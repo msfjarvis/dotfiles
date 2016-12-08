@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source xg.bash
+
 function cleanapks() {
   apks=$(find . -name *.apk 2>/dev/null)
   echo "$(echo $apks | wc -l) APKs found"
