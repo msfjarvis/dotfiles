@@ -39,3 +39,20 @@ function jenkinsbuild(){
   echo "Please specify a jenkins job to begin!"
   fi
 }
+
+function twrp() {
+  if  [ "$1" == "install" ]; then
+  if [ "$2" != "" ]; then
+  adb push $2 /external_sd/
+  adb shell twrp install /external_sd/$2
+  else
+  echo "install what, you twat?" && return 1
+  fi
+  else
+  echo "fark orf ya carnt" && return 1
+  fi
+}
+
+function myeyes(){
+  xflux -l 28.6869 -g 77.3525 -r 1 -k 3000
+}
