@@ -30,6 +30,9 @@ function build-for-jalebi() {
   if [ "$?" != 0 ]; then sendmessage "repopick operations failed" "testers" && exit 1; fi
   prebuilts/misc/linux-x86/ccache/ccache -M 30G
   ./prebuilts/sdk/tools/jack-admin kill-server
+  calctime
+  sendmessage "Build restarted. This should take about $time minutes!
+  Changelog will come with the build link" "testers"
   if [ "$CLEAN" == "true" ]; then clean="noclean";fi
   build full $LUNCH_TARGET "$clean"
   ./prebuilts/sdk/tools/jack-admin kill-server
@@ -57,10 +60,15 @@ function upload() {
 function init-if-needed(){
   [ -d .repo/ ] || repo init -u git://github.com/halogenOS/android_manifest -b XOS-7.0
 }
+
+function calctime() {
+  current_out_size_gb=$(du -sh out/ | awk '{print $1}' | sed 's/[^.0-9]*//g')
+  time_per_gb=$(bc <<< 'scale=4;25/28')
+  time=$($current_out_size_gb/$time_per_gb)
+}
+
 export USE_CCACHE=1
 export CCACHE_DIR=~/.ccache
-sendmessage "Build restarted. This should take about 10 minutes!
-Changelog will come with the build link" "testers"
 cd xos
 init-if-needed
 build-for-jalebi
