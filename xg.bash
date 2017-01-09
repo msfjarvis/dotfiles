@@ -1,20 +1,31 @@
+function getPlatformPath() {
+  ANDROID_PLATFORM_ROOT="your-build-root"
+  PWD="$(pwd)"
+  original_string="$PWD"
+  string_to_replace="$ANDROID_PLATFORM_ROOT"
+  result_string="${original_string//$string_to_replace}"
+  echo -n $result_string
+}
+
 function xg() {
   original_string="$(getPlatformPath)"
+  original_string=$(echo  $original_string | cut -d "/" -f9-)
   strepl="_"
   resultstr="android_${original_string//\//$strepl}"
-  
+
+
   local AT="$@"
-  
+
   local remotebranchaddition=""
-  
+
   if [ ! -z "$topic" ]; then
     local remotebranchaddition="/$topic"
-  fi  
-  
+  fi
+
   if [ ! -z "$message" ]; then
     local remotebranchaddition="$remotebranchaddition%message=$message"
   fi
-  
+
   case $1 in
     add)
       git remote add gerrit ssh://MSF-Jarvis@review.halogenos.org:29418/$resultstr
@@ -107,7 +118,7 @@ function xg() {
       ;;
     *) echo "Oops";;
   esac
-  
+
   unset message
   unset topic
   unset remotebranchaddition
