@@ -30,8 +30,7 @@ function build-for-jalebi() {
   if [ "$?" != 0 ]; then sendmessage "repopick operations failed" "testers" && exit 1; fi
   prebuilts/misc/linux-x86/ccache/ccache -M 30G
   ./prebuilts/sdk/tools/jack-admin kill-server
-  calctime
-  sendmessage "Build restarted. This should take about $time minutes!
+  sendmessage "Build restarted. This should take about 28 minutes!
   Changelog will come with the build link" "testers"
   if [ "$CLEAN" == "true" ]; then clean="noclean";fi
   build full $LUNCH_TARGET "$clean"
@@ -53,18 +52,12 @@ function upload() {
   sleep 1
   [ "$2" != "simulate" ] && ret=$? || ret=0
   sleep 4
-  sendmessage "$changelog" "testers"
+  sendmessage "Build uploaded, use /latest to see it" "testers"
   exit $?
 }
 
 function init-if-needed(){
   [ -d .repo/ ] || repo init -u git://github.com/halogenOS/android_manifest -b XOS-7.0
-}
-
-function calctime() {
-  current_out_size_gb=$(du -sh out/ | awk '{print $1}' | sed 's/[^.0-9]*//g')
-  time_per_gb=$(bc <<< 'scale=4;25/28')
-  time=$($current_out_size_gb/$time_per_gb)
 }
 
 export USE_CCACHE=1
