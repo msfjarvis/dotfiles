@@ -23,9 +23,9 @@ function sendmessage() {
 
 function build-for-jalebi() {
   . build/envsetup.sh
-  if [ "$SYNC" == "true" ]; then repo sync -j49 -c --no-tags --force-sync -f;fi
-  if [ "$reset" != "false" ]; then repo forall -c "git reset --hard XOS/XOS-7.0" 2>/dev/null;fi
-  if [ "$repopicks" != "false" ]; then repopick "$repopicks";fi
+  if [ "$SYNC" == "true" ]; then reposync turbo;fi
+  if [ "$reset" != "false" ]; then reporeset;fi
+  if [ "$repopicks" != "none" ]; then repopick "$repopicks";fi
   if [ "$repopick_topic" != "none" ]; then repopick -t "$repopick_topic";fi
   if [ "$?" != 0 ]; then sendmessage "repopick operations failed" "testers" && exit 1; fi
   prebuilts/misc/linux-x86/ccache/ccache -M 30G
@@ -62,6 +62,7 @@ function init-if-needed(){
 
 export USE_CCACHE=1
 export CCACHE_DIR=~/.ccache
+if [ "$TARGET_DEVICE" == "jalebi" ]; then export OUT_DIR_COMMON_BASE=/out ;fi
 cd xos
 init-if-needed
 build-for-jalebi
