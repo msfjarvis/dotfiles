@@ -25,7 +25,7 @@ function build-for-jalebi() {
   ./prebuilts/sdk/tools/jack-admin kill-server
   sendmessage "Build started. This should take about 10 minutes!
   Changelog will come with the build link" "testers"
-  [ "$CLEAN" == "true" ] && make clean
+  [ "$CLEAN_BUILD" == "true" ] && make clean
   [ "$Release" == "true" ] && export TARGET_FORCE_DEXPREOPT=true && sendmessage "This is a release build" "testers" || sendmessage "This is a test build" "testers"
   breakfast $TARGET_DEVICE
   build full $LUNCH_TARGET noclean
