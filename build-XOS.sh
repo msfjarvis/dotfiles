@@ -1,15 +1,9 @@
 function sendmessage() {
   tgmessage="$1"
   BOTID="$BOT_TOKEN"
-  if [ "$2" == "testers" ]; then
-  chat_id="$CHAT_ID"
-  else
-  chat_id=$2
-  fi
+  [ "$2" == "testers" ] && chat_id="$CHAT_ID" || chat_id=$2
 
-  if [ "$2" == "updates" ]; then
-  echo "Gonna get some updates for ya"
-  fi
+  [ "$2" == "updates" ] && echo "Gonna get some updates for ya"
   if [ -z $chat_id ]; then
   echo
   echo "I didn't get a chat_id from your input, or you were confused,"
@@ -23,39 +17,51 @@ function sendmessage() {
 
 function build-for-jalebi() {
   . build/envsetup.sh
-  if [ "$SYNC" == "true" ]; then reposync turbo;fi
-  if [ "$reset" != "false" ]; then reporeset;fi
-  if [ "$repopicks" != "none" ]; then repopick "$repopicks";fi
-  if [ "$repopick_topic" != "none" ]; then repopick -t "$repopick_topic";fi
-  if [ "$?" != 0 ]; then sendmessage "repopick operations failed" "testers" && exit 1; fi
+  [ "$SYNC" == "true" ] && rm -rf kernel/ && reposync turbo
+  [ "$reset" != "false" ] && reporeset 2>/dev/null
+  [ "$repopicks" != "none" ] && repopick "$repopicks"
+  [ "$repopick_topic" != "none" ] && repopick -t "$repopick_topic"
   prebuilts/misc/linux-x86/ccache/ccache -M 30G
   ./prebuilts/sdk/tools/jack-admin kill-server
-  sendmessage "Build restarted. This should take about 28 minutes!
+  sendmessage "Build started. This should take about 10 minutes!
   Changelog will come with the build link" "testers"
-  if [ "$CLEAN" == "true" ]; then clean="noclean";fi
-  build full $LUNCH_TARGET "$clean"
+  [ "$CLEAN" == "true" ] && make clean
+  [ "$Release" == "true" ] && export TARGET_FORCE_DEXPREOPT=true && sendmessage "This is a release build" "testers" || sendmessage "This is a test build" "testers"
+  breakfast $TARGET_DEVICE
+  build full $LUNCH_TARGET noclean
   ./prebuilts/sdk/tools/jack-admin kill-server
   cd $OUT
-  if [ -f "$XOS_VERSION.zip" ]; then upload; else sendmessage "Build failed." "testers" && exit 1; fi
+  [ -f "$XOS_VERSION.zip" ] && upload || sendmessage "Build failed." "testers" && exit 1
 }
 
 function upload() {
   echo "upload script"
+  cd $OUT
   filename="$XOS_VERSION.zip"
+  #filename="XOS_jalebi_7.0*.zip"
   ZIP_SIZE_BYTES=$(stat --printf="%s" $filename)
   ZIP_SIZE_MB=$((ZIP_SIZE_BYTES / 1000000)) # M
-  sendmessage "zip size $ZIP_SIZE_MB MBs" "testers"
-  sendmessage "The build is uploading
-  Estimated upload duration: 1 minute" "testers"
+  sendmessage "zip size $ZIP_SIZE_MB MB" "testers"
+  [ "$Release" != "true" ] && sendmessage "The build is uploading. Estimated upload duration: 1 minute" "testers"
   echo "Uploading the zip $filename"
-  [ "$2" != "simulate" ] && rsync -e ssh "$filename" msf-jarvis@frs.sourceforge.net:/home/frs/project/xos-for-jalebi/
+  [ "$Release" != "true" ] && rsync -e ssh "$filename" msf-jarvis@frs.sourceforge.net:/home/frs/project/xos-for-jalebi/ || release
   sleep 1
   [ "$2" != "simulate" ] && ret=$? || ret=0
   sleep 4
-  sendmessage "Build uploaded, use /latest to see it" "testers"
+  [ "$Release" != "true" ] && sendmessage "Build uploaded, use /latest to see it" "testers"
+  [ "$Release" == "true" ] && tell-them
   exit $?
 }
 
+function release(){
+  wput ftp://"$RELEASE_USER_NAME":"$RELEASE_PASSWD"@halogenos.org/upload/ROM/halogenOS/7/jalebi/ "$filename"
+  [ "$?" == 0 ] || "Uploading of release build failed."
+}
+
+function tell-them(){
+  sendmessage "This was a release build, will upload in five minutes. download it [here](http://halogenos.org/upload/ROM/halogenOS/7/)" "testers"
+  release
+}
 function init-if-needed(){
   [ -d .repo/ ] || repo init -u git://github.com/halogenOS/android_manifest -b XOS-7.0
 }
@@ -63,6 +69,7 @@ function init-if-needed(){
 export USE_CCACHE=1
 export CCACHE_DIR=~/.ccache
 if [ "$TARGET_DEVICE" == "jalebi" ]; then export OUT_DIR_COMMON_BASE=/out ;fi
+mkdir -p xos
 cd xos
 init-if-needed
 build-for-jalebi
