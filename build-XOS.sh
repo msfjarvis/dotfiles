@@ -48,8 +48,8 @@ function upload() {
   sleep 1
   [ "$2" != "simulate" ] && ret=$? || ret=0
   sleep 4
-  [ "$Release" != "true" ] && sendmessage "Build uploaded, use /latest to see it" "testers"
-  [ "$Release" == "true" ] && tell-them
+  [ "$Release" != "true" ] && sendmessage "Build uploaded, use /latest to see it" "testers" && exit 0
+  [ "$Release" == "true" ] && tell-them || exit 0
   exit $?
 }
 
