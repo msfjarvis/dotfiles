@@ -15,7 +15,7 @@ function sendmessage() {
   fi
 }
 
-function build-for-jalebi() {
+function build() {
   . build/envsetup.sh
   [ "$SYNC" == "true" ] && rm -rf kernel/ && reposync turbo
   [ "$reset" != "false" ] && reporeset 2>/dev/null
@@ -40,7 +40,7 @@ function upload() {
   filename="$XOS_VERSION.zip"
   #filename="XOS_jalebi_7.0*.zip"
   ZIP_SIZE_BYTES=$(stat --printf="%s" $filename)
-  ZIP_SIZE_MB=$((ZIP_SIZE_BYTES / 1000000)) # M
+  ZIP_SIZE_MB=$( (ZIP_SIZE_BYTES / 1000000) ) # M
   sendmessage "zip size $ZIP_SIZE_MB MB" "testers"
   [ "$Release" != "true" ] && sendmessage "The build is uploading. Estimated upload duration: 1 minute" "testers"
   echo "Uploading the zip $filename"
@@ -53,24 +53,24 @@ function upload() {
   exit $?
 }
 
-function release(){
-  wput ftp://"$RELEASE_USER_NAME":"$RELEASE_PASSWD"@halogenos.org/upload/ROM/halogenOS/7/jalebi/ "$filename"
+function release() {
+  wput ftp://"$RELEASE_USER_NAME":"$RELEASE_PASSWD"@halogenos.org/upload/ROM/halogenOS/7/$TARGET_DEVICE/ "$filename"
   [ "$?" == 0 ] || "Uploading of release build failed."
 }
 
-function tell-them(){
+function tell-them() {
   sendmessage "This was a release build, will upload in five minutes. download it [here](http://halogenos.org/upload/ROM/halogenOS/7/)" "testers"
   release
 }
-function init-if-needed(){
+function init-if-needed() {
   [ -d .repo/ ] || repo init -u git://github.com/halogenOS/android_manifest -b XOS-7.0
 }
 
 export USE_CCACHE=1
 export CCACHE_DIR=~/.ccache
 export HOST_PREFERS_OWN_CCACHE=true
-if [ "$TARGET_DEVICE" == "jalebi" ]; then export OUT_DIR_COMMON_BASE=/out ;fi
+[ "$TARGET_DEVICE" == "jalebi" ] && export OUT_DIR_COMMON_BASE=/out
 mkdir -p xos
 cd xos
 init-if-needed
-build-for-jalebi
+build
