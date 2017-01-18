@@ -68,6 +68,7 @@ function init-if-needed(){
 
 export USE_CCACHE=1
 export CCACHE_DIR=~/.ccache
+export HOST_PREFERS_OWN_CCACHE=true
 if [ "$TARGET_DEVICE" == "jalebi" ]; then export OUT_DIR_COMMON_BASE=/out ;fi
 mkdir -p xos
 cd xos
