@@ -16,6 +16,7 @@ function sendmessage() {
 }
 
 function build() {
+  repo sync -c --no-tags build
   . build/envsetup.sh
   [ "$SYNC" == "true" ] && rm -rf kernel/ && reposync turbo
   [ "$reset" != "false" ] && reporeset 2>/dev/null
