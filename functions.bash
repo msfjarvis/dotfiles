@@ -10,14 +10,14 @@ function gpush() {
   if [[ ! "$(git remote)" == *"gerrit"* ]]; then
   add
   fi
-  git push gerrit HEAD:refs/for/XOS-7.0
+  git push gerrit HEAD:refs/for/XOS-7.1
 }
 
 function gfpush() {
   if [[ ! "$(git remote)" == *"gerrit"* ]]; then
   add
   fi
-  git push gerrit HEAD:refs/heads/XOS-7.0
+  git push gerrit HEAD:refs/heads/XOS-7.1
 }
 
 function cleanapks() {
