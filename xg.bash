@@ -28,7 +28,7 @@ function xg() {
 
   case $1 in
     add)
-      git remote add gerrit ssh://MSF-Jarvis@review.halogenos.org:29418/$resultstr
+      git remote add gerrit ssh://$GERRIT_USER@review.halogenos.org:29418/$resultstr
       ;;
     addf)
       xg add
