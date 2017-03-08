@@ -1,23 +1,60 @@
 #!/usr/bin/env bash
 
+export AOSP_TAG=android-7.1.1_r25
+
+function mergeaosp() {
+  for i in $(cat $1);do echo $i && merge_aosp $i && cd ../;done
+}
+
+function merge_aosp() {
+        cd $ANDROID_BUILD_TOP
+	dir=$1
+	repo_name=android_$(echo $dir | sed 's/\//_/g')
+	[ -d $repo_name ] || git clone halogenOS/$repo_name
+	cd $repo_name
+	aospremote
+	git fetch aosp --tags
+	git merge $AOSP_TAG
+}
+
 function add() {
   repo_name=$(printf '%s\n' "${PWD##*/}")
-  git remote add gerrit ssh://MSF-Jarvis@review.halogenos.org:29418/$repo_name
+  git remote add gerrit ssh://MSF_Jarvis@review.halogenos.org:29418/$repo_name
   hook
 }
 
+function aospremote(){
+  repo_name=$(printf '%s\n' "${PWD##*/}")
+  repo_name=$(echo $repo_name | sed 's/_/\//g' | sed 's/android/platform/g')
+  git remote remove aosp 2>/dev/null
+  git remote add aosp https://android.googlesource.com/$repo_name
+}
+
+function reposync(){
+  git fetch origin XOS-7.1
+  git checkout .
+  git clean --force
+  git reset --hard origin/XOS-7.1
+}
+
+function reposyncall(){
+  for i in $(ls);do cd $i && reposync && cd ../;done
+}
+
+function hook() {
+  scp -p -P 29418 MSF_Jarvis@review.halogenos.org:hooks/commit-msg .git/hooks/
+}
+
 function gpush() {
-  if [[ ! "$(git remote)" == *"gerrit"* ]]; then
-  add
-  fi
-  git push gerrit HEAD:refs/for/XOS-7.0
+  if [ "$1" ]; then git push gerrit HEAD:refs/for/XOS-7.1/"$1"; else git push gerrit HEAD:refs/for/XOS-7.1;fi
 }
 
 function gfpush() {
-  if [[ ! "$(git remote)" == *"gerrit"* ]]; then
-  add
-  fi
-  git push gerrit HEAD:refs/heads/XOS-7.0
+  git push gerrit HEAD:refs/heads/XOS-7.1
+}
+
+function gffpush() {
+  git push --force gerrit HEAD:refs/heads/XOS-7.1
 }
 
 function cleanapks() {
@@ -43,22 +80,14 @@ function transfer() {
   rm -f $tmpfile
 }
 
+function immadoandroid() {
+  export ANDROID_HOME=/home/msfjarvis/Android/Sdk
+}
+
 function gpick(){
   git cherry-pick $@
 }
 
-function jenkinsbuild(){
-  if [ $1 ];
-  then
-  jenkins_invoke -u $JENKINSUSERNAME -p $JENKINSPASSWD -J http://jenkins.msfjarvis.me $1
-  else
-  echo "Please specify a jenkins job to begin!"
-  fi
-}
-
-function hook() {
-  scp -p -P 29418 MSF-Jarvis@review.halogenos.org:hooks/commit-msg .git/hooks/
-}
 
 function twrp() {
   #echo $@ && return 1
@@ -74,11 +103,11 @@ function twrp() {
   fi
 }
 
-function myeyes(){
-  xflux -l 28.6869 -g 77.3525 -r 1 -k 3000
+function myeyes() {
+  xflux -l 28.6869 -g 77.3525 -r 1 -k 2000
 }
 
-function updatee(){
+function updatee() {
   for i in $(ls); do cd $i && git pull origin XOS-7.0 && cd .. ; done
 }
 
@@ -86,9 +115,15 @@ function what() {
   bash-it help aliases $1 | grep $2 2>/dev/null
 }
 
-function findapks(){
+function findapks() {
   find . -name *.apk
 }
+
+function list() {
+  for i in `cat ~/functions.bash | sed -n "/^[[:blank:]]*function /s/function \([a-z_]*\).*/\1/p" | sort | uniq`; do echo $i ;done
+}
+immadoandroid
+export GOPATH=~/.go
 
 function datime(){
   date '+%A %W %Y %X'
@@ -109,4 +144,37 @@ function weather(){
   [ -z "$1" ] && curl 'wttr.in/New%20Delhi' || curl "wttr.in/$1"
 }
 
+function serbur(){
+  ssh harsh@138.201.198.175
+}
+
+function readall(){
+  for file in $(ls); do nano $file;done
+}
+
+function findtwowords(){
+  ag -ia $1 | grep $2
+}
+
+function findandopen() {
+  for file in $(find . -name $1); do nano $file;done
+}
+
+function fetch() {
+  [ "$1" == "*app" ]; scp harsh@138.201.198.175:~/xos/out/target/product/jalebi/system/$1/$2/$2.apk .
+#  [ "$1" in "zip" ]; scp harsh@138.201.198.175:~/xos/out/target/product/jalebi/$2 .
+#  [ "$2" == "*framework*" ]; scp harsh@138.201.198.175:~/xos/out/target/product/jalebi/system/framework/$2 .
+#  [ "$2" == "framework-res" ]; scp harsh@138.201.198.175:~/xos/out/target/product/jalebi/system/$1/$2.apk .
+#  scp harsh@138.201.198.175:~/xos/out/target/product/jalebi/system/$1 .
+}
+
+
 alias disp="xrandr --output eDP1 --rotate $1"
+alias wttr=weather
+alias xos="cd ~/git-repos/halogenOS"
+export PATH=~/bin:$PATH
+source ~/bin/bash_completion.d/*
+export ANDROID_BUILD_TOP="/home/msfjarvis/git-repos/halogenOS"
+alias reload="source ~/.bashrc"
+alias funcs="nano ~/functions.bash"
+
