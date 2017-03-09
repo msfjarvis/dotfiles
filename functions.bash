@@ -168,6 +168,9 @@ function fetch() {
 #  scp harsh@138.201.198.175:~/xos/out/target/product/jalebi/system/$1 .
 }
 
+function tg() {
+  curl -F chat_id="$TG_ID" -F document="@$1" "https://api.telegram.org/bot$TG_BOT_ID/sendDocument"
+}
 
 alias disp="xrandr --output eDP1 --rotate $1"
 alias wttr=weather
