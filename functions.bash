@@ -172,6 +172,22 @@ function tg() {
   curl -F chat_id="$TG_ID" -F document="@$1" "https://api.telegram.org/bot$TG_BOT_ID/sendDocument"
 }
 
+#TODO : Handle cases where paths are specified rather than files
+# Ideally, split the argument with a backslash delimiter and use
+# the last item as the file name for searching $out
+
+function p2d() {
+  file=$1
+  out=$(adb shell find /system -name $file)
+  if [ "$out" = "" ]
+  then
+    return "Bad file"
+  else
+    echo "$file will be placed at $out"
+    adb push $file $out
+  fi
+}
+
 alias disp="xrandr --output eDP1 --rotate $1"
 alias wttr=weather
 alias xos="cd ~/git-repos/halogenOS"
