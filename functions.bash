@@ -141,7 +141,11 @@ function subsupdate(){
 }
 
 function weather(){
-  [ -z "$1" ] && curl 'wttr.in/New%20Delhi' || curl "wttr.in/$1"
+    if (( `tput cols` < 125 )); then # 125 is min size for correct display
+        [ -z "$1" ] && curl "wttr.in/New%20Delhi?0" || curl "wttr.in/$1?0"
+    else 
+        [ -z "$1" ] && curl "wttr.in/New%20Delhi" || curl "wttr.in/$1"
+    fi
 }
 
 function serbur(){
