@@ -176,13 +176,22 @@ function tg() {
   curl -F chat_id="$TG_ID" -F document="@$1" "https://api.telegram.org/bot$TG_BOT_ID/sendDocument"
 }
 
-#TODO : Handle cases where paths are specified rather than files
-# Ideally, split the argument with a backslash delimiter and use
-# the last item as the file name for searching $out
+function get_abs_file() {
+  string="$1"
+  old=$IFS
+  IFS='/'
+  for str in $string # loop over all
+  do
+    last=$str # set to value
+  done
+  echo $last # last val
+  IFS=$old
+}
 
 function p2d() {
   file=$1
-  out=$(adb shell find /system -name $file)
+  [ -d $1 ] && real_file=`get_abs_file $file` || real_file=$file
+  out=$(adb shell find /system -name $real_file)
   if [ "$out" = "" ]
   then
     return "Bad file"
