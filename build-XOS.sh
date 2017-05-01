@@ -41,7 +41,7 @@ function init-if-needed() {
 function pickAndReset(){
   [ "$reset" == "true" ] && reporeset 2>/dev/null
   temp=$(echo $repopick_tasks | sed s/\n//) #test for empty repopicks list
-  if [ "$temp" != "" ]; do
+  if [ "$temp" != "" ]; then
     for task in "$repopick_tasks"; do
       repopick "$task"
     done
@@ -57,12 +57,16 @@ function notify(){
   [ "$temp" != "" ] && sendmessage "repopick tasks : $repopick_tasks" || sendmessage "No repopicks"
 }
 
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+function testBash(){
+  if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     echo -e "\033[01;31m"
     echo "Script HAS to be sourced, please DO NOT run it with the bash command!"
     echo -e "\033[0m"
-    return 0
-fi
+    exit 255
+  fi
+}
+
+testBash
 export USE_CCACHE=1
 export CCACHE_DIR=~/.ccache
 export HOST_PREFERS_OWN_CCACHE=true
