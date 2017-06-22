@@ -100,6 +100,18 @@ function p2d() {
   fi
 }
 
+function tab2space() {
+  find .  ! -type d -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
+}
+
+function d2u() {
+  for file in $(find . -type f -not -iwholename '.git'); do dos2unix $file;done
+}
+
+function whitespace() {
+  find . -type f -not -iwholename '.git' -print0 | xargs -0 perl -pi -e 's/ +$//'
+}
+
 alias disp="xrandr --output eDP1 --rotate $1"
 alias wttr=weather
 export PATH=~/bin:$PATH
