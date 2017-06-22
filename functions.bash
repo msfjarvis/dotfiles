@@ -1,46 +1,5 @@
 #!/usr/bin/env bash
 
-export AOSP_TAG=android-7.1.1_r25
-
-function mergeaosp() {
-  for i in $(cat $1);do echo $i && merge_aosp $i && cd ../;done
-}
-
-function merge_aosp() {
-        cd $ANDROID_BUILD_TOP
-	dir=$1
-	repo_name=android_$(echo $dir | sed 's/\//_/g')
-	[ -d $repo_name ] || git clone halogenOS/$repo_name
-	cd $repo_name
-	aospremote
-	git fetch aosp --tags
-	git merge $AOSP_TAG
-}
-
-function add() {
-  repo_name=$(printf '%s\n' "${PWD##*/}")
-  git remote add gerrit ssh://MSF_Jarvis@review.halogenos.org:29418/$repo_name
-  hook
-}
-
-function aospremote(){
-  repo_name=$(printf '%s\n' "${PWD##*/}")
-  repo_name=$(echo $repo_name | sed 's/_/\//g' | sed 's/android/platform/g')
-  git remote remove aosp 2>/dev/null
-  git remote add aosp https://android.googlesource.com/$repo_name
-}
-
-function reposync(){
-  git fetch origin XOS-7.1
-  git checkout .
-  git clean --force
-  git reset --hard origin/XOS-7.1
-}
-
-function reposyncall(){
-  for i in $(ls);do cd $i && reposync && cd ../;done
-}
-
 function hook() {
   scp -p -P 29418 MSF_Jarvis@review.halogenos.org:hooks/commit-msg .git/hooks/
 }
@@ -62,14 +21,11 @@ function cleanapks() {
   for i in $apks; do rm $i; done
 }
 
-function cleanmahshitz() {
-  rm -rf build
-  rm -rf app/build
-}
-
 function transfer() {
   if [ $# -eq 0 ]
-    then echo "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"
+    then echo "No arguments specified. Usage:
+    echo transfer /tmp/test.md
+    cat /tmp/test.md | transfer test.md"
     return 1
   fi
   tmpfile=$( mktemp -t transferXXX )
@@ -78,10 +34,6 @@ function transfer() {
   else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile
   fi; cat $tmpfile
   rm -f $tmpfile
-}
-
-function immadoandroid() {
-  export ANDROID_HOME=/home/msfjarvis/Android/Sdk
 }
 
 function gpick(){
@@ -107,14 +59,6 @@ function myeyes() {
   xflux -l 28.6869 -g 77.3525 -r 1 -k 2000
 }
 
-function updatee() {
-  for i in $(ls); do cd $i && git pull origin XOS-7.0 && cd .. ; done
-}
-
-function what() {
-  bash-it help aliases $1 | grep $2 2>/dev/null
-}
-
 function findapks() {
   find . -name *.apk
 }
@@ -122,54 +66,21 @@ function findapks() {
 function list() {
   for i in `cat ~/functions.bash | sed -n "/^[[:blank:]]*function /s/function \([a-z_]*\).*/\1/p" | sort | uniq`; do echo $i ;done
 }
-immadoandroid
-export GOPATH=~/.go
 
 function datime(){
   date '+%A %W %Y %X'
 }
 
-function subsupdate(){
-  cur_dir=$(pwd)
-  cd ~/git-repos/substratum
-  git checkout dev
-  git pull origin dev
-  git checkout self-builds
-  git pull origin dev
-  git push --all
-  cd $cur_dir
-}
-
 function weather(){
     if (( `tput cols` < 125 )); then # 125 is min size for correct display
         [ -z "$1" ] && curl "wttr.in/New%20Delhi?0" || curl "wttr.in/$1?0"
-    else 
+    else
         [ -z "$1" ] && curl "wttr.in/New%20Delhi" || curl "wttr.in/$1"
     fi
 }
 
-function serbur(){
-  ssh harsh@138.201.198.175
-}
-
-function readall(){
-  for file in $(ls); do nano $file;done
-}
-
-function findtwowords(){
-  ag -ia $1 | grep $2
-}
-
 function findandopen() {
   for file in $(find . -name $1); do nano $file;done
-}
-
-function fetch() {
-  [ "$1" == "*app" ]; scp harsh@138.201.198.175:~/xos/out/target/product/jalebi/system/$1/$2/$2.apk .
-#  [ "$1" in "zip" ]; scp harsh@138.201.198.175:~/xos/out/target/product/jalebi/$2 .
-#  [ "$2" == "*framework*" ]; scp harsh@138.201.198.175:~/xos/out/target/product/jalebi/system/framework/$2 .
-#  [ "$2" == "framework-res" ]; scp harsh@138.201.198.175:~/xos/out/target/product/jalebi/system/$1/$2.apk .
-#  scp harsh@138.201.198.175:~/xos/out/target/product/jalebi/system/$1 .
 }
 
 function tg() {
@@ -191,10 +102,7 @@ function p2d() {
 
 alias disp="xrandr --output eDP1 --rotate $1"
 alias wttr=weather
-alias xos="cd ~/git-repos/halogenOS"
 export PATH=~/bin:$PATH
 source ~/bin/bash_completion.d/*
-export ANDROID_BUILD_TOP="/home/msfjarvis/git-repos/halogenOS"
 alias reload="source ~/.bashrc"
 alias funcs="nano ~/functions.bash"
-
