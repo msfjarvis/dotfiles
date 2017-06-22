@@ -77,6 +77,18 @@ function reboot {
   esac
 }
 
+function tab2space() {
+  find . -type f -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
+}
+
+function d2u() {
+  find . -type f -not -iwholename '.git' -exec dos2unix {} \;
+}
+
+function whitespace() {
+  find . -type f -not -iwholename '.git' -print0 | xargs -0 perl -pi -e 's/ +$//'
+}
+
 # Kernel stuff
 function kgrep {
     find . -name .git -prune -o -path ./out -prune -o -regextype posix-egrep \
