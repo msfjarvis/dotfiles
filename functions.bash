@@ -63,10 +63,6 @@ function findapks() {
   find . -name *.apk
 }
 
-function list() {
-  for i in `cat ~/functions.bash | sed -n "/^[[:blank:]]*function /s/function \([a-z_]*\).*/\1/p" | sort | uniq`; do echo $i ;done
-}
-
 function datime(){
   date '+%A %W %Y %X'
 }
@@ -112,9 +108,12 @@ function whitespace() {
   find . -type f -not -iwholename '.git' -print0 | xargs -0 perl -pi -e 's/ +$//'
 }
 
+function list() {
+  for i in `cat functions.bash | sed -n "/^[[:blank:]]*function /s/function \([a-z_]*\).*/\1/p" | sort | uniq`; do echo $i ;done
+}
+
 alias disp="xrandr --output eDP1 --rotate $1"
 alias wttr=weather
-export PATH=~/bin:$PATH
 source ~/bin/bash_completion.d/*
 alias reload="source ~/.bashrc"
 alias funcs="nano ~/functions.bash"
