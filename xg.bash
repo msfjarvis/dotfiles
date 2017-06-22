@@ -1,3 +1,5 @@
+#!/bin/bash
+
 function getPlatformPath() {
   ANDROID_PLATFORM_ROOT="your-build-root"
   PWD="$(pwd)"
@@ -8,6 +10,7 @@ function getPlatformPath() {
 }
 
 function xg() {
+  [ ${ANDROID_PLATFORM_PATH} == "your-build-root" ] && echo "Fill in your ROM source path please!" && exit 1
   original_string="$(getPlatformPath)"
   original_string=$(echo  $original_string | cut -d "/" -f9-)
   strepl="_"
