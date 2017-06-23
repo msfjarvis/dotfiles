@@ -1,9 +1,9 @@
 #!/bin/bash
 
-RED="\033[01;31m"
 export USE_CCACHE=1
-export CCACHE_DIR=~/.ccache/${TARGET_DEVICE}/
+export CCACHE_DIR=${HOME}/.ccache/${TARGET_DEVICE}/
 export HOST_PREFERS_OWN_CCACHE=true
+RED="\033[01;31m"
 
 function reportError() {
     echo -e ""
@@ -75,19 +75,9 @@ function notify {
   [ ${TEMP} != "" ] && sendmessage "repopick tasks : ${REPOPICK_TASKS}" || sendmessage "No repopicks"
 }
 
-function testBash {
-  if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    echo -e "\033[01;31m"
-    echo "Script HAS to be sourced, please DO NOT run it with the bash command!"
-    echo -e "\033[0m"
-    exit 255
-  fi
-}
-
 function readConfig {
-  CONFIG_FILE="~/.build_xos.config"
-  [ -f ${CONFIG_FILE} ] || error "Missing config"
-  echo $(grep $1  | cut -d = -f 2)
+  CONFIG_FILE="$HOME/.build_xos.config"
+  [ -f ${CONFIG_FILE} ] || reportError "Missing config" && echo `grep $1 ${CONFIG_FILE} | cut -d = -f 2`
 }
 
 function loadInfo {
@@ -109,9 +99,8 @@ function loadInfo {
   done
 }
 
-testBash
-mkdir -p ~/xos
-cd ~/xos
+mkdir -p ${HOME}/xos
+cd ${HOME}/xos
 loadInfo
 init-if-needed
 notify
