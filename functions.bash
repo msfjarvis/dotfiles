@@ -107,6 +107,18 @@ function list() {
   for i in `cat functions.bash | sed -n "/^[[:blank:]]*function /s/function \([a-z_]*\).*/\1/p" | sort | uniq`; do echo $i ;done
 }
 
+function reboot() {
+  echo "Do you really wanna reboot?"
+  read confirmation
+  case "${confirmation}" in
+      'y'|'Y')
+          $(which reboot)
+          ;;
+      *)
+          ;;
+  esac
+}
+
 alias disp="xrandr --output eDP1 --rotate $1"
 alias wttr=weather
 source ~/bin/bash_completion.d/*
