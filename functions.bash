@@ -124,3 +124,5 @@ alias wttr=weather
 source ~/bin/bash_completion.d/*
 alias reload="source ~/.bashrc"
 alias funcs="nano ~/functions.bash"
+d_ate=$(date +"%H:%M")
+PS1='\[\033[01;34m\]( \u@\h | $d_ate ) \[\033[01;32m\]\w\[\033[01;31m\] $(__git_ps1 "(%s) ")\[\033[39m\]\$\[\033[0m\] '
