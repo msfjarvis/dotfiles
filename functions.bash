@@ -119,9 +119,29 @@ function reboot() {
   esac
 }
 
+function setalarm() {
+  echo $@ | sed s/:// > ~/.current_alarm
+}
+
+function getalarm() {
+  if [[ -f ~/.current_alarm ]]; then
+    if [[ $(date +"%H%M") -ge $(cat ~/.current_alarm) ]]; then
+    echo -e '\033[01;31mALARM\033[01;34m'
+    else
+    echo $(date +"%H:%M")
+    fi
+  else
+    echo $(date +"%H:%M")
+  fi
+}
+
+function remalarm() {
+  rm ~/.current_alarm 2>/dev/null
+}
+
 alias disp="xrandr --output eDP1 --rotate $1"
 alias wttr=weather
 source ~/bin/bash_completion.d/*
 alias reload="source ~/.bashrc"
 alias funcs="nano ~/functions.bash"
-PS1='\[\033[01;34m\]( \u@\h | $(date +"%H:%M") ) \[\033[01;32m\]\w\[\033[01;31m\] $(__git_ps1 "(%s) ")\[\033[39m\]\$\[\033[0m\] '
+PS1='\[\033[01;34m\]( \u@\h | $(getalarm) ) \[\033[01;32m\]\w\[\033[01;31m\] $(__git_ps1 "(%s) ")\[\033[39m\]\$\[\033[0m\] '
