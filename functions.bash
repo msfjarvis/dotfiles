@@ -127,7 +127,8 @@ function reboot() {
 }
 
 function setalarm() {
-  echo $@ | sed s/:// > ~/.current_alarm
+  args=$(echo $@ | sed s/://)
+  [[ ${#args} -eq 4 ]] && echo $args > ~/.current_alarm || echo -e "${CL_BOLD}${CL_RED} Error setting alarm ${CL_RST}"
 }
 
 function getalarm() {
