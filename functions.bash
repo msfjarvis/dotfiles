@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+CL_BOLD="\033[1m"
+CL_INV="\033[7m"
+CL_RED="\033[01;31m"
+CL_RST="\033[0m"
+CL_YLW="\033[01;33m"
+CL_BLUE="\033[01;34m"
+
 function hook() {
   scp -p -P 29418 MSF_Jarvis@review.halogenos.org:hooks/commit-msg .git/hooks/
 }
@@ -126,7 +133,7 @@ function setalarm() {
 function getalarm() {
   if [[ -f ~/.current_alarm ]]; then
     if [[ $(date +"%H%M") -ge $(cat ~/.current_alarm) ]]; then
-    echo -e '\033[01;31mALARM\033[01;34m'
+    echo -e "${CL_INV}${CL_RED}ALARM${CL_RST}${CL_BLUE}"
     else
     echo $(date +"%H:%M")
     fi
