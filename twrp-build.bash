@@ -24,7 +24,11 @@ function reportError {
 
 # Set final TWRP version
 function setVars {
-    [[ $tw_version == "" ]] && tw_real_ver=$(getCurrentVer) || tw_real_ver=$(getCurrentVer)-$tw_version
+    if [[ $(getCurrentVer) == "" ]]; then
+        reportError "Are you sure you're building TWRP?"
+    else
+        [[ $tw_version == "" ]] && tw_real_ver=$(getCurrentVer) || tw_real_ver=$(getCurrentVer)-$tw_version
+    fi
 }
 
 # Move teh files
