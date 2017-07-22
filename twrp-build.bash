@@ -33,7 +33,11 @@ function setVars {
 
 # Move teh files
 function setupFiles {
-    mv out/target/product/$device/recovery.img twrp-$tw_real_ver-$device.img
+    if [ -f out/target/product/$device/recovery.tar ]; then
+        mv out/target/product/$device/recovery.tar twrp-$tw_real_ver-$device.tar
+    else
+        mv out/target/product/$device/recovery.img twrp-$tw_real_ver-$device.img
+    fi
 }
 
 # Do the real build
