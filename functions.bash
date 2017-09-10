@@ -69,6 +69,15 @@ function createXos {
   git create halogenOS/${resultstr}
 }
 
+function httpsremote {
+    all_remotes=$(git remote -v | grep push)
+    for remote in "${all_remotes}"; do
+        https_url=$(echo $remote | awk '{print $2}' | sed 's/:/\//g' | sed 's/git@/https:\/\//g')
+        remote_name=$(echo "${remote}" | awk '{print $1}')
+        git remote remove "${remote_name}"
+        git remote add "${remote_name}" "${https_url}"
+    done
+}
 
 
 # Utility functions
