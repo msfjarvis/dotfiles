@@ -133,7 +133,7 @@ function tgm {
 
 function pushcaesiumtg {
     tg "zips/${1}" "${OP3_TESTERS_CHAT_ID}"
-    tgm "${2}" "${OP3_TESTERS_CHAT_ID}"
+    tgm "$(git -C ~/git-repos/halogenOS/oneplus3 shortlog msf/XOS-8.0..HEAD)" "${OP3_TESTERS_CHAT_ID}"
 }
 
 function pushthemetg {
