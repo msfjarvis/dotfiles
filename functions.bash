@@ -58,7 +58,9 @@ function gfpush {
 
 function gffpush {
   echo "${GERRIT_PASSWD}"
-  git push --force gerrit HEAD:refs/heads/XOS-8.0
+  BRANCH="${1}"
+  [[ "${BRANCH}" == "" ]] && BRANCH="XOS-8.0"
+  git push --force gerrit HEAD:refs/heads/"${BRANCH}"
 }
 
 function createXos {
