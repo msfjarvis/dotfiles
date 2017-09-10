@@ -122,13 +122,13 @@ function serverconnect {
 function tg {
     chat_id="${2}"
     [[ "${2}" == "" ]] && chat_id="${MSF_TG_ID}"
-    curl -F chat_id="${chat_id}" -F document="@${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendDocument" >&2
+    curl -F chat_id="${chat_id}" -F document="@${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendDocument" 1>/dev/null 2>/dev/null
 }
 
 function tgm {
     chat_id="${2}"
     [[ "${2}" == "" ]] && chat_id="${MSF_TG_ID}"
-    curl -F chat_id="${chat_id}" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" >&2
+    curl -F chat_id="${chat_id}" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" 1>/dev/null 2>/dev/null
 }
 
 function pushcaesiumtg {
