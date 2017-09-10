@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+export USE_CCACHE=1
+export CCACHE_DIR=~/.ccache/
+export GERRIT_USER=MSF_Jarvis
 CL_BOLD="\033[1m"
 CL_INV="\033[7m"
 CL_RED="\033[01;31m"
@@ -7,69 +10,133 @@ CL_RST="\033[0m"
 CL_YLW="\033[01;33m"
 CL_BLUE="\033[01;34m"
 
-function hook() {
-  scp -p -P 29418 MSF_Jarvis@review.halogenos.org:hooks/commit-msg .git/hooks/
+# Gerrit tooling
+function getPlatformPath {
+  ANDROID_PLATFORM_ROOT="~/xossrc"
+  PWD="$(pwd)"
+  original_string="$PWD"
+  string_to_replace="$ANDROID_PLATFORM_ROOT"
+  result_string="${original_string//$string_to_replace}"
+  echo -n $result_string
 }
 
-function gpush() {
-  if [ "$1" ]; then git push gerrit HEAD:refs/for/XOS-7.1/"$1"; else git push gerrit HEAD:refs/for/XOS-7.1;fi
+function xg {
+  original_string="$(getPlatformPath)"
+  original_string=$(echo  $original_string | cut -d "/" -f5-)
+  strepl="_"
+  resultstr="android_${original_string//\//$strepl}"
+
+  git remote remove gerrit 2>/dev/null
+  git remote add gerrit https://$GERRIT_USER@review.halogenos.org/a/$resultstr
+#  git remote add gerrit ssh://$GERRIT_USER@review.halogenos.org:29418/$resultstr
+  hook_path=$(git rev-parse --git-dir)/hook/commit-msg
+  [[ -f $hook_path ]] || hook
 }
 
-function gfpush() {
-  git push gerrit HEAD:refs/heads/XOS-7.1
+function hook {
+  curl -kLo `git rev-parse --git-dir`/hooks/commit-msg https://MSF_Jarvis@review.halogenos.org/tools/hooks/commit-msg
+  chmod +x `git rev-parse --git-dir`/hooks/commit-msg
 }
 
-function gffpush() {
-  git push --force gerrit HEAD:refs/heads/XOS-7.1
+function gpush {
+  [[ $1 ]] || BRANCH="XOS-8.0" && BRANCH="$1"
+  echo "${GERRIT_PASSWD}"
+  if [ "$2" ]; then
+  git push gerrit HEAD:refs/for/$BRANCH/"$2"
+  else
+  git push gerrit HEAD:refs/for/$BRANCH
+  fi
 }
 
-function cleanapks() {
-  apks=$(find . -name *.apk 2>/dev/null)
-  for i in $apks; do rm $i; done
+function gfpush {
+   [[ $1 ]] || BRANCH="XOS-8.0" && BRANCH="$1"
+  echo "${GERRIT_PASSWD}"
+  git push gerrit HEAD:refs/heads/$BRANCH
 }
 
-function transfer() {
+function gffpush {
+  echo "${GERRIT_PASSWD}"
+  git push --force gerrit HEAD:refs/heads/XOS-8.0
+}
+
+function createXos {
+  original_string="$(getPlatformPath)"
+  original_string=$(echo  $original_string | cut -d "/" -f5-)
+  strepl="_"
+  resultstr="android_${original_string//\//$strepl}"
+  echo $resultstr
+  ssh ${GERRIT_USER}@review.halogenos.org -p 29418 gerrit create-project -p All-Projects -t REBASE_IF_NECESSARY $resultstr
+  git create halogenOS/${resultstr}
+}
+
+
+
+# Utility functions
+function transfer {
   if [ $# -eq 0 ]
     then echo "No arguments specified. Usage:
     echo transfer /tmp/test.md
     cat /tmp/test.md | transfer test.md"
     return 1
   fi
-  curl --progress-bar --upload-file "$1" "https://transfer.sh/";printf '\n'
+  tmpfile=$( mktemp -t transferXXX )
+  if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
+  curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile
+  else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile
+  fi; cat $tmpfile
+  rm -f $tmpfile
+  echo ""
 }
 
-function gpick(){
-  git cherry-pick $@
+
+
+# Server tooling
+function startserver {
+  gcloud compute instances start --project "halogenos-msfjarvis" --zone "us-west1-c" "jarvisbox"
+}
+
+function stopserver {
+  gcloud compute instances stop --project "halogenos-msfjarvis" --zone "us-west1-c" "jarvisbox"
+}
+
+function serverconnect {
+  gcloud compute --project "halogenos-msfjarvis" ssh --zone "us-west1-c" "jarvisbox"
 }
 
 
-function twrp() {
-  #echo $@ && return 1
-  if  [ "$1" == "install" ]; then
-  if [ "$2" != "" ]; then
-  adb push $2 /external_sd/
-  adb shell twrp install /external_sd/$2
-  else
-  echo "install what you twat" && return 1
-  fi
-  else
-  echo "fark orf ya carnt" && return 1
-  fi
+# Telegram stuff
+function tg {
+    chat_id="${2}"
+    [[ "${2}" == "" ]] && chat_id="${MSF_TG_ID}"
+    curl -F chat_id="${chat_id}" -F document="@${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendDocument" >&2
 }
 
-function myeyes() {
+function tgm {
+    chat_id="${2}"
+    [[ "${2}" == "" ]] && chat_id="${MSF_TG_ID}"
+    curl -F chat_id="${chat_id}" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" >&2
+}
+
+function pushcaesiumtg {
+    tg "zips/${1}" "${OP3_TESTERS_CHAT_ID}"
+    tgm "${2}" "${OP3_TESTERS_CHAT_ID}"
+}
+
+function pushthemetg {
+    tg "${1}" "${THEME_TESTERS_CHAT_ID}"
+    tgm "${2}" "${THEME_TESTERS_CHAT_ID}"
+}
+
+# Random utility tooling
+function myeyes {
   xflux -l 28.6869 -g 77.3525 -r 1 -k 2000
 }
 
-function findapks() {
-  find . -name *.apk
+function findapks {
+  find $1 -name "*.apk"
 }
 
-function datime(){
-  date '+%A %W %Y %X'
-}
-
-function weather(){
+function weather {
     if (( `tput cols` < 125 )); then # 125 is min size for correct display
         [ -z "$1" ] && curl "wttr.in/New%20Delhi?0" || curl "wttr.in/$1?0"
     else
@@ -77,45 +144,8 @@ function weather(){
     fi
 }
 
-function findandopen() {
-  for file in $(find . -name $1); do nano $file;done
-}
-
-function tg() {
-  curl -F chat_id="$TG_ID" -F document="@$1" "https://api.telegram.org/bot$TG_BOT_ID/sendDocument"
-}
-
-function p2d() {
-  file=$1
-  real_file=`echo $file  | awk -F "/" '{print $NF }'`
-  out=$(adb shell find /system -name $real_file)
-  if [ "$out" = "" ]
-  then
-    return "Bad file"
-  else
-    echo "$file will be placed at $out"
-    adb push $file $out
-  fi
-}
-
-function tab2space() {
-  find .  ! -type d -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
-}
-
-function d2u() {
-  for file in $(find . -type f -not -iwholename '.git'); do dos2unix $file;done
-}
-
-function whitespace() {
-  find . -type f -not -iwholename '.git' -print0 | xargs -0 perl -pi -e 's/ +$//'
-}
-
-function list() {
-  for i in `cat functions.bash | sed -n "/^[[:blank:]]*function /s/function \([a-z_]*\).*/\1/p" | sort | uniq`; do echo $i ;done
-}
-
-function reboot() {
-  echo "Do you really wanna reboot?"
+function reboot {
+  echo "Do you really wanna reboot??"
   read confirmation
   case "${confirmation}" in
       'y'|'Y')
@@ -126,30 +156,58 @@ function reboot() {
   esac
 }
 
-function setalarm() {
-  args=$(echo $@ | sed s/://)
-  [[ ${#args} -eq 4 ]] && echo $args > ~/.current_alarm || echo -e "${CL_BOLD}${CL_RED} Error setting alarm ${CL_RST}"
+function what {
+  grep $1 ~/.bash_aliases
 }
 
-function getalarm() {
-  if [[ -f ~/.current_alarm ]]; then
-    if [[ $(date +"%H%M") -ge $(cat ~/.current_alarm) ]]; then
-    echo -e "${CL_INV}${CL_RED}ALARM${CL_RST}${CL_BLUE}"
-    else
-    echo $(date +"%H:%M")
-    fi
-  else
-    echo $(date +"%H:%M")
-  fi
+
+# Android + Kernel stuff
+function p2d {
+  adb shell mount system
+  final_path=$(adb shell find /system -name $1)
+  echo "${final_path}"
+  adb push $1 "${final_path}"
+  adb shell umount system
 }
 
-function remalarm() {
-  rm ~/.current_alarm 2>/dev/null
+function pushcaesium {
+  adb push zips/$1 /sdcard/Caesium/
+}
+
+function kgrep {
+    find . -name .git -prune -o -path ./out -prune -o -regextype posix-egrep \
+        -iregex '(.*\/Makefile|.*\/Kconfig|.*\/oneplus3_defconfig|.*\/caesium_defconfig)' -type f \
+        -exec grep --color -n "$@" {} +
+}
+
+function kerndeploy {
+    git push msf;gfpush;git push gerrit HEAD:refs/heads/XOS-7.1
+}
+
+
+# File sanitization
+function tab2space {
+  find .  ! -type d -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
+}
+
+function d2u {
+  for file in $(find . -type f -not -iwholename '.git'); do dos2unix $file;done
+}
+
+function whitespace {
+  find . -type f -not -iwholename '.git' -print0 | xargs -0 perl -pi -e 's/ +$//'
+}
+
+
+# List all functions
+function list {
+    local all_functions=""
+    for function in $(cat ~/bin/functions.bash |sed -n "/^[[:blank:]]*function /s/function \([a-z_]*\).*/\1/p" | sort | uniq);do
+        all_functions="${all_functions} ${function}"
+    done
+    echo "${all_functions}"
 }
 
 alias disp="xrandr --output eDP1 --rotate $1"
-alias wttr=weather
-source ~/bin/bash_completion.d/*
 alias reload="source ~/.bashrc"
-alias funcs="nano ~/functions.bash"
-PS1='\[\033[01;34m\]( \u@\h | $(getalarm) ) \[\033[01;32m\]\w\[\033[01;31m\] $(__git_ps1 "(%s) ")\[\033[39m\]\$\[\033[0m\] '
+alias funcs="nano ~/bin/functions.bash"
