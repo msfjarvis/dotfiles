@@ -223,3 +223,5 @@ function list {
 alias disp="xrandr --output eDP1 --rotate $1"
 alias reload="source ~/.bashrc"
 alias funcs="nano ~/bin/functions.bash"
+alias lazybash="cp ~/bin/functions.bash ~/git-repos/lazy-bash/"
+[[ -d ~/.secretcreds ]] && source ~/.secrecreds
