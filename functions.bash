@@ -39,19 +39,21 @@ function hook {
 }
 
 function gpush {
-  [[ $1 ]] || BRANCH="XOS-8.0" && BRANCH="$1"
+  BRANCH="${1}"
+  [[ "${BRANCH}" == "" ]] && BRANCH="XOS-8.0"
   echo "${GERRIT_PASSWD}"
   if [ "$2" ]; then
-  git push gerrit HEAD:refs/for/$BRANCH/"$2"
+  git push gerrit HEAD:refs/for/"${BRANCH}"/"$2"
   else
-  git push gerrit HEAD:refs/for/$BRANCH
+  git push gerrit HEAD:refs/for/"${BRANCH}"
   fi
 }
 
 function gfpush {
-   [[ $1 ]] || BRANCH="XOS-8.0" && BRANCH="$1"
+  BRANCH="${1}"
+  [[ "${BRANCH}" == "" ]] && BRANCH="XOS-8.0"
   echo "${GERRIT_PASSWD}"
-  git push gerrit HEAD:refs/heads/$BRANCH
+  git push gerrit HEAD:refs/heads/"${BRANCH}"
 }
 
 function gffpush {
@@ -72,7 +74,7 @@ function createXos {
 function httpsremote {
     all_remotes=$(git remote -v | grep push)
     for remote in "${all_remotes}"; do
-        https_url=$(echo $remote | awk '{print $2}' | sed 's/:/\//g' | sed 's/git@/https:\/\//g')
+        https_url=$(echo "${remote}" | awk '{print $2}' | sed 's/:/\//g' | sed 's/git@/https:\/\//g')
         https_url=$(echo "${https_url}" | sed 's/https:\/\//https:\/\/MSF-Jarvis@/g')
         remote_name=$(echo "${remote}" | awk '{print $1}')
         git remote remove "${remote_name}"
@@ -191,7 +193,7 @@ function kgrep {
 }
 
 function kerndeploy {
-    git push msf;gfpush;git push gerrit HEAD:refs/heads/XOS-7.1
+    git push msf;gfpush;gfpush XOS-7.1
 }
 
 
