@@ -103,22 +103,24 @@ function transfer {
 }
 
 function makeapk {
+    params=("$@")
+    echo "${params}"
     [[ -f "build.gradle" ]] || echo -e "${CL_RED} No build.gradle present, dimwit ${CL_RST}" || return 1
     local gradlecommand=""
     local buildtype=""
-    case "$1" in
+    case "${params[0]}" in
          "Debug"|"debug")
              gradlecommand="assembleDebug"
-             buildtype="debug"
+             buildtype="Debug"
              ;;
          "Release"|"release")
              gradlecommand="assembleRelease"
-             buildtype="release"
+             buildtype="Release"
              ;;
     esac
     [[ "${buildtype}" == "" || "${gradlecommand}" == "" ]] && echo -e "${CL_RED} No build type specified ${CL_RST}" && return 1
-    [[ "$@" == "*install*" ]] && gradlecommand="${gradlecommand} install"
-    rm -rfv app/build/outputs/apk/"${buildtype}"/*
+    [[ "${params[1]}" == "install" ]] && gradlecommand="install${buildtype}"
+    rm -rfv app/build/outputs/apk/"${buildtype,,}"/*
     ./gradlew "${gradlecommand}"
 }
 
