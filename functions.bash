@@ -102,6 +102,25 @@ function transfer {
   echo ""
 }
 
+function makeapk {
+    [[ -f "build.gradle" ]] || echo -e "${CL_RED} No build.gradle present, dimwit ${CL_RST}" || return 1
+    local gradlecommand=""
+    local buildtype=""
+    case "$1" in
+         "Debug"|"debug")
+             gradlecommand="assembleDebug"
+             buildtype="debug"
+             ;;
+         "Release"|"release")
+             gradlecommand="assembleRelease"
+             buildtype="release"
+             ;;
+    esac
+    [[ "${buildtype}" == "" || "${gradlecommand}" == "" ]] && echo -e "${CL_RED} No build type specified ${CL_RST}" && return 1
+    [[ "$@" == "*install*" ]] && gradlecommand="${gradlecommand} install"
+    rm -rfv app/build/outputs/apk/"${buildtype}"/*
+    ./gradlew "${gradlecommand}"
+}
 
 
 # Server tooling
@@ -230,4 +249,4 @@ alias disp="xrandr --output eDP1 --rotate $1"
 alias reload="source ~/.bashrc"
 alias funcs="nano ~/bin/functions.bash"
 alias lazybash="cp ~/bin/functions.bash ~/git-repos/lazy-bash/"
-[[ -d ~/.secretcreds ]] && source ~/.secrecreds
+[[ -f "~/.secretcreds" ]] && source ~/.secretcreds
