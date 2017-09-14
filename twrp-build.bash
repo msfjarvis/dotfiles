@@ -7,7 +7,7 @@ RST="\033[0m"
 YLW="\033[01;33m"
 
 # Prints a formatted header to let the user know what's being done
-function echoText() {
+function echoText {
     echo -e ${RED}
     echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
     echo -e "==  ${1}  =="
@@ -16,7 +16,7 @@ function echoText() {
 }
 
 # Prints an error in bold red
-function reportError() {
+function reportError {
     echo -e ""
     echo -e ${RED}"${1}"${RST}
     if [[ -z ${2} ]]; then
@@ -25,7 +25,7 @@ function reportError() {
 }
 
 # Prints a warning in bold yellow
-function reportWarning() {
+function reportWarning {
     echo -e ""
     echo -e ${YLW}"${1}"${RST}
     if [[ -z ${2} ]]; then
@@ -49,42 +49,39 @@ function getCurrentVer {
     fi
 }
 
-# Stub to work around issues with issuing multiple commands in
-# oneline if blocks
-function reportError {
-    echo $@
-    exit 1
-}
-
 # Set final TWRP version
 function setVars {
     if [[ $(getCurrentVer) == "" ]]; then
         reportError "Are you sure you're building TWRP?"
     else
-        [[ $tw_version == "" ]] && tw_real_ver=$(getCurrentVer) || tw_real_ver=$(getCurrentVer)-$tw_version
+        [[ ${tw_version} == "" ]] && tw_real_ver=$(getCurrentVer) || tw_real_ver=$(getCurrentVer)-${tw_version}
     fi
 }
 
 # Move teh files
 function setupFiles {
-    if [ -f out/target/product/$device/recovery.tar ]; then
-        mv out/target/product/$device/recovery.tar twrp-$tw_real_ver-$device.tar
+    if [ -f out/target/product/${device}/recovery.tar ]; then
+        mv out/target/product/${device}/recovery.tar twrp-${tw_real_ver}-${device}.tar
+    elif [ -f out/target/product/${device}/recovery.img ]; then
+        mv out/target/product/${device}/recovery.img twrp-${tw_real_ver}-${device}.img
     else
-        mv out/target/product/$device/recovery.img twrp-$tw_real_ver-$device.img
+        reportError "Compilation failed!"
     fi
 }
 
 # Do the real build
 function build {
+    echoText "Starting compilation"
     if [[ $(isTop) == 0 ]]; then
         setVars
-        [[ $tw_version ]] && export TW_DEVICE_VERSION=$tw_version && echo "Setting version to $tw_real_ver"
+        [[ ${tw_version} ]] && export TW_DEVICE_VERSION=${tw_version} && echoText "Setting version to $tw_real_ver"
+        [[ ${device} ]] || reportError "No device specified"
         . build/envsetup.sh
-        [[ $device ]] && lunch omni_$device-eng || reportError "No device specified"
+        lunch omni_${device}-eng
         mka recoveryimage
-        [[ $? == 0 ]] && setupFiles || reportError "Compilation failed"
+        setupFiles
     else
-        echo "Script not run from top of source tree, aborting"
+        reportError "Script not run from top of source tree, aborting"
     fi
 }
 
