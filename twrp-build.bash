@@ -1,5 +1,39 @@
 #!/bin/bash
 
+# Colors
+BOLD="\033[1m"
+RED="\033[01;31m"
+RST="\033[0m"
+YLW="\033[01;33m"
+
+# Prints a formatted header to let the user know what's being done
+function echoText() {
+    echo -e ${RED}
+    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
+    echo -e "==  ${1}  =="
+    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
+    echo -e ${RST}
+}
+
+# Prints an error in bold red
+function reportError() {
+    echo -e ""
+    echo -e ${RED}"${1}"${RST}
+    if [[ -z ${2} ]]; then
+        echo -e ""
+    fi
+}
+
+# Prints a warning in bold yellow
+function reportWarning() {
+    echo -e ""
+    echo -e ${YLW}"${1}"${RST}
+    if [[ -z ${2} ]]; then
+        echo -e ""
+    fi
+}
+
+
 # Checks if the script is being run from the top of the
 # Android source tree
 function isTop {
