@@ -22,6 +22,7 @@ function reportError {
     if [[ -z ${2} ]]; then
         echo -e ""
     fi
+    exit 1
 }
 
 # Prints a warning in bold yellow
@@ -37,12 +38,12 @@ function reportWarning {
 # Checks if the script is being run from the top of the
 # Android source tree
 function isTop {
-    [[ -d .repo/manifests/ ]] && echo 0 || echo 255
+    [[ -d .repo/manifests/ ]] || reportError "Not building inside an AOSP tree"
 }
 
 # Get the current TWRP version. Slightly hacky but works
 function getCurrentVer {
-    if [[ $(isTop) == 0 ]]; then
+    if [[ $(grep TW_MAIN_VERSION_STR bootable/recovery/variables.h) ]]; then
         echo $(grep TW_MAIN_VERSION_STR bootable/recovery/variables.h | grep -v TW_DEVICE_VERSION | awk '{print $3}' | sed 's/"//g')
     else
         echo ""
@@ -51,11 +52,18 @@ function getCurrentVer {
 
 # Set final TWRP version
 function setVars {
+    unset TW_DEVICE_VERSION
     if [[ $(getCurrentVer) == "" ]]; then
         reportError "Are you sure you're building TWRP?"
     else
         [[ ${tw_version} == "" ]] && tw_real_ver=$(getCurrentVer) || tw_real_ver=$(getCurrentVer)-${tw_version}
     fi
+    export TW_DEVICE_VERSION=${tw_version} && echoText "Setting version to ${tw_real_ver}"
+
+}
+
+function checkDevice {
+    [[ $(find device -name vendorsetup.sh | cut -d / -f 3) == ${device} ]] || reportError "No sources for device \"${device}\" could be found"
 }
 
 # Move teh files
@@ -71,18 +79,15 @@ function setupFiles {
 
 # Do the real build
 function build {
+    isTop
+    checkDevice
     echoText "Starting compilation"
-    if [[ $(isTop) == 0 ]]; then
-        setVars
-        [[ ${tw_version} ]] && export TW_DEVICE_VERSION=${tw_version} && echoText "Setting version to $tw_real_ver"
-        [[ ${device} ]] || reportError "No device specified"
-        . build/envsetup.sh
-        lunch omni_${device}-eng
-        mka recoveryimage
-        setupFiles
-    else
-        reportError "Script not run from top of source tree, aborting"
-    fi
+    setVars
+    . build/envsetup.sh
+    lunch omni_${device}-eng
+    mka clean
+    mka recoveryimage
+    setupFiles
 }
 
 device=$1
