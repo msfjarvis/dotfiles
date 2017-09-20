@@ -43,8 +43,8 @@ function isTop {
 
 # Get the current TWRP version. Slightly hacky but works
 function getCurrentVer {
-    if [[ $(grep TW_MAIN_VERSION_STR bootable/recovery/variables.h) ]]; then
-        echo $(grep TW_MAIN_VERSION_STR bootable/recovery/variables.h | grep -v TW_DEVICE_VERSION | awk '{print $3}' | sed 's/"//g')
+    if [[ $(grep -Fx TW_MAIN_VERSION_STR bootable/recovery/variables.h) ]]; then
+        echo $(grep -Fx TW_MAIN_VERSION_STR bootable/recovery/variables.h | grep -v TW_DEVICE_VERSION | awk '{print $3}' | sed 's/"//g')
     else
         echo ""
     fi
