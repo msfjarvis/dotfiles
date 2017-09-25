@@ -40,7 +40,7 @@ function hook {
 
 function gpush {
   BRANCH="${1}"
-  [[ "${BRANCH}" == "" ]] && BRANCH="XOS-8.0"
+  [[ "${BRANCH}" == "" ]] && BRANCH="XOS-7.1"
   echo "${GERRIT_PASSWD}"
   if [ "$2" ]; then
   git push gerrit HEAD:refs/for/"${BRANCH}"/"$2"
@@ -51,7 +51,7 @@ function gpush {
 
 function gfpush {
   BRANCH="${1}"
-  [[ "${BRANCH}" == "" ]] && BRANCH="XOS-8.0"
+  [[ "${BRANCH}" == "" ]] && BRANCH="XOS-7.1"
   echo "${GERRIT_PASSWD}"
   git push gerrit HEAD:refs/heads/"${BRANCH}"
 }
@@ -59,7 +59,7 @@ function gfpush {
 function gffpush {
   echo "${GERRIT_PASSWD}"
   BRANCH="${1}"
-  [[ "${BRANCH}" == "" ]] && BRANCH="XOS-8.0"
+  [[ "${BRANCH}" == "" ]] && BRANCH="XOS-7.1"
   git push --force gerrit HEAD:refs/heads/"${BRANCH}"
 }
 
