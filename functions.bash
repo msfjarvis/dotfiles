@@ -148,16 +148,22 @@ function tg {
 function tgm {
     chat_id="${2}"
     [[ "${2}" == "" ]] && chat_id="${MSF_TG_ID}"
-    curl -F chat_id="${chat_id}" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" 1>/dev/null 2>/dev/null
+    curl -F chat_id="${chat_id}" -F parse_mode="markdown" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" 1>/dev/null 2>/dev/null
 }
 
 function pushcaesiumtg {
-    tg "zips/${1}" "${OP3_TESTERS_CHAT_ID}"
-    tgm "Changelog:
+    file=$(transfer "zips/${1}")
+    tgm "[${1}](${file})" "${OP3_TESTERS_CHAT_ID}"
+    tgm "[${1}](${file})" "${OP3_CAESIUM_CHAT_ID}"
+    changelog=${2}
+    if [[ ${changelog} != "" ]]; then
+        tgm "Changelog:
 
-    $(git -C ~/git-repos/halogenOS/oneplus3 shortlog msf/XOS-8.0..HEAD)
+${changelog}" "${OP3_TESTERS_CHAT_ID}"
+        tgm "Changelog:
 
-    ${2}" "${OP3_TESTERS_CHAT_ID}"
+${changelog}" "${OP3_CAESIUM_CHAT_ID}"
+    fi
 }
 
 function pushthemetg {
