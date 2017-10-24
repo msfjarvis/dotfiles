@@ -2,7 +2,8 @@
 
 export USE_CCACHE=1
 export CCACHE_DIR=~/.ccache/
-export GERRIT_USER=MSF_Jarvis
+export GERRIT_USER=MSF-Jarvis
+export  ANDROID_PLATFORM_ROOT="/home/msfjarvis/xossrc"
 CL_BOLD="\033[1m"
 CL_INV="\033[7m"
 CL_RED="\033[01;31m"
@@ -12,7 +13,6 @@ CL_BLUE="\033[01;34m"
 
 # Gerrit tooling
 function getPlatformPath {
-  ANDROID_PLATFORM_ROOT="~/xossrc"
   PWD="$(pwd)"
   original_string="$PWD"
   string_to_replace="$ANDROID_PLATFORM_ROOT"
@@ -21,16 +21,33 @@ function getPlatformPath {
 }
 
 function xg {
-  original_string="$(getPlatformPath)"
-  original_string=$(echo  $original_string | cut -d "/" -f5-)
-  strepl="_"
-  resultstr="android_${original_string//\//$strepl}"
+    if ! git rev-parse --git-dir &> /dev/null
+    then
+        echo ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
+        return 1
+    fi
+    PROJECT=$(pwd -P | sed -e "s#$ANDROID_PLATFORM_ROOT\/##; s#-caf.*##; s#\/default##")
+    if (echo $PROJECT | grep -qv "^device")
+    then
+        PFX="android_"
+    fi
+    git remote remove gerrit 2>/dev/null
+    git remote add gerrit https://$GERRIT_USER@review.halogenos.org/a/$PFX$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
+}
 
-  git remote remove gerrit 2>/dev/null
-  git remote add gerrit https://$GERRIT_USER@review.halogenos.org/a/$resultstr
-#  git remote add gerrit ssh://$GERRIT_USER@review.halogenos.org:29418/$resultstr
-  hook_path=$(git rev-parse --git-dir)/hook/commit-msg
-  [[ -f $hook_path ]] || hook
+function gz {
+    if ! git rev-parse --git-dir &> /dev/null
+    then
+        echo ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
+        return 1
+    fi
+    PROJECT=$(pwd -P | sed -e "s#$ANDROID_PLATFORM_ROOT\/##; s#-caf.*##; s#\/default##")
+    if (echo $PROJECT | grep -qv "^device")
+    then
+        PFX="GZOSP/"
+    fi
+    git remote remove gzgerrit 2>/dev/null
+    git remote add gzgerrit ssh://$GERRIT_USER@review.gzospgzr.com:29418/$PFX$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
 }
 
 function hook {
@@ -39,19 +56,27 @@ function hook {
 }
 
 function gpush {
-  BRANCH="${1}"
-  [[ "${BRANCH}" == "" ]] && BRANCH="XOS-7.1"
+  BRANCH="XOS-8.0"
   echo "${GERRIT_PASSWD}"
-  if [ "$2" ]; then
-  git push gerrit HEAD:refs/for/"${BRANCH}"/"$2"
+  if [ "$1" ]; then
+  git push gerrit HEAD:refs/for/"${BRANCH}"/"$1"
   else
   git push gerrit HEAD:refs/for/"${BRANCH}"
   fi
 }
 
+function gzpush {
+  BRANCH="8.0"
+  if [ "$1" ]; then
+  git push gzgerrit HEAD:refs/for/"${BRANCH}"/"$1"
+  else
+  git push gzgerrit HEAD:refs/for/"${BRANCH}"
+  fi
+}
+
 function gfpush {
   BRANCH="${1}"
-  [[ "${BRANCH}" == "" ]] && BRANCH="XOS-7.1"
+  [[ "${BRANCH}" == "" ]] && BRANCH="XOS-8.0"
   echo "${GERRIT_PASSWD}"
   git push gerrit HEAD:refs/heads/"${BRANCH}"
 }
@@ -59,7 +84,7 @@ function gfpush {
 function gffpush {
   echo "${GERRIT_PASSWD}"
   BRANCH="${1}"
-  [[ "${BRANCH}" == "" ]] && BRANCH="XOS-7.1"
+  [[ "${BRANCH}" == "" ]] && BRANCH="XOS-8.0"
   git push --force gerrit HEAD:refs/heads/"${BRANCH}"
 }
 
@@ -103,7 +128,6 @@ function transfer {
 
 function makeapk {
     params=("$@")
-    echo "${params}"
     [[ -f "build.gradle" ]] || echo -e "${CL_RED} No build.gradle present, dimwit ${CL_RST}" || return 1
     local gradlecommand=""
     local buildtype=""
@@ -120,6 +144,7 @@ function makeapk {
     [[ "${buildtype}" == "" || "${gradlecommand}" == "" ]] && echo -e "${CL_RED} No build type specified ${CL_RST}" && return 1
     [[ "${params[1]}" == "install" ]] && gradlecommand="install${buildtype}"
     rm -rfv app/build/outputs/apk/"${buildtype,,}"/*
+    #./gradlew clean
     ./gradlew "${gradlecommand}"
 }
 
@@ -149,6 +174,11 @@ function tgm {
     chat_id="${2}"
     [[ "${2}" == "" ]] && chat_id="${MSF_TG_ID}"
     curl -F chat_id="${chat_id}" -F parse_mode="markdown" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" 1>/dev/null 2>/dev/null
+}
+
+function ttg {
+    file=$(transfer "zips/${1}")
+    tgm "[${1}](${file})"
 }
 
 function pushcaesiumtg {
@@ -225,7 +255,7 @@ function kgrep {
 }
 
 function kerndeploy {
-    git push msf;gfpush;gfpush XOS-7.1
+    git push msf;gfpush;gfpush XOS-8.0
 }
 
 
@@ -252,8 +282,13 @@ function list {
     echo "${all_functions}"
 }
 
+#alias fixcrowdin="for file in $(find . -name *.xml); do sed -i 's/></>\'$'\n</g' $file;done"
 alias disp="xrandr --output eDP1 --rotate $1"
 alias reload="source ~/.bashrc"
 alias funcs="nano ~/bin/functions.bash"
 alias lazybash="cp ~/bin/functions.bash ~/git-repos/lazy-bash/"
-[[ -f "~/.secretcreds" ]] && source ~/.secretcreds
+alias nano="nano -L"
+alias svg="mono svg2vd.exe --no-update-check -i"
+source ~/.secretcreds
+export PATH="~/bin:${PATH}"
+export EDITOR=nano
