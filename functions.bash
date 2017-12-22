@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-export USE_CCACHE=1
 export CCACHE_DIR=~/.ccache/
 export GERRIT_USER=MSF-Jarvis
-export  ANDROID_PLATFORM_ROOT="/home/msfjarvis/xossrc"
+export ANDROID_PLATFORM_ROOT="/home/msfjarvis/xossrc"
+export JARVISBOX_URL="https://jarvisbox.duckdns.org/caesium"
 CL_BOLD="\033[1m"
 CL_INV="\033[7m"
 CL_RED="\033[01;31m"
@@ -11,13 +11,51 @@ CL_RST="\033[0m"
 CL_YLW="\033[01;33m"
 CL_BLUE="\033[01;34m"
 
-# Gerrit tooling
-function getPlatformPath {
-  PWD="$(pwd)"
-  original_string="$PWD"
-  string_to_replace="$ANDROID_PLATFORM_ROOT"
-  result_string="${original_string//$string_to_replace}"
-  echo -n $result_string
+function echoText {
+    echo -e ${CL_RED}
+    echo -e ${CL_BOLD}
+    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
+    echo -e "==  ${1}  =="
+    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
+    echo -e ${CL_RST}
+}
+
+function reportWarning {
+    echo -e ""
+    echo -e ${CL_YLW}"${1}"${CL_RST}
+    if [[ -z ${2} ]]; then
+        echo -e ""
+    fi
+}
+
+function cpuinfo {
+    grep -E '^model name|^cpu MHz' /proc/cpuinfo
+}
+
+function getAllCPUFreq {
+    for i in {0..3};do cat /sys/devices/system/cpu/cpu${i}/cpufreq/scaling_governor;done
+}
+
+function _setAllCPUFreq {
+    for i in {0..3};do  echo ${1} > /sys/devices/system/cpu/cpu${i}/cpufreq/scaling_governor;done
+}
+
+function _overclockAllCPUFreq {
+    for i in {0..3};do echo $(cat /sys/devices/system/cpu/cpu${i}/cpufreq/scaling_max_freq) > /sys/devices/system/cpu/cpu${i}/cpufreq/scaling_min_freq;done
+}
+
+function overclockAllCPUFreq {
+    exesudo _overclockAllCPUFreq ${@}
+}
+
+function setAllCPUFreq {
+    exesudo _setAllCPUFreq ${@}
+}
+
+function createXos {
+  PROJECT=$(pwd -P | sed -e "s#$ANDROID_PLATFORM_ROOT\/##; s#-caf.*##; s#\/default##")
+  ssh ${GERRIT_USER}@review.halogenos.org -p 29418 gerrit create-project -p All-Projects -t REBASE_IF_NECESSARY android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
+  git create halogenOS/android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
 }
 
 function xg {
@@ -27,12 +65,8 @@ function xg {
         return 1
     fi
     PROJECT=$(pwd -P | sed -e "s#$ANDROID_PLATFORM_ROOT\/##; s#-caf.*##; s#\/default##")
-    if (echo $PROJECT | grep -qv "^device")
-    then
-        PFX="android_"
-    fi
     git remote remove gerrit 2>/dev/null
-    git remote add gerrit https://$GERRIT_USER@review.halogenos.org/a/$PFX$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
+    git remote add gerrit ssh://$GERRIT_USER@review.halogenos.org:29418/android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
 }
 
 function gz {
@@ -50,14 +84,9 @@ function gz {
     git remote add gzgerrit ssh://$GERRIT_USER@review.gzospgzr.com:29418/$PFX$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
 }
 
-function hook {
-  curl -kLo `git rev-parse --git-dir`/hooks/commit-msg https://MSF_Jarvis@review.halogenos.org/tools/hooks/commit-msg
-  chmod +x `git rev-parse --git-dir`/hooks/commit-msg
-}
-
 function gpush {
+  echo ${GERRIT_PASSWD}
   BRANCH="XOS-8.0"
-  echo "${GERRIT_PASSWD}"
   if [ "$1" ]; then
   git push gerrit HEAD:refs/for/"${BRANCH}"/"$1"
   else
@@ -75,39 +104,18 @@ function gzpush {
 }
 
 function gfpush {
+  echo ${GERRIT_PASSWD}
   BRANCH="${1}"
   [[ "${BRANCH}" == "" ]] && BRANCH="XOS-8.0"
-  echo "${GERRIT_PASSWD}"
   git push gerrit HEAD:refs/heads/"${BRANCH}"
 }
 
 function gffpush {
-  echo "${GERRIT_PASSWD}"
+  echo ${GERRIT_PASSWD}
   BRANCH="${1}"
   [[ "${BRANCH}" == "" ]] && BRANCH="XOS-8.0"
   git push --force gerrit HEAD:refs/heads/"${BRANCH}"
 }
-
-function createXos {
-  original_string="$(getPlatformPath)"
-  original_string=$(echo  $original_string | cut -d "/" -f5-)
-  strepl="_"
-  resultstr="android_${original_string//\//$strepl}"
-  echo $resultstr
-  ssh ${GERRIT_USER}@review.halogenos.org -p 29418 gerrit create-project -p All-Projects -t REBASE_IF_NECESSARY $resultstr
-  git create halogenOS/${resultstr}
-}
-
-function httpsremote {
-    all_remotes=$(git remote -v | grep push)
-    for remote in "${all_remotes}"; do
-        https_url=$(echo "${remote}" | awk '{print $2}' | sed 's/:/\//g' | sed 's/git@/https:\/\//g')
-        https_url=$(echo "${https_url}" | sed 's/https:\/\//https:\/\/MSF-Jarvis@/g')
-        remote_name=$(echo "${remote}" | awk '{print $1}')
-        git remote set-url "${remote_name}" "${https_url}"
-    done
-}
-
 
 # Utility functions
 function transfer {
@@ -144,8 +152,8 @@ function makeapk {
     [[ "${buildtype}" == "" || "${gradlecommand}" == "" ]] && echo -e "${CL_RED} No build type specified ${CL_RST}" && return 1
     [[ "${params[1]}" == "install" ]] && gradlecommand="install${buildtype}"
     rm -rfv app/build/outputs/apk/"${buildtype,,}"/*
-    #./gradlew clean
-    ./gradlew "${gradlecommand}"
+    #bash gradlew clean
+    bash gradlew "${gradlecommand}"
 }
 
 
@@ -177,23 +185,27 @@ function tgm {
 }
 
 function ttg {
-    file=$(transfer "zips/${1}")
+    file=$(transfer "${1}")
     tgm "[${1}](${file})"
 }
 
+function publish {
+    rsync -avR ${1} root@jarvisbox.duckdns.org:/var/www/${2}/ --progress --verbose
+}
+
 function pushcaesiumtg {
-    file=$(transfer "zips/${1}")
-    tgm "[${1}](${file})" "${OP3_TESTERS_CHAT_ID}"
-    tgm "[${1}](${file})" "${OP3_CAESIUM_CHAT_ID}"
-    changelog=${2}
-    if [[ ${changelog} != "" ]]; then
-        tgm "Changelog:
-
-${changelog}" "${OP3_TESTERS_CHAT_ID}"
-        tgm "Changelog:
-
-${changelog}" "${OP3_CAESIUM_CHAT_ID}"
-    fi
+    file=${1}
+    type=${2}
+    case ${type} in
+        "alpha"|"beta"|"stable") ;;
+        *) echo "Invalid build type" && return ;;
+    esac
+    changelog_file=$(echo ${file} | sed 's/\.zip//')_changelog.txt
+    git shortlog msf/XOS-8.0..HEAD > ${changelog_file}
+    rsync ${changelog_file} root@jarvisbox.duckdns.org:/var/www/caesium/${type} --progress --verbose
+    rsync zips/${file} root@jarvisbox.duckdns.org:/var/www/caesium/${type} --progress --verbose
+    tgm "New [${type}](${JARVISBOX_URL}/${type}) build uploaded : [${file}](${JARVISBOX_URL}/${type}/${file})" "${OP3_CAESIUM_CHAT_ID}"
+    tgm "New [${type}](${JARVISBOX_URL}/${type}) build uploaded : [${file}](${JARVISBOX_URL}/${type}/${file})" "${OP3_JAGRAV_CHAT_ID}"
 }
 
 function pushthemetg {
@@ -230,12 +242,7 @@ function reboot {
   esac
 }
 
-function what {
-  grep $1 ~/.bash_aliases
-}
-
-
-# Android + Kernel stuff
+# Android + kernel stuff
 function p2d {
   adb shell mount system
   final_path=$(adb shell find /system -name $1)
@@ -246,6 +253,11 @@ function p2d {
 
 function pushcaesium {
   adb push zips/$1 /sdcard/Caesium/
+  adb shell twrp install /sdcard/Caesium/$1
+}
+
+function apply_patches {
+    for patch in $(cat ~/git-repos/halogenOS/stable-queue/queue-3.18/series);do git am ~/git-repos/halogenOS/stable-queue/queue-3.18/${patch};done
 }
 
 function kgrep {
@@ -254,41 +266,127 @@ function kgrep {
         -exec grep --color -n "$@" {} +
 }
 
-function kerndeploy {
-    git push msf;gfpush;gfpush XOS-8.0
-}
-
-
-# File sanitization
-function tab2space {
-  find .  ! -type d -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
-}
-
-function d2u {
-  for file in $(find . -type f -not -iwholename '.git'); do dos2unix $file;done
-}
-
-function whitespace {
-  find . -type f -not -iwholename '.git' -print0 | xargs -0 perl -pi -e 's/ +$//'
-}
-
-
-# List all functions
-function list {
-    local all_functions=""
-    for function in $(cat ~/bin/functions.bash |sed -n "/^[[:blank:]]*function /s/function \([a-z_]*\).*/\1/p" | sort | uniq);do
-        all_functions="${all_functions} ${function}"
+function flasherThingy {
+    for file in $(adb shell ls Flash-Walleye-${1}-*.img);do
+        partition=$(echo ${file} | cut -d '-' -f 5 | sed 's/\.img//')
+        reportWarning "Processing ${file}"
+        if [ ${partition} == "boot" ];then
+            reportWarning "Pulling Magisk patched boot image"
+            adb pull /sdcard/MagiskManager/patched_boot.img ${file}
+        else
+            adb pull /sdcard/Download/${file}
+        fi
     done
-    echo "${all_functions}"
+    reportWarning "Rebooting to bootloader"
+    adb reboot bootloader
+    sleep 5
+    for file in $(ls Flash-Walleye-${1}-*.img);do
+        partition=$(echo ${file} | cut -d '-' -f 5 | sed 's/\.img//')
+        fastboot flash ${partition} ${file}
+    done
+    echoText "Flashing complete, rebooting"
+    fastboot reboot
 }
 
-#alias fixcrowdin="for file in $(find . -name *.xml); do sed -i 's/></>\'$'\n</g' $file;done"
-alias disp="xrandr --output eDP1 --rotate $1"
-alias reload="source ~/.bashrc"
-alias funcs="nano ~/bin/functions.bash"
-alias lazybash="cp ~/bin/functions.bash ~/git-repos/lazy-bash/"
-alias nano="nano -L"
-alias svg="mono svg2vd.exe --no-update-check -i"
-source ~/.secretcreds
-export PATH="~/bin:${PATH}"
-export EDITOR=nano
+
+function andromeda {
+    bash ~/git-repos/andromeda_startup_scripts/Linux/start_andromeda.sh
+}
+
+function findJ {
+    ag -ia ${1} | grep java | cut -f 1 -d ':' | uniq
+}
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+# EXESUDO
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+#
+# Purpose:
+# -------------------------------------------------------------------- #
+# Execute a function with sudo
+#
+# Params:
+# -------------------------------------------------------------------- #
+# $1:   string: name of the function to be executed with sudo
+#
+# Usage:
+# -------------------------------------------------------------------- #
+# exesudo "funcname" followed by any param
+#
+# -------------------------------------------------------------------- #
+# Created 01 September 2012              Last Modified 02 September 2012
+
+function exesudo ()
+{
+    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ##
+    #
+    # LOCAL VARIABLES:
+    #
+    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ##
+
+    #
+    # I use underscores to remember it's been passed
+    local _funcname_="$1"
+
+    local params=( "$@" )               ## array containing all params passed here
+    local tmpfile="/dev/shm/$RANDOM"    ## temporary file
+    local filecontent                   ## content of the temporary file
+    local regex                         ## regular expression
+    local func                          ## function source
+
+
+    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ##
+    #
+    # MAIN CODE:
+    #
+    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ##
+
+    #
+    # WORKING ON PARAMS:
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    #
+    # Shift the first param (which is the name of the function)
+    unset params[0]              ## remove first element
+    # params=( "${params[@]}" )     ## repack array
+
+
+    #
+    # WORKING ON THE TEMPORARY FILE:
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    content="#!/bin/bash\n\n"
+
+    #
+    # Write the params array
+    content="${content}params=(\n"
+
+    regex="\s+"
+    for param in "${params[@]}"
+    do
+        if [[ "$param" =~ $regex ]]
+            then
+                content="${content}\t\"${param}\"\n"
+            else
+                content="${content}\t${param}\n"
+        fi
+    done
+
+    content="$content)\n"
+    echo -e "$content" > "$tmpfile"
+
+    #
+    # Append the function source
+    echo "#$( type "$_funcname_" )" >> "$tmpfile"
+
+    #
+    # Append the call to the function
+    echo -e "\n$_funcname_ \"\${params[@]}\"\n" >> "$tmpfile"
+
+
+    #
+    # DONE: EXECUTE THE TEMPORARY FILE WITH SUDO
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    sudo bash "$tmpfile"
+    rm "$tmpfile"
+}
