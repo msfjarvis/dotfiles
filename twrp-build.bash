@@ -43,8 +43,8 @@ function isTop {
 
 # Get the current TWRP version. Slightly hacky but works
 function getCurrentVer {
-    if [[ $(grep -Fx TW_MAIN_VERSION_STR bootable/recovery/variables.h) ]]; then
-        echo $(grep -Fx TW_MAIN_VERSION_STR bootable/recovery/variables.h | grep -v TW_DEVICE_VERSION | awk '{print $3}' | sed 's/"//g')
+    if [[ $(grep TW_MAIN_VERSION_STR bootable/recovery/variables.h) ]]; then
+        echo $(grep TW_MAIN_VERSION_STR bootable/recovery/variables.h | grep -v TW_DEVICE_VERSION | awk '{print $3}' | sed 's/"//g')
     else
         echo ""
     fi
@@ -56,14 +56,14 @@ function setVars {
     if [[ $(getCurrentVer) == "" ]]; then
         reportError "Are you sure you're building TWRP?"
     else
-        [[ ${tw_version} == "" ]] && tw_real_ver=$(getCurrentVer) || tw_real_ver=$(getCurrentVer)-${tw_version}
+        [[ ${tw_version} == "" || ${tw_version} == "clean" ]] && tw_real_ver=$(getCurrentVer) || tw_real_ver=$(getCurrentVer)-${tw_version}
     fi
     export TW_DEVICE_VERSION=${tw_version} && echoText "Setting version to ${tw_real_ver}"
 
 }
 
 function checkDevice {
-    [[ $(find device -name vendorsetup.sh | cut -d / -f 3) == ${device} ]] || reportError "No sources for device \"${device}\" could be found"
+    [[ $(find device -name vendorsetup.sh | cut -d / -f 3) =~ ${device} ]] || reportError "No sources for device \"${device}\" could be found"
 }
 
 # Move teh files
@@ -85,11 +85,16 @@ function build {
     setVars
     . build/envsetup.sh
     lunch omni_${device}-eng
-    mka clean
+    [[ ${CLEAN} ]] && mka clean
     mka recoveryimage
     setupFiles
 }
 
 device=$1
-tw_version=$2
+if [[ ${2} == clean ]]; then
+    CLEAN=true
+    tw_version=$3
+else
+    tw_version=$2
+fi
 build
