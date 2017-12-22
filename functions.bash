@@ -224,9 +224,9 @@ function findapks {
 
 function weather {
     if (( `tput cols` < 125 )); then # 125 is min size for correct display
-        [ -z "$1" ] && curl "wttr.in/New%20Delhi?0" || curl "wttr.in/$1?0"
+        [ -z "$1" ] && curl "wttr.in/Ghaziabad?0" || curl "wttr.in/~$1?0"
     else
-        [ -z "$1" ] && curl "wttr.in/New%20Delhi" || curl "wttr.in/$1"
+        [ -z "$1" ] && curl "wttr.in/Ghaziabad" || curl "wttr.in/~$1"
     fi
 }
 
@@ -267,14 +267,13 @@ function kgrep {
 }
 
 function flasherThingy {
-    for file in $(adb shell ls Flash-Walleye-${1}-*.img);do
+    for file in $(adb shell ls /sdcard/Download/Flash-Walleye-${1}-*.img);do
         partition=$(echo ${file} | cut -d '-' -f 5 | sed 's/\.img//')
-        reportWarning "Processing ${file}"
+        reportWarning "Pulling ${file}"
         if [ ${partition} == "boot" ];then
-            reportWarning "Pulling Magisk patched boot image"
-            adb pull /sdcard/MagiskManager/patched_boot.img ${file}
+            adb pull /sdcard/MagiskManager/patched_boot.img $(basename ${file})
         else
-            adb pull /sdcard/Download/${file}
+            adb pull /sdcard/Download/$(basename ${file})
         fi
     done
     reportWarning "Rebooting to bootloader"
