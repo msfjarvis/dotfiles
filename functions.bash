@@ -86,7 +86,7 @@ function gz {
 
 function gpush {
   echo ${GERRIT_PASSWD}
-  BRANCH="XOS-8.0"
+  BRANCH="XOS-8.1"
   if [ "$1" ]; then
   git push gerrit HEAD:refs/for/"${BRANCH}"/"$1"
   else
@@ -106,14 +106,14 @@ function gzpush {
 function gfpush {
   echo ${GERRIT_PASSWD}
   BRANCH="${1}"
-  [[ "${BRANCH}" == "" ]] && BRANCH="XOS-8.0"
+  [[ "${BRANCH}" == "" ]] && BRANCH="XOS-8.1"
   git push gerrit HEAD:refs/heads/"${BRANCH}"
 }
 
 function gffpush {
   echo ${GERRIT_PASSWD}
   BRANCH="${1}"
-  [[ "${BRANCH}" == "" ]] && BRANCH="XOS-8.0"
+  [[ "${BRANCH}" == "" ]] && BRANCH="XOS-8.1"
   git push --force gerrit HEAD:refs/heads/"${BRANCH}"
 }
 
