@@ -159,15 +159,15 @@ function makeapk {
 
 # Server tooling
 function startserver {
-  gcloud compute instances start --project "halogenos-msfjarvis" --zone "us-west1-c" "jarvisbox"
+  gcloud compute instances start --project "heroic-diode-189916" --zone "us-west1-c" "jarvisbox"
 }
 
 function stopserver {
-  gcloud compute instances stop --project "halogenos-msfjarvis" --zone "us-west1-c" "jarvisbox"
+  gcloud compute instances stop --project "heroic-diode-189916" --zone "us-west1-c" "jarvisbox"
 }
 
 function serverconnect {
-  gcloud compute --project "halogenos-msfjarvis" ssh --zone "us-west1-c" "jarvisbox"
+  gcloud compute --project "heroic-diode-189916" ssh --zone "us-west1-c" "jarvisbox"
 }
 
 
