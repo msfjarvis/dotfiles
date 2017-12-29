@@ -267,6 +267,7 @@ function kgrep {
 }
 
 function flasherThingy {
+    cd ~/Downloads/walleye
     for file in $(adb shell ls /sdcard/Download/Flash-Walleye-${1}-*.img);do
         partition=$(echo ${file} | cut -d '-' -f 5 | sed 's/\.img//')
         reportWarning "Pulling ${file}"
@@ -276,6 +277,7 @@ function flasherThingy {
             adb pull /sdcard/Download/$(basename ${file})
         fi
     done
+    read -n 1 -s -r -p "Press any key to continue..."
     reportWarning "Rebooting to bootloader"
     adb reboot bootloader
     sleep 5
