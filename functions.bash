@@ -193,6 +193,12 @@ function publish {
     rsync -avR ${1} root@jarvisbox.duckdns.org:/var/www/${2}/ --progress --verbose
 }
 
+function backup {
+    for folder in $(adb shell find /sdcard/ -type d -maxdepth 1);do
+        adb-sync --delete --reverse ${folder} ~/git-repos/backups/
+    done
+}
+
 function pushcaesiumtg {
     file=${1}
     type=${2}
