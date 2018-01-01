@@ -274,6 +274,11 @@ function kgrep {
 
 function flasherThingy {
     cd ~/Downloads/walleye
+    for file in $(ls Flash-Walleye-${1}-*.img);do
+        reportWarning "Nuking duplicate file ${file}"
+        rm -v ${file}
+        adb shell rm -v /sdcard/Download/${file}
+    done
     for file in $(adb shell ls /sdcard/Download/Flash-Walleye-${1}-*.img);do
         partition=$(echo ${file} | cut -d '-' -f 5 | sed 's/\.img//')
         reportWarning "Pulling ${file}"
