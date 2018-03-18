@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 export CCACHE_DIR=~/.ccache/
-export GERRIT_USER=MSF-Jarvis
+export XOS_GERRIT_USER=MSF-Jarvis
+export SUBS_GERRIT_USER=MSF_Jarvis
 export ANDROID_PLATFORM_ROOT="/home/msfjarvis/xossrc"
 export JARVISBOX_URL="https://jarvisbox.duckdns.org/caesium"
 CL_BOLD="\033[1m"
@@ -10,6 +11,11 @@ CL_RED="\033[01;31m"
 CL_RST="\033[0m"
 CL_YLW="\033[01;33m"
 CL_BLUE="\033[01;34m"
+
+function t {
+    gcc ${1} -o test
+    ./test
+}
 
 function echoText {
     echo -e ${CL_RED}
@@ -52,9 +58,17 @@ function setAllCPUFreq {
     exesudo _setAllCPUFreq ${@}
 }
 
+function gerrit {
+    ssh -p 29418 ${XOS_GERRIT_USER}@review.halogenos.org gerrit $@
+}
+
+function subsgerrit {
+    ssh -p 29418 ${SUBS_GERRIT_USER}@substratum.review gerrit $@
+}
+
 function createXos {
   PROJECT=$(pwd -P | sed -e "s#$ANDROID_PLATFORM_ROOT\/##; s#-caf.*##; s#\/default##")
-  ssh ${GERRIT_USER}@review.halogenos.org -p 29418 gerrit create-project -p All-Projects -t REBASE_IF_NECESSARY android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
+  ssh ${XOS_GERRIT_USER}@review.halogenos.org -p 29418 gerrit create-project -p All-Projects -t REBASE_IF_NECESSARY android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
   git create halogenOS/android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
 }
 
@@ -66,7 +80,13 @@ function xg {
     fi
     PROJECT=$(pwd -P | sed -e "s#$ANDROID_PLATFORM_ROOT\/##; s#-caf.*##; s#\/default##")
     git remote remove gerrit 2>/dev/null
-    git remote add gerrit ssh://$GERRIT_USER@review.halogenos.org:29418/android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
+    git remote add gerrit ssh://$XOS_GERRIT_USER@review.halogenos.org:29418/android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
+    gitdir=$(git rev-parse --git-dir); scp -p -P 29418 MSF-Jarvis@review.halogenos.org:hooks/commit-msg ${gitdir}/hooks/
+#    git remote add gerrit https://$XOS_GERRIT_USER@review.halogenos.org:29418/a/android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
+}
+
+function hook {
+    gitdir=$(git rev-parse --git-dir); scp -p -P 29418 MSF-Jarvis@review.halogenos.org:hooks/commit-msg ${gitdir}/hooks/
 }
 
 function gz {
@@ -81,7 +101,7 @@ function gz {
         PFX="GZOSP/"
     fi
     git remote remove gzgerrit 2>/dev/null
-    git remote add gzgerrit ssh://$GERRIT_USER@review.gzospgzr.com:29418/$PFX$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
+    git remote add gzgerrit ssh://$XOS_GERRIT_USER@review.gzospgzr.com:29418/$PFX$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
 }
 
 function gpush {
@@ -136,7 +156,7 @@ function transfer {
 
 function makeapk {
     params=("$@")
-    [[ -f "build.gradle" ]] || echo -e "${CL_RED} No build.gradle present, dimwit ${CL_RST}" || return 1
+    [[ ! -f "build.gradle" ]] && echo -e "${CL_RED} No build.gradle present, dimwit ${CL_RST}" && return 1
     local gradlecommand=""
     local buildtype=""
     case "${params[0]}" in
@@ -186,37 +206,20 @@ function tgm {
 
 function ttg {
     file=$(transfer "${1}")
-    tgm "[${1}](${file})"
+    tgm "[$(basename ${1})](${file})" "${2}"
 }
 
-function publish {
-    rsync -avR ${1} root@jarvisbox.duckdns.org:/var/www/${2}/ --progress --verbose
+function send {
+    tgm "[$(echo ${1} | cut -d / -f 5)](${1})"
 }
 
 function backup {
-    for folder in $(adb shell find /sdcard/ -type d -maxdepth 1);do
-        adb-sync --delete --reverse ${folder} ~/git-repos/backups/
-    done
-}
-
-function pushcaesiumtg {
-    file=${1}
-    type=${2}
-    case ${type} in
-        "alpha"|"beta"|"stable") ;;
-        *) echo "Invalid build type" && return ;;
-    esac
-    changelog_file=$(echo ${file} | sed 's/\.zip//')_changelog.txt
-    git shortlog msf/XOS-8.0..HEAD > ${changelog_file}
-    rsync ${changelog_file} root@jarvisbox.duckdns.org:/var/www/caesium/${type} --progress --verbose
-    rsync zips/${file} root@jarvisbox.duckdns.org:/var/www/caesium/${type} --progress --verbose
-    tgm "New [${type}](${JARVISBOX_URL}/${type}) build uploaded : [${file}](${JARVISBOX_URL}/${type}/${file})" "${OP3_CAESIUM_CHAT_ID}"
-    tgm "New [${type}](${JARVISBOX_URL}/${type}) build uploaded : [${file}](${JARVISBOX_URL}/${type}/${file})" "${OP3_JAGRAV_CHAT_ID}"
+    adb-sync --reverse /sdcard/* ~/git-repos/backups/
 }
 
 function pushthemetg {
     tg "${1}" "${THEME_TESTERS_CHAT_ID}"
-    tgm "${2}" "${THEME_TESTERS_CHAT_ID}"
+    tgm "${3}" "${THEME_TESTERS_CHAT_ID}"
 }
 
 # Random utility tooling
@@ -268,31 +271,26 @@ function apply_patches {
 
 function kgrep {
     find . -name .git -prune -o -path ./out -prune -o -regextype posix-egrep \
-        -iregex '(.*\/Makefile|.*\/Kconfig|.*\/oneplus3_defconfig|.*\/caesium_defconfig)' -type f \
+        -iregex '(.*\/Makefile|.*\/Kconfig|.*\/oneplus3_defconfig|.*\/caesium_defconfig|.*\/wahoo_defconfig)' -type f \
         -exec grep --color -n "$@" {} +
 }
 
 function flasherThingy {
     cd ~/Downloads/walleye
-    for file in $(ls Flash-Walleye-${1}-*.img);do
-        reportWarning "Nuking duplicate file ${file}"
-        rm -v ${file}
-        adb shell rm -v /sdcard/Download/${file}
-    done
-    for file in $(adb shell ls /sdcard/Download/Flash-Walleye-${1}-*.img);do
+    for file in $(adb shell ls /sdcard/Download/FlashKernel-Walleye-${1}-*.img);do
         partition=$(echo ${file} | cut -d '-' -f 5 | sed 's/\.img//')
         reportWarning "Pulling ${file}"
-        if [ ${partition} == "boot" ];then
+        if [[ ${partition} == "boot" ]];then
             adb pull /sdcard/MagiskManager/patched_boot.img $(basename ${file})
         else
-            adb pull /sdcard/Download/$(basename ${file})
+         adb pull /sdcard/Download/$(basename ${file})
         fi
     done
     read -n 1 -s -r -p "Press any key to continue..."
     reportWarning "Rebooting to bootloader"
     adb reboot bootloader
     sleep 5
-    for file in $(ls Flash-Walleye-${1}-*.img);do
+    for file in $(ls FlashKernel-Walleye-${1}-*.img);do
         partition=$(echo ${file} | cut -d '-' -f 5 | sed 's/\.img//')
         fastboot flash ${partition} ${file}
     done
@@ -305,8 +303,26 @@ function andromeda {
     bash ~/git-repos/andromeda_startup_scripts/Linux/start_andromeda.sh
 }
 
+function pajeet {
+    adb shell settings put global emergency_affordance_needed 0
+}
+
 function findJ {
     ag -ia ${1} | grep java | cut -f 1 -d ':' | uniq
+}
+
+function fao {
+    [ -z ${1} ] && echoText "Supply a filename moron" && return
+    [ -z ${2} ] && nano -L $(find -name ${1}.*) || nano -L $(find ${2} -name ${1}.*)
+}
+
+function adbp {
+    package=$(echo $(adb shell pm path ${1}) | cut -d : -f2)
+    if [[ ${package} != "package" ]]; then
+        adb pull ${package} ${1}.apk
+    else
+        echoText "Package not found"
+    fi
 }
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
