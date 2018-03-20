@@ -19,16 +19,16 @@ TREES="rr:oreo|aosip:oreo-mr1|xos:XOS-8.1"
 # Caesium Kernel Details
 KERNEL_NAME="Caesium"
 INCREMENTAL_VERSION="AtheistApricot"
-export LOCALVERSION=-${INCREMENTAL_VERSION}
+LOCALVERSION=-${INCREMENTAL_VERSION}
 GIT_HASH=$(git rev-parse --short HEAD)
 DEVICE="oneplus3"
 FINAL_VER="${KERNEL_NAME}-${DEVICE}-${INCREMENTAL_VERSION}"
 
 # Vars
-export ARCH=arm64
-export SUBARCH=arm64
-export KBUILD_BUILD_USER=MSF
-export KBUILD_BUILD_HOST=jarvisbox
+ARCH=arm64
+SUBARCH=arm64
+KBUILD_BUILD_USER=MSF
+KBUILD_BUILD_HOST=jarvisbox
 
 # Paths
 WORKING_DIR=$(pwd)
@@ -37,83 +37,9 @@ TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/aarch64-linux-gnu/"
 REPACK_DIR="${ANYKERNEL_DIR}"
 OUT_DIR="${WORKING_DIR}/out/"
 ZIP_MOVE="${WORKING_DIR}/zips/"
-MAKE="make O=${OUT_DIR}"
+MAKE="make O=${OUT_DIR} ARCH=${ARCH} SUBARCH=${SUBARCH}"
 
 ## Functions
-
-# Send a markdown encoded Telegram message
-function tgm {
-    chat_id="${2}"
-    [[ "${2}" == "" ]] && chat_id="${MSF_TG_ID}"
-    curl -F chat_id="${chat_id}" -F parse_mode="markdown" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" 1>/dev/null 2>/dev/null
-}
-
-# Pushes a local file to my webserver
-function publish {
-    rsync -avR ${1} root@download.msfjarvis.website:/var/www/${2}/ --progress --verbose
-}
-
-# The meat of the telegram notifications workflow
-function pushcaesiumtg {
-    FILE=${1}
-    TYPE=${2}
-    case ${TYPE} in
-        "alpha"|"beta"|"stable"|"test") ;;
-        *) echo "Invalid build type" && return ;;
-    esac
-    CHANGELOG_FILE=$(echo ${FILE} | sed 's/\.zip//')_changelog.txt
-    LAST_TAG=$(git tag --sort=-taggerdate -l | head -n1)
-    RANGE=${LAST_TAG}..HEAD
-    CHANGELOG=zips/${CHANGELOG_FILE}
-    git log ${RANGE} | git shortlog ${RANGE} > ${CHANGELOG}
-    git diff --find-renames --stat --summary ${RANGE} >> ${CHANGELOG}
-    cd zips;md5sum ${FILE} > ${FILE}.md5
-    for item in ${FILE} ${CHANGELOG_FILE} ${FILE}.md5; do
-        publish ${item} caesium/${TYPE}
-    done
-    cd ../
-    if [ ${TYPE} == "stable" ]; then
-      release ${FILE}
-    fi
-    if [ ${TYPE} != "test" ]; then
-      tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})" "${OP3_CAESIUM_CHAT_ID}"
-    fi
-    tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})" "${OP3_JAGRAV_CHAT_ID}"
-}
-
-# Called by pushcaesiumtg on release builds
-function release {
-    FILE=${1}
-    TAG=$(echo ${FILE} | cut -d / -f 2 | cut -d '-' -f 3 | sed 's/\.zip//')
-    git -C ../AnyKernel2/ push origin HEAD:8.1.x-caesium
-    git -C ../AnyKernel2/ tag -a ${TAG}
-    git -C ../AnyKernel2/ push origin ${TAG}
-    git push origin HEAD:XOS-8.1
-    git tag -a ${TAG}
-    git push origin ${TAG}
-    git branch --set-upstream-to=origin/XOS-8.1
-    hub release create ${TAG} -a zips/${FILE} -a zips/${CHANGELOG_FILE} -a zips/${FILE}.md5
-    git branch --set-upstream-to=staging/XOS-8.1
-    update_source_trees ${TAG}
-}
-
-# Takes a predefined list of trees to merge into and
-# programmatically updates them to the latest tag.
-function update_source_trees {
-    local TAG=${1}
-    IFS='|' read -r -a MERGEABLES <<< "${TREES}"
-    for ITEM in "${MERGEABLES[@]}"; do
-        IFS=':' read -r -a ELEMENTS <<< "${ITEM}"
-        if [ ${#ELEMENTS[@]} -ge 2 ]; then
-            REMOTE=${ELEMENTS[0]}
-            BRANCH=${ELEMENTS[1]}
-            git fetch ${REMOTE} ${BRANCH} --no-tags
-            git checkout ${BRANCH}
-            git merge ${TAG}
-            git push ${REMOTE} ${BRANCH}
-        fi
-    done
-}
 
 # Prints a formatted header to let the user know what's being done
 function echoText {
@@ -154,11 +80,84 @@ function reportSuccess {
     echo -e ${CL_RST}
 }
 
-# Find a the correct CROSS_COMPILE candidate
+# Send a markdown encoded Telegram message
+function tgm {
+    chat_id="${2}"
+    [[ "${2}" == "" ]] && chat_id="${MSF_TG_ID}"
+    curl -F chat_id="${chat_id}" -F parse_mode="markdown" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" 1>/dev/null 2>/dev/null
+}
+
+# Pushes a local file to my webserver
+function publish {
+    rsync -avR ${1} root@download.msfjarvis.website:/var/www/${2}/ --progress --verbose
+}
+
+# The meat of the telegram notifications workflow
+function pushcaesiumtg {
+    local FILE=${1}
+    local TYPE=${2}
+    local FINAL_VER=$(echo ${FILE} | sed 's/\.zip//')
+    case ${TYPE} in
+        "alpha"|"beta"|"stable"|"test") ;;
+        *) echo "Invalid build type" && return ;;
+    esac
+    local CHANGELOG_FILE=${FINAL_VER}_changelog.txt
+    local LAST_TAG=$(git tag --sort=-taggerdate -l | head -n1)
+    local RANGE=${LAST_TAG}..HEAD
+    echo "${FINAL_VER}" > zips/${CHANGELOG_FILE}
+    git log ${RANGE} | git shortlog ${RANGE} >> zips/${CHANGELOG_FILE}
+    git diff --find-renames --stat --summary ${RANGE} >> zips/${CHANGELOG_FILE}
+    cd zips;md5sum ${FILE} > ${FILE}.md5
+    for item in ${FILE} ${CHANGELOG_FILE} ${FILE}.md5; do
+        publish ${item} caesium/${TYPE}
+    done
+    cd ../
+    if [ ${TYPE} == "stable" ]; then
+      release ${FILE}
+    fi
+    if [ ${TYPE} != "test" ]; then
+      tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})" "${OP3_CAESIUM_CHAT_ID}"
+    fi
+    tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})" "${OP3_JAGRAV_CHAT_ID}"
+}
+
+# Called by pushcaesiumtg on release builds
+function release {
+    local FILE=${1}
+    local TAG=$(echo ${FILE} | cut -d / -f 2 | cut -d '-' -f 3 | sed 's/\.zip//')
+    git -C ../AnyKernel2/ push origin HEAD:8.1.x-caesium
+    git -C ../AnyKernel2/ tag ${TAG}
+    git -C ../AnyKernel2/ push origin ${TAG}
+    git push origin HEAD:XOS-8.1
+    git tag -a ${TAG}
+    git push origin ${TAG}
+    git branch --set-upstream-to=origin/XOS-8.1
+    hub release create ${TAG} -a zips/${FILE} -a zips/${CHANGELOG_FILE} -a zips/${FILE}.md5
+    git branch --set-upstream-to=staging/XOS-8.1
+    update_source_trees ${TAG}
+}
+
+# Takes a predefined list of trees to merge into and
+# programmatically updates them to the latest tag.
+function update_source_trees {
+    local TAG=${1}
+    IFS='|' read -r -a MERGEABLES <<< "${TREES}"
+    for ITEM in "${MERGEABLES[@]}"; do
+        IFS=':' read -r -a ELEMENTS <<< "${ITEM}"
+        if [ ${#ELEMENTS[@]} -ge 2 ]; then
+            REMOTE=${ELEMENTS[0]}
+            BRANCH=${ELEMENTS[1]}
+            git fetch ${REMOTE} ${BRANCH} --no-tags
+            git checkout ${BRANCH}
+            git merge ${TAG}
+            git push ${REMOTE} ${BRANCH}
+        fi
+    done
+}
+
+# Find the correct CROSS_COMPILE candidate
 function check_toolchain() {
-
     export TC="$(find ${TOOLCHAIN_DIR}/bin -type f -name *-gcc)";
-
         if [[ -f "${TC}" ]]; then
                 export CROSS_COMPILE="$(command -v ccache) ${TOOLCHAIN_DIR}/bin/$(echo ${TC} | awk -F '/' '{print $NF'} | sed -e 's/gcc//')";
                 echoText "$Using toolchain: $(${CROSS_COMPILE}gcc --version | head -1)"
@@ -183,7 +182,7 @@ function make_kernel {
           ${MAKE} ${KERNEL} ${THREAD} |& ag "error:|warning"
       fi
   fi
-  BUILT_KERNEL=out/arch/${ARCH}/boot/${KERNEL}
+  local BUILT_KERNEL=out/arch/${ARCH}/boot/${KERNEL}
   [ -f "${BUILT_KERNEL}" ] && cp -r ${BUILT_KERNEL} ${REPACK_DIR} && return 0 || reportError "Kernel compilation failed"
 }
 
