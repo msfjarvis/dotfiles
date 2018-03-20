@@ -14,6 +14,7 @@ CL_BLUE="\033[01;34m"
 THREAD="-j$(nproc --all)"
 DEFCONFIG="caesium_defconfig"
 KERNEL="Image.gz-dtb"
+TREES="rr:oreo|aosip:oreo-mr1|xos:XOS-8.1"
 
 # Caesium Kernel Details
 KERNEL_NAME="Caesium"
@@ -40,7 +41,14 @@ MAKE="make O=${OUT_DIR}"
 
 ## Functions
 
-# Pushed a local file to my webserver
+# Send a markdown encoded Telegram message
+function tgm {
+    chat_id="${2}"
+    [[ "${2}" == "" ]] && chat_id="${MSF_TG_ID}"
+    curl -F chat_id="${chat_id}" -F parse_mode="markdown" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" 1>/dev/null 2>/dev/null
+}
+
+# Pushes a local file to my webserver
 function publish {
     rsync -avR ${1} root@download.msfjarvis.website:/var/www/${2}/ --progress --verbose
 }
@@ -83,16 +91,28 @@ function release {
     git push origin HEAD:XOS-8.1
     git tag -a ${TAG}
     git push origin ${TAG}
-    git checkout oreo-mr1
-    git merge ${TAG}
-    git push aosip oreo-mr1
-    git checkout oreo
-    git merge ${TAG}
-    git push rr oreo
-    git checkout XOS-8.1
     git branch --set-upstream-to=origin/XOS-8.1
     hub release create ${TAG} -a zips/${FILE} -a zips/${CHANGELOG_FILE} -a zips/${FILE}.md5
     git branch --set-upstream-to=staging/XOS-8.1
+    update_source_trees ${TAG}
+}
+
+# Takes a predefined list of trees to merge into and
+# programmatically updates them to the latest tag.
+function update_source_trees {
+    local TAG=${1}
+    IFS='|' read -r -a MERGEABLES <<< "${TREES}"
+    for ITEM in "${MERGEABLES[@]}"; do
+        IFS=':' read -r -a ELEMENTS <<< "${ITEM}"
+        if [ ${#ELEMENTS[@]} -ge 2 ]; then
+            REMOTE=${ELEMENTS[0]}
+            BRANCH=${ELEMENTS[1]}
+            git fetch ${REMOTE} ${BRANCH} --no-tags
+            git checkout ${BRANCH}
+            git merge ${TAG}
+            git push ${REMOTE} ${BRANCH}
+        fi
+    done
 }
 
 # Prints a formatted header to let the user know what's being done
