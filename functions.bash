@@ -34,6 +34,30 @@ function reportWarning {
     fi
 }
 
+function update_template {
+    local WORKING_DIR=$(pwd)
+    local TEMPLATE_DIR="${WORKING_DIR}/../template"
+    local PACKAGE_NAME=$(grep 'applicationId ' app/build.gradle | cut -d '"' -f 2)
+    local PACKAGE_DIR=$(echo ${PACKAGE_NAME} | sed 's/\./\//g')
+    local PACKAGE_JNI_NAME=$(echo ${PACKAGE_NAME} | sed 's/\./_/g')
+    local TEMPLATE_HASH=$(git -C ${TEMPLATE_DIR} rev-parse --short HEAD)
+    reportWarning "Updating Kotlin bits"
+    cp -R ${TEMPLATE_DIR}/app/src/main/kotlin/substratum/theme/template/* ${WORKING_DIR}/app/src/main/kotlin/${PACKAGE_DIR}
+    sed -i "s#substratum\.theme\.template#${PACKAGE_NAME}#g" ${WORKING_DIR}/app/src/main/kotlin/${PACKAGE_DIR}/*
+    reportWarning "Updating jni"
+    cp -R ${TEMPLATE_DIR}/app/src/main/jni ${WORKING_DIR}/app/src/main
+    sed -i "s#substratum_theme_template#${PACKAGE_JNI_NAME}#g" ${WORKING_DIR}/app/src/main/jni/*
+    reportWarning "Updating AndroidManifest"
+    cp ${TEMPLATE_DIR}/app/src/main/AndroidManifest.xml ${WORKING_DIR}/app/src/main/AndroidManifest.xml
+    sed -i "s#substratum\.theme\.template#${PACKAGE_NAME}#g" ${WORKING_DIR}/app/src/main/AndroidManifest.xml
+    reportWarning "Updating Gradle wrapper files"
+    cp ${TEMPLATE_DIR}/build.gradle ${WORKING_DIR}
+#    cp ${TEMPLATE_DIR}/app/build.gradle ${WORKING_DIR}/app/build.gradle
+    cp -R ${TEMPLATE_DIR}/gradle/ ${WORKING_DIR}
+    sed -i "s#substratum\.theme\.template#${PACKAGE_NAME}#g" ${WORKING_DIR}/app/build.gradle
+    git commit -am "[CHANGEME]: Update to upstream revision ${TEMPLATE_HASH}" --edit
+}
+
 function cpuinfo {
     grep -E '^model name|^cpu MHz' /proc/cpuinfo
 }
