@@ -1,38 +1,12 @@
 #!/usr/bin/env bash
 
 export CCACHE_DIR=~/.ccache/
-export XOS_GERRIT_USER=MSF-Jarvis
-export SUBS_GERRIT_USER=MSF_Jarvis
-export ANDROID_PLATFORM_ROOT="/home/msfjarvis/xossrc"
-export JARVISBOX_URL="https://jarvisbox.duckdns.org/caesium"
-CL_BOLD="\033[1m"
-CL_INV="\033[7m"
-CL_RED="\033[01;31m"
-CL_RST="\033[0m"
-CL_YLW="\033[01;33m"
-CL_BLUE="\033[01;34m"
+XOS_GERRIT_USER=MSF-Jarvis
+SUBS_GERRIT_USER=MSF_Jarvis
+ANDROID_PLATFORM_ROOT="/home/msfjarvis/xossrc"
 
-function t {
-    gcc ${1} -o test
-    ./test
-}
-
-function echoText {
-    echo -e ${CL_RED}
-    echo -e ${CL_BOLD}
-    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
-    echo -e "==  ${1}  =="
-    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
-    echo -e ${CL_RST}
-}
-
-function reportWarning {
-    echo -e ""
-    echo -e ${CL_YLW}"${1}"${CL_RST}
-    if [[ -z ${2} ]]; then
-        echo -e ""
-    fi
-}
+# Source the common tooling
+source common
 
 function update_template {
     local WORKING_DIR=$(pwd)
@@ -62,26 +36,6 @@ function cpuinfo {
     grep -E '^model name|^cpu MHz' /proc/cpuinfo
 }
 
-function getAllCPUFreq {
-    for i in {0..3};do cat /sys/devices/system/cpu/cpu${i}/cpufreq/scaling_governor;done
-}
-
-function _setAllCPUFreq {
-    for i in {0..3};do  echo ${1} > /sys/devices/system/cpu/cpu${i}/cpufreq/scaling_governor;done
-}
-
-function _overclockAllCPUFreq {
-    for i in {0..3};do echo $(cat /sys/devices/system/cpu/cpu${i}/cpufreq/scaling_max_freq) > /sys/devices/system/cpu/cpu${i}/cpufreq/scaling_min_freq;done
-}
-
-function overclockAllCPUFreq {
-    exesudo _overclockAllCPUFreq ${@}
-}
-
-function setAllCPUFreq {
-    exesudo _setAllCPUFreq ${@}
-}
-
 function gerrit {
     ssh -p 29418 ${XOS_GERRIT_USER}@review.halogenos.org gerrit $@
 }
@@ -91,32 +45,34 @@ function subsgerrit {
 }
 
 function createXos {
-  PROJECT=$(pwd -P | sed -e "s#$ANDROID_PLATFORM_ROOT\/##; s#-caf.*##; s#\/default##")
-  ssh ${XOS_GERRIT_USER}@review.halogenos.org -p 29418 gerrit create-project -p All-Projects -t REBASE_IF_NECESSARY android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
-  git create halogenOS/android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
-}
-
-function xg {
-    if ! git rev-parse --git-dir &> /dev/null
-    then
-        echo ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
-        return 1
-    fi
-    PROJECT=$(pwd -P | sed -e "s#$ANDROID_PLATFORM_ROOT\/##; s#-caf.*##; s#\/default##")
-    git remote remove gerrit 2>/dev/null
-    git remote add gerrit ssh://$XOS_GERRIT_USER@review.halogenos.org:29418/android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
-    gitdir=$(git rev-parse --git-dir); scp -p -P 29418 MSF-Jarvis@review.halogenos.org:hooks/commit-msg ${gitdir}/hooks/
-#    git remote add gerrit https://$XOS_GERRIT_USER@review.halogenos.org:29418/a/android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
+  PROJECT=$(pwd -P | sed -e "s#$ANDROID_PLATFORM_ROOT/##; s#-caf.*##; s#\/default##; s#/#_#g#")
+  ssh ${XOS_GERRIT_USER}@review.halogenos.org -p 29418 \
+      gerrit create-project -p All-Projects -t REBASE_IF_NECESSARY \
+      android_${PROJECT}
+  git create halogenOS/android_${PROJECT}
 }
 
 function hook {
     gitdir=$(git rev-parse --git-dir); scp -p -P 29418 MSF-Jarvis@review.halogenos.org:hooks/commit-msg ${gitdir}/hooks/
 }
 
+function xg {
+    if ! git rev-parse --git-dir &> /dev/null
+    then
+        reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
+        return 1
+    fi
+    PROJECT=$(pwd -P | sed -e "s#$ANDROID_PLATFORM_ROOT\/##; s#-caf.*##; s#\/default##")
+    git remote remove gerrit 2>/dev/null
+    git remote add gerrit ssh://$XOS_GERRIT_USER@review.halogenos.org:29418/android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
+    hook
+#    git remote add gerrit https://$XOS_GERRIT_USER@review.halogenos.org:29418/a/android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
+}
+
 function gz {
     if ! git rev-parse --git-dir &> /dev/null
     then
-        echo ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
+        reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
         return 1
     fi
     PROJECT=$(pwd -P | sed -e "s#$ANDROID_PLATFORM_ROOT\/##; s#-caf.*##; s#\/default##")
@@ -129,7 +85,6 @@ function gz {
 }
 
 function gpush {
-  echo ${GERRIT_PASSWD}
   BRANCH="XOS-8.1"
   if [ "$1" ]; then
   git push gerrit HEAD:refs/for/"${BRANCH}"/"$1"
@@ -139,7 +94,7 @@ function gpush {
 }
 
 function gzpush {
-  BRANCH="8.0"
+  BRANCH="8.1"
   if [ "$1" ]; then
   git push gzgerrit HEAD:refs/for/"${BRANCH}"/"$1"
   else
@@ -148,39 +103,20 @@ function gzpush {
 }
 
 function gfpush {
-  echo ${GERRIT_PASSWD}
   BRANCH="${1}"
   [[ "${BRANCH}" == "" ]] && BRANCH="XOS-8.1"
   git push gerrit HEAD:refs/heads/"${BRANCH}"
 }
 
 function gffpush {
-  echo ${GERRIT_PASSWD}
   BRANCH="${1}"
   [[ "${BRANCH}" == "" ]] && BRANCH="XOS-8.1"
   git push --force gerrit HEAD:refs/heads/"${BRANCH}"
 }
 
-# Utility functions
-function transfer {
-  if [ $# -eq 0 ]
-    then echo "No arguments specified. Usage:
-    echo transfer /tmp/test.md
-    cat /tmp/test.md | transfer test.md"
-    return 1
-  fi
-  tmpfile=$( mktemp -t transferXXX )
-  if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
-  curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile
-  else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile
-  fi; cat $tmpfile
-  rm -f $tmpfile
-  echo ""
-}
-
 function makeapk {
     params=("$@")
-    [[ ! -f "build.gradle" ]] && echo -e "${CL_RED} No build.gradle present, dimwit ${CL_RST}" && return 1
+    [[ ! -f "build.gradle" ]] && reportError "No build.gradle present, dimwit" && return 1
     local gradlecommand=""
     local buildtype=""
     case "${params[0]}" in
@@ -193,10 +129,9 @@ function makeapk {
              buildtype="Release"
              ;;
     esac
-    [[ "${buildtype}" == "" || "${gradlecommand}" == "" ]] && echo -e "${CL_RED} No build type specified ${CL_RST}" && return 1
+    [[ "${buildtype}" == "" || "${gradlecommand}" == "" ]] && reportError "No build type specified" && return 1
     [[ "${params[1]}" == "install" ]] && gradlecommand="install${buildtype}"
     rm -rfv app/build/outputs/apk/"${buildtype,,}"/*
-    #bash gradlew clean
     bash gradlew "${gradlecommand}"
 }
 
@@ -214,36 +149,13 @@ function serverconnect {
   gcloud compute --project "heroic-diode-189916" ssh --zone "us-west1-c" "jarvisbox"
 }
 
-
-# Telegram stuff
-function tg {
-    chat_id="${2}"
-    [[ "${2}" == "" ]] && chat_id="${MSF_TG_ID}"
-    curl -F chat_id="${chat_id}" -F document="@${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendDocument" 1>/dev/null 2>/dev/null
-}
-
-function tgm {
-    chat_id="${2}"
-    [[ "${2}" == "" ]] && chat_id="${MSF_TG_ID}"
-    curl -F chat_id="${chat_id}" -F parse_mode="markdown" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" 1>/dev/null 2>/dev/null
-}
-
-function ttg {
-    file=$(transfer "${1}")
-    tgm "[$(basename ${1})](${file})" "${2}"
-}
-
-function send {
-    tgm "[$(echo ${1} | cut -d / -f 5)](${1})"
-}
-
 function backup {
     adb-sync --reverse /sdcard/* ~/git-repos/backups/
 }
 
 function pushthemetg {
     tg "${1}" "${THEME_TESTERS_CHAT_ID}"
-    tgm "${3}" "${THEME_TESTERS_CHAT_ID}"
+    tgm "${2}" "${THEME_TESTERS_CHAT_ID}"
 }
 
 # Random utility tooling
@@ -282,15 +194,6 @@ function p2d {
   echo "${final_path}"
   adb push $1 "${final_path}"
   adb shell umount system
-}
-
-function pushcaesium {
-  adb push zips/$1 /sdcard/Caesium/
-  adb shell twrp install /sdcard/Caesium/$1
-}
-
-function apply_patches {
-    for patch in $(cat ~/git-repos/halogenOS/stable-queue/queue-3.18/series);do git am ~/git-repos/halogenOS/stable-queue/queue-3.18/${patch};done
 }
 
 function kgrep {

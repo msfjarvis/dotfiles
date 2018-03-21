@@ -1,14 +1,7 @@
 #!/bin/bash
 
-# Bash colors
-CL_GRN='\033[01;32m'
-CL_BOLD="\033[1m"
-CL_INV="\033[7m"
-CL_RED="\033[01;31m"
-CL_RST="\033[0m"
-CL_YLW="\033[01;33m"
-CL_BLUE="\033[01;34m"
-
+# Source common functions
+source common
 
 # Resources
 THREAD="-j$(nproc --all)"
@@ -40,58 +33,12 @@ ZIP_MOVE="${WORKING_DIR}/zips/"
 
 ## Functions
 
-# Prints a formatted header to let the user know what's being done
-function echoText {
-    echo -e ${CL_RED}
-    echo -e ${CL_BOLD}
-    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
-    echo -e "==  ${1}  =="
-    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
-    echo -e ${CL_RST}
-}
-
-# Prints an error in bold red
-function reportError {
-    echo -e ""
-    echo -e ${CL_RED}"${1}"${CL_RST}
-    if [[ -z ${2} ]]; then
-        echo -e ""
-    fi
-    exit 1
-}
-
-# Prints a warning in bold yellow
-function reportWarning {
-    echo -e ""
-    echo -e ${CL_YLW}"${1}"${CL_RST}
-    if [[ -z ${2} ]]; then
-        echo -e ""
-    fi
-}
-
-# Prints the success banner
-function reportSuccess {
-    echo -e ${CL_GRN}
-    echo -e ${CL_BOLD}
-    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
-    echo -e "==  ${1}  =="
-    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
-    echo -e ${CL_RST}
-}
-
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper {
     make O=${OUT_DIR} \
         ARCH=${ARCH} SUBARCH=${SUBARCH} \
         KBUILD_BUILD_USER=${USER} \
         KBUILD_BUILD_HOST=${HOST} $@
-}
-
-# Send a markdown encoded Telegram message
-function tgm {
-    chat_id="${2}"
-    [[ "${2}" == "" ]] && chat_id="${MSF_TG_ID}"
-    curl -F chat_id="${chat_id}" -F parse_mode="markdown" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" 1>/dev/null 2>/dev/null
 }
 
 # Pushes a local file to my webserver

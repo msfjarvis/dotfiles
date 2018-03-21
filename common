@@ -1,0 +1,84 @@
+#!/bin/bash
+
+CL_BOLD="\033[1m"
+CL_INV="\033[7m"
+CL_RED="\033[01;31m"
+CL_RST="\033[0m"
+CL_YLW="\033[01;33m"
+CL_BLUE="\033[01;34m"
+
+# Prints a formatted header to let the user know what's being done
+function echoText {
+    echo -e ${CL_RED}
+    echo -e ${CL_BOLD}
+    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
+    echo -e "==  ${1}  =="
+    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
+    echo -e ${CL_RST}
+}
+
+# Prints an error in bold red
+function reportError {
+    echo -e ""
+    echo -e ${CL_RED}"${1}"${CL_RST}
+    if [[ -z ${2} ]]; then
+        echo -e ""
+    fi
+    exit 1
+}
+
+# Prints a warning in bold yellow
+function reportWarning {
+    echo -e ""
+    echo -e ${CL_YLW}"${1}"${CL_RST}
+    if [[ -z ${2} ]]; then
+        echo -e ""
+    fi
+}
+
+# Prints the success banner
+function reportSuccess {
+    echo -e ${CL_GRN}
+    echo -e ${CL_BOLD}
+    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
+    echo -e "==  ${1}  =="
+    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
+    echo -e ${CL_RST}
+}
+
+# Upload a file to transfer.sh
+function transfer {
+  if [ $# -eq 0 ]
+    then echo "No arguments specified. Usage:
+    echo transfer /tmp/test.md
+    cat /tmp/test.md | transfer test.md"
+    return 1
+  fi
+  tmpfile=$( mktemp -t transferXXX )
+  if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
+  curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile
+  else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile
+  fi; cat $tmpfile
+  rm -f $tmpfile
+  echo ""
+}
+
+# Send a markdown encoded Telegram message
+function tgm {
+    chat_id="${2}"
+    [[ "${2}" == "" ]] && chat_id="${MSF_TG_ID}"
+    curl -F chat_id="${chat_id}" -F parse_mode="markdown" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" 1>/dev/null 2>/dev/null
+}
+
+# Upload a file to Telegram
+function tg {
+    chat_id="${2}"
+    [[ "${2}" == "" ]] && chat_id="${MSF_TG_ID}"
+    curl -F chat_id="${chat_id}" -F document="@${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendDocument" 1>/dev/null 2>/dev/null
+}
+
+# Upload a file to transfer.sh, and send the link to telegram
+function ttg {
+    file=$(transfer "${1}")
+    tgm "[$(basename ${1})](${file})" "${2}"
+}
