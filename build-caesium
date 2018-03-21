@@ -18,7 +18,7 @@ TREES="rr:oreo|aosip:oreo-mr1|xos:XOS-8.1"
 
 # Caesium Kernel Details
 KERNEL_NAME="Caesium"
-INCREMENTAL_VERSION="AtheistApricot"
+INCREMENTAL_VERSION="${CAESIUM_VERSION}"
 LOCALVERSION=-${INCREMENTAL_VERSION}
 GIT_HASH=$(git rev-parse --short HEAD)
 DEVICE="oneplus3"
