@@ -245,7 +245,7 @@ function fao {
 
 function adbp {
     package=$(echo $(adb shell pm path ${1}) | cut -d : -f2)
-    if [[ ${package} != "package" ]]; then
+    if [[ ${package} != "" ]]; then
         adb pull ${package} ${1}.apk
     else
         echoText "Package not found"
