@@ -8,7 +8,7 @@ function build {
     . build/envsetup.sh
     pick_and_reset
     tgm "Build started."
-    [ ${CLEAN} == "true" ] && make clean
+    [[ ${CLEAN} == "true" ]] && make clean
     breakfast ${TARGET_DEVICE}
     build full XOS_${TARGET_DEVICE}-userdebug noclean
     [ -f ${OUT}/${XOS_VERSION}.zip ] && upload || tgm "Build failed." && return 1
@@ -29,7 +29,7 @@ function upload {
 }
 
 function init_if_needed {
-    [ -d .repo/ ] && return
+    [[ -d .repo/ ]] && return
     repo init -u git://github.com/halogenOS/android_manifest -b XOS-8.1
     repo sync -c --no-tags -f build/make external/xos
     . build/envsetup.sh
@@ -37,10 +37,11 @@ function init_if_needed {
 }
 
 function pick_and_reset {
-  [ ${RESET} == "true" ] && reporeset 2>/dev/null
-  temp=$(echo ${REPOPICK_TASKS} | sed s/\n//)
-  if [ ${TEMP} != "" ]; then
-    for TASK in ${REPOPICK_TASKS}; do
+  [[ ${RESET} == "true" ]] && reporeset
+  if [[ ${REPOPICK_TASKS} != "" ]]; then
+    IFS=$'\n' read -r -a REPOPICKS <<< "${REPOPICK_TASKS}"
+    for TASK in "${REPOPICKS[@]}"; do
+      echo ${TASK}
       repopick $(echo ${TASK} | sed 's#,# #g')
     done
   fi
@@ -49,32 +50,30 @@ function pick_and_reset {
 function notify {
     tgm "Building for device : ${TARGET_DEVICE}"
     sleep 0.5
-    [ ${CLEAN} == "true" ] && tgm "Building clean" || tgm "Not building clean"
+    [[ ${CLEAN} == "true" ]] && tgm "Building clean" || tgm "Not building clean"
     sleep 0.5
     TEMP=$(echo ${REPOPICK_TASKS} | sed s/\n//)
-    [ ${TEMP} != "" ] && tgm "repopick tasks : ${REPOPICK_TASKS}" || tgm "No repopicks"
-}
-
-function get_opts {
-    while getopts ":ct" opt; do
-      case $opt in
-        c)
-          export CLEAN=true
-          ;;
-        t)
-          TARGET_DEVICE=${OPTARG}
-          ;;
-        \?)
-          echo "Invalid option: -${OPTARG}" >&2
-          ;;
-      esac
-    done
-    REPOPICK_TASKS=$(cat repopicks.txt)
+    [[ ${TEMP} != "" ]] && tgm "repopick tasks : ${REPOPICK_TASKS}" || tgm "No repopicks"
 }
 
 mkdir -p ${HOME}/xossrc
 cd ${HOME}/xossrc
-get_opts
+
+while getopts ":ct:" opt; do
+  case $opt in
+     c)
+      export CLEAN=true
+      ;;
+     t)
+      TARGET_DEVICE=${OPTARG}
+      ;;
+     \?)
+      echo "Invalid option: -${OPTARG}" >&2
+      ;;
+   esac
+done
+REPOPICK_TASKS=$(cat repopicks.txt)
+
 init_if_needed
 notify
 build
