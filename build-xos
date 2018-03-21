@@ -41,7 +41,7 @@ function pick_and_reset {
   temp=$(echo ${REPOPICK_TASKS} | sed s/\n//)
   if [ ${TEMP} != "" ]; then
     for TASK in ${REPOPICK_TASKS}; do
-      repopick ${TASK}
+      repopick $(echo ${TASK} | sed 's#,# #g')
     done
   fi
 }
@@ -51,7 +51,7 @@ function notify {
     sleep 0.5
     [ ${CLEAN} == "true" ] && tgm "Building clean" || tgm "Not building clean"
     sleep 0.5
-    temp=$(echo ${REPOPICK_TASKS} | sed s/\n//)
+    TEMP=$(echo ${REPOPICK_TASKS} | sed s/\n//)
     [ ${TEMP} != "" ] && tgm "repopick tasks : ${REPOPICK_TASKS}" || tgm "No repopicks"
 }
 
