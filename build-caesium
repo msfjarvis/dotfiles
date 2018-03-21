@@ -27,8 +27,8 @@ FINAL_VER="${KERNEL_NAME}-${DEVICE}-${INCREMENTAL_VERSION}"
 # Vars
 ARCH=arm64
 SUBARCH=arm64
-KBUILD_BUILD_USER=MSF
-KBUILD_BUILD_HOST=jarvisbox
+USER=MSF
+HOST=jarvisbox
 
 # Paths
 WORKING_DIR=$(pwd)
@@ -37,7 +37,6 @@ TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/aarch64-linux-gnu/"
 REPACK_DIR="${ANYKERNEL_DIR}"
 OUT_DIR="${WORKING_DIR}/out/"
 ZIP_MOVE="${WORKING_DIR}/zips/"
-MAKE="make O=${OUT_DIR} ARCH=${ARCH} SUBARCH=${SUBARCH}"
 
 ## Functions
 
@@ -78,6 +77,14 @@ function reportSuccess {
     echo -e "==  ${1}  =="
     echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
     echo -e ${CL_RST}
+}
+
+# Wrapper function around make to ensure all the variables go through
+function make_wrapper {
+    make O=${OUT_DIR} \
+        ARCH=${ARCH} SUBARCH=${SUBARCH} \
+        KBUILD_BUILD_USER=${USER} \
+        KBUILD_BUILD_HOST=${HOST} $@
 }
 
 # Send a markdown encoded Telegram message
@@ -171,15 +178,15 @@ function make_kernel {
   make_defconfig
   if [ ${MODULE} ]; then
       if [ ${VERBOSE} ]; then
-          ${MAKE} ${MODULE} ${THREAD}
+          make_wrapper ${MODULE} ${THREAD}
       else
-          ${MAKE} ${MODULE} ${THREAD} |& ag "error:|warning"
+          make_wrapper ${MODULE} ${THREAD} |& ag "error:|warning"
       fi
   else
       if [ ${VERBOSE} ]; then
-          ${MAKE} ${KERNEL} ${THREAD}
+          make_wrapper ${KERNEL} ${THREAD}
       else
-          ${MAKE} ${KERNEL} ${THREAD} |& ag "error:|warning"
+          make_wrapper ${KERNEL} ${THREAD} |& ag "error:|warning"
       fi
   fi
   local BUILT_KERNEL=out/arch/${ARCH}/boot/${KERNEL}
@@ -189,8 +196,8 @@ function make_kernel {
 # Called by make_kernel, used to trap defconfig regen events
 function make_defconfig {
   [ ${CLEAN} ] && rm -rf ${OUT_DIR}
-  ${MAKE} ${DEFCONFIG} ${THREAD} 1>/dev/null 2>/dev/null
-  ${MAKE} savedefconfig ${THREAD} 1>/dev/null 2>/dev/null
+  make_wrapper ${DEFCONFIG} ${THREAD} 1>/dev/null 2>/dev/null
+  make_wrapper savedefconfig ${THREAD} 1>/dev/null 2>/dev/null
   [ ${REGEN_DEFCONFIG} ] && cp ${OUT_DIR}/defconfig arch/${ARCH}/configs/${DEFCONFIG} && echoText "Regenerated defconfig successfully" && exit 1
 }
 
