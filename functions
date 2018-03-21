@@ -5,8 +5,9 @@ XOS_GERRIT_USER=MSF-Jarvis
 SUBS_GERRIT_USER=MSF_Jarvis
 ANDROID_PLATFORM_ROOT="/home/msfjarvis/xossrc"
 
-# Source the common tooling
-source common
+# Source common functions
+SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+source ${SCRIPT_DIR}/common
 
 function update_template {
     local WORKING_DIR=$(pwd)

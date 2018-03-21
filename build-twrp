@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# Source common stuff
-source common
+# Source common functions
+SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+source ${SCRIPT_DIR}/common
 
 # Checks if the script is being run from the top of the
 # Android source tree

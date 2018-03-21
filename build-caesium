@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Source common functions
-source common
+SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+source ${SCRIPT_DIR}/common
 
 # Resources
 THREAD="-j$(nproc --all)"

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Source common tooling
-source common
-
+# Source common functions
+SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+source ${SCRIPT_DIR}/common
 
 function build {
     . build/envsetup.sh
