@@ -1,0 +1,80 @@
+#!/bin/bash
+
+# Source common tooling
+source common
+
+
+function build {
+    . build/envsetup.sh
+    pick_and_reset
+    tgm "Build started."
+    [ ${CLEAN} == "true" ] && make clean
+    breakfast ${TARGET_DEVICE}
+    build full XOS_${TARGET_DEVICE}-userdebug noclean
+    [ -f ${OUT}/${XOS_VERSION}.zip ] && upload || tgm "Build failed." && return 1
+}
+
+function upload {
+    cd $OUT
+    FILE=${XOS_VERSION}.zip
+    ZIP_SIZE_MB=$(du -h ${FILE} | awk '{print $1}' | sed s/M//)
+    tgm "Uploading the zip ${FILE}"
+    tgm "zip size ${ZIP_SIZE_MB} MB"
+    upload_duration=$(bc <<< '${ZIP_SIZE_MB}/24') # assuming 24mBps as a consistent upload speed
+    tgm "Estimated upload duration: ${upload_duration} minutes"
+    gdrive_upload_id=$(gdrive upload ${FILE} |  cut -d ' ' -f 4)
+    build_url="https://drive.google.com/uc?id=${gdrive_upload_id}&export=download"
+    tgm "[${XOS_VERSION}.zip]($build_url) uploaded"
+    cd ${ANDROID_BUILD_TOP}
+}
+
+function init_if_needed {
+    [ -d .repo/ ] && return
+    repo init -u git://github.com/halogenOS/android_manifest -b XOS-8.1
+    repo sync -c --no-tags -f build/make external/xos
+    . build/envsetup.sh
+    reposync turbo
+}
+
+function pick_and_reset {
+  [ ${RESET} == "true" ] && reporeset 2>/dev/null
+  temp=$(echo ${REPOPICK_TASKS} | sed s/\n//)
+  if [ ${TEMP} != "" ]; then
+    for TASK in ${REPOPICK_TASKS}; do
+      repopick ${TASK}
+    done
+  fi
+}
+
+function notify {
+    tgm "Building for device : ${TARGET_DEVICE}"
+    sleep 0.5
+    [ ${CLEAN} == "true" ] && tgm "Building clean" || tgm "Not building clean"
+    sleep 0.5
+    temp=$(echo ${REPOPICK_TASKS} | sed s/\n//)
+    [ ${TEMP} != "" ] && tgm "repopick tasks : ${REPOPICK_TASKS}" || tgm "No repopicks"
+}
+
+function get_opts {
+    while getopts ":ct" opt; do
+      case $opt in
+        c)
+          export CLEAN=true
+          ;;
+        t)
+          TARGET_DEVICE=${OPTARG}
+          ;;
+        \?)
+          echo "Invalid option: -${OPTARG}" >&2
+          ;;
+      esac
+    done
+    REPOPICK_TASKS=$(cat repopicks.txt)
+}
+
+mkdir -p ${HOME}/xossrc
+cd ${HOME}/xossrc
+get_opts
+init_if_needed
+notify
+build
