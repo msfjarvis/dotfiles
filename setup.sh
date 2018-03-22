@@ -3,7 +3,7 @@
 SCRIPT_DIR="$(cd "$( dirname $( readlink -f "${BASH_SOURCE[0]}" ) )" && pwd)"
 source ${SCRIPT_DIR}/common
 
-declare -a SCRIPTS=("build-xos" "build-caesium" "build-twrp")
+declare -a SCRIPTS=("build-xos" "build-caesium" "build-twrp" "hastebin")
 
 mkdir -p ~/bin/
 
