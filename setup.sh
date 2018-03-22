@@ -8,6 +8,7 @@ declare -a SCRIPTS=("build-xos" "build-caesium" "build-twrp" "hastebin")
 mkdir -p ~/bin/
 
 for SCRIPT in ${SCRIPTS[@]};do
+    rm -rf ~/bin/${SCRIPT}
     ln -s ${SCRIPT_DIR}/${SCRIPT} ~/bin/${SCRIPT}
 done
 
