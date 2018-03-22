@@ -16,3 +16,9 @@ if [[ ! $(echo $PATH) =~ /home/$(whoami)/bin ]]; then
     reportWarning "~/bin is not in PATH, appending the export to bashrc"
     echo $'\nexport PATH=~/bin:$PATH' >> ~/.bashrc
 fi
+
+if ! grep -q "source ${SCRIPT_DIR}/functions" ~/.bashrc; then
+    reportWarning "functions is not sourced in the bashrc, appending"
+    echo $'\n' >> ~/.bashrc # Never assume with people like me who don't leave newlines
+    echo "source ${SCRIPT_DIR}/functions" >> ~/.bashrc
+fi
