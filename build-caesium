@@ -39,7 +39,8 @@ function make_wrapper {
     make O=${OUT_DIR} \
         ARCH=${ARCH} SUBARCH=${SUBARCH} \
         KBUILD_BUILD_USER=${USER} \
-        KBUILD_BUILD_HOST=${HOST} $@
+        KBUILD_BUILD_HOST=${HOST} \
+        LOCALVERSION=${LOCALVERSION} $@
 }
 
 # Pushes a local file to my webserver
