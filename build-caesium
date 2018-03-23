@@ -5,7 +5,6 @@ SCRIPT_DIR="$(cd "$( dirname $( readlink -f "${BASH_SOURCE[0]}" ) )" && pwd)"
 source ${SCRIPT_DIR}/common
 
 # Resources
-THREAD="-j$(nproc --all)"
 DEFCONFIG="caesium_defconfig"
 KERNEL="Image.gz-dtb"
 TREES="rr:oreo|aosip:oreo-mr1"
@@ -40,7 +39,8 @@ function make_wrapper {
         ARCH=${ARCH} SUBARCH=${SUBARCH} \
         KBUILD_BUILD_USER=${USER} \
         KBUILD_BUILD_HOST=${HOST} \
-        LOCALVERSION=${LOCALVERSION} $@
+        LOCALVERSION=${LOCALVERSION} \
+        -j$(nproc --all) $@
 }
 
 # Pushes a local file to my webserver
@@ -128,15 +128,15 @@ function make_kernel {
   make_defconfig
   if [ ${MODULE} ]; then
       if [ ${VERBOSE} ]; then
-          make_wrapper ${MODULE} ${THREAD}
+          make_wrapper ${MODULE}
       else
-          make_wrapper ${MODULE} ${THREAD} |& ag "error:|warning"
+          make_wrapper ${MODULE} |& ag "error:|warning"
       fi
   else
       if [ ${VERBOSE} ]; then
-          make_wrapper ${KERNEL} ${THREAD}
+          make_wrapper ${KERNEL}
       else
-          make_wrapper ${KERNEL} ${THREAD} |& ag "error:|warning"
+          make_wrapper ${KERNEL} |& ag "error:|warning"
       fi
   fi
   local BUILT_KERNEL=out/arch/${ARCH}/boot/${KERNEL}
@@ -146,8 +146,8 @@ function make_kernel {
 # Called by make_kernel, used to trap defconfig regen events
 function make_defconfig {
   [ ${CLEAN} ] && rm -rf ${OUT_DIR}
-  make_wrapper ${DEFCONFIG} ${THREAD} 1>/dev/null 2>/dev/null
-  make_wrapper savedefconfig ${THREAD} 1>/dev/null 2>/dev/null
+  make_wrapper ${DEFCONFIG} 1>/dev/null 2>/dev/null
+  make_wrapper savedefconfig 1>/dev/null 2>/dev/null
   [ ${REGEN_DEFCONFIG} ] && cp ${OUT_DIR}/defconfig arch/${ARCH}/configs/${DEFCONFIG} && echoText "Regenerated defconfig successfully" && exit 1
 }
 
