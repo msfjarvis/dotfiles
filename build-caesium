@@ -108,6 +108,7 @@ function update_source_trees {
             git push ${REMOTE} ${BRANCH}
         fi
     done
+    git checkout XOS-8.1
 }
 
 # Find the correct CROSS_COMPILE candidate
