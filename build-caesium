@@ -45,7 +45,7 @@ function make_wrapper {
 
 # Pushes a local file to my webserver
 function publish {
-    rsync -avR ${1} root@download.msfjarvis.website:/var/www/${2}/ --progress --verbose
+    rsync -avR ${1} caddy@download.msfjarvis.website:/var/www/${2}/ --progress --verbose
 }
 
 # The meat of the telegram notifications workflow
