@@ -8,7 +8,7 @@ source ${SCRIPT_DIR}/common
 THREAD="-j$(nproc --all)"
 DEFCONFIG="caesium_defconfig"
 KERNEL="Image.gz-dtb"
-TREES="rr:oreo|aosip:oreo-mr1|xos:XOS-8.1"
+TREES="rr:oreo|aosip:oreo-mr1"
 
 # Caesium Kernel Details
 KERNEL_NAME="Caesium"
