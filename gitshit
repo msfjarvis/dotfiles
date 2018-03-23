@@ -1,0 +1,92 @@
+#!/bin/bash
+
+XOS_GERRIT_USER=MSF-Jarvis
+SUBS_GERRIT_USER=MSF_Jarvis
+ANDROID_PLATFORM_ROOT="/home/msfjarvis/xossrc"
+DEFAULT_XOS_BRANCH="XOS-8.1"
+
+function hook {
+    gitdir=$(git rev-parse --git-dir); scp -p -P 29418 ${XOS_GERRIT_USER}@review.halogenos.org:hooks/commit-msg ${gitdir}/hooks/
+}
+
+function gerrit {
+    ssh -p 29418 ${XOS_GERRIT_USER}@review.halogenos.org gerrit $@
+}
+
+function subsgerrit {
+    ssh -p 29418 ${SUBS_GERRIT_USER}@substratum.review gerrit $@
+}
+
+function gpush {
+    declare -a PARAMS=("$@")
+    local BRANCH=${DEFAULT_XOS_BRANCH}
+    if [[ ${#PARAMS[@]} -eq 2 ]]; then
+        BRANCH=${PARAMS[0]}
+        if [[ ${PARAMS[1]} == bypass ]]; then
+            git push gerrit HEAD:refs/for/${BRANCH}
+        else
+            git push gerrit HEAD:refs/for/${BRANCH}/${1}
+        fi
+    elif [[ ${#PARAMS[@]} -eq 1 ]]; then
+        git push gerrit HEAD:refs/for/${BRANCH}/${PARAMS[0]}
+    else
+        git push gerrit HEAD:refs/for/${BRANCH}
+    fi
+}
+
+function gzpush {
+    gpush 8.1 bypass
+}
+
+function gfpush {
+    BRANCH=${1}
+    [[ ${BRANCH} == "" ]] && BRANCH=${DEFAULT_XOS_BRANCH}
+    git push gerrit HEAD:refs/heads/${BRANCH}
+}
+
+function gffpush {
+    BRANCH=${1}
+    [[ ${BRANCH} == "" ]] && BRANCH=${DEFAULT_XOS_BRANCH}
+    git push --force gerrit HEAD:refs/heads/${BRANCH}
+}
+
+function createXos {
+        if ! git rev-parse --git-dir &> /dev/null
+    then
+        reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
+        return 1
+    fi
+    local PROJECT=$(pwd -P | sed -e "s#$ANDROID_PLATFORM_ROOT/##; s#-caf.*##; s#\/default##; s#/#_#g#")
+    ssh ${XOS_GERRIT_USER}@review.halogenos.org -p 29418 \
+        gerrit create-project -p All-Projects -t REBASE_IF_NECESSARY \
+        android_${PROJECT}
+    git create halogenOS/android_${PROJECT}
+}
+
+function xg {
+    if ! git rev-parse --git-dir &> /dev/null
+    then
+        reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
+        return 1
+    fi
+    local PROJECT=$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#-caf.*##; s#\/default##; s#/#_#g#")
+    git remote remove gerrit 2>/dev/null
+    git remote add gerrit ssh://${XOS_GERRIT_USER}@review.halogenos.org:29418/android_${PROJECT}
+    hook
+#    git remote add gerrit https://$XOS_GERRIT_USER@review.halogenos.org:29418/a/android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
+}
+
+function gz {
+    if ! git rev-parse --git-dir &> /dev/null
+    then
+        reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
+        return 1
+    fi
+    PROJECT=$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#-caf.*##; s#\/default##; s#/#_#g#")
+    if (echo ${PROJECT} | grep -qv "^device")
+    then
+        PFX="GZOSP/"
+    fi
+    git remote remove gzgerrit 2>/dev/null
+    git remote add gzgerrit ssh://${XOS_GERRIT_USER}@review.gzospgzr.com:29418/${PFX}${PROJECT}
+}
