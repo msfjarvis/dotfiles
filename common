@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Import all the bot tokens and IDs
+source ~/.secretcreds
+
 CL_BOLD="\033[1m"
 CL_INV="\033[7m"
 CL_RED="\033[01;31m"
