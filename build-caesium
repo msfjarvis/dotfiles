@@ -81,10 +81,10 @@ function release {
     local FILE=${1}
     local TAG=$(echo ${FILE} | cut -d / -f 2 | cut -d '-' -f 3 | sed 's/\.zip//')
     git -C ../AnyKernel2/ push origin HEAD:8.1.x-caesium
-    git -C ../AnyKernel2/ tag ${TAG}
+    git -C ../AnyKernel2/ tag -s ${TAG}
     git -C ../AnyKernel2/ push origin ${TAG}
     git push origin HEAD:XOS-8.1
-    git tag -a ${TAG}
+    git tag -as ${TAG}
     git push origin ${TAG}
     git branch --set-upstream-to=origin/XOS-8.1
     hub release create ${TAG} -a zips/${FILE} -a zips/${CHANGELOG_FILE} -a zips/${FILE}.md5
