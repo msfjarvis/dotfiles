@@ -177,6 +177,7 @@ while getopts ":cbrm:t:" opt; do
       ;;
     t)
       TYPE=${OPTARG}
+      NOTIFY=true
       if [[ ${TYPE} != "stable" ]]; then
           echoText " Setting test build parameters" >&2
           TEST_BUILD=true
@@ -213,7 +214,7 @@ DATE_END=$(date +"%s")
 DIFF=$((${DATE_END} - ${DATE_START}))
 if [[ -f zips/${FINAL_VER}.zip ]]; then
     reportSuccess ${FINAL_VER}.zip
-    if [[ ${TEST_BUILD} ]]; then
+    if [[ ${NOTIFY} ]]; then
         pushcaesiumtg ${FINAL_VER}.zip ${TYPE}
     fi
 fi
