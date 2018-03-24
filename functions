@@ -59,6 +59,10 @@ function makeapk {
     bash gradlew ${GRADLE_COMMAND}
 }
 
+function lawnchairbuild {
+    makeapk debug
+    tg $(find build -name Lawnchair-aosp-ci-debug.apk)
+}
 
 # Server tooling
 function startserver {
