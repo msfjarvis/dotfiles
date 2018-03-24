@@ -22,3 +22,11 @@ if ! grep -q "source ${SCRIPT_DIR}/functions" ~/.bashrc; then
     echo $'\n' >> ~/.bashrc # Never assume with people like me who don't leave newlines
     echo "source ${SCRIPT_DIR}/functions" >> ~/.bashrc
 fi
+
+if [[ "$@" =~ "--install-gitconfig" ]]; then
+  mv ~/.gitconfig ~/.gitconfig.old # Failsafe in case we screw up
+  cp ${SCRIPT_DIR}/.gitconfig ~/.gitconfig
+  for item in $(find gitconfig_fragments -name fragment_*);do
+    cat ${item} >> ~/.gitconfig
+  done
+fi
