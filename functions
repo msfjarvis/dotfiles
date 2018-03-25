@@ -60,8 +60,10 @@ function makeapk {
 }
 
 function lawnchairbuild {
+    git clean -fdx
     makeapk debug
-    tg $(find build -name Lawnchair-aosp-ci-debug.apk)
+    local BUILD_APK=$(find build -name Lawnchair-aosp-ci-debug.apk)
+    [[ -f ${BUILD_APK} ]] && tg ${BUILD_APK} || tgm "Lawnchair build failed"
 }
 
 # Server tooling
