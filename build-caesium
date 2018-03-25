@@ -8,6 +8,7 @@ source ${SCRIPT_DIR}/common
 DEFCONFIG="caesium_defconfig"
 KERNEL="Image.gz-dtb"
 TREES="rr:oreo|aosip:oreo-mr1"
+JARVISBOX_URL="https://download.msfjarvis.website/caesium"
 
 # Caesium Kernel Details
 KERNEL_NAME="Caesium"
