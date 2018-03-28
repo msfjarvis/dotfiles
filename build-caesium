@@ -46,7 +46,8 @@ function make_wrapper {
 
 # Pushes a local file to my webserver
 function publish {
-    rsync -avR ${1} caddy@download.msfjarvis.website:/var/www/${2}/ --progress --verbose
+    tg ${1} ${2}
+    #rsync -avR ${1} caddy@download.msfjarvis.website:/var/www/${2}/ --progress --verbose
 }
 
 # The meat of the telegram notifications workflow
@@ -66,16 +67,17 @@ function pushcaesiumtg {
     git diff --find-renames --stat --summary ${RANGE} >> zips/${CHANGELOG_FILE}
     cd zips;md5sum ${FILE} > ${FILE}.md5
     for item in ${FILE} ${CHANGELOG_FILE} ${FILE}.md5; do
-        publish ${item} caesium/${TYPE}
+        publish ${item} ${OP3_JAGRAV_CHAT_ID}
+        [[ ${TYPE} != "test" ]] && publish ${item} ${OP3_CAESIUM_CHAT_ID}
     done
     cd ../
     if [ ${TYPE} == "stable" ]; then
       release ${FILE}
     fi
-    if [ ${TYPE} != "test" ]; then
-      tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})" "${OP3_CAESIUM_CHAT_ID}"
-    fi
-    tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})" "${OP3_JAGRAV_CHAT_ID}"
+#    if [ ${TYPE} != "test" ]; then
+#      tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})" "${OP3_CAESIUM_CHAT_ID}"
+#    fi
+#    tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})" "${OP3_JAGRAV_CHAT_ID}"
 }
 
 # Called by pushcaesiumtg on release builds
