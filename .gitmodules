@@ -1,0 +1,3 @@
+[submodule "adb-multi"]
+	path = adb-multi
+	url = git://github.com/KreAch3R/adb-multi.git
