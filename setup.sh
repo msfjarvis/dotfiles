@@ -30,3 +30,8 @@ if [[ "$@" =~ "--install-gitconfig" ]]; then
     cat ${item} >> ~/.gitconfig
   done
 fi
+
+if [[ "$@" =~ "--setup-adb" ]]; then
+    ./${SCRIPT_DIR}/adb-multi/adb-multi generate
+    cp ${SCRIPT_DIR}/adb-multi/adb-multi ~/bin
+fi
