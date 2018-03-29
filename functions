@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 
 export CCACHE_DIR=~/.ccache/
+CURRENT_DEVICE=walleye
 
 # Source common functions
 SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 source ${SCRIPT_DIR}/common
 source ${SCRIPT_DIR}/gitshit
+
+function set_device {
+    CURRENT_DEVICE=${1:?}
+}
 
 function update_template {
     local WORKING_DIR=$(pwd)
@@ -119,11 +124,11 @@ function reboot {
 
 # Android + kernel stuff
 function p2d {
-  adb shell mount system
-  final_path=$(adb shell find /system -name $1)
+  adb-${CURRENT_DEVICE} shell mount system
+  final_path=$(adb-${CURRENT_DEVICE} shell find /system -name $1)
   echo "${final_path}"
-  adb push $1 "${final_path}"
-  adb shell umount system
+  adb-${CURRENT_DEVICE} push $1 "${final_path}"
+  adb-${CURRENT_DEVICE} shell umount system
 }
 
 function kgrep {
@@ -134,18 +139,18 @@ function kgrep {
 
 function flasherThingy {
     cd ~/Downloads/walleye
-    for file in $(adb shell ls /sdcard/Download/FlashKernel-Walleye-${1}-*.img);do
+    for file in $(adb-${CURRENT_DEVICE} shell ls /sdcard/Download/FlashKernel-Walleye-${1}-*.img);do
         partition=$(echo ${file} | cut -d '-' -f 5 | sed 's/\.img//')
         reportWarning "Pulling ${file}"
         if [[ ${partition} == "boot" ]];then
-            adb pull /sdcard/MagiskManager/patched_boot.img $(basename ${file})
+            adb-${CURRENT_DEVICE} pull /sdcard/MagiskManager/patched_boot.img $(basename ${file})
         else
-         adb pull /sdcard/Download/$(basename ${file})
+         adb-${CURRENT_DEVICE} pull /sdcard/Download/$(basename ${file})
         fi
     done
     read -n 1 -s -r -p "Press any key to continue..."
     reportWarning "Rebooting to bootloader"
-    adb reboot bootloader
+    adb-${CURRENT_DEVICE} reboot bootloader
     sleep 5
     for file in $(ls FlashKernel-Walleye-${1}-*.img);do
         partition=$(echo ${file} | cut -d '-' -f 5 | sed 's/\.img//')
@@ -161,7 +166,7 @@ function andromeda {
 }
 
 function pajeet {
-    adb shell settings put global emergency_affordance_needed 0
+    adb-${CURRENT_DEVICE} shell settings put global emergency_affordance_needed 0
 }
 
 function findJ {
@@ -174,9 +179,9 @@ function fao {
 }
 
 function adbp {
-    package=$(echo $(adb shell pm path ${1}) | cut -d : -f2)
+    package=$(echo $(adb-${CURRENT_DEVICE} shell pm path ${1}) | cut -d : -f2)
     if [[ ${package} != "" ]]; then
-        adb pull ${package} ${1}.apk
+        adb-${CURRENT_DEVICE} pull ${package} ${1}.apk
     else
         echoText "Package not found"
     fi
