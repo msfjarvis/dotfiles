@@ -23,7 +23,8 @@ if ! grep -q "source ${SCRIPT_DIR}/functions" ~/.bashrc; then
     echo "source ${SCRIPT_DIR}/functions" >> ~/.bashrc
 fi
 
-if [[ "$@" =~ "--install-gitconfig" ]]; then
+if [[ "$@" =~ "--install-gitconfig" || "$@" =~ "--all" ]]; then
+  echoText "Setting up gitconfig"
   mv ~/.gitconfig ~/.gitconfig.old # Failsafe in case we screw up
   cp ${SCRIPT_DIR}/.gitconfig ~/.gitconfig
   for item in $(find gitconfig_fragments -name fragment_*);do
@@ -31,7 +32,8 @@ if [[ "$@" =~ "--install-gitconfig" ]]; then
   done
 fi
 
-if [[ "$@" =~ "--setup-adb" ]]; then
+if [[ "$@" =~ "--setup-adb" || "$@" =~ "--all" ]]; then
+    echoText "Setting up multi-adb"
     ./${SCRIPT_DIR}/adb-multi/adb-multi generate
     cp ${SCRIPT_DIR}/adb-multi/adb-multi ~/bin
 fi
