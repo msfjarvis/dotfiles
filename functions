@@ -94,7 +94,7 @@ function myeyes {
 }
 
 function findapks {
-  find $1 -name "*.apk"
+  find $@ -name "*.apk"
 }
 
 function weather {
