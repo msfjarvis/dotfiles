@@ -49,9 +49,7 @@ function pick_and_reset {
 
 function notify {
     tgm "Building for device : ${TARGET_DEVICE}"
-    sleep 0.5
     [[ ${CLEAN} == "true" ]] && tgm "Building clean" || tgm "Not building clean"
-    sleep 0.5
     TEMP=$(echo ${REPOPICK_TASKS} | sed s/\n//)
     [[ ${TEMP} != "" ]] && tgm "repopick tasks : ${REPOPICK_TASKS}" || tgm "No repopicks"
 }
