@@ -1,0 +1,109 @@
+#!/bin/bash
+
+CURRENT_DEVICE=walleye
+
+# Source common functions
+SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+source ${SCRIPT_DIR}/common
+
+function set_device {
+    CURRENT_DEVICE=${1:?}
+}
+
+function update_template {
+    local WORKING_DIR=$(pwd)
+    local TEMPLATE_DIR="${WORKING_DIR}/../template"
+    local PACKAGE_NAME=$(grep 'applicationId ' app/build.gradle | cut -d '"' -f 2)
+    local PACKAGE_DIR=$(echo ${PACKAGE_NAME} | sed 's/\./\//g')
+    local PACKAGE_JNI_NAME=$(echo ${PACKAGE_NAME} | sed 's/\./_/g')
+    local TEMPLATE_HASH=$(git -C ${TEMPLATE_DIR} rev-parse --short HEAD)
+    reportWarning "Updating Kotlin bits"
+    cp -R ${TEMPLATE_DIR}/app/src/main/kotlin/substratum/theme/template/* ${WORKING_DIR}/app/src/main/kotlin/${PACKAGE_DIR}
+    sed -i "s#substratum\.theme\.template#${PACKAGE_NAME}#g" ${WORKING_DIR}/app/src/main/kotlin/${PACKAGE_DIR}/*
+    reportWarning "Updating jni"
+    cp -R ${TEMPLATE_DIR}/app/src/main/jni ${WORKING_DIR}/app/src/main
+    sed -i "s#substratum_theme_template#${PACKAGE_JNI_NAME}#g" ${WORKING_DIR}/app/src/main/jni/*
+    reportWarning "Updating AndroidManifest"
+    cp ${TEMPLATE_DIR}/app/src/main/AndroidManifest.xml ${WORKING_DIR}/app/src/main/AndroidManifest.xml
+    sed -i "s#substratum\.theme\.template#${PACKAGE_NAME}#g" ${WORKING_DIR}/app/src/main/AndroidManifest.xml
+    reportWarning "Updating Gradle wrapper files"
+    cp ${TEMPLATE_DIR}/build.gradle ${WORKING_DIR}
+#    cp ${TEMPLATE_DIR}/app/build.gradle ${WORKING_DIR}/app/build.gradle
+    cp -R ${TEMPLATE_DIR}/gradle/ ${WORKING_DIR}
+    sed -i "s#substratum\.theme\.template#${PACKAGE_NAME}#g" ${WORKING_DIR}/app/build.gradle
+    git commit -am "[CHANGEME]: Update to upstream revision ${TEMPLATE_HASH}" --edit
+}
+
+function makeapk {
+    params=("$@")
+    [[ ! -f "build.gradle" ]] && reportError "No build.gradle present, dimwit" && return 1
+    local GRADLE_COMMAND=""
+    local BUILD_TYPE=""
+    case ${params[0]} in
+        "Debug"|"debug")
+            GRADLE_COMMAND="assembleDebug"
+            BUILD_TYPE="Debug"
+            ;;
+        "Release"|"release")
+            GRADLE_COMMAND="assembleRelease"
+            BUILD_TYPE="Release"
+            ;;
+        *)
+            reportError "Invalid build type specified"
+            return 1
+            ;;
+    esac
+    [[ "${params[1]}" == "install" ]] && GRADLE_COMMAND="install${BUILD_TYPE}"
+    rm -rfv app/build/outputs/apk/${BUILD_TYPE,,}/*
+    bash gradlew ${GRADLE_COMMAND}
+}
+
+function lawnchairbuild {
+    git clean -fdx
+    makeapk debug
+    local BUILD_APK=$(find build -name Lawnchair-aosp-ci-debug.apk)
+    [[ -f ${BUILD_APK} ]] && tg ${BUILD_APK} || tgm "Lawnchair build failed"
+}
+
+function pushthemetg {
+    tg "${1}" "${THEME_TESTERS_CHAT_ID}"
+    tgm "${2}" "${THEME_TESTERS_CHAT_ID}"
+}
+
+function findapks {
+  find $@ -name "*.apk"
+}
+
+function p2d {
+  adb-${CURRENT_DEVICE} shell mount system
+  final_path=$(adb-${CURRENT_DEVICE} shell find /system -name $1)
+  echo "${final_path}"
+  adb-${CURRENT_DEVICE} push $1 "${final_path}"
+  adb-${CURRENT_DEVICE} shell umount system
+}
+
+function andromeda {
+    bash ~/git-repos/andromeda_startup_scripts/Linux/start_andromeda.sh
+}
+
+function pajeet {
+    adb-${CURRENT_DEVICE} shell settings put global emergency_affordance_needed 0
+}
+
+function findJ {
+    ag -ia ${1} | grep java | cut -f 1 -d ':' | uniq
+}
+
+function fao {
+    [ -z ${1} ] && echoText "Supply a filename moron" && return
+    [ -z ${2} ] && nano -L $(find -name ${1}.*) || nano -L $(find ${2} -name ${1}.*)
+}
+
+function adbp {
+    package=$(echo $(adb-${CURRENT_DEVICE} shell pm path ${1}) | cut -d : -f2)
+    if [[ ${package} != "" ]]; then
+        adb-${CURRENT_DEVICE} pull ${package} ${1}.apk
+    else
+        echoText "Package not found"
+    fi
+}

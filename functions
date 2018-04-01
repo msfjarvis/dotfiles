@@ -1,74 +1,13 @@
 #!/usr/bin/env bash
 
-export CCACHE_DIR=~/.ccache/
-CURRENT_DEVICE=walleye
-
 # Source common functions
 SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 source ${SCRIPT_DIR}/common
 source ${SCRIPT_DIR}/gitshit
-
-function set_device {
-    CURRENT_DEVICE=${1:?}
-}
-
-function update_template {
-    local WORKING_DIR=$(pwd)
-    local TEMPLATE_DIR="${WORKING_DIR}/../template"
-    local PACKAGE_NAME=$(grep 'applicationId ' app/build.gradle | cut -d '"' -f 2)
-    local PACKAGE_DIR=$(echo ${PACKAGE_NAME} | sed 's/\./\//g')
-    local PACKAGE_JNI_NAME=$(echo ${PACKAGE_NAME} | sed 's/\./_/g')
-    local TEMPLATE_HASH=$(git -C ${TEMPLATE_DIR} rev-parse --short HEAD)
-    reportWarning "Updating Kotlin bits"
-    cp -R ${TEMPLATE_DIR}/app/src/main/kotlin/substratum/theme/template/* ${WORKING_DIR}/app/src/main/kotlin/${PACKAGE_DIR}
-    sed -i "s#substratum\.theme\.template#${PACKAGE_NAME}#g" ${WORKING_DIR}/app/src/main/kotlin/${PACKAGE_DIR}/*
-    reportWarning "Updating jni"
-    cp -R ${TEMPLATE_DIR}/app/src/main/jni ${WORKING_DIR}/app/src/main
-    sed -i "s#substratum_theme_template#${PACKAGE_JNI_NAME}#g" ${WORKING_DIR}/app/src/main/jni/*
-    reportWarning "Updating AndroidManifest"
-    cp ${TEMPLATE_DIR}/app/src/main/AndroidManifest.xml ${WORKING_DIR}/app/src/main/AndroidManifest.xml
-    sed -i "s#substratum\.theme\.template#${PACKAGE_NAME}#g" ${WORKING_DIR}/app/src/main/AndroidManifest.xml
-    reportWarning "Updating Gradle wrapper files"
-    cp ${TEMPLATE_DIR}/build.gradle ${WORKING_DIR}
-#    cp ${TEMPLATE_DIR}/app/build.gradle ${WORKING_DIR}/app/build.gradle
-    cp -R ${TEMPLATE_DIR}/gradle/ ${WORKING_DIR}
-    sed -i "s#substratum\.theme\.template#${PACKAGE_NAME}#g" ${WORKING_DIR}/app/build.gradle
-    git commit -am "[CHANGEME]: Update to upstream revision ${TEMPLATE_HASH}" --edit
-}
+source ${SCRIPT_DIR}/apps
 
 function cpuinfo {
     grep -E '^model name|^cpu MHz' /proc/cpuinfo
-}
-
-function makeapk {
-    params=("$@")
-    [[ ! -f "build.gradle" ]] && reportError "No build.gradle present, dimwit" && return 1
-    local GRADLE_COMMAND=""
-    local BUILD_TYPE=""
-    case ${params[0]} in
-        "Debug"|"debug")
-            GRADLE_COMMAND="assembleDebug"
-            BUILD_TYPE="Debug"
-            ;;
-        "Release"|"release")
-            GRADLE_COMMAND="assembleRelease"
-            BUILD_TYPE="Release"
-            ;;
-        *)
-            reportError "Invalid build type specified"
-            return 1
-            ;;
-    esac
-    [[ "${params[1]}" == "install" ]] && GRADLE_COMMAND="install${BUILD_TYPE}"
-    rm -rfv app/build/outputs/apk/${BUILD_TYPE,,}/*
-    bash gradlew ${GRADLE_COMMAND}
-}
-
-function lawnchairbuild {
-    git clean -fdx
-    makeapk debug
-    local BUILD_APK=$(find build -name Lawnchair-aosp-ci-debug.apk)
-    [[ -f ${BUILD_APK} ]] && tg ${BUILD_APK} || tgm "Lawnchair build failed"
 }
 
 # Server tooling
@@ -88,17 +27,7 @@ function backup {
     adb-sync --reverse /sdcard/* ~/git-repos/backups/
 }
 
-function pushthemetg {
-    tg "${1}" "${THEME_TESTERS_CHAT_ID}"
-    tgm "${2}" "${THEME_TESTERS_CHAT_ID}"
-}
-
 # Random utility tooling
-
-function findapks {
-  find $@ -name "*.apk"
-}
-
 function weather {
     if (( `tput cols` < 125 )); then # 125 is min size for correct display
         [ -z "$1" ] && curl "wttr.in/Ghaziabad?0" || curl "wttr.in/~$1?0"
@@ -119,14 +48,7 @@ function reboot {
   esac
 }
 
-# Android + kernel stuff
-function p2d {
-  adb-${CURRENT_DEVICE} shell mount system
-  final_path=$(adb-${CURRENT_DEVICE} shell find /system -name $1)
-  echo "${final_path}"
-  adb-${CURRENT_DEVICE} push $1 "${final_path}"
-  adb-${CURRENT_DEVICE} shell umount system
-}
+# Kernel stuff
 
 function kgrep {
     find . -name .git -prune -o -path ./out -prune -o -regextype posix-egrep \
@@ -158,14 +80,6 @@ function flasherThingy {
 }
 
 
-function andromeda {
-    bash ~/git-repos/andromeda_startup_scripts/Linux/start_andromeda.sh
-}
-
-function pajeet {
-    adb-${CURRENT_DEVICE} shell settings put global emergency_affordance_needed 0
-}
-
 function findJ {
     ag -ia ${1} | grep java | cut -f 1 -d ':' | uniq
 }
@@ -175,111 +89,8 @@ function fao {
     [ -z ${2} ] && nano -L $(find -name ${1}.*) || nano -L $(find ${2} -name ${1}.*)
 }
 
-function adbp {
-    package=$(echo $(adb-${CURRENT_DEVICE} shell pm path ${1}) | cut -d : -f2)
-    if [[ ${package} != "" ]]; then
-        adb-${CURRENT_DEVICE} pull ${package} ${1}.apk
-    else
-        echoText "Package not found"
-    fi
-}
-
 function night {
     sudo echo 1 > /sys/class/backlight/intel_backlight/brightness
     sudo pkill xflux # In case it's already running. Erring on the side of caution here.
     xflux -l 28.6869 -g 77.3525 -r 1 -k 2000
-}
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-# EXESUDO
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-#
-# Purpose:
-# -------------------------------------------------------------------- #
-# Execute a function with sudo
-#
-# Params:
-# -------------------------------------------------------------------- #
-# $1:   string: name of the function to be executed with sudo
-#
-# Usage:
-# -------------------------------------------------------------------- #
-# exesudo "funcname" followed by any param
-#
-# -------------------------------------------------------------------- #
-# Created 01 September 2012              Last Modified 02 September 2012
-
-function exesudo ()
-{
-    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ##
-    #
-    # LOCAL VARIABLES:
-    #
-    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ##
-
-    #
-    # I use underscores to remember it's been passed
-    local _funcname_="$1"
-
-    local params=( "$@" )               ## array containing all params passed here
-    local tmpfile="/dev/shm/$RANDOM"    ## temporary file
-    local filecontent                   ## content of the temporary file
-    local regex                         ## regular expression
-    local func                          ## function source
-
-
-    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ##
-    #
-    # MAIN CODE:
-    #
-    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ##
-
-    #
-    # WORKING ON PARAMS:
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    #
-    # Shift the first param (which is the name of the function)
-    unset params[0]              ## remove first element
-    # params=( "${params[@]}" )     ## repack array
-
-
-    #
-    # WORKING ON THE TEMPORARY FILE:
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    content="#!/bin/bash\n\n"
-
-    #
-    # Write the params array
-    content="${content}params=(\n"
-
-    regex="\s+"
-    for param in "${params[@]}"
-    do
-        if [[ "$param" =~ $regex ]]
-            then
-                content="${content}\t\"${param}\"\n"
-            else
-                content="${content}\t${param}\n"
-        fi
-    done
-
-    content="$content)\n"
-    echo -e "$content" > "$tmpfile"
-
-    #
-    # Append the function source
-    echo "#$( type "$_funcname_" )" >> "$tmpfile"
-
-    #
-    # Append the call to the function
-    echo -e "\n$_funcname_ \"\${params[@]}\"\n" >> "$tmpfile"
-
-
-    #
-    # DONE: EXECUTE THE TEMPORARY FILE WITH SUDO
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    sudo bash "$tmpfile"
-    rm "$tmpfile"
 }
