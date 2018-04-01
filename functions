@@ -94,9 +94,6 @@ function pushthemetg {
 }
 
 # Random utility tooling
-function myeyes {
-  xflux -l 28.6869 -g 77.3525 -r 1 -k 2000
-}
 
 function findapks {
   find $@ -name "*.apk"
@@ -185,6 +182,12 @@ function adbp {
     else
         echoText "Package not found"
     fi
+}
+
+function night {
+    sudo echo 1 > /sys/class/backlight/intel_backlight/brightness
+    sudo pkill xflux # In case it's already running. Erring on the side of caution here.
+    xflux -l 28.6869 -g 77.3525 -r 1 -k 2000
 }
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
