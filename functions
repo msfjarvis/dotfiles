@@ -58,18 +58,18 @@ function kgrep {
 
 function flasherThingy {
     cd ~/Downloads/walleye
-    for file in $(adb-${CURRENT_DEVICE} shell ls /sdcard/Download/FlashKernel-Walleye-${1}-*.img);do
+    for file in $(adb-walleye shell ls /sdcard/Download/FlashKernel-Walleye-${1}-*.img);do
         partition=$(echo ${file} | cut -d '-' -f 5 | sed 's/\.img//')
         reportWarning "Pulling ${file}"
         if [[ ${partition} == "boot" ]];then
-            adb-${CURRENT_DEVICE} pull /sdcard/MagiskManager/patched_boot.img $(basename ${file})
+            adb-walleye pull /sdcard/MagiskManager/patched_boot.img $(basename ${file})
         else
-         adb-${CURRENT_DEVICE} pull /sdcard/Download/$(basename ${file})
+         adb-walleye pull /sdcard/Download/$(basename ${file})
         fi
     done
     read -n 1 -s -r -p "Press any key to continue..."
     reportWarning "Rebooting to bootloader"
-    adb-${CURRENT_DEVICE} reboot bootloader
+    adb-walleye reboot bootloader
     sleep 5
     for file in $(ls FlashKernel-Walleye-${1}-*.img);do
         partition=$(echo ${file} | cut -d '-' -f 5 | sed 's/\.img//')
