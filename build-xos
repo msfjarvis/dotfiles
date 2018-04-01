@@ -9,7 +9,6 @@ function build {
     pick_and_reset
     tgm "Build started."
     [[ ${CLEAN} == "true" ]] && make clean
-    breakfast ${TARGET_DEVICE}
     build full XOS_${TARGET_DEVICE}-userdebug noclean
     [ -f ${OUT}/${XOS_VERSION}.zip ] && upload || tgm "Build failed." && return 1
 }
