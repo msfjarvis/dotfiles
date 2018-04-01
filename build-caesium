@@ -36,12 +36,21 @@ ZIP_MOVE="${WORKING_DIR}/zips/"
 
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper {
-    make O=${OUT_DIR} \
-        ARCH=${ARCH} SUBARCH=${SUBARCH} \
-        KBUILD_BUILD_USER=${USER} \
-        KBUILD_BUILD_HOST=${HOST} \
-        LOCALVERSION=${LOCALVERSION} \
-        -j$(nproc --all) $@
+    if [[ ! ${VERBOSE} ]]; then
+        make O=${OUT_DIR} \
+            ARCH=${ARCH} SUBARCH=${SUBARCH} \
+            KBUILD_BUILD_USER=${USER} \
+            KBUILD_BUILD_HOST=${HOST} \
+            LOCALVERSION=${LOCALVERSION} \
+            -j$(nproc --all) $@ |& ag "error:|warning"
+    else
+        make O=${OUT_DIR} \
+            ARCH=${ARCH} SUBARCH=${SUBARCH} \
+            KBUILD_BUILD_USER=${USER} \
+            KBUILD_BUILD_HOST=${HOST} \
+            LOCALVERSION=${LOCALVERSION} \
+            -j$(nproc --all) $@
+    fi
 }
 
 # Pushes a local file to my webserver
@@ -130,17 +139,9 @@ function check_toolchain() {
 function make_kernel {
   make_defconfig
   if [ ${MODULE} ]; then
-      if [ ${VERBOSE} ]; then
-          make_wrapper ${MODULE}
-      else
-          make_wrapper ${MODULE} |& ag "error:|warning"
-      fi
+      make_wrapper ${MODULE}
   else
-      if [ ${VERBOSE} ]; then
-          make_wrapper ${KERNEL}
-      else
-          make_wrapper ${KERNEL} |& ag "error:|warning"
-      fi
+      make_wrapper ${KERNEL}
   fi
   local BUILT_KERNEL=out/arch/${ARCH}/boot/${KERNEL}
   [ -f "${BUILT_KERNEL}" ] && cp -r ${BUILT_KERNEL} ${REPACK_DIR} && return 0 || reportError "Kernel compilation failed"
