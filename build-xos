@@ -70,7 +70,7 @@ while getopts ":ct:" opt; do
    esac
 done
 REPOPICK_TASKS=$(cat repopicks.txt)
-XOS_VERSION=XOS_${TARGET_DEVICE}_8.1_$(date +%Y%m%d).zip
+XOS_VERSION=XOS_${TARGET_DEVICE}_8.1_$(date +%Y%m%d)
 
 init_if_needed
 notify
