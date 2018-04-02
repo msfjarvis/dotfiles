@@ -10,6 +10,16 @@ function cpuinfo {
     grep -E '^model name|^cpu MHz' /proc/cpuinfo
 }
 
+function battinfo {
+    local BASE=/sys/class/power_supply/BAT0/
+    declare -a ITEMS=("capacity_level:Battery_status" "charge_now:Current_charge" "capacity:Battery_percentage" "status:Status")
+    for ITEM in ${ITEMS[@]};do
+        NODE=$(echo ${ITEM} | cut -d ':' -f 1)
+        LABEL=$(echo ${ITEM} | cut -d ':' -f 2)
+        echo -e "${CL_RED}${LABEL}${CL_RST}: ${CL_YLW}$(cat ${BASE}${NODE})${CL_RST}"
+    done
+}
+
 # Server tooling
 function startserver {
   gcloud compute instances start --project "heroic-diode-189916" --zone "us-west1-c" "jarvisbox"
