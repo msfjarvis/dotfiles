@@ -12,6 +12,7 @@ function cpuinfo {
 
 function battinfo {
     local BASE=/sys/class/power_supply/BAT0/
+    #FIXME: Remove underscores from elements
     declare -a ITEMS=("capacity_level:Battery_status" "charge_now:Current_charge" "capacity:Battery_percentage" "status:Status")
     for ITEM in ${ITEMS[@]};do
         NODE=$(echo ${ITEM} | cut -d ':' -f 1)
@@ -59,7 +60,6 @@ function reboot {
 }
 
 # Kernel stuff
-
 function kgrep {
     find . -name .git -prune -o -path ./out -prune -o -regextype posix-egrep \
         -iregex '(.*\/Makefile|.*\/Kconfig|.*\/oneplus3_defconfig|.*\/caesium_defconfig|.*\/wahoo_defconfig)' -type f \
