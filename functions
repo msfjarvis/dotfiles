@@ -17,7 +17,7 @@ function battinfo {
     for ITEM in ${ITEMS[@]};do
         NODE=$(echo ${ITEM} | cut -d ':' -f 1)
         LABEL=$(echo ${ITEM} | cut -d ':' -f 2)
-        echo -e "${CL_RED}${LABEL}${CL_RST}: ${CL_YLW}$(cat ${BASE}${NODE})${CL_RST}"
+        echo -e "${CL_RED}$(echo ${LABEL} | sed 's/_/ /g')${CL_RST}: ${CL_YLW}$(cat ${BASE}${NODE})${CL_RST}"
     done
 }
 
