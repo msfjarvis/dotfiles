@@ -22,7 +22,8 @@ function upload {
     tgm "zip size ${ZIP_SIZE_MB} MB"
     UPLOAD_DURATION=$(bc <<< "${ZIP_SIZE_MB}/54") # assuming 54mBps as a consistent upload speed
     tgm "Estimated upload duration: ${UPLOAD_DURATION} minutes"
-    GDRIVE_UPLOAD_ID=$(gdrive upload ${FILE} | awk '{print $4}')
+    GDRIVE_UPLOAD_ID=$(gdrive upload ${FILE} | awk '{print $2}')
+    GDRIVE_UPLOAD_ID=$(echo ${GDRIVE_UPLOAD_ID} | awk '{print $2}')
     BUILD_URL=$(printf "https://drive.google.com/uc?id=%s&export=download" ${GDRIVE_UPLOAD_ID})
     tgm "[${XOS_VERSION}.zip]($BUILD_URL) uploaded"
     cd ${ANDROID_BUILD_TOP}
