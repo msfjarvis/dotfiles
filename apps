@@ -35,26 +35,10 @@ function update_template {
 }
 
 function makeapk {
-    params=("$@")
     [[ ! -f "build.gradle" ]] && reportError "No build.gradle present, dimwit" && return 1
-    local GRADLE_COMMAND=""
-    local BUILD_TYPE=""
-    case ${params[0]} in
-        "*Debug"|"debug")
-            GRADLE_COMMAND="assembleDebug"
-            BUILD_TYPE="Debug"
-            ;;
-        "*Release"|"release")
-            GRADLE_COMMAND="assembleRelease"
-            BUILD_TYPE="Release"
-            ;;
-        *)
-            reportError "Invalid build type specified"
-            return 1
-            ;;
-    esac
-    [[ "${params[1]}" == "install" ]] && GRADLE_COMMAND="install${BUILD_TYPE}"
-    rm -rfv app/build/outputs/apk/${BUILD_TYPE,,}/*
+    local GRADLE_COMMAND="assemble${1:?}"
+    [[ "${2}" == "install" ]] && GRADLE_COMMAND="install${1:?}"
+    rm -rfv app/build/outputs/apk/*
     bash gradlew ${GRADLE_COMMAND}
 }
 
