@@ -40,11 +40,11 @@ function makeapk {
     local GRADLE_COMMAND=""
     local BUILD_TYPE=""
     case ${params[0]} in
-        "Debug"|"debug")
+        "*Debug"|"debug")
             GRADLE_COMMAND="assembleDebug"
             BUILD_TYPE="Debug"
             ;;
-        "Release"|"release")
+        "*Release"|"release")
             GRADLE_COMMAND="assembleRelease"
             BUILD_TYPE="Release"
             ;;
