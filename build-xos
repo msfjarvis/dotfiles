@@ -16,14 +16,14 @@ function build {
 function upload {
     cd $OUT
     FILE=${XOS_VERSION}.zip
-    ZIP_SIZE_MB=$(du -h ${FILE} | awk '{print $1}' | sed s/M//)
+    ZIP_SIZE_MB=$(du -h ${FILE} | awk '{print $1}' | sed 's/M//')
     tgm "Uploading the zip ${FILE}"
     tgm "zip size ${ZIP_SIZE_MB} MB"
-    upload_duration=$(bc <<< '${ZIP_SIZE_MB}/24') # assuming 24mBps as a consistent upload speed
-    tgm "Estimated upload duration: ${upload_duration} minutes"
-    gdrive_upload_id=$(gdrive upload ${FILE} |  cut -d ' ' -f 4)
-    build_url="https://drive.google.com/uc?id=${gdrive_upload_id}&export=download"
-    tgm "[${XOS_VERSION}.zip]($build_url) uploaded"
+    UPLOAD_DURATION=$(bc <<< "${ZIP_SIZE_MB}/54") # assuming 54mBps as a consistent upload speed
+    tgm "Estimated upload duration: ${UPLOAD_DURATION} minutes"
+    GDRIVE_UPLOAD_ID=$(gdrive upload ${FILE} | awk '{print $4}')
+    BUILD_URL=$(printf "https://drive.google.com/uc?id=%s&export=download" ${GDRIVE_UPLOAD_ID})
+    tgm "[${XOS_VERSION}.zip]($BUILD_URL) uploaded"
     cd ${ANDROID_BUILD_TOP}
 }
 
