@@ -6,6 +6,10 @@ source ${SCRIPT_DIR}/common
 source ${SCRIPT_DIR}/gitshit
 source ${SCRIPT_DIR}/apps
 
+function reload {
+    source ~/.bashrc
+}
+
 function cpuinfo {
     grep -E '^model name|^cpu MHz' /proc/cpuinfo
 }
