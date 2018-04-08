@@ -167,7 +167,7 @@ function make_zip {
   cd ${WORKING_DIR}
 }
 
-while getopts ":cbrm:t:" opt; do
+while getopts ":cbrm:t:d:" opt; do
   case $opt in
     c)
       echoText " Building clean " >&2
@@ -199,6 +199,12 @@ while getopts ":cbrm:t:" opt; do
       fi
       echoText "Building module ${MODULE}"
       ;;
+     d)
+      [[ ${OPTARG} != "garlic" ]] && return
+      DEVICE=garlic
+      ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2_garlic"
+      FINAL_VER="${KERNEL_NAME}-${DEVICE}-${INCREMENTAL_VERSION}"
+      ;;
     \?)
       reportWarning "Invalid option: -${OPTARG}" >&2
       ;;
@@ -220,7 +226,7 @@ DATE_END=$(date +"%s")
 DIFF=$((${DATE_END} - ${DATE_START}))
 if [[ -f zips/${FINAL_VER}.zip ]]; then
     reportSuccess ${FINAL_VER}.zip
-    if [[ ${NOTIFY} ]]; then
+    if [[ ${DEVICE} != "garlic" ]]; then
         pushcaesiumtg ${FINAL_VER}.zip ${TYPE}
     fi
 fi
