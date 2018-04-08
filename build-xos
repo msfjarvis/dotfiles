@@ -10,9 +10,10 @@ function build {
     pick_and_reset
     tgm "Build started."
     [[ ${CLEAN} == "true" ]] && rm -rf out/target/product/${TARGET_DEVICE}
-    build full XOS_${TARGET_DEVICE}-userdebug noclean 2>&1 | tee -a build_log.txt
-    echo "$(tail -n 500 build_log.txt)" > build_log.txt
-    [ -f ${OUT}/${XOS_VERSION}.zip ] && upload || tgm "Build failed." && tgm $(hastebin build_log.txt noraw) && return 1
+    local LOG_FILE=XOS_${TARGET_DEVICE}-$(date +"%Y%m%d"-"%H%M%S").txt
+    build full XOS_${TARGET_DEVICE}-userdebug noclean 2>&1 | tee -a ${LOG_FILE}
+    echo "$(tail -n 500 ${LOG_FILE})" > ${LOG_FILE}
+    [ -f ${OUT}/${XOS_VERSION}.zip ] && upload || tgm "Build failed." && tgm $(hastebin ${LOG_FILE} noraw) && return 1
 }
 
 function upload {
