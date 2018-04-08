@@ -68,7 +68,7 @@ function pushcaesiumtg {
         *) echo "Invalid build type" && return ;;
     esac
     local CHANGELOG_FILE=${FINAL_VER}_changelog.txt
-    local LAST_TAG=$(git tag --sort=-taggerdate -l | head -n1)
+    local LAST_TAG=$(git describe --tags --abbrev=0)
     local RANGE=${LAST_TAG}..HEAD
     echo "${FINAL_VER}" > zips/${CHANGELOG_FILE}
     git log ${RANGE} | git shortlog ${RANGE} >> zips/${CHANGELOG_FILE}
