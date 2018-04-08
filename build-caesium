@@ -28,7 +28,6 @@ HOST=jarvisbox
 WORKING_DIR=$(pwd)
 ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2"
 TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/aarch64--glibc--bleeding-edge-2018.02-1/"
-REPACK_DIR="${ANYKERNEL_DIR}"
 OUT_DIR="${WORKING_DIR}/out/"
 ZIP_MOVE="${WORKING_DIR}/zips/"
 
@@ -142,7 +141,7 @@ function make_kernel {
       make_wrapper ${KERNEL}
   fi
   local BUILT_KERNEL=out/arch/${ARCH}/boot/${KERNEL}
-  [ -f "${BUILT_KERNEL}" ] && cp -r ${BUILT_KERNEL} ${REPACK_DIR} && return 0 || reportError "Kernel compilation failed"
+  [ -f "${BUILT_KERNEL}" ] && cp -r ${BUILT_KERNEL} ${ANYKERNEL_DIR} && return 0 || reportError "Kernel compilation failed"
 }
 
 # Called by make_kernel, used to trap defconfig regen events
@@ -155,7 +154,7 @@ function make_defconfig {
 
 # Create the final ZIP
 function make_zip {
-  cd ${REPACK_DIR}
+  cd ${ANYKERNEL_DIR}
   echo ${FINAL_VER} > version
   rm *.zip 2>/dev/null
   [[ ${TEST_BUILD} ]] && FINAL_VER=${FINAL_VER}-$(date +"%Y%m%d"-"%H%M%S")
