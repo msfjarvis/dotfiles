@@ -27,7 +27,10 @@ HOST=jarvisbox
 # Paths
 WORKING_DIR=$(pwd)
 ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2"
-TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/aarch64--glibc--bleeding-edge-2018.02-1/"
+if [[ -z TOOLCHAIN_DIR ]]; then
+    TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/aarch64--glibc--bleeding-edge-2018.02-1/"
+    TOOLCHAIN_SEARCH_STRING="*gnu-gcc"
+fi
 OUT_DIR="${WORKING_DIR}/out/"
 ZIP_MOVE="${WORKING_DIR}/zips/"
 
@@ -123,7 +126,7 @@ function update_source_trees {
 
 # Find the correct CROSS_COMPILE candidate
 function check_toolchain() {
-    local TC="$(find ${TOOLCHAIN_DIR}/bin -name *gnu-gcc)";
+    local TC="$(find ${TOOLCHAIN_DIR}/bin -name ${TOOLCHAIN_SEARCH_STRING})";
         if [[ -f "${TC}" ]]; then
                 export CROSS_COMPILE="$(command -v ccache) ${TOOLCHAIN_DIR}/bin/$(echo ${TC} | awk -F '/' '{print $NF'} | sed -e 's/gcc//')";
                 echoText "$Using toolchain: $(${CROSS_COMPILE}gcc --version | head -1)"
