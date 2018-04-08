@@ -6,6 +6,7 @@ source ${SCRIPT_DIR}/common
 
 function build {
     . build/envsetup.sh
+    [[ ${SKIP_SYNC} == "true" ]] || reposync turbo
     pick_and_reset
     tgm "Build started."
     [[ ${CLEAN} == "true" ]] && rm -rf out/target/product/${TARGET_DEVICE}
@@ -58,10 +59,13 @@ function notify {
 mkdir -p ${HOME}/xossrc
 cd ${HOME}/xossrc
 
-while getopts ":ct:" opt; do
+while getopts ":cst:" opt; do
   case $opt in
      c)
-      export CLEAN=true
+      CLEAN=true
+      ;;
+     s)
+      SKIP_SYNC=true
       ;;
      t)
       TARGET_DEVICE=${OPTARG}
