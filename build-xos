@@ -48,7 +48,6 @@ function pick_and_reset {
     git config --global commit.gpgsign false # Disable GPG signing to let this happen automatically
     IFS=$'\n' read -r -a REPOPICKS <<< "${REPOPICK_TASKS}"
     for TASK in "${REPOPICKS[@]}"; do
-      echo ${TASK}
       repopick ${TASK}
     done
     git config --global commit.gpgsign true # Re-enable after repopicking is done
@@ -95,10 +94,15 @@ REPOPICK_TASKS=$(cat repopicks.txt)
 TEMP=$(echo ${REPOPICK_TASKS} | sed s/\n//)
 if [[ ${TEMP} != "" ]]; then
 BUILD_INFO="${BUILD_INFO}
-repopick tasks: ${REPOPICK_TASKS}"
+repopick tasks:
+\`\`\`
+${REPOPICK_TASKS}
+\`\`\`
+"
 else
 BUILD_INFO="${BUILD_INFO}
-No repopicks"
+No repopicks
+"
 fi
 tgm "${BUILD_INFO}"
 unset BUILD_INFO
