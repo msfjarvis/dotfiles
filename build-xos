@@ -73,7 +73,7 @@ Skipping repopick
       NO_REPOPICK=true ;;
      r)
       BUILD_INFO="${BUILD_INFO}
-Skipping reporeset
+Will reporeset
 "
       RESET=true ;;
      s)
