@@ -45,7 +45,7 @@ function pick_and_reset {
     IFS=$'\n' read -r -a REPOPICKS <<< "${REPOPICK_TASKS}"
     for TASK in "${REPOPICKS[@]}"; do
       echo ${TASK}
-      repopick $(echo ${TASK} | sed 's#,# #g')
+      repopick ${TASK}
     done
   fi
 }
