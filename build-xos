@@ -41,7 +41,7 @@ function init_if_needed {
 
 function pick_and_reset {
   [[ ${RESET} == "true" ]] && reporeset
-  if [[ ${REPOPICK_TASKS} != "" ]]; then
+  if [[ ${REPOPICK_TASKS} != "" && -z ${NO_REPOPICK} ]]; then
     git config --global commit.gpgsign false # Disable GPG signing to let this happen automatically
     IFS=$'\n' read -r -a REPOPICKS <<< "${REPOPICK_TASKS}"
     for TASK in "${REPOPICKS[@]}"; do
@@ -62,10 +62,12 @@ function notify {
 mkdir -p ${HOME}/xossrc
 cd ${HOME}/xossrc
 
-while getopts ":crst:" opt; do
+while getopts ":cnrst:" opt; do
   case $opt in
      c)
       CLEAN=true ;;
+     n)
+      NO_REPOPICK=true;;
      r)
       RESET=true ;;
      s)
