@@ -62,20 +62,18 @@ function notify {
 mkdir -p ${HOME}/xossrc
 cd ${HOME}/xossrc
 
-while getopts ":cst:" opt; do
+while getopts ":crst:" opt; do
   case $opt in
      c)
-      CLEAN=true
-      ;;
+      CLEAN=true ;;
+     r)
+      RESET=true ;;
      s)
-      SKIP_SYNC=true
-      ;;
+      SKIP_SYNC=true ;;
      t)
-      TARGET_DEVICE=${OPTARG}
-      ;;
+      TARGET_DEVICE=${OPTARG} ;;
      \?)
-      echo "Invalid option: -${OPTARG}" >&2
-      ;;
+      echo "Invalid option: -${OPTARG}" >&2 ;;
    esac
 done
 REPOPICK_TASKS=$(cat repopicks.txt)
