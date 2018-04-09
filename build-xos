@@ -18,12 +18,15 @@ function build {
 
 function upload {
     cd $OUT
-    FILE=${XOS_VERSION}.zip
-    ZIP_SIZE_MB=$(du -h ${FILE} | awk '{print $1}' | sed 's/M//')
-    tgm "Uploading the zip ${FILE}"
-    tgm "zip size ${ZIP_SIZE_MB} MB"
-    UPLOAD_DURATION=$(bc <<< "${ZIP_SIZE_MB}/54") # assuming 54mBps as a consistent upload speed
-    tgm "Estimated upload duration: ${UPLOAD_DURATION} seconds"
+    local FILE=${XOS_VERSION}.zip
+    local ZIP_SIZE_MB=$(du -h ${FILE} | awk '{print $1}' | sed 's/M//')
+    local UPLOAD_DURATION=$(bc <<< "${ZIP_SIZE_MB}/54") # assuming 54mBps as a consistent upload speed
+    tgm "
+    File name: ${FILE}
+    Size: ${ZIP_SIZE_MB}
+    MD5: \`$(md5sum ${FILE} | awk '{print $1}')\`
+    Estimated upload duration: ${UPLOAD_DURATION} seconds
+    "
     GDRIVE_UPLOAD_ID=$(gdrive upload ${FILE} | awk '{print $2}')
     GDRIVE_UPLOAD_ID=$(echo ${GDRIVE_UPLOAD_ID} | awk '{print $2}')
     BUILD_URL=$(printf "https://drive.google.com/uc?id=%s&export=download" ${GDRIVE_UPLOAD_ID})
@@ -52,35 +55,54 @@ function pick_and_reset {
   fi
 }
 
-function notify {
-    tgm "Building for device : ${TARGET_DEVICE}"
-    [[ ${CLEAN} == "true" ]] && tgm "Building clean" || tgm "Not building clean"
-    TEMP=$(echo ${REPOPICK_TASKS} | sed s/\n//)
-    [[ ${TEMP} != "" ]] && tgm "repopick tasks : ${REPOPICK_TASKS}" || tgm "No repopicks"
-}
-
 mkdir -p ${HOME}/xossrc
 cd ${HOME}/xossrc
 
+BUILD_INFO=""
 while getopts ":cnrst:" opt; do
   case $opt in
      c)
+      BUILD_INFO="${BUILD_INFO}
+Building clean
+"
       CLEAN=true ;;
      n)
-      NO_REPOPICK=true;;
+      BUILD_INFO="${BUILD_INFO}
+Skipping repopick
+"
+      NO_REPOPICK=true ;;
      r)
+      BUILD_INFO="${BUILD_INFO}
+Skipping reporeset
+"
       RESET=true ;;
      s)
+      BUILD_INFO="${BUILD_INFO}
+Skipping reposync
+"
       SKIP_SYNC=true ;;
      t)
+      BUILD_INFO="${BUILD_INFO}
+Building for device: ${OPTARG}
+"
       TARGET_DEVICE=${OPTARG} ;;
      \?)
       echo "Invalid option: -${OPTARG}" >&2 ;;
    esac
 done
+
 REPOPICK_TASKS=$(cat repopicks.txt)
+TEMP=$(echo ${REPOPICK_TASKS} | sed s/\n//)
+if [[ ${TEMP} != "" ]]; then
+BUILD_INFO="${BUILD_INFO}
+repopick tasks: ${REPOPICK_TASKS}"
+else
+BUILD_INFO="${BUILD_INFO}
+No repopicks"
+fi
+tgm "${BUILD_INFO}"
+unset BUILD_INFO
 XOS_VERSION=XOS_${TARGET_DEVICE}_8.1_$(date +%Y%m%d)
 
 init_if_needed
-notify
 build
