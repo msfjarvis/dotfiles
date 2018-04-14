@@ -39,6 +39,6 @@ fi
 
 if [[ "$@" =~ "--setup-adb" || "$@" =~ "--all" ]]; then
     echoText "Setting up multi-adb"
-    ./${SCRIPT_DIR}/adb-multi/adb-multi generate
+    ${SCRIPT_DIR}/adb-multi/adb-multi generate
     cp ${SCRIPT_DIR}/adb-multi/adb-multi ~/bin
 fi
