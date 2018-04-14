@@ -59,6 +59,6 @@ function build {
     setup_files
 }
 
-DEVICE=${1}
+DEVICE=${1:?}
 TW_VERSION=${2}
 build
