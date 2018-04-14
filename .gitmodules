@@ -1,3 +1,6 @@
 [submodule "adb-multi"]
 	path = adb-multi
 	url = git://github.com/KreAch3R/adb-multi.git
+[submodule "tdm-scripts"]
+	path = tdm-scripts
+	url = https://github.com/tdm/android-scripts
