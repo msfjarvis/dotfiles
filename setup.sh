@@ -33,7 +33,11 @@ if [[ "$@" =~ "--install-gitconfig" || "$@" =~ "--all" ]]; then
   mv ~/.gitconfig ~/.gitconfig.old # Failsafe in case we screw up
   cp ${SCRIPT_DIR}/.gitconfig ~/.gitconfig
   for item in $(find gitconfig_fragments -name fragment_*); do
-    cat ${item} >> ~/.gitconfig
+    decrypted=$(echo ${item} | cut -d '.' -f 1)
+    rm -f ${decrypted} 2>/dev/null
+    gpg ${item}
+    [[ ! -f ${decrypted} ]] && return
+    cat ${decrypted} >> ~/.gitconfig
   done
 fi
 
