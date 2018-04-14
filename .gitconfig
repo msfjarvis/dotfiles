@@ -1,7 +1,7 @@
 [core]
-        abbrev = 12
+	abbrev = 12
 [pretty]
-        fixes = Fixes: %h (\"%s\")
+	fixes = Fixes: %h (\"%s\")
 [user]
 	signingkey = 4AD75758D9EE741C
 	name = Harsh Shandilya
@@ -20,18 +20,18 @@
 [credential]
 	helper = cache --timeout=3000
 [alias]
-  add-change-id = "!EDITOR='sed -i -re s/^pick/e/' sh -c 'git rebase -i $1 && while test -f .git/rebase-merge/interactive; do git commit --amend --no-edit && git commit --amend --no-edit && git rebase --continue; done' -"
-  reword = "!EDITOR='sed -i -re s/^pick/e/' sh -c 'git rebase -i $1 && while test -f .git/rebase-merge/interactive; do git commit --amend && git rebase --continue;done' -"
-  lo = log --oneline --no-merges
-  los = log --oneline --stat
-  lof = log --format=fixes
-  cp = cherry-pick --signoff
-  cpa = cherry-pick --abort
-  s = status
-  ss = show --stat
-  ds = diff --stat
-  lst = ls-tree --full-tree -r HEAD
-  suicide = reset --hard
+	add-change-id = "!EDITOR='sed -i -re s/^pick/e/' sh -c 'git rebase -i $1 && while test -f .git/rebase-merge/interactive; do git commit --amend --no-edit && git commit --amend --no-edit && git rebase --continue; done' -"
+	reword = "!EDITOR='sed -i -re s/^pick/e/' sh -c 'git rebase -i $1 && while test -f .git/rebase-merge/interactive; do git commit --amend && git rebase --continue;done' -"
+	lo = log --oneline --no-merges
+	los = log --oneline --stat
+	lof = log --format=fixes
+	cp = cherry-pick --signoff
+	cpa = cherry-pick --abort
+	s = status
+	ss = show --stat
+	ds = diff --stat
+	lst = ls-tree --full-tree -r HEAD
+	suicide = reset --hard
 
 [merge]
 	log = true
