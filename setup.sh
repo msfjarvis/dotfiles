@@ -17,6 +17,11 @@ for ITEM in ${TDM_SCRIPTS[@]}; do
     cp tdm-scripts/${ITEM} ~/bin/${ITEM}
 done
 
+if [[ ! $(grep msfjarvis-aliases-start ~/.bash_aliases) ]]; then
+    echo $'\n' >> ~/.bash_aliases
+    cat ${SCRIPT_DIR}/.bash_aliases >> ~/.bash_aliases
+fi
+
 if [[ ! $(echo $PATH) =~ /home/$(whoami)/bin ]]; then
     reportWarning "~/bin is not in PATH, appending the export to bashrc"
     echo $'\nexport PATH=~/bin:$PATH' >> ~/.bashrc
