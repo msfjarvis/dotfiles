@@ -27,7 +27,7 @@ HOST=jarvisbox
 # Paths
 WORKING_DIR=$(pwd)
 ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2"
-if [[ -z TOOLCHAIN_DIR ]]; then
+if [[ -z ${TOOLCHAIN_DIR} ]]; then
     TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/aarch64--glibc--bleeding-edge-2018.02-1/"
     TOOLCHAIN_SEARCH_STRING="*gnu-gcc"
 fi
