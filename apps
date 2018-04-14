@@ -26,12 +26,15 @@ function update_template {
     reportWarning "Updating AndroidManifest"
     cp ${TEMPLATE_DIR}/app/src/main/AndroidManifest.xml ${WORKING_DIR}/app/src/main/AndroidManifest.xml
     sed -i "s#substratum\.theme\.template#${PACKAGE_NAME}#g" ${WORKING_DIR}/app/src/main/AndroidManifest.xml
-    reportWarning "Updating Gradle wrapper files"
+    reportWarning "Updating Gradle wrapper and build files"
     cp ${TEMPLATE_DIR}/build.gradle ${WORKING_DIR}
-#    cp ${TEMPLATE_DIR}/app/build.gradle ${WORKING_DIR}/app/build.gradle
+    cp ${TEMPLATE_DIR}/app/build.gradle ${WORKING_DIR}/app/build.gradle
     cp -R ${TEMPLATE_DIR}/gradle/ ${WORKING_DIR}
     sed -i "s#substratum\.theme\.template#${PACKAGE_NAME}#g" ${WORKING_DIR}/app/build.gradle
-    git commit -am "[CHANGEME]: Update to upstream revision ${TEMPLATE_HASH}" --edit
+    reportWarning "Updating resources"
+    cp -R ${TEMPLATE_DIR}/app/src/main/res/values/* ${WORKING_DIR}/app/src/main/res/values/
+    ga -A -p ${WORKING_DIR}/app/build.gradle ${WORKING_DIR}/app/src/main/res/ ${WORKING_DIR}/gradle/ ${WORKING_DIR}/build.gradle
+    git commit -m "[CHANGEME]: Update to upstream revision ${TEMPLATE_HASH}" --edit
 }
 
 function makeapk {
