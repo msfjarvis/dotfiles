@@ -8,16 +8,21 @@ declare -a TDM_SCRIPTS=("gerrit-review")
 
 mkdir -p ~/bin/
 
+echoText "Installing scripts"
 for SCRIPT in ${SCRIPTS[@]}; do
+    echo -e "${CL_YLW}Processing ${SCRIPT}${CL_RST}"
     rm -rf ~/bin/${SCRIPT}
     ln -s ${SCRIPT_DIR}/${SCRIPT} ~/bin/${SCRIPT}
 done
 
-for ITEM in ${TDM_SCRIPTS[@]}; do
-    cp tdm-scripts/${ITEM} ~/bin/${ITEM}
+echoText "Setting up tdm-scripts"
+for SCRIPT in ${TDM_SCRIPTS[@]}; do
+    echo -e "${CL_YLW}Processing ${SCRIPT}${CL_RST}"
+    cp tdm-scripts/${SCRIPT} ~/bin/${SCRIPT}
 done
 
 if [[ ! $(grep msfjarvis-aliases-start ~/.bash_aliases) ]]; then
+    reportWarning "Bash aliases not installed, installing now"
     echo $'\n' >> ~/.bash_aliases
     cat ${SCRIPT_DIR}/.bash_aliases >> ~/.bash_aliases
 fi
@@ -41,7 +46,7 @@ if [[ "$@" =~ "--install-gitconfig" || "$@" =~ "--all" ]]; then
     decrypted=$(echo ${item} | cut -d '.' -f 1)
     rm -f ${decrypted} 2>/dev/null
     gpg ${item}
-    [[ ! -f ${decrypted} ]] && return
+    [[ ! -f ${decrypted} ]] && break
     cat ${decrypted} >> ~/.gitconfig
   done
 fi
