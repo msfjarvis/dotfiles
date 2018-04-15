@@ -9,7 +9,7 @@ function build {
     [[ ${SKIP_SYNC} == "true" ]] || reposync turbo
     pick_and_reset
     tgm "Build started."
-    [[ ${CLEAN} == "true" ]] && rm -rf out/target/product/${TARGET_DEVICE}
+    [[ ${CLEAN} == "true" ]] && rm -rf out/target/product
     local LOG_FILE=XOS_${TARGET_DEVICE}-$(date +"%Y%m%d"-"%H%M%S").txt
     build full XOS_${TARGET_DEVICE}-userdebug noclean 2>&1 | tee -a ${LOG_FILE}
     echo "$(tail -n 500 ${LOG_FILE})" > ${LOG_FILE}
