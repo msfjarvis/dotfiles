@@ -15,6 +15,7 @@ function build {
     echo "$(tail -n 500 ${LOG_FILE})" > ${LOG_FILE}
     OUT="out/target/product/${TARGET_DEVICE}" # For some reason this is getting unset after build, hardcode for now.
     if [[ -f ${OUT}/${XOS_VERSION}.zip ]]; then
+        tgm "Build successful, uploading."
         upload
     else
         tgm "Build failed."
@@ -28,16 +29,15 @@ function upload {
     local FILE=${XOS_VERSION}.zip
     local ZIP_SIZE_MB=$(du -h ${FILE} | awk '{print $1}' | sed 's/M//')
     local UPLOAD_DURATION=$(bc <<< "${ZIP_SIZE_MB}/54") # assuming 54mBps as a consistent upload speed
-    tgm "
-    File name: ${FILE}
-    Size: ${ZIP_SIZE_MB}
-    MD5: \`$(md5sum ${FILE} | awk '{print $1}')\`
-    Estimated upload duration: ${UPLOAD_DURATION} seconds
-    "
+    local MD5=$(md5sum ${FILE} | awk '{print $1}')
     GDRIVE_UPLOAD_ID=$(gdrive upload ${FILE} | awk '{print $2}')
     GDRIVE_UPLOAD_ID=$(echo ${GDRIVE_UPLOAD_ID} | awk '{print $2}')
-    BUILD_URL=$(printf "https://drive.google.com/uc?id=%s&export=download" ${GDRIVE_UPLOAD_ID})
-    tgm "[${XOS_VERSION}.zip]($BUILD_URL) uploaded"
+    UPLOAD_INFO="
+File: [${FILE}]($(printf "https://drive.google.com/uc?id=%s&export=download" ${GDRIVE_UPLOAD_ID}))
+Size: ${ZIP_SIZE_MB}
+MD5: \`${MD5}\`
+"
+    tgm "${UPLOAD_INFO}"
     cd ${ANDROID_BUILD_TOP}
 }
 
