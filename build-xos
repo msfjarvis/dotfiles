@@ -30,7 +30,7 @@ function upload {
     local ZIP_SIZE_MB=$(du -h ${FILE} | awk '{print $1}' | sed 's/M//')
     local UPLOAD_DURATION=$(bc <<< "${ZIP_SIZE_MB}/54") # assuming 54mBps as a consistent upload speed
     local MD5=$(md5sum ${FILE} | awk '{print $1}')
-    GDRIVE_UPLOAD_ID=$(gdrive upload ${FILE} | awk '{print $2}')
+    GDRIVE_UPLOAD_ID=$(gdrive upload --share ${FILE} | awk '{print $2}')
     GDRIVE_UPLOAD_ID=$(echo ${GDRIVE_UPLOAD_ID} | awk '{print $2}')
     UPLOAD_INFO="
 File: [${FILE}]($(printf "https://drive.google.com/uc?id=%s&export=download" ${GDRIVE_UPLOAD_ID}))
