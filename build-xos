@@ -4,22 +4,31 @@
 SCRIPT_DIR="$(cd "$( dirname $( readlink -f "${BASH_SOURCE[0]}" ) )" && pwd)"
 source ${SCRIPT_DIR}/common
 
+function notify {
+    local CHAT_ID
+    case ${TARGET_DEVICE} in
+    "oneplus3") CHAT_ID=${OP3_JAGRAV_CHAT_ID} ;;
+    *) CHAT_ID="" ;;
+    esac
+    tgm ${@} ${CHAT_ID}
+}
+
 function build {
     . build/envsetup.sh
     [[ ${SKIP_SYNC} == "true" ]] || reposync turbo
     pick_and_reset
-    tgm "Build started."
+    notify "Build started."
     [[ ${CLEAN} == "true" ]] && rm -rf out/target/product
     local LOG_FILE=XOS_${TARGET_DEVICE}-$(date +"%Y%m%d"-"%H%M%S").txt
     build full XOS_${TARGET_DEVICE}-userdebug noclean 2>&1 | tee -a ${LOG_FILE}
     echo "$(tail -n 500 ${LOG_FILE})" > ${LOG_FILE}
     OUT="out/target/product/${TARGET_DEVICE}" # For some reason this is getting unset after build, hardcode for now.
     if [[ -f ${OUT}/${XOS_VERSION}.zip ]]; then
-        tgm "Build successful, uploading."
+        notify "Build successful, uploading."
         upload
     else
-        tgm "Build failed."
-        tgm $(hastebin ${LOG_FILE} noraw)
+        notify "Build failed."
+        notify $(hastebin ${LOG_FILE} noraw)
         return 1
     fi
 }
@@ -37,7 +46,7 @@ File: [${FILE}]($(printf "https://drive.google.com/uc?id=%s&export=download" ${G
 Size: ${ZIP_SIZE_MB}
 MD5: \`${MD5}\`
 "
-    tgm "${UPLOAD_INFO}"
+    notify "${UPLOAD_INFO}"
     cd ${ANDROID_BUILD_TOP}
 }
 
@@ -111,7 +120,7 @@ BUILD_INFO="${BUILD_INFO}
 No repopicks
 "
 fi
-tgm "${BUILD_INFO}"
+notify "${BUILD_INFO}"
 unset BUILD_INFO
 XOS_VERSION=XOS_${TARGET_DEVICE}_8.1_$(date +%Y%m%d)
 
