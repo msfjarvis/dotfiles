@@ -20,12 +20,21 @@ function build {
     notify "Build started."
     [[ ${CLEAN} == "true" ]] && rm -rf out/target/product
     local LOG_FILE=XOS_${TARGET_DEVICE}-$(date +"%Y%m%d"-"%H%M%S").txt
-    build full XOS_${TARGET_DEVICE}-userdebug noclean 2>&1 | tee -a ${LOG_FILE}
+    if [[ -z ${MODULE} ]]; then
+        build full XOS_${TARGET_DEVICE}-userdebug noclean 2>&1 | tee -a ${LOG_FILE}
+    else
+        build module XOS_${TARGET_DEVICE}-userdebug ${MODULE} noclean 2>&1 | tee -a ${LOG_FILE}
+    fi
     echo "$(tail -n 500 ${LOG_FILE})" > ${LOG_FILE}
     OUT="out/target/product/${TARGET_DEVICE}" # For some reason this is getting unset after build, hardcode for now.
-    if [[ -f ${OUT}/${XOS_VERSION}.zip ]]; then
+    if [[ -z ${MODULE} ]]; then
+        OUT_FILE=${OUT}/${XOS_VERSION}.zip
+    else
+        OUT_FILE=$(find ${OUT}/system -name ${MODULE}.*)
+    fi
+    if [[ -f ${OUT_FILE} ]]; then
         notify "Build successful, uploading."
-        upload
+        upload ${OUT_FILE}
     else
         notify "Build failed."
         notify $(hastebin ${LOG_FILE} noraw)
@@ -34,8 +43,7 @@ function build {
 }
 
 function upload {
-    cd $OUT
-    local FILE=${XOS_VERSION}.zip
+    local FILE=${1:?}
     local ZIP_SIZE_MB=$(du -h ${FILE} | awk '{print $1}' | sed 's/M//')
     local UPLOAD_DURATION=$(bc <<< "${ZIP_SIZE_MB}/54") # assuming 54mBps as a consistent upload speed
     local MD5=$(md5sum ${FILE} | awk '{print $1}')
@@ -47,7 +55,6 @@ Size: ${ZIP_SIZE_MB}
 MD5: \`${MD5}\`
 "
     notify "${UPLOAD_INFO}"
-    cd ${ANDROID_BUILD_TOP}
 }
 
 function init_if_needed {
@@ -74,13 +81,18 @@ mkdir -p ${HOME}/xossrc
 cd ${HOME}/xossrc
 
 BUILD_INFO=""
-while getopts ":cnrst:" opt; do
+while getopts ":cm:nrst:" opt; do
   case $opt in
      c)
       BUILD_INFO="${BUILD_INFO}
 Building clean
 "
       CLEAN=true ;;
+     m)
+      BUILD_INFO="${BUILD_INFO}
+Building module ${OPTARG}
+"
+      MODULE=${OPTARG} ;;
      n)
       BUILD_INFO="${BUILD_INFO}
 Skipping repopick
