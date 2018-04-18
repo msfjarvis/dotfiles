@@ -4,20 +4,11 @@
 SCRIPT_DIR="$(cd "$( dirname $( readlink -f "${BASH_SOURCE[0]}" ) )" && pwd)"
 source ${SCRIPT_DIR}/common
 
-function notify {
-    local CHAT_ID
-    case ${TARGET_DEVICE} in
-    "oneplus3") CHAT_ID=${OP3_JAGRAV_CHAT_ID} ;;
-    *) CHAT_ID="" ;;
-    esac
-    tgm ${@} ${CHAT_ID}
-}
-
 function build {
     . build/envsetup.sh
     [[ ${SKIP_SYNC} == "true" ]] || reposync turbo
     pick_and_reset
-    notify "Build started."
+    tgm "Build started."
     [[ ${CLEAN} == "true" ]] && rm -rf out/target/product
     local LOG_FILE=XOS_${TARGET_DEVICE}-$(date +"%Y%m%d"-"%H%M%S").txt
     if [[ -z ${MODULE} ]]; then
@@ -33,11 +24,11 @@ function build {
         OUT_FILE=$(find ${OUT}/system -name ${MODULE}.*)
     fi
     if [[ -f ${OUT_FILE} ]]; then
-        notify "Build successful, uploading."
+        tgm "Build successful, uploading."
         upload ${OUT_FILE}
     else
-        notify "Build failed."
-        notify $(hastebin ${LOG_FILE} noraw)
+        tgm "Build failed."
+        tgm $(hastebin ${LOG_FILE} noraw)
         return 1
     fi
 }
@@ -54,7 +45,8 @@ File: [${FILE}]($(printf "https://drive.google.com/uc?id=%s&export=download" ${G
 Size: ${ZIP_SIZE_MB}
 MD5: \`${MD5}\`
 "
-    notify "${UPLOAD_INFO}"
+    tgm "${UPLOAD_INFO}"
+    cd ${ANDROID_BUILD_TOP}
 }
 
 function init_if_needed {
@@ -132,7 +124,7 @@ BUILD_INFO="${BUILD_INFO}
 No repopicks
 "
 fi
-notify "${BUILD_INFO}"
+tgm "${BUILD_INFO}"
 unset BUILD_INFO
 XOS_VERSION=XOS_${TARGET_DEVICE}_8.1_$(date +%Y%m%d)
 
