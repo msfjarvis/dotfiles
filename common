@@ -66,6 +66,24 @@ function transfer {
   echo ""
 }
 
+# Upload to GDrive
+function upload {
+    local FILE=${1:?}
+    local ZIP_SIZE_MB=$(du -h ${FILE} | awk '{print $1}' | sed 's/M//')
+    local UPLOAD_DURATION=$(bc <<< "${ZIP_SIZE_MB}/54") # assuming 54mBps as a consistent upload speed
+    local MD5=$(md5sum ${FILE} | awk '{print $1}')
+    GDRIVE_UPLOAD_ID=$(gdrive upload --share ${FILE} | awk '{print $2}')
+    GDRIVE_UPLOAD_ID=$(echo ${GDRIVE_UPLOAD_ID} | awk '{print $2}')
+    UPLOAD_INFO="
+File: [$(basename ${FILE})]($(printf "https://drive.google.com/uc?id=%s&export=download" ${GDRIVE_UPLOAD_ID}))
+Size: ${ZIP_SIZE_MB}
+MD5: \`${MD5}\`
+GDrive ID: \`${GDRIVE_UPLOAD_ID}\`
+"
+    tgm "${UPLOAD_INFO}"
+    cd ${ANDROID_BUILD_TOP}
+}
+
 # Send a markdown encoded Telegram message
 function tgm {
     chat_id="${2}"
