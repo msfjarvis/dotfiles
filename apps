@@ -69,12 +69,12 @@ function findapks {
 }
 
 function p2d {
-  adb-"${CURRENT_DEVICE}" shell mount system
+  adb-garlic shell mount system
   local FINAL_PATH
-  FINAL_PATH=$(adb-"${CURRENT_DEVICE}" shell find /system -name "$1")
+  FINAL_PATH=$(adb-garlic shell find /system -name "$1")
   echo "${FINAL_PATH}"
-  adb-"${CURRENT_DEVICE}" push "$1" "${FINAL_PATH}"
-  adb-"${CURRENT_DEVICE}" shell umount system
+  adb-garlic push "$1" "${FINAL_PATH}"
+  adb-garlic shell umount system
 }
 
 function andromeda {
