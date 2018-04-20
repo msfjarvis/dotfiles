@@ -18,7 +18,7 @@ done
 echoText "Setting up tdm-scripts"
 for SCRIPT in ${TDM_SCRIPTS[@]}; do
     echo -e "${CL_YLW}Processing ${SCRIPT}${CL_RST}"
-    cp tdm-scripts/${SCRIPT} ~/bin/${SCRIPT}
+    cp ${SCRIPT_DIR}/tdm-scripts/${SCRIPT} ~/bin/${SCRIPT}
 done
 
 if [[ ! $(grep msfjarvis-aliases-start ~/.bash_aliases) ]]; then
@@ -27,7 +27,7 @@ if [[ ! $(grep msfjarvis-aliases-start ~/.bash_aliases) ]]; then
     cat ${SCRIPT_DIR}/.bash_aliases >> ~/.bash_aliases
 fi
 
-if [[ ! $(echo $PATH) =~ /home/$(whoami)/bin ]]; then
+if [[ ! $(echo $PATH) =~ ~/bin ]]; then
     reportWarning "~/bin is not in PATH, appending the export to bashrc"
     echo $'\nexport PATH=~/bin:$PATH' >> ~/.bashrc
 fi
