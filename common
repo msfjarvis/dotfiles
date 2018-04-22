@@ -76,7 +76,7 @@ function upload {
     GDRIVE_UPLOAD_ID=$(echo ${GDRIVE_UPLOAD_ID} | awk '{print $2}')
     UPLOAD_INFO="
 File: [$(basename ${FILE})]($(printf "https://drive.google.com/uc?id=%s&export=download" ${GDRIVE_UPLOAD_ID}))
-Size: ${ZIP_SIZE_MB}
+Size: ${ZIP_SIZE_MB}M
 MD5: \`${MD5}\`
 GDrive ID: \`${GDRIVE_UPLOAD_ID}\`
 "
