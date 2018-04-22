@@ -63,11 +63,18 @@ function reboot {
 }
 
 # Kernel stuff
-
 function kgrep {
     find . -name .git -prune -o -path ./out -prune -o -regextype posix-egrep \
         -iregex '(.*\/Makefile|.*\/Kconfig|.*\/oneplus3_defconfig|.*\/caesium_defconfig|.*\/wahoo_defconfig)' -type f \
         -exec grep --color -n "$@" {} +
+}
+
+function apply_patches {
+    local KERN_VER="3.18"
+    [[ -z ${1} ]] || KERN_VER=${1}
+    for patch in $(cat ~/git-repos/halogenOS/stable-queue/queue-${KERN_VER}/series); do
+        git am ~/git-repos/halogenOS/stable-queue/queue-${KERN_VER}/${patch}
+    done
 }
 
 function flasherThingy {
