@@ -3,17 +3,11 @@
 # SPDX-License-Identifier: GPL-3.0-only #
 
 # Source common functions
-SCRIPT_DIR="$(cd "$( dirname $( readlink -f "${BASH_SOURCE[0]}" ) )" && pwd)"
-source ${SCRIPT_DIR}/common
+SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
+source "${SCRIPT_DIR}/common"
 
 # Resources
 DEFCONFIG="jarvisbox_defconfig"
-
-# Caesium Kernel Details
-KERNEL_NAME="Caesium"
-GIT_HASH=$(git rev-parse --short HEAD)
-DEVICE="jarvisbox"
-FINAL_VER="${KERNEL_NAME}-${DEVICE}"
 
 # Vars
 ARCH=x86
@@ -29,61 +23,61 @@ OUT_DIR="${WORKING_DIR}/out/"
 
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper {
-    make O=${OUT_DIR} \
-        ARCH=${ARCH} SUBARCH=${SUBARCH} \
-        KBUILD_BUILD_USER=${USER} \
-        KBUILD_BUILD_HOST=${HOST} \
-        LOCALVERSION=${LOCALVERSION} \
-        -j$(nproc --all) $@
+    make O="${OUT_DIR}" \
+        ARCH="${ARCH}" SUBARCH="${SUBARCH}" \
+        KBUILD_BUILD_USER="${USER}" \
+        KBUILD_BUILD_HOST="${HOST}" \
+        LOCALVERSION="${LOCALVERSION}" \
+        -j"$(nproc --all)" "$@"
 }
 
 # Duh
 function make_kernel {
-  make_defconfig
-  if [ ${MODULE} ]; then
-      make_wrapper ${MODULE}
-  elif [ ${TARGET} ]; then
-      make_wrapper ${TARGET}
-  else
-      make_wrapper all
-  fi
+    make_defconfig
+    if [ "${MODULE}" ]; then
+        make_wrapper "${MODULE}"
+    else
+        make_wrapper all
+    fi
 }
 
 # Called by make_kernel, used to trap defconfig regen events
 function make_defconfig {
-  [ ${CLEAN} ] && rm -rf ${OUT_DIR}
-  make_wrapper ${DEFCONFIG} 1>/dev/null 2>/dev/null
-  make_wrapper savedefconfig 1>/dev/null 2>/dev/null
-  [ ${REGEN_DEFCONFIG} ] && cp ${OUT_DIR}/defconfig arch/${ARCH}/configs/${DEFCONFIG} && echoText "Regenerated defconfig successfully" && exit 1
+    [ "${CLEAN}" ] && rm -rf "${OUT_DIR}"
+    make_wrapper "${DEFCONFIG}" 1>/dev/null 2>/dev/null
+    make_wrapper savedefconfig 1>/dev/null 2>/dev/null
+    [ "${REGEN_DEFCONFIG}" ] && cp "${OUT_DIR}"/defconfig arch/"${ARCH}"/configs/"${DEFCONFIG}" && echoText "Regenerated defconfig successfully" && exit 1
 }
 
-while getopts ":cbrm:t:d:" opt; do
-  case $opt in
-    c)
-      echoText " Building clean " >&2
-      CLEAN=true
-      ;;
-    r)
-      echoText " Regenerating defconfig " >&2
-      REGEN_DEFCONFIG=true
-      ;;
-    t)
-      echoText "Building ${OPTARG} target instead of all" >&2
-      TARGET="${OPTARG}"
-      ;;
-    m)
-      MODULE=${OPTARG}
-      [[ ${MODULE} == */ ]] || MODULE=${MODULE}/
-      if [[ ! "$(ls ${MODULE}Kconfig*  2>/dev/null)" ]]; then
-          reportError "Invalid module specified - ${MODULE}"
-          return 1
-      fi
-      echoText "Building module ${MODULE}"
-      ;;
-    \?)
-      reportWarning "Invalid option: -${OPTARG}" >&2
-      ;;
-  esac
+while getopts ":crm:" opt; do
+    case $opt in
+      c)
+        echoText " Building clean " >&2
+        CLEAN=true
+        ;;
+      r)
+        echoText " Regenerating defconfig " >&2
+        REGEN_DEFCONFIG=true
+        ;;
+      m)
+        MODULE="${OPTARG}"
+        [[ "${MODULE}" == */ ]] || MODULE="${MODULE}"/
+        if [[ ! "$(ls "${MODULE}"Kconfig*  2>/dev/null)" ]]; then
+            reportError "Invalid module specified - ${MODULE}"
+            return 1
+        fi
+        echoText "Building module ${MODULE}"
+        ;;
+      \?)
+        reportWarning "Invalid option: -${OPTARG}" >&2
+        ;;
+    esac
 done
 
+DATE_START=$(date +"%s")
 make_kernel
+
+DATE_END=$(date +"%s")
+DIFF=$(("${DATE_END}" - "${DATE_START}"))
+
+reportWarning "Time: ${DIFF} / 60 minute(s) and ${DIFF} % 60 seconds."

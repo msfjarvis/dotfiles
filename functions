@@ -4,9 +4,9 @@
 
 # Source common functions
 SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
-source ${SCRIPT_DIR}/common
-source ${SCRIPT_DIR}/gitshit
-source ${SCRIPT_DIR}/apps
+source "${SCRIPT_DIR}/common"
+source "${SCRIPT_DIR}/gitshit"
+source "${SCRIPT_DIR}/apps"
 
 function reload {
     source ~/.bashrc
@@ -19,10 +19,10 @@ function cpuinfo {
 function battinfo {
     local BASE=/sys/class/power_supply/BAT0/
     declare -a ITEMS=("capacity_level:Battery_status" "charge_now:Current_charge" "capacity:Battery_percentage" "status:Status")
-    for ITEM in ${ITEMS[@]};do
-        NODE=$(echo ${ITEM} | cut -d ':' -f 1)
-        LABEL=$(echo ${ITEM} | cut -d ':' -f 2)
-        echo -e "${CL_RED}$(echo ${LABEL} | sed 's/_/ /g')${CL_RST}: ${CL_YLW}$(cat ${BASE}${NODE})${CL_RST}"
+    for ITEM in "${ITEMS[@]}"; do
+        NODE=$(echo "${ITEM}" | cut -d ':' -f 1)
+        LABEL=$(echo "${ITEM}" | cut -d ':' -f 2)
+        echo -e "${CL_RED}${LABEL/_/ }${CL_RST}: ${CL_YLW}$(cat "${BASE}${NODE}")${CL_RST}"
     done
 }
 
@@ -45,10 +45,18 @@ function backup {
 
 # Random utility tooling
 function weather {
-    if (( `tput cols` < 125 )); then # 125 is min size for correct display
-        [ -z "$1" ] && curl "wttr.in/Ghaziabad?0" || curl "wttr.in/~$1?0"
+    if [ "$(tput cols)" -lt 125 ]; then # 125 is min size for correct display
+        if [ -z "$1" ]; then
+            curl "wttr.in/Ghaziabad?0"
+        else
+            curl "wttr.in/~$1?0"
+        fi
     else
-        [ -z "$1" ] && curl "wttr.in/Ghaziabad" || curl "wttr.in/~$1"
+        if [ -z "$1" ]; then
+            curl "wttr.in/Ghaziabad"
+        else
+            curl "wttr.in/~$1"
+        fi
     fi
 }
 
@@ -56,11 +64,8 @@ function reboot {
   echo "Do you really wanna reboot??"
   read confirmation
   case "${confirmation}" in
-      'y'|'Y')
-          $(which reboot)
-          ;;
-      *)
-          ;;
+      'y'|'Y') exec "$(command -v reboot)" ;;
+      *) ;;
   esac
 }
 
@@ -73,37 +78,42 @@ function kgrep {
 
 function apply_patches {
     local KERN_VER="3.18"
-    [[ -z ${1} ]] || KERN_VER=${1}
-    for patch in $(cat ~/git-repos/halogenOS/stable-queue/queue-${KERN_VER}/series); do
-        git am ~/git-repos/halogenOS/stable-queue/queue-${KERN_VER}/${patch}
+    [ -z "${1}" ] || KERN_VER="${1}"
+    local PATCH_DIR="../stable-queue/queue-${KERN_VER}"
+    grep -v '^ *#' < "${PATCH_DIR}/series" | while IFS= read -r patch
+    do
+        git am ~/git-repos/halogenOS/stable-queue/queue-"${KERN_VER}"/"${patch}"
     done
 }
 
 function stableprep {
-    ARCH=x86_64 make x86_64_defconfig -j$(nproc --all)
-    make prepare -j$(nproc --all)
+    local JOBS
+    JOBS="-j$(nproc --all)"
+    ARCH=x86_64 make x86_64_defconfig "${JOBS}"
+    make prepare "${JOBS}"
     make allyesconfig
-    find ${1:?} -name *.o -exec rm -v {} \;
+    find "${1:?}" -name "*.o" -exec rm -v {} \;
 }
 
 function flasherThingy {
     cd ~/Downloads/walleye
-    for file in $(adb-walleye shell ls /sdcard/Download/FlashKernel-Walleye-${1}-*.img);do
-        partition=$(echo ${file} | cut -d '-' -f 5 | sed 's/\.img//')
+    for file in $(adb-walleye shell ls /sdcard/Download/FlashKernel-Walleye-"${1}"-*.img);do
+        partition=$(echo "${file}" | cut -d '-' -f 5 | sed 's/\.img//')
         reportWarning "Pulling ${file}"
-        if [[ ${partition} == "boot" ]];then
-            adb-walleye pull /sdcard/MagiskManager/patched_boot.img $(basename ${file})
+        if [[ "${partition}" == "boot" ]];then
+            adb-walleye pull /sdcard/MagiskManager/patched_boot.img "$(basename "${file}")"
         else
-         adb-walleye pull /sdcard/Download/$(basename ${file})
+         adb-walleye pull /sdcard/Download/"$(basename "${file}")"
         fi
     done
     read -n 1 -s -r -p "Press any key to continue..."
     reportWarning "Rebooting to bootloader"
     adb-walleye reboot bootloader
     sleep 5
-    for file in $(ls FlashKernel-Walleye-${1}-*.img);do
-        partition=$(echo ${file} | cut -d '-' -f 5 | sed 's/\.img//')
-        fastboot flash ${partition} ${file}
+    for file in FlashKernel-Walleye-${1}-*.img
+    do
+        partition=$(echo "${file}" | cut -d '-' -f 5 | sed 's/\.img//')
+        fastboot flash "${partition}" "${file}"
     done
     echoText "Flashing complete, rebooting"
     fastboot reboot
@@ -111,12 +121,19 @@ function flasherThingy {
 
 
 function findJ {
-    ag -ia ${1} | grep java | cut -f 1 -d ':' | uniq
+    ag -ia "${1}" | grep java | cut -f 1 -d ':' | uniq
 }
 
 function fao {
-    [ -z ${1} ] && echoText "Supply a filename moron" && return
-    [ -z ${2} ] && nano -L $(find -name ${1}.*) || nano -L $(find ${2} -name ${1}.*)
+    if [ -z "${1}" ]; then
+        echoText "Supply a filename moron"
+        return
+    else
+        local SEARCH_DIR
+        SEARCH_DIR="."
+        [ -z "${2}" ] || SEARCH_DIR="${2}"
+        nano -L "$(find "${SEARCH_DIR}" -name "${1}.*")"
+    fi
 }
 
 function night {
