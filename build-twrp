@@ -3,46 +3,50 @@
 # SPDX-License-Identifier: GPL-3.0-only #
 
 # Source common functions
-SCRIPT_DIR="$(cd "$( dirname $( readlink -f "${BASH_SOURCE[0]}" ) )" && pwd)"
-source ${SCRIPT_DIR}/common
+SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
+source "${SCRIPT_DIR}/common"
+
+TWRP_VERSION="$(get_current_ver)"
 
 # Checks if the script is being run from the top of the
 # Android source tree
 function is_top {
-    [[ -d .repo/manifests/ ]] || reportError "Not building inside an AOSP tree"
+    [ -d .repo/manifests/ ] || reportError "Not building inside an AOSP tree"
 }
 
 # Get the current TWRP version. Slightly hacky but works
 function get_current_ver {
-    if [[ $(grep TW_MAIN_VERSION_STR bootable/recovery/variables.h) ]]; then
-        echo $(grep TW_MAIN_VERSION_STR bootable/recovery/variables.h | grep -v TW_DEVICE_VERSION | awk '{print $3}' | sed 's/"//g')
-    else
-        echo ""
+    if "grep -q TW_MAIN_VERSION_STR bootable/recovery/variables.h"; then
+        TWRP_VERSION=$(grep TW_MAIN_VERSION_STR bootable/recovery/variables.h | grep -v TW_DEVICE_VERSION | awk '{print $3}' | sed 's/"//g')
     fi
 }
 
 # Set final TWRP version
 function set_vars {
     unset TW_DEVICE_VERSION
-    if [[ $(get_current_ver) == "" ]]; then
+    if [ "${TWRP_VERSION}" == "" ]; then
         reportError "Are you sure you're building TWRP?"
     else
-        [[ ${TW_VERSION} == "" ]] && TW_REAL_VER=$(get_current_ver) || TW_REAL_VER=$(get_current_ver)-${TW_VERSION}
+        if [ -z "${TW_VERSION}" ]; then
+            TW_REAL_VER="${TWRP_VERSION}"
+        else
+            TW_REAL_VER="${TWRP_VERSION}"-"${TW_VERSION}"
+        fi
     fi
-    export TW_DEVICE_VERSION=${TW_VERSION} && echoText "Setting version to ${TW_REAL_VER}"
+    export TW_DEVICE_VERSION="${TW_VERSION}" && echoText "Setting version to ${TW_REAL_VER}"
 
 }
 
 function check_device {
-    [[ $(find device -name vendorsetup.sh | cut -d / -f 3) =~ ${DEVICE} ]] || reportError "No sources for device \"${DEVICE}\" could be found"
+    [[ "$(find device -name vendorsetup.sh | cut -d / -f 3)" =~ ${DEVICE} ]] || reportError "No sources for device \"${DEVICE}\" could be found"
 }
 
 # Move teh files
 function setup_files {
-    if [ -f out/target/product/${DEVICE}/recovery.tar ]; then
-        mv out/target/product/${DEVICE}/recovery.tar twrp-${TW_REAL_VER}-${DEVICE}.tar
-    elif [ -f out/target/product/${DEVICE}/recovery.img ]; then
-        mv out/target/product/${DEVICE}/recovery.img twrp-${TW_REAL_VER}-${DEVICE}.img
+    if [ -f out/target/product/"${DEVICE}"/recovery.tar ]; then
+        mv out/target/product/"${DEVICE}"/recovery.tar twrp-"${TW_REAL_VER}"-"${DEVICE}".tar
+    elif [ -f out/target/product/"${DEVICE}"/recovery.img ]; then
+        mv out/target/product/"${DEVICE}"/recovery.img twrp-"${TW_REAL_VER}"-"${DEVICE}".img
     else
         reportError "Compilation failed!"
     fi
@@ -55,12 +59,12 @@ function build {
     echoText "Starting compilation"
     set_vars
     . build/envsetup.sh
-    lunch omni_${DEVICE}-eng
-    [[ ${CLEAN} ]] && mka clean
+    lunch omni_"${DEVICE}"-eng
+    [ "${CLEAN}" ] && mka clean
     mka recoveryimage
     setup_files
 }
 
-DEVICE=${1:?}
-TW_VERSION=${2}
+DEVICE="${1:?}"
+TW_VERSION="${2}"
 build
