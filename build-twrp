@@ -6,7 +6,7 @@
 SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
 source "${SCRIPT_DIR}/common"
 
-TWRP_VERSION="$(get_current_ver)"
+TWRP_VERSION=""
 
 # Checks if the script is being run from the top of the
 # Android source tree
@@ -15,8 +15,8 @@ function is_top {
 }
 
 # Get the current TWRP version. Slightly hacky but works
-function get_current_ver {
-    if "grep -q TW_MAIN_VERSION_STR bootable/recovery/variables.h"; then
+function set_twrp_ver {
+    if grep -q TW_MAIN_VERSION_STR bootable/recovery/variables.h; then
         TWRP_VERSION=$(grep TW_MAIN_VERSION_STR bootable/recovery/variables.h | grep -v TW_DEVICE_VERSION | awk '{print $3}' | sed 's/"//g')
     fi
 }
@@ -24,6 +24,7 @@ function get_current_ver {
 # Set final TWRP version
 function set_vars {
     unset TW_DEVICE_VERSION
+    set_twrp_ver
     if [ "${TWRP_VERSION}" == "" ]; then
         reportError "Are you sure you're building TWRP?"
     else
