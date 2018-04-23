@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# SPDX-License-Identifier: GPL-3.0-only #
+
 CURRENT_DEVICE=walleye
 
 # Source common functions

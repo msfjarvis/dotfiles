@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# SPDX-License-Identifier: GPL-3.0-only #
+
 # Import all the bot tokens and IDs
 source ~/.secretcreds
 
