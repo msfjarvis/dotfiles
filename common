@@ -83,7 +83,7 @@ MD5: \`${MD5}\`
 GDrive ID: \`${GDRIVE_UPLOAD_ID}\`
 "
     tgm "${UPLOAD_INFO}"
-    cd ${ANDROID_BUILD_TOP}
+    echo "Get the file with ${GDRIVE_UPLOAD_ID}"
 }
 
 # Send a markdown encoded Telegram message
