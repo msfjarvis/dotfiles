@@ -23,7 +23,7 @@ for SCRIPT in ${TDM_SCRIPTS[@]}; do
     cp ${SCRIPT_DIR}/tdm-scripts/${SCRIPT} ~/bin/${SCRIPT}
 done
 
-if [[ ! $(grep msfjarvis-aliases-start ~/.bash_aliases) ]]; then
+if [[ ! $(grep -q "msfjarvis-aliases-start" ~/.bash_aliases) || ! "$@" =~ "--all" ]]; then
     reportWarning "Bash aliases not installed, installing now"
     echo $'\n' >> ~/.bash_aliases
     cat ${SCRIPT_DIR}/.bash_aliases >> ~/.bash_aliases
@@ -34,7 +34,7 @@ if [[ ! $(echo $PATH) =~ ~/bin ]]; then
     echo $'\nexport PATH=~/bin:$PATH' >> ~/.bashrc
 fi
 
-if ! grep -q "source ${SCRIPT_DIR}/functions" ~/.bashrc; then
+if [[ ! grep -q "source ${SCRIPT_DIR}/functions" ~/.bashrc ]]; then
     reportWarning "functions is not sourced in the bashrc, appending"
     echo $'\n' >> ~/.bashrc # Never assume with people like me who don't leave newlines
     echo "source ${SCRIPT_DIR}/functions" >> ~/.bashrc
