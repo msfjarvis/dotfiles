@@ -59,7 +59,15 @@ function make_wrapper {
 
 # Pushes a local file to my webserver
 function publish {
-    rsync -avR ${1} caddy@download.msfjarvis.website:/var/www/${2}/ --progress --verbose
+    rsync -avR ${1} caddy@download.msfjarvis.website:/home/caddy/potatobox/caesium/${2}/ --progress --verbose
+}
+
+# Preps the server folder structure for new builds
+function prepdirs {
+    ssh caddy@download.msfjarvis.website mkdir -p /home/caddy/potatobox/caesium/${1}/
+    ssh caddy@download.msfjarvis.website mkdir -p /home/caddy/potatobox/archive/${1}/
+    ssh caddy@download.msfjarvis.website rm -rf /home/caddy/potatobox/archive/${1}/*
+    ssh caddy@download.msfjarvis.website mv /home/caddy/potatobox/caesium/${1}/* /home/caddy/potatobox/archive/${1}/
 }
 
 # The meat of the telegram notifications workflow
@@ -78,8 +86,9 @@ function pushcaesiumtg {
     git log ${RANGE} | git shortlog ${RANGE} >> zips/${CHANGELOG_FILE}
     git diff --find-renames --stat --summary ${RANGE} >> zips/${CHANGELOG_FILE}
     cd zips;md5sum ${FILE} > ${FILE}.md5
+    prepdirs ${TYPE}
     for item in ${FILE} ${CHANGELOG_FILE} ${FILE}.md5; do
-        publish ${item} caesium/${TYPE}
+        publish ${item} ${TYPE}
     done
     cd ../
     if [ ${TYPE} == "stable" ]; then
