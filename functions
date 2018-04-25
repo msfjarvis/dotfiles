@@ -12,6 +12,10 @@ function reload {
     source ~/.bashrc
 }
 
+function lolsay {
+    cowsay "${@}" | lolcat
+}
+
 function cpuinfo {
     grep -E '^model name|^cpu MHz' /proc/cpuinfo
 }
