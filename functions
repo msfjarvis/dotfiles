@@ -16,6 +16,10 @@ function lolsay {
     cowsay "${@}" | lolcat
 }
 
+function foreversay {
+    until ! lolsay "${@}";do sleep 0;done
+}
+
 function cpuinfo {
     grep -E '^model name|^cpu MHz' /proc/cpuinfo
 }
