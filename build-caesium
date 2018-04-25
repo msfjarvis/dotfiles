@@ -3,8 +3,8 @@
 # SPDX-License-Identifier: GPL-3.0-only #
 
 # Source common functions
-SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
-source "${SCRIPT_DIR}/common"
+SCRIPT_DIR="$(cd "$( dirname $( readlink -f "${BASH_SOURCE[0]}" ) )" && pwd)"
+source ${SCRIPT_DIR}/common
 
 # Resources
 DEFCONFIG="caesium_defconfig"
@@ -29,7 +29,7 @@ HOST=jarvisbox
 # Paths
 WORKING_DIR=$(pwd)
 ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2"
-if [ -z "${TOOLCHAIN_DIR}" ]; then
+if [[ -z ${TOOLCHAIN_DIR} ]]; then
     TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/aarch64--glibc--bleeding-edge-2018.02-1/"
     TOOLCHAIN_SEARCH_STRING="*gnu-gcc"
 fi
@@ -40,53 +40,52 @@ ZIP_MOVE="${WORKING_DIR}/zips/"
 
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper {
-    if [[ ! "${VERBOSE}" ]]; then
-        make O="${OUT_DIR}" \
-            ARCH="${ARCH}" SUBARCH="${SUBARCH}" \
-            KBUILD_BUILD_USER="${USER}" \
-            KBUILD_BUILD_HOST="${HOST}" \
-            LOCALVERSION="${LOCALVERSION}" \
-            -j"$(nproc --all)" "$@" |& ag "error:|warning"
+    if [[ ! ${VERBOSE} ]]; then
+        make O=${OUT_DIR} \
+            ARCH=${ARCH} SUBARCH=${SUBARCH} \
+            KBUILD_BUILD_USER=${USER} \
+            KBUILD_BUILD_HOST=${HOST} \
+            LOCALVERSION=${LOCALVERSION} \
+            -j$(nproc --all) $@ |& ag "error:|warning"
     else
-        make O="${OUT_DIR}" \
-            ARCH="${ARCH}" SUBARCH="${SUBARCH}" \
-            KBUILD_BUILD_USER="${USER}" \
-            KBUILD_BUILD_HOST="${HOST}" \
-            LOCALVERSION="${LOCALVERSION}" \
-            -j"$(nproc --all)" "$@"
+        make O=${OUT_DIR} \
+            ARCH=${ARCH} SUBARCH=${SUBARCH} \
+            KBUILD_BUILD_USER=${USER} \
+            KBUILD_BUILD_HOST=${HOST} \
+            LOCALVERSION=${LOCALVERSION} \
+            -j$(nproc --all) $@
     fi
 }
 
 # Pushes a local file to my webserver
 function publish {
-    rsync -avR "${1}" caddy@download.msfjarvis.website:/var/www/"${2}"/ --progress --verbose
+    rsync -avR ${1} caddy@download.msfjarvis.website:/var/www/${2}/ --progress --verbose
 }
 
 # The meat of the telegram notifications workflow
 function pushcaesiumtg {
-    local FILE="${1}"
-    local TYPE="${2}"
-    local FINAL_VER, LAST_TAG
-    FINAL_VER="${FILE/.zip/}"
-    case "${TYPE}" in
+    local FILE=${1}
+    local TYPE=${2}
+    local FINAL_VER=$(echo ${FILE} | sed 's/\.zip//')
+    case ${TYPE} in
         "alpha"|"beta"|"stable"|"test") ;;
         *) echo "Invalid build type" && return ;;
     esac
-    local CHANGELOG_FILE="${FINAL_VER}"_changelog.txt
-    LAST_TAG="$(git describe --tags --abbrev=0)"
-    local RANGE="${LAST_TAG}"..HEAD
-    echo "${FINAL_VER}" > zips/"${CHANGELOG_FILE}"
-    git log "${RANGE}" | git shortlog "${RANGE}" >> zips/"${CHANGELOG_FILE}"
-    git diff --find-renames --stat --summary "${RANGE}" >> zips/"${CHANGELOG_FILE}"
-    cd zips;md5sum "${FILE}" > "${FILE}".md5
-    for item in "${FILE}" "${CHANGELOG_FILE}" "${FILE}".md5; do
-        publish "${item}" caesium/"${TYPE}"
+    local CHANGELOG_FILE=${FINAL_VER}_changelog.txt
+    local LAST_TAG=$(git describe --tags --abbrev=0)
+    local RANGE=${LAST_TAG}..HEAD
+    echo "${FINAL_VER}" > zips/${CHANGELOG_FILE}
+    git log ${RANGE} | git shortlog ${RANGE} >> zips/${CHANGELOG_FILE}
+    git diff --find-renames --stat --summary ${RANGE} >> zips/${CHANGELOG_FILE}
+    cd zips;md5sum ${FILE} > ${FILE}.md5
+    for item in ${FILE} ${CHANGELOG_FILE} ${FILE}.md5; do
+        publish ${item} caesium/${TYPE}
     done
     cd ../
-    if [ "${TYPE}" == "stable" ]; then
-      release "${FILE}"
+    if [ ${TYPE} == "stable" ]; then
+      release ${FILE}
     fi
-    if [ "${TYPE}" != "test" ]; then
+    if [ ${TYPE} != "test" ]; then
       tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})" "${OP3_CAESIUM_CHAT_ID}"
     fi
     tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})" "${OP3_JAGRAV_CHAT_ID}"
@@ -94,35 +93,34 @@ function pushcaesiumtg {
 
 # Called by pushcaesiumtg on release builds
 function release {
-    local FILE="${1}"
-    local TAG
-    TAG="$(echo "${FILE}" | cut -d / -f 2 | cut -d '-' -f 3 | sed 's/\.zip//')"
+    local FILE=${1}
+    local TAG=$(echo ${FILE} | cut -d / -f 2 | cut -d '-' -f 3 | sed 's/\.zip//')
     git -C ../AnyKernel2/ push origin HEAD:8.1.x-caesium
-    git -C ../AnyKernel2/ tag -s "${TAG}"
-    git -C ../AnyKernel2/ push origin "${TAG}"
+    git -C ../AnyKernel2/ tag -s ${TAG}
+    git -C ../AnyKernel2/ push origin ${TAG}
     git push origin HEAD:XOS-8.1
-    git tag -as "${TAG}"
-    git push origin "${TAG}"
+    git tag -as ${TAG}
+    git push origin ${TAG}
     git branch --set-upstream-to=origin/XOS-8.1
-    hub release create "${TAG}" -a zips/"${FILE}" -a zips/"${CHANGELOG_FILE}" -a zips/"${FILE}".md5
+    hub release create ${TAG} -a zips/${FILE} -a zips/${CHANGELOG_FILE} -a zips/${FILE}.md5
     git branch --set-upstream-to=staging/XOS-8.1
-    update_source_trees "${TAG}"
+    update_source_trees ${TAG}
 }
 
 # Takes a predefined list of trees to merge into and
 # programmatically updates them to the latest tag.
 function update_source_trees {
-    local TAG="${1}"
+    local TAG=${1}
     IFS='|' read -r -a MERGEABLES <<< "${TREES}"
     for ITEM in "${MERGEABLES[@]}"; do
         IFS=':' read -r -a ELEMENTS <<< "${ITEM}"
-        if [ "${#ELEMENTS[@]}" -ge 2 ]; then
-            REMOTE="${ELEMENTS[0]}"
-            BRANCH="${ELEMENTS[1]}"
-            git fetch "${REMOTE}" "${BRANCH}" --no-tags
-            git checkout "${BRANCH}"
-            git merge "${TAG}"
-            git push "${REMOTE}" "${BRANCH}"
+        if [ ${#ELEMENTS[@]} -ge 2 ]; then
+            REMOTE=${ELEMENTS[0]}
+            BRANCH=${ELEMENTS[1]}
+            git fetch ${REMOTE} ${BRANCH} --no-tags
+            git checkout ${BRANCH}
+            git merge ${TAG}
+            git push ${REMOTE} ${BRANCH}
         fi
     done
     git checkout XOS-8.1
@@ -130,115 +128,109 @@ function update_source_trees {
 
 # Find the correct CROSS_COMPILE candidate
 function check_toolchain() {
-    local TC
-    TC="$(find "${TOOLCHAIN_DIR}"/bin -name "${TOOLCHAIN_SEARCH_STRING}")";
+    local TC="$(find ${TOOLCHAIN_DIR}/bin -name ${TOOLCHAIN_SEARCH_STRING})";
         if [[ -f "${TC}" ]]; then
-                local CROSS_COMPILE
-                CROSS_COMPILE=$(command -v ccache) "${TOOLCHAIN_DIR}"/bin/"$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')"
-                echoText "Using toolchain: $("${CROSS_COMPILE}"gcc --version | head -1)"
+                export CROSS_COMPILE="$(command -v ccache) ${TOOLCHAIN_DIR}/bin/$(echo ${TC} | awk -F '/' '{print $NF'} | sed -e 's/gcc//')";
+                echoText "$Using toolchain: $(${CROSS_COMPILE}gcc --version | head -1)"
         else
-                reportError "No suitable toolchain found in ${TOOLCHAIN_DIR}"
+                reportError "No suitable toolchain found in ${TOOLCHAIN_DIR}";
         fi
 }
 
 # Duh
 function make_kernel {
-    make_defconfig
-    if [ "${MODULE}" ]; then
-        make_wrapper "${MODULE}"
-    else
-        make_wrapper "${KERNEL}"
-    fi
-    local BUILT_KERNEL=out/arch/"${ARCH}"/boot/"${KERNEL}"
-    if [ -f "${BUILT_KERNEL}" ]; then
-        cp -r "${BUILT_KERNEL}" "${ANYKERNEL_DIR}"
-    else
-        reportError "Kernel compilation failed"
-        tgm "Kernel compilation failed"
-    fi
+  make_defconfig
+  if [ ${MODULE} ]; then
+      make_wrapper ${MODULE}
+  else
+      make_wrapper ${KERNEL}
+  fi
+  local BUILT_KERNEL=out/arch/${ARCH}/boot/${KERNEL}
+  [ -f "${BUILT_KERNEL}" ] && cp -r ${BUILT_KERNEL} ${ANYKERNEL_DIR} && return 0 || reportError "Kernel compilation failed"
 }
 
 # Called by make_kernel, used to trap defconfig regen events
 function make_defconfig {
-    [ "${CLEAN}" ] && rm -rf "${OUT_DIR}"
-    make_wrapper "${DEFCONFIG}" 1>/dev/null 2>/dev/null
-    make_wrapper savedefconfig 1>/dev/null 2>/dev/null
-    [ "${REGEN_DEFCONFIG}" ] && cp "${OUT_DIR}"/defconfig arch/"${ARCH}"/configs/"${DEFCONFIG}" && echoText "Regenerated defconfig successfully" && exit 1
+  [ ${CLEAN} ] && rm -rf ${OUT_DIR}
+  make_wrapper ${DEFCONFIG} 1>/dev/null 2>/dev/null
+  make_wrapper savedefconfig 1>/dev/null 2>/dev/null
+  [ ${REGEN_DEFCONFIG} ] && cp ${OUT_DIR}/defconfig arch/${ARCH}/configs/${DEFCONFIG} && echoText "Regenerated defconfig successfully" && exit 1
 }
 
 # Create the final ZIP
 function make_zip {
-    cd "${ANYKERNEL_DIR}"
-    echo "${FINAL_VER}" > version
-    rm ./*.zip 2>/dev/null
-    [[ "${TEST_BUILD}" ]] && FINAL_VER="${FINAL_VER}"-$(date +%Y%m%d-%H%M%S)
-    zip -r "${FINAL_VER}".zip ./* -x ".git/*" "README.md" ".gitignore" "./*.zip" 1>/dev/null 2>/dev/null
-    mkdir -p "${ZIP_MOVE}"
-    cp  "${FINAL_VER}".zip "${ZIP_MOVE}"/
-    cd "${WORKING_DIR}"
+  cd ${ANYKERNEL_DIR}
+  echo ${FINAL_VER} > version
+  rm *.zip 2>/dev/null
+  [[ ${TEST_BUILD} ]] && FINAL_VER=${FINAL_VER}-$(date +"%Y%m%d"-"%H%M%S")
+  zip -r ${FINAL_VER}.zip * -x ".git/*" "README.md" ".gitignore" "*.zip" 1>/dev/null 2>/dev/null
+  mkdir -p ${ZIP_MOVE}
+  cp  ${FINAL_VER}.zip ${ZIP_MOVE}/
+  cd ${WORKING_DIR}
 }
 
 while getopts ":cbrm:t:d:" opt; do
-    case $opt in
-      c)
-        echoText " Building clean " >&2
-        CLEAN=true
-        ;;
-      b)
-        echoText " Building ZIP only " >&2
-        ONLY_ZIP=true
-        ;;
-      r)
-        echoText " Regenerating defconfig " >&2
-        REGEN_DEFCONFIG=true
-        ;;
-      t)
-        TYPE="${OPTARG}"
-        if [[ "${TYPE}" != "stable" ]]; then
-            echoText " Setting test build parameters" >&2
-            TEST_BUILD=true
-            export LOCALVERSION="-${INCREMENTAL_VERSION}-${GIT_HASH}"
-        fi
-        ;;
-      m)
-        MODULE="${OPTARG}"
-        [[ "${MODULE}" == */ ]] || MODULE="${MODULE}"/
-        if [[ ! "$(ls "${MODULE}"Kconfig*  2>/dev/null)" ]]; then
-            reportError "Invalid module specified - ${MODULE}"
-            return 1
-        fi
-        echoText "Building module ${MODULE}"
-        ;;
-       d)
-        [[ "${OPTARG}" != "garlic" ]] && return
-        DEVICE=garlic
-        ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2_garlic"
-        FINAL_VER="${KERNEL_NAME}-${DEVICE}-${INCREMENTAL_VERSION}"
-        ;;
-      \?)
-        reportWarning "Invalid option: -${OPTARG}" >&2
-        ;;
-    esac
+  case $opt in
+    c)
+      echoText " Building clean " >&2
+      CLEAN=true
+      ;;
+    b)
+      echoText " Building ZIP only " >&2
+      ONLY_ZIP=true
+      ;;
+    r)
+      echoText " Regenerating defconfig " >&2
+      REGEN_DEFCONFIG=true
+      ;;
+    t)
+      TYPE=${OPTARG}
+      NOTIFY=true
+      if [[ ${TYPE} != "stable" ]]; then
+          echoText " Setting test build parameters" >&2
+          TEST_BUILD=true
+          export LOCALVERSION="-${INCREMENTAL_VERSION}-${GIT_HASH}"
+      fi
+      ;;
+    m)
+      MODULE=${OPTARG}
+      [[ ${MODULE} == */ ]] || MODULE=${MODULE}/
+      if [[ ! "$(ls ${MODULE}Kconfig*  2>/dev/null)" ]]; then
+          reportError "Invalid module specified - ${MODULE}"
+          return 1
+      fi
+      echoText "Building module ${MODULE}"
+      ;;
+     d)
+      [[ ${OPTARG} != "garlic" ]] && return
+      DEVICE=garlic
+      ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2_garlic"
+      FINAL_VER="${KERNEL_NAME}-${DEVICE}-${INCREMENTAL_VERSION}"
+      ;;
+    \?)
+      reportWarning "Invalid option: -${OPTARG}" >&2
+      ;;
+  esac
 done
 
 DATE_START=$(date +"%s")
 
 # Make
 check_toolchain
-if [ "${ONLY_ZIP}" ]; then
-    make_zip
+if [ ${ONLY_ZIP} ]; then
+  make_zip
 else
-    make_kernel
-    make_zip
+  make_kernel
+  make_zip
 fi
 
 DATE_END=$(date +"%s")
-DIFF=$(("${DATE_END}" - "${DATE_START}"))
-if [[ -f zips/"${FINAL_VER}".zip ]]; then
-    reportSuccess "${FINAL_VER}".zip
-    if [[ "${DEVICE}" != "garlic" ]]; then
-        pushcaesiumtg "${FINAL_VER}".zip "${TYPE}"
+DIFF=$((${DATE_END} - ${DATE_START}))
+if [[ -f zips/${FINAL_VER}.zip ]]; then
+    reportSuccess ${FINAL_VER}.zip
+    if [[ ${DEVICE} != "garlic" ]]; then
+        pushcaesiumtg ${FINAL_VER}.zip ${TYPE}
     fi
 fi
 
-reportWarning "Time: ${DIFF} / 60 minute(s) and ${DIFF} % 60 seconds."
+reportWarning "Time: $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
