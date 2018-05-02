@@ -2,21 +2,21 @@
 
 # SPDX-License-Identifier: GPL-3.0-only #
 
-XOS_GERRIT_USER=MSF-Jarvis
-GZOSP_GERRIT_USER=${XOS_GERRIT_USER}
+AOSIP_GERRIT_USER=MSF-Jarvis
+GZOSP_GERRIT_USER=${AOSIP_GERRIT_USER}
 SUBS_GERRIT_USER=MSF_Jarvis
-ANDROID_PLATFORM_ROOT="/home/msfjarvis/xossrc"
-DEFAULT_XOS_BRANCH="XOS-8.1"
+ANDROID_PLATFORM_ROOT="/home/msfjarvis/aosip"
+DEFAULT_AOSIP_BRANCH="oreo-mr1"
 DEFAULT_SUBS_BRANCH="o"
 DEFAULT_GZOSP_BRANCH="8.1"
-XOS_GERRIT_URL="review.halogenos.org"
+AOSIP_GERRIT_URL="review.aosiprom.com"
 GZOSP_GERRIT_URL="review.gzospgzr.com"
 SUBS_GERRIT_URL="substratum.review"
-DEFAULT_GERRIT="halogenos"
+DEFAULT_GERRIT="aosip"
 
 function get_current_gerrit {
-    if [[ ${DEFAULT_GERRIT} == "halogenos" ]]; then
-        echo "${XOS_GERRIT_USER}@${XOS_GERRIT_URL}"
+    if [[ ${DEFAULT_GERRIT} == "aosip" ]]; then
+        echo "${AOSIP_GERRIT_USER}@${AOSIP_GERRIT_URL}"
     elif [[ ${DEFAULT_GERRIT} == "substratum" ]]; then
         echo "${SUBS_GERRIT_USER}@${SUBS_GERRIT_URL}"
     elif [[ ${DEFAULT_GERRIT} == "gzosp" ]]; then
@@ -41,7 +41,7 @@ function subsgerrit {
 
 function gpush {
     declare -a PARAMS=("$@")
-    local BRANCH=${DEFAULT_XOS_BRANCH}
+    local BRANCH=${DEFAULT_AOSIP_BRANCH}
     if [[ ${#PARAMS[@]} -eq 2 ]]; then
         BRANCH=${PARAMS[0]}
         if [[ ${PARAMS[1]} == bypass ]]; then
@@ -62,27 +62,28 @@ function gzpush {
 
 function gfpush {
     BRANCH=${1}
-    [[ ${BRANCH} == "" ]] && BRANCH=${DEFAULT_XOS_BRANCH}
+    [[ ${BRANCH} == "" ]] && BRANCH=${DEFAULT_AOSIP_BRANCH}
     git push gerrit HEAD:refs/heads/${BRANCH}
 }
 
 function gffpush {
     BRANCH=${1}
-    [[ ${BRANCH} == "" ]] && BRANCH=${DEFAULT_XOS_BRANCH}
+    [[ ${BRANCH} == "" ]] && BRANCH=${DEFAULT_AOSIP_BRANCH}
     git push --force gerrit HEAD:refs/heads/${BRANCH}
 }
 
+echo "
 function createXos {
     if ! git rev-parse --git-dir &> /dev/null; then
         reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
         return 1
     fi
     local PROJECT=$(pwd -P | sed -e "s#$ANDROID_PLATFORM_ROOT/##; s#-caf.*##; s#\/default##; s#/#_#g#")
-    ssh ${XOS_GERRIT_USER}@${XOS_GERRIT_URL} -p 29418 \
+    ssh ${AOSIP_GERRIT_USER}@${AOSIP_GERRIT_URL} -p 29418 \
         gerrit create-project -p All-Projects -t REBASE_IF_NECESSARY \
         android_${PROJECT}
     git create halogenOS/android_${PROJECT}
-}
+}" >/dev/null
 
 function xg {
     if ! git rev-parse --git-dir &> /dev/null; then
@@ -91,9 +92,9 @@ function xg {
     fi
     local PROJECT=$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#-caf.*##; s#\/default##; s#/#_#g#")
     git remote remove gerrit 2>/dev/null
-    git remote add gerrit ssh://${XOS_GERRIT_USER}@${XOS_GERRIT_URL}:29418/android_${PROJECT}
+    git remote add gerrit ssh://${AOSIP_GERRIT_USER}@${AOSIP_GERRIT_URL}:29418/AOSiP/platform_${PROJECT}
     hook
-#   git remote add gerrit https://$XOS_GERRIT_USER@${XOS_GERRIT_URL}:29418/a/android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
+#   git remote add gerrit https://$AOSIP_GERRIT_USER@${AOSIP_GERRIT_URL}:29418/a/android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
 }
 
 function gz {
