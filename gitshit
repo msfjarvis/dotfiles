@@ -2,9 +2,7 @@
 
 # SPDX-License-Identifier: GPL-3.0-only #
 
-AOSIP_GERRIT_USER=MSF-Jarvis
-GZOSP_GERRIT_USER=${AOSIP_GERRIT_USER}
-SUBS_GERRIT_USER=MSF_Jarvis
+GERRIT_USER=MSF_Jarvis
 ANDROID_PLATFORM_ROOT="/home/msfjarvis/aosip"
 DEFAULT_AOSIP_BRANCH="oreo-mr1"
 DEFAULT_SUBS_BRANCH="o"
@@ -16,11 +14,11 @@ DEFAULT_GERRIT="aosip"
 
 function get_current_gerrit {
     if [[ ${DEFAULT_GERRIT} == "aosip" ]]; then
-        echo "${AOSIP_GERRIT_USER}@${AOSIP_GERRIT_URL}"
+        echo "${GERRIT_USER}@${AOSIP_GERRIT_URL}"
     elif [[ ${DEFAULT_GERRIT} == "substratum" ]]; then
-        echo "${SUBS_GERRIT_USER}@${SUBS_GERRIT_URL}"
+        echo "${GERRIT_USER}@${SUBS_GERRIT_URL}"
     elif [[ ${DEFAULT_GERRIT} == "gzosp" ]]; then
-        echo "${GZOSP_GERRIT_USER}@${GZOSP_GERRIT_URL}"
+        echo "${GERRIT_USER}@${GZOSP_GERRIT_URL}"
     else
         return 1
     fi
@@ -36,7 +34,7 @@ function gerrit {
 }
 
 function subsgerrit {
-    ssh -p 29418 ${SUBS_GERRIT_USER}@${SUBS_GERRIT_URL} gerrit $@
+    ssh -p 29418 ${GERRIT_USER}@${SUBS_GERRIT_URL} gerrit $@
 }
 
 function gpush {
@@ -79,7 +77,7 @@ function createXos {
         return 1
     fi
     local PROJECT=$(pwd -P | sed -e "s#$ANDROID_PLATFORM_ROOT/##; s#-caf.*##; s#\/default##; s#/#_#g#")
-    ssh ${AOSIP_GERRIT_USER}@${AOSIP_GERRIT_URL} -p 29418 \
+    ssh ${GERRIT_USER}@${AOSIP_GERRIT_URL} -p 29418 \
         gerrit create-project -p All-Projects -t REBASE_IF_NECESSARY \
         android_${PROJECT}
     git create halogenOS/android_${PROJECT}
@@ -92,9 +90,9 @@ function xg {
     fi
     local PROJECT=$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#-caf.*##; s#\/default##; s#/#_#g#")
     git remote remove gerrit 2>/dev/null
-    git remote add gerrit ssh://${AOSIP_GERRIT_USER}@${AOSIP_GERRIT_URL}:29418/AOSiP/platform_${PROJECT}
+    git remote add gerrit ssh://${GERRIT_USER}@${AOSIP_GERRIT_URL}:29418/AOSiP/platform_${PROJECT}
     hook
-#   git remote add gerrit https://$AOSIP_GERRIT_USER@${AOSIP_GERRIT_URL}:29418/a/android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
+#   git remote add gerrit https://$GERRIT_USER@${AOSIP_GERRIT_URL}:29418/a/android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
 }
 
 function gz {
@@ -109,7 +107,7 @@ function gz {
         PFX="GZOSP/"
     fi
     git remote remove gzgerrit 2>/dev/null
-    git remote add gerrit ssh://${GZOSP_GERRIT_USER}@${GZOSP_GERRIT_URL}:29418/${PFX}${PROJECT}
+    git remote add gerrit ssh://${GERRIT_USER}@${GZOSP_GERRIT_URL}:29418/${PFX}${PROJECT}
 }
 
 function subs {
@@ -124,5 +122,5 @@ function subs {
         PFX="SubstratumResources/platform_"
     fi
     git remote remove gzgerrit 2>/dev/null
-    git remote add gerrit ssh://${SUBS_GERRIT_USER}@${SUBS_GERRIT_URL}:29418/${PFX}${PROJECT}
+    git remote add gerrit ssh://${GERRIT_USER}@${SUBS_GERRIT_URL}:29418/${PFX}${PROJECT}
 }
