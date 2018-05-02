@@ -17,4 +17,5 @@ alias grpcs='git reset;git cherry-pick --continue'
 alias grc='git rebase --continue'
 alias grs='git rebase --skip'
 alias gra='git rebase --abort'
+alias nano='nano -L'
 # -- msfjarvis-aliases-end -- #
