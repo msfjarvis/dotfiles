@@ -88,7 +88,7 @@ function xg {
         reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
         return 1
     fi
-    local PROJECT=$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#-caf.*##; s#\/default##; s#/#_#g#")
+    local PROJECT=$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#-caf.*##; s#/make##; s#\/default##; s#/#_#g#")
     git remote remove gerrit 2>/dev/null
     git remote add gerrit ssh://${GERRIT_USER}@${AOSIP_GERRIT_URL}:29418/AOSIP/platform_${PROJECT}
     hook
