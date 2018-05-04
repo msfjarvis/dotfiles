@@ -4,6 +4,7 @@
 
 # Source common functions
 SCRIPT_DIR="$(cd "$( dirname $( readlink -f "${BASH_SOURCE[0]}" ) )" && pwd)"
+BIN_FOLDER=${SCRIPT_DIR}/bin
 source ${SCRIPT_DIR}/common
 
 # Resources
@@ -168,13 +169,18 @@ function make_defconfig {
 
 # Create the final ZIP
 function make_zip {
+  [[ ${TEST_BUILD} ]] && FINAL_VER=${FINAL_VER}-$(date +"%Y%m%d"-"%H%M%S")
+  local UNSIGNED_ZIP=${FINAL_VER}_unsigned.zip
+  local SIGNED_ZIP=${FINAL_VER}.zip
   cd ${ANYKERNEL_DIR}
   echo ${FINAL_VER} > version
   rm *.zip 2>/dev/null
-  [[ ${TEST_BUILD} ]] && FINAL_VER=${FINAL_VER}-$(date +"%Y%m%d"-"%H%M%S")
-  zip -r ${FINAL_VER}.zip * -x ".git/*" "README.md" ".gitignore" "*.zip" 1>/dev/null 2>/dev/null
+  zip -r ${UNSIGNED_ZIP} * -x ".git/*" "README.md" ".gitignore" "*.zip" 1>/dev/null 2>/dev/null
+  java -jar "${BIN_FOLDER}/zipsigner-2.1.jar" \
+            "${UNSIGNED_ZIP}" \
+            "${SIGNED_ZIP}"
   mkdir -p ${ZIP_MOVE}
-  cp  ${FINAL_VER}.zip ${ZIP_MOVE}/
+  mv  ${SIGNED_ZIP} ${ZIP_MOVE}/
   cd ${WORKING_DIR}
 }
 
