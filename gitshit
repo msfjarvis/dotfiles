@@ -29,6 +29,10 @@ function hook {
     scp -p -P 29418 $(get_current_gerrit):hooks/commit-msg ${gitdir}/hooks/
 }
 
+function reposync {
+    repo sync -q -c --no-tags --force-sync -f -j10 ${@}
+}
+
 function gerrit {
     ssh -p 29418 $(get_current_gerrit) gerrit $@
 }
