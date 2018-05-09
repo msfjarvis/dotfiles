@@ -162,8 +162,8 @@ function make_kernel {
 # Called by make_kernel, used to trap defconfig regen events
 function make_defconfig {
   [ ${CLEAN} ] && rm -rf ${OUT_DIR}
-  make_wrapper ${DEFCONFIG} 1>/dev/null 2>/dev/null
-  make_wrapper savedefconfig 1>/dev/null 2>/dev/null
+  make_wrapper ${DEFCONFIG} 2>&1 >/dev/null
+  make_wrapper savedefconfig 2>&1 >/dev/null
   [ ${REGEN_DEFCONFIG} ] && cp ${OUT_DIR}/defconfig arch/${ARCH}/configs/${DEFCONFIG} && echoText "Regenerated defconfig successfully" && exit 1
 }
 
@@ -175,7 +175,7 @@ function make_zip {
   cd ${ANYKERNEL_DIR}
   echo ${FINAL_VER} > version
   rm *.zip 2>/dev/null
-  zip -r ${UNSIGNED_ZIP} * -x ".git/*" "README.md" ".gitignore" "*.zip" 1>/dev/null 2>/dev/null
+  zip -r ${UNSIGNED_ZIP} * -x ".git/*" "README.md" ".gitignore" "*.zip" 2>&1 >/dev/null
   java -jar "${BIN_FOLDER}/zipsigner-2.1.jar" \
             "${UNSIGNED_ZIP}" \
             "${SIGNED_ZIP}"
