@@ -30,7 +30,7 @@ function hook {
 }
 
 function reposync {
-    repo sync -q -c --no-tags --force-sync -f -j10 ${@}
+    repo sync -c --no-tags --force-sync -f -j10 ${@}
 }
 
 function gerrit {
