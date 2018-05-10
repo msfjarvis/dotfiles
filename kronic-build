@@ -3,35 +3,37 @@
 # SPDX-License-Identifier: GPL-3.0-only #
 
 # Source common functions
-SCRIPT_DIR="$(cd "$( dirname $( readlink -f "${BASH_SOURCE[0]}" ) )" && pwd)"
-source ${SCRIPT_DIR}/common
+SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
+source "${SCRIPT_DIR}"/common
 
 function build {
     . build/envsetup.sh
-    [[ ${SKIP_SYNC} == "true" ]] || repo sync -c --force-sync -j10 --no-tags
+    [[ "${SKIP_SYNC}" == "true" ]] || repo sync -c --force-sync -j10 --no-tags
     pick_and_reset
     tgm "Build started."
-    [[ ${CLEAN} == "true" ]] && rm -rf out/target/product
-    local LOG_FILE=aosip_${TARGET_DEVICE}-$(date +"%Y%m%d"-"%H%M%S").txt
-    lunch aosip_${TARGET_DEVICE}-userdebug
-    if [[ -z ${MODULE} ]]; then
-        make kronic -j$(nproc --all) 2>&1 | tee -a ${LOG_FILE}
+    [[ "${CLEAN}" == "true" ]] && rm -rf out/target/product
+    local LOG_FILE
+    LOG_FILE=aosip_"${TARGET_DEVICE}"-$(date +%Y%m%d-%H%M%S).txt
+    lunch aosip_"${TARGET_DEVICE}"-userdebug
+    if [[ -z "${MODULE}" ]]; then
+        make kronic -j"$(nproc --all)" 2>&1 | tee -a "${LOG_FILE}"
     else
-        make ${MODULE} -j$(nproc --all) 2>&1 | tee -a ${LOG_FILE}
+        make "${MODULE}" -j"$(nproc --all)" 2>&1 | tee -a "${LOG_FILE}"
     fi
-    echo "$(tail -n 500 ${LOG_FILE})" > ${LOG_FILE}
-    OUT="out/target/product/${TARGET_DEVICE}" # For some reason this is getting unset after build, hardcode for now.
+    tail -n 500 "${LOG_FILE}" > "${LOG_FILE}_trimmed"
+    mv "${LOG_FILE}_trimmed" "${LOG_FILE}"
+    OUT=out/target/product/"${TARGET_DEVICE}" # For some reason this is getting unset after build, hardcode for now.
     if [[ -z ${MODULE} ]]; then
-        OUT_FILE=${OUT}/${AOSIP_VERSION}.zip
+        OUT_FILE="${OUT}/${AOSIP_VERSION}".zip
     else
-        OUT_FILE=$(find ${OUT}/system -name ${MODULE}.*)
+        OUT_FILE=$(find "${OUT}"/system -name "${MODULE}.*")
     fi
-    if [[ -f ${OUT_FILE} ]]; then
+    if [[ -f "${OUT_FILE}" ]]; then
         tgm "Build successful, uploading."
-        upload ${OUT_FILE}
+        upload "${OUT_FILE}"
     else
         tgm "Build failed."
-        tgm $(hastebin ${LOG_FILE} noraw)
+        tgm "$(hastebin "${LOG_FILE}" noraw)"
         return 1
     fi
 }
@@ -43,7 +45,7 @@ function init_if_needed {
 }
 
 function pick_and_reset {
-  if [[ ${REPOPICK_TASKS} != "" && -z ${NO_REPOPICK} ]]; then
+  if [[ "${REPOPICK_TASKS}" != "" && -z "${NO_REPOPICK}" ]]; then
     git config --global commit.gpgsign false # Disable GPG signing to let this happen automatically
     while IFS= read -r ITEM
     do
@@ -53,8 +55,8 @@ function pick_and_reset {
   fi
 }
 
-mkdir -p ${HOME}/aosip
-cd ${HOME}/aosip
+mkdir -p "${HOME}"/aosip
+cd "${HOME}"/aosip
 
 BUILD_INFO=""
 while getopts ":cm:nst:" opt; do
@@ -90,8 +92,9 @@ Building for device: ${OPTARG}
 done
 
 REPOPICK_TASKS=$(cat repopicks.txt)
-TEMP=$(echo ${REPOPICK_TASKS} | sed s/\n//)
-if [[ ${TEMP} != "" ]]; then
+TEMP=${REPOPICK_TASKS/\n/}
+#TEMP=$(echo ${REPOPICK_TASKS} | sed s/\n//)
+if [[ "${TEMP}" != "" ]]; then
 BUILD_INFO="${BUILD_INFO}
 repopick tasks:
 \`\`\`
@@ -105,7 +108,7 @@ No repopicks
 fi
 tgm "${BUILD_INFO}"
 unset BUILD_INFO
-AOSIP_VERSION=AOSiP-8.1-Derp-${TARGET_DEVICE}-$(date +%Y%m%d)
+AOSIP_VERSION=AOSiP-8.1-Derp-"${TARGET_DEVICE}"-$(date +%Y%m%d)
 
 init_if_needed
 build
