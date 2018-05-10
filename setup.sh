@@ -4,6 +4,7 @@
 
 SCRIPT_DIR="$(cd "$( dirname $( readlink -f "${BASH_SOURCE[0]}" ) )" && pwd)"
 source ${SCRIPT_DIR}/common
+git -C ${SCRIPT_DIR} submodule update --init --recursive
 
 declare -a SCRIPTS=("kronic-build" "build-caesium" "build-kernel" "build-twrp" "hastebin")
 declare -a TDM_SCRIPTS=("gerrit-review")
