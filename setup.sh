@@ -23,10 +23,9 @@ for SCRIPT in ${TDM_SCRIPTS[@]}; do
     cp ${SCRIPT_DIR}/tdm-scripts/${SCRIPT} ~/bin/${SCRIPT}
 done
 
-if [[ ! $(grep 'msfjarvis-aliases-start' ~/.bash_aliases 2>/dev/null) || ! "$@" =~ "--all" ]]; then
-    reportWarning "Bash aliases not installed, installing now"
-    cat ${SCRIPT_DIR}/.bash_aliases >> ~/.bash_aliases
-fi
+reportWarning "Installing bash aliases"
+mv ~/.bash_aliases ~/.bash_aliases.old
+cp ${SCRIPT_DIR}/.bash_aliases ~/.bash_aliases
 
 if [[ ! $(echo $PATH) =~ ~/bin ]]; then
     reportWarning "~/bin is not in PATH, appending the export to bashrc"

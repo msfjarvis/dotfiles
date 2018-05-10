@@ -1,4 +1,3 @@
-# -- msfjarvis-aliases-start -- #
 alias ga='git add'
 alias gpristine='git reset --hard && git clean -dfx'
 alias g='git'
@@ -18,4 +17,3 @@ alias grc='git rebase --continue'
 alias grs='git rebase --skip'
 alias gra='git rebase --abort'
 alias nano='nano -L'
-# -- msfjarvis-aliases-end -- #
