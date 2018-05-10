@@ -4,7 +4,6 @@
 
 # Source common functions
 SCRIPT_DIR="$(cd "$( dirname $( readlink -f "${BASH_SOURCE[0]}" ) )" && pwd)"
-BIN_FOLDER=${SCRIPT_DIR}/bin
 source ${SCRIPT_DIR}/common
 
 # Resources
@@ -176,9 +175,8 @@ function make_zip {
   echo ${FINAL_VER} > version
   rm *.zip 2>/dev/null
   zip -r ${UNSIGNED_ZIP} * -x ".git/*" "README.md" ".gitignore" "*.zip" 2>&1 >/dev/null
-  java -jar "${BIN_FOLDER}/zipsigner-2.1.jar" \
-            "${UNSIGNED_ZIP}" \
-            "${SIGNED_ZIP}"
+  [ -z ${KEYSTORE_PASSWORD} ] || echo ${KEYSTORE_PASSWORD} | jarsigner -keystore ${SCRIPT_DIR}/caesium_release.keystore ${UNSIGNED_ZIP} msfjarvis
+  mv ${UNSIGNED_ZIP} ${SIGNED_ZIP}
   mkdir -p ${ZIP_MOVE}
   mv  ${SIGNED_ZIP} ${ZIP_MOVE}/
   cd ${WORKING_DIR}
