@@ -35,16 +35,8 @@ function battinfo {
 }
 
 # Server tooling
-function startserver {
-  gcloud compute instances start --project "heroic-diode-189916" --zone "us-west1-c" "jarvisbox"
-}
-
-function stopserver {
-  gcloud compute instances stop --project "heroic-diode-189916" --zone "us-west1-c" "jarvisbox"
-}
-
 function serverconnect {
-  gcloud compute --project "heroic-diode-189916" ssh --zone "us-west1-c" "jarvisbox"
+    ssh horbis@aosiprom.com
 }
 
 function backup {
