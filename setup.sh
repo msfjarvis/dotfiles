@@ -12,6 +12,18 @@ declare -a GPG_KEYS=("public_prjkt.asc" "private_prjkt.asc")
 
 mkdir -p ~/bin/
 
+echoText "Checking and installing hub"
+HUB=$(command -v hub)
+if [ ${HUB} == "" ]; then
+    HUB_ARCH=linux-amd64
+    wget $(curl -s https://api.github.com/repos/github/hub/releases/latest | jq -r ".assets[] | select(.name | test(\"${HUB_ARCH}\")) | .browser_download_url") -O hub.tgz
+    mkdir -p hub
+    tar -xf hub.tgz -C hub
+    sudo ./hub/*/install --prefix=/usr/local/
+else
+    reportWarning "$(hub --version) is already installed!"
+fi
+
 echoText "Installing scripts"
 for SCRIPT in ${SCRIPTS[@]}; do
     echo -e "${CL_YLW}Processing ${SCRIPT}${CL_RST}"
