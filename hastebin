@@ -2,11 +2,11 @@
 
 # SPDX-License-Identifier: GPL-3.0-only #
 
-result=$(curl -sf --data-binary @${1:--} https://del.dog/documents) || {
+result=$(curl -sf --data-binary @${1:--} https://hastebin.com/documents) || {
       echo "ERROR: failed to post document" >&2
       exit 1
 }
 key=$(jq -r .key <<< $result)
-echo "https://del.dog/${key}"
-[[ -z ${2} ]] && echo "https://del.dog/raw/${key}"
+echo "https://hastebin.com/${key}"
+[[ -z ${2} ]] && echo "https://hastebin.com/raw/${key}"
 
