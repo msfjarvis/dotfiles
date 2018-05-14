@@ -61,11 +61,11 @@ function build {
     set_vars
     . build/envsetup.sh
     lunch omni_"${DEVICE}"-eng
-    [[ "${@}" =~ "clean" ]] && mka clean
+    [[ "${@}" =~ clean ]] && mka clean
     mka recoveryimage
     setup_files
 }
 
 DEVICE="${1:?}"
 TW_VERSION="${2}"
-build
+build "${@}"
