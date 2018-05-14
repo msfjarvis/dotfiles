@@ -18,6 +18,11 @@ for SCRIPT in ${SCRIPTS[@]}; do
     ln -s ${SCRIPT_DIR}/${SCRIPT} ~/bin/${SCRIPT}
 done
 
+echoText "Moving credentials"
+gpg ${SCRIPT_DIR}/.secretcreds.gpg
+[ -f ${SCRIPT_DIR}/.secretcreds ] && mv ${SCRIPT_DIR}/.secretcreds ~/.secretcreds
+rm -f ${SCRIPT_DIR}/.secretcreds 2>/dev/null
+
 echoText "Setting up tdm-scripts"
 for SCRIPT in ${TDM_SCRIPTS[@]}; do
     echo -e "${CL_YLW}Processing ${SCRIPT}${CL_RST}"
