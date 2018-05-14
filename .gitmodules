@@ -4,3 +4,6 @@
 [submodule "tdm-scripts"]
 	path = tdm-scripts
 	url = https://github.com/tdm/android-scripts
+[submodule "gpg_keys"]
+	path = gpg_keys
+	url = https://github.com/MSF-Jarvis/gpg_keys
