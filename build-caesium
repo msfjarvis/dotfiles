@@ -97,7 +97,7 @@ function pushcaesiumtg {
     if [ ${TYPE} != "test" ]; then
       tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})" "${OP3_CAESIUM_CHAT_ID}"
     fi
-    tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})" "${OP3_JAGRAV_CHAT_ID}"
+    tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})"
 }
 
 # Called by pushcaesiumtg on release builds
