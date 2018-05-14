@@ -8,6 +8,7 @@ git -C ${SCRIPT_DIR} submodule update --init --recursive
 
 declare -a SCRIPTS=("kronic-build" "build-caesium" "build-kernel" "build-twrp" "hastebin")
 declare -a TDM_SCRIPTS=("gerrit-review")
+declare -a GPG_KEYS=("public_prjkt.asc" "private_prjkt.asc")
 
 mkdir -p ~/bin/
 
@@ -16,6 +17,11 @@ for SCRIPT in ${SCRIPTS[@]}; do
     echo -e "${CL_YLW}Processing ${SCRIPT}${CL_RST}"
     rm -rf ~/bin/${SCRIPT}
     ln -s ${SCRIPT_DIR}/${SCRIPT} ~/bin/${SCRIPT}
+done
+
+echoText "Importing GPG keys"
+for KEY in ${GPG_KEYS[@]}; do
+    gpg --import ${SCRIPT_DIR}/gpg_keys/${KEY}
 done
 
 echoText "Moving credentials"
