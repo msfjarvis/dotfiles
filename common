@@ -12,6 +12,11 @@ CL_RST="\033[0m"
 CL_YLW="\033[01;33m"
 CL_BLUE="\033[01;34m"
 
+# Route nano to 'no-trailing-newlines' mode
+function nano {
+    $(command -v nano) -L ${@}
+}
+
 # Prints a formatted header to let the user know what's being done
 function echoText {
     echo -e ${CL_RED}

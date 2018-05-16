@@ -20,17 +20,32 @@
 [credential]
 	helper = cache --timeout=3000
 [alias]
+	a = add
 	add-change-id = "!EDITOR='sed -i -re s/^pick/e/' sh -c 'git rebase -i $1 && while test -f .git/rebase-merge/interactive; do git commit --amend --no-edit && git commit --amend --no-edit && git rebase --continue; done' -"
-	reword = "!EDITOR='sed -i -re s/^pick/e/' sh -c 'git rebase -i $1 && while test -f .git/rebase-merge/interactive; do git commit --amend && git rebase --continue;done' -"
+	cp = cherry-pick --signoff
+	cpa = cherry-pick --abort
+	cpc = cherry-pick --continue
+	d = diff
+	dc = diff --cached
+	ds = diff --stat
+	dsc = diff --stat --cached
+	export = archive --format zip --output
 	lo = log --oneline --no-merges
 	los = log --oneline --stat
 	lof = log --format=fixes
-	cp = cherry-pick --signoff
-	cpa = cherry-pick --abort
-	s = status
-	ss = show --stat
-	ds = diff --stat
 	lst = ls-tree --full-tree -r HEAD
+	pr = pull --rebase
+	pristine = suicide && clean -fdx
+	ra = rebase --abort
+	re = reset
+	rc = rebase --continue
+	rpc = reset --hard && cherry-pick --continue
+	rs = rebase --skip
+	rv = remote -v
+	reword = "!EDITOR='sed -i -re s/^pick/e/' sh -c 'git rebase -i $1 && while test -f .git/rebase-merge/interactive; do git commit --amend && git rebase --continue;done' -"
+	s = status
+	su = submodule update --init --recursive
+	ss = show --stat
 	suicide = reset --hard
 
 [merge]
