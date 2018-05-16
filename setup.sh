@@ -47,9 +47,10 @@ for SCRIPT in ${TDM_SCRIPTS[@]}; do
     cp ${SCRIPT_DIR}/tdm-scripts/${SCRIPT} ~/bin/${SCRIPT}
 done
 
-reportWarning "Installing bash aliases"
+echoText "Installing bash aliases"
 mv ~/.bash_aliases ~/.bash_aliases.old
 cp ${SCRIPT_DIR}/.bash_aliases ~/.bash_aliases
+echo -e "${CL_YLW}Installed!${CL_RST}"
 
 if [[ ! $(echo $PATH) =~ ~/bin ]]; then
     reportWarning "~/bin is not in PATH, appending the export to bashrc"
