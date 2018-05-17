@@ -32,6 +32,7 @@
 	dsc = diff --stat --cached
 	export = archive --format zip --output
 	lo = log --oneline --no-merges
+	loa = lo --author='Harsh Shandilya <harsh@prjkt.io>'
 	los = log --oneline --stat
 	lof = log --format=fixes
 	lst = ls-tree --full-tree -r HEAD
