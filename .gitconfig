@@ -36,7 +36,6 @@
 	lof = log --format=fixes
 	lst = ls-tree --full-tree -r HEAD
 	pr = pull --rebase
-	pristine = suicide && clean -fdx
 	ra = rebase --abort
 	re = reset
 	rc = rebase --continue
