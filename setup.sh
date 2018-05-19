@@ -24,6 +24,15 @@ else
     reportWarning "$(hub --version) is already installed!"
 fi
 
+echoText "Checking and installing gdrive"
+GDRIVE="$(command -v gdrive)"
+if [ "${GDRIVE}" == "" ]; then
+    wget 'https://docs.google.com/uc?id=0B3X9GlR6EmbnQ0FtZmJJUXEyRTA&export=download' -O ~/bin/gdrive
+    chmod +x ~/bin/gdrive
+else
+    reportWarning "gdrive is already installed!"
+fi
+
 echoText "Installing scripts"
 for SCRIPT in "${SCRIPTS[@]}"; do
     echo -e "${CL_YLW}Processing ${SCRIPT}${CL_RST}"
