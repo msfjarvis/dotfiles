@@ -73,6 +73,10 @@ function prepdirs {
 # The meat of the telegram notifications workflow
 function pushcaesiumtg {
     local FILE=${1}
+    if [ "${DEVICE}" == "garlic" ]; then
+        upload "${FILE}"
+        return
+    fi
     local TYPE=${2}
     local FINAL_VER=$(echo ${FILE} | sed 's/\.zip//')
     case ${TYPE} in
@@ -241,9 +245,7 @@ DATE_END=$(date +"%s")
 DIFF=$((${DATE_END} - ${DATE_START}))
 if [[ -f zips/${FINAL_VER}.zip ]]; then
     reportSuccess ${FINAL_VER}.zip
-    if [[ ${DEVICE} != "garlic" ]]; then
-        pushcaesiumtg ${FINAL_VER}.zip ${TYPE}
-    fi
+    pushcaesiumtg ${FINAL_VER}.zip ${TYPE}
 fi
 
 reportWarning "Time: $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
