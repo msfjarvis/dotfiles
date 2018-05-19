@@ -30,7 +30,7 @@ HOST=jarvisbox
 WORKING_DIR=$(pwd)
 ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2"
 if [[ -z ${TOOLCHAIN_DIR} ]]; then
-    TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/aarch64--glibc--bleeding-edge-2018.02-1/"
+    TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/aarch64--glibc--stable-2018.02-2"
     TOOLCHAIN_SEARCH_STRING="*gnu-gcc"
 fi
 OUT_DIR="${WORKING_DIR}/out/"
