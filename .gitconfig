@@ -17,6 +17,8 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[format]
+	signoff = true
 [credential]
 	helper = cache --timeout=3000
 [alias]
