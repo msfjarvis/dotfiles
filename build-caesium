@@ -74,7 +74,7 @@ function prepdirs {
 function pushcaesiumtg {
     local FILE=${1}
     if [ "${DEVICE}" == "garlic" ]; then
-        upload "${FILE}"
+        upload "${ZIP_MOVE}${FILE}"
         return
     fi
     local TYPE=${2}
