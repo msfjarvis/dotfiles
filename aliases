@@ -3,3 +3,5 @@
 # SPDX-License-Identifier: GPL-3.0-only #
 
 alias gpristine='git suicide && git clean -fdx'
+alias gc='git c'
+alias gs='git s'
