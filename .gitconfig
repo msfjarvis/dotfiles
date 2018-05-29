@@ -21,17 +21,19 @@
 	add-change-id = "!EDITOR='sed -i -re s/^pick/e/' sh -c 'git rebase -i $1 && while test -f .git/rebase-merge/interactive; do git commit --amend --no-edit && git commit --amend --no-edit && git rebase --continue; done' -"
 	c = commit -s
 	ca = c -a
+	cam = c -am
 	cp = cherry-pick --signoff
 	cpa = cherry-pick --abort
 	cpc = cherry-pick --continue
 	d = diff
-	dc = diff --cached
-	dcs = diff --stat --cached
-	ds = diff --stat
-	dsc = diff --stat --cached
+	dc = d --cached
+	dcs = ds --cached
+	ds = d --stat
+	dsc = ds --cached
 	export = archive --format zip --output
 	lo = log --oneline --no-merges
-	loa = lo --author='Harsh Shandilya <harsh@prjkt.io>'
+	loa = lo --author='Harsh Shandilya'
+	loc = lo --committer='Harsh Shandilya'
 	los = log --oneline --stat
 	lof = log --format=fixes
 	lst = ls-tree --full-tree -r HEAD
