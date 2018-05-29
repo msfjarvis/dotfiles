@@ -62,6 +62,7 @@ function makeapk {
     local GRADLE_COMMAND="assemble${1:?}"
     [[ "${2}" == "install" ]] && GRADLE_COMMAND="install${1:?}"
     rm -rfv app/build/outputs/apk/*
+    rm -rfv build/outputs/apk/*
     bash gradlew "${GRADLE_COMMAND}"
 }
 
