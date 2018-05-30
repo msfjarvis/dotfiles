@@ -100,9 +100,10 @@ function pushcaesiumtg {
       release ${FILE}
     fi
     if [ ${TYPE} != "test" ]; then
-      tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})" "${OP3_CAESIUM_CHAT_ID}"
+        tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})" "${OP3_CAESIUM_CHAT_ID}"
+    else
+        tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})"
     fi
-    tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})"
 }
 
 # Called by pushcaesiumtg on release builds
@@ -153,88 +154,88 @@ function check_toolchain() {
 
 # Duh
 function make_kernel {
-  tgm "Building ${FINAL_VER}" "${OP3_CAESIUM_CHAT_ID}"
-  make_defconfig
-  if [ ${MODULE} ]; then
-      make_wrapper ${MODULE}
-  else
-      make_wrapper ${KERNEL}
-  fi
-  local BUILT_KERNEL=out/arch/${ARCH}/boot/${KERNEL}
-  if [ -f "${BUILT_KERNEL}" ]; then
-    cp -r ${BUILT_KERNEL} ${ANYKERNEL_DIR}
-    tgm "Build successful" "${OP3_CAESIUM_CHAT_ID}"
-    return 0
-  else
-    reportError "Kernel compilation failed"
-  fi
+    tgm "Building ${FINAL_VER}" "${OP3_CAESIUM_CHAT_ID}"
+    make_defconfig
+    if [ ${MODULE} ]; then
+        make_wrapper ${MODULE}
+    else
+        make_wrapper ${KERNEL}
+    fi
+    local BUILT_KERNEL=out/arch/${ARCH}/boot/${KERNEL}
+    if [ -f "${BUILT_KERNEL}" ]; then
+      cp -r ${BUILT_KERNEL} ${ANYKERNEL_DIR}
+      tgm "Build successful" "${OP3_CAESIUM_CHAT_ID}"
+      return 0
+    else
+      reportError "Kernel compilation failed"
+    fi
 }
 
 # Called by make_kernel, used to trap defconfig regen events
 function make_defconfig {
-  [ ${CLEAN} ] && rm -rf ${OUT_DIR}
-  make_wrapper ${DEFCONFIG} 2>&1 >/dev/null
-  make_wrapper savedefconfig 2>&1 >/dev/null
-  [ ${REGEN_DEFCONFIG} ] && cp ${OUT_DIR}/defconfig arch/${ARCH}/configs/${DEFCONFIG} && echoText "Regenerated defconfig successfully" && exit 1
+    [ ${CLEAN} ] && rm -rf ${OUT_DIR}
+    make_wrapper ${DEFCONFIG} 2>&1 >/dev/null
+    make_wrapper savedefconfig 2>&1 >/dev/null
+    [ ${REGEN_DEFCONFIG} ] && cp ${OUT_DIR}/defconfig arch/${ARCH}/configs/${DEFCONFIG} && echoText "Regenerated defconfig successfully" && exit 1
 }
 
 # Create the final ZIP
 function make_zip {
-  local UNSIGNED_ZIP=${FINAL_VER}_unsigned.zip
-  local SIGNED_ZIP=${FINAL_VER}.zip
-  cd ${ANYKERNEL_DIR}
-  echo ${FINAL_VER} > version
-  rm *.zip 2>/dev/null
-  zip -r ${UNSIGNED_ZIP} * -x ".git/*" "README.md" ".gitignore" "*.zip" 2>&1 >/dev/null
-  [ -z ${KEYSTORE_PASSWORD} ] || echo ${KEYSTORE_PASSWORD} | jarsigner -keystore ${SCRIPT_DIR}/caesium_release.keystore ${UNSIGNED_ZIP} msfjarvis
-  mv ${UNSIGNED_ZIP} ${SIGNED_ZIP}
-  mkdir -p ${ZIP_MOVE}
-  mv  ${SIGNED_ZIP} ${ZIP_MOVE}/
-  cd ${WORKING_DIR}
+    local UNSIGNED_ZIP=${FINAL_VER}_unsigned.zip
+    local SIGNED_ZIP=${FINAL_VER}.zip
+    cd ${ANYKERNEL_DIR}
+    echo ${FINAL_VER} > version
+    rm *.zip 2>/dev/null
+    zip -r ${UNSIGNED_ZIP} * -x ".git/*" "README.md" ".gitignore" "*.zip" 2>&1 >/dev/null
+    [ -z ${KEYSTORE_PASSWORD} ] || echo ${KEYSTORE_PASSWORD} | jarsigner -keystore ${SCRIPT_DIR}/caesium_release.keystore ${UNSIGNED_ZIP} msfjarvis
+    mv ${UNSIGNED_ZIP} ${SIGNED_ZIP}
+    mkdir -p ${ZIP_MOVE}
+    mv  ${SIGNED_ZIP} ${ZIP_MOVE}/
+    cd ${WORKING_DIR}
 }
 
 while getopts ":cbrm:t:d:" opt; do
-  case $opt in
-    c)
-      echoText " Building clean " >&2
-      CLEAN=true
-      ;;
-    b)
-      echoText " Building ZIP only " >&2
-      ONLY_ZIP=true
-      ;;
-    r)
-      echoText " Regenerating defconfig " >&2
-      REGEN_DEFCONFIG=true
-      ;;
-    t)
-      TYPE=${OPTARG}
-      NOTIFY=true
-      if [[ ${TYPE} != "stable" ]]; then
-          echoText " Setting test build parameters" >&2
-          TEST_BUILD=true
-          export LOCALVERSION="-${INCREMENTAL_VERSION}-${GIT_HASH}"
-      fi
-      ;;
-    m)
-      MODULE=${OPTARG}
-      [[ ${MODULE} == */ ]] || MODULE=${MODULE}/
-      if [[ ! "$(ls ${MODULE}Kconfig*  2>/dev/null)" ]]; then
-          reportError "Invalid module specified - ${MODULE}"
-          return 1
-      fi
-      echoText "Building module ${MODULE}"
-      ;;
-     d)
-      [[ ${OPTARG} != "garlic" ]] && return
-      DEVICE=garlic
-      ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2_garlic"
-      FINAL_VER="${KERNEL_NAME}-${DEVICE}-${INCREMENTAL_VERSION}"
-      ;;
-    \?)
-      reportWarning "Invalid option: -${OPTARG}" >&2
-      ;;
-  esac
+    case $opt in
+        c)
+        echoText " Building clean " >&2
+        CLEAN=true
+        ;;
+        b)
+        echoText " Building ZIP only " >&2
+        ONLY_ZIP=true
+        ;;
+        r)
+        echoText " Regenerating defconfig " >&2
+        REGEN_DEFCONFIG=true
+        ;;
+        t)
+        TYPE=${OPTARG}
+        NOTIFY=true
+        if [[ ${TYPE} != "stable" ]]; then
+            echoText " Setting test build parameters" >&2
+            TEST_BUILD=true
+            export LOCALVERSION="-${INCREMENTAL_VERSION}-${GIT_HASH}"
+        fi
+        ;;
+        m)
+        MODULE=${OPTARG}
+        [[ ${MODULE} == */ ]] || MODULE=${MODULE}/
+        if [[ ! "$(ls ${MODULE}Kconfig*  2>/dev/null)" ]]; then
+            reportError "Invalid module specified - ${MODULE}"
+            return 1
+        fi
+        echoText "Building module ${MODULE}"
+        ;;
+        d)
+        [[ ${OPTARG} != "garlic" ]] && return
+        DEVICE=garlic
+        ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2_garlic"
+        FINAL_VER="${KERNEL_NAME}-${DEVICE}-${INCREMENTAL_VERSION}"
+        ;;
+        \?)
+        reportWarning "Invalid option: -${OPTARG}" >&2
+        ;;
+    esac
 done
 
 [[ ${TEST_BUILD} ]] && FINAL_VER=${FINAL_VER}-$(date +"%Y%m%d"-"%H%M%S")
@@ -244,10 +245,10 @@ DATE_START=$(date +"%s")
 # Make
 check_toolchain
 if [ ${ONLY_ZIP} ]; then
-  make_zip
+    make_zip
 else
-  make_kernel
-  make_zip
+    make_kernel
+    make_zip
 fi
 
 DATE_END=$(date +"%s")
