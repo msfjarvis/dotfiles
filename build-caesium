@@ -59,6 +59,7 @@ function make_wrapper {
 
 # Pushes a local file to my webserver
 function publish {
+    tgm "Uploading ${1} to ${2}" "${OP3_CAESIUM_CHAT_ID}"
     rsync -avR ${1} caddy@download.msfjarvis.website:/home/caddy/potatobox/caesium/${2}/ --progress --verbose
 }
 
@@ -152,6 +153,7 @@ function check_toolchain() {
 
 # Duh
 function make_kernel {
+  tgm "Building ${FINAL_VER}" "${OP3_CAESIUM_CHAT_ID}"
   make_defconfig
   if [ ${MODULE} ]; then
       make_wrapper ${MODULE}
@@ -159,7 +161,13 @@ function make_kernel {
       make_wrapper ${KERNEL}
   fi
   local BUILT_KERNEL=out/arch/${ARCH}/boot/${KERNEL}
-  [ -f "${BUILT_KERNEL}" ] && cp -r ${BUILT_KERNEL} ${ANYKERNEL_DIR} && return 0 || reportError "Kernel compilation failed"
+  if [ -f "${BUILT_KERNEL}" ]; then
+    cp -r ${BUILT_KERNEL} ${ANYKERNEL_DIR}
+    tgm "Build successful" "${OP3_CAESIUM_CHAT_ID}"
+    return 0
+  else
+    reportError "Kernel compilation failed"
+  fi
 }
 
 # Called by make_kernel, used to trap defconfig regen events
@@ -172,7 +180,6 @@ function make_defconfig {
 
 # Create the final ZIP
 function make_zip {
-  [[ ${TEST_BUILD} ]] && FINAL_VER=${FINAL_VER}-$(date +"%Y%m%d"-"%H%M%S")
   local UNSIGNED_ZIP=${FINAL_VER}_unsigned.zip
   local SIGNED_ZIP=${FINAL_VER}.zip
   cd ${ANYKERNEL_DIR}
@@ -229,6 +236,8 @@ while getopts ":cbrm:t:d:" opt; do
       ;;
   esac
 done
+
+[[ ${TEST_BUILD} ]] && FINAL_VER=${FINAL_VER}-$(date +"%Y%m%d"-"%H%M%S")
 
 DATE_START=$(date +"%s")
 
