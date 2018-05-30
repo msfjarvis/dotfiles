@@ -38,6 +38,11 @@ ZIP_MOVE="${WORKING_DIR}/zips/"
 
 ## Functions
 
+# Wrapper around tgm to avoid having to pass the second chat ID param everywhere
+function tgm_caesium {
+    tgm "${1}" "${OP3_CAESIUM_CHAT_ID}"
+}
+
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper {
     if [[ ! ${VERBOSE} ]]; then
@@ -59,7 +64,7 @@ function make_wrapper {
 
 # Pushes a local file to my webserver
 function publish {
-    tgm "Uploading ${1} to ${2}" "${OP3_CAESIUM_CHAT_ID}"
+    tgm_caesium "Uploading ${1} to ${2}"
     rsync -avR ${1} caddy@download.msfjarvis.website:/home/caddy/potatobox/caesium/${2}/ --progress --verbose
 }
 
@@ -100,7 +105,7 @@ function pushcaesiumtg {
       release ${FILE}
     fi
     if [ ${TYPE} != "test" ]; then
-        tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})" "${OP3_CAESIUM_CHAT_ID}"
+        tgm_caesium "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})"
     else
         tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})"
     fi
@@ -108,8 +113,8 @@ function pushcaesiumtg {
 
 # Called by pushcaesiumtg on release builds
 function release {
-    local FILE=${1}
-    local TAG=$(echo ${FILE} | cut -d / -f 2 | cut -d '-' -f 3 | sed 's/\.zip//')
+    local TAG=$(echo ${1} | cut -d / -f 2 | cut -d '-' -f 3 | sed 's/\.zip//')
+    tgm_caesium "Tagging and releasing ${TAG}"
     git -C ../AnyKernel2/ push origin HEAD:8.1.x-caesium
     git -C ../AnyKernel2/ tag -s ${TAG}
     git -C ../AnyKernel2/ push origin ${TAG}
@@ -154,7 +159,7 @@ function check_toolchain() {
 
 # Duh
 function make_kernel {
-    tgm "Building ${FINAL_VER}" "${OP3_CAESIUM_CHAT_ID}"
+    tgm_caesium "Building ${FINAL_VER}"
     make_defconfig
     if [ ${MODULE} ]; then
         make_wrapper ${MODULE}
@@ -164,7 +169,7 @@ function make_kernel {
     local BUILT_KERNEL=out/arch/${ARCH}/boot/${KERNEL}
     if [ -f "${BUILT_KERNEL}" ]; then
       cp -r ${BUILT_KERNEL} ${ANYKERNEL_DIR}
-      tgm "Build successful" "${OP3_CAESIUM_CHAT_ID}"
+      tgm_caesium "Build successful"
       return 0
     else
       reportError "Kernel compilation failed"
