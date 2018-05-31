@@ -40,7 +40,11 @@ ZIP_MOVE="${WORKING_DIR}/zips/"
 
 # Wrapper around tgm to avoid having to pass the second chat ID param everywhere
 function tgm_caesium {
-    tgm "${1}" "${OP3_CAESIUM_CHAT_ID}"
+    if [ "${TYPE}" == "test" ]; then
+        tgm "${1}"
+    else
+        tgm "${1}" "${OP3_CAESIUM_CHAT_ID}"
+    fi
 }
 
 # Wrapper function around make to ensure all the variables go through
@@ -64,7 +68,6 @@ function make_wrapper {
 
 # Pushes a local file to my webserver
 function publish {
-    tgm_caesium "Uploading ${1} to ${2}"
     rsync -avR ${1} caddy@download.msfjarvis.website:/home/caddy/potatobox/caesium/${2}/ --progress --verbose
 }
 
@@ -104,11 +107,17 @@ function pushcaesiumtg {
     if [ ${TYPE} == "stable" ]; then
       release ${FILE}
     fi
-    if [ ${TYPE} != "test" ]; then
-        tgm_caesium "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})"
-    else
-        tgm "New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})"
+    local MESSAGE, CHANGELOG
+    MESSAGE="New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})"
+    CHANGELOG="$(cat changelog 2>/dev/null)"
+    if [ "${CHANGELOG}" != "" ]; then
+        MESSAGE="${MESSAGE}
+
+Changelog:
+
+\`${CHANGELOG}\`"
     fi
+        tgm_caesium " ${MESSAGE}"
 }
 
 # Called by pushcaesiumtg on release builds
@@ -173,6 +182,7 @@ function make_kernel {
       return 0
     else
       reportError "Kernel compilation failed"
+      tgm_caesium "Build failed"
     fi
 }
 
