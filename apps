@@ -9,15 +9,15 @@ SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 source "${SCRIPT_DIR}/common"
 
 function am {
-    adb-"${CURRENT_DEVICE}" shell am "${@}"
+    adb shell am "${@}"
 }
 
 function pm {
-    adb-"${CURRENT_DEVICE}" shell pm "${@}"
+    adb shell pm "${@}"
 }
 
 function cmd {
-    adb-"${CURRENT_DEVICE}" shell cmd "${@}"
+    adb shell cmd "${@}"
 }
 
 function set_device {
