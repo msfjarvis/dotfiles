@@ -7,7 +7,9 @@ SCRIPT_DIR="$(cd "$( dirname $( readlink -f "${BASH_SOURCE[0]}" ) )" && pwd)"
 source ${SCRIPT_DIR}/common
 
 # Resources
-DEFCONFIG="caesium_defconfig"
+if [ -z "${DEFCONFIG}" ]; then
+    DEFCONFIG="caesium_defconfig"
+fi
 KERNEL="Image.gz-dtb"
 TREES="rr:oreo|aosip:oreo-mr1"
 JARVISBOX_URL="https://download.msfjarvis.website/caesium"
@@ -42,7 +44,7 @@ ZIP_MOVE="${WORKING_DIR}/zips/"
 function tgm_caesium {
     if [ "${TYPE}" == "test" ]; then
         tgm "${1}"
-    else
+    elif [ ! -z "${TYPE}" ]; then
         tgm "${1}" "${OP3_CAESIUM_CHAT_ID}"
     fi
 }
