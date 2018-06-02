@@ -32,8 +32,8 @@
 	dsc = ds --cached
 	export = archive --format zip --output
 	lo = log --oneline --no-merges
-	loa = lo --author='Harsh Shandilya'
-	loc = lo --committer='Harsh Shandilya'
+	loa = log --author='Harsh Shandilya'
+	loc = log --committer='Harsh Shandilya'
 	los = log --oneline --stat
 	lof = log --format=fixes
 	lst = ls-tree --full-tree -r HEAD
