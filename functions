@@ -25,6 +25,11 @@ function cpuinfo {
     grep -E '^model name|^cpu MHz' /proc/cpuinfo
 }
 
+function encrypt {
+    [ -z "${1}" ] && return
+    gpg --encrypt --output "${1}".gpg --recipient "harsh@prjkt.io" "${1}"
+}
+
 function battinfo {
     local BASE=/sys/class/power_supply/BAT0/
     declare -a ITEMS=("capacity_level:Battery_status" "charge_now:Current_charge" "capacity:Battery_percentage" "status:Status")
