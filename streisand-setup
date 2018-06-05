@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# SPDX-License-Identifier: GPL-3.0-only #
+
+# Source common functions
+SCRIPT_DIR="$(cd "$( dirname $( readlink -f "${BASH_SOURCE[0]}" ) )" && pwd)"
+source "${SCRIPT_DIR}/common"
+
+if [ ! -f "${HOME}/.ssh/id_rsa.pub" ]; then
+    echoText "SSH key not found, generating!"
+    ssh-keygen
+fi
+
+echoText "Installing dependencies"
+apt install git python-paramiko python-pip python-pycurl python-dev build-essential -y
+
+echoText "Installing pip dependencies"
+pip install setuptools
+pip install ansible markupsafe
+
+echoText "Cloning streisand repository"
+git clone https://github.com/StreisandEffect/streisand
+
+echoText "Running streisand installation now, pay attention to the prompts!"
+cd streisand
+./streisand
