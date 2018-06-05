@@ -6,7 +6,7 @@
 SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 source "${SCRIPT_DIR}/common"
 
-if [ "$(lsb_release -d)" != "Description:	Ubuntu 16.04.* LTS" ]; then
+if [[ ! "$(lsb_release -d)" =~ "Ubuntu 16.04" ]]; then
     reportError "Streisand only supports Ubuntu 16.04 LTS"
 fi
 
@@ -16,10 +16,9 @@ if [ ! -f "${HOME}/.ssh/id_rsa.pub" ]; then
 fi
 
 echoText "Installing dependencies"
-apt install python-paramiko python-pip python-pycurl python-dev build-essential -y
+apt install python-wheel python-setuptools python-paramiko python-pip python-pycurl python-dev build-essential -y
 
 echoText "Installing pip dependencies"
-pip install setuptools
 pip install ansible markupsafe
 
 echoText "Cloning streisand repository"
