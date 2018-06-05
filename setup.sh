@@ -9,8 +9,21 @@ git -C "${SCRIPT_DIR}" submodule update --init --recursive
 declare -a SCRIPTS=("kronic-build" "build-caesium" "build-kernel" "build-twrp" "hastebin")
 declare -a TDM_SCRIPTS=("gerrit-review")
 declare -a GPG_KEYS=("public_prjkt.asc" "private_prjkt.asc")
+declare -a NEEDED_PACKAGES=("adb:android-tools-adb" "jq" "curl" "wget")
 
 mkdir -p ~/bin/
+
+echoText "Checking for and installing missing packages"
+for PACKAGE in "${NEEDED_PACKAGES[@]}"; do
+    BIN="$(echo ${PACKAGE} | cut -d ':' -f 1)"
+    APT_TARGET="$(echo ${PACKAGE} | cut -d ':' -f 2)"
+    if [ -z "${APT_TARGET}" ]; then
+        APT_TARGET="${BIN}"
+    fi
+    if [ -z "$(which ${BIN})" ]; then
+        apt install "${APT_TARGET}" -y
+    fi
+done
 
 echoText "Checking and installing hub"
 HUB="$(command -v hub)"
