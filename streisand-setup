@@ -6,6 +6,10 @@
 SCRIPT_DIR="$(cd "$( dirname $( readlink -f "${BASH_SOURCE[0]}" ) )" && pwd)"
 source "${SCRIPT_DIR}/common"
 
+if [ "$(lsb_release -d)" != "Description:	Ubuntu 16.04.* LTS" ]; then
+    reportError "Streisand only supports Ubuntu 16.04 LTS"
+fi
+
 if [ ! -f "${HOME}/.ssh/id_rsa.pub" ]; then
     echoText "SSH key not found, generating!"
     ssh-keygen
