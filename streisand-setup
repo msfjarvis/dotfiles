@@ -3,8 +3,8 @@
 # SPDX-License-Identifier: GPL-3.0-only #
 
 # Source common functions
-SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
-source "${SCRIPT_DIR}/common"
+SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
+source "${SCRIPT_DIR}"/common
 
 if [[ ! "$(lsb_release -d)" =~ "Ubuntu 16.04" ]]; then
     reportError "Streisand only supports Ubuntu 16.04 LTS"
