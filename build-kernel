@@ -44,9 +44,13 @@ function make_kernel {
 # Called by make_kernel, used to trap defconfig regen events
 function make_defconfig {
     [ "${CLEAN}" ] && rm -rf "${OUT_DIR}"
-    make_wrapper "${DEFCONFIG}" 1>/dev/null 2>/dev/null
-    make_wrapper savedefconfig 1>/dev/null 2>/dev/null
-    [ "${REGEN_DEFCONFIG}" ] && cp "${OUT_DIR}"/defconfig arch/"${ARCH}"/configs/"${DEFCONFIG}" && echoText "Regenerated defconfig successfully" && exit 1
+    make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
+    if [ "${REGEN_DEFCONFIG}" ]; then
+        make_wrapper savedefconfig 1>/dev/null 2>&1
+        cp "${OUT_DIR}"/defconfig arch/"${ARCH}"/configs/"${DEFCONFIG}"
+        echoText "Regenerated defconfig successfully"
+        exit 0
+    fi
 }
 
 while getopts ":crm:" opt; do
