@@ -277,11 +277,11 @@ else
     make_zip
 fi
 
-DATE_END=$(date +"%s")
-DIFF=$(("${DATE_END}" - "${DATE_START}"))
 if [[ -f zips/"${FINAL_VER}".zip ]]; then
     reportSuccess "${FINAL_VER}".zip
     pushcaesiumtg "${FINAL_VER}".zip "${TYPE}"
 fi
+DATE_END=$(date +"%s")
+DIFF="$(bc <<< "${DATE_END} - ${DATE_START}")"
 
-reportWarning "Time: ${DIFF} / 60 minute(s) and ${DIFF} % 60 seconds."
+reportWarning "Time: $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds."
