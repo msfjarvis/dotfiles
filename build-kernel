@@ -7,7 +7,7 @@ SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
 source "${SCRIPT_DIR}"/common
 
 # Resources
-DEFCONFIG="jarvisbox_defconfig"
+DEFCONFIG="ryzenbox_defconfig"
 
 # Vars
 ARCH=x86
@@ -15,19 +15,13 @@ SUBARCH=x86_64
 USER=MSF
 HOST=jarvisbox
 
-# Paths
-WORKING_DIR=$(pwd)
-OUT_DIR="${WORKING_DIR}/out/"
-
 ## Functions
 
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper {
-    make O="${OUT_DIR}" \
-        ARCH="${ARCH}" SUBARCH="${SUBARCH}" \
+    make ARCH="${ARCH}" SUBARCH="${SUBARCH}" \
         KBUILD_BUILD_USER="${USER}" \
         KBUILD_BUILD_HOST="${HOST}" \
-        LOCALVERSION="${LOCALVERSION}" \
         -j"$(nproc --all)" "$@"
 }
 
@@ -37,7 +31,7 @@ function make_kernel {
     if [ "${MODULE}" ]; then
         make_wrapper "${MODULE}"
     else
-        make_wrapper all
+        make_wrapper all bindeb-pkg
     fi
 }
 
@@ -45,10 +39,9 @@ function make_kernel {
 function make_defconfig {
     [ "${CLEAN}" ] && rm -rf "${OUT_DIR}"
     make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
-    make_wrapper localmodconfig 1>/dev/null 2>&1
     if [ "${REGEN_DEFCONFIG}" ]; then
         make_wrapper savedefconfig 1>/dev/null 2>&1
-        cp "${OUT_DIR}"/defconfig arch/"${ARCH}"/configs/"${DEFCONFIG}"
+        mv $(pwd)/defconfig arch/"${ARCH}"/configs/"${DEFCONFIG}"
         echoText "Regenerated defconfig successfully"
         exit 0
     fi
@@ -81,8 +74,7 @@ done
 
 DATE_START=$(date +"%s")
 make_kernel
-
 DATE_END=$(date +"%s")
-DIFF=$(("${DATE_END}" - "${DATE_START}"))
+DIFF="$(bc <<< "${DATE_END} - ${DATE_START}")"
 
-reportWarning "Time: ${DIFF} / 60 minute(s) and ${DIFF} % 60 seconds."
+reportWarning "Time: $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds."
