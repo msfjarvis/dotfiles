@@ -87,7 +87,7 @@ if [[ "$@" =~ --install-gitconfig || "$@" =~ --all ]]; then
   for ITEM in $(find gitconfig_fragments -type f); do
     DECRYPTED="${ITEM/.gpg/}"
     rm -f "${DECRYPTED}" 2>/dev/null
-    gpg "${ITEM}"
+    gpg --decrypt "${ITEM}" > "${DECRYPTED}"
     [[ ! -f "${DECRYPTED}" ]] && break
     cat "${DECRYPTED}" >> ~/.gitconfig
     rm "${DECRYPTED}"
