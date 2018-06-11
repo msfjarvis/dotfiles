@@ -95,14 +95,18 @@ GDrive ID: \`${GDRIVE_UPLOAD_ID}\`
 function tgm {
     chat_id="${2}"
     [[ "${2}" == "" ]] && chat_id="${MSF_TG_ID}"
-    curl -F chat_id="${chat_id}" -F parse_mode="markdown" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" 1>/dev/null 2>/dev/null
+    curl -F chat_id="${chat_id}" -F parse_mode="markdown" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" 2&>1 1>/dev/null
 }
 
 # Upload a file to Telegram
 function tg {
     chat_id="${2}"
-    [[ "${2}" == "" ]] && chat_id="${MSF_TG_ID}"
-    curl -F chat_id="${chat_id}" -F document="@${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendDocument" 1>/dev/null 2>/dev/null
+    caption="${3}"
+    [[ "${2}" == "" || "${2}" =~ "-100" ]] && chat_id="${MSF_TG_ID}"
+    [[ ! "${2}" =~ "-100" ]] && caption="${2}"
+    [[ "${3}" == "" ]] && caption=""
+    echo "${chat_id}"
+    curl -F chat_id="${chat_id}" -F document="@${1}" -F caption="${caption}" "https://api.telegram.org/bot${TG_BOT_ID}/sendDocument" 2&>1 1>/dev/null
 }
 
 # Upload a file to transfer.sh, and send the link to telegram
