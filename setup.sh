@@ -22,7 +22,7 @@ for PACKAGE in "${NEEDED_PACKAGES[@]}"; do
         APT_TARGET="${BIN}"
     fi
     if [ -z "$(which ${BIN})" ]; then
-        apt install "${APT_TARGET}" -y
+        sudo apt install "${APT_TARGET}" -y
     fi
 done
 
