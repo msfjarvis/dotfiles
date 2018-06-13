@@ -100,13 +100,18 @@ function tgm {
 
 # Upload a file to Telegram
 function tg {
-    chat_id="${2}"
     caption="${3}"
-    [[ "${2}" == "" || "${2}" =~ "-100" ]] && chat_id="${MSF_TG_ID}"
-    [[ ! "${2}" =~ "-100" ]] && caption="${2}"
-    [[ "${3}" == "" ]] && caption=""
+    if [[ "${2}" == "" ]]; then
+        chat_id="${MSF_TG_ID}"
+    elif [[ "${2}" =~ "-100" ]]; then
+        chat_id="${2}"
+    else
+        caption="${2}"
+        chat_id="${MSF_TG_ID}"
+    fi
     echo "${chat_id}"
-    curl -F chat_id="${chat_id}" -F document="@${1}" -F caption="${caption}" "https://api.telegram.org/bot${TG_BOT_ID}/sendDocument" 2&>1 1>/dev/null
+    echo "${caption}"
+    curl -F chat_id="${chat_id}" -F document="@${1}" -F caption="${caption}" "https://api.telegram.org/bot${TG_BOT_ID}/sendDocument" && echo -e '\n'  2&>1 >/dev/null
 }
 
 # Upload a file to transfer.sh, and send the link to telegram
