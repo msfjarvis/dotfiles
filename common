@@ -93,25 +93,26 @@ GDrive ID: \`${GDRIVE_UPLOAD_ID}\`
 
 # Send a markdown encoded Telegram message
 function tgm {
-    chat_id="${2}"
-    [[ "${2}" == "" ]] && chat_id="${MSF_TG_ID}"
-    curl -F chat_id="${chat_id}" -F parse_mode="markdown" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" 2&>1 1>/dev/null
+    local CHAT_ID
+    CHAT_ID="${2}"
+    [[ "${2}" == "" ]] && CHAT_ID="${MSF_TG_ID}"
+    curl -F chat_id="${CHAT_ID}" -F parse_mode="markdown" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" 2&>1 1>/dev/null
 }
 
 # Upload a file to Telegram
 function tg {
-    caption="${3}"
+    local CHAT_ID
+    local CAPTION
+    CAPTION="${3}"
     if [[ "${2}" == "" ]]; then
-        chat_id="${MSF_TG_ID}"
+        CHAT_ID="${MSF_TG_ID}"
     elif [[ "${2}" =~ "-100" ]]; then
-        chat_id="${2}"
+        CHAT_ID="${2}"
     else
-        caption="${2}"
-        chat_id="${MSF_TG_ID}"
+        CAPTION="${2}"
+        CHAT_ID="${MSF_TG_ID}"
     fi
-    echo "${chat_id}"
-    echo "${caption}"
-    curl -F chat_id="${chat_id}" -F document="@${1}" -F caption="${caption}" "https://api.telegram.org/bot${TG_BOT_ID}/sendDocument" && echo -e '\n'  2&>1 >/dev/null
+    curl -F chat_id="${CHAT_ID}" -F document="@${1}" -F caption="${CAPTION}" "https://api.telegram.org/bot${TG_BOT_ID}/sendDocument" && echo -e '\n'  2&>1 >/dev/null
 }
 
 # Upload a file to transfer.sh, and send the link to telegram
