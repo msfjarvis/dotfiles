@@ -7,7 +7,9 @@ SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
 source "${SCRIPT_DIR}"/common
 
 # Resources
-DEFCONFIG="ryzenbox_defconfig"
+if [ -z "${DEFCONFIG}" ]; then
+    DEFCONFIG="ryzenbox_defconfig"
+fi
 
 # Vars
 ARCH=x86
