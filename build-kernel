@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# SPDX-License-Identifier: GPL-3.0-only #
+# Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
+# SPDX-License-Identifier: GPL-3.0-only
 
 # Source common functions
 SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
@@ -43,7 +44,7 @@ function make_defconfig {
     make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
     if [ "${REGEN_DEFCONFIG}" ]; then
         make_wrapper savedefconfig 1>/dev/null 2>&1
-        mv $(pwd)/defconfig arch/"${ARCH}"/configs/"${DEFCONFIG}"
+        mv "$(pwd)"/defconfig arch/"${ARCH}"/configs/"${DEFCONFIG}"
         echoText "Regenerated defconfig successfully"
         exit 0
     fi

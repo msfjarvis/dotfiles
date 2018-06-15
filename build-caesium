@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# SPDX-License-Identifier: GPL-3.0-only #
+# Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
+# SPDX-License-Identifier: GPL-3.0-only
 
 # Source common functions
 SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
@@ -72,15 +73,15 @@ function make_wrapper {
 
 # Pushes a local file to my webserver
 function publish {
-    rsync -avR "${1}" "${CAESIUM_UPLOAD_HOST}":"${CAESIUM_UPLOAD_PATH}"/"${2}"/ --progress --verbose
+    rsync -avR "${1}" "${CAESIUM_UPLOAD_HOST}":"${CAESIUM_UPLOAD_PATH}/${2}/" --progress --verbose
 }
 
 # Preps the server folder structure for new builds
 function prepdirs {
-    ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${CAESIUM_UPLOAD_PATH}"/"${1}"/
-    ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${CAESIUM_UPLOAD_PATH/caesium/archive}"/"${1}"/
-    ssh "${CAESIUM_UPLOAD_HOST}" rm -rf "${CAESIUM_UPLOAD_PATH/caesium/archive}"/"${1}"/*
-    ssh "${CAESIUM_UPLOAD_HOST}" mv "${CAESIUM_UPLOAD_PATH}"/"${1}"/* "${CAESIUM_UPLOAD_PATH/caesium/archive}"/"${1}"/
+    ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${CAESIUM_UPLOAD_PATH}/${1}/"
+    ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${CAESIUM_UPLOAD_PATH/caesium/archive}/${1}/"
+    ssh "${CAESIUM_UPLOAD_HOST}" rm -rf "${CAESIUM_UPLOAD_PATH/caesium/archive}/${1}/*"
+    ssh "${CAESIUM_UPLOAD_HOST}" mv "${CAESIUM_UPLOAD_PATH}/${1}/*" "${CAESIUM_UPLOAD_PATH/caesium/archive}/${1}/"
 }
 
 # The meat of the telegram notifications workflow
@@ -91,7 +92,7 @@ function pushcaesiumtg {
         return
     fi
     local TYPE="${2}"
-    local FINAL_VER="${FILE/.zip//}"
+    local FINAL_VER="${FILE/.zip/}"
     case "${TYPE}" in
         "alpha"|"beta"|"stable"|"test") ;;
         *) echo "Invalid build type" && return ;;

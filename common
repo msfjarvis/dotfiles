@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# SPDX-License-Identifier: GPL-3.0-only #
+# Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
+# SPDX-License-Identifier: GPL-3.0-only
 
 # Import all the bot tokens and IDs
 source ~/.secretcreds
@@ -12,26 +13,31 @@ CL_RST="\033[0m"
 CL_YLW="\033[01;33m"
 CL_BLUE="\033[01;34m"
 
+# To shut shellcheck up
+export CL_BOLD CL_INV CL_RED CL_RST CL_YLW CL_BLUE
+
 # Route nano to 'no-trailing-newlines' mode
 function nano {
     "$(which nano)" -L "${@/ /\ }"
 }
 
 # Prints a formatted header to let the user know what's being done
+# SC2034: func appears unused. Verify it or export it.
+# shellcheck disable=SC2034
 function echoText {
-    echo -e ${CL_RED}
-    echo -e ${CL_BOLD}
+    echo -e "${CL_RED}"
+    echo -e "${CL_BOLD}"
     echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
     echo -e "==  ${1}  =="
     echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
-    echo -e ${CL_RST}
+    echo -e "${CL_RST}"
 }
 
 # Prints an error in bold red
 function reportError {
     echo -e ""
-    echo -e ${CL_RED}"${1}"${CL_RST}
-    if [[ -z ${2} ]]; then
+    echo -e "${CL_RED}${1}${CL_RST}"
+    if [[ -z "${2}" ]]; then
         echo -e ""
     fi
     exit 1
@@ -40,49 +46,53 @@ function reportError {
 # Prints a warning in bold yellow
 function reportWarning {
     echo -e ""
-    echo -e ${CL_YLW}"${1}"${CL_RST}
-    if [[ -z ${2} ]]; then
+    echo -e "${CL_YLW}${1}${CL_RST}"
+    if [[ -z "${2}" ]]; then
         echo -e ""
     fi
 }
 
 # Prints the success banner
+# SC2034: func appears unused. Verify it or export it.
+# shellcheck disable=SC2034
 function reportSuccess {
-    echo -e ${CL_GRN}
-    echo -e ${CL_BOLD}
+    echo -e "${CL_GRN}"
+    echo -e "${CL_BOLD}"
     echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
     echo -e "==  ${1}  =="
     echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
-    echo -e ${CL_RST}
+    echo -e "${CL_RST}"
 }
 
 # Upload a file to transfer.sh
 function transfer {
-  if [ $# -eq 0 ]
-    then echo "No arguments specified. Usage:
-    echo transfer /tmp/test.md
-    cat /tmp/test.md | transfer test.md"
-    return 1
-  fi
-  tmpfile=$( mktemp -t transferXXX )
-  if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
-  curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile
-  else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile
-  fi; cat $tmpfile
-  rm -f $tmpfile
-  echo ""
+    if [ "$#" -eq 0 ]
+      then echo "No arguments specified. Usage:
+      echo transfer /tmp/test.md
+      cat /tmp/test.md | transfer test.md"
+      return 1
+    fi
+    tmpfile=$( mktemp -t transferXXX )
+    if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
+    curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> "${tmpfile}"
+    else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> "${tmpfile}"
+    fi; cat "${tmpfile}"
+    rm -f "${tmpfile}"
+    echo ""
 }
 
 # Upload to GDrive
 function upload {
-    local FILE=${1:?}
-    local ZIP_SIZE_MB=$(du -h ${FILE} | awk '{print $1}' | sed 's/M//')
-    local UPLOAD_DURATION=$(bc <<< "${ZIP_SIZE_MB}/54") # assuming 54mBps as a consistent upload speed
-    local MD5=$(md5sum ${FILE} | awk '{print $1}')
-    GDRIVE_UPLOAD_ID=$(gdrive upload --share ${FILE} | awk '{print $2}')
-    GDRIVE_UPLOAD_ID=$(echo ${GDRIVE_UPLOAD_ID} | awk '{print $2}')
+    local FILE; local ZIP_SIZE_MB; local UPLOAD_DURATION; local MD5
+    FILE="${1:?}"
+    ZIP_SIZE_MB="$(du -h "${FILE}" | awk '{print $1}' | sed 's/M//')"
+    UPLOAD_DURATION=$(bc <<< "${ZIP_SIZE_MB}/54") # assuming 54mBps as a consistent upload speed
+    tgm "Uploading ${FILE}, ETA ${UPLOAD_DURATION}"
+    MD5="$(md5sum "${FILE}" | awk '{print $1}')"
+    GDRIVE_UPLOAD_ID="$(gdrive upload --share "${FILE}" | awk '{print $2}')"
+    GDRIVE_UPLOAD_ID="$(echo "${GDRIVE_UPLOAD_ID}" | awk '{print $2}')"
     UPLOAD_INFO="
-File: [$(basename ${FILE})]($(printf "https://drive.google.com/uc?id=%s&export=download" ${GDRIVE_UPLOAD_ID}))
+File: [$(basename "${FILE}")]($(printf "https://drive.google.com/uc?id=%s&export=download" "${GDRIVE_UPLOAD_ID}"))
 Size: ${ZIP_SIZE_MB}M
 MD5: \`${MD5}\`
 GDrive ID: \`${GDRIVE_UPLOAD_ID}\`
@@ -100,6 +110,8 @@ function tgm {
 }
 
 # Upload a file to Telegram
+# SC2076: Don't quote rhs of =~, it'll match literally rather than as a regex.
+# shellcheck disable=SC2076
 function tg {
     local CHAT_ID
     local CAPTION
@@ -118,7 +130,7 @@ function tg {
 # Upload a file to transfer.sh, and send the link to telegram
 function ttg {
     file=$(transfer "${1}")
-    tgm "[$(basename ${1})](${file})" "${2}"
+    tgm "[$(basename "${1}")](${file})" "${2}"
 }
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
@@ -139,7 +151,8 @@ function ttg {
 #
 # -------------------------------------------------------------------- #
 # Created 01 September 2012              Last Modified 02 September 2012
-
+# SC2034: func appears unused. Verify it or export it.
+# shellcheck disable=SC2034
 function exesudo ()
 {
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ##

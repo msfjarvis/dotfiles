@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# SPDX-License-Identifier: GPL-3.0-only #
+# Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
+# SPDX-License-Identifier: GPL-3.0-only
 
 CURRENT_DEVICE=walleye
 

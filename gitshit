@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# SPDX-License-Identifier: GPL-3.0-only #
+# Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
+# SPDX-License-Identifier: GPL-3.0-only
 
 GERRIT_USER=MSF_Jarvis
 ANDROID_PLATFORM_ROOT="/home/msfjarvis/aosip"
@@ -13,11 +14,11 @@ SUBS_GERRIT_URL="substratum.review"
 DEFAULT_GERRIT="aosip"
 
 function get_current_gerrit {
-    if [[ ${DEFAULT_GERRIT} == "aosip" ]]; then
+    if [[ "${DEFAULT_GERRIT}" == "aosip" ]]; then
         echo "${GERRIT_USER}@${AOSIP_GERRIT_URL}"
-    elif [[ ${DEFAULT_GERRIT} == "substratum" ]]; then
+    elif [[ "${DEFAULT_GERRIT}" == "substratum" ]]; then
         echo "${GERRIT_USER}@${SUBS_GERRIT_URL}"
-    elif [[ ${DEFAULT_GERRIT} == "gzosp" ]]; then
+    elif [[ "${DEFAULT_GERRIT}" == "gzosp" ]]; then
         echo "${GERRIT_USER}@${GZOSP_GERRIT_URL}"
     else
         return 1
@@ -25,78 +26,80 @@ function get_current_gerrit {
 }
 
 function hook {
-    local gitdir=$(git rev-parse --git-dir)
-    scp -p -P 29418 $(get_current_gerrit):hooks/commit-msg ${gitdir}/hooks/
+    local gitdir
+    gitdir="$(git rev-parse --git-dir)"
+    scp -p -P 29418 "$(get_current_gerrit)":hooks/commit-msg "${gitdir}"/hooks/
 }
 
 function reposync {
-    repo sync -c --no-tags --force-sync -f -j10 ${@}
+    repo sync -c --no-tags --force-sync -f -j10 "${@}"
 }
 
+# shellcheck disable=SC2032,SC2033,SC2029
+# All the disabled warnings are false alarms that don't apply.
 function gerrit {
-    ssh -p 29418 $(get_current_gerrit) gerrit $@
+    ssh -p 29418 "$(get_current_gerrit)" gerrit "${@}"
 }
 
+# shellcheck disable=SC2032,SC2033,SC2029
+# All the disabled warnings are false alarms that don't apply.
 function subsgerrit {
-    ssh -p 29418 ${GERRIT_USER}@${SUBS_GERRIT_URL} gerrit $@
+    ssh -p 29418 "${GERRIT_USER}@${SUBS_GERRIT_URL}" gerrit "${@}"
 }
 
 function gpush {
-    declare -a PARAMS=("$@")
-    local BRANCH=${DEFAULT_AOSIP_BRANCH}
-    if [[ ${#PARAMS[@]} -eq 2 ]]; then
-        BRANCH=${PARAMS[0]}
-        if [[ ${PARAMS[1]} == bypass ]]; then
-            git push gerrit HEAD:refs/for/${BRANCH}
+    declare -a PARAMS=("${@}")
+    local BRANCH
+    BRANCH="${DEFAULT_AOSIP_BRANCH}"
+    if [[ "${#PARAMS[@]}" -eq 2 ]]; then
+        BRANCH="${PARAMS[0]}"
+        if [[ "${PARAMS[1]}" == bypass ]]; then
+            git push gerrit HEAD:refs/for/"${BRANCH}"
         else
-            git push gerrit HEAD:refs/for/${BRANCH}/${1}
+            git push gerrit HEAD:refs/for/"${BRANCH}"/"${PARAMS[0]}"
         fi
-    elif [[ ${#PARAMS[@]} -eq 1 ]]; then
-        git push gerrit HEAD:refs/for/${BRANCH}/${PARAMS[0]}
+    elif [[ "${#PARAMS[@]}" -eq 1 ]]; then
+        git push gerrit HEAD:refs/for/"${BRANCH}"/"${PARAMS[0]}"
     else
-        git push gerrit HEAD:refs/for/${BRANCH}
+        git push gerrit HEAD:refs/for/"${BRANCH}"
     fi
 }
 
 function gzpush {
-    gpush 8.1 bypass
+    gpush "${DEFAULT_GZOSP_BRANCH}" bypass
+}
+
+function subspush {
+    gpush "${DEFAULT_SUBS_BRANCH}" bypass
 }
 
 function gfpush {
-    BRANCH=${1}
-    [[ ${BRANCH} == "" ]] && BRANCH=${DEFAULT_AOSIP_BRANCH}
-    git push gerrit HEAD:refs/heads/${BRANCH}
+    local BRANCH
+    BRANCH="${1}"
+    if [[ "${BRANCH}" == "" ]]; then
+        BRANCH="${DEFAULT_AOSIP_BRANCH}"
+    fi
+    git push gerrit HEAD:refs/heads/"${BRANCH}"
 }
 
 function gffpush {
-    BRANCH=${1}
-    [[ ${BRANCH} == "" ]] && BRANCH=${DEFAULT_AOSIP_BRANCH}
-    git push --force gerrit HEAD:refs/heads/${BRANCH}
+    BRANCH="${1}"
+    if [[ "${BRANCH}" == "" ]]; then
+        BRANCH="${DEFAULT_AOSIP_BRANCH}"
+    fi
+    git push --force gerrit HEAD:refs/heads/"${BRANCH}"
 }
 
-echo "
-function createXos {
-    if ! git rev-parse --git-dir &> /dev/null; then
-        reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
-        return 1
-    fi
-    local PROJECT=$(pwd -P | sed -e "s#$ANDROID_PLATFORM_ROOT/##; s#-caf.*##; s#\/default##; s#/#_#g#")
-    ssh ${GERRIT_USER}@${AOSIP_GERRIT_URL} -p 29418 \
-        gerrit create-project -p All-Projects -t REBASE_IF_NECESSARY \
-        android_${PROJECT}
-    git create halogenOS/android_${PROJECT}
-}" >/dev/null
-
 function xg {
+    local PROJECT
     if ! git rev-parse --git-dir &> /dev/null; then
         reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
         return 1
     fi
-    local PROJECT=$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#-caf.*##; s#/make##; s#\/default##; s#/#_#g#")
+    PROJECT="$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#-caf.*##; s#/make##; s#\/default##; s#/#_#g#")"
     git remote remove gerrit 2>/dev/null
-    git remote add gerrit ssh://${GERRIT_USER}@${AOSIP_GERRIT_URL}:29418/AOSIP/platform_${PROJECT}
+    git remote add gerrit ssh://"${GERRIT_USER}"@"${AOSIP_GERRIT_URL}":29418/AOSIP/platform_"${PROJECT}"
     hook
-#   git remote add gerrit https://$GERRIT_USER@${AOSIP_GERRIT_URL}:29418/a/android_$(echo $PROJECT | sed "s#$ANDROID_PLATFORM_ROOT/##" | sed "s#/#_#g#")
 }
 
 function gz {
@@ -106,12 +109,11 @@ function gz {
         return 1
     fi
     PROJECT=$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#-caf.*##; s#\/default##; s#/#_#g#")
-    if (echo ${PROJECT} | grep -qv "^device")
-    then
+    if (echo "${PROJECT}" | grep -qv "^device"); then
         PFX="GZOSP/"
     fi
     git remote remove gzgerrit 2>/dev/null
-    git remote add gerrit ssh://${GERRIT_USER}@${GZOSP_GERRIT_URL}:29418/${PFX}${PROJECT}
+    git remote add gerrit ssh://"${GERRIT_USER}"@${GZOSP_GERRIT_URL}:29418/"${PFX}${PROJECT}"
 }
 
 function subs {
@@ -120,11 +122,7 @@ function subs {
         reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
         return 1
     fi
-    PROJECT=$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#-caf.*##; s#\/default##; s#/#_#g#")
-    if (echo ${PROJECT} | grep -qv "^device")
-    then
-        PFX="SubstratumResources/platform_"
-    fi
-    git remote remove gzgerrit 2>/dev/null
-    git remote add gerrit ssh://${GERRIT_USER}@${SUBS_GERRIT_URL}:29418/${PFX}${PROJECT}
+    PROJECT=$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#/#_#g#")
+    git remote remove subsgerrit 2>/dev/null
+    git remote add subsgerrit ssh://"${GERRIT_USER}"@"${SUBS_GERRIT_URL}":29418/SubstratumResources/platform_"${PROJECT}"
 }

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# SPDX-License-Identifier: GPL-3.0-only #
+# Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
+# SPDX-License-Identifier: GPL-3.0-only
 
 # Source common functions
 SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
@@ -16,12 +17,12 @@ mkdir -p ~/bin/
 
 echoText "Checking for and installing missing packages"
 for PACKAGE in "${NEEDED_PACKAGES[@]}"; do
-    BIN="$(echo ${PACKAGE} | cut -d ':' -f 1)"
-    APT_TARGET="$(echo ${PACKAGE} | cut -d ':' -f 2)"
+    BIN="$(echo "${PACKAGE}" | cut -d ':' -f 1)"
+    APT_TARGET="$(echo "${PACKAGE}" | cut -d ':' -f 2)"
     if [ -z "${APT_TARGET}" ]; then
         APT_TARGET="${BIN}"
     fi
-    if [ -z "$(which ${BIN})" ]; then
+    if [ -z "$(command -v "${BIN}")" ]; then
         sudo apt install "${APT_TARGET}" -y
     fi
 done
@@ -55,12 +56,16 @@ done
 echoText "Moving credentials"
 gpg --decrypt "${SCRIPT_DIR}"/.secretcreds.gpg > ~/.secretcreds
 
-if [[ ! "${PATH}" =~ ~/bin ]]; then
+# SC2076: Don't quote rhs of =~, it'll match literally rather than as a regex.
+# SC2088: Note that ~ does not expand in quotes.
+# shellcheck disable=SC2076,SC2088
+if [[ ! "${PATH}" =~ "~/bin" ]]; then
     reportWarning "~/bin is not in PATH, appending the export to bashrc"
-    echo $'\nexport PATH=~/bin:$PATH' >> ~/.bashrc
+    echo $'\nexport PATH="~/bin":$PATH' >> ~/.bashrc
 fi
 
-if [[ ! $(grep "source ${SCRIPT_DIR}/functions" ~/.bashrc) ]]; then
+ret="$(grep -q "source ${SCRIPT_DIR}/functions" ~/.bashrc)"
+if [[ "${ret}" ]]; then
     reportWarning "functions is not sourced in the bashrc, appending"
     echo "source ${SCRIPT_DIR}/functions" >> ~/.bashrc
 fi
@@ -81,6 +86,9 @@ done
 echoText "Setting up gitconfig"
 mv ~/.gitconfig ~/.gitconfig.old 2>/dev/null # Failsafe in case we screw up
 cp "${SCRIPT_DIR}/.gitconfig" ~/.gitconfig
+# SC2044: For loops over find output are fragile. Use find -exec or a while read loop.
+# Disabling until I have a better idea
+# shellcheck disable=SC2044
 for ITEM in $(find gitconfig_fragments -type f); do
     DECRYPTED="${ITEM/.gpg/}"
     rm -f "${DECRYPTED}" 2>/dev/null

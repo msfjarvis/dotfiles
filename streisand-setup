@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 
-# SPDX-License-Identifier: GPL-3.0-only #
+# Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
+# SPDX-License-Identifier: GPL-3.0-only
 
 # Source common functions
 SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
 source "${SCRIPT_DIR}"/common
 
+# SC2076: Don't quote rhs of =~, it'll match literally rather than as a regex.
+# We DON'T want this to match as a regex
+# shellcheck disable=SC2076
 if [[ ! "$(lsb_release -d)" =~ "Ubuntu 16.04" ]]; then
     reportError "Streisand only supports Ubuntu 16.04 LTS"
 fi
