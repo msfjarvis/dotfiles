@@ -124,7 +124,7 @@ function tg {
         CAPTION="${2}"
         CHAT_ID="${MSF_TG_ID}"
     fi
-    curl -F chat_id="${CHAT_ID}" -F document="@${1}" -F caption="${CAPTION}" "https://api.telegram.org/bot${TG_BOT_ID}/sendDocument" >/dev/null 2>&1
+    curl -F chat_id="${CHAT_ID}" -F document="@${1}" -F caption="${CAPTION}" -F parse_mode="Markdown" "https://api.telegram.org/bot${TG_BOT_ID}/sendDocument" >/dev/null 2>&1
 }
 
 # Upload a file to transfer.sh, and send the link to telegram
