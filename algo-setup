@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
+# SPDX-License-Identifier: GPL-3.0-only
+# This script is basically the README from algo in a script to avoid copypasta.
+
+# I use my fork because it has my custom configurations, feel free to stick to official.
+git clone MSF-Jarvis/algo
+cd algo/
+apt install build-essential libssl-dev libffi-dev python-dev python-pip python-setuptools python-virtualenv -y
+python -m virtualenv --python=$(which python2) env && source env/bin/activate && python -m pip install -U pip && python -m pip install -r requirements.txt
+./algo
