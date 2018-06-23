@@ -22,7 +22,7 @@ function nano {
 }
 
 # Prints a formatted header to let the user know what's being done
-# SC2034: func appears unused. Verify it or export it.
+# SC2034: i appears unused. Verify it or export it.
 # shellcheck disable=SC2034
 function echoText {
     echo -e "${CL_RED}"
@@ -53,7 +53,7 @@ function reportWarning {
 }
 
 # Prints the success banner
-# SC2034: func appears unused. Verify it or export it.
+# SC2034: i appears unused. Verify it or export it.
 # shellcheck disable=SC2034
 function reportSuccess {
     echo -e "${CL_GRN}"
