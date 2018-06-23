@@ -67,14 +67,6 @@ function makeapk {
     bash gradlew "${GRADLE_COMMAND}"
 }
 
-function lawnchairbuild {
-    local BUILT_APK
-    git clean -fdx
-    makeapk debug
-    BUILT_APK=$(find build -name Lawnchair-aosp-ci-debug.apk)
-    if [[ -f "${BUILT_APK}" ]]; then tg "${BUILT_APK}"; else tgm "Lawnchair build failed"; fi
-}
-
 function wgbuild {
     local BUILT_APK GIT_DESCRIBE CHANGELOG DATE_START DATE_END DIFF
     GIT_DESCRIBE="$(git describe --tags)"
