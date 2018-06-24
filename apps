@@ -54,8 +54,8 @@ function update_template {
     sed -i "s#substratum\.theme\.template#${PACKAGE_NAME}#g" "${WORKING_DIR}"/app/build.gradle
     reportWarning "Updating resources"
     cp -R "${TEMPLATE_DIR}"/app/src/main/res/values/* "${WORKING_DIR}"/app/src/main/res/values/
-    ga -A -p "${WORKING_DIR}"/app/build.gradle "${WORKING_DIR}"/app/src/main/res/ "${WORKING_DIR}"/gradle/ "${WORKING_DIR}"/build.gradle
-    git commit -m "[CHANGEME]: Update to upstream revision ${TEMPLATE_HASH}" --edit
+    git a -A -p "${WORKING_DIR}"/app/build.gradle "${WORKING_DIR}"/app/src/main/res/ "${WORKING_DIR}"/gradle/ "${WORKING_DIR}"/build.gradle
+    git c -m "[CHANGEME]: Update to upstream revision ${TEMPLATE_HASH}" --edit
 }
 
 function makeapk {
@@ -96,8 +96,7 @@ function wgbuild {
 }
 
 function pushthemetg {
-    tg "${1}" "${THEME_TESTERS_CHAT_ID}"
-    tgm "${2}" "${THEME_TESTERS_CHAT_ID}"
+    tg "${1}" "${THEME_TESTERS_CHAT_ID}" "${2}"
 }
 
 function findapks {
