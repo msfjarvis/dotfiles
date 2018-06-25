@@ -68,10 +68,11 @@ function makeapk {
 }
 
 function wgbuild {
-    local BUILT_APK GIT_DESCRIBE CHANGELOG DATE_START DATE_END DIFF
+    local BUILT_APK GIT_DESCRIBE CHANGELOG DATE_START DATE_END DIFF IS_LOCAL
     GIT_DESCRIBE="$(git describe --tags)"
     BUILT_APK="app/build/outputs/apk/debug/wg-android_${GIT_DESCRIBE}.apk"
     CHANGELOG="${1:?}"
+    [[ "${@}" =~ --local || "${@}" =~ -l ]] && IS_LOCAL=true
     for PROJECT in wireguard wireguard-go; do
         git -C app/tools/"${PROJECT}" ru
         git -C app/tools/"${PROJECT}" suicide origin/master
@@ -82,17 +83,18 @@ function wgbuild {
         return 1
     fi
     DATE_START=$(date +"%s")
-    tgm '`Starting compilation..." "${WIREGUARD_CHANNEL_ID}`'
+    [ "${IS_LOCAL}" ] || tgm '`Starting compilation..." "${WIREGUARD_CHANNEL_ID}`'
     makeapk debug
     if [[ ! -f "${BUILT_APK}" ]]; then
         reportError '`APK Compilation failed`'
-        tgm '`Compilation failed!`'  "${WIREGUARD_CHANNEL_ID}"
+        [ "${IS_LOCAL}" ] || tgm '`Compilation failed!`'  "${WIREGUARD_CHANNEL_ID}"
         return 1
     fi
     DATE_END=$(date +"%s")
     DIFF="$(bc <<< "${DATE_END} - ${DATE_START}")"
-    tgm "Build successful in  $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds, uploading." "${WIREGUARD_CHANNEL_ID}"
-    tg "${BUILT_APK}" "${WIREGUARD_CHANNEL_ID}" "${CHANGELOG}"
+    [ "${IS_LOCAL}" ] || tgm "Build successful in  $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds, uploading." "${WIREGUARD_CHANNEL_ID}"
+    [ "${IS_LOCAL}" ] || tg "${BUILT_APK}" "${WIREGUARD_CHANNEL_ID}" "${CHANGELOG}"
+    [ "${IS_LOCAL}" ] && adb install "$(findapks app/build)"
 }
 
 function pushthemetg {
