@@ -19,7 +19,11 @@ function lolsay {
 }
 
 function foreversay {
-    until ! lolsay "${@}";do sleep 0;done
+    until ! lolsay "${@}"; do sleep 0; done
+}
+
+function tgcow {
+    tgm "\`$(cowsay "${@}")\`" "${OP3_CAESIUM_CHAT_ID}"
 }
 
 function cpuinfo {
