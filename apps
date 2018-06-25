@@ -84,17 +84,22 @@ function wgbuild {
     fi
     DATE_START=$(date +"%s")
     [ "${IS_LOCAL}" ] || tgm '`Starting compilation..." "${WIREGUARD_CHANNEL_ID}`'
-    makeapk debug
+    if [ "${IS_LOCAL}" ]; then
+        makeapk debug install
+        return 0
+    else
+        makeapk debug
+    fi
     if [[ ! -f "${BUILT_APK}" ]]; then
         reportError '`APK Compilation failed`'
-        [ "${IS_LOCAL}" ] || tgm '`Compilation failed!`'  "${WIREGUARD_CHANNEL_ID}"
+        tgm '`Compilation failed!`'  "${WIREGUARD_CHANNEL_ID}"
         return 1
     fi
     DATE_END=$(date +"%s")
     DIFF="$(bc <<< "${DATE_END} - ${DATE_START}")"
-    [ "${IS_LOCAL}" ] || tgm "Build successful in  $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds, uploading." "${WIREGUARD_CHANNEL_ID}"
-    [ "${IS_LOCAL}" ] || tg "${BUILT_APK}" "${WIREGUARD_CHANNEL_ID}" "${CHANGELOG}"
-    [ "${IS_LOCAL}" ] && adb install -r "$(findapks app/build)"
+    tgm "Build successful in  $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds, uploading." "${WIREGUARD_CHANNEL_ID}"
+    tg "${BUILT_APK}" "${WIREGUARD_CHANNEL_ID}" "${CHANGELOG}"
+    adb install -r "$(findapks app/build)"
 }
 
 function pushthemetg {
