@@ -94,7 +94,7 @@ function wgbuild {
     DIFF="$(bc <<< "${DATE_END} - ${DATE_START}")"
     [ "${IS_LOCAL}" ] || tgm "Build successful in  $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds, uploading." "${WIREGUARD_CHANNEL_ID}"
     [ "${IS_LOCAL}" ] || tg "${BUILT_APK}" "${WIREGUARD_CHANNEL_ID}" "${CHANGELOG}"
-    [ "${IS_LOCAL}" ] && adb install "$(findapks app/build)"
+    [ "${IS_LOCAL}" ] && adb install -r "$(findapks app/build)"
 }
 
 function pushthemetg {
