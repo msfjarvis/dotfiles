@@ -43,6 +43,7 @@ ZIP_MOVE="${WORKING_DIR}/zips/"
 
 # Wrapper around tgm to avoid having to pass the second chat ID param everywhere
 function tgm_caesium {
+    [ -z "${NO_CHATTER}" ] || return
     if [ "${TYPE}" == "test" ]; then
         tgm "${1}"
     elif [ ! -z "${TYPE}" ]; then
@@ -86,6 +87,7 @@ function prepdirs {
 
 # The meat of the telegram notifications workflow
 function pushcaesiumtg {
+    [ -z "${TYPE}" ] && return
     local FILE="${1}"
     if [ "${DEVICE}" == "garlic" ]; then
         upload "${ZIP_MOVE}${FILE}"
@@ -226,27 +228,15 @@ function make_zip {
     cd "${WORKING_DIR}"
 }
 
-while getopts ":cbrm:t:d:" OPT; do
+while getopts ":cbm:nrt:d:" OPT; do
     case "${OPT}" in
-        c)
-        echoText " Building clean " >&2
-        CLEAN=true
-        ;;
-        b)
-        echoText " Building ZIP only " >&2
-        ONLY_ZIP=true
-        ;;
-        r)
-        echoText " Regenerating defconfig " >&2
-        REGEN_DEFCONFIG=true
-        ;;
-        t)
-        TYPE="${OPTARG}"
-        if [[ "${TYPE}" != "stable" ]]; then
-            echoText " Setting test build parameters" >&2
-            TEST_BUILD=true
-            export LOCALVERSION=-"${INCREMENTAL_VERSION}"-"${GIT_HASH}"
-        fi
+        b) echoText " Building ZIP only " >&2; ONLY_ZIP=true ;;
+        c) echoText " Building clean " >&2; CLEAN=true ;;
+        d)
+        [[ "${OPTARG}" != "garlic" ]] && return
+        DEVICE=garlic
+        ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2_garlic"
+        FINAL_VER="${KERNEL_NAME}"-"${DEVICE}"-"${INCREMENTAL_VERSION}"
         ;;
         m)
         MODULE="${OPTARG}"
@@ -257,11 +247,15 @@ while getopts ":cbrm:t:d:" OPT; do
         fi
         echoText "Building module ${MODULE}"
         ;;
-        d)
-        [[ "${OPTARG}" != "garlic" ]] && return
-        DEVICE=garlic
-        ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2_garlic"
-        FINAL_VER="${KERNEL_NAME}"-"${DEVICE}"-"${INCREMENTAL_VERSION}"
+        n) NO_CHATTER=true ;;
+        r) echoText " Regenerating defconfig " >&2; REGEN_DEFCONFIG=true ;;
+        t)
+        TYPE="${OPTARG}"
+        if [[ "${TYPE}" != "stable" ]]; then
+            echoText " Setting test build parameters" >&2
+            TEST_BUILD=true
+            export LOCALVERSION=-"${INCREMENTAL_VERSION}"-"${GIT_HASH}"
+        fi
         ;;
         \?)
         reportWarning "Invalid option: -${OPTARG}" >&2
