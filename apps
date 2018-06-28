@@ -83,7 +83,7 @@ function wgbuild {
         return 1
     fi
     DATE_START=$(date +"%s")
-    [ "${IS_LOCAL}" ] || tgm '`Starting compilation..." "${WIREGUARD_CHANNEL_ID}`'
+    [ "${IS_LOCAL}" ] || tgm '`Starting compilation...`' "${WIREGUARD_CHANNEL_ID}"
     if [ "${IS_LOCAL}" ]; then
         makeapk debug install
         return 0
