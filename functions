@@ -35,6 +35,12 @@ function encrypt {
     gpg --encrypt --output "${1}".gpg --recipient "harsh@prjkt.io" "${1}"
 }
 
+function maintenance {
+    sudo apt update
+    sudo apt upgrade -y
+    sudo apt autoremove -y
+}
+
 function battinfo {
     local BASE=/sys/class/power_supply/BAT0/
     declare -a ITEMS=("capacity_level:Battery_status" "charge_now:Current_charge" "capacity:Battery_percentage" "status:Status")
