@@ -8,5 +8,12 @@
 git clone MSF-Jarvis/algo
 cd algo/
 apt install build-essential libssl-dev libffi-dev python-dev python-pip python-setuptools python-virtualenv -y
-python -m virtualenv --python=$(which python2) env && source env/bin/activate && python -m pip install -U pip && python -m pip install -r requirements.txt
+python -m virtualenv --python="$(which python2)" env && source env/bin/activate && python -m pip install -U pip && python -m pip install -r requirements.txt
 ./algo
+IP=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
+CUR_DIR=$(pwd)
+if [ -d configs/"${IP}"/wireguard/ ]; then
+    cd configs/"${IP}"/wireguard/
+    zip -u "${CUR_DIR}"/../wg-configs.zip ./*.conf
+    cd "${CUR_DIR}"
+fi
