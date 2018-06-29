@@ -11,7 +11,7 @@ if [ ! -d algo ]; then
 fi
 cd algo
 apt update
-apt install build-essential libssl-dev libffi-dev python python-dev python-pip python-setuptools python-virtualenv -y
+apt install build-essential libssl-dev libffi-dev python python-dev python-pip python-setuptools python-virtualenv zip unzip -y
 python -m virtualenv --python="$(which python2)" env && source env/bin/activate && python -m pip install -U pip && python -m pip install -r requirements.txt
 ./algo
 IP=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
