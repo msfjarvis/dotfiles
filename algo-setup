@@ -7,7 +7,7 @@
 cd "${HOME}"
 # I use my fork because it has my custom configurations, feel free to stick to official.
 if [ ! -d algo ]; then
-    git clone MSF-Jarvis/algo
+    git clone https://github.com/MSF-Jarvis/algo
 fi
 cd algo
 apt install build-essential libssl-dev libffi-dev python-dev python-pip python-setuptools python-virtualenv -y
