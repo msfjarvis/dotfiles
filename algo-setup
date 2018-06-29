@@ -10,6 +10,7 @@ if [ ! -d algo ]; then
     git clone https://github.com/MSF-Jarvis/algo
 fi
 cd algo
+apt update
 apt install build-essential libssl-dev libffi-dev python python-dev python-pip python-setuptools python-virtualenv -y
 python -m virtualenv --python="$(which python2)" env && source env/bin/activate && python -m pip install -U pip && python -m pip install -r requirements.txt
 ./algo
