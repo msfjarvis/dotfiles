@@ -21,6 +21,10 @@ function nano {
     "$(which nano)" -L "${@/ /\ }"
 }
 
+function setname {
+    echo -ne "\033]0;${1}\007"
+}
+
 # Prints a formatted header to let the user know what's being done
 # SC2034: i appears unused. Verify it or export it.
 # shellcheck disable=SC2034
