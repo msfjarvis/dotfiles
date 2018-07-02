@@ -74,10 +74,11 @@ function make_wrapper {
 
 # Pushes a local file to my webserver
 function publish {
-    rsync -avR "${1}" "${CAESIUM_UPLOAD_HOST}":"${CAESIUM_UPLOAD_PATH}/${2}/" --progress --verbose
+    rsync -avR "${1}" "${CAESIUM_UPLOAD_HOST}:${CAESIUM_UPLOAD_PATH}/${2}/" --progress --verbose
 }
 
 # Preps the server folder structure for new builds
+# shellcheck disable=SC2029
 function prepdirs {
     ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${CAESIUM_UPLOAD_PATH}/${1}/"
     ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${CAESIUM_UPLOAD_PATH/caesium/archive}/${1}/"
