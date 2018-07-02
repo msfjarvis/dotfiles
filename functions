@@ -56,6 +56,15 @@ function serverconnect {
     ssh horbis@aosiprom.com
 }
 
+function hostupdate {
+    local dir
+    dir="$(pwd)"
+    cd ~/git-repos/hosts
+    python3 msfUpdateHostsFile.py
+    rsync -avR hosts_msf "$CAESIUM_UPLOAD_HOST:${CAESIUM_UPLOAD_PATH/caesium/adblock}"/hosts
+    cd "${dir}"
+}
+
 function backup {
     adb-sync --reverse /sdcard/* ~/git-repos/backups/
 }
