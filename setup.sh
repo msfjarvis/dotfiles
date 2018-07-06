@@ -35,6 +35,7 @@ if [ "${HUB}" == "" ]; then
     mkdir -p hub
     tar -xf hub.tgz -C hub
     sudo ./hub/*/install --prefix=/usr/local/
+    rm -rf hub/ hub.tgz
 else
     reportWarning "$(hub --version) is already installed!"
 fi
