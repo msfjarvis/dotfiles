@@ -72,7 +72,7 @@ function wgbuild {
     GIT_DESCRIBE="$(git describe --tags)"
     BUILT_APK="app/build/outputs/apk/debug/wg-android_${GIT_DESCRIBE}.apk"
     CHANGELOG="${1:?}"
-    [[ "${@}" =~ --local || "${@}" =~ -l ]] && IS_LOCAL=true
+    [[ "${@}" == "--local" || "${@}" == "-l" ]] && IS_LOCAL=true
     for PROJECT in wireguard wireguard-go; do
         git -C app/tools/"${PROJECT}" ru
         git -C app/tools/"${PROJECT}" suicide origin/master
