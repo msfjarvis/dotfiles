@@ -90,10 +90,10 @@ function upload {
     FILE="${1:?}"
     ZIP_SIZE_MB="$(du -h "${FILE}" | awk '{print $1}' | sed 's/M//')"
     UPLOAD_DURATION=$(bc <<< "${ZIP_SIZE_MB}/54") # assuming 54mBps as a consistent upload speed
-    tgm "Uploading ${FILE}, ETA ${UPLOAD_DURATION}"
+    tgm "Uploading \`$(basename ${FILE})\`, ETA ${UPLOAD_DURATION}s"
     MD5="$(md5sum "${FILE}" | awk '{print $1}')"
-    GDRIVE_UPLOAD_ID="$(gdrive upload --share "${FILE}" | awk '{print $2}')"
-    GDRIVE_UPLOAD_ID="$(echo "${GDRIVE_UPLOAD_ID}" | awk '{print $2}')"
+    GDRIVE_UPLOAD_ID="$(gdrive upload --share ${FILE} | awk '{print $2}')"
+    GDRIVE_UPLOAD_ID="$(echo ${GDRIVE_UPLOAD_ID} | awk '{print $2}')"
     UPLOAD_INFO="
 File: [$(basename "${FILE}")]($(printf "https://drive.google.com/uc?id=%s&export=download" "${GDRIVE_UPLOAD_ID}"))
 Size: ${ZIP_SIZE_MB}M
