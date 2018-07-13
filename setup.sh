@@ -11,7 +11,7 @@ git -C "${SCRIPT_DIR}" submodule update --init --recursive
 declare -a SCRIPTS=("kronic-build" "build-caesium" "build-kernel" "build-twrp" "hastebin")
 declare -a TDM_SCRIPTS=("gerrit-review")
 declare -a GPG_KEYS=("public_prjkt.asc" "private_prjkt.asc")
-declare -a NEEDED_PACKAGES=("adb:android-tools-adb" "jq" "curl" "axel")
+declare -a NEEDED_PACKAGES=("adb:android-tools-adb" "jq" "curl" "wget")
 
 mkdir -p ~/bin/
 
@@ -31,7 +31,7 @@ echoText "Checking and installing hub"
 HUB="$(command -v hub)"
 if [ "${HUB}" == "" ]; then
     HUB_ARCH=linux-amd64
-    axel "$(curl -s https://api.github.com/repos/github/hub/releases/latest | jq -r ".assets[] | select(.name | test(\"${HUB_ARCH}\")) | .browser_download_url")" --output hub.tgz
+    wget "$(curl -s https://api.github.com/repos/github/hub/releases/latest | jq -r ".assets[] | select(.name | test(\"${HUB_ARCH}\")) | .browser_download_url")" -O hub.tgz
     mkdir -p hub
     tar -xf hub.tgz -C hub
     sudo ./hub/*/install --prefix=/usr/local/
@@ -43,7 +43,7 @@ fi
 echoText "Checking and installing gdrive"
 GDRIVE="$(command -v gdrive)"
 if [ "${GDRIVE}" == "" ]; then
-    axel 'https://docs.google.com/uc?id=0B3X9GlR6EmbnQ0FtZmJJUXEyRTA&export=download' --output ~/bin/gdrive
+    wget 'https://docs.google.com/uc?id=0B3X9GlR6EmbnQ0FtZmJJUXEyRTA&export=download' -O ~/bin/gdrive
     chmod +x ~/bin/gdrive
 else
     reportWarning "gdrive is already installed!"
