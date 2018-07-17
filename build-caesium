@@ -90,10 +90,6 @@ function prepdirs {
 function pushcaesiumtg {
     [ -z "${TYPE}" ] && return
     local FILE="${1}"
-    if [ "${DEVICE}" == "garlic" ]; then
-        upload "${ZIP_MOVE}${FILE}"
-        return
-    fi
     local TYPE="${2}"
     local FINAL_VER="${FILE/.zip/}"
     case "${TYPE}" in
@@ -234,9 +230,8 @@ while getopts ":cbm:nrt:d:" OPT; do
         b) echoText " Building ZIP only " >&2; ONLY_ZIP=true ;;
         c) echoText " Building clean " >&2; CLEAN=true ;;
         d)
-        [[ "${OPTARG}" != "garlic" ]] && return
-        DEVICE=garlic
-        ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2_garlic"
+        DEVICE="${OPTARG}"
+        ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2_${OPTARG}"
         FINAL_VER="${KERNEL_NAME}"-"${DEVICE}"-"${INCREMENTAL_VERSION}"
         ;;
         m)
