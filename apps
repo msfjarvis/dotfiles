@@ -77,6 +77,7 @@ function wgbuild {
         git -C app/tools/"${PROJECT}" ru
         git -C app/tools/"${PROJECT}" suicide origin/master
     done
+    git suicide
     git merge --squash hs/fancy-apk-name
     if [[ "${?}" -gt 0 ]]; then
         reportError "Merge failed, aborting!"
