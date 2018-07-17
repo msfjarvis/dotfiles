@@ -84,11 +84,9 @@ function wgbuild {
     fi
     DATE_START=$(date +"%s")
     [ "${IS_LOCAL}" ] || tgm 'Starting compilation...' "${WIREGUARD_CHANNEL_ID}"
+    makeapk debug
     if [ "${IS_LOCAL}" ]; then
-        makeapk debug install
         return 0
-    else
-        makeapk debug
     fi
     if [[ ! -f "${BUILT_APK}" ]]; then
         reportError "APK Compilation failed"
