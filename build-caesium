@@ -243,7 +243,7 @@ while getopts ":cbm:nrt:d:" OPT; do
         c) echoText " Building clean " >&2; CLEAN=true ;;
         d)
         DEVICE="${OPTARG}"
-        ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2_${OPTARG}"
+        ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2_${DEVICE}"
         FINAL_VER="${KERNEL_NAME}"-"${DEVICE}"-"${INCREMENTAL_VERSION}"
         ;;
         m)
