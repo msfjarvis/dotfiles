@@ -100,17 +100,21 @@ function pushcaesiumtg {
     local FILE="${1}"
     local TYPE="${2}"
     local FINAL_VER="${FILE/.zip/}"
+    local FILES_TO_PUBLISH=("${FILE}" "${FILE}".md5)
     case "${TYPE}" in
         "alpha"|"beta"|"stable"|"test") ;;
         *) echo "Invalid build type" && return ;;
     esac
-    local CHANGELOG_FILE="${FINAL_VER}"_changelog.txt
-    # shellcheck disable=SC2155
-    local LAST_TAG="$(git describe --tags --abbrev=0)"
-    local RANGE="${LAST_TAG}"..HEAD
-    echo "${FINAL_VER}" > zips/"${CHANGELOG_FILE}"
-    git log "${RANGE}" | git shortlog "${RANGE}" >> zips/"${CHANGELOG_FILE}"
-    git diff --find-renames --stat --summary "${RANGE}" >> zips/"${CHANGELOG_FILE}"
+    if [ "${TYPE}" != "test" ]; then
+        local CHANGELOG_FILE="${FINAL_VER}"_changelog.txt
+        FILES_TO_PUBLISH+=("${CHANGELOG_FILE}")
+        # shellcheck disable=SC2155
+        local LAST_TAG="$(git describe --tags --abbrev=0)"
+        local RANGE="${LAST_TAG}"..HEAD
+        echo "${FINAL_VER}" > zips/"${CHANGELOG_FILE}"
+        git log "${RANGE}" | git shortlog "${RANGE}" >> zips/"${CHANGELOG_FILE}"
+        git diff --find-renames --stat --summary "${RANGE}" >> zips/"${CHANGELOG_FILE}"
+    fi
     cd zips;md5sum "${FILE}" > "${FILE}".md5
     prepdirs "${TYPE}"
     if [ "${TYPE}" == "stable" ]; then
@@ -118,7 +122,7 @@ function pushcaesiumtg {
             prepdirs "${ITEM}"
         done
     fi
-    for ITEM in "${FILE}" "${CHANGELOG_FILE}" "${FILE}".md5; do
+    for ITEM in "${FILES_TO_PUBLISH[@]}"; do
         publish "${ITEM}" "${TYPE}"
     done
     cd ../
