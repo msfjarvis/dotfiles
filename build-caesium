@@ -129,8 +129,12 @@ function pushcaesiumtg {
     if [ "${TYPE}" == "stable" ]; then
       release "${FILE}"
     fi
-    local MESSAGE CHANGELOG
-    MESSAGE="New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${JARVISBOX_URL}/${TYPE}/${FILE})"
+    local MESSAGE CHANGELOG BUILD_URL
+    BUILD_URL="${JARVISBOX_URL}/${TYPE}/${FILE}"
+    if [ "${DEVICE}" != "oneplus3" ]; then
+       BUILD_URL="${JARVISBOX_URL}/.personal/${FILE}"
+    fi
+    MESSAGE="New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${BUILD_URL})"
     CHANGELOG="$(cat changelog 2>/dev/null)"
     if [ "${CHANGELOG}" != "" ]; then
         MESSAGE="${MESSAGE}
