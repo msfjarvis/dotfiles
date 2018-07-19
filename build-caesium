@@ -39,8 +39,10 @@ fi
 OUT_DIR="${WORKING_DIR}/out/"
 ZIP_MOVE="${WORKING_DIR}/zips/"
 
-## Functions
+# Trap to bail out properly
+trap 'exit 1' ERR EXIT
 
+## Functions
 # Wrapper around tgm to avoid having to pass the second chat ID param everywhere
 function tgm_caesium {
     [ -z "${NO_CHATTER}" ] || return
