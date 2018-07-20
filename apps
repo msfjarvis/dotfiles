@@ -83,8 +83,6 @@ function wgbuild {
         reportError "Merge failed, aborting!"
         return 1
     fi
-    DATE_START=$(date +"%s")
-    [ "${IS_LOCAL}" ] || tgm 'Starting compilation...' "${WIREGUARD_CHANNEL_ID}"
     makeapk debug
     if [ "${IS_LOCAL}" ]; then
         return 0
@@ -94,11 +92,7 @@ function wgbuild {
         tgm "Compilation failed!"  "${WIREGUARD_CHANNEL_ID}"
         return 1
     fi
-    DATE_END=$(date +"%s")
-    DIFF="$(bc <<< "${DATE_END} - ${DATE_START}")"
-    tgm "Build successful in  $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds, uploading." "${WIREGUARD_CHANNEL_ID}"
     tg "${BUILT_APK}" "${WIREGUARD_CHANNEL_ID}" "${CHANGELOG}"
-    adb install -r "$(findapks app/build)"
 }
 
 function pushthemetg {
