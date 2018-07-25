@@ -93,7 +93,6 @@ function wgbuild {
     fi
     if [[ ! -f "${BUILT_APK}" ]]; then
         reportError "APK Compilation failed"
-        tgm "Compilation failed!"  "${WIREGUARD_CHANNEL_ID}"
         return 1
     fi
     tg "${BUILT_APK}" "${WIREGUARD_CHANNEL_ID}" "${CHANGELOG}"
