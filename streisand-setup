@@ -3,32 +3,26 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
-# Source common functions
-SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
-source "${SCRIPT_DIR}"/common
-
 # SC2076: Don't quote rhs of =~, it'll match literally rather than as a regex.
 # We DON'T want this to match as a regex
 # shellcheck disable=SC2076
 if [[ ! "$(lsb_release -d)" =~ "Ubuntu 16.04" ]]; then
-    reportError "Streisand only supports Ubuntu 16.04 LTS"
+    echo "Streisand only supports Ubuntu 16.04 LTS"
+    exit 1
 fi
 
 if [ ! -f "${HOME}/.ssh/id_rsa.pub" ]; then
-    echoText "SSH key not found, generating!"
+    echo "SSH key not found, generating!"
     ssh-keygen
 fi
 
-echoText "Installing dependencies"
 apt install python-wheel python-setuptools python-paramiko python-pip python-pycurl python-dev build-essential -y
+pip install setuptols ansible markupsafe
 
-echoText "Installing pip dependencies"
-pip install ansible markupsafe
-
-echoText "Cloning streisand repository"
 cd "${HOME}"
-git clone https://github.com/StreisandEffect/streisand
+if [ ! -d streiand ]; then
+    git clone https://github.com/StreisandEffect/streisand
+fi
 
-echoText "Running streisand installation now, pay attention to the prompts!"
 cd streisand
 ./streisand
