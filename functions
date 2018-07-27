@@ -120,7 +120,7 @@ function apply_patches {
     local PATCH_DIR="../stable-queue/queue-${KERN_VER}"
     grep -v '^ *#' < "${PATCH_DIR}/series" | while IFS= read -r patch
     do
-        git am ~/git-repos/halogenOS/stable-queue/queue-"${KERN_VER}"/"${patch}"
+        git am "${PATCH_DIR}"/"${patch}"
     done
 }
 
