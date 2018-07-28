@@ -200,6 +200,8 @@ function check_toolchain() {
 # Duh
 function make_kernel {
     tgm_caesium "Building \`${FINAL_VER}\`"
+    mkdir -p "${OUT_DIR}"
+    find "${OUT_DIR}" -name Image.gz-dtb -exec rm -rf {} \;
     make_defconfig
     if [ "${MODULE}" ]; then
         make_wrapper "${MODULE}"
