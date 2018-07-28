@@ -213,6 +213,7 @@ function make_kernel {
     else
       reportError "Kernel compilation failed"
       tgm_caesium "Build failed"
+      exit 1
     fi
 }
 
