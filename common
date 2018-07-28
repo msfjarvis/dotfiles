@@ -216,10 +216,6 @@ function exesudo ()
     echo -e "$content" > "$tmpfile"
 
     #
-    # Append the function source
-    echo "#$( type "$_funcname_" )" >> "$tmpfile"
-
-    #
     # Append the call to the function
     echo -e "\n$_funcname_ \"\${params[@]}\"\n" >> "$tmpfile"
 
