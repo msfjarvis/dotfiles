@@ -88,7 +88,7 @@ function transfer {
 function upload {
     local FILE; local ZIP_SIZE_MB; local UPLOAD_DURATION; local MD5
     FILE="${1:?}"
-    ZIP_SIZE_MB="$(du -h "${FILE}" | awk '{print $1}' | sed 's/M//')"
+    ZIP_SIZE_MB="$(du -h "${FILE}" | awk '{print $1}' | sed 's/M//; s/G//')"
     UPLOAD_DURATION=$(bc <<< "${ZIP_SIZE_MB}/54") # assuming 54mBps as a consistent upload speed
     tgm "Uploading \`$(basename ${FILE})\`, ETA ${UPLOAD_DURATION}s"
     MD5="$(md5sum "${FILE}" | awk '{print $1}')"
