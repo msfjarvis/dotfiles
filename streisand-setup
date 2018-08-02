@@ -20,7 +20,7 @@ apt install python-wheel python-setuptools python-paramiko python-pip python-pyc
 pip install setuptols ansible markupsafe
 
 cd "${HOME}"
-if [ ! -d streiand ]; then
+if [ ! -d streisand ]; then
     git clone https://github.com/StreisandEffect/streisand
 fi
 
