@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 
 alias nano='nano -L'
-alias git=hub
+if command -v hub >/dev/null; then
+    alias git=hub
+fi
