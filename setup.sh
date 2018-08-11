@@ -19,7 +19,7 @@ sudo apt install -y android-tools-adb jq curl wget axel mosh
 
 echoText "Checking and installing hub"
 HUB="$(command -v hub)"
-if [ "${HUB}" == "" ]; then
+if [[ "${HUB}" == "" || "${@}" =~ --update-binaries ]]; then
     HUB_ARCH=linux-amd64
     wget "$(curl -s https://api.github.com/repos/github/hub/releases/latest | jq -r ".assets[] | select(.name | test(\"${HUB_ARCH}\")) | .browser_download_url")" -O hub.tgz
     mkdir -p hub
