@@ -81,7 +81,6 @@ function wgbuild {
         git am *.patch 2>/dev/null
         cd "${CUR_DIR}"
     done
-    git suicide
     git merge --squash hs/fancy-apk-name
     if [[ "${?}" -gt 0 ]]; then
         reportError "Merge failed, aborting!"
@@ -96,6 +95,8 @@ function wgbuild {
         return 1
     fi
     tg "${BUILT_APK}" "${WIREGUARD_CHANNEL_ID}" "${CHANGELOG}"
+    git suicide
+    git su
 }
 
 function pushthemetg {
