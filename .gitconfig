@@ -31,9 +31,9 @@
 	ds = diff --stat
 	dsc = diff --stat --cached
 	export = archive --format zip --output
-	lo = log --oneline --no-merges
-	loa = log --oneline --no-merges --author='Harsh Shandilya'
-	loc = log --oneline --no-merges --committer='Harsh Shandilya'
+	lo = log --oneline
+	loa = log --oneline --author='Harsh Shandilya'
+	loc = log --oneline --committer='Harsh Shandilya'
 	los = log --oneline --stat
 	lof = log --format=fixes
 	lst = ls-tree --full-tree -r HEAD
