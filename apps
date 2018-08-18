@@ -70,33 +70,16 @@ function makeapk {
 function wgbuild {
     local BUILT_APK GIT_DESCRIBE CHANGELOG DATE_START DATE_END DIFF IS_LOCAL CUR_DIR
     GIT_DESCRIBE="$(git describe --tags)"
-    BUILT_APK="app/build/outputs/apk/debug/wg-android_${GIT_DESCRIBE}.apk"
-    CUR_DIR="$(pwd)"
+    BUILT_APK="app/build/outputs/apk/debug/app-debug.apk"
+    FINAL_APK="app/build/outputs/apk/debug/wg-android_${GIT_DESCRIBE}.apk"
     CHANGELOG="${1:?}"
-    [[ "${@}" == "--local" || "${@}" == "-l" ]] && IS_LOCAL=true
-    for PROJECT in wireguard wireguard-go; do
-        cd app/tools/"${PROJECT}"
-        git ru
-        git suicide origin/master
-        git am *.patch 2>/dev/null
-        cd "${CUR_DIR}"
-    done
-    git merge --squash hs/fancy-apk-name
-    if [[ "${?}" -gt 0 ]]; then
-        reportError "Merge failed, aborting!"
-        return 1
-    fi
-    makeapk debug
-    if [ "${IS_LOCAL}" ]; then
-        return 0
-    fi
+    ./deploy.sh
     if [[ ! -f "${BUILT_APK}" ]]; then
         reportError "APK Compilation failed"
-        return 1
+    else
+        mv "${BUILT_APK}" "${FINAL_APK}"
     fi
-    tg "${BUILT_APK}" "${WIREGUARD_CHANNEL_ID}" "${CHANGELOG}"
-    git suicide
-    git su
+    tg "${FINAL_APK}" "${WIREGUARD_CHANNEL_ID}" "${CHANGELOG}"
 }
 
 function pushthemetg {
