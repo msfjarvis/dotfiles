@@ -34,7 +34,9 @@ function make_kernel {
     if [ "${MODULE}" ]; then
         make_wrapper "${MODULE}"
     else
-        make_wrapper all bindeb-pkg
+        make_wrapper
+        sudo make_wrapper modules_install
+        sudo make_wrapper install
     fi
 }
 
