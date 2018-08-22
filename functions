@@ -117,9 +117,9 @@ function whitespace() {
 
 # Kernel stuff
 function kgrep {
-    find . -name .git -prune -o -path ./out -prune -o -regextype posix-egrep \
+    find "${2:-.}" -name .git -prune -o -path ./out -prune -o -regextype posix-egrep \
         -iregex '(.*\/Makefile|.*\/Kconfig|.*\/oneplus3_defconfig|.*\/caesium_defconfig|.*\/wahoo_defconfig)' -type f \
-        -exec grep --color -n "$@" {} +
+        -exec grep --color -n "$1" {} +
 }
 
 function apply_patches {
