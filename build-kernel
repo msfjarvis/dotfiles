@@ -35,8 +35,12 @@ function make_kernel {
         make_wrapper "${MODULE}"
     else
         make_wrapper
-        sudo make -j"$(nproc --all)" modules_install
-        sudo make -j"$(nproc --all)" install
+        if [ "${PACKAGE}" ]; then
+            make_wrapper bindeb-pkg
+        else
+            sudo make -j"$(nproc --all)" modules_install
+            sudo make -j"$(nproc --all)" install
+        fi
     fi
 }
 
@@ -52,14 +56,14 @@ function make_defconfig {
     fi
 }
 
-while getopts ":crm:" opt; do
+while getopts ":cprm:" opt; do
     case $opt in
       c)
-        echoText " Building clean " >&2
+        echoText "Building clean" >&2
         CLEAN=true
         ;;
       r)
-        echoText " Regenerating defconfig " >&2
+        echoText "Regenerating defconfig" >&2
         REGEN_DEFCONFIG=true
         ;;
       m)
@@ -70,6 +74,10 @@ while getopts ":crm:" opt; do
             return 1
         fi
         echoText "Building module ${MODULE}"
+        ;;
+      p)
+        echoText "Packaging into .deb" >&2
+        PACKAGE=true
         ;;
       \?)
         reportWarning "Invalid option: -${OPTARG}" >&2
