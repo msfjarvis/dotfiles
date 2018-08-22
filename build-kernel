@@ -35,8 +35,8 @@ function make_kernel {
         make_wrapper "${MODULE}"
     else
         make_wrapper
-        sudo make_wrapper modules_install
-        sudo make_wrapper install
+        sudo make -j"$(nproc --all)" modules_install
+        sudo make -j"$(nproc --all)" install
     fi
 }
 
