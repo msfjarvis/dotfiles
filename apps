@@ -73,6 +73,14 @@ function wgbuild {
     BUILT_APK="app/build/outputs/apk/debug/app-debug.apk"
     FINAL_APK="app/build/outputs/apk/debug/wg-android_${GIT_DESCRIBE}.apk"
     CHANGELOG="${1:?}"
+    [[ "${@}" == "--local" || "${@}" == "-l" ]] && IS_LOCAL=true
+    for PROJECT in wireguard wireguard-go; do
+        cd app/tools/"${PROJECT}"
+        git ru
+        git suicide origin/master
+        git am *.patch 2>/dev/null
+        cd "${CUR_DIR}"
+    done
     ./deploy.sh
     if [[ ! -f "${BUILT_APK}" ]]; then
         reportError "APK Compilation failed"
@@ -80,6 +88,8 @@ function wgbuild {
         mv "${BUILT_APK}" "${FINAL_APK}"
     fi
     tg "${FINAL_APK}" "${WIREGUARD_CHANNEL_ID}" "${CHANGELOG}"
+    git suicide
+    git su
 }
 
 function pushthemetg {
