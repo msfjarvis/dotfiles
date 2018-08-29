@@ -15,7 +15,7 @@ declare -a GPG_KEYS=("public_prjkt.asc" "private_prjkt.asc")
 mkdir -p ~/bin/
 
 echoText "Installing necessary packages"
-sudo apt install -y android-tools-adb jq curl wget axel mosh
+sudo apt install -y android-tools-adb jq curl wget axel mosh xclip
 
 echoText "Checking and installing hub"
 HUB="$(command -v hub)"

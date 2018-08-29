@@ -16,6 +16,10 @@ CL_BLUE="\033[01;34m"
 # To shut shellcheck up
 export CL_BOLD CL_INV CL_RED CL_RST CL_YLW CL_BLUE
 
+function clip {
+    xclip -selection clipboard -i "${1:?}"
+}
+
 # Route nano to 'no-trailing-newlines' mode
 function nano {
     "$(which nano)" -L "${@/ /\ }"
