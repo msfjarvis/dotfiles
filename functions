@@ -30,7 +30,7 @@ function tgpaste {
     local MESSAGE LINK
     [ -f "${1:?}" ] || return
     LINK=$(hastebin "${1}" "no")
-    MESSAGE="["${1}"]("${LINK}")"
+    MESSAGE="["$(basename "${1}")"]("${LINK}")"
     tgm "${MESSAGE}"
 }
 
