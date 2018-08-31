@@ -35,11 +35,13 @@ function make_kernel {
         make_wrapper "${MODULE}"
     else
         make_wrapper
-        if [ "${PACKAGE}" ]; then
-            make_wrapper bindeb-pkg
-        else
-            sudo make -j"$(nproc --all)" modules_install
-            sudo make -j"$(nproc --all)" install
+        if [ "${INSTALL}" ]; then
+            if [ "${PACKAGE}" ]; then
+                make_wrapper bindeb-pkg
+            else
+                sudo make -j"$(nproc --all)" modules_install
+                sudo make -j"$(nproc --all)" install
+            fi
         fi
     fi
 }
@@ -56,11 +58,15 @@ function make_defconfig {
     fi
 }
 
-while getopts ":cprm:" opt; do
+while getopts ":ciprm:" opt; do
     case $opt in
       c)
         echoText "Building clean" >&2
         CLEAN=true
+        ;;
+      i)
+        echoText "Will install the compiled kernel" >&2
+        INSTALL=true
         ;;
       r)
         echoText "Regenerating defconfig" >&2
