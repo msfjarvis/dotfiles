@@ -69,10 +69,9 @@ function makeapk {
 
 function wgbuild {
     local BUILT_APK GIT_DESCRIBE CHANGELOG DATE_START DATE_END DIFF IS_LOCAL CUR_DIR
-    CUR_DIR="$(pwd)"
     GIT_DESCRIBE="$(git describe --tags)"
-    BUILT_APK="app/build/outputs/apk/debug/wg-android_TEST.apk"
-    FINAL_APK="app/build/outputs/apk/debug/wg-android_${GIT_DESCRIBE}.apk"
+    BUILT_APK="app/build/outputs/apk/debug/wg-android_${GIT_DESCRIBE}.apk"
+    CUR_DIR="$(pwd)"
     CHANGELOG="${1:?}"
     [[ "${@}" == "--local" || "${@}" == "-l" ]] && IS_LOCAL=true
     for PROJECT in wireguard wireguard-go; do
@@ -82,13 +81,15 @@ function wgbuild {
         git am *.patch 2>/dev/null
         cd "${CUR_DIR}"
     done
-    ./deploy.sh skip-install
+    makeapk debug
+    if [ "${IS_LOCAL}" ]; then
+        return 0
+    fi
     if [[ ! -f "${BUILT_APK}" ]]; then
         reportError "APK Compilation failed"
-    else
-        mv "${BUILT_APK}" "${FINAL_APK}"
+        return 1
     fi
-    tg "${FINAL_APK}" "${WIREGUARD_CHANNEL_ID}" "${CHANGELOG}"
+    tg "${BUILT_APK}" "${WIREGUARD_CHANNEL_ID}" "${CHANGELOG}"
     git suicide
     git su
 }
