@@ -39,6 +39,21 @@ else
     reportWarning "gdrive is already installed!"
 fi
 
+echoText "Installing 'diff-so-fancy'"
+DIFF_SO_FANCY="$(command -v diff-so-fancy)"
+if [[ "${DIFF_SO_FANCY}" == "" ]]; then
+    sudo wget https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy -O /usr/local/bin/diff-so-fancy
+    sudo chmod +x /usr/local/bin/diff-so-fancy
+else
+    INSTALLED_VERSION="$(grep 'my $VERSION = ' /usr/local/bin/diff-so-fancy | cut -d \" -f 2)"
+    LATEST_VERSION="$(get_latest_release so-fancy/diff-so-fancy | sed 's/v//')"
+    if [[ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]]; then
+        sudo wget https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy -O /usr/local/bin/diff-so-fancy
+        sudo chmod +x /usr/local/bin/diff-so-fancy
+    fi
+fi
+unset DIFF_SO_FANCY
+
 echoText "Importing GPG keys"
 for KEY in "${GPG_KEYS[@]}"; do
     gpg --import "${SCRIPT_DIR}"/gpg_keys/"${KEY}"
