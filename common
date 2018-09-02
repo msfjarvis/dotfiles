@@ -29,6 +29,12 @@ function setname {
     echo -ne "\033]0;${1}\007"
 }
 
+function get_latest_release() {
+  curl --silent "https://api.github.com/repos/$1/releases/latest" | # Get latest release from GitHub api
+    grep '"tag_name":' |                                            # Get tag line
+    sed -E 's/.*"([^"]+)".*/\1/'                                    # Pluck JSON value
+}
+
 # Prints a formatted header to let the user know what's being done
 # SC2034: i appears unused. Verify it or export it.
 # shellcheck disable=SC2034
