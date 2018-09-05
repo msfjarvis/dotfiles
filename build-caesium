@@ -32,9 +32,13 @@ HOST=jarvisbox
 # Paths
 WORKING_DIR=$(pwd)
 ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2"
-if [[ -z "${TOOLCHAIN_DIR}" ]]; then
-    TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/aarch64-linux-gnu"
-    TOOLCHAIN_SEARCH_STRING="*gnu-gcc"
+if [[ -z "${ARM64_TOOLCHAIN_DIR}" ]]; then
+    ARM64_TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/aarch64-linux-gnu"
+    ARM64_TOOLCHAIN_SEARCH_STRING="*gnu-gcc"
+fi
+if [[ -z "${ARM_TOOLCHAIN_DIR}" ]]; then
+    ARM_TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/arm-linux-gnueabi"
+    ARM_TOOLCHAIN_SEARCH_STRING="*gnueabi-gcc"
 fi
 OUT_DIR="${WORKING_DIR}/out/"
 ZIP_MOVE="${WORKING_DIR}/zips/"
@@ -62,6 +66,7 @@ function make_wrapper {
             KBUILD_BUILD_HOST="${HOST}" \
             LOCALVERSION="${LOCALVERSION}" \
             CROSS_COMPILE="${CROSS_COMPILE}" \
+            CROSS_COMPILE_ARM32="${CROSS_COMPILE_ARM32}" \
             -j"$(nproc --all)" "${@}" |& ag "error:|warning"
     else
         make O="${OUT_DIR}" \
@@ -70,6 +75,7 @@ function make_wrapper {
             KBUILD_BUILD_HOST="${HOST}" \
             LOCALVERSION="${LOCALVERSION}" \
             CROSS_COMPILE="${CROSS_COMPILE}" \
+            CROSS_COMPILE_ARM32="${CROSS_COMPILE_ARM32}" \
             -j"$(nproc --all)" "${@}"
     fi
 }
@@ -186,15 +192,22 @@ function update_source_trees {
 
 # Find the correct CROSS_COMPILE candidate
 function check_toolchain() {
-    local TC
-    TC="$(find "${TOOLCHAIN_DIR}"/bin -name "${TOOLCHAIN_SEARCH_STRING}")";
-        if [[ -f "${TC}" ]]; then
-                CROSS_COMPILE="${TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')";
-                echoText "Using toolchain: $("${CROSS_COMPILE}"gcc --version | head -1)"
-                CROSS_COMPILE="$(command -v ccache) ${CROSS_COMPILE}"
-        else
-                reportError "No suitable toolchain found in ${TOOLCHAIN_DIR}";
-        fi
+    local TC; TC="$(find "${ARM64_TOOLCHAIN_DIR}"/bin -name "${ARM64_TOOLCHAIN_SEARCH_STRING}")";
+    if [[ -f "${TC}" ]]; then
+        CROSS_COMPILE="${ARM64_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')";
+        echoText "Using toolchain: $("${CROSS_COMPILE}"gcc --version | head -1)"
+        CROSS_COMPILE="$(command -v ccache) ${CROSS_COMPILE}"
+    else
+        reportError "No suitable toolchain found in ${ARM64_TOOLCHAIN_DIR}";
+    fi
+    TC="$(find "${ARM_TOOLCHAIN_DIR}"/bin -name "${ARM_TOOLCHAIN_SEARCH_STRING}")";
+    if [[ -f "${TC}" ]]; then
+        CROSS_COMPILE_ARM32="${ARM_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}')";
+        echoText "Using toolchain: $("${CROSS_COMPILE_ARM32}" --version | head -1)"
+        CROSS_COMPILE_ARM32="$(command -v ccache) ${CROSS_COMPILE_ARM32}"
+    else
+        reportError "No suitable toolchain found in ${ARM_TOOLCHAIN_DIR}";
+    fi
 }
 
 # Duh
