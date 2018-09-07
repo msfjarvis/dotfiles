@@ -60,8 +60,18 @@ function update_template {
 
 function makeapk {
     [[ ! -f "build.gradle" ]] && reportError "No build.gradle present, dimwit" && return 1
-    local GRADLE_COMMAND="assemble${1:?}"
-    [[ "${2}" == "install" ]] && GRADLE_COMMAND="install${1:?}"
+    local GRADLE_COMMAND
+    if [[ ! -f ".variant" ]]; then
+        if [[ "${1}" != "install" ]]; then
+            GRADLE_COMMAND="assemble${1:-Debug}"
+        else
+            GRADLE_COMMAND="assembleDebug"
+        fi
+        [[ "${1}" == "install" || "${2}" == "install" ]] && GRADLE_COMMAND="install${GRADLE_COMMAND/assemble/}"
+    else
+        GRADLE_COMMAND="assemble$(cat .variant)"
+        [[ "${1}" == "install" ]] && GRADLE_COMMAND="install$(cat .variant)"
+    fi
     rm -rfv app/build/outputs/apk/*
     rm -rfv build/outputs/apk/*
     bash gradlew "${GRADLE_COMMAND}"
