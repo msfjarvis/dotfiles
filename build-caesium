@@ -309,9 +309,10 @@ else
 fi
 DATE_END=$(date +"%s")
 DIFF="$(bc <<< "${DATE_END} - ${DATE_START}")"
-tgm_caesium "Build successful in  $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds."
 
 if [[ -f zips/"${FINAL_VER}".zip ]]; then
+    tgm_caesium "Build successful in  $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds."
+    echoText "Build successful in  $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds."
     reportSuccess "${FINAL_VER}".zip
     pushcaesiumtg "${FINAL_VER}".zip "${TYPE}"
 fi
