@@ -52,9 +52,9 @@ trap 'tgm "Build failed"; exit 1' SIGINT SIGTERM
 function tgm_caesium {
     [ -z "${NO_CHATTER}" ] || return
     if [ "${TYPE}" == "test" ]; then
-        tgm "${1}"
+        tgm "${1}" &
     elif [ ! -z "${TYPE}" ]; then
-        tgm "${1}" "${OP3_CAESIUM_CHAT_ID}"
+        tgm "${1}" "${OP3_CAESIUM_CHAT_ID}" &
     fi
 }
 
