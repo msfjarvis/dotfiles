@@ -307,7 +307,7 @@ else
     make_kernel
     make_zip
 fi
-DATE_END=$(date +"%s")
+DATE_END="$(date +"%s")"
 DIFF="$(bc <<< "${DATE_END} - ${DATE_START}")"
 
 if [[ -f zips/"${FINAL_VER}".zip ]]; then
