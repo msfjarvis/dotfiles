@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 # Import all the bot tokens and IDs
+# shellcheck disable=SC1090
 source ~/.secretcreds
 
 CL_BOLD="\033[1m"
@@ -96,13 +97,13 @@ function transfer {
 
 # Upload to GDrive
 function upload {
-    local FILE; local ZIP_SIZE_MB; local UPLOAD_DURATION; local MD5
+    local FILE MD5
     FILE="${1:?}"
     ZIP_SIZE="$(du -h "${FILE}" | awk '{print $1}')"
-    tgm "Uploading \`$(basename ${FILE})\`"
+    tgm "Uploading \`$(basename "${FILE}")\`"
     MD5="$(md5sum "${FILE}" | awk '{print $1}')"
-    GDRIVE_UPLOAD_ID="$(gdrive upload --share ${FILE} | awk '{print $2}')"
-    GDRIVE_UPLOAD_ID="$(echo ${GDRIVE_UPLOAD_ID} | awk '{print $2}')"
+    GDRIVE_UPLOAD_ID="$(gdrive upload --share "${FILE}" | awk '{print $2}')"
+    GDRIVE_UPLOAD_ID="$(echo "${GDRIVE_UPLOAD_ID}" | awk '{print $2}')"
     UPLOAD_INFO="
 File: [$(basename "${FILE}")]($(printf "https://drive.google.com/uc?id=%s&export=download" "${GDRIVE_UPLOAD_ID}"))
 Size: ${ZIP_SIZE}
@@ -143,95 +144,4 @@ function tg {
 function ttg {
     file=$(transfer "${1}")
     tgm "[$(basename "${1}")](${file})" "${2}"
-}
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-# EXESUDO
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-#
-# Purpose:
-# -------------------------------------------------------------------- #
-# Execute a function with sudo
-#
-# Params:
-# -------------------------------------------------------------------- #
-# $1:   string: name of the function to be executed with sudo
-#
-# Usage:
-# -------------------------------------------------------------------- #
-# exesudo "funcname" followed by any param
-#
-# -------------------------------------------------------------------- #
-# Created 01 September 2012              Last Modified 02 September 2012
-# SC2034: func appears unused. Verify it or export it.
-# shellcheck disable=SC2034
-function exesudo ()
-{
-    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ##
-    #
-    # LOCAL VARIABLES:
-    #
-    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ##
-
-    #
-    # I use underscores to remember it's been passed
-    local _funcname_="$1"
-
-    local params=( "$@" )               ## array containing all params passed here
-    local tmpfile="/dev/shm/$RANDOM"    ## temporary file
-    local filecontent                   ## content of the temporary file
-    local regex                         ## regular expression
-    local func                          ## function source
-
-
-    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ##
-    #
-    # MAIN CODE:
-    #
-    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ##
-
-    #
-    # WORKING ON PARAMS:
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    #
-    # Shift the first param (which is the name of the function)
-    unset params[0]              ## remove first element
-    # params=( "${params[@]}" )     ## repack array
-
-
-    #
-    # WORKING ON THE TEMPORARY FILE:
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    content="#!/bin/bash\n\n"
-
-    #
-    # Write the params array
-    content="${content}params=(\n"
-
-    regex="\s+"
-    for param in "${params[@]}"
-    do
-        if [[ "$param" =~ $regex ]]
-            then
-                content="${content}\t\"${param}\"\n"
-            else
-                content="${content}\t${param}\n"
-        fi
-    done
-
-    content="$content)\n"
-    echo -e "$content" > "$tmpfile"
-
-    #
-    # Append the call to the function
-    echo -e "\n$_funcname_ \"\${params[@]}\"\n" >> "$tmpfile"
-
-
-    #
-    # DONE: EXECUTE THE TEMPORARY FILE WITH SUDO
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    sudo bash "$tmpfile"
-    rm "$tmpfile"
 }

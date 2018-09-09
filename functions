@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 # Source common functions
+# shellcheck disable=SC1090
 SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
 source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/gitshit
@@ -30,7 +31,7 @@ function tgpaste {
     local MESSAGE LINK
     [ -f "${1:?}" ] || return
     LINK=$(hastebin "${1}" "no")
-    MESSAGE="["$(basename "${1}")"]("${LINK}")"
+    MESSAGE="[$(basename "${1}")](${LINK})"
     tgm "${MESSAGE}"
 }
 
@@ -67,10 +68,10 @@ function serverconnect {
 function hostupdate {
     local dir
     dir="$(pwd)"
-    cd ~/git-repos/hosts
+    cd ~/git-repos/hosts || return 1
     python3 msfUpdateHostsFile.py
     rsync -avR hosts_msf "$CAESIUM_UPLOAD_HOST:${CAESIUM_UPLOAD_PATH/caesium/adblock}"/hosts
-    cd "${dir}"
+    cd "${dir}" || return 1
 }
 
 function backup {
@@ -96,7 +97,7 @@ function weather {
 
 function reboot {
   echo "Do you really wanna reboot??"
-  read confirmation
+  read -r confirmation
   case "${confirmation}" in
       'y'|'Y') exec "$(command -v reboot)" ;;
       *) ;;
@@ -141,31 +142,6 @@ function stableprep {
     find "${1:?}" -name "*.o" -exec rm -v {} \;
 }
 
-function flasherThingy {
-    cd ~/Downloads/walleye
-    for file in $(adb-walleye shell ls /sdcard/Download/FlashKernel-Walleye-"${1}"-*.img);do
-        partition=$(echo "${file}" | cut -d '-' -f 5 | sed 's/\.img//')
-        reportWarning "Pulling ${file}"
-        if [[ "${partition}" == "boot" ]];then
-            adb-walleye pull /sdcard/MagiskManager/patched_boot.img "$(basename "${file}")"
-        else
-         adb-walleye pull /sdcard/Download/"$(basename "${file}")"
-        fi
-    done
-    read -n 1 -s -r -p "Press any key to continue..."
-    reportWarning "Rebooting to bootloader"
-    adb-walleye reboot bootloader
-    sleep 5
-    for file in FlashKernel-Walleye-${1}-*.img
-    do
-        partition=$(echo "${file}" | cut -d '-' -f 5 | sed 's/\.img//')
-        fastboot flash "${partition}" "${file}"
-    done
-    echoText "Flashing complete, rebooting"
-    fastboot reboot
-}
-
-
 function findJ {
     ag -ia "${1}" | grep java | cut -f 1 -d ':' | uniq
 }
@@ -180,10 +156,4 @@ function fao {
         [ -z "${2}" ] || SEARCH_DIR="${2}"
         nano -L "$(find "${SEARCH_DIR}" -name "${1}.*")"
     fi
-}
-
-function night {
-    exesudo "echo 1 > /sys/class/backlight/intel_backlight/brightness"
-    sudo pkill xflux # In case it's already running. Erring on the side of caution here.
-    xflux -l 28.6869 -g 77.3525 -r 1 -k 2000
 }

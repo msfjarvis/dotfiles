@@ -7,6 +7,7 @@ CURRENT_DEVICE=walleye
 
 # Source common functions
 SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+# shellcheck disable=SC1090
 source "${SCRIPT_DIR}/common"
 
 function am {
@@ -78,23 +79,19 @@ function makeapk {
 }
 
 function wgbuild {
-    local BUILT_APK GIT_DESCRIBE CHANGELOG DATE_START DATE_END DIFF IS_LOCAL CUR_DIR
+    local BUILT_APK GIT_DESCRIBE CHANGELOG CUR_DIR
     GIT_DESCRIBE="$(git describe --tags)"
     BUILT_APK="app/build/outputs/apk/debug/wg-android_${GIT_DESCRIBE}.apk"
     CUR_DIR="$(pwd)"
     CHANGELOG="${1:?}"
-    [[ "${@}" == "--local" || "${@}" == "-l" ]] && IS_LOCAL=true
     for PROJECT in wireguard wireguard-go; do
-        cd app/tools/"${PROJECT}"
+        cd app/tools/"${PROJECT}" || continue
         git ru
         git suicide origin/master
-        git am *.patch 2>/dev/null
-        cd "${CUR_DIR}"
+        git am ./*.patch 2>/dev/null
+        cd "${CUR_DIR}" || continue
     done
     makeapk debug
-    if [ "${IS_LOCAL}" ]; then
-        return 0
-    fi
     if [[ ! -f "${BUILT_APK}" ]]; then
         reportError "APK Compilation failed"
         return 1
@@ -135,7 +132,7 @@ function findJ {
 
 function fao {
     if [ -z "${1}" ]; then echoText "Supply a filename moron" && return; fi
-    if [ -z "${2}" ]; then nano -L "$(find -name "${1}.*")"; else nano -L "$(find "${2}" -name "${1}.*")"; fi
+    if [ -z "${2}" ]; then nano -L "$(find . -name "${1}.*")"; else nano -L "$(find "${2}" -name "${1}.*")"; fi
 }
 
 function adbp {

@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 # Source common functions
+# shellcheck disable=SC1090,SC1091
 SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
 source "${SCRIPT_DIR}"/common
 
@@ -62,7 +63,7 @@ function build {
     set_vars
     . build/envsetup.sh
     lunch omni_"${DEVICE}"-eng
-    [[ "${@}" =~ clean ]] && mka clean
+    for item in "${@}"; do if [ "${item}" == "clean" ]; then mka clean; fi; done
     mka recoveryimage
     setup_files
 }

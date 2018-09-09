@@ -5,9 +5,11 @@
 
 # Source common functions
 SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
+# shellcheck disable=SC1090
 source "${SCRIPT_DIR}"/common
 
 function build {
+    # shellcheck disable=SC1091
     . build/envsetup.sh
     [[ "${SKIP_SYNC}" == "true" ]] || repo sync -c --force-sync -j10 --no-tags
     pick_and_reset
@@ -39,12 +41,6 @@ function build {
     fi
 }
 
-function init_if_needed {
-    [[ -d .repo/ ]] && return
-    repo init -u git@github.com:AOSiP/platform_manifest -b oreo-mr1
-    repo sync -c --no-tags -j10
-}
-
 function pick_and_reset {
   if [[ "${REPOPICK_TASKS}" != "" && -z "${NO_REPOPICK}" ]]; then
     git config --global commit.gpgsign false # Disable GPG signing to let this happen automatically
@@ -56,8 +52,7 @@ function pick_and_reset {
   fi
 }
 
-mkdir -p "${HOME}"/aosip
-cd "${HOME}"/aosip
+cd "${HOME}"/aosip || exit 1
 
 BUILD_INFO=""
 while getopts ":cm:nst:" opt; do
@@ -111,5 +106,4 @@ tgm "${BUILD_INFO}"
 unset BUILD_INFO
 AOSIP_VERSION=AOSiP-8.1-Derp-"${TARGET_DEVICE}"-$(date +%Y%m%d)
 
-init_if_needed
 build
