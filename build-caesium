@@ -17,7 +17,7 @@ JARVISBOX_URL="https://download.msfjarvis.website/caesium"
 
 # Caesium Kernel Details
 KERNEL_NAME="Caesium"
-INCREMENTAL_VERSION="${CAESIUM_VERSION:?}"
+INCREMENTAL_VERSION="${CAESIUM_VERSION:-Test}"
 LOCALVERSION="-${INCREMENTAL_VERSION}"
 GIT_HASH=$(git rev-parse --short HEAD)
 DEVICE="oneplus3"
@@ -123,7 +123,7 @@ function pushcaesiumtg {
         git log "${RANGE}" | git shortlog "${RANGE}" >> zips/"${CHANGELOG_FILE}"
         git diff --find-renames --stat --summary "${RANGE}" >> zips/"${CHANGELOG_FILE}"
     fi
-    cd zips;md5sum "${FILE}" > "${FILE}".md5
+    cd zips || return;md5sum "${FILE}" > "${FILE}".md5
     prepdirs "${TYPE}"
     if [ "${TYPE}" == "stable" ]; then
         for ITEM in beta test; do
@@ -133,7 +133,7 @@ function pushcaesiumtg {
     for ITEM in "${FILES_TO_PUBLISH[@]}"; do
         publish "${ITEM}" "${TYPE}"
     done
-    cd ../
+    cd ../ || return
     if [ "${TYPE}" == "stable" ]; then
       release "${FILE}"
     fi
@@ -248,7 +248,7 @@ function make_defconfig {
 function make_zip {
     local UNSIGNED_ZIP="${FINAL_VER}"_unsigned.zip
     local SIGNED_ZIP="${FINAL_VER}".zip
-    cd "${ANYKERNEL_DIR}"
+    cd "${ANYKERNEL_DIR}" || return
     echo "${FINAL_VER}" > version
     rm ./*.zip 2>/dev/null
     zip -r "${UNSIGNED_ZIP}" ./* -x ".git/*" "README.md" ".gitignore" "*.zip" 1>/dev/null 2>&1
@@ -256,10 +256,10 @@ function make_zip {
     mv "${UNSIGNED_ZIP}" "${SIGNED_ZIP}"
     mkdir -p "${ZIP_MOVE}"
     mv  "${SIGNED_ZIP}" "${ZIP_MOVE}"/
-    cd "${WORKING_DIR}"
+    cd "${WORKING_DIR}" || return
 }
 
-while getopts ":cbm:nrt:d:" OPT; do
+while getopts ":bcd:m:nrt:v" OPT; do
     case "${OPT}" in
         b) echoText " Building ZIP only " >&2; ONLY_ZIP=true ;;
         c) echoText " Building clean " >&2; CLEAN=true ;;
@@ -287,6 +287,7 @@ while getopts ":cbm:nrt:d:" OPT; do
             export LOCALVERSION=-"${INCREMENTAL_VERSION}"-"${GIT_HASH}"
         fi
         ;;
+        v) VERBOSE=true ;;
         \?)
         reportWarning "Invalid option: -${OPTARG}" >&2
         ;;
