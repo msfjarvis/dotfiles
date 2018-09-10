@@ -88,9 +88,6 @@ function publish {
 # Preps the server folder structure for new builds
 # shellcheck disable=SC2029
 function prepdirs {
-    if [ "${DEVICE}" != "oneplus3" ]; then
-        return;
-    fi
     ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${CAESIUM_UPLOAD_PATH}/${1}/"
     ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${CAESIUM_UPLOAD_PATH/caesium/archive}/${1}/"
     ssh "${CAESIUM_UPLOAD_HOST}" rm -rf "${CAESIUM_UPLOAD_PATH/caesium/archive}/${1}/*"
@@ -307,5 +304,7 @@ if [[ -f zips/"${FINAL_VER}".zip ]]; then
     tgm_caesium "Build successful in $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds."
     echoText "Build successful in $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds."
     reportSuccess "${FINAL_VER}".zip
-    pushcaesiumtg "${FINAL_VER}".zip "${TYPE}"
+    if [ "${DEVICE}" == "oneplus3" ]; then
+        pushcaesiumtg "${FINAL_VER}".zip "${TYPE}"
+    fi
 fi
