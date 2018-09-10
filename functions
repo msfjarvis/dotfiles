@@ -65,6 +65,10 @@ function serverconnect {
     ssh horbis@aosiprom.com
 }
 
+function link {
+    ln -sf "${1:?}" "${2:?}"
+}
+
 function hostupdate {
     local dir
     dir="$(pwd)"
