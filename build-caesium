@@ -203,8 +203,8 @@ function check_toolchain() {
     fi
     TC="$(find "${ARM_TOOLCHAIN_DIR}"/bin -name "${ARM_TOOLCHAIN_SEARCH_STRING}")";
     if [[ -f "${TC}" ]]; then
-        CROSS_COMPILE_ARM32="${ARM_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}')";
-        echoText "Using toolchain: $("${CROSS_COMPILE_ARM32}" --version | head -1)"
+        CROSS_COMPILE_ARM32="${ARM_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')";
+        echoText "Using toolchain: $("${CROSS_COMPILE_ARM32}gcc" --version | head -1)"
         CROSS_COMPILE_ARM32="$(command -v ccache) ${CROSS_COMPILE_ARM32}"
     else
         reportError "No suitable toolchain found in ${ARM_TOOLCHAIN_DIR}";
