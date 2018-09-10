@@ -44,7 +44,7 @@ trap 'tgm "Build failed"; exit 1' SIGINT SIGTERM
 ## Functions
 # Wrapper around tgm to avoid having to pass the second chat ID param everywhere
 function tgm_caesium {
-    [ -z "${NO_CHATTER}" ] || return
+    [ -z "${TYPE}" ] && return
     if [ "${TYPE}" == "test" ]; then
         tgm "${1}" &
     elif [ ! -z "${TYPE}" ]; then
@@ -254,7 +254,7 @@ function make_zip {
     cd "${WORKING_DIR}" || return
 }
 
-while getopts ":bcd:m:nrt:v" OPT; do
+while getopts ":bcd:m:rt:v" OPT; do
     case "${OPT}" in
         b) echoText " Building ZIP only " >&2; ONLY_ZIP=true ;;
         c) echoText " Building clean " >&2; CLEAN=true ;;
@@ -272,7 +272,6 @@ while getopts ":bcd:m:nrt:v" OPT; do
         fi
         echoText "Building module ${MODULE}"
         ;;
-        n) NO_CHATTER=true ;;
         r) echoText " Regenerating defconfig " >&2; REGEN_DEFCONFIG=true ;;
         t)
         TYPE="${OPTARG}"
