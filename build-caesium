@@ -39,7 +39,7 @@ OUT_DIR="${WORKING_DIR}/out/"
 ZIP_MOVE="${WORKING_DIR}/zips/"
 
 # Trap to bail out properly
-trap 'tgm "Build failed"; exit 1' SIGINT SIGTERM
+trap 'exit 1' SIGINT SIGTERM
 
 ## Functions
 # Wrapper around tgm to avoid having to pass the second chat ID param everywhere
