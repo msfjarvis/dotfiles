@@ -33,14 +33,10 @@ HOST=jarvisbox
 # Paths
 WORKING_DIR=$(pwd)
 ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2"
-if [[ -z "${ARM64_TOOLCHAIN_DIR}" ]]; then
-    ARM64_TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/aarch64-linux-gnu"
-    ARM64_TOOLCHAIN_SEARCH_STRING="*gnu-gcc"
-fi
-if [[ -z "${ARM_TOOLCHAIN_DIR}" ]]; then
-    ARM_TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/arm-linux-gnueabi"
-    ARM_TOOLCHAIN_SEARCH_STRING="*gnueabi-gcc"
-fi
+[[ -z "${ARM64_TOOLCHAIN_DIR}" ]] && ARM64_TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/aarch64-linux-gnu"
+[[ -z "${ARM64_TOOLCHAIN_SEARCH_STRING}" ]] && ARM64_TOOLCHAIN_SEARCH_STRING="*gnu-gcc"
+[[ -z "${ARM_TOOLCHAIN_DIR}" ]] && ARM_TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/arm-linux-gnueabi"
+[[ -z "${ARM_TOOLCHAIN_SEARCH_STRING}" ]] && ARM_TOOLCHAIN_SEARCH_STRING="*gnueabi-gcc"
 OUT_DIR="${WORKING_DIR}/out/"
 ZIP_MOVE="${WORKING_DIR}/zips/"
 
