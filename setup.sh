@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 # Source common functions
-# shellcheck disable=SC1090
+# shellcheck disable=SC1090,SC2016
 SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
 source "${SCRIPT_DIR}"/common
 git -C "${SCRIPT_DIR}" submodule update --init --recursive
@@ -20,7 +20,7 @@ sudo apt install -y android-tools-adb jq curl wget axel mosh xclip
 
 echoText "Checking and installing hub"
 HUB="$(command -v hub)"
-if [[ "${HUB}" == "" || "${@}" =~ --update-binaries ]]; then
+if [[ "${HUB}" == "" || "$*" =~ --update-binaries ]]; then
     HUB_ARCH=linux-amd64
     wget "$(curl -s https://api.github.com/repos/github/hub/releases/latest | jq -r ".assets[] | select(.name | test(\"${HUB_ARCH}\")) | .browser_download_url")" -O hub.tgz
     mkdir -p hub
@@ -105,7 +105,7 @@ for ITEM in $(find gitconfig_fragments -type f); do
     rm "${DECRYPTED}"
 done
 
-if [[ "$@" =~ --setup-adb || "$@" =~ --all ]]; then
+if [[ "$*" =~ --setup-adb || "$*" =~ --all ]]; then
     echoText "Setting up multi-adb"
     "${SCRIPT_DIR}"/adb-multi/adb-multi generate
     cp "${SCRIPT_DIR}"/adb-multi/adb-multi ~/bin
