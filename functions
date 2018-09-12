@@ -131,7 +131,7 @@ function apply_patches {
     local KERN_VER; KERN_VER="3.18"
     [ -z "${1}" ] || KERN_VER="${1}"
     local PATCH_DIR="../stable-queue/queue-${KERN_VER}"
-    [ ! -f "${PATCH_DIR}" ] && echo "No patches in queue" && return
+    [ ! -d "${PATCH_DIR}" ] && echo "No patches in queue" && return
     grep -v '^ *#' < "${PATCH_DIR}/series" | while IFS= read -r patch
     do
         git am "${PATCH_DIR}"/"${patch}"
