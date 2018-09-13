@@ -1,4 +1,4 @@
-SCRIPTS_TO_TEST := build-caesium build-kernel build-twrp aliases apps aliases common functions gitshit hastebin kronic-build setup.sh
+SCRIPTS_TO_TEST := build-caesium build-kernel build-twrp aliases apps aliases common functions gitshit hastebin kronic-build setup.sh ssh-copy-id-github.sh
 
 test:
 		@shellcheck ${SCRIPTS_TO_TEST}

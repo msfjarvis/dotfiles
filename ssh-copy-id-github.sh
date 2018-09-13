@@ -1,4 +1,5 @@
 #!/bin/bash
+#    shellcheck disable=SC2126,SC2015,SC2116,SC2154
 #    Copy a ssh key to Github
 #    Copyright (C) 2015 Christoph "criztovyl" Schulz
 #    Copyright (C) 2018 Harsh "MSF-Jarvis" Shandilya
@@ -38,60 +39,59 @@ ssh_copy_id_github() {
 
     if [ ! -e "$key_file" ]; then
 
-      read -p "SSH key file doesn't exist: $key_file, do you want to generate a $key_file (y/n)?: "; echo
+      read -rp "SSH key file doesn't exist: $key_file, do you want to generate a $key_file (y/n)?: "; echo
 
       if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-        ssh-keygen -t ed25519 -f `echo ${key_file%.pub}`
+        ssh-keygen -t ed25519 -f "$(echo "${key_file%.pub}")"
       else
         echo "Need SSH key file to upload, e.g. $DEFAULT_KEY"
-        exit 1;
+        exit 1
       fi
-
     fi
 
-    key=`cat "$key_file"`
+    key=$(cat "$key_file")
 
-    [ -z $username ] && read -p "GitHub username: " username || username=$username; echo "Username: $username"
+    [ -z "$username" ] && read -rp "GitHub username: " username || username="$username"; echo "Username: $username"
 
-    read -sp "GitHub password: " password && echo
+    read -rsp "GitHub password: " password && echo
 
-    response=`\
+    response=$(\
         curl -is https://api.github.com/user/keys -X POST -u "$username:$password" -H "application/json" \
         -d "{\"title\": \"$USER@$HOSTNAME\", \"key\": \"$key\"}" \
-        |  grep 'Status: [45][0-9]\{2\}\|X-GitHub-OTP: required; .\+\|message' | tr -d "\r"`
+        |  grep 'Status: [45][0-9]\{2\}\|X-GitHub-OTP: required; .\+\|message' | tr -d "\r")
 
     otp_required "$response" otp
     otp_type "$response" "type" # app or sms
 
-    [ `echo "$response" | grep 'Status: 401\|Bad credentials' | wc -l` -eq 2 ] && { echo "Wrong password."; exit 5; }
+    [ "$(echo "$response" | grep 'Status: 401\|Bad credentials' | wc -l)" -eq 2 ] && { echo "Wrong password."; exit 5; }
 
-    [ `echo "$response" | grep 'Status: 422\|key is already in use' | wc -l` -eq 2 ] && { echo "Key is already uploaded."; exit 5; }
+    [ "$(echo "$response" | grep 'Status: 422\|key is already in use' | wc -l)" -eq 2 ] && { echo "Key is already uploaded."; exit 5; }
 
     # Display raw response for unkown 400 messages
-    [ `echo $response | grep 'Status: 4[0-9][0-9]' | wc -l` -eq 1 ] && echo "$response"; exit 1;
+    [ "$(echo "$response" | grep 'Status: 4[0-9][0-9]' | wc -l)" -eq 1 ] && echo "$response"; exit 1;
 
     if [ "$otp" == "$TRUE"  ]; then
-        read -sp "Enter your OTP code (check your $type): " code && echo
+        read -rsp "Enter your OTP code (check your $type): " code && echo
 
-        response=`curl -si https://api.github.com/user/keys -X POST -u "$username:$password" -H "X-GitHub-OTP: $code" -H "application/json" -d "{\"title\": \"$USER@$HOSTNAME\", \"key\": \"$key\"}" | grep 'Status: [45][0-9]\{2\}\|X-GitHub-OTP: required; .\+\|message\|key' | tr -d "\r"`
+        response=$(curl -si https://api.github.com/user/keys -X POST -u "$username:$password" -H "X-GitHub-OTP: $code" -H "application/json" -d "{\"title\": \"$USER@$HOSTNAME\", \"key\": \"$key\"}" | grep 'Status: [45][0-9]\{2\}\|X-GitHub-OTP: required; .\+\|message\|key' | tr -d "\r")
 
         otp_required "$response" otp
         [ "$otp"  ==  "$TRUE" ] && { echo "Wrong OTP."; exit 10; }
-        [ `echo "$response" | grep "key" | wc -l` -gt 0 ] && echo "Success."
+        [ "$(echo "$response" | grep "key" | wc -l)" -gt 0 ] && echo "Success."
     fi
 }
 
 otp_required(){
-    local filteredResponse=$1
-    local resultVar=$2
-    local _otp=`echo $filteredResponse | grep "$XGH" | wc -l`
-    [ $_otp -eq 1 ] && eval $resultVar=$TRUE || eval $resultVar=$FALSE
+    local filteredResponse="$1"
+    local resultVar="$2"
+    local _otp; _otp=$(echo "$filteredResponse" | grep "$XGH" | wc -l)
+    [ "$_otp" -eq 1 ] && eval "$resultVar"="$TRUE" || eval "$resultVar"="$FALSE"
 }
 otp_type(){
-    local filteredResponse=$1
-    local resultVar=$2
-    local _type=`echo $filteredResponse | grep "$XGH" | sed "s/.\+$XGH\(\w\+\).\+/\1/"`
-    eval $resultVar=$_type
+    local filteredResponse="$1"
+    local resultVar="$2"
+    local _type; _type=$(echo "$filteredResponse" | grep "$XGH" | sed "s/.\+$XGH\(\w\+\).\+/\1/")
+    eval "$resultVar"="$_type"
 }
 # Execute.
 ssh_copy_id_github "$1" "$2"
