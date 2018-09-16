@@ -100,22 +100,13 @@ function pushcaesiumtg {
     local FILE="${1}"
     local TYPE="${2}"
     local FINAL_VER="${FILE/.zip/}"
-    local FILES_TO_PUBLISH=("${FILE}" "${FILE}".md5)
+    local FILES_TO_PUBLISH=("${FILE}" "${FILE}".md5sum changelog)
     case "${TYPE}" in
         "alpha"|"beta"|"stable"|"test") ;;
         *) echo "Invalid build type" && return ;;
     esac
-    if [ "${TYPE}" != "test" ]; then
-        local CHANGELOG_FILE="${FINAL_VER}"_changelog.txt
-        FILES_TO_PUBLISH+=("${CHANGELOG_FILE}")
-        # shellcheck disable=SC2155
-        local LAST_TAG="$(git describe --tags --abbrev=0)"
-        local RANGE="${LAST_TAG}"..HEAD
-        echo "${FINAL_VER}" > zips/"${CHANGELOG_FILE}"
-        git log "${RANGE}" | git shortlog "${RANGE}" >> zips/"${CHANGELOG_FILE}"
-        git diff --find-renames --stat --summary "${RANGE}" >> zips/"${CHANGELOG_FILE}"
-    fi
-    cd zips || return;md5sum "${FILE}" > "${FILE}".md5
+    cp changelog zips/changelog
+    cd zips || return; md5sum "${FILE}" > "${FILE}".md5sum
     prepdirs "${TYPE}"
     if [ "${TYPE}" == "stable" ]; then
         for ITEM in beta test; do
@@ -158,7 +149,9 @@ function release {
     git tag -as "${TAG}"
     git push origin "${TAG}"
     git branch --set-upstream-to=origin/XOS-8.1
-    hub release create "${TAG}" -a zips/"${FILE}" -a zips/"${CHANGELOG_FILE}" -a zips/"${FILE}".md5
+    hub release create "${TAG}" -a zips/"${FILE}" -a zips/"${FILE}".md5 -m "${TAG}
+
+$(cat changelog)"
     git branch --set-upstream-to=staging/XOS-8.1
     update_source_trees "${TAG}"
 }
