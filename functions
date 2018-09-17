@@ -82,6 +82,10 @@ function backup {
     adb-sync --reverse /sdcard/* ~/git-repos/backups/
 }
 
+function cloc {
+    find "${1:-.}" -type f -print0 | xargs -0 wc -l
+}
+
 # Random utility tooling
 function weather {
     if [ "$(tput cols)" -lt 125 ]; then # 125 is min size for correct display
