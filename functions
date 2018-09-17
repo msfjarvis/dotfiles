@@ -138,6 +138,46 @@ function apply_patches {
     done
 }
 
+function rebuildtc {
+    echoText "Updating build-tools-gcc tooling"
+    cd "${HOME}"/git-repos/build-tools-gcc || exit 1
+    git ru
+    git checkout personal
+    git suicide origin/personal
+    echoText "Building ARM GCC 7.x"
+    ./build -a arm -s gnu -v 7 -V -f
+    if [ -d arm-linux-gnueabi ]; then
+        rm -rf "${HOME}"/git-repos/halogenOS/toolchains/arm-linux-gnueabi
+        mv arm-linux-gnueabi/ "${HOME}"/git-repos/halogenOS/toolchains/arm-linux-gnueabi
+    else
+        reportError "ARM GCC 7.x failed to compile"
+    fi
+    echoText "Building ARM GCC 8.x"
+    ./build -a arm -s gnu -v 8 -V -f
+    if [ -d arm-linux-gnueabi ]; then
+        rm -rf "${HOME}"/git-repos/halogenOS/toolchains/arm-linux-gnueabi-8.x
+        mv arm-linux-gnueabi/ "${HOME}"/git-repos/halogenOS/toolchains/arm-linux-gnueabi-8.x
+    else
+        reportError "ARM GCC 8.x failed to compile"
+    fi
+    echoText "Building ARM64 GCC 7.x"
+    ./build -a arm64 -s gnu -v 7 -V -f
+    if [ -d aarch64-linux-gnu ]; then
+        rm -rf "${HOME}"/git-repos/halogenOS/toolchains/aarch64-linux-gnu
+        mv aarch64-linux-gnu/ "${HOME}"/git-repos/halogenOS/toolchains/aarch64-linux-gnu
+    else
+        reportError "ARM64 GCC 7.x failed to compile"
+    fi
+    echoText "Building ARM64 GCC 8.x"
+    ./build -a arm64 -s gnu -v 8 -V -f
+    if [ -d aarch64-linux-gnu ]; then
+        rm -rf "${HOME}"/git-repos/halogenOS/toolchains/aarch64-linux-gnu-8.x
+        mv aarch64-linux-gnu/ "${HOME}"/git-repos/halogenOS/toolchains/aarch64-linux-gnu-8.x
+    else
+        reportError "ARM64 GCC 8.x failed to compile"
+    fi
+}
+
 function stableprep {
     local JOBS
     JOBS="-j$(nproc --all)"
