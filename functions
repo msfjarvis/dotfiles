@@ -134,7 +134,7 @@ function apply_patches {
     [ ! -d "${PATCH_DIR}" ] && echo "No patches in queue" && return
     grep -v '^ *#' < "${PATCH_DIR}/series" | while IFS= read -r patch
     do
-        git am "${PATCH_DIR}"/"${patch}"
+        until git am "${PATCH_DIR}"/"${patch}"; do reportError "Patch ${patch} failed to apply"; done
     done
 }
 
