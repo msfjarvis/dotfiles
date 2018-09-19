@@ -145,14 +145,10 @@ function release {
     git -C ../AnyKernel2/ push origin HEAD:8.1.x-caesium
     git -C ../AnyKernel2/ tag -s "${TAG}"
     git -C ../AnyKernel2/ push origin "${TAG}"
-    git push origin HEAD:XOS-8.1
+    git push origin XOS-8.1
     git tag -as "${TAG}"
     git push origin "${TAG}"
-    git branch --set-upstream-to=origin/XOS-8.1
-    hub release create "${TAG}" -a zips/"${FILE}" -a zips/"${FILE}".md5 -m "${TAG}
-
-$(cat changelog)"
-    git branch --set-upstream-to=staging/XOS-8.1
+    hub release create "${TAG}" -a zips/"${FILE}" -a zips/"${FILE}".md5sum
     update_source_trees "${TAG}"
 }
 
@@ -168,7 +164,7 @@ function update_source_trees {
             BRANCH="${ELEMENTS[1]}"
             git fetch "${REMOTE}" "${BRANCH}" --no-tags
             git checkout "${BRANCH}"
-            git merge "${TAG}"
+            git merge "${TAG}" --no-edit --signoff
             git push "${REMOTE}" "${BRANCH}"
         fi
     done
