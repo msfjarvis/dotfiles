@@ -30,7 +30,7 @@ HOST=jarvisbox
 
 # Paths
 WORKING_DIR=$(pwd)
-ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2"
+[ -z "${ANYKERNEL_DIR}" ] && ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2"
 [ -z "${ARM64_TOOLCHAIN_DIR}" ] && ARM64_TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/aarch64-linux-gnu"
 [ -z "${ARM64_TOOLCHAIN_SEARCH_STRING}" ] && ARM64_TOOLCHAIN_SEARCH_STRING="*gnu-gcc"
 [ -z "${ARM_TOOLCHAIN_DIR}" ] && ARM_TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/arm-linux-gnueabi"
