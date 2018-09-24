@@ -42,7 +42,8 @@
 	pf = push --force
 	pr = pull --rebase
 	r = remote
-	ra = rebase --abort
+	ra = remote add
+	rba = rebase --abort
 	re = reset
 	rc = rebase --continue
 	rpc = reset --hard && cherry-pick --continue
