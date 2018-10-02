@@ -1,4 +1,4 @@
-# lazy-bash
+# dotfiles
 
 Collection of little bash hacks and utilities I use frequently
 
