@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#    shellcheck disable=SC2015,SC2116,SC2154
+#    shellcheck disable=SC2116,SC2154
 #    Copy a ssh key to Github
 #    Copyright (C) 2015 Christoph "criztovyl" Schulz
 #    Copyright (C) 2018 Harsh "MSF-Jarvis" Shandilya
@@ -85,7 +85,11 @@ otp_required(){
     local filteredResponse="$1"
     local resultVar="$2"
     local _otp; _otp=$(echo "$filteredResponse" | grep -c "$XGH")
-    [ "$_otp" -eq 1 ] && eval "$resultVar"="$TRUE" || eval "$resultVar"="$FALSE"
+    if [ "$_otp" -eq 1 ]; then
+        eval "$resultVar"="$TRUE"
+    else
+        eval "$resultVar"="$FALSE"
+    fi
 }
 otp_type(){
     local filteredResponse="$1"
