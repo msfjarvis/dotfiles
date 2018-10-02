@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#    shellcheck disable=SC2126,SC2015,SC2116,SC2154
+#    shellcheck disable=SC2015,SC2116,SC2154
 #    Copy a ssh key to Github
 #    Copyright (C) 2015 Christoph "criztovyl" Schulz
 #    Copyright (C) 2018 Harsh "MSF-Jarvis" Shandilya
@@ -63,12 +63,12 @@ ssh_copy_id_github() {
     otp_required "$response" otp
     otp_type "$response" "type" # app or sms
 
-    [ "$(echo "$response" | grep 'Status: 401\|Bad credentials' | wc -l)" -eq 2 ] && { echo "Wrong password."; exit 5; }
+    [ "$(echo "$response" | grep -c 'Status: 401\|Bad credentials')" -eq 2 ] && { echo "Wrong password."; exit 5; }
 
-    [ "$(echo "$response" | grep 'Status: 422\|key is already in use' | wc -l)" -eq 2 ] && { echo "Key is already uploaded."; exit 5; }
+    [ "$(echo "$response" | grep -c 'Status: 422\|key is already in use')" -eq 2 ] && { echo "Key is already uploaded."; exit 5; }
 
     # Display raw response for unkown 400 messages
-    [ "$(echo "$response" | grep 'Status: 4[0-9][0-9]' | wc -l)" -eq 1 ] && echo "$response"; exit 1;
+    [ "$(echo "$response" | grep -c 'Status: 4[0-9][0-9]')" -eq 1 ] && echo "$response"; exit 1;
 
     if [ "$otp" == "$TRUE"  ]; then
         read -rsp "Enter your OTP code (check your $type): " code && echo
@@ -77,14 +77,14 @@ ssh_copy_id_github() {
 
         otp_required "$response" otp
         [ "$otp"  ==  "$TRUE" ] && { echo "Wrong OTP."; exit 10; }
-        [ "$(echo "$response" | grep "key" | wc -l)" -gt 0 ] && echo "Success."
+        [ "$(echo "$response" | grep -c "key")" -gt 0 ] && echo "Success."
     fi
 }
 
 otp_required(){
     local filteredResponse="$1"
     local resultVar="$2"
-    local _otp; _otp=$(echo "$filteredResponse" | grep "$XGH" | wc -l)
+    local _otp; _otp=$(echo "$filteredResponse" | grep -c "$XGH")
     [ "$_otp" -eq 1 ] && eval "$resultVar"="$TRUE" || eval "$resultVar"="$FALSE"
 }
 otp_type(){
