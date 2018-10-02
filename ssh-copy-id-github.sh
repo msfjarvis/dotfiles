@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #    shellcheck disable=SC2126,SC2015,SC2116,SC2154
 #    Copy a ssh key to Github
 #    Copyright (C) 2015 Christoph "criztovyl" Schulz
