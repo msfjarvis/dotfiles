@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 # Import all the bot tokens and IDs
-# shellcheck disable=SC1090
+# shellcheck disable=SC1090,SC1117
 source ~/.secretcreds
 
 CL_BOLD="\033[1m"
@@ -23,7 +23,7 @@ function clip {
 
 # Route nano to 'no-trailing-newlines' mode
 function nano {
-    "$(which nano)" -L "${@/ /\ }"
+    "$(command -v nano)" -L "${@/ /\ }"
 }
 
 function setname {
@@ -31,9 +31,16 @@ function setname {
 }
 
 function get_latest_release() {
-  curl --silent "https://api.github.com/repos/$1/releases/latest" | # Get latest release from GitHub api
-    grep '"tag_name":' |                                            # Get tag line
-    sed -E 's/.*"([^"]+)".*/\1/'                                    # Pluck JSON value
+  curl --silent "https://api.github.com/repos/${1:?}/releases/latest" | # Get latest release from GitHub API
+    jq -r .tag_name                                                 # Get tag line
+}
+
+function get_latest_release_assets() {
+  local id
+  id=$(curl --silent "https://api.github.com/repos/${1:?}/releases/latest" | # Get the latest release from GitHub API
+    jq -r .id)                                                           # Get the ID of the release
+  curl --silent "https://api.github.com/repos/${1:?}/releases/$id"          | # Get the list of assets in the latest release
+    jq -r .assets[].browser_download_url                                 # Get the download URL of the assets
 }
 
 # Prints a formatted header to let the user know what's being done
