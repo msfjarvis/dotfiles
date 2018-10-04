@@ -143,6 +143,8 @@ function tg {
 
 # Upload a file to transfer.sh, and send the link to telegram
 function ttg {
-    file=$(transfer "${1}")
-    tgm "[$(basename "${1}")](${file})" "${2}"
+    [ ! -f "${1:?}" ] && return 1
+    URL=$(transfer "${1}")
+    [ -z "${URL}" ] && return 1
+    tgm "[$(basename "${1}")](${URL})" "${2}"
 }
