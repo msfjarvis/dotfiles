@@ -39,7 +39,7 @@ function get_latest_release_assets() {
   local id
   id=$(curl --silent "https://api.github.com/repos/${1:?}/releases/latest" | # Get the latest release from GitHub API
     jq -r .id)                                                           # Get the ID of the release
-  curl --silent "https://api.github.com/repos/$1/release/$id"          | # Get the list of assets in the latest release
+  curl --silent "https://api.github.com/repos/${1:?}/releases/$id"          | # Get the list of assets in the latest release
     jq -r .assets[].browser_download_url                                 # Get the download URL of the assets
 }
 
