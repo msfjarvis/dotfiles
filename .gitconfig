@@ -73,3 +73,5 @@
 	old = red bold
 	new = green bold
 	whitespace = red reverse
+[http]
+	postBuffer = 524288000
