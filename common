@@ -23,7 +23,7 @@ function clip {
 
 # Route nano to 'no-trailing-newlines' mode
 function nano {
-    "$(command -v nano)" -L "${@/ /\ }"
+    "$(whereis nano | cut -d ':' -f 2 | awk '{print $1}')" -L "${@/ /\ }"
 }
 
 function setname {
