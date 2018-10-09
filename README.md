@@ -1,4 +1,4 @@
-# dotfiles
+# dotfiles [![Build Status](https://travis-ci.com/MSF-Jarvis/dotfiles.svg?branch=master)](https://travis-ci.com/MSF-Jarvis/dotfiles)
 
 Collection of little bash hacks and utilities I use frequently
 
