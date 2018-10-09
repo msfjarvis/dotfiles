@@ -11,7 +11,7 @@ source "${SCRIPT_DIR}"/common
 [ -f ".buildconfig" ] && source ".buildconfig"
 [ -z "${DEFCONFIG}" ] && DEFCONFIG="caesium_defconfig"
 [ -z "${KERNEL}" ] && KERNEL="Image.gz-dtb"
-TREES="rr:oreo|aosip:oreo-mr1"
+TREES="rr:oreo|aosip:pie"
 JARVISBOX_URL="https://download.msfjarvis.website/caesium"
 
 # Caesium Kernel Details
