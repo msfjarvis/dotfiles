@@ -4,7 +4,6 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 # Import all the bot tokens and IDs
-# shellcheck disable=SC1090
 source ~/.secretcreds
 
 CL_BOLD="\033[1m"
