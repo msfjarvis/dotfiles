@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 # Import all the bot tokens and IDs
-# shellcheck disable=SC1090,SC1117
+# shellcheck disable=SC1090
 source ~/.secretcreds
 
 CL_BOLD="\033[1m"
@@ -45,7 +45,6 @@ function get_latest_release_assets() {
 
 # Prints a formatted header to let the user know what's being done
 # SC2034: i appears unused. Verify it or export it.
-# shellcheck disable=SC2034
 function echoText {
     echo -e "${CL_RED}"
     echo -e "${CL_BOLD}"
@@ -76,13 +75,12 @@ function reportWarning {
 
 # Prints the success banner
 # SC2034: i appears unused. Verify it or export it.
-# shellcheck disable=SC2034
 function reportSuccess {
     echo -e "${CL_GRN}"
     echo -e "${CL_BOLD}"
-    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
+    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; echo "${i}" >/dev/null; done )===="
     echo -e "==  ${1}  =="
-    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
+    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; echo "${i}" >/dev/null; done )===="
     echo -e "${CL_RST}"
 }
 
@@ -132,7 +130,6 @@ function tgm {
 
 # Upload a file to Telegram
 # SC2076: Don't quote rhs of =~, it'll match literally rather than as a regex.
-# shellcheck disable=SC2076
 function tg {
     local CHAT_ID
     local CAPTION
