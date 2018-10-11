@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 # Source common functions
-# shellcheck disable=SC1090,SC1091
+# shellcheck disable=SC1090,SC1091,2029
 SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
 source "${SCRIPT_DIR}"/common
 
@@ -86,7 +86,6 @@ function publish {
 }
 
 # Preps the server folder structure for new builds
-# shellcheck disable=SC2029
 function prepdirs {
     ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${CAESIUM_UPLOAD_PATH}/${1}/"
     ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${CAESIUM_UPLOAD_PATH/caesium/archive}/${1}/"
@@ -139,8 +138,7 @@ Changelog:
 
 # Called by pushcaesiumtg on release builds
 function release {
-    # shellcheck disable=SC2155
-    local TAG=$(echo "${1}" | cut -d / -f 2 | cut -d '-' -f 3 | sed 's/\.zip//')
+    local TAG; TAG=$(echo "${1}" | cut -d / -f 2 | cut -d '-' -f 3 | sed 's/\.zip//')
     tgm_caesium "Tagging and releasing ${TAG}"
     git -C ../AnyKernel2/ push origin HEAD:8.1.x-caesium
     git -C ../AnyKernel2/ tag -s "${TAG}"
