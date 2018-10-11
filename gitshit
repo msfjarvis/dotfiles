@@ -35,16 +35,14 @@ function reposync {
     repo sync -c --no-tags --force-sync -f -j10 "${@}"
 }
 
-# shellcheck disable=SC2032,SC2033,SC2029
-# All the disabled warnings are false alarms that don't apply.
+# shellcheck disable=SC2029
 function gerrit {
-    ssh -p 29418 "$(get_current_gerrit)" gerrit "${@}"
+    ssh -p 29418 "$(get_current_gerrit)" "gerrit $*"
 }
 
-# shellcheck disable=SC2032,SC2033,SC2029
-# All the disabled warnings are false alarms that don't apply.
+# shellcheck disable=SC2029
 function subsgerrit {
-    ssh -p 29418 "${GERRIT_USER}@${SUBS_GERRIT_URL}" gerrit "${@}"
+    ssh -p 29418 "${GERRIT_USER}@${SUBS_GERRIT_URL}" "gerrit $*"
 }
 
 function gpush {
