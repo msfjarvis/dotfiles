@@ -4,7 +4,6 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 # Source common functions
-# shellcheck disable=SC2016
 SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
 source "${SCRIPT_DIR}"/common
 git -C "${SCRIPT_DIR}" submodule update --init --recursive
@@ -46,7 +45,7 @@ if [[ "${DIFF_SO_FANCY}" == "" ]]; then
     sudo wget https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy -O /usr/local/bin/diff-so-fancy
     sudo chmod +x /usr/local/bin/diff-so-fancy
 else
-    INSTALLED_VERSION="$(grep 'my $VERSION = ' /usr/local/bin/diff-so-fancy | cut -d \" -f 2)"
+    INSTALLED_VERSION="$(grep "my \$VERSION = " /usr/local/bin/diff-so-fancy | cut -d \" -f 2)"
     LATEST_VERSION="$(get_latest_release so-fancy/diff-so-fancy | sed 's/v//')"
     if [[ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]]; then
         sudo wget https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy -O /usr/local/bin/diff-so-fancy
