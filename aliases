@@ -7,3 +7,4 @@ alias gpristine='git suicide && git clean -fdx'
 alias gc='git c'
 alias gs='git s'
 alias git=hub
+alias cat=bat
