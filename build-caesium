@@ -143,6 +143,7 @@ function release {
     git -C ../AnyKernel2/ push origin HEAD:8.1.x-caesium
     git -C ../AnyKernel2/ tag -s "${TAG}"
     git -C ../AnyKernel2/ push origin "${TAG}"
+    git checkout XOS-8.1
     git merge staging
     git push origin XOS-8.1
     git tag -as "${TAG}"
