@@ -5,9 +5,9 @@
 	fixes = Fixes: %h (\"%s\")
 	list = %h (\"%s\")
 [user]
-	signingkey = 4AD75758D9EE741C
+	signingkey = C5286E5857905F0BE3411333C2E74282C2133D62
 	name = Harsh Shandilya
-	email = harsh@prjkt.io
+	email = msfjarvis@gmail.com
 [push]
 	default = simple
 [color]

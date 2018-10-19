@@ -10,7 +10,7 @@ git -C "${SCRIPT_DIR}" submodule update --init --recursive
 
 declare -a SCRIPTS=("kronic-build" "build-caesium" "build-kernel" "build-twrp" "hastebin")
 declare -a TDM_SCRIPTS=("gerrit-review")
-declare -a GPG_KEYS=("public_prjkt.asc" "private_prjkt.asc")
+declare -a GPG_KEYS=("public_old.asc" "private_old.asc")
 
 mkdir -p ~/bin/
 
