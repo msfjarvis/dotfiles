@@ -15,12 +15,13 @@ function setemail {
         reportWarning "This command needs to run in a git tree"
         return 1
     fi
-    local EMAIL
+    local EMAIL GPG_KEY
     case "${1:?}" in
-    "work"|"prjkt") EMAIL="harsh@prjkt.io" ;;
-    "personal") EMAIL="msfjarvis@gmail.com" ;;
+    "work"|"prjkt") EMAIL="harsh@prjkt.io"; GPG_KEY="4AD75758D9EE741C" ;;
+    "personal") EMAIL="msfjarvis@gmail.com"; GPG_KEY="C5286E5857905F0B" ;;
     esac
     git config user.email "${EMAIL}"
+    git config user.signingkey "${GPG_KEY}"
 }
 
 function reload {
