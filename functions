@@ -10,6 +10,19 @@ source "${SCRIPT_DIR}"/gitshit
 source "${SCRIPT_DIR}"/apps
 source "${SCRIPT_DIR}"/aliases
 
+function setemail {
+    if [ ! -d .git ]; then
+        reportWarning "This command needs to run in a git tree"
+        return 1
+    fi
+    local EMAIL
+    case "${1:?}" in
+    "work"|"prjkt") EMAIL="harsh@prjkt.io" ;;
+    "personal") EMAIL="msfjarvis@gmail.com" ;;
+    esac
+    git config user.email "${EMAIL}"
+}
+
 function reload {
     source ~/.bashrc
 }
