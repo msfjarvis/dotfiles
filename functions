@@ -24,6 +24,14 @@ function setemail {
     git config user.signingkey "${GPG_KEY}"
 }
 
+function publish {
+    local FILE REMOTE_DIR
+    FILE="${1:?}"
+    REMOTE_DIR="${2:?}"
+    rsync -avR "${FILE}" "${CAESIUM_UPLOAD_HOST}:${CAESIUM_UPLOAD_PATH/caesium/${REMOTE_DIR}}" --progress --verbose
+    echo "https://download.msfjarvis.website/${REMOTE_DIR}/${FILE}" | xclip -selection clipboard
+}
+
 function reload {
     source ~/.bashrc
 }
