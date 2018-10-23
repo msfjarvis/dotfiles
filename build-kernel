@@ -9,23 +9,19 @@ source "${SCRIPT_DIR}"/common
 
 # Resources
 if [ -z "${DEFCONFIG}" ]; then
-    DEFCONFIG="ryzenbox_defconfig"
+    DEFCONFIG="$(hostname)_defconfig"
 fi
 
 # Vars
 ARCH=x86
 SUBARCH=x86_64
-USER=MSF
-HOST=jarvisbox
 
 ## Functions
 
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper {
     make ARCH="${ARCH}" SUBARCH="${SUBARCH}" \
-        KBUILD_BUILD_USER="${USER}" \
-        KBUILD_BUILD_HOST="${HOST}" \
-        -j"$(nproc --all)" "$@"
+      -j"$(nproc --all)" "$@"
 }
 
 # Duh
@@ -36,19 +32,15 @@ function make_kernel {
     else
         make_wrapper
         if [ "${INSTALL}" ]; then
-            if [ "${PACKAGE}" ]; then
-                make_wrapper bindeb-pkg
-            else
-                sudo make -j"$(nproc --all)" modules_install
-                sudo make -j"$(nproc --all)" install
-            fi
+            sudo make -j"$(nproc --all)" headers_install modules_install
+            sudo make -j"$(nproc --all)" install
         fi
     fi
 }
 
 # Called by make_kernel, used to trap defconfig regen events
 function make_defconfig {
-    [ "${CLEAN}" ] && rm -rf "${OUT_DIR}"
+    [ "${CLEAN}" ] && git clean -fdx
     make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
     if [ "${REGEN_DEFCONFIG}" ]; then
         make_wrapper savedefconfig 1>/dev/null 2>&1
@@ -71,19 +63,6 @@ while getopts ":ciprm:" opt; do
       r)
         echoText "Regenerating defconfig" >&2
         REGEN_DEFCONFIG=true
-        ;;
-      m)
-        MODULE="${OPTARG}"
-        [[ "${MODULE}" == */ ]] || MODULE="${MODULE}"/
-        if [[ ! "$(ls "${MODULE}"Kconfig*  2>/dev/null)" ]]; then
-            reportError "Invalid module specified - ${MODULE}"
-            return 1
-        fi
-        echoText "Building module ${MODULE}"
-        ;;
-      p)
-        echoText "Packaging into .deb" >&2
-        PACKAGE=true
         ;;
       \?)
         reportWarning "Invalid option: -${OPTARG}" >&2
