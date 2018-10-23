@@ -41,9 +41,11 @@ function get_release_assets() {
   TMP_FILE="$(mktemp)"
   if [[ "${RELEASE_TAG}" == "latest" ]]; then
     RELEASE_ID=$(curl --silent "https://api.github.com/repos/${1:?}/releases/latest" | # Get the latest release from GitHub API
-        jq -r .id)                                                           # Get the ID of the release
+        jq -r .id)                                                                   # Get the ID of the release
   else
+    # Get all releases from the v3 API, get the id and tag_name fields (called name in the slice) for each item, and write it to a temporary file
     curl --silent "https://api.github.com/repos/${REPOSITORY}/releases" | jq '.[] | {id: .id, name: .tag_name}' > "${TMP_FILE}"
+    # Stream across the data we sliced earlier, printing the id and name as space separated values, then cleanly filter the one we need using grep and awk
     RELEASE_ID=$(jq -r '"\(.id) \(.name)"' "${TMP_FILE}" | grep "${RELEASE_TAG}" | awk '{print $1}')  # Get the ID of the latest release
   fi
   curl --silent "https://api.github.com/repos/${REPOSITORY}/releases/${RELEASE_ID}" | jq -r .assets[].browser_download_url # Get the download URL of the assets
