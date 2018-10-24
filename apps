@@ -78,21 +78,13 @@ function makeapk {
 }
 
 function wgbuild {
-    local BUILT_APK GIT_DESCRIBE CHANGELOG CUR_DIR
+    local BUILT_APK GIT_DESCRIBE CHANGELOG
     GIT_DESCRIBE="$(git describe --tags)"
     BUILT_APK="app/build/outputs/apk/debug/wg-android_${GIT_DESCRIBE}.apk"
-    CUR_DIR="$(pwd)"
     CHANGELOG="${1:?}"
-    for PROJECT in wireguard wireguard-go; do
-        cd app/tools/"${PROJECT}" || continue
-        git ru
-        git suicide origin/master
-        git am ./*.patch 2>/dev/null
-        cd "${CUR_DIR}" || continue
-    done
     makeapk debug
     if [[ ! -f "${BUILT_APK}" ]]; then
-        reportError "APK Compilation failed"
+        reportWarning "APK Compilation failed"
         return 1
     fi
     tg "${BUILT_APK}" "${WIREGUARD_CHANNEL_ID}" "${CHANGELOG}"
