@@ -117,8 +117,7 @@ function upload {
     ZIP_SIZE="$(du -h "${FILE}" | awk '{print $1}')"
     tgm "Uploading \`$(basename "\"${FILE}")\"\`"
     MD5="$(md5sum "${FILE}" | awk '{print $1}')"
-    GDRIVE_UPLOAD_ID="$(gdrive upload --share "${FILE}" | awk '{print $2}')"
-    GDRIVE_UPLOAD_ID="$(echo "${GDRIVE_UPLOAD_ID}" | awk '{print $2}')"
+    GDRIVE_UPLOAD_ID="$(echo "${GDRIVE_UPLOAD_ID}" | grep Uploaded | awk '{print $2}')"
     UPLOAD_INFO="
 File: [$(basename "\"${FILE}\"")]($(printf "https://drive.google.com/uc?id=%s&export=download" "${GDRIVE_UPLOAD_ID}"))
 Size: ${ZIP_SIZE}
