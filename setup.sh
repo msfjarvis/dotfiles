@@ -55,6 +55,9 @@ else
 fi
 unset DIFF_SO_FANCY
 
+echoText 'Installing nanorc'
+cp -v "${SCRIPT_DIR}"/.nanorc ~/.nanorc
+
 echoText "Importing GPG keys"
 for KEY in "${GPG_KEYS[@]}"; do
     gpg --import "${SCRIPT_DIR}"/gpg_keys/"${KEY}"
