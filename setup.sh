@@ -15,13 +15,13 @@ declare -a GPG_KEYS=("public_old.asc" "private_old.asc")
 mkdir -p ~/bin/
 
 echoText "Installing necessary packages"
-sudo apt install -y android-tools-adb jq curl wget axel mosh xclip
+sudo apt install -y android-tools-adb jq curl wget axel mosh xclip aria2
 
 echoText "Checking and installing hub"
 HUB="$(command -v hub)"
 if [[ "${HUB}" == "" || "$*" =~ --update-binaries ]]; then
     HUB_ARCH=linux-amd64
-    wget "$(curl -s https://api.github.com/repos/github/hub/releases/latest | jq -r ".assets[] | select(.name | test(\"${HUB_ARCH}\")) | .browser_download_url")" -O hub.tgz
+    aria2c "$(curl -s https://api.github.com/repos/github/hub/releases/latest | jq -r ".assets[] | select(.name | test(\"${HUB_ARCH}\")) | .browser_download_url")" -o hub.tgz
     mkdir -p hub
     tar -xf hub.tgz -C hub
     sudo ./hub/*/install --prefix=/usr/local/
@@ -33,7 +33,7 @@ fi
 echoText "Checking and installing gdrive"
 GDRIVE="$(command -v gdrive)"
 if [ "${GDRIVE}" == "" ]; then
-    wget 'https://docs.google.com/uc?id=0B3X9GlR6EmbnQ0FtZmJJUXEyRTA&export=download' -O ~/bin/gdrive
+    aria2c 'https://docs.google.com/uc?id=0B3X9GlR6EmbnQ0FtZmJJUXEyRTA&export=download' -o ~/bin/gdrive
     chmod +x ~/bin/gdrive
 else
     reportWarning "gdrive is already installed!"
@@ -42,13 +42,13 @@ fi
 echoText "Installing 'diff-so-fancy'"
 DIFF_SO_FANCY="$(command -v diff-so-fancy)"
 if [[ "${DIFF_SO_FANCY}" == "" ]]; then
-    sudo wget https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy -O /usr/local/bin/diff-so-fancy
+    sudo aria2c 'https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy' -o /usr/local/bin/diff-so-fancy
     sudo chmod +x /usr/local/bin/diff-so-fancy
 else
     INSTALLED_VERSION="$(grep "my \$VERSION = " /usr/local/bin/diff-so-fancy | cut -d \" -f 2)"
     LATEST_VERSION="$(get_latest_release so-fancy/diff-so-fancy | sed 's/v//')"
     if [[ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]]; then
-        sudo wget https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy -O /usr/local/bin/diff-so-fancy
+        sudo aria2c 'https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy' -o /usr/local/bin/diff-so-fancy
         sudo chmod +x /usr/local/bin/diff-so-fancy
     fi
 fi
