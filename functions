@@ -62,7 +62,7 @@ function cpuinfo {
 
 function encrypt {
     [ -z "${1}" ] && return
-    gpg --encrypt --output "${1}".gpg --recipient "harsh@prjkt.io" "${1}"
+    gpg --encrypt --output "${1}".gpg --recipient "msfjarvis@gmail.com" "${1}"
 }
 
 function maintenance {
