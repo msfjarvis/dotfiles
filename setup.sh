@@ -30,14 +30,23 @@ else
     reportWarning "$(hub --version) is already installed!"
 fi
 
+GDRIVE_ARTIFACT_NAME="gdrive-linux-x64"
 if [ "$(command -v gdrive)" == "" ]; then
     echoText "Checking and installing gdrive"
-    GDRIVE_ARTIFACT_NAME="gdrive-linux-x64"
     aria2c "$(get_release_assets MSF-Jarvis/gdrive | grep ${GDRIVE_ARTIFACT_NAME})" -o ~/bin/gdrive
     chmod +x ~/bin/gdrive
 else
-    reportWarning "gdrive is already installed!"
+    INSTALLED_VERSION="$(gdrive version | grep gdrive | awk '{print $2}')"
+    LATEST_VERSION="$(get_latest_release MSF-Jarvis/gdrive)"
+    if [[ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]]; then
+        reportWarning "Outdated version of gdrive detected, upgrading"
+        aria2c "$(get_release_assets MSF-Jarvis/gdrive | grep ${GDRIVE_ARTIFACT_NAME})" -o ~/bin/gdrive
+        chmod +x ~/bin/gdrive
+    else
+        reportWarning "Latest version of gdrive is already installed!"
+    fi
 fi
+unset GDRIVE_ARTIFACT_NAME
 
 if [[ "$(command -v diff-so-fancy)" == "" ]]; then
     echoText "Installing 'diff-so-fancy'"
