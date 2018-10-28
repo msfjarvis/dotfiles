@@ -33,7 +33,8 @@ fi
 echoText "Checking and installing gdrive"
 GDRIVE="$(command -v gdrive)"
 if [ "${GDRIVE}" == "" ]; then
-    aria2c 'https://docs.google.com/uc?id=0B3X9GlR6EmbnQ0FtZmJJUXEyRTA&export=download' -o ~/bin/gdrive
+    GDRIVE_ARTIFACT_NAME="gdrive-linux-x64"
+    aria2c "$(get_release_assets MSF-Jarvis/gdrive | grep ${GDRIVE_ARTIFACT_NAME})" -o ~/bin/gdrive
     chmod +x ~/bin/gdrive
 else
     reportWarning "gdrive is already installed!"
