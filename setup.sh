@@ -21,7 +21,7 @@ echoText "Checking and installing hub"
 HUB="$(command -v hub)"
 if [[ "${HUB}" == "" || "$*" =~ --update-binaries ]]; then
     HUB_ARCH=linux-amd64
-    aria2c "$(curl -s https://api.github.com/repos/github/hub/releases/latest | jq -r ".assets[] | select(.name | test(\"${HUB_ARCH}\")) | .browser_download_url")" -o hub.tgz
+    aria2c "$(get_release_assets github/hub | grep ${HUB_ARCH})" -o hub.tgz
     mkdir -p hub
     tar -xf hub.tgz -C hub
     sudo ./hub/*/install --prefix=/usr/local/
