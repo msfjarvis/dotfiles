@@ -33,6 +33,13 @@ function endtask {
     for pid in $(ps -ef | grep "${1:?}" | awk '{print $2}'); do kill -9 "${pid}" 2>/dev/null; done
 }
 
+function imgur {
+    local FILE; FILE="${1}"
+    curl --request POST --url https://api.imgur.com/3/image --header "authorization: Client-ID ${IMGUR_API_KEY}" \
+        --header 'content-type: multipart/form-data;' -F "image=@${FILE:?}" 2>/dev/null \
+        | jq .data.link | sed 's/"//g' | xclip -selection clipboard
+}
+
 function publish {
     local FILE REMOTE_DIR
     FILE="${1:?}"
