@@ -52,11 +52,15 @@ function gdrivedl {
 }
 
 function publish {
-    local FILE REMOTE_DIR
-    FILE="${1:?}"
-    REMOTE_DIR="${2:?}"
-    rsync -avR "${FILE}" "${CAESIUM_UPLOAD_HOST}:${CAESIUM_UPLOAD_PATH/caesium/${REMOTE_DIR}}" --progress --verbose
-    echo "https://download.msfjarvis.website/${REMOTE_DIR}/${FILE}" | xclip -selection clipboard
+    local FILE REMOTE_DIR FULL_REMOTE_DIR
+    FILE="${1}"
+    REMOTE_DIR="${2:-.superhidden}"
+    FULL_REMOTE_DIR="${CAESIUM_UPLOAD_PATH/caesium/${REMOTE_DIR}}/"
+    # shellcheck disable=SC2029
+    # I want this to expand on the client side
+    ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${FULL_REMOTE_DIR}"
+    rsync -a "${FILE:?}" "${CAESIUM_UPLOAD_HOST}:${FULL_REMOTE_DIR}" --progress
+    printf "https://download.msfjarvis.website/%s" "${REMOTE_DIR}/$(basename "${FILE:?}")" | xclip -selection clipboard
 }
 
 function reload {
