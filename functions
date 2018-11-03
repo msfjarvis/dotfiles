@@ -81,7 +81,9 @@ function foreversay {
 }
 
 function tgcow {
-    tgm "\`$(cowsay "${@}")\`" "${OP3_CAESIUM_CHAT_ID}"
+    local CHAT_ID="${1}"
+    [ -z "${CHAT_ID}" ] && CHAT_ID="${OP3_CAESIUM_CHAT_ID}"
+    tgm "\`$(cowsay "${@}")\`" "${CHAT_ID}"
 }
 
 function tgpaste {
