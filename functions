@@ -123,7 +123,13 @@ function serverconnect {
 }
 
 function link {
-    ln -sf "${1:?}" "${2:?}"
+    local SRC DEST PWD; SRC="${1}"; DEST="${2}"
+    PWD="$(pwd)"
+    case "${SRC:?}" in
+        /*) ;; # No action needed
+        *) SRC="${PWD}"/"${SRC:?}" ;;
+    esac
+    ln -sf "${SRC:?}" "${DEST:?}"
 }
 
 function hostupdate {
