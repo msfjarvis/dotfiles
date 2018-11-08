@@ -151,17 +151,9 @@ function cloc {
 # Random utility tooling
 function weather {
     if [ "$(tput cols)" -lt 125 ]; then # 125 is min size for correct display
-        if [ -z "$1" ]; then
-            curl "wttr.in/Ghaziabad?0"
-        else
-            curl "wttr.in/~$1?0"
-        fi
+        curl "wttr.in/~${1:-Ghaziabad}?0"
     else
-        if [ -z "$1" ]; then
-            curl "wttr.in/Ghaziabad"
-        else
-            curl "wttr.in/~$1"
-        fi
+        curl "wttr.in/~${1:-Ghaziabad}"
     fi
 }
 
