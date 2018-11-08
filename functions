@@ -11,10 +11,7 @@ source "${SCRIPT_DIR}"/apps
 source "${SCRIPT_DIR}"/aliases
 
 function setemail {
-    if [ ! -d .git ]; then
-        reportWarning "This command needs to run in a git tree"
-        return 1
-    fi
+    [ ! -d .git ] && { reportWarning "This command needs to run in a git tree"; return 1; }
     local EMAIL GPG_KEY
     case "${1:?}" in
     "work"|"prjkt") EMAIL="harsh@prjkt.io"; GPG_KEY="4AD75758D9EE741C" ;;
