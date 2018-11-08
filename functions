@@ -161,7 +161,7 @@ function reboot {
   echo "Do you really wanna reboot??"
   read -r confirmation
   case "${confirmation}" in
-      'y'|'Y') exec "$(command -v reboot)" ;;
+      'y'|'Y'|'yes') exec "$(command -v reboot)" ;;
       *) ;;
   esac
 }
