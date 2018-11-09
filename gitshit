@@ -14,11 +14,11 @@ SUBS_GERRIT_URL="substratum.review"
 DEFAULT_GERRIT="aosip"
 
 function get_current_gerrit {
-    if [[ "${DEFAULT_GERRIT}" == "aosip" ]]; then
+    if [ "${DEFAULT_GERRIT}" == "aosip" ]; then
         echo "${GERRIT_USER}@${AOSIP_GERRIT_URL}"
-    elif [[ "${DEFAULT_GERRIT}" == "substratum" ]]; then
+    elif [ "${DEFAULT_GERRIT}" == "substratum" ]; then
         echo "${GERRIT_USER}@${SUBS_GERRIT_URL}"
-    elif [[ "${DEFAULT_GERRIT}" == "gzosp" ]]; then
+    elif [ "${DEFAULT_GERRIT}" == "gzosp" ]; then
         echo "${GERRIT_USER}@${GZOSP_GERRIT_URL}"
     else
         return 1
@@ -49,14 +49,14 @@ function gpush {
     declare -a PARAMS=("${@}")
     local BRANCH
     BRANCH="${DEFAULT_AOSIP_BRANCH}"
-    if [[ "${#PARAMS[@]}" -eq 2 ]]; then
+    if [ "${#PARAMS[@]}" -eq 2 ]; then
         BRANCH="${PARAMS[0]}"
-        if [[ "${PARAMS[1]}" == bypass ]]; then
+        if [ "${PARAMS[1]}" == bypass ]; then
             git push gerrit HEAD:refs/for/"${BRANCH}"
         else
             git push gerrit HEAD:refs/for/"${BRANCH}"/"${PARAMS[0]}"
         fi
-    elif [[ "${#PARAMS[@]}" -eq 1 ]]; then
+    elif [ "${#PARAMS[@]}" -eq 1 ]; then
         git push gerrit HEAD:refs/for/"${BRANCH}"/"${PARAMS[0]}"
     else
         git push gerrit HEAD:refs/for/"${BRANCH}"
@@ -74,7 +74,7 @@ function subspush {
 function gfpush {
     local BRANCH
     BRANCH="${1}"
-    if [[ "${BRANCH}" == "" ]]; then
+    if [ "${BRANCH}" == "" ]; then
         BRANCH="${DEFAULT_AOSIP_BRANCH}"
     fi
     git push gerrit HEAD:refs/heads/"${BRANCH}"
@@ -82,7 +82,7 @@ function gfpush {
 
 function gffpush {
     BRANCH="${1}"
-    if [[ "${BRANCH}" == "" ]]; then
+    if [ "${BRANCH}" == "" ]; then
         BRANCH="${DEFAULT_AOSIP_BRANCH}"
     fi
     git push --force gerrit HEAD:refs/heads/"${BRANCH}"
