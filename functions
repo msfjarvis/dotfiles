@@ -16,7 +16,7 @@ function setemail {
     case "${1:?}" in
     "work"|"prjkt") EMAIL="harsh@prjkt.io"; GPG_KEY="4AD75758D9EE741C" ;;
     esac
-    [[ -z "${EMAIL}" && -z "${GPG_KEY}" ]] && { git config --unset user.email; git config --unset user.signingkey; return 0; }
+    if [ -z "${EMAIL}" ] && [ -z "${GPG_KEY}" ]; then { git config --unset user.email; git config --unset user.signingkey; return 0; }; fi
     git config user.email "${EMAIL}"
     git config user.signingkey "${GPG_KEY}"
 }
@@ -227,7 +227,6 @@ function rebuildtc {
         reportError "ARM64 GCC 8.x failed to compile"
     fi
 }
-
 
 function gettcvers {
     cd "${HOME}"/git-repos/halogenOS/toolchains || return 1
