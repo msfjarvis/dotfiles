@@ -59,18 +59,18 @@ function update_template {
 }
 
 function makeapk {
-    [[ ! -f "build.gradle" ]] && reportError "No build.gradle present, dimwit" && return 1
+    [ ! -f "build.gradle" ] && reportError "No build.gradle present, dimwit" && return 1
     local GRADLE_COMMAND
-    if [[ ! -f ".variant" ]]; then
-        if [[ "${1}" != "install" ]]; then
+    if [ ! -f ".variant" ]; then
+        if [ "${1}" != "install" ]; then
             GRADLE_COMMAND="assemble${1:-Debug}"
         else
             GRADLE_COMMAND="assembleDebug"
         fi
-        [[ "${1}" == "install" || "${2}" == "install" ]] && GRADLE_COMMAND="install${GRADLE_COMMAND/assemble/}"
+        if [ "${1}" == "install" ] || [ "${2}" == "install" ]; then GRADLE_COMMAND="install${GRADLE_COMMAND/assemble/}"; fi
     else
         GRADLE_COMMAND="assemble$(cat .variant)"
-        [[ "${1}" == "install" ]] && GRADLE_COMMAND="install$(cat .variant)"
+        [ "${1}" == "install" ] && GRADLE_COMMAND="install$(cat .variant)"
     fi
     rm -rfv app/build/outputs/apk/*
     rm -rfv build/outputs/apk/*
@@ -83,7 +83,7 @@ function wgbuild {
     BUILT_APK="app/build/outputs/apk/debug/wg-android_${GIT_DESCRIBE}.apk"
     CHANGELOG="${1:?}"
     makeapk debug
-    if [[ ! -f "${BUILT_APK}" ]]; then
+    if [ ! -f "${BUILT_APK}" ]; then
         reportWarning "APK Compilation failed"
         return 1
     fi
@@ -129,7 +129,7 @@ function fao {
 function adbp {
     local RAW_PACKAGE_PATH
     RAW_PACKAGE_PATH="$(adb-"${CURRENT_DEVICE}" shell pm path "${1}")"
-    if [[ "${RAW_PACKAGE_PATH}" != "" ]]; then
+    if [ "${RAW_PACKAGE_PATH}" != "" ]; then
         adb-"${CURRENT_DEVICE}" pull "$(echo "${RAW_PACKAGE_PATH}" | cut -d ':' -f 2)" "${1}".apk
     else
         echoText "Package not found"
