@@ -54,7 +54,7 @@ function tgm_caesium {
 
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper {
-    if [[ ! "${VERBOSE}" ]]; then
+    if [ ! "${VERBOSE}" ]; then
         make O="${OUT_DIR}" \
             ARCH="${ARCH}" SUBARCH="${SUBARCH}" \
             KBUILD_BUILD_USER="${USER}" \
@@ -174,7 +174,7 @@ function update_source_trees {
 # Find the correct CROSS_COMPILE candidate
 function check_toolchain() {
     local TC; TC="$(find "${ARM64_TOOLCHAIN_DIR}"/bin -name "${ARM64_TOOLCHAIN_SEARCH_STRING}")";
-    if [[ -f "${TC}" ]]; then
+    if [ -f "${TC}" ]; then
         CROSS_COMPILE="${ARM64_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')";
         echoText "Using toolchain: $("${CROSS_COMPILE}"gcc --version | head -1)"
         CROSS_COMPILE="$(command -v ccache) ${CROSS_COMPILE}"
@@ -182,7 +182,7 @@ function check_toolchain() {
         reportError "No suitable toolchain found in ${ARM64_TOOLCHAIN_DIR}";
     fi
     TC="$(find "${ARM_TOOLCHAIN_DIR}"/bin -name "${ARM_TOOLCHAIN_SEARCH_STRING}")";
-    if [[ -f "${TC}" ]]; then
+    if [ -f "${TC}" ]; then
         CROSS_COMPILE_ARM32="${ARM_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')";
         echoText "Using toolchain: $("${CROSS_COMPILE_ARM32}gcc" --version | head -1)"
         CROSS_COMPILE_ARM32="$(command -v ccache) ${CROSS_COMPILE_ARM32}"
@@ -252,7 +252,7 @@ while getopts ":bcd:m:rt:v" OPT; do
         m)
         MODULE="${OPTARG}"
         [[ "${MODULE}" == */ ]] || MODULE="${MODULE}"/
-        if [[ ! "$(ls "${MODULE}"Kconfig*  2>/dev/null)" ]]; then
+        if [ ! "$(ls "${MODULE}"Kconfig*  2>/dev/null)" ]; then
             reportError "Invalid module specified - ${MODULE}"
             return 1
         fi
@@ -261,7 +261,7 @@ while getopts ":bcd:m:rt:v" OPT; do
         r) echoText " Regenerating defconfig " >&2; REGEN_DEFCONFIG=true ;;
         t)
         TYPE="${OPTARG}"
-        if [[ "${TYPE}" != "stable" ]]; then
+        if [ "${TYPE}" != "stable" ]; then
             echoText " Setting test build parameters" >&2
             TEST_BUILD=true
             export LOCALVERSION=-"${INCREMENTAL_VERSION}"-"${GIT_HASH}"
@@ -274,7 +274,7 @@ while getopts ":bcd:m:rt:v" OPT; do
     esac
 done
 
-[[ "${TEST_BUILD}" ]] && FINAL_VER="${FINAL_VER}"-"$(date +%Y%m%d-%H%M%S)"
+[ "${TEST_BUILD}" ] && FINAL_VER="${FINAL_VER}"-"$(date +%Y%m%d-%H%M%S)"
 
 DATE_START=$(date +"%s")
 
@@ -289,7 +289,7 @@ fi
 DATE_END="$(date +"%s")"
 DIFF="$(bc <<< "${DATE_END} - ${DATE_START}")"
 
-if [[ -f zips/"${FINAL_VER}".zip ]]; then
+if [ -f zips/"${FINAL_VER}".zip ]; then
     tgm_caesium "Build successful in $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds."
     echoText "Build successful in $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds."
     reportSuccess "${FINAL_VER}".zip
