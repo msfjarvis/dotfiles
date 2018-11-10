@@ -9,5 +9,4 @@ result=$(curl -sf --data-binary @"${1:--}" https://del.dog/documents) || {
 }
 key=$(jq -r .key <<< "${result}")
 echo "https://del.dog/${key}"
-[[ -z ${2} ]] && echo "https://del.dog/raw/${key}"
-
+[ -z "${2}" ] && echo "https://del.dog/raw/${key}"
