@@ -19,7 +19,7 @@ sudo apt install -y android-tools-adb jq curl wget axel mosh xclip aria2
 
 echoText "Checking and installing hub"
 HUB="$(command -v hub)"
-if [[ "${HUB}" == "" || "$*" =~ --update-binaries ]]; then
+if [ "${HUB}" == "" ] || [[ "$*" =~ --update-binaries ]]; then
     HUB_ARCH=linux-amd64
     aria2c "$(get_release_assets github/hub | grep ${HUB_ARCH})" -o hub.tgz
     mkdir -p hub
@@ -38,7 +38,7 @@ if [ "$(command -v gdrive)" == "" ]; then
 else
     INSTALLED_VERSION="$(gdrive version | grep gdrive | awk '{print $2}')"
     LATEST_VERSION="$(get_latest_release MSF-Jarvis/gdrive)"
-    if [[ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]]; then
+    if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
         reportWarning "Outdated version of gdrive detected, upgrading"
         aria2c "$(get_release_assets MSF-Jarvis/gdrive | grep ${GDRIVE_ARTIFACT_NAME})" --allow-overwrite=true -d ~/bin -o gdrive
         chmod +x ~/bin/gdrive
@@ -48,7 +48,7 @@ else
 fi
 unset GDRIVE_ARTIFACT_NAME
 
-if [[ "$(command -v diff-so-fancy)" == "" ]]; then
+if [ "$(command -v diff-so-fancy)" == "" ]; then
     echoText "Installing 'diff-so-fancy'"
     sudo aria2c 'https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy' --allow-overwrite=true -d /usr/local/bin -o diff-so-fancy
     sudo chmod +x /usr/local/bin/diff-so-fancy
@@ -56,7 +56,7 @@ else
     echoText "Installing 'diff-so-fancy'"
     INSTALLED_VERSION="$(grep "my \$VERSION = " /usr/local/bin/diff-so-fancy | cut -d \" -f 2)"
     LATEST_VERSION="$(get_latest_release so-fancy/diff-so-fancy | sed 's/v//')"
-    if [[ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]]; then
+    if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
         sudo aria2c 'https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy' --allow-overwrite=true -d /usr/local/bin -o diff-so-fancy
         sudo chmod +x /usr/local/bin/diff-so-fancy
     fi
@@ -82,7 +82,7 @@ if [[ ! "${PATH}" =~ "~/bin" ]]; then
 fi
 
 ret="$(grep -q "source ${SCRIPT_DIR}/functions" ~/.bashrc)"
-if [[ "${ret}" ]]; then
+if [ "${ret}" ]; then
     reportWarning "functions is not sourced in the bashrc, appending"
     echo "source ${SCRIPT_DIR}/functions" >> ~/.bashrc
 fi
@@ -110,12 +110,12 @@ for ITEM in $(find gitconfig_fragments -type f); do
     DECRYPTED="${ITEM/.gpg/}"
     rm -f "${DECRYPTED}" 2>/dev/null
     gpg --decrypt "${ITEM}" > "${DECRYPTED}"
-    [[ ! -f "${DECRYPTED}" ]] && break
+    [ ! -f "${DECRYPTED}" ] && break
     cat "${DECRYPTED}" >> ~/.gitconfig
     rm "${DECRYPTED}"
 done
 
-if [[ "$*" =~ --setup-adb || "$*" =~ --all ]]; then
+if [[ "$*" =~ --setup-adb ]] || [[ "$*" =~ --all ]]; then
     echoText "Setting up multi-adb"
     "${SCRIPT_DIR}"/adb-multi/adb-multi generate
     cp "${SCRIPT_DIR}"/adb-multi/adb-multi ~/bin
