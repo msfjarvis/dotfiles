@@ -45,7 +45,7 @@ trap 'exit 1' SIGINT SIGTERM
 # Wrapper around tgm to avoid having to pass the second chat ID param everywhere
 function tgm_caesium {
     [ -z "${TYPE}" ] && return
-    if [ "${TYPE}" == "test" ]; then
+    if [ "${TYPE}" == "test" ] || [ "${TYPE}" == "alpha" ]; then
         tgm "${1}" &
     elif [ ! -z "${TYPE}" ]; then
         tgm "${1}" "${OP3_CAESIUM_CHAT_ID}" &
