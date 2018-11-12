@@ -283,7 +283,7 @@ done
 DATE_START=$(date +"%s")
 
 # Make
-rm "${FINAL_VER}".zip
+rm "${FINAL_VER}".zip 2>/dev/null
 check_toolchain
 if [ "${ONLY_ZIP}" ] && [ -z "${MODULE}" ]; then
     make_zip
