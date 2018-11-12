@@ -193,6 +193,7 @@ function check_toolchain() {
 
 # Duh
 function make_kernel {
+    local RETURN_VAL
     tgm_caesium "Building \`${FINAL_VER}\`"
     mkdir -p "${OUT_DIR}"
     find "${OUT_DIR}" -name Image.gz-dtb -exec rm -rf {} \;
@@ -202,10 +203,13 @@ function make_kernel {
     else
         make_wrapper "${KERNEL}"
     fi
+    RETURN_VAL="$?"
     local BUILT_KERNEL=out/arch/"${ARCH}"/boot/"${KERNEL}"
     if [ -f "${BUILT_KERNEL}" ]; then
       cp -r "${BUILT_KERNEL}" "${ANYKERNEL_DIR}"
       return 0
+    elif [ ! -z "${MODULE}" ] && [ "${RETURN_VAL}" == 0 ]; then
+        echo ''
     else
       reportError "Kernel compilation failed"
       tgm "Build failed"
@@ -279,12 +283,13 @@ done
 DATE_START=$(date +"%s")
 
 # Make
+rm "${FINAL_VER}".zip
 check_toolchain
-if [ "${ONLY_ZIP}" ]; then
+if [ "${ONLY_ZIP}" ] && [ -z "${MODULE}" ]; then
     make_zip
 else
     make_kernel
-    make_zip
+    [ -z "${MODULE}" ] && make_zip
 fi
 DATE_END="$(date +"%s")"
 DIFF="$(bc <<< "${DATE_END} - ${DATE_START}")"
