@@ -108,7 +108,7 @@ function pushcaesiumtg {
     cd zips || return; md5sum "${FILE}" > "${FILE}".md5sum
     prepdirs "${TYPE}"
     if [ "${TYPE}" == "stable" ]; then
-        for ITEM in beta test; do
+        for ITEM in beta test alpha; do
             prepdirs "${ITEM}"
         done
     fi
