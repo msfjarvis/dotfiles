@@ -242,7 +242,7 @@ function fillccache {
     cd "${CUR_DIR}" || return 1
     END_TIME="$(date +"%s")"
     DIFF="$(bc <<< "${END_TIME} - ${START_TIME}")"
-    echoText "Total time elapse: $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds."
+    echoText "Total time elapsed: $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds."
 }
 
 function gettcvers {
