@@ -229,6 +229,7 @@ function rebuildtc {
 }
 
 function fillccache {
+    local START_TIME END_TIME; START_TIME=$(date +"%s")
     declare -a DEVICES=("oneplus3" "wahoo")
     local BASE_DIR; BASE_DIR=/home/msfjarvis/git-repos/halogenOS
     for DEVICE in "${DEVICES[@]}"; do
@@ -238,6 +239,10 @@ function fillccache {
             build-caesium -cv
         done
     done
+    cd - || return 1
+    END_TIME="$(date +"%s")"
+    DIFF="$(bc <<< "${END_TIME} - ${START_TIME}")"
+    echoText "Total time elapse: $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds."
 }
 
 function gettcvers {
