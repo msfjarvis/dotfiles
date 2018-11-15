@@ -14,14 +14,13 @@ fi
 
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper {
-    local ARCH SUBARCH CC HOSTCC
-    ARCH=x86; SUBARCH=x86_64
+    local CC HOSTCC
+    declare -a MAKE_FLAGS=("ARCH=x86" "SUBARCH=x86_64")
     CC='ccache gcc'; HOSTCC='ccache gcc'
     [ -z "${CLANG}" ] || { CC='ccache clang'; HOSTCC='ccache clang'; }
-    make ARCH="${ARCH}" \
-         SUBARCH="${SUBARCH}" \
-         CC="${CC}" \
+    make CC="${CC}" \
          HOSTCC="${HOSTCC}" \
+         "${MAKE_FLAGS[@]}" \
          -j"$(nproc --all)" \
          "${@}"
 }
