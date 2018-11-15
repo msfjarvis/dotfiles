@@ -53,7 +53,7 @@ function make_defconfig {
     fi
 }
 
-while getopts ":cir:" opt; do
+while getopts ":cim:r:" opt; do
     case $opt in
       c)
         echoText "Building clean" >&2
@@ -62,6 +62,10 @@ while getopts ":cir:" opt; do
       i)
         echoText "Will install the compiled kernel" >&2
         INSTALL=true
+        ;;
+      m)
+        MODULE="${OPTARG}"
+        echoText "Building module ${MODULE:?}" >&2
         ;;
       r)
         echoText "Regenerating defconfig" >&2
