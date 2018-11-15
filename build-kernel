@@ -8,9 +8,8 @@ SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
 source "${SCRIPT_DIR}"/common
 
 # Resources
-if [ -z "${DEFCONFIG}" ]; then
-    DEFCONFIG="$(hostname)_defconfig"
-fi
+[ -f ".buildconfig" ] && source ".buildconfig"
+DEFCONFIG="${DEFCONFIG}:-$(hostname)_defconfig"
 
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper {
