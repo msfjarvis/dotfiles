@@ -12,16 +12,18 @@ if [ -z "${DEFCONFIG}" ]; then
     DEFCONFIG="$(hostname)_defconfig"
 fi
 
-# Vars
-ARCH=x86
-SUBARCH=x86_64
-
-## Functions
-
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper {
-    make ARCH="${ARCH}" SUBARCH="${SUBARCH}" \
-      -j"$(nproc --all)" "$@"
+    local ARCH SUBARCH CC HOSTCC
+    ARCH=x86; SUBARCH=x86_64
+    CC='ccache gcc'; HOSTCC='ccache gcc'
+    [ -z "${CLANG}" ] || { CC='ccache clang'; HOSTCC='ccache clang'; }
+    make ARCH="${ARCH}" \
+         SUBARCH="${SUBARCH}" \
+         CC="${CC}" \
+         HOSTCC="${HOSTCC}" \
+         -j"$(nproc --all)" \
+         "${@}"
 }
 
 # Duh
