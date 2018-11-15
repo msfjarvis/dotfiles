@@ -53,7 +53,7 @@ function make_defconfig {
     fi
 }
 
-while getopts ":ciprm:" opt; do
+while getopts ":cir:" opt; do
     case $opt in
       c)
         echoText "Building clean" >&2
