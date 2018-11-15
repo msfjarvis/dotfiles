@@ -236,7 +236,7 @@ function fillccache {
         for COUNT in {1..10}; do
             echoText "Build ${COUNT} for device ${DEVICE}"
             cd "${BASE_DIR}"/"${DEVICE}" || return 1
-            build-caesium -cv
+            build-caesium -c
         done
     done
     cd "${CUR_DIR}" || return 1
