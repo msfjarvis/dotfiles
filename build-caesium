@@ -241,6 +241,7 @@ function make_zip {
     mv "${UNSIGNED_ZIP}" "${SIGNED_ZIP}"
     mkdir -p "${ZIP_MOVE}"
     mv  "${SIGNED_ZIP}" "${ZIP_MOVE}"/
+    rm "${ANYKERNEL_DIR}/${KERNEL}" 1>/dev/null 2>&1
     cd "${WORKING_DIR}" || return
 }
 
