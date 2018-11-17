@@ -8,4 +8,4 @@ result=$(curl -sf --data-binary @"${1:--}" https://del.dog/documents) || {
       exit 1
 }
 key=$(jq -r .key <<< "${result}")
-echo "https://del.dog/raw/${key}" | xclip -selection clipboard
+echo "https://del.dog/raw/${key}" | xclip -rmlastnl -selection clipboard

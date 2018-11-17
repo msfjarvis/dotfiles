@@ -17,7 +17,7 @@ CL_BLUE="\033[01;34m"
 export CL_BOLD CL_INV CL_RED CL_RST CL_YLW CL_BLUE
 
 function clip {
-    xclip -selection clipboard -i "${1:?}"
+    xclip -rmlastnl -selection clipboard -i "${1:?}"
 }
 
 # Route nano to 'no-trailing-newlines' mode
@@ -101,7 +101,7 @@ function transfer {
       cat /tmp/test.md | transfer test.md"
       return 1
     fi
-    curl -F c=@"${1}" https://ptpb.pw/?u=1 2>/dev/null | xclip -selection clipboard
+    curl -F c=@"${1}" https://ptpb.pw/?u=1 2>/dev/null | xclip -rmlastnl -selection clipboard
 }
 
 # Upload to GDrive

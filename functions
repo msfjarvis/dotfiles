@@ -34,7 +34,7 @@ function imgur {
     local FILE; FILE="${1}"
     curl --request POST --url https://api.imgur.com/3/image --header "authorization: Client-ID ${IMGUR_API_KEY}" \
         --header 'content-type: multipart/form-data;' -F "image=@${FILE:?}" 2>/dev/null \
-        | jq .data.link | sed 's/"//g' | xclip -selection clipboard
+        | jq .data.link | sed 's/"//g' | xclip -rmlastnl -selection clipboard
 }
 
 function gdrivedl {
@@ -61,7 +61,7 @@ function publish {
     # I want this to expand on the client side
     ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${FULL_REMOTE_DIR}"
     rsync -a "${FILE:?}" "${CAESIUM_UPLOAD_HOST}:${FULL_REMOTE_DIR}" --progress
-    printf "https://download.msfjarvis.website/%s" "${REMOTE_DIR}/$(basename "${FILE:?}")" | xclip -selection clipboard
+    printf "https://download.msfjarvis.website/%s" "${REMOTE_DIR}/$(basename "${FILE:?}")" | xclip -rmlastnl -selection clipboard
 }
 
 function reload {
