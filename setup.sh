@@ -6,61 +6,24 @@
 # Source common functions
 SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
 source "${SCRIPT_DIR}"/common
-git -C "${SCRIPT_DIR}" submodule update --init --recursive
 
 declare -a SCRIPTS=("kronic-build" "build-caesium" "build-kernel" "build-twrp" "hastebin")
 declare -a TDM_SCRIPTS=("gerrit-review")
 declare -a GPG_KEYS=("public_old.asc" "private_old.asc")
 
+# Create binaries directory
 mkdir -p ~/bin/
 
+# Install standard packages.
 echoText "Installing necessary packages"
 sudo apt install -y android-tools-adb jq curl wget axel mosh xclip aria2
 
-echoText "Checking and installing hub"
-HUB="$(command -v hub)"
-if [ "${HUB}" == "" ] || [[ "$*" =~ --update-binaries ]]; then
-    HUB_ARCH=linux-amd64
-    aria2c "$(get_release_assets github/hub | grep ${HUB_ARCH})" -o hub.tgz
-    mkdir -p hub
-    tar -xf hub.tgz -C hub
-    sudo ./hub/*/install --prefix=/usr/local/
-    rm -rf hub/ hub.tgz
-else
-    reportWarning "$(hub --version) is already installed!"
-fi
+# Update all submodules
+git -C "${SCRIPT_DIR}" submodule update --init --recursive
 
-GDRIVE_ARTIFACT_NAME="gdrive-linux-x64"
-if [ "$(command -v gdrive)" == "" ]; then
-    echoText "Checking and installing gdrive"
-    aria2c "$(get_release_assets MSF-Jarvis/gdrive | grep ${GDRIVE_ARTIFACT_NAME})" --allow-overwrite=true -d ~/bin o gdrive
-    chmod +x ~/bin/gdrive
-else
-    INSTALLED_VERSION="$(gdrive version | grep gdrive | awk '{print $2}')"
-    LATEST_VERSION="$(get_latest_release MSF-Jarvis/gdrive)"
-    if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
-        reportWarning "Outdated version of gdrive detected, upgrading"
-        aria2c "$(get_release_assets MSF-Jarvis/gdrive | grep ${GDRIVE_ARTIFACT_NAME})" --allow-overwrite=true -d ~/bin -o gdrive
-        chmod +x ~/bin/gdrive
-    else
-        reportWarning "Latest version of gdrive is already installed!"
-    fi
-fi
-unset GDRIVE_ARTIFACT_NAME
-
-if [ "$(command -v diff-so-fancy)" == "" ]; then
-    echoText "Installing 'diff-so-fancy'"
-    sudo aria2c 'https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy' --allow-overwrite=true -d /usr/local/bin -o diff-so-fancy
-    sudo chmod +x /usr/local/bin/diff-so-fancy
-else
-    echoText "Installing 'diff-so-fancy'"
-    INSTALLED_VERSION="$(grep "my \$VERSION = " /usr/local/bin/diff-so-fancy | cut -d \" -f 2)"
-    LATEST_VERSION="$(get_latest_release so-fancy/diff-so-fancy | sed 's/v//')"
-    if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
-        sudo aria2c 'https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy' --allow-overwrite=true -d /usr/local/bin -o diff-so-fancy
-        sudo chmod +x /usr/local/bin/diff-so-fancy
-    fi
-fi
+source "${SCRIPT_DIR}"/setup/hub.sh
+source "${SCRIPT_DIR}"/setup/gdrive.sh
+source "${SCRIPT_DIR}"/setup/diff-so-fancy.sh
 
 echoText 'Installing nanorc'
 cp -v "${SCRIPT_DIR}"/.nanorc ~/.nanorc
