@@ -21,9 +21,10 @@ sudo apt install -y android-tools-adb jq curl wget axel mosh xclip aria2
 # Update all submodules
 git -C "${SCRIPT_DIR}" submodule update --init --recursive
 
-source "${SCRIPT_DIR}"/setup/hub.sh
-source "${SCRIPT_DIR}"/setup/gdrive.sh
+source "${SCRIPT_DIR}"/setup/bat.sh
 source "${SCRIPT_DIR}"/setup/diff-so-fancy.sh
+source "${SCRIPT_DIR}"/setup/gdrive.sh
+source "${SCRIPT_DIR}"/setup/hub.sh
 
 echoText 'Installing nanorc'
 cp -v "${SCRIPT_DIR}"/.nanorc ~/.nanorc
