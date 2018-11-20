@@ -17,7 +17,12 @@ CL_BLUE="\033[01;34m"
 export CL_BOLD CL_INV CL_RED CL_RST CL_YLW CL_BLUE
 
 function clip {
+    [ "$(display_exists)" ] || return
     xclip -rmlastnl -selection clipboard -i "${1:?}"
+}
+
+function display_exists {
+    if xhost >& /dev/null ; then echo "1"; fi
 }
 
 # Route nano to 'no-trailing-newlines' mode
@@ -95,13 +100,19 @@ function reportSuccess {
 
 # Upload a file to ptpb.pw (Name retained for muscle memory)
 function transfer {
+    local URL
     if [ "$#" -eq 0 ]
       then echo "No arguments specified. Usage:
       echo transfer /tmp/test.md
       cat /tmp/test.md | transfer test.md"
       return 1
     fi
-    curl -F c=@"${1}" https://ptpb.pw/?u=1 2>/dev/null | xclip -rmlastnl -selection clipboard
+    URL=$(curl -F c=@"${1}" https://ptpb.pw/?u=1 2>/dev/null)
+    if [ "$(display_exists)" ]; then
+        echo "${URL}" | xclip -rmlastnl -selection clipboard
+    else
+        echo "${URL}"
+    fi
 }
 
 # Upload to GDrive
