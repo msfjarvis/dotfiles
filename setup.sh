@@ -16,7 +16,7 @@ mkdir -p ~/bin/
 
 # Install standard packages.
 echoText "Installing necessary packages"
-sudo apt install -y android-tools-adb jq curl wget axel mosh xclip aria2
+sudo apt install -y android-tools-adb jq curl wget axel mosh xclip aria2 libxmu-dev
 
 # Update all submodules
 git -C "${SCRIPT_DIR}" submodule update --init --recursive
