@@ -13,7 +13,7 @@ function install_bat {
         aria2c "$(get_release_assets sharkdp/bat | grep ${BAT_ARTIFACT})" -o bat.tgz
         mkdir -p bat
         tar -xf bat.tgz -C bat/
-        cd bat/*/
+        cd bat/*/ || return 1
         sudo install bat /usr/local/bin
         sudo install bat.1 /usr/local/man/
         rm -rf bat/ bat.tgz
