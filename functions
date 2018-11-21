@@ -3,6 +3,19 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
+# Prints a formatted header; used for outlining
+function echoText() {
+    RED="\033[01;31m"
+    RST="\033[0m"
+    echo -e "${RED}"
+# shellcheck disable=SC2034
+    echo -e "====$( for i in $(seq ${#1}); do echo -e "=\c"; done )===="
+    echo -e "==  ${1}  =="
+# shellcheck disable=SC2034
+    echo -e "====$( for i in $(seq ${#1}); do echo -e "=\c"; done )===="
+    echo -e "${RST}"
+}
+
 # Source common functions
 SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
 source "${SCRIPT_DIR}"/common
