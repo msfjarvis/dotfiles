@@ -25,6 +25,7 @@ source "${SCRIPT_DIR}"/setup/bat.sh
 source "${SCRIPT_DIR}"/setup/diff-so-fancy.sh
 source "${SCRIPT_DIR}"/setup/gdrive.sh
 source "${SCRIPT_DIR}"/setup/hub.sh
+source "${SCRIPT_DIR}"/setup/xclip.sh
 
 echoText 'Installing nanorc'
 cp -v "${SCRIPT_DIR}"/.nanorc ~/.nanorc
