@@ -24,6 +24,7 @@ function install_xclip {
         echoText "Latest xclip version is installed"
     fi
     rm "${TMPFILE}"
+    rm -rf /tmp/xclip 2>/dev/null
 }
 
 install_xclip
