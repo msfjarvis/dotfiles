@@ -193,7 +193,7 @@ function check_toolchain() {
 
 # Duh
 function make_kernel {
-    local RETURN_VAL
+    local RETURN_VAL KERNEL_OUT BUILT_KERNEL
     tgm_caesium "Building \`${FINAL_VER}\`"
     mkdir -p "${OUT_DIR}"
     find "${OUT_DIR}" -name Image.gz-dtb -exec rm -rf {} \;
@@ -204,9 +204,14 @@ function make_kernel {
         make_wrapper "${KERNEL}"
     fi
     RETURN_VAL="$?"
-    local BUILT_KERNEL=out/arch/"${ARCH}"/boot/"${KERNEL}"
+    KERNEL_OUT=out/arch/"${ARCH}"/boot
+    BUILT_KERNEL="${KERNEL_OUT}"/"${KERNEL}"
     if [ -f "${BUILT_KERNEL}" ]; then
-      cp -r "${BUILT_KERNEL}" "${ANYKERNEL_DIR}"
+      cp "${BUILT_KERNEL}" "${ANYKERNEL_DIR}"
+      if [[ ! "${KERNEL}" =~ dtb ]]; then
+          mkdir -p "${ANYKERNEL_DIR}"/dtbs/
+          cp "${KERNEL_OUT}"/dts/qcom/*.dtb "${ANYKERNEL_DIR}"/dtbs/
+      fi
       return 0
     elif [ ! -z "${MODULE}" ] && [ "${RETURN_VAL}" == 0 ]; then
         echo ''
