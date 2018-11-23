@@ -201,7 +201,7 @@ function make_kernel {
     if [ "${MODULE}" ]; then
         make_wrapper "${MODULE}"
     else
-        make_wrapper "${KERNEL}"
+        make_wrapper "${KERNEL}" dtbs
     fi
     RETURN_VAL="$?"
     KERNEL_OUT=out/arch/"${ARCH}"/boot
