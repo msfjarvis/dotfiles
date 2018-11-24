@@ -9,7 +9,7 @@ source "${SCRIPT_DIR}"/common
 
 # Resources
 [ -f ".buildconfig" ] && source ".buildconfig"
-DEFCONFIG="${DEFCONFIG}:-$(hostname)_defconfig"
+DEFCONFIG="${DEFCONFIG:-$(hostname)_defconfig}"
 
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper {
@@ -45,13 +45,13 @@ function make_defconfig {
     make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
     if [ "${REGEN_DEFCONFIG}" ]; then
         make_wrapper savedefconfig 1>/dev/null 2>&1
-        mv "$(pwd)"/defconfig arch/"${ARCH}"/configs/"${DEFCONFIG}"
+        mv "$(pwd)"/defconfig arch/x86/configs/"${DEFCONFIG}"
         echoText "Regenerated defconfig successfully"
         exit 0
     fi
 }
 
-while getopts ":cim:r:" opt; do
+while getopts ":cim:r" opt; do
     case $opt in
       c)
         echoText "Building clean" >&2
