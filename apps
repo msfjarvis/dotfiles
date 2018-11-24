@@ -65,10 +65,11 @@ function makeapk {
         if [ "${1}" != "install" ]; then
             GRADLE_COMMAND="assemble${1:-Debug}"
         fi
-        if [ "${1}" == "install" ] || [ "${2}" == "install" ]; then GRADLE_COMMAND="install${GRADLE_COMMAND/assemble/}"; fi
+        if [ "${1}" == "install" ] || [ "${2}" == "install" ]; then
+            GRADLE_COMMAND="install${GRADLE_COMMAND/assemble/}"
+        fi
     else
-        GRADLE_COMMAND="assemble$(cat .variant)"
-        [ "${1}" == "install" ] && GRADLE_COMMAND="install$(cat .variant)"
+        [ "${1}" == "install" ] && GRADLE_COMMAND="install$(cat .variant)" || GRADLE_COMMAND="assemble$(cat .variant)"
     fi
     rm -rfv app/build/outputs/apk/*
     rm -rfv build/outputs/apk/*
