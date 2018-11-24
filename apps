@@ -64,8 +64,6 @@ function makeapk {
     if [ ! -f ".variant" ]; then
         if [ "${1}" != "install" ]; then
             GRADLE_COMMAND="assemble${1:-Debug}"
-        else
-            GRADLE_COMMAND="assembleDebug"
         fi
         if [ "${1}" == "install" ] || [ "${2}" == "install" ]; then GRADLE_COMMAND="install${GRADLE_COMMAND/assemble/}"; fi
     else
