@@ -54,6 +54,7 @@ function tgm_caesium {
 
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper {
+    PATH="${SCRIPT_DIR}/bin:${PATH}"
     if [ ! "${VERBOSE}" ]; then
         make O="${OUT_DIR}" \
             ARCH="${ARCH}" SUBARCH="${SUBARCH}" \
@@ -201,7 +202,7 @@ function make_kernel {
     if [ "${MODULE}" ]; then
         make_wrapper "${MODULE}"
     else
-        make_wrapper "${KERNEL}" dtbs
+        make_wrapper "${KERNEL}" dtbs dtbo.img
     fi
     RETURN_VAL="$?"
     KERNEL_OUT=out/arch/"${ARCH}"/boot
