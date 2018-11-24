@@ -97,10 +97,11 @@ function prepdirs {
 # The meat of the telegram notifications workflow
 function pushcaesiumtg {
     [ -z "${TYPE}" ] && return
-    local FILE="${1}"
-    local TYPE="${2}"
-    local FINAL_VER="${FILE/.zip/}"
-    local FILES_TO_PUBLISH=("${FILE}" "${FILE}".md5sum changelog)
+    local FILE TYPE FINAL_VER FILES_TO_PUBLISH MESSAGE CHANGELOG BUILD_URL
+    FILE="${1}"
+    TYPE="${2}"
+    FINAL_VER="${FILE/.zip/}"
+    FILES_TO_PUBLISH=("${FILE}" "${FILE}".md5sum changelog)
     case "${TYPE}" in
         "alpha"|"beta"|"stable"|"test") ;;
         *) echo "Invalid build type" && return ;;
@@ -120,7 +121,6 @@ function pushcaesiumtg {
     if [ "${TYPE}" == "stable" ]; then
       release "${FILE}"
     fi
-    local MESSAGE CHANGELOG BUILD_URL
     BUILD_URL="${JARVISBOX_URL}/${TYPE}/${FILE}"
     if [ "${DEVICE}" != "oneplus3" ]; then
        BUILD_URL="${JARVISBOX_URL}/.personal/${FILE}"
@@ -194,26 +194,34 @@ function check_toolchain() {
 
 # Duh
 function make_kernel {
-    local RETURN_VAL KERNEL_OUT BUILT_KERNEL
+    local RETURN_VAL BUILT_KERNEL FILES_T0_MOVE
+    case "${DEVICE}" in
+        "oneplus3")
+            FILES_T0_MOVE=( "arch/arm64/boot/${KERNEL}:${ANYKERNEL_DIR}" )
+            ;;
+        "wahoo")
+            FILES_TO_MOVE=( "arch/arm64/boot/${KERNEL}:${ANYKERNEL_DIR}/kernel"
+                            "arch/arm64/boot/dtbo.img:${ANYKERNEL_DIR}" )
+            for DTB in out/arch/arm64/boot/dts/qcom/*.dtb; do
+                FILES_TO_MOVE+=( "${DTB#*/}:${ANYKERNEL_DIR}/dtbs" )
+            done
+            ;;
+    esac
+    export FILES_T0_MOVE
     tgm_caesium "Building \`${FINAL_VER}\`"
     mkdir -p "${OUT_DIR}"
-    find "${OUT_DIR}" -name Image.gz-dtb -exec rm -rf {} \;
+    find "${OUT_DIR}" -name "${KERNEL}" -exec rm -rf {} \;
     make_defconfig
     if [ "${MODULE}" ]; then
         make_wrapper "${MODULE}"
     else
-        make_wrapper "${KERNEL}" dtbs dtbo.img
+        make_wrapper
     fi
     RETURN_VAL="$?"
-    KERNEL_OUT=out/arch/"${ARCH}"/boot
-    BUILT_KERNEL="${KERNEL_OUT}"/"${KERNEL}"
-    if [ -f "${BUILT_KERNEL}" ]; then
-      cp "${BUILT_KERNEL}" "${ANYKERNEL_DIR}"
-      if [[ ! "${KERNEL}" =~ dtb ]]; then
-          mkdir -p "${ANYKERNEL_DIR}"/dtbs/
-          cp "${KERNEL_OUT}"/dts/qcom/*.dtb "${ANYKERNEL_DIR}"/dtbs/
-      fi
-      return 0
+    BUILT_KERNEL="${FILES_TO_MOVE[0]%:*}"
+    if [ -f "${OUT_DIR}/${BUILT_KERNEL}" ]; then
+        move_kernel_files
+        return 0
     elif [ ! -z "${MODULE}" ] && [ "${RETURN_VAL}" == 0 ]; then
         echo ''
     else
@@ -221,6 +229,16 @@ function make_kernel {
       tgm "Build failed"
       exit 1
     fi
+}
+
+# Move kernel files after compilation
+function move_kernel_files() {
+    # Move the kernel image
+    for FTM in "${FILES_TO_MOVE[@]}"; do
+        mkdir -p "${FTM#*:}"
+        cp "${OUT_DIR}/${FTM%:*}" "${FTM#*:}"
+    done
+    echo "Version: $(cat "${OUT_DIR}/include/config/kernel.release")" > "${ANYKERNEL_DIR}/version"
 }
 
 # Called by make_kernel, used to trap defconfig regen events
