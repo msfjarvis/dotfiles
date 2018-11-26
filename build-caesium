@@ -197,7 +197,7 @@ function make_kernel {
     local RETURN_VAL BUILT_KERNEL FILES_T0_MOVE
     case "${DEVICE}" in
         "oneplus3")
-            FILES_T0_MOVE=( "arch/arm64/boot/${KERNEL}:${ANYKERNEL_DIR}" )
+            FILES_TO_MOVE=( "arch/arm64/boot/${KERNEL}:${ANYKERNEL_DIR}" )
             ;;
         "wahoo")
             FILES_TO_MOVE=( "arch/arm64/boot/${KERNEL}:${ANYKERNEL_DIR}/kernel"
