@@ -11,6 +11,7 @@ source "${SCRIPT_DIR}"/common
 [ -f ".buildconfig" ] && source ".buildconfig"
 [ -z "${DEFCONFIG}" ] && DEFCONFIG="caesium_defconfig"
 [ -z "${KERNEL}" ] && KERNEL="Image.gz-dtb"
+[ -z "${DEFAULT_BRANCH}" ] && DEFAULT_BRANCH="XOS-8.1"
 TREES="rr:pie|aosip:pie"
 JARVISBOX_URL="https://download.msfjarvis.website/caesium"
 
@@ -145,9 +146,9 @@ function release {
     git -C ../AnyKernel2/ push origin HEAD:8.1.x-caesium
     git -C ../AnyKernel2/ tag -s "${TAG}"
     git -C ../AnyKernel2/ push origin "${TAG}"
-    git checkout XOS-8.1
+    git checkout "${DEFAULT_BRANCH}"
     git merge staging
-    git push origin XOS-8.1
+    git push origin "${DEFAULT_BRANCH}"
     git tag -as "${TAG}"
     git push origin "${TAG}"
     hub release create "${TAG}" -a zips/"${FILE}" -a zips/"${FILE}".md5sum
@@ -170,7 +171,7 @@ function update_source_trees {
             git push "${REMOTE}" "${BRANCH}"
         fi
     done
-    git checkout XOS-8.1
+    git checkout "${DEFAULT_BRANCH}"
 }
 
 # Find the correct CROSS_COMPILE candidate
