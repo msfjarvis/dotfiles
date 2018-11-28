@@ -45,10 +45,15 @@ trap 'exit 1' SIGINT SIGTERM
 # Wrapper around tgm to avoid having to pass the second chat ID param everywhere
 function tgm_caesium {
     [ -z "${TYPE}" ] && return
+    local CHAT_ID
+    case "${DEVICE}" in
+    "oneplus3") CHAT_ID="${OP3_CAESIUM_CHAT_ID}" ;;
+    "wahoo") CHAT_ID="${MSF_TG_ID}" ;;
+    esac
     if [ "${TYPE}" == "test" ] || [ "${TYPE}" == "alpha" ]; then
         tgm "${1}" &
-    elif [ ! -z "${TYPE}" ]; then
-        tgm "${1}" "${OP3_CAESIUM_CHAT_ID}" &
+    else
+        tgm "${1}" "${CHAT_ID}" &
     fi
 }
 
@@ -78,20 +83,16 @@ function make_wrapper {
 
 # Pushes a local file to my webserver
 function publish {
-    local TYPE
-    TYPE="${2:?}"
-    if [ "${DEVICE}" != "oneplus3" ]; then
-        TYPE=".personal"
-    fi
-    rsync -avR "${1}" "${CAESIUM_UPLOAD_HOST}:${CAESIUM_UPLOAD_PATH}/${TYPE}/" --progress --verbose
+    local TYPE; TYPE="${2:?}"
+    rsync -avR "${1}" "${CAESIUM_UPLOAD_HOST}:${CAESIUM_UPLOAD_PATH}/${DEVICE}/${TYPE}/" --progress --verbose
 }
 
 # Preps the server folder structure for new builds
 function prepdirs {
-    ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${CAESIUM_UPLOAD_PATH}/${1}/"
-    ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${CAESIUM_UPLOAD_PATH/caesium/archive}/${1}/"
-    ssh "${CAESIUM_UPLOAD_HOST}" rm -rf "${CAESIUM_UPLOAD_PATH/caesium/archive}/${1}/*"
-    ssh "${CAESIUM_UPLOAD_HOST}" mv "${CAESIUM_UPLOAD_PATH}/${1}/*" "${CAESIUM_UPLOAD_PATH/caesium/archive}/${1}/"
+    ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${CAESIUM_UPLOAD_PATH}/${DEVICE}/${1}/"
+    ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${CAESIUM_UPLOAD_PATH/caesium/archive}/${DEVICE}/${1}/"
+    ssh "${CAESIUM_UPLOAD_HOST}" rm -rf "${CAESIUM_UPLOAD_PATH/caesium/archive}/${DEVICE}/${1}/*"
+    ssh "${CAESIUM_UPLOAD_HOST}" mv "${CAESIUM_UPLOAD_PATH}/${DEVICE}/${1}/*" "${CAESIUM_UPLOAD_PATH/caesium/archive}/${DEVICE}/${1}/"
 }
 
 # The meat of the telegram notifications workflow
@@ -101,12 +102,16 @@ function pushcaesiumtg {
     FILE="${1}"
     TYPE="${2}"
     FINAL_VER="${FILE/.zip/}"
-    FILES_TO_PUBLISH=("${FILE}" "${FILE}".md5sum changelog)
+    FILES_TO_PUBLISH=("${FILE}" "${FILE}".md5sum)
     case "${TYPE}" in
         "alpha"|"beta"|"stable"|"test") ;;
         *) echo "Invalid build type" && return ;;
     esac
-    cp changelog zips/changelog
+    if [ -f changelog ]; then
+        FILES_TO_PUBLISH+=(changelog)
+        cp changelog zips/changelog
+        CHANGELOG="$(cat changelog)"
+    fi
     cd zips || return; md5sum "${FILE}" > "${FILE}".md5sum
     prepdirs "${TYPE}"
     if [ "${TYPE}" == "stable" ]; then
@@ -121,12 +126,8 @@ function pushcaesiumtg {
     if [ "${TYPE}" == "stable" ]; then
       release "${FILE}"
     fi
-    BUILD_URL="${JARVISBOX_URL}/${TYPE}/${FILE}"
-    if [ "${DEVICE}" != "oneplus3" ]; then
-       BUILD_URL="${JARVISBOX_URL}/.personal/${FILE}"
-    fi
+    BUILD_URL="${JARVISBOX_URL}/${DEVICE}/${TYPE}/${FILE}"
     MESSAGE="New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${BUILD_URL})"
-    CHANGELOG="$(cat changelog 2>/dev/null)"
     if [ "${CHANGELOG}" != "" ]; then
         MESSAGE="${MESSAGE}
 
@@ -150,7 +151,7 @@ function release {
     git tag -as "${TAG}"
     git push origin "${TAG}"
     hub release create "${TAG}" -a zips/"${FILE}" -a zips/"${FILE}".md5sum
-    update_source_trees "${TAG}"
+    [ "${DEVICE}" == "oneplus3" ] && update_source_trees "${TAG}"
 }
 
 # Takes a predefined list of trees to merge into and
@@ -323,7 +324,5 @@ if [ -f zips/"${FINAL_VER}".zip ]; then
     tgm_caesium "Build successful in $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds."
     echoText "Build successful in $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds."
     reportSuccess "${FINAL_VER}".zip
-    if [ "${DEVICE}" == "oneplus3" ]; then
-        pushcaesiumtg "${FINAL_VER}".zip "${TYPE}"
-    fi
+    pushcaesiumtg "${FINAL_VER}".zip "${TYPE}"
 fi
