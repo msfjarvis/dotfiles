@@ -118,13 +118,14 @@ function transfer {
 # Upload to GDrive
 function upload {
     local FILE MD5
-    FILE="${1:?}"
+    FILE="${1}"
+    [ -f "${FILE:?}" ] || { reportWarning "Specified file doesn't exist"; return ; }
     ZIP_SIZE="$(du -h "${FILE}" | awk '{print $1}')"
-    tgm "Uploading \`$(basename "\"${FILE}")\"\`"
     MD5="$(md5sum "${FILE}" | awk '{print $1}')"
-    GDRIVE_UPLOAD_ID="$(echo "${GDRIVE_UPLOAD_ID}" | grep Uploaded | awk '{print $2}')"
+    GDRIVE_UPLOAD_URL="$(gdrive upload --share "${FILE}"  | awk '/https/ {print $7}')"
+    GDRIVE_UPLOAD_ID="$(echo "${GDRIVE_UPLOAD_URL}" | sed -r 's/(.*)&export.*/\1/' | sed -r 's/https.*id=(.*)/\1/')"
     UPLOAD_INFO="
-File: [$(basename "\"${FILE}\"")]($(printf "https://drive.google.com/uc?id=%s&export=download" "${GDRIVE_UPLOAD_ID}"))
+File: [$(basename "${FILE}")](${GDRIVE_UPLOAD_URL})
 Size: ${ZIP_SIZE}
 MD5: \`${MD5}\`
 GDrive ID: \`${GDRIVE_UPLOAD_ID}\`
