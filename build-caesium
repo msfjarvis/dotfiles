@@ -143,7 +143,7 @@ Changelog:
 function release {
     local TAG; TAG=$(echo "${1}" | cut -d / -f 2 | cut -d '-' -f 3 | sed 's/\.zip//')
     tgm_caesium "Tagging and releasing ${TAG}"
-    git -C ../AnyKernel2/ push origin HEAD:8.1.x-caesium
+    git -C ../AnyKernel2/ push
     git -C ../AnyKernel2/ tag -s "${TAG}"
     git -C ../AnyKernel2/ push origin "${TAG}"
     git checkout "${DEFAULT_BRANCH}"
