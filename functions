@@ -180,7 +180,7 @@ function whitespace() {
 # Kernel stuff
 function kgrep {
     find "${2:-.}" -name .git -prune -o -path ./out -prune -o -regextype posix-egrep \
-        -iregex '(.*\/Makefile|.*\/Kconfig|.*\/oneplus3_defconfig|.*\/caesium_defconfig|.*\/wahoo_defconfig)' -type f \
+        -iregex '(.*\/Makefile|.*\/Kconfig.*|.*\/caesium_defconfig)' -type f \
         -exec grep --color -n "$1" {} +
 }
 
