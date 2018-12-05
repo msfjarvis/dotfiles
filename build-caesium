@@ -250,6 +250,7 @@ function make_kernel {
 
 # Move kernel files after compilation
 function move_kernel_files() {
+    git -C "${ANYKERNEL_DIR}" clean -fdx 1>/dev/null 2>&1
     # Move the kernel image
     for FTM in "${FILES_TO_MOVE[@]}"; do
         mkdir -p "${FTM#*:}"
