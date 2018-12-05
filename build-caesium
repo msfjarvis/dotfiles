@@ -33,9 +33,10 @@ HOST=jarvisbox
 WORKING_DIR=$(pwd)
 [ -z "${ANYKERNEL_DIR}" ] && ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2"
 [ -z "${ARM64_TOOLCHAIN_DIR}" ] && ARM64_TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/aarch64-linux-gnu"
-[ -z "${ARM64_TOOLCHAIN_SEARCH_STRING}" ] && ARM64_TOOLCHAIN_SEARCH_STRING="*gnu-gcc"
 [ -z "${ARM_TOOLCHAIN_DIR}" ] && ARM_TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/arm-linux-gnueabi"
-[ -z "${ARM_TOOLCHAIN_SEARCH_STRING}" ] && ARM_TOOLCHAIN_SEARCH_STRING="*gnueabi-gcc"
+[ -z "${CLANG_TOOLCHAIN_DIR}" ] && CLANG_TOOLCHAIN_DIR=""
+[ -z "${CLANG_TRIPLE}" ] && CLANG_TRIPLE=""
+[ -z "${COMPILER}" ] && COMPILER="gcc"
 OUT_DIR="${WORKING_DIR}/out/"
 ZIP_MOVE="${WORKING_DIR}/zips/"
 
@@ -59,29 +60,38 @@ function tgm_caesium {
 }
 
 # Wrapper function around make to ensure all the variables go through
-function make_wrapper {
-    PATH="${SCRIPT_DIR}/bin:${PATH}"
-    if [ ! "${VERBOSE}" ]; then
-        make O="${OUT_DIR}" \
-            ARCH="${ARCH}" SUBARCH="${SUBARCH}" \
-            KBUILD_BUILD_USER="${USER}" \
-            KBUILD_BUILD_HOST="${HOST}" \
-            LOCALVERSION="${LOCALVERSION}" \
-            CROSS_COMPILE="${CROSS_COMPILE}" \
-            CROSS_COMPILE_ARM32="${CROSS_COMPILE_ARM32}" \
-            -j"$(nproc --all)" "${@}" |& ag "error:|warning"
-    else
-        make O="${OUT_DIR}" \
-            ARCH="${ARCH}" SUBARCH="${SUBARCH}" \
-            KBUILD_BUILD_USER="${USER}" \
-            KBUILD_BUILD_HOST="${HOST}" \
-            LOCALVERSION="${LOCALVERSION}" \
-            CROSS_COMPILE="${CROSS_COMPILE}" \
-            CROSS_COMPILE_ARM32="${CROSS_COMPILE_ARM32}" \
-            -j"$(nproc --all)" "${@}"
-    fi
+function make_wrapper_gcc {
+    make O="${OUT_DIR}" \
+        ARCH="${ARCH}" SUBARCH="${SUBARCH}" \
+        KBUILD_BUILD_USER="${USER}" \
+        KBUILD_BUILD_HOST="${HOST}" \
+        LOCALVERSION="${LOCALVERSION}" \
+        CROSS_COMPILE="${CROSS_COMPILE}" \
+        CROSS_COMPILE_ARM32="${CROSS_COMPILE_ARM32}" \
+        -j"$(nproc --all)" "${@}"
 }
 
+function make_wrapper_clang {
+    make O="${OUT_DIR}" \
+        ARCH="${ARCH}" SUBARCH="${SUBARCH}" \
+        KBUILD_BUILD_USER="${USER}" \
+        KBUILD_BUILD_HOST="${HOST}" \
+        LOCALVERSION="${LOCALVERSION}" \
+        CROSS_COMPILE="${CROSS_COMPILE}" \
+        CROSS_COMPILE_ARM32="${CROSS_COMPILE_ARM32}" \
+        CC="${CC}" CLANG_TRIPLE="aarch64-linux-gnu" \
+        KBUILD_COMPILER_STRING="${KBUILD_COMPILER_STRING}" \
+        -j"$(nproc --all)" "${@}"
+}
+
+function kmake {
+    PATH="${SCRIPT_DIR}/bin:${PATH}"
+    if [ -z "${VERBOSE}" ]; then
+        make_wrapper_"${COMPILER}" "${@}" |& ag "error:|warning"
+    else
+        make_wrapper_"${COMPILER}" "${@}"
+    fi
+}
 # Pushes a local file to my webserver
 function publish {
     local TYPE; TYPE="${2:?}"
@@ -174,29 +184,34 @@ function update_source_trees {
     git checkout "${DEFAULT_BRANCH}"
 }
 
-# Find the correct CROSS_COMPILE candidate
+# Find and set toolchain variables
 function check_toolchain() {
-    local TC; TC="$(find "${ARM64_TOOLCHAIN_DIR}"/bin -name "${ARM64_TOOLCHAIN_SEARCH_STRING}")";
+    local TC
+    TC="$(find "${ARM64_TOOLCHAIN_DIR}"/bin -name '*-gcc')";
     if [ -f "${TC}" ]; then
         CROSS_COMPILE="${ARM64_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')";
         echoText "Using toolchain: $("${CROSS_COMPILE}"gcc --version | head -1)"
-        CROSS_COMPILE="$(command -v ccache) ${CROSS_COMPILE}"
     else
         reportError "No suitable toolchain found in ${ARM64_TOOLCHAIN_DIR}";
     fi
-    TC="$(find "${ARM_TOOLCHAIN_DIR}"/bin -name "${ARM_TOOLCHAIN_SEARCH_STRING}")";
+    TC="$(find "${ARM_TOOLCHAIN_DIR}"/bin -name '*-gcc')";
     if [ -f "${TC}" ]; then
         CROSS_COMPILE_ARM32="${ARM_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')";
         echoText "Using toolchain: $("${CROSS_COMPILE_ARM32}gcc" --version | head -1)"
-        CROSS_COMPILE_ARM32="$(command -v ccache) ${CROSS_COMPILE_ARM32}"
     else
         reportError "No suitable toolchain found in ${ARM_TOOLCHAIN_DIR}";
+    fi
+    TC="$(find "${CLANG_TOOLCHAIN_DIR}"/bin -name clang)";
+    if [ -f "${TC}" ]; then
+        CC="${CLANG_TOOLCHAIN_DIR}/bin/clang"
+        KBUILD_COMPILER_STRING="$(${CC} --version | head -n 1 | cut -d \( -f 1,2 | sed 's/[[:space:]]*$//')"
+        echoText "Using clang: ${KBUILD_COMPILER_STRING}"
     fi
 }
 
 # Duh
 function make_kernel {
-    local RETURN_VAL BUILT_KERNEL FILES_T0_MOVE
+    local RETURN_VAL BUILT_KERNEL
     case "${DEVICE}" in
         "oneplus3")
             FILES_TO_MOVE=( "arch/arm64/boot/${KERNEL}:${ANYKERNEL_DIR}" )
@@ -209,15 +224,15 @@ function make_kernel {
             done
             ;;
     esac
-    export FILES_T0_MOVE
+    export FILES_TO_MOVE
     tgm_caesium "Building \`${FINAL_VER}\`"
     mkdir -p "${OUT_DIR}"
     find "${OUT_DIR}" -name "${KERNEL}" -exec rm -rf {} \;
     make_defconfig
     if [ "${MODULE}" ]; then
-        make_wrapper "${MODULE}"
+        kmake "${MODULE}"
     else
-        make_wrapper
+        kmake
     fi
     RETURN_VAL="$?"
     BUILT_KERNEL="${FILES_TO_MOVE[0]%:*}"
@@ -246,9 +261,9 @@ function move_kernel_files() {
 # Called by make_kernel, used to trap defconfig regen events
 function make_defconfig {
     [ "${CLEAN}" ] && rm -rf "${OUT_DIR}"
-    make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
+    kmake "${DEFCONFIG}" 1>/dev/null 2>&1
     if [ "${REGEN_DEFCONFIG}" ]; then
-        make_wrapper savedefconfig 1>/dev/null 2>&1
+        kmake savedefconfig 1>/dev/null 2>&1
         cp "${OUT_DIR}"/defconfig arch/"${ARCH}"/configs/"${DEFCONFIG}"
         echoText "Regenerated defconfig successfully"
         exit 0
