@@ -37,6 +37,14 @@ function imgur {
         | jq .data.link | sed 's/"//g' | xclip -rmlastnl -selection clipboard
 }
 
+function wgup {
+    sudo wg-quick up "$(hostname)"_blr
+}
+
+function wgdown {
+    sudo wg-quick down "$(hostname)"_blr
+}
+
 function gdrivedl {
     local URL GDRIVE FILE_ID; URL="${1}"
     GDRIVE="$(command -v gdrive)"
