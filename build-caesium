@@ -39,6 +39,7 @@ WORKING_DIR=$(pwd)
 [ -z "${COMPILER}" ] && COMPILER="gcc"
 OUT_DIR="${WORKING_DIR}/out/"
 ZIP_MOVE="${WORKING_DIR}/zips/"
+CCACHE="$(command -v ccache)"
 
 # Trap to bail out properly
 trap 'exit 1' SIGINT SIGTERM
@@ -66,8 +67,8 @@ function make_wrapper_gcc {
         KBUILD_BUILD_USER="${USER}" \
         KBUILD_BUILD_HOST="${HOST}" \
         LOCALVERSION="${LOCALVERSION}" \
-        CROSS_COMPILE="${CROSS_COMPILE}" \
-        CROSS_COMPILE_ARM32="${CROSS_COMPILE_ARM32}" \
+        CROSS_COMPILE="${CCACHE} ${CROSS_COMPILE}" \
+        CROSS_COMPILE_ARM32="${CCACHE} ${CROSS_COMPILE_ARM32}" \
         -j"$(nproc --all)" "${@}"
 }
 
@@ -79,7 +80,7 @@ function make_wrapper_clang {
         LOCALVERSION="${LOCALVERSION}" \
         CROSS_COMPILE="${CROSS_COMPILE}" \
         CROSS_COMPILE_ARM32="${CROSS_COMPILE_ARM32}" \
-        CC="${CC}" CLANG_TRIPLE="aarch64-linux-gnu" \
+        CC="${CCACHE} ${CC}" CLANG_TRIPLE="aarch64-linux-gnu" \
         KBUILD_COMPILER_STRING="${KBUILD_COMPILER_STRING}" \
         -j"$(nproc --all)" "${@}"
 }
