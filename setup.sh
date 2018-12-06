@@ -80,7 +80,7 @@ for ITEM in $(find gitconfig_fragments -type f); do
     rm "${DECRYPTED}"
 done
 
-if [[ "$*" =~ --setup-adb ]] || [[ "$*" =~ --all ]]; then
+if [[ "$*" =~ --all ]] && [ "$(display_exists)" ]; then
     echoText "Setting up multi-adb"
     "${SCRIPT_DIR}"/adb-multi/adb-multi generate
     cp "${SCRIPT_DIR}"/adb-multi/adb-multi ~/bin
