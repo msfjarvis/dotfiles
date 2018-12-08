@@ -120,6 +120,7 @@ function battinfo {
     for ITEM in "${ITEMS[@]}"; do
         NODE=$(echo "${ITEM}" | cut -d ':' -f 1)
         LABEL=$(echo "${ITEM}" | cut -d ':' -f 2)
+        [ -f "${BASE}${NODE}" ] || continue
         echo -e "${CL_RED}${LABEL/_/ }${CL_RST}: ${CL_YLW}$(cat "${BASE}${NODE}")${CL_RST}"
     done
 }
