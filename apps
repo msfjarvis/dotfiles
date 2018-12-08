@@ -59,7 +59,7 @@ function update_template {
 }
 
 function makeapk {
-    [ ! -f "build.gradle" ] && { reportError "No build.gradle present, dimwit"; return 1; }
+    if [ ! -f "build.gradle" ] && [ ! -f "build.gradle.kts" ]; then { reportWarning "No build.gradle present, dimwit"; return 1; }; fi
     local GRADLE_COMMAND
     if [ ! -f ".variant" ]; then
         if [ "${1}" != "install" ]; then
