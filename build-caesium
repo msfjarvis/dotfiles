@@ -21,7 +21,7 @@ INCREMENTAL_VERSION="${CAESIUM_VERSION:-Test}"
 LOCALVERSION="-${INCREMENTAL_VERSION}"
 GIT_HASH=$(git rev-parse --short HEAD)
 [ -z "${DEVICE}" ] && DEVICE="oneplus3"
-FINAL_VER="${KERNEL_NAME}-${DEVICE}-${INCREMENTAL_VERSION}"
+FINAL_VER="${KERNEL_NAME}-${DEVICE}-${INCREMENTAL_VERSION}-${GIT_HASH}"
 
 # Vars
 ARCH=arm64
@@ -311,7 +311,6 @@ while getopts ":bcd:m:rt:v" OPT; do
         TYPE="${OPTARG}"
         if [ "${TYPE}" != "stable" ]; then
             echoText " Setting test build parameters" >&2
-            TEST_BUILD=true
             export LOCALVERSION=-"${INCREMENTAL_VERSION}"-"${GIT_HASH}"
         fi
         ;;
@@ -321,8 +320,6 @@ while getopts ":bcd:m:rt:v" OPT; do
         ;;
     esac
 done
-
-[ "${TEST_BUILD}" ] && FINAL_VER="${FINAL_VER}"-"$(date +%Y%m%d-%H%M%S)"
 
 DATE_START=$(date +"%s")
 
