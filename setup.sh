@@ -8,7 +8,6 @@ SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
 source "${SCRIPT_DIR}"/common
 
 declare -a SCRIPTS=("kronic-build" "build-caesium" "build-kernel" "build-twrp" "hastebin")
-declare -a TDM_SCRIPTS=("gerrit-review")
 declare -a GPG_KEYS=("public_old.asc" "private_old.asc")
 
 # Create binaries directory
@@ -57,12 +56,6 @@ for SCRIPT in "${SCRIPTS[@]}"; do
     echo -e "${CL_YLW}Processing ${SCRIPT}${CL_RST}"
     rm -rf ~/bin/"${SCRIPT}"
     ln -s "${SCRIPT_DIR}"/"${SCRIPT}" ~/bin/"${SCRIPT}"
-done
-
-echoText "Setting up tdm-scripts"
-for SCRIPT in "${TDM_SCRIPTS[@]}"; do
-    echo -e "${CL_YLW}Processing ${SCRIPT}${CL_RST}"
-    cp "${SCRIPT_DIR}"/tdm-scripts/"${SCRIPT}" ~/bin/"${SCRIPT}"
 done
 
 echoText "Setting up gitconfig"
