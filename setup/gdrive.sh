@@ -6,6 +6,7 @@
 function install_gdrive {
     local SCRIPT_DIR ARTIFACT_NAME; SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
     source "${SCRIPT_DIR}"/../common
+    echoText "Checking and installing gdrive"
     ARTIFACT_NAME="gdrive-linux-x64"
     if [ "$(command -v gdrive)" == "" ]; then
         echoText "Checking and installing gdrive"
@@ -19,7 +20,7 @@ function install_gdrive {
             aria2c "$(get_release_assets MSF-Jarvis/gdrive | grep ${ARTIFACT_NAME})" --allow-overwrite=true -d ~/bin -o gdrive
             chmod +x ~/bin/gdrive
         else
-            reportWarning "Latest version of gdrive is already installed!"
+            reportWarning "gdrive ${INSTALLED_VERSION} is already installed!"
         fi
     fi
 }
