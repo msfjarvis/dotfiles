@@ -75,6 +75,7 @@ done
 
 if [[ "$*" =~ --all ]] && [ "$(display_exists)" ]; then
     echoText "Setting up multi-adb"
-    ADB_MULTI_BIN="${HOME}/bin" USE_DEFAULT_FILENAMES=true "${SCRIPT_DIR}"/adb-multi/adb-multi generate
+    cp "${SCRIPT_DIR}/config.cfg" "${SCRIPT_DIR}"/adb-multi/config.cfg
+    "${SCRIPT_DIR}"/adb-multi/adb-multi generate
     cp "${SCRIPT_DIR}"/adb-multi/adb-multi ~/bin
 fi
