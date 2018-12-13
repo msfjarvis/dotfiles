@@ -224,6 +224,9 @@ function make_kernel {
                 FILES_TO_MOVE+=( "${DTB#*/}:${ANYKERNEL_DIR}/dtbs" )
             done
             ;;
+        *)
+            FILES_TO_MOVE=( "arch/arm64/boot/${KERNEL}:${ANYKERNEL_DIR}" )
+            ;;
     esac
     export FILES_TO_MOVE
     tgm_caesium "Building \`${FINAL_VER}\`"
