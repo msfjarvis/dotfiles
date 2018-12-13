@@ -53,7 +53,7 @@ function tgm_caesium {
     "oneplus3") CHAT_ID="${OP3_CAESIUM_CHAT_ID}" ;;
     "wahoo") CHAT_ID="${MSF_TG_ID}" ;;
     esac
-    if [ "${TYPE}" == "test" ] || [ "${TYPE}" == "alpha" ]; then
+    if [ "${TYPE}" == "test" ] || [ "${TYPE}" == "alpha" ] || [ "${2}" == "silent" ]; then
         tgm "${1}" &
     else
         tgm "${1}" "${CHAT_ID}" &
@@ -247,7 +247,7 @@ function make_kernel {
         echo ''
     else
       reportError "Kernel compilation failed"
-      tgm "Build failed"
+      tgm_caesium "Build failed" silent
       exit 1
     fi
 }
