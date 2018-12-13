@@ -154,9 +154,9 @@ Changelog:
 function release {
     local TAG; TAG=$(echo "${1}" | cut -d / -f 2 | cut -d '-' -f 3 | sed 's/\.zip//')
     tgm_caesium "Tagging and releasing ${TAG}"
-    git -C ../AnyKernel2/ push
-    git -C ../AnyKernel2/ tag -s "${TAG}"
-    git -C ../AnyKernel2/ push origin "${TAG}"
+    git -C "${ANYKERNEL_DIR}" push
+    git -C "${ANYKERNEL_DIR}" tag -s "${TAG}"
+    git -C "${ANYKERNEL_DIR}" push origin "${TAG}"
     git checkout "${DEFAULT_BRANCH}"
     git merge staging
     git push origin "${DEFAULT_BRANCH}"
