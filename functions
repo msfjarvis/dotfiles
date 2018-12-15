@@ -87,6 +87,7 @@ function foreversay {
 function tgcow {
     local CHAT_ID="${1}"
     [ -z "${CHAT_ID}" ] && CHAT_ID="${OP3_CAESIUM_CHAT_ID}"
+    shift
     tgm "\`$(cowsay "${@}")\`" "${CHAT_ID}"
 }
 
