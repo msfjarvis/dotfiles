@@ -97,7 +97,7 @@ function reportSuccess {
     echo -e "${CL_RST}"
 }
 
-# Upload a file to ptpb.pw (Name retained for muscle memory)
+# Upload a file to transfer.sh
 function transfer {
     local URL
     if [ "$#" -eq 0 ]
@@ -106,12 +106,19 @@ function transfer {
       cat /tmp/test.md | transfer test.md"
       return 1
     fi
-    URL=$(curl -F c=@"${1}" https://ptpb.pw/?u=1 2>/dev/null)
-    if [ "$(display_exists)" ]; then
-        echo "${URL}" | xclip -rmlastnl -selection clipboard
-    else
-        echo "${URL}"
+    tmpfile=$( mktemp -t transferXXX )
+    if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
+    curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> "${tmpfile}"
+    else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> "${tmpfile}"
     fi
+    if [ "$(display_exists)" ]; then
+        xclip -rmlastnl -selection clipboard < "$tmpfile"
+    else
+        cat "$tmpfile"
+    fi
+
+    rm -f "${tmpfile}"
+    echo ""
 }
 
 # Upload to GDrive
