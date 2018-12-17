@@ -13,6 +13,7 @@ CL_RST="\033[0m"
 CL_YLW="\033[01;33m"
 CL_BLUE="\033[01;34m"
 
+[ -z "${GPG_TTY}" ] && { GPG_TTY="$(tty)"; export GPG_TTY; }
 # To shut shellcheck up
 export CL_BOLD CL_INV CL_RED CL_RST CL_YLW CL_BLUE
 
