@@ -26,6 +26,8 @@ source "${SCRIPT_DIR}"/setup/gdrive.sh
 source "${SCRIPT_DIR}"/setup/hub.sh
 source "${SCRIPT_DIR}"/setup/xclip.sh
 
+cd "${SCRIPT_DIR}" || exit 1
+
 echoText 'Installing nanorc'
 cp -v "${SCRIPT_DIR}"/.nanorc ~/.nanorc
 
