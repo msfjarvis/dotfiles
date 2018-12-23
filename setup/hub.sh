@@ -16,7 +16,7 @@ function install_hub {
         sudo ./hub/*/install --prefix=/usr/local/
         rm -rf hub/ hub.tgz
     else
-        INSTALLED_VERSION="$(hub --version | tail -n1 | awk '{print $3}')"
+        INSTALLED_VERSION="v$(hub --version | tail -n1 | awk '{print $3}')"
         LATEST_VERSION="$(get_latest_release github/hub)"
         if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
             reportWarning "Outdated version of hub detected, upgrading"
