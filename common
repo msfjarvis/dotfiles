@@ -146,7 +146,7 @@ function tgm {
     local CHAT_ID
     CHAT_ID="${2}"
     [ "${2}" == "" ] && CHAT_ID="${MSF_TG_ID}"
-    curl -F chat_id="${CHAT_ID}" -F parse_mode="markdown" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" >/dev/null 2>&1
+    curl -F chat_id="${CHAT_ID}" -F parse_mode="markdown" -F disable_web_page_preview="true" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" >/dev/null 2>&1
 }
 
 # Upload a file to Telegram
