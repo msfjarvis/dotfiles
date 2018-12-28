@@ -38,11 +38,13 @@ function imgur {
 }
 
 function wgup {
-    sudo wg-quick up "$(hostname)"_blr
+    local region; region="${1}"
+    sudo wg-quick up mullvad-"${region:?}"
 }
 
 function wgdown {
-    sudo wg-quick down "$(hostname)"_blr
+    local region; region="${1}"
+    sudo wg-quick down mullvad-"${region:?}"
 }
 
 function gdrivedl {
