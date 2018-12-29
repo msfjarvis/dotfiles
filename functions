@@ -156,8 +156,8 @@ function dnsmasqupdate {
     local dir
     dir="$(pwd)"
     cd ~/git-repos/adnix || return 1
-    ./adnix --dnsmasq --file adblock.list
-    sudo cp adblock.list /etc/dnsmasq.d/adblock.list
+    make
+    sudo make install
     rsync -avR adblock.list "$CAESIUM_UPLOAD_HOST:${CAESIUM_UPLOAD_PATH/caesium/adblock}"/
     cd "${dir}" || return 1
 }
