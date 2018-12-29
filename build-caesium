@@ -153,7 +153,6 @@ Changelog:
 # Called by pushcaesiumtg on release builds
 function release {
     local TAG; TAG=$(echo "${1}" | cut -d / -f 2 | cut -d '-' -f 3 | sed 's/\.zip//')
-    tgm_caesium "Tagging and releasing ${TAG}"
     git -C "${ANYKERNEL_DIR}" push
     git -C "${ANYKERNEL_DIR}" tag -s "${TAG}"
     git -C "${ANYKERNEL_DIR}" push origin "${TAG}"
@@ -229,7 +228,6 @@ function make_kernel {
             ;;
     esac
     export FILES_TO_MOVE
-    tgm_caesium "Building \`${FINAL_VER}\`"
     mkdir -p "${OUT_DIR}"
     find "${OUT_DIR}" -name "${KERNEL}" -exec rm -rf {} \;
     make_defconfig
@@ -340,7 +338,6 @@ DATE_END="$(date +"%s")"
 DIFF="$(bc <<< "${DATE_END} - ${DATE_START}")"
 
 if [ -f zips/"${FINAL_VER}".zip ]; then
-    tgm_caesium "Build successful in $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds."
     echoText "Build successful in $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds."
     reportSuccess "${FINAL_VER}".zip
     pushcaesiumtg "${FINAL_VER}".zip "${TYPE}"
