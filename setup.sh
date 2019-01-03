@@ -78,7 +78,10 @@ done
 
 if [[ "$*" =~ --all ]] && [ "$(display_exists)" ]; then
     echoText "Setting up multi-adb"
+    git -C "${SCRIPT_DIR}/adb-multi" reset --hard
+    find patches/adb-multi/ -type f -exec git -C "${SCRIPT_DIR}"/adb-multi/ apply "${SCRIPT_DIR}"/{} \;
     cp "${SCRIPT_DIR}/config.cfg" "${SCRIPT_DIR}"/adb-multi/config.cfg
     "${SCRIPT_DIR}"/adb-multi/adb-multi generate "${HOME}/bin"
     cp "${SCRIPT_DIR}"/adb-multi/adb-multi ~/bin
+    git -C "${SCRIPT_DIR}/adb-multi" reset --hard
 fi
