@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 # Import all the bot tokens and IDs
-source ~/.secretcreds
+source ~/.secretcreds 2>/dev/null
 
 CL_BOLD="\033[1m"
 CL_INV="\033[7m"
