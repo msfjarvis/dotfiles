@@ -20,6 +20,7 @@ sudo apt install -y android-tools-adb jq curl wget axel mosh xclip aria2 libxmu-
 # Update all submodules
 git -C "${SCRIPT_DIR}" submodule update --init --recursive
 
+source "${SCRIPT_DIR}"/setup/android-udev.sh
 source "${SCRIPT_DIR}"/setup/bat.sh
 source "${SCRIPT_DIR}"/setup/diff-so-fancy.sh
 source "${SCRIPT_DIR}"/setup/gdrive.sh
