@@ -47,7 +47,7 @@ if [[ ! "${PATH}" =~ "~/bin" ]]; then
     echo $'\nexport PATH="~/bin":$PATH' >> ~/.bashrc
 fi
 
-ret="$(grep -q "source ${SCRIPT_DIR}/functions" ~/.bashrc)"
+ret="$(grep -qF "source ${SCRIPT_DIR}/functions" ~/.bashrc)"
 if [ "${ret}" ]; then
     reportWarning "functions is not sourced in the bashrc, appending"
     echo "source ${SCRIPT_DIR}/functions" >> ~/.bashrc
