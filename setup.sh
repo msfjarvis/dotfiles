@@ -15,7 +15,7 @@ mkdir -p ~/bin/
 
 # Install standard packages.
 echoText "Installing necessary packages"
-sudo apt install -y android-tools-adb jq curl wget axel mosh aria2 libxmu-dev cowsay lolcat shellcheck silversearcher-ag autoconf automake
+sudo apt install -y android-tools-adb aria2 autoconf automake axel cowsay curl jq libxmu-dev lolcat mosh shellcheck silversearcher-ag wget
 
 # Update all submodules
 git -C "${SCRIPT_DIR}" submodule update --init --recursive
