@@ -16,6 +16,7 @@ function install_bat {
         cd bat/*/ || return 1
         sudo install bat /usr/local/bin
         sudo install bat.1 /usr/local/man/
+        cd "${SCRIPT_DIR}" || return 1
         rm -rf bat/ bat.tgz
     else
         reportWarning "$(bat --version) is already installed!"
