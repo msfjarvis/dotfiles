@@ -8,7 +8,7 @@ SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
 source "${SCRIPT_DIR}"/common
 
 declare -a SCRIPTS=("kronic-build" "build-caesium" "build-kernel" "build-twrp" "hastebin")
-declare -a GPG_KEYS=("public_old.asc" "private_old.asc")
+declare -a GPG_KEYS=("public_old.asc" "private_old.asc" "public_prjkt.asc" "private_prjkt.asc")
 
 # Create binaries directory
 mkdir -p ~/bin/
