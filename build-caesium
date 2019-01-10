@@ -323,6 +323,12 @@ while getopts ":bcd:m:rt:v" OPT; do
     esac
 done
 
+git tag -l | while read -r tag; do
+    if [ "${tag}" == "${CAESIUM_VERSION}" ]; then
+        reportWarning "Forgot to bump version again..."
+    fi
+done
+
 DATE_START=$(date +"%s")
 
 # Make
