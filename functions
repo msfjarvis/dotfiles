@@ -21,6 +21,13 @@ function setemail {
     git config user.signingkey "${GPG_KEY}"
 }
 
+function dlgit {
+    local REPO BRANCH
+    REPO="${1}"
+    BRANCH="${2:-master}"
+    aria2c https://github.com/"${REPO:?}"/archive/"${BRANCH}".zip -o "$(echo "${REPO}" | cut -d '/' -f 2)".zip
+}
+
 # shellcheck disable=SC2009
 # Consider using pgrep instead of grepping ps output.
 # We're directly grepping ps output to handle cases like android-studio, where
