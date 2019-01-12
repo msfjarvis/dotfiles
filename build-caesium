@@ -310,11 +310,6 @@ while getopts ":bcd:m:rt:v" OPT; do
         r) echoText " Regenerating defconfig " >&2; REGEN_DEFCONFIG=true ;;
         t)
         TYPE="${OPTARG}"
-        if [ "${TYPE}" != "stable" ]; then
-            echoText " Setting test build parameters" >&2
-            export LOCALVERSION=-"${INCREMENTAL_VERSION}"-"${GIT_HASH}"
-            FINAL_VER+="-${GIT_HASH}"
-        fi
         ;;
         v) VERBOSE=true ;;
         \?)
@@ -322,6 +317,12 @@ while getopts ":bcd:m:rt:v" OPT; do
         ;;
     esac
 done
+
+if [ "${TYPE}" != "stable" ]; then
+    echoText " Setting test build parameters" >&2
+    export LOCALVERSION=-"${INCREMENTAL_VERSION}"-"${GIT_HASH}"
+    FINAL_VER+="-${GIT_HASH}"
+fi
 
 git tag -l | while read -r tag; do
     if [ "${tag}" == "${CAESIUM_VERSION}" ]; then
