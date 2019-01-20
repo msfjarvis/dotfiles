@@ -60,6 +60,18 @@ function tgm_caesium {
     fi
 }
 
+# Check all variables are set correctly before derping
+# things down the pipe
+function sanity_check {
+    [ -d "${ARM_TOOLCHAIN_DIR}" ] || reportError "ARM toolchain directory incorrectly specified"
+    [ -d "${ARM64_TOOLCHAIN_DIR}" ] || reportError "ARM64 toolchain directory incorrectly specified"
+    [ -d "${ANYKERNEL_DIR}" ] || reportError "AnyKernel directory incorrectly specified"
+    if [ "${COMPILER}" == "clang" ]; then
+        [ -z "${CLANG_TOOLCHAIN_DIR}" ] && reportError "Clang toolchain directory empty"
+        [ -d "${CLANG_TOOLCHAIN_DIR}" ] || reportError "Clang toolchain directory incorrectly specified"
+    fi
+}
+
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper_gcc {
     make O="${OUT_DIR}" \
@@ -334,6 +346,7 @@ DATE_START=$(date +"%s")
 
 # Make
 rm "${FINAL_VER}".zip 2>/dev/null
+sanity_check
 check_toolchain
 if [ "${ONLY_ZIP}" ] && [ -z "${MODULE}" ]; then
     make_zip
