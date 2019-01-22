@@ -9,3 +9,4 @@ alias gs='git s'
 alias git=hub
 alias cat=bat
 alias pidcat='pidcat -i ResourceType -i chatty'
+alias venv='python3 -m virtualenv --no-site-packages venv'
