@@ -71,6 +71,7 @@ function sanity_check {
     if [ "${COMPILER}" == "clang" ]; then
         [ -z "${CLANG_TOOLCHAIN_DIR}" ] && reportError "Clang toolchain directory empty"
         [ -d "${CLANG_TOOLCHAIN_DIR}" ] || reportError "Clang toolchain directory incorrectly specified"
+        [ -z "${CLANG_TRIPLE}" ] && reportError "Clang triple not specified"
     fi
 }
 
