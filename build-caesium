@@ -322,13 +322,9 @@ while getopts ":bcd:m:rt:v" OPT; do
         echoText "Building module ${MODULE}"
         ;;
         r) echoText " Regenerating defconfig " >&2; REGEN_DEFCONFIG=true ;;
-        t)
-        TYPE="${OPTARG}"
-        ;;
+        t) TYPE="${OPTARG}" ;;
         v) VERBOSE=true ;;
-        \?)
-        reportWarning "Invalid option: -${OPTARG}" >&2
-        ;;
+        \?) reportWarning "Invalid option: -${OPTARG}" >&2 ;;
     esac
 done
 
