@@ -65,13 +65,13 @@ function tgm_caesium {
 # Check all variables are set correctly before derping
 # things down the pipe
 function sanity_check {
-    [ -d "${ARM_TOOLCHAIN_DIR}" ] || reportError "ARM toolchain directory incorrectly specified"
-    [ -d "${ARM64_TOOLCHAIN_DIR}" ] || reportError "ARM64 toolchain directory incorrectly specified"
-    [ -d "${ANYKERNEL_DIR}" ] || reportError "AnyKernel directory incorrectly specified"
+    [ -d "${ARM_TOOLCHAIN_DIR}" ] || reportError "ARM toolchain not found!"
+    [ -d "${ARM64_TOOLCHAIN_DIR}" ] || reportError "ARM64 toolchain not found!"
+    [ -d "${ANYKERNEL_DIR}" ] || reportError "AnyKernel directory not found!"
     if [ "${COMPILER}" == "clang" ]; then
-        [ -z "${CLANG_TOOLCHAIN_DIR}" ] && reportError "Clang toolchain directory empty"
-        [ -d "${CLANG_TOOLCHAIN_DIR}" ] || reportError "Clang toolchain directory incorrectly specified"
-        [ -z "${CLANG_TRIPLE}" ] && reportError "Clang triple not specified"
+        [ -z "${CLANG_TOOLCHAIN_DIR}" ] && reportError "Clang toolchain directory not specified!"
+        [ -d "${CLANG_TOOLCHAIN_DIR}" ] || reportError "Clang toolchain not found!"
+        [ -z "${CLANG_TRIPLE}" ] && reportError "Clang triple not specified!"
     fi
 }
 
