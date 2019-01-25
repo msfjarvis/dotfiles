@@ -41,7 +41,7 @@ function make_kernel {
 
 # Called by make_kernel, used to trap defconfig regen events
 function make_defconfig {
-    if [ "${CLEAN}" ]; then make_wrapper clean; else cp .config arch/x86/configs/"${DEFCONFIG}"; fi
+    if [ "${CLEAN}" ]; then make_wrapper clean; fi
     make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
     if [ "${REGEN_DEFCONFIG}" ]; then
         make_wrapper savedefconfig 1>/dev/null 2>&1
