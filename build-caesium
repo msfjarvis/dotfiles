@@ -13,14 +13,8 @@ KERNEL="Image.gz-dtb"
 DEFAULT_BRANCH="XOS-8.1"
 TREES="rr:pie|aosip:pie"
 JARVISBOX_URL="https://download.msfjarvis.website/caesium"
-
-# Caesium Kernel Details
 KERNEL_NAME="Caesium"
-INCREMENTAL_VERSION="${CAESIUM_VERSION:-Test}"
-LOCALVERSION="-${INCREMENTAL_VERSION}"
-GIT_HASH=$(git rev-parse --short HEAD)
 DEVICE="oneplus3"
-FINAL_VER="${KERNEL_NAME}-${DEVICE}-${INCREMENTAL_VERSION}"
 
 # Vars
 ARCH=arm64
@@ -45,6 +39,12 @@ trap 'exit 1' SIGINT SIGTERM
 
 # Source custom options
 [ -f ".buildconfig" ] && source ".buildconfig"
+
+# Versioning
+INCREMENTAL_VERSION="${CAESIUM_VERSION:-Test}"
+LOCALVERSION="-${INCREMENTAL_VERSION}"
+GIT_HASH=$(git rev-parse --short HEAD)
+FINAL_VER="${KERNEL_NAME}-${DEVICE}-${INCREMENTAL_VERSION}"
 
 ## Functions
 # Wrapper around tgm to avoid having to pass the second chat ID param everywhere
