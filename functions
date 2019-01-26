@@ -54,6 +54,13 @@ function wgdown {
     sudo wg-quick down mullvad-"${region:?}"
 }
 
+function venv {
+    if [ ! -d venv ]; then
+        python3 -m virtualenv --no-site-packages venv
+    fi
+    source venv/bin/activate
+}
+
 function gdrivedl {
     local URL GDRIVE FILE_ID; URL="${1}"; shift
     GDRIVE="$(command -v gdrive)"
