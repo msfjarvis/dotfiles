@@ -13,50 +13,8 @@ CL_RST="\033[0m"
 CL_YLW="\033[01;33m"
 CL_BLUE="\033[01;34m"
 
-[ -z "${GPG_TTY}" ] && { GPG_TTY="$(tty)"; export GPG_TTY; }
 # To shut shellcheck up
 export CL_BOLD CL_INV CL_RED CL_RST CL_YLW CL_BLUE
-
-function clip {
-    [ "$(display_exists)" ] || return
-    xclip -rmlastnl -selection clipboard -i "${1:?}"
-}
-
-function display_exists {
-    if xhost >& /dev/null ; then echo "1"; fi
-}
-
-# Route nano to 'no-trailing-newlines' mode
-function nano {
-    "$(whereis nano | cut -d ':' -f 2 | awk '{print $1}')" -L "${@/ /\ }"
-}
-
-function setname {
-    echo -ne "\033]0;${1}\007"
-}
-
-function get_latest_release() {
-  curl --silent "https://api.github.com/repos/${1:?}/releases/latest" | # Get latest release from GitHub API
-    jq -r .tag_name                                                 # Get tag line
-}
-
-function get_release_assets() {
-  local REPOSITORY RELEASE_TAG RELEASE_ID TMP_FILE
-  REPOSITORY="${1:?}"
-  RELEASE_TAG="${2:-latest}"
-  TMP_FILE="$(mktemp)"
-  if [ "${RELEASE_TAG}" == "latest" ]; then
-    RELEASE_ID=$(curl --silent "https://api.github.com/repos/${1:?}/releases/latest" | # Get the latest release from GitHub API
-        jq -r .id)                                                                   # Get the ID of the release
-  else
-    # Get all releases from the v3 API, get the id and tag_name fields (called name in the slice) for each item, and write it to a temporary file
-    curl --silent "https://api.github.com/repos/${REPOSITORY}/releases" | jq '.[] | {id: .id, name: .tag_name}' > "${TMP_FILE}"
-    # Stream across the data we sliced earlier, printing the id and name as space separated values, then cleanly filter the one we need using grep and awk
-    RELEASE_ID=$(jq -r '"\(.id) \(.name)"' "${TMP_FILE}" | grep "${RELEASE_TAG}" | awk '{print $1}')  # Get the ID of the latest release
-  fi
-  curl --silent "https://api.github.com/repos/${REPOSITORY}/releases/${RELEASE_ID}" | jq -r .assets[].browser_download_url # Get the download URL of the assets
-  [ -f "${TMP_FILE}" ] && rm -f "${TMP_FILE}"
-}
 
 # Prints a formatted header to let the user know what's being done
 # SC2034: i appears unused. Verify it or export it.
@@ -97,80 +55,4 @@ function reportSuccess {
     echo -e "==  ${1}  =="
     echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; echo "${i}" >/dev/null; done )===="
     echo -e "${CL_RST}"
-}
-
-# Upload a file to transfer.sh
-function transfer {
-    local URL
-    if [ "$#" -eq 0 ]; then
-        echo "No arguments specified. Usage:
-        echo transfer /tmp/test.md
-        cat /tmp/test.md | transfer test.md"
-        return 1
-    fi
-    tmpfile=$( mktemp -t transferXXX )
-    if tty -s; then
-        basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
-        curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" 2>/dev/null >> "${tmpfile}"
-    else
-        curl --progress-bar --upload-file "-" "https://transfer.sh/$1" 2>/dev/null >> "${tmpfile}"
-    fi
-    if [ "$(display_exists)" ]; then
-        xclip -rmlastnl -selection clipboard < "$tmpfile"
-    else
-        cat "$tmpfile"
-    fi
-    rm -f "${tmpfile}"
-}
-
-# Upload to GDrive
-function upload {
-    local FILE MD5
-    FILE="${1}"
-    [ -f "${FILE:?}" ] || { reportWarning "Specified file doesn't exist"; return ; }
-    ZIP_SIZE="$(du -h "${FILE}" | awk '{print $1}')"
-    MD5="$(md5sum "${FILE}" | awk '{print $1}')"
-    GDRIVE_UPLOAD_URL="$(gdrive upload --share "${FILE}"  | awk '/https/ {print $7}')"
-    GDRIVE_UPLOAD_ID="$(echo "${GDRIVE_UPLOAD_URL}" | sed -r 's/(.*)&export.*/\1/' | sed -r 's/https.*id=(.*)/\1/')"
-    UPLOAD_INFO="
-File: [$(basename "${FILE}")](${GDRIVE_UPLOAD_URL})
-Size: ${ZIP_SIZE}
-MD5: \`${MD5}\`
-GDrive ID: \`${GDRIVE_UPLOAD_ID}\`
-"
-    tgm "${UPLOAD_INFO}"
-    echo "Get the file with ${GDRIVE_UPLOAD_ID}"
-}
-
-# Send a markdown encoded Telegram message
-function tgm {
-    local CHAT_ID
-    CHAT_ID="${2}"
-    [ "${2}" == "" ] && CHAT_ID="${MSF_TG_ID}"
-    curl -F chat_id="${CHAT_ID}" -F parse_mode="markdown" -F disable_web_page_preview="true" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" >/dev/null 2>&1
-}
-
-# Upload a file to Telegram
-# SC2076: Don't quote rhs of =~, it'll match literally rather than as a regex.
-function tg {
-    local CHAT_ID
-    local CAPTION
-    CAPTION="${3}"
-    if [ "${2}" == "" ]; then
-        CHAT_ID="${MSF_TG_ID}"
-    elif [[ "${2}" =~ "-100" ]]; then
-        CHAT_ID="${2}"
-    else
-        CAPTION="${2}"
-        CHAT_ID="${MSF_TG_ID}"
-    fi
-    curl -F chat_id="${CHAT_ID}" -F document="@${1}" -F caption="${CAPTION}" -F parse_mode="Markdown" "https://api.telegram.org/bot${TG_BOT_ID}/sendDocument" >/dev/null 2>&1
-}
-
-# Upload a file to transfer.sh, and send the link to telegram
-function ttg {
-    [ ! -f "${1:?}" ] && return 1
-    URL=$(transfer "${1}")
-    [ -z "${URL}" ] && return 1
-    tgm "[$(basename "${1}")](${URL})" "${2}"
 }

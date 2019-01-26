@@ -13,6 +13,47 @@ GZOSP_GERRIT_URL="review.gzospgzr.com"
 SUBS_GERRIT_URL="substratum.review"
 DEFAULT_GERRIT="aosip"
 
+function setemail {
+    [ ! -d .git ] && { reportWarning "This command needs to run in a git tree"; return 1; }
+    local EMAIL GPG_KEY
+    case "${1:?}" in
+    "work"|"prjkt") EMAIL="harsh@prjkt.io"; GPG_KEY="4AD75758D9EE741C" ;;
+    esac
+    if [ -z "${EMAIL}" ] && [ -z "${GPG_KEY}" ]; then { git config --unset user.email; git config --unset user.signingkey; return 0; }; fi
+    git config user.email "${EMAIL}"
+    git config user.signingkey "${GPG_KEY}"
+}
+
+function dlgit {
+    local REPO BRANCH
+    REPO="${1}"
+    BRANCH="${2:-master}"
+    aria2c https://github.com/"${REPO:?}"/archive/"${BRANCH}".zip -o "$(echo "${REPO}" | cut -d '/' -f 2)".zip
+}
+
+function get_latest_release() {
+  curl --silent "https://api.github.com/repos/${1:?}/releases/latest" | # Get latest release from GitHub API
+    jq -r .tag_name                                                 # Get tag line
+}
+
+function get_release_assets() {
+  local REPOSITORY RELEASE_TAG RELEASE_ID TMP_FILE
+  REPOSITORY="${1:?}"
+  RELEASE_TAG="${2:-latest}"
+  TMP_FILE="$(mktemp)"
+  if [ "${RELEASE_TAG}" == "latest" ]; then
+    RELEASE_ID=$(curl --silent "https://api.github.com/repos/${1:?}/releases/latest" | # Get the latest release from GitHub API
+        jq -r .id)                                                                   # Get the ID of the release
+  else
+    # Get all releases from the v3 API, get the id and tag_name fields (called name in the slice) for each item, and write it to a temporary file
+    curl --silent "https://api.github.com/repos/${REPOSITORY}/releases" | jq '.[] | {id: .id, name: .tag_name}' > "${TMP_FILE}"
+    # Stream across the data we sliced earlier, printing the id and name as space separated values, then cleanly filter the one we need using grep and awk
+    RELEASE_ID=$(jq -r '"\(.id) \(.name)"' "${TMP_FILE}" | grep "${RELEASE_TAG}" | awk '{print $1}')  # Get the ID of the latest release
+  fi
+  curl --silent "https://api.github.com/repos/${REPOSITORY}/releases/${RELEASE_ID}" | jq -r .assets[].browser_download_url # Get the download URL of the assets
+  [ -f "${TMP_FILE}" ] && rm -f "${TMP_FILE}"
+}
+
 function get_current_gerrit {
     if [ "${DEFAULT_GERRIT}" == "aosip" ]; then
         echo "${GERRIT_USER}@${AOSIP_GERRIT_URL}"

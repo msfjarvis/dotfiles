@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+# Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
+# SPDX-License-Identifier: GPL-3.0-only
+
+[ -z "${GPG_TTY}" ] && { GPG_TTY="$(tty)"; export GPG_TTY; }
+
+# shellcheck disable=SC2009
+# Consider using pgrep instead of grepping ps output.
+# We're directly grepping ps output to handle cases like android-studio, where
+# a new java process is forked off after the execution of the initial shell script
+# and this the 'pgrep studio' command does not return all the processes.
+function endtask {
+    for pid in $(ps -ef | grep "${1:?}" | awk '{print $2}'); do kill -9 "${pid}" 2>/dev/null; done
+}
+
+function maintenance {
+    sudo apt update
+    sudo apt upgrade -y
+    sudo apt autoremove -y
+}
+
+function battinfo {
+    local BASE=/sys/class/power_supply/BAT0/
+    [ -d "${BASE}" ] || return
+    declare -a ITEMS=("capacity_level:Battery_status" "charge_now:Current_charge" "capacity:Battery_percentage" "status:Status")
+    for ITEM in "${ITEMS[@]}"; do
+        NODE=$(echo "${ITEM}" | cut -d ':' -f 1)
+        LABEL=$(echo "${ITEM}" | cut -d ':' -f 2)
+        [ -f "${BASE}${NODE}" ] || continue
+        echo -e "${CL_RED}${LABEL/_/ }${CL_RST}: ${CL_YLW}$(cat "${BASE}${NODE}")${CL_RST}"
+    done
+}
+
+function cpuinfo {
+    grep -E '^model name|^cpu MHz' /proc/cpuinfo
+}
+
+function clip {
+    [ "$(display_exists)" ] || return
+    xclip -rmlastnl -selection clipboard -i "${1:?}"
+}
+
+function display_exists {
+    if xhost >& /dev/null ; then echo "1"; fi
+}
+
+function setname {
+    echo -ne "\033]0;${1}\007"
+}
+
+function wgup {
+    local region; region="${1}"
+    sudo wg-quick up mullvad-"${region:?}"
+}
+
+function wgdown {
+    local region; region="${1}"
+    sudo wg-quick down mullvad-"${region:?}"
+}
+
+function venv {
+    if [ ! -d venv ]; then
+        python3 -m virtualenv --no-site-packages venv
+    fi
+    source venv/bin/activate
+}

@@ -5,88 +5,13 @@
 
 # Source common functions
 SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
-source "${SCRIPT_DIR}"/common
-source "${SCRIPT_DIR}"/gitshit
-source "${SCRIPT_DIR}"/apps
 source "${SCRIPT_DIR}"/aliases
-
-function setemail {
-    [ ! -d .git ] && { reportWarning "This command needs to run in a git tree"; return 1; }
-    local EMAIL GPG_KEY
-    case "${1:?}" in
-    "work"|"prjkt") EMAIL="harsh@prjkt.io"; GPG_KEY="4AD75758D9EE741C" ;;
-    esac
-    if [ -z "${EMAIL}" ] && [ -z "${GPG_KEY}" ]; then { git config --unset user.email; git config --unset user.signingkey; return 0; }; fi
-    git config user.email "${EMAIL}"
-    git config user.signingkey "${GPG_KEY}"
-}
-
-function dlgit {
-    local REPO BRANCH
-    REPO="${1}"
-    BRANCH="${2:-master}"
-    aria2c https://github.com/"${REPO:?}"/archive/"${BRANCH}".zip -o "$(echo "${REPO}" | cut -d '/' -f 2)".zip
-}
-
-# shellcheck disable=SC2009
-# Consider using pgrep instead of grepping ps output.
-# We're directly grepping ps output to handle cases like android-studio, where
-# a new java process is forked off after the execution of the initial shell script
-# and this the 'pgrep studio' command does not return all the processes.
-function endtask {
-    for pid in $(ps -ef | grep "${1:?}" | awk '{print $2}'); do kill -9 "${pid}" 2>/dev/null; done
-}
-
-function imgur {
-    local FILE; FILE="${1}"
-    curl --request POST --url https://api.imgur.com/3/image --header "authorization: Client-ID ${IMGUR_API_KEY}" \
-        --header 'content-type: multipart/form-data;' -F "image=@${FILE:?}" 2>/dev/null \
-        | jq .data.link | sed 's/"//g' | xclip -rmlastnl -selection clipboard
-}
-
-function wgup {
-    local region; region="${1}"
-    sudo wg-quick up mullvad-"${region:?}"
-}
-
-function wgdown {
-    local region; region="${1}"
-    sudo wg-quick down mullvad-"${region:?}"
-}
-
-function venv {
-    if [ ! -d venv ]; then
-        python3 -m virtualenv --no-site-packages venv
-    fi
-    source venv/bin/activate
-}
-
-function gdrivedl {
-    local URL GDRIVE FILE_ID; URL="${1}"; shift
-    GDRIVE="$(command -v gdrive)"
-    if [ -z "${GDRIVE}" ]; then
-        reportWarning "gdrive is not in \$PATH"
-        return 1
-    fi
-    if [[ "${URL:?}" =~ folders ]]; then
-        FILE_ID="$(echo "${URL}" | sed -r -e 's/https.*folders\/(.*)/\1/' -e 's/(.*)\?usp=sharing/\1/')"
-    else
-        FILE_ID="$(echo "${URL:?}" | sed -r 's/(.*)&export.*/\1/' | sed -r 's/https.*id=(.*)/\1/')"
-    fi
-    gdrive download --recursive "${FILE_ID:?}" "${@}"
-}
-
-function publish {
-    local FILE REMOTE_DIR FULL_REMOTE_DIR
-    FILE="${1}"
-    REMOTE_DIR="${2:-.superhidden}"
-    FULL_REMOTE_DIR="${CAESIUM_UPLOAD_PATH/caesium/${REMOTE_DIR}}/"
-    # shellcheck disable=SC2029
-    # I want this to expand on the client side
-    ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${FULL_REMOTE_DIR}"
-    rsync -a "${FILE:?}" "${CAESIUM_UPLOAD_HOST}:${FULL_REMOTE_DIR}" --progress
-    printf "https://download.msfjarvis.website/%s" "${REMOTE_DIR}/$(basename "${FILE:?}")" | xclip -rmlastnl -selection clipboard
-}
+source "${SCRIPT_DIR}"/apps
+source "${SCRIPT_DIR}"/common
+source "${SCRIPT_DIR}"/files
+source "${SCRIPT_DIR}"/gitshit
+source "${SCRIPT_DIR}"/system
+source "${SCRIPT_DIR}"/telegram
 
 function reload {
     source ~/.bashrc
@@ -100,61 +25,14 @@ function foreversay {
     until ! lolsay "${@}"; do sleep 0; done
 }
 
-function tgcow {
-    local CHAT_ID="${1}"
-    [ -z "${CHAT_ID}" ] && CHAT_ID="${OP3_CAESIUM_CHAT_ID}"
-    shift
-    tgm "\`$(cowsay "${@}")\`" "${CHAT_ID}"
-}
-
-function tgpaste {
-    local MESSAGE LINK
-    [ -f "${1:?}" ] || return
-    LINK=$(hastebin "${1}" "no")
-    MESSAGE="[$(basename "${1}")](${LINK})"
-    tgm "${MESSAGE}"
-}
-
-function cpuinfo {
-    grep -E '^model name|^cpu MHz' /proc/cpuinfo
-}
-
 function encrypt {
     [ -z "${1}" ] && return
     gpg --encrypt --output "${1}".gpg --recipient "msfjarvis@gmail.com" "${1}"
 }
 
-function maintenance {
-    sudo apt update
-    sudo apt upgrade -y
-    sudo apt autoremove -y
-}
-
-function battinfo {
-    local BASE=/sys/class/power_supply/BAT0/
-    [ -d "${BASE}" ] || return
-    declare -a ITEMS=("capacity_level:Battery_status" "charge_now:Current_charge" "capacity:Battery_percentage" "status:Status")
-    for ITEM in "${ITEMS[@]}"; do
-        NODE=$(echo "${ITEM}" | cut -d ':' -f 1)
-        LABEL=$(echo "${ITEM}" | cut -d ':' -f 2)
-        [ -f "${BASE}${NODE}" ] || continue
-        echo -e "${CL_RED}${LABEL/_/ }${CL_RST}: ${CL_YLW}$(cat "${BASE}${NODE}")${CL_RST}"
-    done
-}
-
 # Server tooling
 function serverconnect {
     ssh horbis@aosiprom.com
-}
-
-function link {
-    local SRC DEST PWD; SRC="${1}"; DEST="${2}"
-    PWD="$(pwd)"
-    case "${SRC:?}" in
-        /*) ;; # No action needed
-        *) SRC="${PWD}"/"${SRC:?}" ;;
-    esac
-    ln -sf "${SRC:?}" "${DEST:?}"
 }
 
 function hostupdate {
@@ -205,7 +83,7 @@ function reboot {
 }
 
 function tab2space() {
-  find . -type f -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
+  find . -type f -not -iwholename '.git' -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
 }
 
 function d2u() {
