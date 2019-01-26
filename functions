@@ -154,7 +154,9 @@ function hostupdate {
     local dir
     dir="$(pwd)"
     cd ~/git-repos/hosts || return 1
-    python3 msfUpdateHostsFile.py
+    source venv/bin/activate
+    python msfUpdateHostsFile.py
+    deactivate
     rsync -avR hosts_msf "$CAESIUM_UPLOAD_HOST:${CAESIUM_UPLOAD_PATH/caesium/adblock}"/hosts
     cd "${dir}" || return 1
 }
