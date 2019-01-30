@@ -45,10 +45,6 @@ function display_exists {
     if xhost >& /dev/null ; then echo "1"; fi
 }
 
-function setname {
-    echo -ne "\033]0;${1}\007"
-}
-
 function wgup {
     local region; region="${1}"
     sudo wg-quick up mullvad-"${region:?}"
