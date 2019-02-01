@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#    shellcheck disable=SC2116,SC2154
 #    Copy a ssh key to Github
 #    Copyright (C) 2015 Christoph "criztovyl" Schulz
 #    Copyright (C) 2018 Harsh "MSF-Jarvis" Shandilya
@@ -30,10 +29,11 @@ DEFAULT_KEY="$HOME/.ssh/id_ed25519.pub"
 # Args: username
 #   username: Github username
 #   ssh_key : SSH key file, default: $HOME/.ssh/id_ed25519.pub
-ssh_copy_id_github() {
+function ssh_copy_id_github() {
 
-    username="$1"
-    key_file="$2"
+    local username key_file otp type
+    username="${1}"
+    key_file="${2}"
 
     [ -z "$key_file" ] && { key_file="$DEFAULT_KEY"; }
 
@@ -42,7 +42,7 @@ ssh_copy_id_github() {
       read -rp "SSH key file doesn't exist: $key_file, do you want to generate a $key_file (y/n)?: "; echo
 
       if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-        ssh-keygen -t ed25519 -f "$(echo "${key_file%.pub}")"
+        ssh-keygen -t ed25519 -f "${key_file%.pub}"
       else
         echo "Need SSH key file to upload, e.g. $DEFAULT_KEY"
         exit 1
@@ -61,7 +61,7 @@ ssh_copy_id_github() {
         |  grep 'Status: [45][0-9]\{2\}\|X-GitHub-OTP: required; .\+\|message' | tr -d "\r")
 
     otp_required "$response" otp
-    otp_type "$response" "type" # app or sms
+    otp_type "$response" type # app or sms
 
     [ "$(echo "$response" | grep -c 'Status: 401\|Bad credentials')" -eq 2 ] && { echo "Wrong password."; exit 5; }
 
@@ -81,21 +81,25 @@ ssh_copy_id_github() {
     fi
 }
 
-otp_required(){
-    local filteredResponse="$1"
-    local resultVar="$2"
-    local _otp; _otp=$(echo "$filteredResponse" | grep -c "$XGH")
+function otp_required(){
+    local filteredResponse resultVar _otp
+    filteredResponse="$1"
+    resultVar="$2"
+     _otp=$(echo "$filteredResponse" | grep -c "$XGH")
     if [ "$_otp" -eq 1 ]; then
         eval "$resultVar"="$TRUE"
     else
         eval "$resultVar"="$FALSE"
     fi
 }
-otp_type(){
-    local filteredResponse="$1"
-    local resultVar="$2"
-    local _type; _type=$(echo "$filteredResponse" | grep "$XGH" | sed "s/.\+$XGH\(\w\+\).\+/\1/")
+
+function otp_type(){
+    local filteredResponse resultVar _type
+    filteredResponse="$1"
+    resultVar="$2"
+    _type=$(echo "$filteredResponse" | grep "$XGH" | sed "s/.\+$XGH\(\w\+\).\+/\1/")
     eval "$resultVar"="$_type"
 }
+
 # Execute.
 ssh_copy_id_github "$1" "$2"
