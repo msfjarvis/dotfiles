@@ -69,7 +69,7 @@ function hook {
 }
 
 function reposync {
-    repo sync -c --no-tags --force-sync -f -j10 "${@}"
+    repo sync -c --no-tags -j10 "${@}"
 }
 
 # shellcheck disable=SC2029
