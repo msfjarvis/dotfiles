@@ -3,9 +3,12 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
+SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
+source "${SCRIPT_DIR}"/../common
+source "${SCRIPT_DIR}"/../gitshit
+
 function install_hub {
-    local SCRIPT_DIR INSTALLED_VERSION HUB HUB_ARCH; SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
-    source "${SCRIPT_DIR}"/../common
+    local INSTALLED_VERSION HUB HUB_ARCH
     echoText "Checking and installing hub"
     HUB="$(command -v hub)"
     HUB_ARCH=linux-amd64

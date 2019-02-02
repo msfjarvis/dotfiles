@@ -3,9 +3,11 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
+SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
+source "${SCRIPT_DIR}"/../common
+source "${SCRIPT_DIR}"/../gitshit
+
 function install_dsf {
-    local SCRIPT_DIR; SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
-    source "${SCRIPT_DIR}"/../common
     echoText "Checking and installing 'diff-so-fancy'"
     if [ "$(command -v diff-so-fancy)" == "" ]; then
         echoText "Installing 'diff-so-fancy'"

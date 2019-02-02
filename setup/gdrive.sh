@@ -3,10 +3,12 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
+SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
+source "${SCRIPT_DIR}"/../common
+source "${SCRIPT_DIR}"/../gitshit
+
 function install_gdrive {
-    local SCRIPT_DIR ARTIFACT_NAME; SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
-    source "${SCRIPT_DIR}"/../common
-    echoText "Checking and installing gdrive"
+    local ARTIFACT_NAME
     ARTIFACT_NAME="gdrive-linux-x64"
     if [ "$(command -v gdrive)" == "" ]; then
         echoText "Checking and installing gdrive"

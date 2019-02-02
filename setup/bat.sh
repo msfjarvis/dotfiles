@@ -3,9 +3,12 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
+SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
+source "${SCRIPT_DIR}"/../common
+source "${SCRIPT_DIR}"/../gitshit
+
 function install_bat {
-    local SCRIPT_DIR BAT; SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
-    source "${SCRIPT_DIR}"/../common
+    local BAT
     echoText "Checking and installing bat"
     BAT="$(command -v bat)"
     if [ "${BAT}" == "" ]; then
