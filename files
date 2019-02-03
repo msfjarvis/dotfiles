@@ -49,7 +49,7 @@ function upload {
     ZIP_SIZE="$(du -h "${FILE}" | awk '{print $1}')"
     MD5="$(md5sum "${FILE}" | awk '{print $1}')"
     GDRIVE_UPLOAD_URL="$(gdrive upload --share "${FILE}"  | awk '/https/ {print $7}')"
-    GDRIVE_UPLOAD_ID="$(echo "${GDRIVE_UPLOAD_URL}" | sed -r 's/(.*)&export.*/\1/' | sed -r 's/https.*id=(.*)/\1/')"
+    GDRIVE_UPLOAD_ID="$(echo "${GDRIVE_UPLOAD_URL}" | sed -r 's/(.*)&export.*/\1/')"
     UPLOAD_INFO="
 File: [$(basename "${FILE}")](${GDRIVE_UPLOAD_URL})
 Size: ${ZIP_SIZE}
