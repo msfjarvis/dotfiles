@@ -88,7 +88,7 @@ function gdrivedl {
     else
         FILE_ID="$(echo "${URL:?}" | sed -r -e 's/(.*)&export.*/\1/' -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/view/\1/')"
     fi
-    until gdrive download --recursive "${FILE_ID:?}" "${@}" 2>/dev/null; do sleep 1; done
+    until gdrive download --recursive "${FILE_ID:?}" "${@}"; do sleep 1; done
 }
 
 # Publish a file to the download server
