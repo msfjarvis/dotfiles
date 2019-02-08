@@ -104,7 +104,7 @@ function findapks {
 function p2d {
   adb-"${CURRENT_DEVICE}" shell mount system
   local FINAL_PATH
-  FINAL_PATH=$(adb-"${CURRENT_DEVICE}" shell find /system -name "$1")
+  FINAL_PATH=$(adb-"${CURRENT_DEVICE}" shell find /system -name "$(basename "${1}")")
   echo "${FINAL_PATH}"
   adb-"${CURRENT_DEVICE}" push "$1" "${FINAL_PATH}"
   adb-"${CURRENT_DEVICE}" shell umount system
