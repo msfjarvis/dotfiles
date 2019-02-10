@@ -77,18 +77,15 @@ function imgur {
 
 # Download a file given the Google Drive URL
 function gdrivedl {
-    local URL GDRIVE FILE_ID; URL="${1}"; shift
-    GDRIVE="$(command -v gdrive)"
-    if [ -z "${GDRIVE}" ]; then
-        reportWarning "gdrive is not in \$PATH"
-        return 1
-    fi
+    local CONFIRM FILE_ID URL; URL="${1}"; shift
     if [[ "${URL:?}" =~ folders ]]; then
         FILE_ID="$(echo "${URL}" | sed -r -e 's/https.*folders\/(.*)/\1/' -e 's/(.*)\?usp=sharing/\1/')"
     else
         FILE_ID="$(echo "${URL:?}" | sed -r -e 's/(.*)&export.*/\1/' -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/view/\1/')"
     fi
-    until gdrive download --recursive "${FILE_ID:?}" "${@}"; do sleep 1; done
+    CONFIRM=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate "https://docs.google.com/uc?export=download&id=$FILE_ID" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')
+    aria2c --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$CONFIRM&id=$FILE_ID"
+    rm -rf /tmp/cookies.txt
 }
 
 # Publish a file to the download server
