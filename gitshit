@@ -4,10 +4,13 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 GERRIT_USER=MSF_Jarvis
+GZOSP_GERRIT_USER=MSF-Jarvis
 ANDROID_PLATFORM_ROOT="/home/msfjarvis/aosip"
 DEFAULT_AOSIP_BRANCH="pie"
 DEFAULT_SUBS_BRANCH="o"
+DEFAULT_GZOSP_BRANCH="9.0"
 AOSIP_GERRIT_URL="review.aosiprom.com"
+GZOSP_GERRIT_URL="review.gzospgzr.com"
 SUBS_GERRIT_URL="substratum.review"
 DEFAULT_GERRIT="aosip"
 
@@ -57,6 +60,8 @@ function get_current_gerrit {
         echo "${GERRIT_USER}@${AOSIP_GERRIT_URL}"
     elif [ "${DEFAULT_GERRIT}" == "substratum" ]; then
         echo "${GERRIT_USER}@${SUBS_GERRIT_URL}"
+    elif [ "${DEFAULT_GERRIT}" == "gzosp" ]; then
+        echo "${GERRIT_USER}@${GZOSP_GERRIT_URL}"
     else
         return 1
     fi
@@ -100,6 +105,10 @@ function gpush {
     fi
 }
 
+function gzpush {
+    gpush "${DEFAULT_GZOSP_BRANCH}" bypass
+}
+
 function subspush {
     gpush "${DEFAULT_SUBS_BRANCH}" bypass
 }
@@ -131,6 +140,20 @@ function xg {
     git remote remove gerrit 2>/dev/null
     git remote add gerrit ssh://"${GERRIT_USER}"@"${AOSIP_GERRIT_URL}":29418/AOSIP/platform_"${PROJECT}"
     hook
+}
+
+function gz {
+    if ! git rev-parse --git-dir &> /dev/null
+    then
+        reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
+        return 1
+    fi
+    PROJECT=$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#-caf.*##; s#\/default##; s#/#_#g#")
+    if (echo "${PROJECT}" | grep -qv "^device"); then
+        PFX="GZOSP/"
+    fi
+    git remote remove gzgerrit 2>/dev/null
+    git remote add gerrit ssh://"${GZOSP_GERRIT_USER}"@${GZOSP_GERRIT_URL}:29418/"${PFX}${PROJECT}"
 }
 
 function subs {
