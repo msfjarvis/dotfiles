@@ -6,6 +6,15 @@
 SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
 source "${SCRIPT_DIR}"/telegram
 
+
+function dl {
+    local URL FILE_NAME; URL="${1}"; FILE_NAME="${2}";
+    if [ -z "${FILE_NAME}" ]; then
+        aria2c --split=16 --max-connection-per-server=16 --summary-interval=0 "${URL:?}"
+    else
+        aria2c --split=16 --max-connection-per-server=16 --summary-interval=0 "${URL:?}" -o "${FILE_NAME}"
+    fi
+}
 # Symlink $1 to $2
 function link {
     local SRC DEST PWD; SRC="${1}"; DEST="${2}"
