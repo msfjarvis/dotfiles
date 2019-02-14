@@ -31,7 +31,7 @@ ARM_TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/arm-linux-gnueabi"
 CLANG_TOOLCHAIN_DIR=""
 CLANG_TRIPLE=""
 COMPILER="gcc"
-OUT_DIR="${WORKING_DIR}/out/"
+OUT_DIR="${WORKING_DIR}/out"
 ZIP_MOVE="${WORKING_DIR}/zips/"
 CCACHE="$(command -v ccache)"
 
