@@ -35,9 +35,6 @@ OUT_DIR="${WORKING_DIR}/out/"
 ZIP_MOVE="${WORKING_DIR}/zips/"
 CCACHE="$(command -v ccache)"
 
-# Array to hold all commands for banner
-declare -a banner_items
-
 # Trap to bail out properly
 trap 'exit 1' SIGINT SIGTERM
 
@@ -49,6 +46,12 @@ INCREMENTAL_VERSION="${CAESIUM_VERSION:-Test}"
 LOCALVERSION="-${INCREMENTAL_VERSION}"
 GIT_HASH=$(git rev-parse --short HEAD)
 FINAL_VER="${KERNEL_NAME}-${DEVICE}-${INCREMENTAL_VERSION}"
+
+# Array to hold all commands for banner
+declare -a banner_items
+banner_items+=("Device: $DEVICE")
+banner_items+=("Defconfig: $DEFCONFIG")
+banner_items+=("Version: $CAESIUM_VERSION")
 
 ## Functions
 # Wrapper around tgm to avoid having to pass the second chat ID param everywhere
