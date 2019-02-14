@@ -35,6 +35,9 @@ OUT_DIR="${WORKING_DIR}/out/"
 ZIP_MOVE="${WORKING_DIR}/zips/"
 CCACHE="$(command -v ccache)"
 
+# Array to hold all commands for banner
+declare -a banner_items
+
 # Trap to bail out properly
 trap 'exit 1' SIGINT SIGTERM
 
@@ -206,14 +209,14 @@ function check_toolchain() {
     TC="$(find "${ARM64_TOOLCHAIN_DIR}"/bin -name '*-gcc')";
     if [ -f "${TC}" ]; then
         CROSS_COMPILE="${ARM64_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')";
-        echoText "Using toolchain: $("${CROSS_COMPILE}"gcc --version | head -1)"
+        banner_items+=("ARM64 toolchain: $("${CROSS_COMPILE}"gcc --version | head -1)")
     else
         reportError "No suitable toolchain found in ${ARM64_TOOLCHAIN_DIR}";
     fi
     TC="$(find "${ARM_TOOLCHAIN_DIR}"/bin -name '*-gcc')";
     if [ -f "${TC}" ]; then
         CROSS_COMPILE_ARM32="${ARM_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')";
-        echoText "Using toolchain: $("${CROSS_COMPILE_ARM32}gcc" --version | head -1)"
+        banner_items+=("ARM toolchain: $("${CROSS_COMPILE_ARM32}gcc" --version | head -1)")
     else
         reportError "No suitable toolchain found in ${ARM_TOOLCHAIN_DIR}";
     fi
@@ -221,7 +224,7 @@ function check_toolchain() {
     if [ -f "${TC}" ]; then
         CC="${CLANG_TOOLCHAIN_DIR}/bin/clang"
         KBUILD_COMPILER_STRING="$(${CC} --version | head -n 1 | cut -d \( -f 1,2 | sed 's/[[:space:]]*$//')"
-        echoText "Using clang: ${KBUILD_COMPILER_STRING}"
+        banner_items+=("Clang toolchain: ${KBUILD_COMPILER_STRING}")
     fi
 }
 
@@ -247,6 +250,7 @@ function make_kernel {
     mkdir -p "${OUT_DIR}"
     find "${OUT_DIR}" -name "${KERNEL}" -exec rm -rf {} \;
     make_defconfig
+    banner "${banner_items[@]/#/}"
     if [ "${MODULE}" ]; then
         kmake "${MODULE}"
     else
@@ -307,8 +311,8 @@ function make_zip {
 
 while getopts ":bcd:m:rt:v" OPT; do
     case "${OPT}" in
-        b) echoText " Building ZIP only " >&2; ONLY_ZIP=true ;;
-        c) echoText " Building clean " >&2; CLEAN=true ;;
+        b) banner_items+=("Building ZIP only"); ONLY_ZIP=true ;;
+        c) banner_items+=("Building clean"); CLEAN=true ;;
         d)
         DEVICE="${OPTARG}"
         ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2_${DEVICE}"
@@ -321,9 +325,9 @@ while getopts ":bcd:m:rt:v" OPT; do
             reportError "Invalid module specified - ${MODULE}"
             return 1
         fi
-        echoText "Building module ${MODULE}"
+        banner_items+=("Building module ${MODULE}")
         ;;
-        r) echoText " Regenerating defconfig " >&2; REGEN_DEFCONFIG=true ;;
+        r) banner_items+=("Regenerating defconfig"); REGEN_DEFCONFIG=true ;;
         t) TYPE="${OPTARG}" ;;
         v) VERBOSE=true ;;
         \?) reportWarning "Invalid option: -${OPTARG}" >&2 ;;
@@ -331,7 +335,7 @@ while getopts ":bcd:m:rt:v" OPT; do
 done
 
 if [ "${TYPE}" != "stable" ]; then
-    echoText " Setting test build parameters" >&2
+    banner_items+=("Setting test build parameters")
     export LOCALVERSION=-"${INCREMENTAL_VERSION}"-"${GIT_HASH}"
     FINAL_VER+="-${GIT_HASH}"
 fi
