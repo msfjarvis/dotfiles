@@ -56,3 +56,20 @@ function reportSuccess {
     echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; echo "${i}" >/dev/null; done )===="
     echo -e "${CL_RST}"
 }
+
+function banner {
+    local s=("$@") b w
+    echo -e "${CL_RED}"
+    echo -e "${CL_BOLD}"
+    for l in "${s[@]}"; do
+      ((w<${#l})) && { b="$l"; w="${#l}"; }
+    done
+    echo "##${b//?/#}##
+# ${b//?/ } #"
+    for l in "${s[@]}"; do
+      printf '# %*s #\n' "-$w" "$l"
+    done
+    echo "# ${b//?/ } #
+##${b//?/#}##"
+    echo -e "${CL_RST}"
+}
