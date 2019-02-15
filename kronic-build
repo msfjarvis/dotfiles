@@ -8,6 +8,8 @@ SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
 source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/files
 
+declare -a banner_items
+
 function build {
     local ZIP
     . build/envsetup.sh
@@ -28,8 +30,8 @@ cd "${HOME}"/aosip || exit 1
 
 while getopts ":cd:hns" opt; do
   case "${opt}" in
-     c) CLEAN=true ;;
-     d) TARGET_DEVICE="${OPTARG}" ;;
+     c) CLEAN=true; banner_items+=("Building clean") ;;
+     d) TARGET_DEVICE="${OPTARG}"; banner_items+=("Building for ${TARGET_DEVICE}") ;;
      h) echo '
 usage: kronic-build [-h] [-c] [-d DEVICE] [-n] [-s]
 
@@ -41,12 +43,14 @@ optional arguments:
   -s        Skip syncing
 '
         exit 0 ;;
-     n) NO_REPOPICK=true ;;
-     s) SKIP_SYNC=true ;;
+     n) NO_REPOPICK=true; banner_items+=("Skipping repopick") ;;
+     s) SKIP_SYNC=true; banner_items+=("Skipping sync") ;;
      *) reportWarning "Invalid option: -${OPTARG}" >&2 ;;
    esac
 done
 
 AOSIP_VERSION=AOSiP-9.0-"${AOSIP_BUILDTYPE:-Pizza}"-"${TARGET_DEVICE:?}"-$(date +%Y%m%d)
+banner_items+=("AOSiP version: ${AOSIP_VERSION}")
+banner "${banner_items[@]/#/}"
 
 build
