@@ -6,103 +6,47 @@
 # Source common functions
 SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
 source "${SCRIPT_DIR}"/common
+source "${SCRIPT_DIR}"/files
 
 function build {
-    # shellcheck disable=SC1091
+    local ZIP
     . build/envsetup.sh
-    [[ "${SKIP_SYNC}" == "true" ]] || repo sync -c --force-sync -j10 --no-tags
-    pick_and_reset
-    tgm "Build started."
-    [[ "${CLEAN}" == "true" ]] && rm -rf out/target/product
-    local LOG_FILE
-    LOG_FILE=aosip_"${TARGET_DEVICE}"-$(date +%Y%m%d-%H%M%S).txt
+    [ "${SKIP_SYNC}" ] || repo sync -c --force-sync -j"$(nproc --all)" --no-tags --detach
+    [ "${NO_REPOPICK}" ] || { [ -f picklist ] && source picklist; }
+    [ "${CLEAN}" ] && m -j"$(nproc --all)" deviceclean
     lunch aosip_"${TARGET_DEVICE}"-userdebug
-    if [[ -z "${MODULE}" ]]; then
-        make kronic -j"$(nproc --all)" 2>&1 | tee -a "${LOG_FILE}"
+    m -j"$(nproc --all)" kronic
+    if [ -z "${OUT_DIR_COMMON_BASE}" ]; then
+        ZIP="out/target/product/${TARGET_DEVICE}/${AOSIP_VERSION}".zip
     else
-        make "${MODULE}" -j"$(nproc --all)" 2>&1 | tee -a "${LOG_FILE}"
+        ZIP="${OUT_DIR_COMMON_BASE}/aosip/target/product/${TARGET_DEVICE}/${AOSIP_VERSION}".zip
     fi
-    tail -n 500 "${LOG_FILE}" > "${LOG_FILE}_trimmed"
-    mv "${LOG_FILE}_trimmed" "${LOG_FILE}"
-    OUT=out/target/product/"${TARGET_DEVICE}" # For some reason this is getting unset after build, hardcode for now.
-    if [[ -z ${MODULE} ]]; then
-        OUT_FILE="${OUT}/${AOSIP_VERSION}".zip
-    else
-        OUT_FILE=$(find "${OUT}"/system -name "${MODULE}.*")
-    fi
-    if [[ -f "${OUT_FILE}" ]]; then
-        tgm "Build successful, uploading."
-        upload "${OUT_FILE}"
-    else
-        tgm "Build failed."
-        tgm "$(hastebin "${LOG_FILE}" noraw)"
-        return 1
-    fi
-}
-
-function pick_and_reset {
-  if [[ "${REPOPICK_TASKS}" != "" && -z "${NO_REPOPICK}" ]]; then
-    git config --global commit.gpgsign false # Disable GPG signing to let this happen automatically
-    while IFS= read -r ITEM
-    do
-        repopick "${ITEM}"
-    done < "repopicks.txt"
-    git config --global commit.gpgsign true # Re-enable after repopicking is done
-  fi
+    if [ -f "${ZIP}" ]; then upload "${ZIP}"; else tgm "${TARGET_DEVICE} build failed."; fi
 }
 
 cd "${HOME}"/aosip || exit 1
 
-BUILD_INFO=""
-while getopts ":cm:nst:" opt; do
-  case $opt in
-     c)
-      BUILD_INFO="${BUILD_INFO}
-Building clean
-"
-      CLEAN=true ;;
-     m)
-      BUILD_INFO="${BUILD_INFO}
-Building module ${OPTARG}
-"
-      MODULE=${OPTARG} ;;
-     n)
-      BUILD_INFO="${BUILD_INFO}
-Skipping repopick
-"
-      NO_REPOPICK=true ;;
-     s)
-      BUILD_INFO="${BUILD_INFO}
-Skipping sync
-"
-      SKIP_SYNC=true ;;
-     t)
-      BUILD_INFO="${BUILD_INFO}
-Building for device: ${OPTARG}
-"
-      TARGET_DEVICE=${OPTARG} ;;
-     \?)
-      echo "Invalid option: -${OPTARG}" >&2 ;;
+while getopts ":cd:hns" opt; do
+  case "${opt}" in
+     c) CLEAN=true ;;
+     d) TARGET_DEVICE="${OPTARG}" ;;
+     h) echo '
+usage: kronic-build [-h] [-c] [-d DEVICE] [-n] [-s]
+
+optional arguments:
+  -h        Show this help message and exit
+  -c        Force a deviceclean build
+  -d DEVICE Build for DEVICE
+  -n        Skip repopick tasks
+  -s        Skip syncing
+'
+        exit 0 ;;
+     n) NO_REPOPICK=true ;;
+     s) SKIP_SYNC=true ;;
+     *) reportWarning "Invalid option: -${OPTARG}" >&2 ;;
    esac
 done
 
-REPOPICK_TASKS=$(cat repopicks.txt)
-TEMP=${REPOPICK_TASKS/\n/}
-#TEMP=$(echo ${REPOPICK_TASKS} | sed s/\n//)
-if [[ "${TEMP}" != "" ]]; then
-BUILD_INFO="${BUILD_INFO}
-repopick tasks:
-\`\`\`
-${REPOPICK_TASKS}
-\`\`\`
-"
-else
-BUILD_INFO="${BUILD_INFO}
-No repopicks
-"
-fi
-tgm "${BUILD_INFO}"
-unset BUILD_INFO
-AOSIP_VERSION=AOSiP-8.1-Derp-"${TARGET_DEVICE}"-$(date +%Y%m%d)
+AOSIP_VERSION=AOSiP-9.0-"${AOSIP_BUILDTYPE:-Pizza}"-"${TARGET_DEVICE:?}"-$(date +%Y%m%d)
 
 build
