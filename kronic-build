@@ -18,8 +18,8 @@ function build {
     . build/envsetup.sh
     [ "${SKIP_SYNC}" ] || repo sync -c --force-sync -j"$(nproc --all)" --no-tags --detach
     [ "${NO_REPOPICK}" ] || { [ -f picklist ] && source picklist; }
-    [ "${CLEAN}" ] && m -j"$(nproc --all)" deviceclean
     lunch aosip_"${TARGET_DEVICE}"-userdebug
+    [ "${CLEAN}" ] && m -j"$(nproc --all)" deviceclean
     m -j"$(nproc --all)" kronic
     if [ -z "${OUT_DIR_COMMON_BASE}" ]; then
         ZIP="out/target/product/${TARGET_DEVICE}/${AOSIP_VERSION}".zip
