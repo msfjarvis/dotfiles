@@ -12,7 +12,6 @@ source "${SCRIPT_DIR}"/telegram
 DEFCONFIG="caesium_defconfig"
 KERNEL="Image.gz-dtb"
 DEFAULT_BRANCH="XOS-8.1"
-TREES="rr:pie|aosip:pie"
 JARVISBOX_URL="https://download.msfjarvis.website/caesium"
 KERNEL_NAME="Caesium"
 DEVICE="oneplus3"
@@ -184,26 +183,6 @@ function release {
     git tag -as "${TAG}"
     git push origin "${TAG}"
     hub release create "${TAG}" -a zips/"${FILE}" -a zips/"${FILE}".md5sum
-    [ "${DEVICE}" == "oneplus3" ] && update_source_trees "${TAG}"
-}
-
-# Takes a predefined list of trees to merge into and
-# programmatically updates them to the latest tag.
-function update_source_trees {
-    local TAG="${1}"
-    IFS='|' read -r -a MERGEABLES <<< "${TREES}"
-    for ITEM in "${MERGEABLES[@]}"; do
-        IFS=':' read -r -a ELEMENTS <<< "${ITEM}"
-        if [ "${#ELEMENTS[@]}" -ge 2 ]; then
-            REMOTE="${ELEMENTS[0]}"
-            BRANCH="${ELEMENTS[1]}"
-            git fetch "${REMOTE}" "${BRANCH}" --no-tags
-            git checkout "${BRANCH}"
-            git merge "${TAG}" --no-edit --signoff
-            git push "${REMOTE}" "${BRANCH}"
-        fi
-    done
-    git checkout "${DEFAULT_BRANCH}"
 }
 
 # Find and set toolchain variables
