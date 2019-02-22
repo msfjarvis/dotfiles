@@ -17,13 +17,17 @@ function dl {
 }
 # Symlink $1 to $2
 function link {
-    local SRC DEST PWD; SRC="${1}"; DEST="${2}"
+    local SRC DEST ROOT PWD; SRC="${1}"; DEST="${2}"; ROOT="${3}"
     PWD="$(pwd)"
     case "${SRC:?}" in
         /*) ;; # No action needed
         *) SRC="${PWD}"/"${SRC:?}" ;;
     esac
-    ln -sf "${SRC:?}" "${DEST:?}"
+    if [ -z "${ROOT}" ]; then
+        ln -sf "${SRC:?}" "${DEST:?}"
+    else
+        sudo ln -sf "${SRC:?}" "${DEST:?}"
+    fi
 }
 
 # Upload a file to transfer.sh
