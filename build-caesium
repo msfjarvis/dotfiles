@@ -116,13 +116,17 @@ function kmake {
     fi
 }
 # Pushes a local file to my webserver
-function publish {
-    local TYPE; TYPE="${2:?}"
+function publish() {
+    local FILES_TO_PUBLISH; FILES_TO_PUBLISH=("${@}")
     if [ -d "${LOCAL_SITE_MIRROR}" ]; then
-        cp "${1}" "${LOCAL_SITE_MIRROR}/caesium/${DEVICE}/${TYPE}/"
+        for item in "${FILES_TO_PUBLISH[@]}"; do
+            cp "${item}" "${LOCAL_SITE_MIRROR}/caesium/${DEVICE}/${TYPE}/"
+        done
         syncup
     else
-        rsync -avR "${1}" "${CAESIUM_UPLOAD_HOST}:${CAESIUM_UPLOAD_PATH}/${DEVICE}/${TYPE}/" --progress --verbose
+        for item in "${FILES_TO_PUBLISH[@]}"; do
+            rsync -avR "${item}" "${CAESIUM_UPLOAD_HOST}:${CAESIUM_UPLOAD_PATH}/${DEVICE}/${TYPE}/" --progress --verbose
+        done
    fi
 }
 
@@ -132,7 +136,7 @@ function prepdirs {
         mkdir -p "${LOCAL_SITE_MIRROR}/caesium/${DEVICE}/${1}/"
         rm -rf "${LOCAL_SITE_MIRROR}/archive/${DEVICE}/${1}"
         mkdir -p "${LOCAL_SITE_MIRROR}/archive/${DEVICE}/${1}/"
-        mv "${LOCAL_SITE_MIRROR}/caesium/${DEVICE}/${1}/*" "${LOCAL_SITE_MIRROR}/archive/${DEVICE}/${1}/"
+        mv "${LOCAL_SITE_MIRROR}/caesium/${DEVICE}/${1}"/* "${LOCAL_SITE_MIRROR}/archive/${DEVICE}/${1}/"
     else
         ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${CAESIUM_UPLOAD_PATH}/${DEVICE}/${1}/"
         ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${CAESIUM_UPLOAD_PATH/caesium/archive}/${DEVICE}/${1}/"
@@ -165,9 +169,7 @@ function pushcaesiumtg {
             prepdirs "${ITEM}"
         done
     fi
-    for ITEM in "${FILES_TO_PUBLISH[@]}"; do
-        publish "${ITEM}" "${TYPE}"
-    done
+    publish "${FILES_TO_PUBLISH[@]}"
     cd ../ || return
     if [ "${TYPE}" == "stable" ]; then
       release "${FILE}"
