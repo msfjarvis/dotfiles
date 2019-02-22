@@ -4,8 +4,8 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
+source "${SCRIPT_DIR}"/server
 source "${SCRIPT_DIR}"/telegram
-
 
 function dl {
     local URL FILE_NAME; URL="${1}"; FILE_NAME="${2}";
@@ -102,13 +102,11 @@ function gdrivedl {
 
 # Publish a file to the download server
 function publish {
-    local FILE REMOTE_DIR FULL_REMOTE_DIR
+    local FILE REMOTE_DIR
     FILE="${1}"
     REMOTE_DIR="${2:-.superhidden}"
-    FULL_REMOTE_DIR="${CAESIUM_UPLOAD_PATH/caesium/${REMOTE_DIR}}/"
-    # shellcheck disable=SC2029
-    # I want this to expand on the client side
-    ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${FULL_REMOTE_DIR}"
-    rsync -a "${FILE:?}" "${CAESIUM_UPLOAD_HOST}:${FULL_REMOTE_DIR}" --progress
+    mkdir -p "${LOCAL_SITE_MIRROR}/${REMOTE_DIR}"
+    cp "${FILE:?}" "${LOCAL_SITE_MIRROR}/${REMOTE_DIR}/"
+    syncup
     printf "https://download.msfjarvis.website/%s" "${REMOTE_DIR}/$(basename "${FILE:?}")" | xclip -rmlastnl -selection clipboard
 }
