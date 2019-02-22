@@ -10,6 +10,7 @@ source "${SCRIPT_DIR}"/apps
 source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/files
 source "${SCRIPT_DIR}"/gitshit
+source "${SCRIPT_DIR}"/server
 source "${SCRIPT_DIR}"/system
 source "${SCRIPT_DIR}"/telegram
 

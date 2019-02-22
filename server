@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
+# SPDX-License-Identifier: GPL-3.0-only
+
+function syncdown {
+    rsync -av "${CAESIUM_UPLOAD_HOST}:${CAESIUM_UPLOAD_PATH/caesium/}/" "${LOCAL_SITE_MIRROR}" --progress --delete
+}
+
+function syncup {
+    rsync -av "${LOCAL_SITE_MIRROR}/" "${CAESIUM_UPLOAD_HOST}:${CAESIUM_UPLOAD_PATH/caesium/}" --progress --delete
+}
