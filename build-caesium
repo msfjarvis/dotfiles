@@ -151,7 +151,7 @@ function pushcaesiumtg {
     FILES_TO_PUBLISH=("${FILE}" "${FILE}".md5sum)
     case "${TYPE}" in
         "alpha"|"beta"|"stable"|"test") ;;
-        *) echo "Invalid build type" && return ;;
+        *) reportWarning "Invalid build type; skipping upload." && return ;;
     esac
     if [ -f changelog ]; then
         FILES_TO_PUBLISH+=(changelog)
