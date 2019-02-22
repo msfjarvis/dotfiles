@@ -116,7 +116,7 @@ function kmake {
     fi
 }
 # Pushes a local file to my webserver
-function publish() {
+function publish {
     local FILES_TO_PUBLISH; FILES_TO_PUBLISH=("${@}")
     if [ -d "${LOCAL_SITE_MIRROR}" ]; then
         for item in "${FILES_TO_PUBLISH[@]}"; do
@@ -201,7 +201,7 @@ function release {
 }
 
 # Find and set toolchain variables
-function check_toolchain() {
+function check_toolchain {
     local TC
     TC="$(find "${ARM64_TOOLCHAIN_DIR}"/bin -name '*-gcc')";
     if [ -f "${TC}" ]; then
@@ -268,7 +268,7 @@ function make_kernel {
 }
 
 # Move kernel files after compilation
-function move_kernel_files() {
+function move_kernel_files {
     git -C "${ANYKERNEL_DIR}" clean -fdx 1>/dev/null 2>&1
     # Move the kernel image
     for FTM in "${FILES_TO_MOVE[@]}"; do

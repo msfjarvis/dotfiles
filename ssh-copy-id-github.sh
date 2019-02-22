@@ -29,7 +29,7 @@ DEFAULT_KEY="$HOME/.ssh/id_ed25519.pub"
 # Args: username
 #   username: Github username
 #   ssh_key : SSH key file, default: $HOME/.ssh/id_ed25519.pub
-function ssh_copy_id_github() {
+function ssh_copy_id_github {
 
     local username key_file otp type
     username="${1}"
@@ -81,7 +81,7 @@ function ssh_copy_id_github() {
     fi
 }
 
-function otp_required(){
+function otp_required {
     local filteredResponse resultVar _otp
     filteredResponse="$1"
     resultVar="$2"
@@ -93,7 +93,7 @@ function otp_required(){
     fi
 }
 
-function otp_type(){
+function otp_type {
     local filteredResponse resultVar _type
     filteredResponse="$1"
     resultVar="$2"

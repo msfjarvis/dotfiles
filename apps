@@ -118,7 +118,7 @@ function pajeet {
     adb-"${CURRENT_DEVICE}" shell settings put global emergency_affordance_needed 0
 }
 
-function findJ {
+function findJ() {
     ag -ia "${1}" | grep java | cut -f 1 -d ':' | uniq
 }
 
