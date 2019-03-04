@@ -26,12 +26,12 @@ function build {
     else
         ZIP="${OUT_DIR_COMMON_BASE}/aosip/target/product/${TARGET_DEVICE}/${AOSIP_VERSION}".zip
     fi
-    if [ -f "${ZIP}" ]; then upload "${ZIP}"; else tgm "${TARGET_DEVICE} build failed."; fi
+    if [ -f "${ZIP}" ]; then [ "${UPLOAD_BUILD}" ] && upload "${ZIP}"; else tgm "${TARGET_DEVICE} build failed."; fi
 }
 
 cd "${HOME}"/aosip || exit 1
 
-while getopts ":cd:hns" opt; do
+while getopts ":cd:hnsu" opt; do
   case "${opt}" in
      c) CLEAN=true; banner_items+=("Building clean") ;;
      d) TARGET_DEVICE="${OPTARG}"; banner_items+=("Building for ${TARGET_DEVICE}") ;;
@@ -44,10 +44,12 @@ optional arguments:
   -d DEVICE Build for DEVICE
   -n        Skip repopick tasks
   -s        Skip syncing
+  -u        Upload build to Google Drive
 '
         exit 0 ;;
      n) NO_REPOPICK=true; banner_items+=("Skipping repopick") ;;
      s) SKIP_SYNC=true; banner_items+=("Skipping sync") ;;
+     u) UPLOAD_BUILD=true; banner_items+=("Will upload finished build") ;;
      *) reportWarning "Invalid option: -${OPTARG}" >&2 ;;
    esac
 done
