@@ -94,6 +94,10 @@ function imgur {
 # Download a file given the Google Drive URL
 function gdrivedl {
     local CONFIRM FILE_ID URL; URL="${1}"; shift
+    if [ ! -z "${PYDRIVE_CLIENT_DIR}" ]; then
+        "${PYDRIVE_CLIENT_DIR}"/venv/bin/python "${PYDRIVE_CLIENT_DIR}"/main.py -d "${URL}"
+        return
+    fi
     if [[ "${URL:?}" =~ folders ]]; then
         FILE_ID="$(echo "${URL}" | sed -r -e 's/https.*folders\/(.*)/\1/' -e 's/(.*)\?usp=sharing/\1/')"
     else
