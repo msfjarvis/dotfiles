@@ -56,15 +56,12 @@ function transfer {
 
 # Upload to GDrive
 function upload {
-    local FILE MD5 ZIP_SIZE GDRIVE_UPLOAD_URL GDRIVE_UPLOAD_ID UPLOAD_INFO
+    local FILE MD5
     FILE="${1}"
     [ -f "${FILE:?}" ] || { reportWarning "Specified file doesn't exist"; return ; }
     ZIP_SIZE="$(du -h "${FILE}" | awk '{print $1}')"
     MD5="$(md5sum "${FILE}" | awk '{print $1}')"
-    while [ -z "${GDRIVE_UPLOAD_URL}" ]
-    do
-        GDRIVE_UPLOAD_URL="$(gdrive upload --share "${FILE}"  | awk '/https/ {print $7}')"
-    done
+    GDRIVE_UPLOAD_URL="$(gdrive upload --share "${FILE}"  | awk '/https/ {print $7}')"
     GDRIVE_UPLOAD_ID="$(echo "${GDRIVE_UPLOAD_URL}" | sed -r -e 's/(.*)&export.*/\1/' -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/view/\1/')"
     UPLOAD_INFO="
 File: [$(basename "${FILE}")](${GDRIVE_UPLOAD_URL})
@@ -93,15 +90,18 @@ function imgur {
 
 # Download a file given the Google Drive URL
 function gdrivedl {
-    local CONFIRM FILE_ID URL; URL="${1}"; shift
+    local URL GDRIVE FILE_ID; URL="${1}"; shift
+    GDRIVE="$(command -v gdrive)"
+    if [ -z "${GDRIVE}" ]; then
+        reportWarning "gdrive is not in \$PATH"
+        return 1
+    fi
     if [[ "${URL:?}" =~ folders ]]; then
         FILE_ID="$(echo "${URL}" | sed -r -e 's/https.*folders\/(.*)/\1/' -e 's/(.*)\?usp=sharing/\1/')"
     else
         FILE_ID="$(echo "${URL:?}" | sed -r -e 's/(.*)&export.*/\1/' -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/view/\1/')"
     fi
-    CONFIRM=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate "https://docs.google.com/uc?export=download&id=$FILE_ID" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')
-    aria2c --split=16 --max-connection-per-server=16 --summary-interval=0 --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$CONFIRM&id=$FILE_ID"
-    rm -rf /tmp/cookies.txt
+    until gdrive download --recursive "${FILE_ID:?}" "${@}"; do sleep 1; done
 }
 
 # Publish a file to the download server
