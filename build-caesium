@@ -229,15 +229,10 @@ function check_toolchain {
 function make_kernel {
     local RETURN_VAL BUILT_KERNEL
     case "${DEVICE}" in
-        "oneplus3")
-            FILES_TO_MOVE=( "arch/arm64/boot/${KERNEL}:${ANYKERNEL_DIR}" )
-            ;;
         "wahoo")
             FILES_TO_MOVE=( "arch/arm64/boot/${KERNEL}:${ANYKERNEL_DIR}/kernel"
-                            "arch/arm64/boot/dtbo.img:${ANYKERNEL_DIR}" )
-            for DTB in out/arch/arm64/boot/dts/qcom/*.dtb; do
-                FILES_TO_MOVE+=( "${DTB#*/}:${ANYKERNEL_DIR}/dtbs" )
-            done
+                            "arch/arm64/boot/dtbo.img:${ANYKERNEL_DIR}"
+                            "arch/arm64/boot/dts/qcom/msm8998-v2.1-soc.dtb:${ANYKERNEL_DIR}/dtbs" )
             ;;
         *)
             FILES_TO_MOVE=( "arch/arm64/boot/${KERNEL}:${ANYKERNEL_DIR}" )
