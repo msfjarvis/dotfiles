@@ -26,16 +26,17 @@ function ps1 {
 }
 
 function hostupdate {
-    local dir
-    dir="$(pwd)"
+    local DIR
+    DIR="$(pwd)"
     cd ~/git-repos/hosts || return 1
     venv 3.7
-    echo N | python msfUpdateHostsFile.py
+    python msfUpdateHostsFile.py -n
     deactivate
     cp hosts_msf "${LOCAL_SITE_MIRROR}"/adblock/hosts
     syncup
-    sudo cp hosts_msf /etc/hosts
-    cd "${dir}" || return 1
+    sudo cp -v hosts_msf /etc/hosts
+    sudo /etc/init.d/dns-clean start
+    cd "${DIR}" || return 1
 }
 
 function dnsmasqupdate {
