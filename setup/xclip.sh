@@ -25,7 +25,7 @@ function install_xclip {
         make all -j"$(nproc)"
         sudo make install install.man
     else
-        echoText "Latest xclip version is installed"
+        reportWarning "xclip ${XCLIP_VER} is already installed!"
     fi
     rm "${TMPFILE}"
     rm -rf /tmp/xclip 2>/dev/null
