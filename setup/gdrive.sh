@@ -10,8 +10,8 @@ source "${SCRIPT_DIR}"/../gitshit
 function install_gdrive {
     local ARTIFACT_NAME
     ARTIFACT_NAME="gdrive-linux-x64"
+    echoText "Checking and installing gdrive"
     if [ "$(command -v gdrive)" == "" ]; then
-        echoText "Checking and installing gdrive"
         aria2c "$(get_release_assets MSF-Jarvis/gdrive | grep ${ARTIFACT_NAME})" --allow-overwrite=true -d ~/bin -o gdrive
         chmod +x ~/bin/gdrive
     else
