@@ -58,7 +58,8 @@ function maintenance {
 }
 
 function battinfo {
-    local BASE=/sys/class/power_supply/BAT0/
+    local BASE; BASE=/sys/class/power_supply/BAT0/
+    [ ! -f "${BASE}" ] && return
     [ -d "${BASE}" ] || return
     declare -a ITEMS=("capacity_level:Battery_status" "charge_now:Current_charge" "capacity:Battery_percentage" "status:Status")
     for ITEM in "${ITEMS[@]}"; do
