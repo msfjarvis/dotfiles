@@ -4,8 +4,8 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 # Source common functions
-SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
-source "${SCRIPT_DIR}"/common
+CUR_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
+source "${CUR_DIR}"/common
 
 declare -a SCRIPTS=("kronic-build" "build-caesium" "build-kernel" "build-twrp" "hastebin")
 declare -a GPG_KEYS=("public_old.asc" "private_old.asc" "public_prjkt.asc" "private_prjkt.asc")
@@ -18,27 +18,27 @@ echoText "Installing necessary packages"
 sudo apt install -y android-tools-adb aria2 autoconf automake axel cowsay curl jq libxmu-dev lolcat mosh shellcheck silversearcher-ag wget
 
 # Update all submodules
-git -C "${SCRIPT_DIR}" submodule update --init --recursive
+git -C "${CUR_DIR}" submodule update --init --recursive
 
-source "${SCRIPT_DIR}"/setup/android-udev.sh
-source "${SCRIPT_DIR}"/setup/bat.sh
-source "${SCRIPT_DIR}"/setup/diff-so-fancy.sh
-source "${SCRIPT_DIR}"/setup/gdrive.sh
-source "${SCRIPT_DIR}"/setup/hub.sh
-source "${SCRIPT_DIR}"/setup/xclip.sh
+source "${CUR_DIR}"/setup/android-udev.sh
+source "${CUR_DIR}"/setup/bat.sh
+source "${CUR_DIR}"/setup/diff-so-fancy.sh
+source "${CUR_DIR}"/setup/gdrive.sh
+source "${CUR_DIR}"/setup/hub.sh
+source "${CUR_DIR}"/setup/xclip.sh
 
-cd "${SCRIPT_DIR}" || exit 1
+cd "${CUR_DIR}" || exit 1
 
 echoText 'Installing nanorc'
-cp -v "${SCRIPT_DIR}"/.nanorc ~/.nanorc
+cp -v "${CUR_DIR}"/.nanorc ~/.nanorc
 
 echoText "Importing GPG keys"
 for KEY in "${GPG_KEYS[@]}"; do
-    gpg --import "${SCRIPT_DIR}"/gpg_keys/"${KEY}"
+    gpg --import "${CUR_DIR}"/gpg_keys/"${KEY}"
 done
 
 echoText "Moving credentials"
-gpg --decrypt "${SCRIPT_DIR}"/.secretcreds.gpg > ~/.secretcreds
+gpg --decrypt "${CUR_DIR}"/.secretcreds.gpg > ~/.secretcreds
 
 # SC2076: Don't quote rhs of =~, it'll match literally rather than as a regex.
 # SC2088: Note that ~ does not expand in quotes.
@@ -48,22 +48,22 @@ if [[ ! "${PATH}" =~ "~/bin" ]]; then
     echo $'\nexport PATH="~/bin":$PATH' >> ~/.bashrc
 fi
 
-ret="$(grep -qF "source ${SCRIPT_DIR}/functions" ~/.bashrc)"
+ret="$(grep -qF "source ${CUR_DIR}/functions" ~/.bashrc)"
 if [ "${ret}" ]; then
     reportWarning "functions is not sourced in the bashrc, appending"
-    echo "source ${SCRIPT_DIR}/functions" >> ~/.bashrc
+    echo "source ${CUR_DIR}/functions" >> ~/.bashrc
 fi
 
 echoText "Installing scripts"
 for SCRIPT in "${SCRIPTS[@]}"; do
     echo -e "${CL_YLW}Processing ${SCRIPT}${CL_RST}"
     rm -rf ~/bin/"${SCRIPT}"
-    ln -s "${SCRIPT_DIR}"/"${SCRIPT}" ~/bin/"${SCRIPT}"
+    ln -s "${CUR_DIR}"/"${SCRIPT}" ~/bin/"${SCRIPT}"
 done
 
 echoText "Setting up gitconfig"
 mv ~/.gitconfig ~/.gitconfig.old 2>/dev/null # Failsafe in case we screw up
-cp "${SCRIPT_DIR}/.gitconfig" ~/.gitconfig
+cp "${CUR_DIR}/.gitconfig" ~/.gitconfig
 # SC2044: For loops over find output are fragile. Use find -exec or a while read loop.
 # Disabling until I have a better idea
 # shellcheck disable=SC2044
@@ -78,10 +78,10 @@ done
 
 if [[ "$*" =~ --all ]] && [ "$(display_exists)" ]; then
     echoText "Setting up multi-adb"
-    git -C "${SCRIPT_DIR}/adb-multi" reset --hard
-    find patches/adb-multi/ -type f -exec git -C "${SCRIPT_DIR}"/adb-multi/ apply "${SCRIPT_DIR}"/{} \;
-    cp "${SCRIPT_DIR}/config.cfg" "${SCRIPT_DIR}"/adb-multi/config.cfg
-    "${SCRIPT_DIR}"/adb-multi/adb-multi generate "${HOME}/bin"
-    cp "${SCRIPT_DIR}"/adb-multi/adb-multi ~/bin
-    git -C "${SCRIPT_DIR}/adb-multi" reset --hard
+    git -C "${CUR_DIR}/adb-multi" reset --hard
+    find patches/adb-multi/ -type f -exec git -C "${CUR_DIR}"/adb-multi/ apply "${CUR_DIR}"/{} \;
+    cp "${CUR_DIR}/config.cfg" "${CUR_DIR}"/adb-multi/config.cfg
+    "${CUR_DIR}"/adb-multi/adb-multi generate "${HOME}/bin"
+    cp "${CUR_DIR}"/adb-multi/adb-multi ~/bin
+    git -C "${CUR_DIR}/adb-multi" reset --hard
 fi
