@@ -32,8 +32,10 @@ function hostupdate {
     venv 3.7
     python msfUpdateHostsFile.py -n
     deactivate
-    cp hosts_msf "${LOCAL_SITE_MIRROR}"/adblock/hosts
-    syncup
+    if [ -z "${1}" ]; then
+      cp hosts_msf "${LOCAL_SITE_MIRROR}"/adblock/hosts
+      syncup
+    fi
     sudo cp -v hosts_msf /etc/hosts
     sudo /etc/init.d/dns-clean start
     cd "${DIR}" || return 1
