@@ -59,3 +59,6 @@ banner_items+=("AOSiP version: ${AOSIP_VERSION}")
 banner "${banner_items[@]/#/}"
 
 build
+
+echo "{ \"response\": [ { \"datetime\": $(grep ro\.build\.date\.utc $OUT/system/build.prop | cut -d= -f2), \"filename\": \"$AOSIP_VERSION.zip\", \"id\": \"$((sha256sum $OUT/$AOSIP_VERSION.zip) | cut -d ' ' -f1)\", \"romtype\": \"$AOSIP_BUILDTYPE\", \"size\": $(stat -c%s $OUT/$AOSIP_VERSION.zip), \"url\": \"https://download.msfjarvis.website/SOMEPATHIDK/$AOSIP_VERSION.zip\", \"version\": \"9.0\"  }]}" > updater.json
+jq . updater.json
