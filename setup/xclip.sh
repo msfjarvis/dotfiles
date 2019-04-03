@@ -5,9 +5,8 @@
 
 trap 'rm -rf /tmp/xclip' INT TERM EXIT
 
-SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
-source "${SCRIPT_DIR}"/../common
-source "${SCRIPT_DIR}"/../gitshit
+source "${SCRIPT_DIR}"/common
+source "${SCRIPT_DIR}"/gitshit
 
 function install_xclip {
     local XCLIP_VER LATEST_XCLIP_VER TMPFILE SCRIPT_DIR; TMPFILE="$(mktemp)"
