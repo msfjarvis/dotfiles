@@ -77,11 +77,5 @@ for ITEM in $(find gitconfig_fragments -type f); do
 done
 
 if [[ "$*" =~ --all ]] && [ "$(display_exists)" ]; then
-    echoText "Setting up multi-adb"
-    git -C "${CUR_DIR}/adb-multi" reset --hard
-    find patches/adb-multi/ -type f -exec git -C "${CUR_DIR}"/adb-multi/ apply "${CUR_DIR}"/{} \;
-    cp "${CUR_DIR}/config.cfg" "${CUR_DIR}"/adb-multi/config.cfg
-    "${CUR_DIR}"/adb-multi/adb-multi generate "${HOME}/bin"
-    cp "${CUR_DIR}"/adb-multi/adb-multi ~/bin
-    git -C "${CUR_DIR}/adb-multi" reset --hard
+    source ./setup/adb-multi.sh
 fi
