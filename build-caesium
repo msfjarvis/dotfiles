@@ -12,7 +12,7 @@ source "${SCRIPT_DIR}"/telegram
 
 DEFCONFIG="caesium_defconfig"
 KERNEL="Image.gz-dtb"
-DEFAULT_BRANCH="XOS-8.1"
+DEFAULT_BRANCH="pie-qpr2"
 JARVISBOX_URL="https://download.msfjarvis.website/caesium"
 KERNEL_NAME="Caesium"
 DEVICE="oneplus3"
@@ -42,16 +42,18 @@ trap 'exit 1' SIGINT SIGTERM
 [ -f ".buildconfig" ] && source ".buildconfig"
 
 # Versioning
-INCREMENTAL_VERSION="${CAESIUM_VERSION:-Test}"
-LOCALVERSION="-${INCREMENTAL_VERSION}"
-GIT_HASH=$(git rev-parse --short HEAD)
-FINAL_VER="${KERNEL_NAME}-${DEVICE}-${INCREMENTAL_VERSION}"
+if [ -z "${NO_VERSIONING}" ]; then
+  INCREMENTAL_VERSION="${KERNEL_VERSION:-Test}"
+  LOCALVERSION="-${INCREMENTAL_VERSION}"
+  GIT_HASH=$(git rev-parse --short HEAD)
+fi
+FINAL_VER="${KERNEL_NAME}-${DEVICE}-$(date +"%Y%m%d")"
 
 # Array to hold all commands for banner
 declare -a banner_items
 banner_items+=("Device: $DEVICE")
 banner_items+=("Defconfig: $DEFCONFIG")
-banner_items+=("Version: $CAESIUM_VERSION")
+[ -z "${NO_VERSIONING}" ] && banner_items+=("Version: $KERNEL_VERSION")
 
 ## Functions
 # Wrapper around tgm to avoid having to pass the second chat ID param everywhere
@@ -82,24 +84,24 @@ function sanity_check {
     fi
 }
 
+function prepare_configuration {
+    CONFIGURATION=( "O=${OUT_DIR}" "ARCH=${ARCH}" "SUBARCH=${SUBARCH}"
+                    "KBUILD_BUILD_USER=${USER}" "KBUILD_BUILD_HOST=${HOST}" )
+    if [ -z "${NO_VERSIONING}" ]; then
+        CONFIGURATION+=( "LOCALVERSION=${LOCALVERSION}" )
+    fi
+}
+
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper_gcc {
-    make O="${OUT_DIR}" \
-        ARCH="${ARCH}" SUBARCH="${SUBARCH}" \
-        KBUILD_BUILD_USER="${USER}" \
-        KBUILD_BUILD_HOST="${HOST}" \
-        LOCALVERSION="${LOCALVERSION}" \
+    make "${CONFIGURATION[@]}" \
         CROSS_COMPILE="${CCACHE} ${CROSS_COMPILE}" \
         CROSS_COMPILE_ARM32="${CCACHE} ${CROSS_COMPILE_ARM32}" \
         -j"$(nproc --all)" "${@}"
 }
 
 function make_wrapper_clang {
-    make O="${OUT_DIR}" \
-        ARCH="${ARCH}" SUBARCH="${SUBARCH}" \
-        KBUILD_BUILD_USER="${USER}" \
-        KBUILD_BUILD_HOST="${HOST}" \
-        LOCALVERSION="${LOCALVERSION}" \
+    make "${CONFIGURATION[@]}" \
         CROSS_COMPILE="${CROSS_COMPILE}" \
         CROSS_COMPILE_ARM32="${CROSS_COMPILE_ARM32}" \
         CC="${CCACHE} ${CC}" CLANG_TRIPLE="${CLANG_TRIPLE}" \
@@ -109,6 +111,7 @@ function make_wrapper_clang {
 
 function kmake {
     PATH="${SCRIPT_DIR}/bin:${PATH}"
+    prepare_configuration
     if [ -z "${VERBOSE}" ]; then
         make_wrapper_"${COMPILER}" "${@}" |& ag "error:|warning"
     else
@@ -326,14 +329,14 @@ while getopts ":bcd:m:rt:v" OPT; do
     esac
 done
 
-if [ "${TYPE}" != "stable" ]; then
+if [ "${TYPE}" != "stable" ] && [ -z "${NO_VERSIONING}" ]; then
     banner_items+=("Setting test build parameters")
-    export LOCALVERSION=-"${INCREMENTAL_VERSION}"-"${GIT_HASH}"
+    LOCALVERSION=-"${INCREMENTAL_VERSION}"-"${GIT_HASH}"
     FINAL_VER+="-${GIT_HASH}"
 fi
 
 git tag -l | while read -r tag; do
-    if [ "${tag}" == "${CAESIUM_VERSION}" ]; then
+    if [ "${tag}" == "${KERNEL_VERSION}" ]; then
         reportWarning "Forgot to bump version again..."
     fi
 done
