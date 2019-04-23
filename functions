@@ -93,7 +93,7 @@ function apply_patches {
 }
 
 function rebuildtc {
-    cd "${HOME}"/git-repos/build-tools-gcc || exit 1
+    cd /mnt/mediahell/build-tools-gcc || exit 1
     echoText "Building ARM GCC 8.x"
     ./build -a arm -s gnu -v 8 -V -f
     if [ -d arm-linux-gnueabi ]; then
