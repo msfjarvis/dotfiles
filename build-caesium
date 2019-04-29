@@ -46,8 +46,10 @@ if [ -z "${NO_VERSIONING}" ]; then
   INCREMENTAL_VERSION="${KERNEL_VERSION:-Test}"
   LOCALVERSION="-${INCREMENTAL_VERSION}"
   GIT_HASH=$(git rev-parse --short HEAD)
+else
+  INCREMENTAL_VERSION="$(date +"%Y%m%d")"
 fi
-FINAL_VER="${KERNEL_NAME}-${DEVICE}-$(date +"%Y%m%d")"
+FINAL_VER="${KERNEL_NAME}-${DEVICE}-${INCREMENTAL_VERSION}"
 
 # Array to hold all commands for banner
 declare -a banner_items
