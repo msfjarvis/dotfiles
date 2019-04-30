@@ -91,7 +91,7 @@ function imgur {
 
 # Download a file given the Google Drive URL
 function gdrivedl {
-    local URL GDRIVE FILE_ID; URL="${1}"; shift
+    local URL GDRIVE IS_FOLDER FILE_ID; URL="${1}"; shift
     GDRIVE="$(command -v gdrive)"
     if [ -z "${GDRIVE}" ]; then
         reportWarning "gdrive is not in \$PATH"
@@ -99,10 +99,15 @@ function gdrivedl {
     fi
     if [[ "${URL:?}" =~ folders ]]; then
         FILE_ID="$(echo "${URL}" | sed -r -e 's/https.*folders\/(.*)/\1/' -e 's/(.*)\?usp=sharing/\1/')"
+        IS_FOLDER=true
     else
         FILE_ID="$(echo "${URL:?}" | sed -r -e 's/(.*)&export.*/\1/' -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/view/\1/')"
     fi
-    until gdrive download --recursive "${FILE_ID:?}" "${@}"; do sleep 1; done
+    if [ -z "${IS_FOLDER}" ]; then
+        gdrive download "${FILE_ID:?}"
+    else
+        "${PYDRIVE_CLIENT}/venv/bin/python" "${PYDRIVE_CLIENT}/main.py" -d "${FILE_ID}"
+    fi
 }
 
 # Publish a file to the download server
