@@ -5,10 +5,10 @@
 
 function syncdown {
     [ -z "${LOCAL_SITE_MIRROR}" ] && { echo 'LOCAL_SITE_MIRROR not set!'; return 1; }
-    rsync -av "${CAESIUM_UPLOAD_HOST}:${CAESIUM_UPLOAD_PATH/caesium/}/" "${LOCAL_SITE_MIRROR}" --progress --delete
+    rsync -ahv --progress --delete --no-o --no-g "${CAESIUM_UPLOAD_HOST}:${CAESIUM_UPLOAD_PATH/caesium/}/" "${LOCAL_SITE_MIRROR}"
 }
 
 function syncup {
     [ -z "${LOCAL_SITE_MIRROR}" ] && { echo 'LOCAL_SITE_MIRROR not set!'; return 1; }
-    rsync -av "${LOCAL_SITE_MIRROR}/" "${CAESIUM_UPLOAD_HOST}:${CAESIUM_UPLOAD_PATH/caesium/}" --progress --delete
+    rsync -ahv --progress --delete --no-o --no-g "${LOCAL_SITE_MIRROR}/" "${CAESIUM_UPLOAD_HOST}:${CAESIUM_UPLOAD_PATH/caesium/}"
 }
