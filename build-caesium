@@ -127,7 +127,7 @@ function publish {
         for item in "${FILES_TO_PUBLISH[@]}"; do
             cp "${item}" "${LOCAL_SITE_MIRROR}/caesium/${DEVICE}/${TYPE}/"
         done
-        syncup
+        syncup caesium
     else
         for item in "${FILES_TO_PUBLISH[@]}"; do
             rsync -avR "${item}" "${CAESIUM_UPLOAD_HOST}:${CAESIUM_UPLOAD_PATH}/${DEVICE}/${TYPE}/" --progress --verbose
