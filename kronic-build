@@ -24,7 +24,7 @@ function handle_upload {
         mkdir -p "${LOCAL_SITE_MIRROR}/aosip/${TARGET_DEVICE}/"
         cp "${FILE}" "${LOCAL_SITE_MIRROR}/aosip/${TARGET_DEVICE}/"
         mv updater.json "${LOCAL_SITE_MIRROR}/aosip/${TARGET_DEVICE}/"
-        syncup
+        syncup aosip
     fi
 }
 
