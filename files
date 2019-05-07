@@ -117,7 +117,7 @@ function publish {
     REMOTE_DIR="${2:-.superhidden}"
     mkdir -p "${LOCAL_SITE_MIRROR}/${REMOTE_DIR}"
     cp "${FILE:?}" "${LOCAL_SITE_MIRROR}/${REMOTE_DIR}/"
-    syncup
+    syncup "${REMOTE_DIR}"
     printf "https://download.msfjarvis.website/%s" "${REMOTE_DIR}/$(basename "${FILE:?}")" | xclip -rmlastnl -selection clipboard
 }
 
