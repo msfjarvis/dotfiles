@@ -54,12 +54,12 @@ function findapks {
 }
 
 function p2d {
-  adb-"${CURRENT_DEVICE}" shell mount system
+  adb-whyred shell mount system
   local FINAL_PATH
-  FINAL_PATH=$(adb-"${CURRENT_DEVICE}" shell find /system -name "$(basename "${1}")")
+  FINAL_PATH=$(adb-whyred shell find /system -name "$(basename "${1}")")
   echo "${FINAL_PATH}"
-  adb-"${CURRENT_DEVICE}" push "$1" "${FINAL_PATH}"
-  adb-"${CURRENT_DEVICE}" shell umount system
+  adb-whyred push "$1" "${FINAL_PATH}"
+  adb-whyred shell umount system
 }
 
 function andromeda {
