@@ -34,7 +34,7 @@ function hostupdate {
     deactivate
     if [ -z "${1}" ]; then
       cp hosts_msf "${LOCAL_SITE_MIRROR}"/adblock/hosts
-      syncup
+      syncup adblock
     fi
     sudo cp -v hosts_msf /etc/hosts
     sudo /etc/init.d/dns-clean start
