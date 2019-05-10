@@ -42,13 +42,11 @@ function hostupdate {
 }
 
 function dnsmasqupdate {
-    local dir
-    dir="$(pwd)"
     cd ~/git-repos/adnix || return 1
     make
-    sudo make install
-    rsync -avR adblock.list "$CAESIUM_UPLOAD_HOST:${CAESIUM_UPLOAD_PATH/caesium/adblock}"/
-    cd "${dir}" || return 1
+    cp adblock.list "${LOCAL_SITE_MIRROR}"/adblock/adblock.list
+    syncup adblock
+    cd - || return 1
 }
 
 function maintenance {
