@@ -15,7 +15,7 @@ DEFCONFIG="${DEFCONFIG:-$(hostname)_defconfig}"
 function make_wrapper {
     local CC HOSTCC
     declare -a MAKE_FLAGS=("ARCH=x86" "SUBARCH=x86_64")
-    CC='ccache gcc'; HOSTCC='ccache gcc'
+    CC='ccache gcc-8'; HOSTCC='ccache gcc-8'
     [ -z "${CLANG}" ] || { CC='ccache clang'; HOSTCC='ccache clang'; }
     make CC="${CC}" \
          HOSTCC="${HOSTCC}" \
