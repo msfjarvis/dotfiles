@@ -288,6 +288,10 @@ function make_defconfig {
         echoText "Regenerated defconfig successfully"
         exit 0
     fi
+    IFS=',' read -r -a CONFIGS <<< "${EXTRA_CONFIGS}"
+    for CONFIG in "${CONFIGS[@]}"; do
+        "${WORKING_DIR}"/scripts/config --file "${OUT_DIR}"/.config -e "${CONFIG}"
+    done
 }
 
 # Create the final ZIP
