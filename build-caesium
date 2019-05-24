@@ -230,6 +230,7 @@ function check_toolchain {
             # This is not AOSP clang, try to disaassemble it as a trunk build
             KBUILD_COMPILER_STRING="$(${CC} --version | head -n 1 | awk '{print $3"-"$5}')"
         fi
+        export KBUILD_COMPILER_STRING
         banner_items+=("Clang toolchain: ${KBUILD_COMPILER_STRING}")
     fi
 }
