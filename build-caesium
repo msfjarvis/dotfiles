@@ -228,7 +228,7 @@ function check_toolchain {
         KBUILD_COMPILER_STRING="$(${CC} --version | head -n 1 | cut -d \( -f 1,2 | sed 's/[[:space:]]*$//')"
         if [[ "${KBUILD_COMPILER_STRING}" =~ "llvm/llvm-project" ]]; then
             # This is not AOSP clang, try to disaassemble it as a trunk build
-            KBUILD_COMPILER_STRING="$(${CC} --version | head -n 1 | awk '{print $3}')"
+            KBUILD_COMPILER_STRING="$(${CC} --version | head -n 1 | awk '{print $3"-"$5}')"
         fi
         banner_items+=("Clang toolchain: ${KBUILD_COMPILER_STRING}")
     fi
