@@ -6,23 +6,35 @@
 function syncdown {
     [ -z "${LOCAL_SITE_MIRROR}" ] && { echo 'LOCAL_SITE_MIRROR not set!'; return 1; }
     local LOCAL_DIR REMOTE_DIR
+    declare -a CONFIGURATION=("-ahv" "--progress" "--delete" "--no-o" "--no-g")
     LOCAL_DIR="${LOCAL_SITE_MIRROR}"
     REMOTE_DIR="${CAESIUM_UPLOAD_PATH/caesium/}"
     if [ ! -z "${1}" ] && [ -d "${LOCAL_SITE_MIRROR}/${1}" ]; then
         LOCAL_DIR="${LOCAL_DIR}/${1}"
         REMOTE_DIR="${REMOTE_DIR}/${1}"
+        if [ ! -z "${2}" ] && [ "${2}" == "--dry-run" ]; then
+            CONFIGURATION+=("--dry-run")
+        fi
+    elif [ ! -z "${1}" ] && [ "${1}" == "--dry-run" ]; then
+        CONFIGURATION+=("--dry-run")
     fi
-    rsync -ahv --progress --delete --no-o --no-g "${CAESIUM_UPLOAD_HOST}:${REMOTE_DIR}/" "${LOCAL_DIR}"
+    rsync "${CONFIGURATION[@]}" "${CAESIUM_UPLOAD_HOST}:${REMOTE_DIR}/" "${LOCAL_DIR}"
 }
 
 function syncup {
     [ -z "${LOCAL_SITE_MIRROR}" ] && { echo 'LOCAL_SITE_MIRROR not set!'; return 1; }
     local LOCAL_DIR REMOTE_DIR
+    declare -a CONFIGURATION=("-ahv" "--progress" "--delete" "--no-o" "--no-g")
     LOCAL_DIR="${LOCAL_SITE_MIRROR}"
     REMOTE_DIR="${CAESIUM_UPLOAD_PATH/caesium/}"
     if [ ! -z "${1}" ] && [ -d "${LOCAL_SITE_MIRROR}/${1}" ]; then
         LOCAL_DIR="${LOCAL_DIR}/${1}"
         REMOTE_DIR="${REMOTE_DIR}/${1}"
+        if [ ! -z "${2}" ] && [ "${2}" == "--dry-run" ]; then
+            CONFIGURATION+=("--dry-run")
+        fi
+    elif [ ! -z "${1}" ] && [ "${1}" == "--dry-run" ]; then
+        CONFIGURATION+=("--dry-run")
     fi
-    rsync -ahv --progress --delete --no-o --no-g "${LOCAL_DIR}/" "${CAESIUM_UPLOAD_HOST}:${REMOTE_DIR}"
+    rsync "${CONFIGURATION[@]}" "${LOCAL_DIR}/" "${CAESIUM_UPLOAD_HOST}:${REMOTE_DIR}"
 }
