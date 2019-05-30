@@ -1,6 +1,3 @@
 [submodule "adb-multi"]
 	path = adb-multi
 	url = https://github.com/kreach3r/adb-multi
-[submodule "gpg_keys"]
-	path = gpg_keys
-	url = https://github.com/MSF-Jarvis/gpg_keys
