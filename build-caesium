@@ -303,16 +303,13 @@ function make_defconfig {
 
 # Create the final ZIP
 function make_zip {
-    local UNSIGNED_ZIP="${FINAL_VER}"_unsigned.zip
-    local SIGNED_ZIP="${FINAL_VER}".zip
+    local FINAL_ZIP="${FINAL_VER}.zip"
     cd "${ANYKERNEL_DIR}" || return
     echo "${FINAL_VER}" > version
     rm ./*.zip 2>/dev/null
-    zip -r "${UNSIGNED_ZIP}" ./* -x ".git/*" "README.md" ".gitignore" "*.zip" 1>/dev/null 2>&1
-    [ -z "${KEYSTORE_PASSWORD}" ] || echo "${KEYSTORE_PASSWORD}" | jarsigner -keystore "${SCRIPT_DIR}"/caesium_release.keystore "${UNSIGNED_ZIP}" msfjarvis
-    mv "${UNSIGNED_ZIP}" "${SIGNED_ZIP}"
+    zip -r "${FINAL_ZIP}" ./* -x ".git/*" "README.md" ".gitignore" "*.zip" 1>/dev/null 2>&1
     mkdir -p "${ZIP_MOVE}"
-    mv  "${SIGNED_ZIP}" "${ZIP_MOVE}"/
+    mv  "${FINAL_ZIP}" "${ZIP_MOVE}"/
     rm "${ANYKERNEL_DIR}/${KERNEL}" 1>/dev/null 2>&1
     cd "${WORKING_DIR}" || return
 }
