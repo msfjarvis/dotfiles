@@ -44,7 +44,6 @@ function hostupdate {
 function dnsmasqupdate {
     cd ~/git-repos/adnix || return 1
     make generate
-    sudo make install
     cp adblock.list "${LOCAL_SITE_MIRROR}"/adblock/adblock.list
     syncup adblock
     cd - || return 1
