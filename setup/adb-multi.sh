@@ -16,6 +16,7 @@ function setup_adb {
     cp "${SCRIPT_DIR}/config.cfg" "${CLONE_DIR}"/config.cfg
     "${CLONE_DIR}"/adb-multi generate "${HOME}/bin"
     cp "${CLONE_DIR}"/adb-multi ~/bin
+    cp "${CLONE_DIR}"/config.cfg ~/bin
 }
 
 setup_adb
