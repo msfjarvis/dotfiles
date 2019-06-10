@@ -25,6 +25,7 @@ git -C "${SCRIPT_DIR}" submodule update --init --recursive
 source "${SCRIPT_DIR}"/setup/android-udev.sh
 source "${SCRIPT_DIR}"/setup/bat.sh
 source "${SCRIPT_DIR}"/setup/diff-so-fancy.sh
+source "${SCRIPT_DIR}"/setup/fd.sh
 source "${SCRIPT_DIR}"/setup/gdrive.sh
 source "${SCRIPT_DIR}"/setup/hub.sh
 source "${SCRIPT_DIR}"/setup/xclip.sh
