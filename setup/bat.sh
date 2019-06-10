@@ -7,19 +7,15 @@ source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/gitshit
 
 function install_bat {
-    local BAT
+    local BAT BAT_ARTIFACT
     echoText "Checking and installing bat"
     BAT="$(command -v bat)"
     if [ "${BAT}" == "" ]; then
-        BAT_ARTIFACT=x86_64-unknown-linux-gnu.tar.gz
-        aria2c "$(get_release_assets sharkdp/bat | grep ${BAT_ARTIFACT})" -o bat.tgz
-        mkdir -p bat
-        tar -xf bat.tgz -C bat/
-        cd bat/*/ || return 1
-        sudo install bat /usr/local/bin
-        sudo install bat.1 /usr/local/man/
+        BAT_ARTIFACT="bat_.*_amd64.deb"
+        aria2c "$(get_release_assets sharkdp/bat | grep "${BAT_ARTIFACT}")" -o bat.deb
+        sudo dpkg -i bat.deb
         cd "${SCRIPT_DIR}" || return 1
-        rm -rf bat/ bat.tgz
+        rm -rf bat.deb
     else
         reportWarning "$(bat --version) is already installed!"
     fi
