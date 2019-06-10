@@ -54,7 +54,11 @@ function pushthemetg {
 }
 
 function findapks {
-  find "$@" -name "*.apk"
+    local DIR; DIR="."
+    if [ ! -z "${1}" ]; then
+        DIR="${1}"
+    fi
+    find "${DIR}" -name "*.apk"
 }
 
 function p2d {
