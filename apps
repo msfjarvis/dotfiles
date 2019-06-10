@@ -26,23 +26,27 @@ function set_device {
 }
 
 function makeapk {
-    if [ ! -f "build.gradle" ] && [ ! -f "build.gradle.kts" ]; then { reportWarning "No build.gradle present, dimwit"; return 1; }; fi
-    local GRADLE_COMMAND
+    if [ ! -f "build.gradle" ] && [ ! -f "build.gradle.kts" ]; then { reportError "No gradle configuration found!"; return 1; }; fi
+    local GRADLE COMMAND
+    if [ -z "$(which gradle)" ]; then
+        GRADLE="./gradlew"
+    else
+        GRADLE="gradle"
+    fi
     if [ ! -f ".variant" ]; then
         if [ "${1}" != "install" ]; then
-            GRADLE_COMMAND="assemble${1:-Debug}"
+            COMMAND="assemble${1:-Debug}"
         elif [ "${1}" == "install" ]; then
-            GRADLE_COMMAND="installDebug"
+            COMMAND="installDebug"
         fi
         if [ "${2}" == "install" ]; then
-            GRADLE_COMMAND="install${GRADLE_COMMAND/assemble/}"
+            COMMAND="install${COMMAND/assemble/}"
         fi
     else
-        [ "${1}" == "install" ] && GRADLE_COMMAND="install$(cat .variant)" || GRADLE_COMMAND="assemble$(cat .variant)"
+        [ "${1}" == "install" ] && COMMAND="install$(cat .variant)" || COMMAND="assemble$(cat .variant)"
     fi
-    rm -rfv app/build/outputs/apk/*
-    rm -rfv build/outputs/apk/*
-    bash gradlew "${GRADLE_COMMAND}"
+    findapks "." | while read -r apk; do rm -v "${apk}"; done
+    "${GRADLE}" "${COMMAND}"
 }
 
 function pushthemetg {
