@@ -6,19 +6,31 @@
 source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/gitshit
 
-function install_bat {
-    local BAT BAT_ARTIFACT
+function check_and_install_bat {
+    local BAT BAT_ARTIFACT LOCAL_BAT_VERSION REMOTE_BAT_VERSION
     echoText "Checking and installing bat"
     BAT="$(command -v bat)"
     if [ "${BAT}" == "" ]; then
-        BAT_ARTIFACT="bat_.*_amd64.deb"
-        aria2c "$(get_release_assets sharkdp/bat | grep "${BAT_ARTIFACT}")" -o bat.deb
-        sudo dpkg -i bat.deb
-        cd "${SCRIPT_DIR}" || return 1
-        rm -rf bat.deb
+        install_bat
     else
-        reportWarning "$(bat --version) is already installed!"
+        LOCAL_BAT_VERSION="$(bat --version | awk '{print $2}')"
+        REMOTE_BAT_VERSION="$(get_latest_release sharkdp/bat | sed 's/v//')"
+        if [ "${LOCAL_BAT_VERSION}" != "${REMOTE_BAT_VERSION}" ]; then
+            reportWarning "Outdated version of bat detected, upgrading"
+            install_bat
+        else
+            reportWarning "$(bat --version) is already installed!"
+        fi
     fi
 }
 
-install_bat
+function install_bat {
+    local BAT_ARTIFACT; BAT_ARTIFACT="bat_.*_amd64.deb"
+    aria2c "$(get_release_assets sharkdp/bat | grep "${BAT_ARTIFACT}")" -o bat.deb
+    sudo dpkg -i bat.deb
+    cd "${SCRIPT_DIR}" || return 1
+    rm -rf bat.deb
+
+}
+
+check_and_install_bat
