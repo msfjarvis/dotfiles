@@ -6,23 +6,26 @@
 source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/gitshit
 
-function install_dsf {
+function check_and_install_dsf {
+    local DFS INSTALLED_VERSION LATEST_VERSION; DFS="$(command -v diff-so-fancy)"
     echoText "Checking and installing 'diff-so-fancy'"
-    if [ "$(command -v diff-so-fancy)" == "" ]; then
-        echoText "Installing 'diff-so-fancy'"
-        sudo aria2c 'https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy' --allow-overwrite=true -d /usr/local/bin -o diff-so-fancy
-        sudo chmod +x /usr/local/bin/diff-so-fancy
+    if [ -z "${DFS}" ]; then
+        install_dsf
     else
         INSTALLED_VERSION="$(grep "my \$VERSION = " /usr/local/bin/diff-so-fancy | cut -d \" -f 2)"
         LATEST_VERSION="$(get_latest_release so-fancy/diff-so-fancy | sed 's/v//')"
         if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
-            echoText "Installing 'diff-so-fancy'"
-            sudo aria2c 'https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy' --allow-overwrite=true -d /usr/local/bin -o diff-so-fancy
-            sudo chmod +x /usr/local/bin/diff-so-fancy
+            reportWarning "Oudated version of 'diff-so-fancy' detected"
+            install_dsf
         else
             reportWarning "'diff-so-fancy' ${INSTALLED_VERSION} is already installed!"
         fi
     fi
 }
 
-install_dsf
+function install_dsf {
+    sudo aria2c 'https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy' --allow-overwrite=true -d /usr/local/bin -o diff-so-fancy
+    sudo chmod +x /usr/local/bin/diff-so-fancy
+}
+
+check_and_install_dsf

@@ -7,10 +7,9 @@ source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/gitshit
 
 function check_and_install_bat {
-    local BAT BAT_ARTIFACT LOCAL_BAT_VERSION REMOTE_BAT_VERSION
+    local BAT BAT_ARTIFACT LOCAL_BAT_VERSION REMOTE_BAT_VERSION; BAT="$(command -v bat)"
     echoText "Checking and installing bat"
-    BAT="$(command -v bat)"
-    if [ "${BAT}" == "" ]; then
+    if [ -z "${BAT}" ]; then
         install_bat
     else
         LOCAL_BAT_VERSION="$(bat --version | awk '{print $2}')"

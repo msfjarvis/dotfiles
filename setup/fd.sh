@@ -7,10 +7,9 @@ source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/gitshit
 
 function check_and_install_fd {
-    local FD FD_ARTIFACT LOCAL_FD_VERSION REMOTE_FD_VERSION
+    local FD FD_ARTIFACT LOCAL_FD_VERSION REMOTE_FD_VERSION; FD="$(command -v fd)"
     echoText "Checking and installing fd"
-    FD="$(command -v fd)"
-    if [ "${FD}" == "" ]; then
+    if [ -z "${FD}" ]; then
         install_fd
     else
         LOCAL_FD_VERSION="$(fd --version | awk '{print $2}')"
