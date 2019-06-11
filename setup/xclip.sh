@@ -9,10 +9,9 @@ source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/gitshit
 
 function install_xclip {
-    local XCLIP_VER LATEST_XCLIP_VER TMPFILE SCRIPT_DIR; TMPFILE="$(mktemp)"
+    local XCLIP_VER LATEST_XCLIP_VER SCRIPT_DIR
     echoText "Checking and installing xclip"
-    xclip -version 2>"${TMPFILE}"
-    XCLIP_VER="$(grep version "${TMPFILE}" | awk '{print $3}')"
+    XCLIP_VER="$(xclip -version 2>&1 | head -n1 | awk '{print $3}')"
     LATEST_XCLIP_VER="$(get_latest_release astrand/xclip)"
     if [ "${XCLIP_VER}" != "${LATEST_XCLIP_VER}" ]; then
         echoText "Building latest xclip version from git"
@@ -26,7 +25,6 @@ function install_xclip {
     else
         reportWarning "xclip ${XCLIP_VER} is already installed!"
     fi
-    rm "${TMPFILE}"
     rm -rf /tmp/xclip 2>/dev/null
 }
 
