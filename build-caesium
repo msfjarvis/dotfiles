@@ -22,6 +22,7 @@ ARCH=arm64
 SUBARCH=arm64
 USER=MSF
 HOST=jarvisbox
+CONFIG="${CONFIG:-.buildconfig}"
 
 # Paths
 WORKING_DIR=$(pwd)
@@ -39,7 +40,7 @@ CCACHE="$(command -v ccache)"
 trap 'exit 1' SIGINT SIGTERM
 
 # Source custom options
-[ -f ".buildconfig" ] && source ".buildconfig"
+[ -f "${CONFIG}" ] && source "${CONFIG}"
 
 # Versioning
 if [ -z "${NO_VERSIONING}" ]; then
