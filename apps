@@ -62,7 +62,7 @@ function findapks() {
     if [ ! -z "${1}" ]; then
         DIR="${1}"
     fi
-    find "${DIR}" -name "*.apk"
+    fd -HI "\.apk$" "${DIR}"
 }
 
 function p2d() {
@@ -80,7 +80,7 @@ function andromeda() {
 
 function fao() {
     if [ -z "${1}" ]; then echoText "Supply a filename moron" && return; fi
-    if [ -z "${2}" ]; then nano -L "$(find . -name "${1}.*")"; else nano -L "$(find "${2}" -name "${1}.*")"; fi
+    if [ -z "${2}" ]; then nano -L "$(fd ".*$" .)"; else nano -L "$(fd ".*$" "${2}")"; fi
 }
 
 function adbp() {

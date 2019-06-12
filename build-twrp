@@ -41,7 +41,7 @@ function set_vars() {
 }
 
 function check_device() {
-    [[ "$(find device -name vendorsetup.sh | cut -d / -f 3)" =~ ${DEVICE} ]] || reportError "No sources for device \"${DEVICE}\" could be found"
+    [[ "$(fd -F vendorsetup.sh device | cut -d / -f 3)" =~ ${DEVICE} ]] || reportError "No sources for device \"${DEVICE}\" could be found"
 }
 
 # Move teh files

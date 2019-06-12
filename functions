@@ -41,7 +41,7 @@ function backup() {
 }
 
 function cloc() {
-    find "${1:-.}" -type f -print0 | xargs -0 wc -l
+    fd . --type f | xargs wc -l
 }
 
 # Random utility tooling
@@ -62,23 +62,22 @@ function reboot() {
     esac
 }
 
+# shellcheck disable=SC2016
 function tab2space() {
-    find . -type f -not -iwholename '.git' -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
+    fd --type f -0 -x bash -c 'tmp=$(mktemp); expand -t 4 "$0" > $tmp && cat $tmp > "$0"; rm $tmp' {} \;
 }
 
 function d2u() {
-    find . -type f -not -iwholename '.git' -exec dos2unix {} \;
+    fd --type f -x dos2unix
 }
 
 function whitespace() {
-    find . -type f -not -iwholename '.git' -print0 | xargs -0 perl -pi -e 's/ +$//'
+    fd --type f | xargs perl -pi -e 's/ +$//'
 }
 
 # Kernel stuff
 function kgrep() {
-    find "${2:-.}" -name .git -prune -o -path ./out -prune -o -regextype posix-egrep \
-        -iregex '(.*\/Makefile|.*\/Kconfig.*|.*\/caesium_defconfig)' -type f \
-        -exec grep --color -n "$1" {} +
+    fd '(Makefile|Kconfig.*|.*_defconfig)' "${2:-.}" --type f -x grep --color -n "$1" {} \;
 }
 
 function apply_patches() {
@@ -143,7 +142,7 @@ function stableprep() {
     ARCH=x86_64 make x86_64_defconfig "${JOBS}"
     make prepare "${JOBS}"
     make allyesconfig
-    find "${1:?}" -name "*.o" -exec rm -v {} \;
+    fd "*.o" "${1:?}" -x rm -v
 }
 
 function findJ() {
@@ -158,6 +157,6 @@ function fao() {
         local SEARCH_DIR
         SEARCH_DIR="."
         [ -z "${2}" ] || SEARCH_DIR="${2}"
-        nano -L "$(find "${SEARCH_DIR}" -name "${1}.*")"
+        nano -L "$(fd "^${1}" "${SEARCH_DIR}")"
     fi
 }

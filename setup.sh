@@ -62,10 +62,7 @@ done
 echoText "Setting up gitconfig"
 mv ~/.gitconfig ~/.gitconfig.old 2>/dev/null # Failsafe in case we screw up
 cp "${SCRIPT_DIR}/.gitconfig" ~/.gitconfig
-# SC2044: For loops over find output are fragile. Use find -exec or a while read loop.
-# Disabling until I have a better idea
-# shellcheck disable=SC2044
-for ITEM in $(find gitconfig_fragments -type f); do
+for ITEM in $(fd -tf . gitconfig_fragments); do
     DECRYPTED="${ITEM/.gpg/}"
     rm -f "${DECRYPTED}" 2>/dev/null
     gpg --decrypt "${ITEM}" >"${DECRYPTED}"

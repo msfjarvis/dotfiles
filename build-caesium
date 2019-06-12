@@ -211,14 +211,14 @@ function release() {
 # Find and set toolchain variables
 function check_toolchain() {
     local TC
-    TC="$(find "${ARM64_TOOLCHAIN_DIR}"/bin -name '*-gcc')"
+    TC="$(fd ".*-gcc$" "${ARM64_TOOLCHAIN_DIR}"/bin)"
     if [ -f "${TC}" ]; then
         CROSS_COMPILE="${ARM64_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')"
         banner_items+=("ARM64 toolchain: $("${CROSS_COMPILE}"gcc --version | head -1)")
     else
         reportError "No suitable toolchain found in ${ARM64_TOOLCHAIN_DIR}"
     fi
-    TC="$(find "${ARM_TOOLCHAIN_DIR}"/bin -name '*-gcc')"
+    TC="$(fd ".*-gcc$" "${ARM_TOOLCHAIN_DIR}"/bin)"
     if [ -f "${TC}" ]; then
         CROSS_COMPILE_ARM32="${ARM_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')"
         banner_items+=("ARM toolchain: $("${CROSS_COMPILE_ARM32}gcc" --version | head -1)")
@@ -226,7 +226,7 @@ function check_toolchain() {
         reportError "No suitable toolchain found in ${ARM_TOOLCHAIN_DIR}"
     fi
     if [ "${COMPILER}" == "clang" ]; then
-        TC="$(find "${CLANG_TOOLCHAIN_DIR}"/bin -name clang)"
+        TC="$(fd "clang" "${CLANG_TOOLCHAIN_DIR}"/bin)"
         if [ -f "${TC}" ]; then
             CC="${CLANG_TOOLCHAIN_DIR}/bin/clang"
             KBUILD_COMPILER_STRING="$(${CC} --version | head -n 1 | cut -d \( -f 1,2 | sed 's/[[:space:]]*$//')"
@@ -255,7 +255,7 @@ function make_kernel() {
     esac
     export FILES_TO_MOVE
     mkdir -p "${OUT_DIR}"
-    find "${OUT_DIR}" -name "${KERNEL}" -exec rm -rf {} \;
+    fd "${KERNEL}" "${OUT_DIR}" -X rm -rf
     make_defconfig
     banner "${banner_items[@]/#/}"
     if [ "${MODULE}" ]; then
