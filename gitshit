@@ -14,48 +14,58 @@ GZOSP_GERRIT_URL="review.gzospgzr.com"
 SUBS_GERRIT_URL="substratum.review"
 DEFAULT_GERRIT="aosip"
 
-function setemail {
-    [ ! -d .git ] && { reportWarning "This command needs to run in a git tree"; return 1; }
+function setemail() {
+    [ ! -d .git ] && {
+        reportWarning "This command needs to run in a git tree"
+        return 1
+    }
     local EMAIL GPG_KEY
     case "${1:?}" in
-    "work"|"prjkt") EMAIL="harsh@prjkt.io"; GPG_KEY="4AD75758D9EE741C" ;;
+    "work" | "prjkt")
+        EMAIL="harsh@prjkt.io"
+        GPG_KEY="4AD75758D9EE741C"
+        ;;
     esac
-    if [ -z "${EMAIL}" ] && [ -z "${GPG_KEY}" ]; then { git config --unset user.email; git config --unset user.signingkey; return 0; }; fi
+    if [ -z "${EMAIL}" ] && [ -z "${GPG_KEY}" ]; then {
+        git config --unset user.email
+        git config --unset user.signingkey
+        return 0
+    }; fi
     git config user.email "${EMAIL}"
     git config user.signingkey "${GPG_KEY}"
 }
 
-function dlgit {
+function dlgit() {
     local REPO BRANCH
     REPO="${1}"
     BRANCH="${2:-master}"
     aria2c https://github.com/"${REPO:?}"/archive/"${BRANCH}".zip -o "$(echo "${REPO}" | cut -d '/' -f 2)".zip
 }
 
-function get_latest_release {
-  curl --silent "https://api.github.com/repos/${1:?}/releases/latest" | # Get latest release from GitHub API
-    jq -r .tag_name                                                 # Get tag line
+function get_latest_release() {
+    curl --silent "https://api.github.com/repos/${1:?}/releases/latest" | # Get latest release from GitHub API
+        jq -r .tag_name # Get tag line
 }
 
-function get_release_assets {
-  local REPOSITORY RELEASE_TAG RELEASE_ID TMP_FILE
-  REPOSITORY="${1:?}"
-  RELEASE_TAG="${2:-latest}"
-  TMP_FILE="$(mktemp)"
-  if [ "${RELEASE_TAG}" == "latest" ]; then
-    RELEASE_ID=$(curl --silent "https://api.github.com/repos/${1:?}/releases/latest" | # Get the latest release from GitHub API
-        jq -r .id)                                                                   # Get the ID of the release
-  else
-    # Get all releases from the v3 API, get the id and tag_name fields (called name in the slice) for each item, and write it to a temporary file
-    curl --silent "https://api.github.com/repos/${REPOSITORY}/releases" | jq '.[] | {id: .id, name: .tag_name}' > "${TMP_FILE}"
-    # Stream across the data we sliced earlier, printing the id and name as space separated values, then cleanly filter the one we need using grep and awk
-    RELEASE_ID=$(jq -r '"\(.id) \(.name)"' "${TMP_FILE}" | grep "${RELEASE_TAG}" | awk '{print $1}')  # Get the ID of the latest release
-  fi
-  curl --silent "https://api.github.com/repos/${REPOSITORY}/releases/${RELEASE_ID}" | jq -r .assets[].browser_download_url # Get the download URL of the assets
-  [ -f "${TMP_FILE}" ] && rm -f "${TMP_FILE}"
+function get_release_assets() {
+    local REPOSITORY RELEASE_TAG RELEASE_ID TMP_FILE
+    REPOSITORY="${1:?}"
+    RELEASE_TAG="${2:-latest}"
+    TMP_FILE="$(mktemp)"
+    if [ "${RELEASE_TAG}" == "latest" ]; then
+        RELEASE_ID=$(curl --silent "https://api.github.com/repos/${1:?}/releases/latest" | # Get the latest release from GitHub API
+            jq -r .id) # Get the ID of the release
+    else
+        # Get all releases from the v3 API, get the id and tag_name fields (called name in the slice) for each item, and write it to a temporary file
+        curl --silent "https://api.github.com/repos/${REPOSITORY}/releases" | jq '.[] | {id: .id, name: .tag_name}' >"${TMP_FILE}"
+        # Stream across the data we sliced earlier, printing the id and name as space separated values, then cleanly filter the one we need using grep and awk
+        RELEASE_ID=$(jq -r '"\(.id) \(.name)"' "${TMP_FILE}" | grep "${RELEASE_TAG}" | awk '{print $1}') # Get the ID of the latest release
+    fi
+    curl --silent "https://api.github.com/repos/${REPOSITORY}/releases/${RELEASE_ID}" | jq -r .assets[].browser_download_url # Get the download URL of the assets
+    [ -f "${TMP_FILE}" ] && rm -f "${TMP_FILE}"
 }
 
-function get_current_gerrit {
+function get_current_gerrit() {
     if [ "${DEFAULT_GERRIT}" == "aosip" ]; then
         echo "${GERRIT_USER}@${AOSIP_GERRIT_URL}"
     elif [ "${DEFAULT_GERRIT}" == "substratum" ]; then
@@ -67,27 +77,27 @@ function get_current_gerrit {
     fi
 }
 
-function hook {
+function hook() {
     local gitdir
     gitdir="$(git rev-parse --git-dir)"
     scp -p -P 29418 "$(get_current_gerrit)":hooks/commit-msg "${gitdir}"/hooks/
 }
 
-function reposync {
+function reposync() {
     repo sync -c --no-tags -j10 "${@}"
 }
 
 # shellcheck disable=SC2029
-function gerrit {
+function gerrit() {
     ssh -p 29418 "$(get_current_gerrit)" "gerrit $*"
 }
 
 # shellcheck disable=SC2029
-function subsgerrit {
+function subsgerrit() {
     ssh -p 29418 "${GERRIT_USER}@${SUBS_GERRIT_URL}" "gerrit $*"
 }
 
-function gpush {
+function gpush() {
     declare -a PARAMS=("${@}")
     local BRANCH
     BRANCH="${DEFAULT_AOSIP_BRANCH}"
@@ -105,15 +115,15 @@ function gpush {
     fi
 }
 
-function gzpush {
+function gzpush() {
     gpush "${DEFAULT_GZOSP_BRANCH}" bypass
 }
 
-function subspush {
+function subspush() {
     gpush "${DEFAULT_SUBS_BRANCH}" bypass
 }
 
-function gfpush {
+function gfpush() {
     local BRANCH
     BRANCH="${1}"
     if [ "${BRANCH}" == "" ]; then
@@ -122,7 +132,7 @@ function gfpush {
     git push gerrit HEAD:refs/heads/"${BRANCH}"
 }
 
-function gffpush {
+function gffpush() {
     BRANCH="${1}"
     if [ "${BRANCH}" == "" ]; then
         BRANCH="${DEFAULT_AOSIP_BRANCH}"
@@ -130,9 +140,9 @@ function gffpush {
     git push --force gerrit HEAD:refs/heads/"${BRANCH}"
 }
 
-function xg {
+function xg() {
     local PROJECT
-    if ! git rev-parse --git-dir &> /dev/null; then
+    if ! git rev-parse --git-dir &>/dev/null; then
         reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
         return 1
     fi
@@ -142,9 +152,8 @@ function xg {
     hook
 }
 
-function gz {
-    if ! git rev-parse --git-dir &> /dev/null
-    then
+function gz() {
+    if ! git rev-parse --git-dir &>/dev/null; then
         reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
         return 1
     fi
@@ -156,9 +165,8 @@ function gz {
     git remote add gerrit ssh://"${GZOSP_GERRIT_USER}"@${GZOSP_GERRIT_URL}:29418/"${PFX}${PROJECT}"
 }
 
-function subs {
-    if ! git rev-parse --git-dir &> /dev/null
-    then
+function subs() {
+    if ! git rev-parse --git-dir &>/dev/null; then
         reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
         return 1
     fi

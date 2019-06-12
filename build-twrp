@@ -5,26 +5,26 @@
 
 # Source common functions
 # shellcheck disable=SC1091
-SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 source "${SCRIPT_DIR}"/common
 
 TWRP_VERSION=""
 
 # Checks if the script is being run from the top of the
 # Android source tree
-function is_top {
+function is_top() {
     [ -d .repo/manifests/ ] || reportError "Not building inside an AOSP tree"
 }
 
 # Get the current TWRP version. Slightly hacky but works
-function set_twrp_ver {
+function set_twrp_ver() {
     if grep -q TW_MAIN_VERSION_STR bootable/recovery/variables.h; then
         TWRP_VERSION=$(grep TW_MAIN_VERSION_STR bootable/recovery/variables.h | grep -v TW_DEVICE_VERSION | awk '{print $3}' | sed 's/"//g')
     fi
 }
 
 # Set final TWRP version
-function set_vars {
+function set_vars() {
     unset TW_DEVICE_VERSION
     set_twrp_ver
     if [ "${TWRP_VERSION}" == "" ]; then
@@ -40,12 +40,12 @@ function set_vars {
 
 }
 
-function check_device {
+function check_device() {
     [[ "$(find device -name vendorsetup.sh | cut -d / -f 3)" =~ ${DEVICE} ]] || reportError "No sources for device \"${DEVICE}\" could be found"
 }
 
 # Move teh files
-function setup_files {
+function setup_files() {
     if [ -f out/target/product/"${DEVICE}"/recovery.tar ]; then
         mv out/target/product/"${DEVICE}"/recovery.tar twrp-"${TW_REAL_VER}"-"${DEVICE}".tar
     elif [ -f out/target/product/"${DEVICE}"/recovery.img ]; then
@@ -56,7 +56,7 @@ function setup_files {
 }
 
 # Do the real build
-function build {
+function build() {
     is_top
     check_device
     echoText "Starting compilation"

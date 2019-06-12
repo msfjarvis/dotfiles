@@ -4,25 +4,25 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 # Source common functions
-SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 source "${SCRIPT_DIR}"/common
 
 # Send a markdown encoded Telegram message
-function tgm {
+function tgm() {
     local CHAT_ID
     CHAT_ID="${2}"
     [ "${2}" == "" ] && CHAT_ID="${MSF_TG_ID}"
     curl -F chat_id="${CHAT_ID}" -F parse_mode="markdown" -F disable_web_page_preview="true" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" >/dev/null 2>&1
 }
 
-function tgcow {
+function tgcow() {
     local CHAT_ID="${1}"
     [ -z "${CHAT_ID}" ] && CHAT_ID="${OP3_CAESIUM_CHAT_ID}"
     shift
     tgm "\`$(cowsay "${@}")\`" "${CHAT_ID}"
 }
 
-function tgpaste {
+function tgpaste() {
     local MESSAGE LINK
     [ -f "${1:?}" ] || return
     LINK=$(hastebin "${1}" "no")
@@ -32,7 +32,7 @@ function tgpaste {
 
 # Upload a file to Telegram
 # SC2076: Don't quote rhs of =~, it'll match literally rather than as a regex.
-function tg {
+function tg() {
     local CHAT_ID
     local CAPTION
     CAPTION="${3}"
@@ -48,7 +48,7 @@ function tg {
 }
 
 # Upload a file to transfer.sh, and send the link to telegram
-function ttg {
+function ttg() {
     [ ! -f "${1:?}" ] && return 1
     URL=$(transfer "${1}")
     [ -z "${URL}" ] && return 1

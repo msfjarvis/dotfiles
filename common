@@ -18,17 +18,17 @@ export CL_BOLD CL_INV CL_RED CL_RST CL_YLW CL_BLUE
 
 # Prints a formatted header to let the user know what's being done
 # SC2034: i appears unused. Verify it or export it.
-function echoText {
+function echoText() {
     echo -e "${CL_RED}"
     echo -e "${CL_BOLD}"
-    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
+    echo -e "====$(for i in $(seq ${#1}); do echo -e "=\c"; done)===="
     echo -e "==  ${1}  =="
-    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; done )===="
+    echo -e "====$(for i in $(seq ${#1}); do echo -e "=\c"; done)===="
     echo -e "${CL_RST}"
 }
 
 # Prints an error in bold red
-function reportError {
+function reportError() {
     echo -e ""
     echo -e "${CL_RED}${1}${CL_RST}"
     if [ -z "${2}" ]; then
@@ -38,7 +38,7 @@ function reportError {
 }
 
 # Prints a warning in bold yellow
-function reportWarning {
+function reportWarning() {
     echo -e ""
     echo -e "${CL_YLW}${1}${CL_RST}"
     if [ -z "${2}" ]; then
@@ -48,26 +48,35 @@ function reportWarning {
 
 # Prints the success banner
 # SC2034: i appears unused. Verify it or export it.
-function reportSuccess {
+function reportSuccess() {
     echo -e "${CL_GRN}"
     echo -e "${CL_BOLD}"
-    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; echo "${i}" >/dev/null; done )===="
+    echo -e "====$(for i in $(seq ${#1}); do
+        echo -e "=\c"
+        echo "${i}" >/dev/null
+    done)===="
     echo -e "==  ${1}  =="
-    echo -e "====$( for i in $( seq ${#1} ); do echo -e "=\c"; echo "${i}" >/dev/null; done )===="
+    echo -e "====$(for i in $(seq ${#1}); do
+        echo -e "=\c"
+        echo "${i}" >/dev/null
+    done)===="
     echo -e "${CL_RST}"
 }
 
-function banner {
+function banner() {
     local s=("$@") b w
     echo -e "${CL_RED}"
     echo -e "${CL_BOLD}"
     for l in "${s[@]}"; do
-      ((w<${#l})) && { b="$l"; w="${#l}"; }
+        ((w < ${#l})) && {
+            b="$l"
+            w="${#l}"
+        }
     done
     echo "##${b//?/#}##
 # ${b//?/ } #"
     for l in "${s[@]}"; do
-      printf '# %*s #\n' "-$w" "$l"
+        printf '# %*s #\n' "-$w" "$l"
     done
     echo "# ${b//?/ } #
 ##${b//?/#}##"

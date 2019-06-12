@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 # Source common functions
-SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 source "${SCRIPT_DIR}"/aliases
 source "${SCRIPT_DIR}"/apps
 source "${SCRIPT_DIR}"/common
@@ -14,38 +14,38 @@ source "${SCRIPT_DIR}"/server
 source "${SCRIPT_DIR}"/system
 source "${SCRIPT_DIR}"/telegram
 
-function reload {
+function reload() {
     source ~/.bashrc
 }
 
-function lolsay {
+function lolsay() {
     cowsay "${@}" | lolcat
 }
 
-function foreversay {
+function foreversay() {
     until ! lolsay "${@}"; do sleep 0; done
 }
 
-function encrypt {
+function encrypt() {
     [ -z "${1}" ] && return
     gpg --encrypt --output "$(basename "${1}")".gpg --recipient "msfjarvis@gmail.com" "${1}"
 }
 
 # Server tooling
-function serverconnect {
+function serverconnect() {
     ssh horbis@aosiprom.com
 }
 
-function backup {
+function backup() {
     adb-sync --reverse /sdcard/* ~/git-repos/backups/
 }
 
-function cloc {
+function cloc() {
     find "${1:-.}" -type f -print0 | xargs -0 wc -l
 }
 
 # Random utility tooling
-function weather {
+function weather() {
     if [ "$(tput cols)" -lt 125 ]; then # 125 is min size for correct display
         curl "wttr.in/~${1:-Ghaziabad}?0"
     else
@@ -53,46 +53,46 @@ function weather {
     fi
 }
 
-function reboot {
-  echo "Do you really wanna reboot??"
-  read -r confirmation
-  case "${confirmation}" in
-      'y'|'Y'|'yes') exec "$(command -v reboot)" ;;
-      *) ;;
-  esac
+function reboot() {
+    echo "Do you really wanna reboot??"
+    read -r confirmation
+    case "${confirmation}" in
+    'y' | 'Y' | 'yes') exec "$(command -v reboot)" ;;
+    *) ;;
+    esac
 }
 
 function tab2space() {
-  find . -type f -not -iwholename '.git' -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
+    find . -type f -not -iwholename '.git' -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
 }
 
 function d2u() {
-  find . -type f -not -iwholename '.git' -exec dos2unix {} \;
+    find . -type f -not -iwholename '.git' -exec dos2unix {} \;
 }
 
 function whitespace() {
-  find . -type f -not -iwholename '.git' -print0 | xargs -0 perl -pi -e 's/ +$//'
+    find . -type f -not -iwholename '.git' -print0 | xargs -0 perl -pi -e 's/ +$//'
 }
 
 # Kernel stuff
-function kgrep {
+function kgrep() {
     find "${2:-.}" -name .git -prune -o -path ./out -prune -o -regextype posix-egrep \
         -iregex '(.*\/Makefile|.*\/Kconfig.*|.*\/caesium_defconfig)' -type f \
         -exec grep --color -n "$1" {} +
 }
 
-function apply_patches {
-    local KERN_VER; KERN_VER="3.18"
+function apply_patches() {
+    local KERN_VER
+    KERN_VER="3.18"
     [ -z "${1}" ] || KERN_VER="${1}"
     local PATCH_DIR="../stable-queue/queue-${KERN_VER}"
     [ ! -d "${PATCH_DIR}" ] && echo "No patches in queue" && return
-    grep -v '^ *#' < "${PATCH_DIR}/series" | while IFS= read -r patch
-    do
+    grep -v '^ *#' <"${PATCH_DIR}/series" | while IFS= read -r patch; do
         until git am "${PATCH_DIR}"/"${patch}"; do reportError "Patch ${patch} failed to apply"; done
     done
 }
 
-function rebuildtc {
+function rebuildtc() {
     cd /mnt/mediahell/build-tools-gcc || exit 1
     echoText "Building ARM GCC 8.x"
     ./build -a arm -s gnu -v 8 -V -tr
@@ -110,8 +110,9 @@ function rebuildtc {
     fi
 }
 
-function fillccache {
-    local START_TIME END_TIME BASE_DIR CUR_DIR; START_TIME=$(date +"%s")
+function fillccache() {
+    local START_TIME END_TIME BASE_DIR CUR_DIR
+    START_TIME=$(date +"%s")
     declare -a DEVICES=("wahoo")
     BASE_DIR=/home/msfjarvis/git-repos/halogenOS
     CUR_DIR="$(pwd)"
@@ -124,19 +125,19 @@ function fillccache {
     done
     cd "${CUR_DIR}" || return 1
     END_TIME="$(date +"%s")"
-    DIFF="$(bc <<< "${END_TIME} - ${START_TIME}")"
-    echoText "Total time elapsed: $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds."
+    DIFF="$(bc <<<"${END_TIME} - ${START_TIME}")"
+    echoText "Total time elapsed: $(bc <<<"${DIFF} / 60") minute(s) and $(bc <<<"${DIFF} % 60") seconds."
 }
 
-function gettcvers {
+function gettcvers() {
     cd "${HOME}"/git-repos/halogenOS/toolchains || return 1
     for item in arm-linux-gnueabi-8.x aarch64-linux-gnu-8.x; do
         ./"$item"/bin/"${item/-8.x/}"-gcc --version
     done
-    cd - > /dev/null || return 1
+    cd - >/dev/null || return 1
 }
 
-function stableprep {
+function stableprep() {
     local JOBS
     JOBS="-j$(nproc --all)"
     ARCH=x86_64 make x86_64_defconfig "${JOBS}"
@@ -145,11 +146,11 @@ function stableprep {
     find "${1:?}" -name "*.o" -exec rm -v {} \;
 }
 
-function findJ {
+function findJ() {
     ag -ia "${1}" | grep java | cut -f 1 -d ':' | uniq
 }
 
-function fao {
+function fao() {
     if [ -z "${1}" ]; then
         echoText "Supply a filename moron"
         return

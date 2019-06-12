@@ -6,27 +6,30 @@
 CURRENT_DEVICE=walleye
 
 # Source common functions
-SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/common"
 
-function am {
+function am() {
     adb shell am "${@}"
 }
 
-function pm {
+function pm() {
     adb shell pm "${@}"
 }
 
-function cmd {
+function cmd() {
     adb shell cmd "${@}"
 }
 
-function set_device {
+function set_device() {
     CURRENT_DEVICE="${1:?}"
 }
 
-function makeapk {
-    if [ ! -f "build.gradle" ] && [ ! -f "build.gradle.kts" ]; then { reportError "No gradle configuration found!"; return 1; }; fi
+function makeapk() {
+    if [ ! -f "build.gradle" ] && [ ! -f "build.gradle.kts" ]; then {
+        reportError "No gradle configuration found!"
+        return 1
+    }; fi
     local GRADLE COMMAND
     if [ -z "$(which gradle)" ]; then
         GRADLE="./gradlew"
@@ -49,37 +52,38 @@ function makeapk {
     "${GRADLE}" "${COMMAND}"
 }
 
-function pushthemetg {
+function pushthemetg() {
     tg "${1}" "${THEME_TESTERS_CHAT_ID}" "${2}"
 }
 
-function findapks {
-    local DIR; DIR="."
+function findapks() {
+    local DIR
+    DIR="."
     if [ ! -z "${1}" ]; then
         DIR="${1}"
     fi
     find "${DIR}" -name "*.apk"
 }
 
-function p2d {
-  adb-whyred shell mount system
-  local FINAL_PATH
-  FINAL_PATH=$(adb-whyred shell find /system -name "$(basename "${1}")")
-  echo "${FINAL_PATH}"
-  adb-whyred push "$1" "${FINAL_PATH}"
-  adb-whyred shell umount system
+function p2d() {
+    adb-whyred shell mount system
+    local FINAL_PATH
+    FINAL_PATH=$(adb-whyred shell find /system -name "$(basename "${1}")")
+    echo "${FINAL_PATH}"
+    adb-whyred push "$1" "${FINAL_PATH}"
+    adb-whyred shell umount system
 }
 
-function andromeda {
+function andromeda() {
     bash ~/git-repos/andromeda_startup_scripts/Linux/start_andromeda.sh
 }
 
-function fao {
+function fao() {
     if [ -z "${1}" ]; then echoText "Supply a filename moron" && return; fi
     if [ -z "${2}" ]; then nano -L "$(find . -name "${1}.*")"; else nano -L "$(find "${2}" -name "${1}.*")"; fi
 }
 
-function adbp {
+function adbp() {
     local RAW_PACKAGE_PATH
     RAW_PACKAGE_PATH="$(adb-"${CURRENT_DEVICE}" shell pm path "${1}")"
     if [ "${RAW_PACKAGE_PATH}" != "" ]; then

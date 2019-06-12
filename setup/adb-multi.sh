@@ -5,8 +5,9 @@
 
 source "${SCRIPT_DIR}/common"
 
-function setup_adb {
-    local CLONE_DIR; CLONE_DIR="/tmp/adb-multi";
+function setup_adb() {
+    local CLONE_DIR
+    CLONE_DIR="/tmp/adb-multi"
     if [ -d "${CLONE_DIR}" ]; then
         git -C "${CLONE_DIR}" pull origin master
     else

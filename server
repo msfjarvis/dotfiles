@@ -3,8 +3,11 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
-function syncdown {
-    [ -z "${LOCAL_SITE_MIRROR}" ] && { echo 'LOCAL_SITE_MIRROR not set!'; return 1; }
+function syncdown() {
+    [ -z "${LOCAL_SITE_MIRROR}" ] && {
+        echo 'LOCAL_SITE_MIRROR not set!'
+        return 1
+    }
     local LOCAL_DIR REMOTE_DIR CUSTOM_DIR
     declare -a CONFIGURATION=("-ahv" "--progress" "--delete" "--no-o" "--no-g")
     LOCAL_DIR="${LOCAL_SITE_MIRROR}"
@@ -25,8 +28,11 @@ function syncdown {
     rsync "${CONFIGURATION[@]}" "${CAESIUM_UPLOAD_HOST}:${REMOTE_DIR}/" "${LOCAL_DIR}"
 }
 
-function syncup {
-    [ -z "${LOCAL_SITE_MIRROR}" ] && { echo 'LOCAL_SITE_MIRROR not set!'; return 1; }
+function syncup() {
+    [ -z "${LOCAL_SITE_MIRROR}" ] && {
+        echo 'LOCAL_SITE_MIRROR not set!'
+        return 1
+    }
     local LOCAL_DIR REMOTE_DIR
     declare -a CONFIGURATION=("-ahv" "--progress" "--delete" "--no-o" "--no-g")
     LOCAL_DIR="${LOCAL_SITE_MIRROR}"

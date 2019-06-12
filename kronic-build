@@ -7,20 +7,21 @@
 trap 'exit 1' SIGINT SIGTERM
 
 # Source common functions
-SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/files
 source "${SCRIPT_DIR}"/server
 
 declare -a banner_items
 
-function handle_upload {
-    local FILE; FILE="${1}"
+function handle_upload() {
+    local FILE
+    FILE="${1}"
     if [ -z "${LOCAL_SITE_MIRROR}" ]; then
         upload "${FILE}"
     else
-        upload "${FILE}" & # Moving along
-        echo "{ \"response\": [ { \"datetime\": $(grep ro\.build\.date\.utc "${OUT}"/system/build.prop | cut -d= -f2), \"filename\": \"${AOSIP_VERSION}.zip\", \"id\": \"$( sha256sum "${OUT}"/"${AOSIP_VERSION}".zip | cut -d ' ' -f1 )\", \"romtype\": \"${AOSIP_BUILDTYPE}\", \"size\": $(stat -c%s "${OUT}"/"${AOSIP_VERSION}".zip ), \"url\": \"https://download.msfjarvis.website/aosip/${TARGET_DEVICE}/${AOSIP_VERSION}.zip\", \"version\": \"9.0\"  }]}" > updater.json
+        upload "${FILE}" &# Moving along
+        echo "{ \"response\": [ { \"datetime\": $(grep ro\.build\.date\.utc "${OUT}"/system/build.prop | cut -d= -f2), \"filename\": \"${AOSIP_VERSION}.zip\", \"id\": \"$(sha256sum "${OUT}"/"${AOSIP_VERSION}".zip | cut -d ' ' -f1)\", \"romtype\": \"${AOSIP_BUILDTYPE}\", \"size\": $(stat -c%s "${OUT}"/"${AOSIP_VERSION}".zip), \"url\": \"https://download.msfjarvis.website/aosip/${TARGET_DEVICE}/${AOSIP_VERSION}.zip\", \"version\": \"9.0\"  }]}" >updater.json
         mkdir -p "${LOCAL_SITE_MIRROR}/aosip/${TARGET_DEVICE}/"
         cp "${FILE}" "${LOCAL_SITE_MIRROR}/aosip/${TARGET_DEVICE}/"
         mv updater.json "${LOCAL_SITE_MIRROR}/aosip/${TARGET_DEVICE}/"
@@ -28,7 +29,7 @@ function handle_upload {
     fi
 }
 
-function build {
+function build() {
     local ZIP
     . build/envsetup.sh
     [ "${SKIP_SYNC}" ] || repo sync -c --force-sync -j"$(nproc --all)" --no-tags --detach
@@ -47,10 +48,17 @@ function build {
 cd "${HOME}"/aosip || exit 1
 
 while getopts ":cd:hnsu" opt; do
-  case "${opt}" in
-     c) CLEAN=true; banner_items+=("Building clean") ;;
-     d) TARGET_DEVICE="${OPTARG}"; banner_items+=("Building for ${TARGET_DEVICE}") ;;
-     h) echo '
+    case "${opt}" in
+    c)
+        CLEAN=true
+        banner_items+=("Building clean")
+        ;;
+    d)
+        TARGET_DEVICE="${OPTARG}"
+        banner_items+=("Building for ${TARGET_DEVICE}")
+        ;;
+    h)
+        echo '
 usage: kronic-build [-h] [-c] [-d DEVICE] [-n] [-s]
 
 optional arguments:
@@ -61,12 +69,22 @@ optional arguments:
   -s        Skip syncing
   -u        Upload build to Google Drive
 '
-        exit 0 ;;
-     n) NO_REPOPICK=true; banner_items+=("Skipping repopick") ;;
-     s) SKIP_SYNC=true; banner_items+=("Skipping sync") ;;
-     u) UPLOAD_BUILD=true; banner_items+=("Will upload finished build") ;;
-     *) reportWarning "Invalid option: -${OPTARG}" >&2 ;;
-   esac
+        exit 0
+        ;;
+    n)
+        NO_REPOPICK=true
+        banner_items+=("Skipping repopick")
+        ;;
+    s)
+        SKIP_SYNC=true
+        banner_items+=("Skipping sync")
+        ;;
+    u)
+        UPLOAD_BUILD=true
+        banner_items+=("Will upload finished build")
+        ;;
+    *) reportWarning "Invalid option: -${OPTARG}" >&2 ;;
+    esac
 done
 
 AOSIP_VERSION=AOSiP-9.0-"${AOSIP_BUILDTYPE:-Pizza}"-"${TARGET_DEVICE:?}"-$(date +%Y%m%d)

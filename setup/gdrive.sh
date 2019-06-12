@@ -6,8 +6,9 @@
 source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/gitshit
 
-function check_and_install_gdrive {
-    local GDRIVE ARTIFACT_NAME; ARTIFACT_NAME="gdrive-linux-x64"
+function check_and_install_gdrive() {
+    local GDRIVE ARTIFACT_NAME
+    ARTIFACT_NAME="gdrive-linux-x64"
     echoText "Checking and installing gdrive"
     GDRIVE="$(command -v gdrive)"
     if [ -z "${GDRIVE}" ]; then
@@ -24,9 +25,9 @@ function check_and_install_gdrive {
     fi
 }
 
-function install_gdrive {
-	aria2c "$(get_release_assets MSF-Jarvis/gdrive | grep ${ARTIFACT_NAME})" --allow-overwrite=true -d ~/bin -o gdrive
-	chmod +x ~/bin/gdrive
+function install_gdrive() {
+    aria2c "$(get_release_assets MSF-Jarvis/gdrive | grep ${ARTIFACT_NAME})" --allow-overwrite=true -d ~/bin -o gdrive
+    chmod +x ~/bin/gdrive
 }
 
 check_and_install_gdrive

@@ -6,7 +6,7 @@
 source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/gitshit
 
-function check_and_install_hub {
+function check_and_install_hub() {
     local INSTALLED_VERSION HUB HUB_ARCH
     echoText "Checking and installing hub"
     HUB="$(command -v hub)"
@@ -25,12 +25,12 @@ function check_and_install_hub {
     fi
 }
 
-function install_hub {
-	aria2c "$(get_release_assets github/hub | grep ${HUB_ARCH})" -o hub.tgz
-	mkdir -p hub
-	tar -xf hub.tgz -C hub
-	sudo ./hub/*/install --prefix=/usr/local/
-	rm -rf hub/ hub.tgz
+function install_hub() {
+    aria2c "$(get_release_assets github/hub | grep ${HUB_ARCH})" -o hub.tgz
+    mkdir -p hub
+    tar -xf hub.tgz -C hub
+    sudo ./hub/*/install --prefix=/usr/local/
+    rm -rf hub/ hub.tgz
 }
 
 check_and_install_hub

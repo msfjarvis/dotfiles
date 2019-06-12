@@ -6,8 +6,9 @@
 source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/gitshit
 
-function check_and_install_dsf {
-    local DFS INSTALLED_VERSION LATEST_VERSION; DFS="$(command -v diff-so-fancy)"
+function check_and_install_dsf() {
+    local DFS INSTALLED_VERSION LATEST_VERSION
+    DFS="$(command -v diff-so-fancy)"
     echoText "Checking and installing 'diff-so-fancy'"
     if [ -z "${DFS}" ]; then
         install_dsf
@@ -23,7 +24,7 @@ function check_and_install_dsf {
     fi
 }
 
-function install_dsf {
+function install_dsf() {
     sudo aria2c 'https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy' --allow-overwrite=true -d /usr/local/bin -o diff-so-fancy
     sudo chmod +x /usr/local/bin/diff-so-fancy
 }

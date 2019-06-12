@@ -6,8 +6,9 @@
 source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/gitshit
 
-function check_and_install_bat {
-    local BAT BAT_ARTIFACT LOCAL_BAT_VERSION REMOTE_BAT_VERSION; BAT="$(command -v bat)"
+function check_and_install_bat() {
+    local BAT BAT_ARTIFACT LOCAL_BAT_VERSION REMOTE_BAT_VERSION
+    BAT="$(command -v bat)"
     echoText "Checking and installing bat"
     if [ -z "${BAT}" ]; then
         install_bat
@@ -23,8 +24,9 @@ function check_and_install_bat {
     fi
 }
 
-function install_bat {
-    local BAT_ARTIFACT; BAT_ARTIFACT="bat_.*_amd64.deb"
+function install_bat() {
+    local BAT_ARTIFACT
+    BAT_ARTIFACT="bat_.*_amd64.deb"
     aria2c "$(get_release_assets sharkdp/bat | grep "${BAT_ARTIFACT}")" -o bat.deb
     sudo dpkg -i bat.deb
     cd "${SCRIPT_DIR}" || return 1

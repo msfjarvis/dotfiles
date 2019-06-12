@@ -6,8 +6,9 @@
 source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/gitshit
 
-function check_and_install_fd {
-    local FD FD_ARTIFACT LOCAL_FD_VERSION REMOTE_FD_VERSION; FD="$(command -v fd)"
+function check_and_install_fd() {
+    local FD FD_ARTIFACT LOCAL_FD_VERSION REMOTE_FD_VERSION
+    FD="$(command -v fd)"
     echoText "Checking and installing fd"
     if [ -z "${FD}" ]; then
         install_fd
@@ -23,8 +24,9 @@ function check_and_install_fd {
     fi
 }
 
-function install_fd {
-    local FD_ARTIFACT; FD_ARTIFACT="fd_.*_amd64.deb"
+function install_fd() {
+    local FD_ARTIFACT
+    FD_ARTIFACT="fd_.*_amd64.deb"
     aria2c "$(get_release_assets sharkdp/fd | grep "${FD_ARTIFACT}")" -o fd.deb
     sudo dpkg -i fd.deb
     cd "${SCRIPT_DIR}" || return 1

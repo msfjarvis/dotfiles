@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 # Source common functions
-SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 source "${SCRIPT_DIR}"/common
 
 # Resources
@@ -12,72 +12,76 @@ source "${SCRIPT_DIR}"/common
 DEFCONFIG="${DEFCONFIG:-$(hostname)_defconfig}"
 
 # Wrapper function around make to ensure all the variables go through
-function make_wrapper {
-    local CC HOSTCC
-    declare -a MAKE_FLAGS=("ARCH=x86" "SUBARCH=x86_64")
-    CC='ccache gcc-8'; HOSTCC='ccache gcc-8'
-    [ -z "${CLANG}" ] || { CC='ccache clang'; HOSTCC='ccache clang'; }
-    make CC="${CC}" \
-         HOSTCC="${HOSTCC}" \
-         "${MAKE_FLAGS[@]}" \
-         -j"$(nproc --all)" \
-         "${@}"
+function make_wrapper() {
+  local CC HOSTCC
+  declare -a MAKE_FLAGS=("ARCH=x86" "SUBARCH=x86_64")
+  CC='ccache gcc-8'
+  HOSTCC='ccache gcc-8'
+  [ -z "${CLANG}" ] || {
+    CC='ccache clang'
+    HOSTCC='ccache clang'
+  }
+  make CC="${CC}" \
+    HOSTCC="${HOSTCC}" \
+    "${MAKE_FLAGS[@]}" \
+    -j"$(nproc --all)" \
+    "${@}"
 }
 
 # Duh
-function make_kernel {
-    make_defconfig
-    if [ "${MODULE}" ]; then
-        make_wrapper "${MODULE}"
-    else
-        make_wrapper
-        if [ "${INSTALL}" ]; then
-            make_wrapper headers_install
-            sudo make -j"$(nproc --all)" modules_install
-            sudo make -j"$(nproc --all)" install
-        fi
+function make_kernel() {
+  make_defconfig
+  if [ "${MODULE}" ]; then
+    make_wrapper "${MODULE}"
+  else
+    make_wrapper
+    if [ "${INSTALL}" ]; then
+      make_wrapper headers_install
+      sudo make -j"$(nproc --all)" modules_install
+      sudo make -j"$(nproc --all)" install
     fi
+  fi
 }
 
 # Called by make_kernel, used to trap defconfig regen events
-function make_defconfig {
-    if [ "${CLEAN}" ]; then make_wrapper clean; fi
-    make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
-    if [ "${REGEN_DEFCONFIG}" ]; then
-        make_wrapper savedefconfig 1>/dev/null 2>&1
-        mv "$(pwd)"/defconfig arch/x86/configs/"${DEFCONFIG}"
-        echoText "Regenerated defconfig successfully"
-        exit 0
-    fi
+function make_defconfig() {
+  if [ "${CLEAN}" ]; then make_wrapper clean; fi
+  make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
+  if [ "${REGEN_DEFCONFIG}" ]; then
+    make_wrapper savedefconfig 1>/dev/null 2>&1
+    mv "$(pwd)"/defconfig arch/x86/configs/"${DEFCONFIG}"
+    echoText "Regenerated defconfig successfully"
+    exit 0
+  fi
 }
 
 while getopts ":cim:r" opt; do
-    case $opt in
-      c)
-        echoText "Building clean" >&2
-        CLEAN=true
-        ;;
-      i)
-        echoText "Will install the compiled kernel" >&2
-        INSTALL=true
-        ;;
-      m)
-        MODULE="${OPTARG}"
-        echoText "Building module ${MODULE:?}" >&2
-        ;;
-      r)
-        echoText "Regenerating defconfig" >&2
-        REGEN_DEFCONFIG=true
-        ;;
-      \?)
-        reportWarning "Invalid option: -${OPTARG}" >&2
-        ;;
-    esac
+  case $opt in
+  c)
+    echoText "Building clean" >&2
+    CLEAN=true
+    ;;
+  i)
+    echoText "Will install the compiled kernel" >&2
+    INSTALL=true
+    ;;
+  m)
+    MODULE="${OPTARG}"
+    echoText "Building module ${MODULE:?}" >&2
+    ;;
+  r)
+    echoText "Regenerating defconfig" >&2
+    REGEN_DEFCONFIG=true
+    ;;
+  \?)
+    reportWarning "Invalid option: -${OPTARG}" >&2
+    ;;
+  esac
 done
 
 DATE_START=$(date +"%s")
 make_kernel
 DATE_END=$(date +"%s")
-DIFF="$(bc <<< "${DATE_END} - ${DATE_START}")"
+DIFF="$(bc <<<"${DATE_END} - ${DATE_START}")"
 
-reportWarning "Time: $(bc <<< "${DIFF} / 60") minute(s) and $(bc <<< "${DIFF} % 60") seconds."
+reportWarning "Time: $(bc <<<"${DIFF} / 60") minute(s) and $(bc <<<"${DIFF} % 60") seconds."

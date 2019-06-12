@@ -4,28 +4,31 @@
 # SPDX-License-Identifier: GPL-3.0-only
 source "${SCRIPT_DIR}"/server
 
-[ -z "${GPG_TTY}" ] && { GPG_TTY="$(tty)"; export GPG_TTY; }
+[ -z "${GPG_TTY}" ] && {
+    GPG_TTY="$(tty)"
+    export GPG_TTY
+}
 
 # shellcheck disable=SC2009
 # Consider using pgrep instead of grepping ps output.
 # We're directly grepping ps output to handle cases like android-studio, where
 # a new java process is forked off after the execution of the initial shell script
 # and this the 'pgrep studio' command does not return all the processes.
-function endtask {
+function endtask() {
     for pid in $(ps -ef | grep "${1:?}" | awk '{print $2}'); do kill -9 "${pid}" 2>/dev/null; done
 }
 
 # shellcheck disable=SC2154
 # Complains about the debian_chroot variable not being defined
 # which is supplied internally.
-function ps1 {
+function ps1() {
     case "${1}" in
-    "short"|"compact") export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\W\[\033[00m\]$(__git_ps1 " (%s)") \$ ' ;;
+    "short" | "compact") export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\W\[\033[00m\]$(__git_ps1 " (%s)") \$ ' ;;
     *) export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 " (%s)") \$ ' ;;
     esac
 }
 
-function hostupdate {
+function hostupdate() {
     local DIR
     DIR="$(pwd)"
     cd ~/git-repos/hosts || return 1
@@ -33,15 +36,15 @@ function hostupdate {
     python msfUpdateHostsFile.py -n
     deactivate
     if [ -z "${1}" ]; then
-      cp hosts_msf "${LOCAL_SITE_MIRROR}"/adblock/hosts
-      syncup adblock
+        cp hosts_msf "${LOCAL_SITE_MIRROR}"/adblock/hosts
+        syncup adblock
     fi
     sudo cp -v hosts_msf /etc/hosts
     sudo /etc/init.d/dns-clean start
     cd "${DIR}" || return 1
 }
 
-function dnsmasqupdate {
+function dnsmasqupdate() {
     cd ~/git-repos/adnix || return 1
     make generate
     cp adblock.list "${LOCAL_SITE_MIRROR}"/adblock/adblock.list
@@ -49,14 +52,15 @@ function dnsmasqupdate {
     cd - || return 1
 }
 
-function maintenance {
+function maintenance() {
     sudo apt update
     sudo apt upgrade -y
     sudo apt autoremove -y
 }
 
-function battinfo {
-    local BASE; BASE=/sys/class/power_supply/BAT0/
+function battinfo() {
+    local BASE
+    BASE=/sys/class/power_supply/BAT0/
     [ ! -f "${BASE}" ] && return
     [ -d "${BASE}" ] || return
     declare -a ITEMS=("capacity_level:Battery_status" "charge_now:Current_charge" "capacity:Battery_percentage" "status:Status")
@@ -68,30 +72,32 @@ function battinfo {
     done
 }
 
-function cpuinfo {
+function cpuinfo() {
     grep -E '^model name|^cpu MHz' /proc/cpuinfo
 }
 
-function clip {
+function clip() {
     [ "$(display_exists)" ] || return
     xclip -rmlastnl -selection clipboard -i "${1:?}"
 }
 
-function display_exists {
-    if xhost >& /dev/null ; then echo "1"; fi
+function display_exists() {
+    if xhost >&/dev/null; then echo "1"; fi
 }
 
-function wgup {
-    local region; region="${1}"
+function wgup() {
+    local region
+    region="${1}"
     sudo wg-quick up mullvad-"${region:?}"
 }
 
-function wgdown {
-    local region; region="${1}"
+function wgdown() {
+    local region
+    region="${1}"
     sudo wg-quick down mullvad-"${region:?}"
 }
 
-function venv {
+function venv() {
     if [ ! -d venv ]; then
         python"${1:-3}" -m virtualenv --no-site-packages venv
     fi

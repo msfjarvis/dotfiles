@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 # Source common functions
-SCRIPT_DIR="$(cd "$( dirname "$( readlink -f "${BASH_SOURCE[0]}" )" )" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/system
 
@@ -36,20 +36,20 @@ echoText 'Installing nanorc'
 cp -v "${SCRIPT_DIR}"/.nanorc ~/.nanorc
 
 echoText "Moving credentials"
-gpg --decrypt "${SCRIPT_DIR}"/.secretcreds.gpg > ~/.secretcreds
+gpg --decrypt "${SCRIPT_DIR}"/.secretcreds.gpg >~/.secretcreds
 
 # SC2076: Don't quote rhs of =~, it'll match literally rather than as a regex.
 # SC2088: Note that ~ does not expand in quotes.
 # shellcheck disable=SC2076,SC2088
 if [[ ! "${PATH}" =~ "~/bin" ]]; then
     reportWarning "~/bin is not in PATH, appending the export to bashrc"
-    echo $'\nexport PATH="~/bin":$PATH' >> ~/.bashrc
+    echo $'\nexport PATH="~/bin":$PATH' >>~/.bashrc
 fi
 
 ret="$(grep -qF "source ${SCRIPT_DIR}/functions" ~/.bashrc)"
 if [ "${ret}" ]; then
     reportWarning "functions is not sourced in the bashrc, appending"
-    echo "source ${SCRIPT_DIR}/functions" >> ~/.bashrc
+    echo "source ${SCRIPT_DIR}/functions" >>~/.bashrc
 fi
 
 echoText "Installing scripts"
@@ -68,9 +68,9 @@ cp "${SCRIPT_DIR}/.gitconfig" ~/.gitconfig
 for ITEM in $(find gitconfig_fragments -type f); do
     DECRYPTED="${ITEM/.gpg/}"
     rm -f "${DECRYPTED}" 2>/dev/null
-    gpg --decrypt "${ITEM}" > "${DECRYPTED}"
+    gpg --decrypt "${ITEM}" >"${DECRYPTED}"
     [ ! -f "${DECRYPTED}" ] && break
-    cat "${DECRYPTED}" >> ~/.gitconfig
+    cat "${DECRYPTED}" >>~/.gitconfig
     rm "${DECRYPTED}"
 done
 

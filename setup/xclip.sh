@@ -8,7 +8,7 @@ trap 'rm -rf /tmp/xclip' INT TERM EXIT
 source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/gitshit
 
-function install_xclip {
+function install_xclip() {
     local XCLIP_VER LATEST_XCLIP_VER SCRIPT_DIR
     echoText "Checking and installing xclip"
     XCLIP_VER="$(xclip -version 2>&1 | head -n1 | awk '{print $3}')"
