@@ -31,17 +31,8 @@ function encrypt() {
     gpg --encrypt --output "$(basename "${1}")".gpg --recipient "msfjarvis@gmail.com" "${1}"
 }
 
-# Server tooling
-function serverconnect() {
-    ssh horbis@aosiprom.com
-}
-
 function backup() {
     adb-sync --reverse /sdcard/* ~/git-repos/backups/
-}
-
-function cloc() {
-    fd . --type f | xargs wc -l
 }
 
 # Random utility tooling
@@ -80,16 +71,6 @@ function kgrep() {
     fd '(Makefile|Kconfig.*|.*_defconfig)' "${2:-.}" --type f -x grep --color -n "$1" {} \;
 }
 
-function apply_patches() {
-    local KERN_VER
-    KERN_VER="3.18"
-    [ -z "${1}" ] || KERN_VER="${1}"
-    local PATCH_DIR="../stable-queue/queue-${KERN_VER}"
-    [ ! -d "${PATCH_DIR}" ] && echo "No patches in queue" && return
-    grep -v '^ *#' <"${PATCH_DIR}/series" | while IFS= read -r patch; do
-        until git am "${PATCH_DIR}"/"${patch}"; do reportError "Patch ${patch} failed to apply"; done
-    done
-}
 
 function rebuildtc() {
     cd /mnt/mediahell/build-tools-gcc || exit 1
@@ -134,19 +115,6 @@ function gettcvers() {
         ./"$item"/bin/"${item/-8.x/}"-gcc --version
     done
     cd - >/dev/null || return 1
-}
-
-function stableprep() {
-    local JOBS
-    JOBS="-j$(nproc --all)"
-    ARCH=x86_64 make x86_64_defconfig "${JOBS}"
-    make prepare "${JOBS}"
-    make allyesconfig
-    fd "*.o" "${1:?}" -x rm -v
-}
-
-function findJ() {
-    ag -ia "${1}" | grep java | cut -f 1 -d ':' | uniq
 }
 
 function fao() {

@@ -9,18 +9,6 @@ CURRENT_DEVICE=walleye
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/common"
 
-function am() {
-    adb shell am "${@}"
-}
-
-function pm() {
-    adb shell pm "${@}"
-}
-
-function cmd() {
-    adb shell cmd "${@}"
-}
-
 function set_device() {
     CURRENT_DEVICE="${1:?}"
 }
