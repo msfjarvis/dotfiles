@@ -27,11 +27,11 @@ function check_and_install_fd() {
 function install_fd() {
     local FD_ARTIFACT
     FD_ARTIFACT="fd_.*_amd64.deb"
+    cd /tmp || return 1
     aria2c "$(get_release_assets sharkdp/fd | grep "${FD_ARTIFACT}")" -o fd.deb
     sudo dpkg -i fd.deb
-    cd "${SCRIPT_DIR}" || return 1
     rm -rf fd.deb
-
+    cd "${SCRIPT_DIR}" || return 1
 }
 
 check_and_install_fd

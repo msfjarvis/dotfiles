@@ -27,11 +27,11 @@ function check_and_install_bat() {
 function install_bat() {
     local BAT_ARTIFACT
     BAT_ARTIFACT="bat_.*_amd64.deb"
+    cd /tmp || return 1
     aria2c "$(get_release_assets sharkdp/bat | grep "${BAT_ARTIFACT}")" -o bat.deb
     sudo dpkg -i bat.deb
-    cd "${SCRIPT_DIR}" || return 1
     rm -rf bat.deb
-
+    cd "${SCRIPT_DIR}" || return 1
 }
 
 check_and_install_bat
