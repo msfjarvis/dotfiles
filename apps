@@ -66,11 +66,6 @@ function andromeda() {
     bash ~/git-repos/andromeda_startup_scripts/Linux/start_andromeda.sh
 }
 
-function fao() {
-    if [ -z "${1}" ]; then echoText "Supply a filename moron" && return; fi
-    if [ -z "${2}" ]; then nano -L "$(fd ".*$" .)"; else nano -L "$(fd ".*$" "${2}")"; fi
-}
-
 function adbp() {
     local RAW_PACKAGE_PATH
     RAW_PACKAGE_PATH="$(adb-"${CURRENT_DEVICE}" shell pm path "${1}")"
