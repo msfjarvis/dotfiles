@@ -14,6 +14,9 @@ function syncdown() {
     REMOTE_DIR="${CAESIUM_UPLOAD_PATH/caesium/}"
     if [ ! -z "${1}" ]; then
         CUSTOM_DIR="$(basename "${1}")"
+        if [ "${CUSTOM_DIR}" == "." ]; then
+            CUSTOM_DIR="$(basename "$(pwd)")"
+        fi
         if [ -d "${LOCAL_SITE_MIRROR}/${CUSTOM_DIR}" ]; then
             LOCAL_DIR="${LOCAL_DIR}/${CUSTOM_DIR}"
             REMOTE_DIR="${REMOTE_DIR}${CUSTOM_DIR}"
@@ -39,6 +42,9 @@ function syncup() {
     REMOTE_DIR="${CAESIUM_UPLOAD_PATH/caesium/}"
     if [ ! -z "${1}" ]; then
         CUSTOM_DIR="$(basename "${1}")"
+        if [ "${CUSTOM_DIR}" == "." ]; then
+            CUSTOM_DIR="$(basename "$(pwd)")"
+        fi
         if [ -d "${LOCAL_SITE_MIRROR}/${CUSTOM_DIR}" ]; then
             LOCAL_DIR="${LOCAL_DIR}/${CUSTOM_DIR}"
             REMOTE_DIR="${REMOTE_DIR}${CUSTOM_DIR}"
