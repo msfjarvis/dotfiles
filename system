@@ -61,14 +61,16 @@ function maintenance() {
 function battinfo() {
     local BASE
     BASE=/sys/class/power_supply/BAT0/
-    [ ! -f "${BASE}" ] && return
-    [ -d "${BASE}" ] || return
-    declare -a ITEMS=("capacity_level:Battery_status" "charge_now:Current_charge" "capacity:Battery_percentage" "status:Status")
+    [ ! -d "${BASE}" ] && {
+        reportWarning "${BASE} does not exist"
+        return
+    }
+    declare -a ITEMS=("capacity_level:Battery status" "charge_now:Current charge" "capacity:Battery percentage" "status:Status")
     for ITEM in "${ITEMS[@]}"; do
         NODE=$(echo "${ITEM}" | cut -d ':' -f 1)
         LABEL=$(echo "${ITEM}" | cut -d ':' -f 2)
         [ -f "${BASE}${NODE}" ] || continue
-        echo -e "${CL_RED}${LABEL/_/ }${CL_RST}: ${CL_YLW}$(cat "${BASE}${NODE}")${CL_RST}"
+        printf "${CL_RED}%s${CL_RST}: ${CL_YLW}%s${CL_RST}\n" "${LABEL}" "$(cat "${BASE}${NODE}")"
     done
 }
 
