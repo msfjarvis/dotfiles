@@ -72,5 +72,5 @@ for ITEM in $(fd -tf . gitconfig_fragments); do
 done
 
 if [[ "$*" =~ --all ]] && [ "$(display_exists)" ]; then
-    source ./setup/adb-multi.sh
+    source "${SCRIPT_DIR}"/setup/adb-multi.sh
 fi
