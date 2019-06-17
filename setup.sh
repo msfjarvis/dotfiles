@@ -36,7 +36,7 @@ echoText 'Installing nanorc'
 cp -v "${SCRIPT_DIR}"/.nanorc ~/.nanorc
 
 echoText "Moving credentials"
-gpg --decrypt "${SCRIPT_DIR}"/.secretcreds.gpg >~/.secretcreds
+gpg --decrypt "${SCRIPT_DIR}"/.secretcreds.gpg > ~/.secretcreds
 
 # SC2076: Don't quote rhs of =~, it'll match literally rather than as a regex.
 # SC2088: Note that ~ does not expand in quotes.
