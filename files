@@ -48,12 +48,12 @@ function transfer() {
     tmpfile=$(mktemp -t transferXXX)
     if tty -s; then
         basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
-        curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" 2>/dev/null >>"${tmpfile}"
+        curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" 2>/dev/null >> "${tmpfile}"
     else
-        curl --progress-bar --upload-file "-" "https://transfer.sh/$1" 2>/dev/null >>"${tmpfile}"
+        curl --progress-bar --upload-file "-" "https://transfer.sh/$1" 2>/dev/null >> "${tmpfile}"
     fi
     if [ "$(display_exists)" ]; then
-        xclip -rmlastnl -selection clipboard <"$tmpfile"
+        xclip -rmlastnl -selection clipboard < "$tmpfile"
     else
         cat "$tmpfile"
     fi
