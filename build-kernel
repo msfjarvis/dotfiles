@@ -7,9 +7,18 @@
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 source "${SCRIPT_DIR}"/common
 
+set -euo pipefail
+
 # Resources
 [ -f ".buildconfig" ] && source ".buildconfig"
 DEFCONFIG="${DEFCONFIG:-$(hostname)_defconfig}"
+
+# Setup variables
+CLANG=
+CLEAN=
+INSTALL=
+MODULE=
+REGEN_DEFCONFIG=
 
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper() {
@@ -31,11 +40,11 @@ function make_wrapper() {
 # Duh
 function make_kernel() {
   make_defconfig
-  if [ "${MODULE}" ]; then
+  if [ ! -z  "${MODULE}" ]; then
     make_wrapper "${MODULE}"
   else
     make_wrapper
-    if [ "${INSTALL}" ]; then
+    if [ ! -z "${INSTALL}" ]; then
       make_wrapper headers_install
       sudo make -j"$(nproc --all)" modules_install
       sudo make -j"$(nproc --all)" install
@@ -45,9 +54,9 @@ function make_kernel() {
 
 # Called by make_kernel, used to trap defconfig regen events
 function make_defconfig() {
-  if [ "${CLEAN}" ]; then make_wrapper clean; fi
+  [ -z "${CLEAN}" ] || make_wrapper clean
   make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
-  if [ "${REGEN_DEFCONFIG}" ]; then
+  if [ ! -z "${REGEN_DEFCONFIG}" ]; then
     make_wrapper savedefconfig 1>/dev/null 2>&1
     mv "$(pwd)"/defconfig arch/x86/configs/"${DEFCONFIG}"
     echoText "Regenerated defconfig successfully"
