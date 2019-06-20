@@ -83,7 +83,7 @@ function clip() {
     if [ "${1}" ]; then
         xclip -rmlastnl -selection clipboard -i "${1}"
     else
-        xclip -selection clipboard
+        xclip -rmlastnl -selection clipboard
     fi
 }
 
