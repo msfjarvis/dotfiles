@@ -4,15 +4,9 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 GERRIT_USER=MSF_Jarvis
-GZOSP_GERRIT_USER=MSF-Jarvis
 ANDROID_PLATFORM_ROOT="/home/msfjarvis/aosip"
 DEFAULT_AOSIP_BRANCH="pie"
-DEFAULT_SUBS_BRANCH="o"
-DEFAULT_GZOSP_BRANCH="9.0"
 AOSIP_GERRIT_URL="review.aosiprom.com"
-GZOSP_GERRIT_URL="review.gzospgzr.com"
-SUBS_GERRIT_URL="substratum.review"
-DEFAULT_GERRIT="aosip"
 
 function setemail() {
     [ ! -d .git ] && {
@@ -65,22 +59,10 @@ function get_release_assets() {
     [ -f "${TMP_FILE}" ] && rm -f "${TMP_FILE}"
 }
 
-function get_current_gerrit() {
-    if [ "${DEFAULT_GERRIT}" == "aosip" ]; then
-        echo "${GERRIT_USER}@${AOSIP_GERRIT_URL}"
-    elif [ "${DEFAULT_GERRIT}" == "substratum" ]; then
-        echo "${GERRIT_USER}@${SUBS_GERRIT_URL}"
-    elif [ "${DEFAULT_GERRIT}" == "gzosp" ]; then
-        echo "${GERRIT_USER}@${GZOSP_GERRIT_URL}"
-    else
-        return 1
-    fi
-}
-
 function hook() {
     local gitdir
     gitdir="$(git rev-parse --git-dir)"
-    scp -p -P 29418 "$(get_current_gerrit)":hooks/commit-msg "${gitdir}"/hooks/
+    scp -p -P 29418 MSF_Jarvis@review.aosiprom.com:hooks/commit-msg "${gitdir}"/hooks/
 }
 
 function reposync() {
@@ -92,52 +74,16 @@ function gerrit() {
     ssh -p 29418 "$(get_current_gerrit)" "gerrit $*"
 }
 
-# shellcheck disable=SC2029
-function subsgerrit() {
-    ssh -p 29418 "${GERRIT_USER}@${SUBS_GERRIT_URL}" "gerrit $*"
-}
-
 function gpush() {
-    declare -a PARAMS=("${@}")
-    local BRANCH
-    BRANCH="${DEFAULT_AOSIP_BRANCH}"
-    if [ "${#PARAMS[@]}" -eq 2 ]; then
-        BRANCH="${PARAMS[0]}"
-        if [ "${PARAMS[1]}" == bypass ]; then
-            git push gerrit HEAD:refs/for/"${BRANCH}"
-        else
-            git push gerrit HEAD:refs/for/"${BRANCH}"/"${PARAMS[0]}"
-        fi
-    elif [ "${#PARAMS[@]}" -eq 1 ]; then
-        git push gerrit HEAD:refs/for/"${BRANCH}"/"${PARAMS[0]}"
-    else
-        git push gerrit HEAD:refs/for/"${BRANCH}"
-    fi
-}
-
-function gzpush() {
-    gpush "${DEFAULT_GZOSP_BRANCH}" bypass
-}
-
-function subspush() {
-    gpush "${DEFAULT_SUBS_BRANCH}" bypass
+    git push gerrit HEAD:refs/for/"${DEFAULT_AOSIP_BRANCH}"
 }
 
 function gfpush() {
-    local BRANCH
-    BRANCH="${1}"
-    if [ "${BRANCH}" == "" ]; then
-        BRANCH="${DEFAULT_AOSIP_BRANCH}"
-    fi
-    git push gerrit HEAD:refs/heads/"${BRANCH}"
+    git push gerrit HEAD:refs/heads/"${DEFAULT_AOSIP_BRANCH}"
 }
 
 function gffpush() {
-    BRANCH="${1}"
-    if [ "${BRANCH}" == "" ]; then
-        BRANCH="${DEFAULT_AOSIP_BRANCH}"
-    fi
-    git push --force gerrit HEAD:refs/heads/"${BRANCH}"
+    git push --force gerrit HEAD:refs/heads/"${DEFAULT_AOSIP_BRANCH}"
 }
 
 function xg() {
@@ -150,27 +96,4 @@ function xg() {
     git remote remove gerrit 2>/dev/null
     git remote add gerrit ssh://"${GERRIT_USER}"@"${AOSIP_GERRIT_URL}":29418/AOSIP/platform_"${PROJECT}"
     hook
-}
-
-function gz() {
-    if ! git rev-parse --git-dir &>/dev/null; then
-        reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
-        return 1
-    fi
-    PROJECT=$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#-caf.*##; s#\/default##; s#/#_#g#")
-    if (echo "${PROJECT}" | grep -qv "^device"); then
-        PFX="GZOSP/"
-    fi
-    git remote remove gzgerrit 2>/dev/null
-    git remote add gerrit ssh://"${GZOSP_GERRIT_USER}"@${GZOSP_GERRIT_URL}:29418/"${PFX}${PROJECT}"
-}
-
-function subs() {
-    if ! git rev-parse --git-dir &>/dev/null; then
-        reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
-        return 1
-    fi
-    PROJECT=$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#/#_#g#")
-    git remote remove subsgerrit 2>/dev/null
-    git remote add subsgerrit ssh://"${GERRIT_USER}"@"${SUBS_GERRIT_URL}":29418/SubstratumResources/platform_"${PROJECT}"
 }
