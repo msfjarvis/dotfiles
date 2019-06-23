@@ -57,6 +57,7 @@ function make_defconfig() {
   [ -z "${CLEAN}" ] || make_wrapper clean
   make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
   if [ ! -z "${REGEN_DEFCONFIG}" ]; then
+    cp .config arch/x86/configs/"${DEFCONFIG}"
     make_wrapper savedefconfig 1>/dev/null 2>&1
     mv "$(pwd)"/defconfig arch/x86/configs/"${DEFCONFIG}"
     echoText "Regenerated defconfig successfully"
