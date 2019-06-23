@@ -122,9 +122,16 @@ function fao() {
         echoText "Supply a filename moron"
         return
     else
-        local SEARCH_DIR
+        local SEARCH_DIR EDITOR
+        EDITOR="nano"
         SEARCH_DIR="."
-        [ -z "${2}" ] || SEARCH_DIR="${2}"
-        fd "^${1}\..*" "${SEARCH_DIR}" -X nano
+        [ -z "${2}" ] || {
+            if [ -d "${2}" ]; then
+                SEARCH_DIR="${2}"
+            else
+                EDITOR="${2}"
+            fi
+        }
+        fd "^${1}\..*" "${SEARCH_DIR}" -X "${EDITOR}"
     fi
 }
