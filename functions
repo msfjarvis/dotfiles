@@ -68,7 +68,7 @@ function whitespace() {
 
 # Kernel stuff
 function kgrep() {
-    fd '(Makefile|Kconfig.*|.*_defconfig)' "${2:-.}" --type f -x grep --color -n "$1" {} \;
+    fd '(Makefile|Kconfig.*)' "${2:-.}" --type f -X ag "$1"
 }
 
 
