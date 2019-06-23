@@ -30,8 +30,8 @@ function echoText() {
 # Prints an error in bold red
 function reportError() {
     echo -e ""
-    echo -e "${CL_RED}${1}${CL_RST}"
-    if [ -z "${2}" ]; then
+    echo -e "${CL_RED}${1:?}${CL_RST}"
+    if [ -z "${2:-}" ]; then
         echo -e ""
     fi
     exit 1
@@ -40,8 +40,8 @@ function reportError() {
 # Prints a warning in bold yellow
 function reportWarning() {
     echo -e ""
-    echo -e "${CL_YLW}${1}${CL_RST}"
-    if [ -z "${2}" ]; then
+    echo -e "${CL_YLW}${1:?}${CL_RST}"
+    if [ -z "${2:-}" ]; then
         echo -e ""
     fi
 }
