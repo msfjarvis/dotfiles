@@ -10,6 +10,8 @@ source "${SCRIPT_DIR}"/system
 
 trap 'exit 1' SIGINT SIGTERM
 
+set -euo pipefail
+
 declare -a SCRIPTS=("kronic-build" "build-caesium" "build-kernel" "build-twrp" "hastebin")
 
 # Create binaries directory
