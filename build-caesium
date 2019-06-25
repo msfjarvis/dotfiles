@@ -15,7 +15,7 @@ KERNEL="Image.gz-dtb"
 DEFAULT_BRANCH="pie-qpr2"
 JARVISBOX_URL="https://download.msfjarvis.website/caesium"
 KERNEL_NAME="Caesium"
-DEVICE="oneplus3"
+DEVICE="wahoo"
 
 # Vars
 ARCH=arm64
@@ -23,18 +23,24 @@ SUBARCH=arm64
 USER=MSF
 HOST=jarvisbox
 CONFIG="${CONFIG:-.buildconfig}"
-
-# Paths
-WORKING_DIR=$(pwd)
+WORKING_DIR="$(pwd)"
 ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2"
 ARM64_TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/aarch64-linux-gnu"
 ARM_TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/arm-linux-gnueabi"
-CLANG_TOOLCHAIN_DIR=""
-CLANG_TRIPLE=""
+CROSS_COMPILE=
+CROSS_COMPILE_ARM32=
+CLANG_TOOLCHAIN_DIR=
+CLANG_TRIPLE=
 COMPILER="gcc"
 OUT_DIR="${WORKING_DIR}/out"
 ZIP_MOVE="${WORKING_DIR}/zips/"
 CCACHE="$(command -v ccache)"
+TYPE=
+NO_VERSIONING=
+INCREMENTAL_VERSION=
+LOCALVERSION=
+GIT_HASH=
+declare -a CONFIGURATION=()
 
 # Trap to bail out properly
 trap 'exit 1' SIGINT SIGTERM
@@ -53,10 +59,10 @@ fi
 FINAL_VER="${KERNEL_NAME}-${DEVICE}-${INCREMENTAL_VERSION}"
 
 # Array to hold all commands for banner
-declare -a banner_items
-banner_items+=("Device: $DEVICE")
-banner_items+=("Defconfig: $DEFCONFIG")
-[ -z "${NO_VERSIONING}" ] && banner_items+=("Version: $KERNEL_VERSION")
+declare -a BANNER_ITEMS
+BANNER_ITEMS+=("Device: ${DEVICE}")
+BANNER_ITEMS+=("Defconfig: ${DEFCONFIG}")
+[ -z "${NO_VERSIONING}" ] && BANNER_ITEMS+=("Version: ${KERNEL_VERSION}")
 
 ## Functions
 # Wrapper around tgm to avoid having to pass the second chat ID param everywhere
@@ -139,13 +145,13 @@ function publish() {
 
 # Preps the server folder structure for new builds
 function prepdirs() {
-    if [ -d "${LOCAL_SITE_MIRROR}" ]; then
+    if [ -d "${LOCAL_SITE_MIRROR:-}" ]; then
         mkdir -p "${LOCAL_SITE_MIRROR}/caesium/${DEVICE}/${1}/"
         rm -rf "${LOCAL_SITE_MIRROR}/archive/${DEVICE}/${1}"
         mkdir -p "${LOCAL_SITE_MIRROR}/archive/${DEVICE}/${1}/"
         mv "${LOCAL_SITE_MIRROR}/caesium/${DEVICE}/${1}"/* "${LOCAL_SITE_MIRROR}/archive/${DEVICE}/${1}/"
     else
-        ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${CAESIUM_UPLOAD_PATH}/${DEVICE}/${1}/"
+        ssh "${CAESIUM_UPLOAD_HOST:?}" mkdir -p "${CAESIUM_UPLOAD_PATH}/${DEVICE}/${1}/"
         ssh "${CAESIUM_UPLOAD_HOST}" mkdir -p "${CAESIUM_UPLOAD_PATH/caesium/archive}/${DEVICE}/${1}/"
         ssh "${CAESIUM_UPLOAD_HOST}" rm -rf "${CAESIUM_UPLOAD_PATH/caesium/archive}/${DEVICE}/${1}/*"
         ssh "${CAESIUM_UPLOAD_HOST}" mv "${CAESIUM_UPLOAD_PATH}/${DEVICE}/${1}/*" "${CAESIUM_UPLOAD_PATH/caesium/archive}/${DEVICE}/${1}/"
@@ -154,13 +160,12 @@ function prepdirs() {
 
 # The meat of the telegram notifications workflow
 function pushcaesiumtg() {
-    [ -z "${TYPE}" ] && return
     local FILE TYPE FINAL_VER FILES_TO_PUBLISH MESSAGE CHANGELOG BUILD_URL
     FILE="${1}"
     TYPE="${2}"
-    FINAL_VER="${FILE/.zip/}"
+    FINAL_VER="${FILE:?/.zip/}"
     FILES_TO_PUBLISH=("${FILE}" "${FILE}".md5sum)
-    case "${TYPE}" in
+    case "${TYPE:-}" in
     "alpha" | "beta" | "stable" | "test") ;;
     *) reportWarning "Invalid build type; skipping upload." && return ;;
     esac
@@ -215,14 +220,14 @@ function check_toolchain() {
     TC="$(fd ".*-gcc$" "${ARM64_TOOLCHAIN_DIR}"/bin)"
     if [ -f "${TC}" ]; then
         CROSS_COMPILE="${ARM64_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')"
-        banner_items+=("ARM64 toolchain: $("${CROSS_COMPILE}"gcc --version | head -1)")
+        BANNER_ITEMS+=("ARM64 toolchain: $("${CROSS_COMPILE}"gcc --version | head -1)")
     else
         reportError "No suitable toolchain found in ${ARM64_TOOLCHAIN_DIR}"
     fi
     TC="$(fd ".*-gcc$" "${ARM_TOOLCHAIN_DIR}"/bin)"
     if [ -f "${TC}" ]; then
         CROSS_COMPILE_ARM32="${ARM_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')"
-        banner_items+=("ARM toolchain: $("${CROSS_COMPILE_ARM32}gcc" --version | head -1)")
+        BANNER_ITEMS+=("ARM toolchain: $("${CROSS_COMPILE_ARM32}gcc" --version | head -1)")
     else
         reportError "No suitable toolchain found in ${ARM_TOOLCHAIN_DIR}"
     fi
@@ -236,7 +241,7 @@ function check_toolchain() {
                 KBUILD_COMPILER_STRING="$(${CC} --version | head -n 1 | awk '{print $3"-"$5}')"
             fi
             export KBUILD_COMPILER_STRING
-            banner_items+=("Clang toolchain: ${KBUILD_COMPILER_STRING}")
+            BANNER_ITEMS+=("Clang toolchain: ${KBUILD_COMPILER_STRING}")
         else
             reportError "Failed to find clang toolchain ${CLANG_TOOLCHAIN_DIR}"
         fi
@@ -260,7 +265,7 @@ function make_kernel() {
     mkdir -p "${OUT_DIR}"
     fd "${KERNEL}" "${OUT_DIR}" -X rm -rf
     make_defconfig
-    banner "${banner_items[@]/#/}"
+    banner "${BANNER_ITEMS[@]/#/}"
     if [ "${MODULE}" ]; then
         kmake "${MODULE}"
     else
@@ -323,11 +328,11 @@ function make_zip() {
 while getopts ":bcd:m:rt:v" OPT; do
     case "${OPT}" in
     b)
-        banner_items+=("Building ZIP only")
+        BANNER_ITEMS+=("Building ZIP only")
         ONLY_ZIP=true
         ;;
     c)
-        banner_items+=("Building clean")
+        BANNER_ITEMS+=("Building clean")
         CLEAN=true
         ;;
     d)
@@ -342,20 +347,26 @@ while getopts ":bcd:m:rt:v" OPT; do
             reportError "Invalid module specified - ${MODULE}"
             return 1
         fi
-        banner_items+=("Building module ${MODULE}")
+        BANNER_ITEMS+=("Building module ${MODULE}")
         ;;
     r)
-        banner_items+=("Regenerating defconfig")
+        BANNER_ITEMS+=("Regenerating defconfig")
         REGEN_DEFCONFIG=true
         ;;
-    t) TYPE="${OPTARG}" ;;
-    v) VERBOSE=true ;;
-    \?) reportWarning "Invalid option: -${OPTARG}" >&2 ;;
+    t)
+        TYPE="${OPTARG}"
+        ;;
+    v)
+        VERBOSE=true
+        ;;
+    \?)
+        reportWarning "Invalid option: -${OPTARG}" >&2
+        ;;
     esac
 done
 
 if [ "${TYPE}" != "stable" ] && [ -z "${NO_VERSIONING}" ]; then
-    banner_items+=("Setting test build parameters")
+    BANNER_ITEMS+=("Setting test build parameters")
     LOCALVERSION=-"${INCREMENTAL_VERSION}"-"${GIT_HASH}"
     FINAL_VER+="-${GIT_HASH}"
 fi
