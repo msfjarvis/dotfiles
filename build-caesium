@@ -227,7 +227,7 @@ function check_toolchain() {
         reportError "No suitable toolchain found in ${ARM_TOOLCHAIN_DIR}"
     fi
     if [ "${COMPILER}" == "clang" ]; then
-        TC="$(fd "clang" "${CLANG_TOOLCHAIN_DIR}"/bin)"
+        TC="$(fd -tf "^clang$" "${CLANG_TOOLCHAIN_DIR}"/bin)"
         if [ -f "${TC}" ]; then
             CC="${CLANG_TOOLCHAIN_DIR}/bin/clang"
             KBUILD_COMPILER_STRING="$(${CC} --version | head -n 1 | cut -d \( -f 1,2 | sed 's/[[:space:]]*$//')"
@@ -237,6 +237,8 @@ function check_toolchain() {
             fi
             export KBUILD_COMPILER_STRING
             banner_items+=("Clang toolchain: ${KBUILD_COMPILER_STRING}")
+        else
+            reportError "Failed to find clang toolchain ${CLANG_TOOLCHAIN_DIR}"
         fi
     fi
 }
