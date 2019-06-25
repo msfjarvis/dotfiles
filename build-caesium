@@ -227,8 +227,8 @@ function check_toolchain() {
         reportError "No suitable toolchain found in ${ARM_TOOLCHAIN_DIR}"
     fi
     if [ "${COMPILER}" == "clang" ]; then
-        TC="$(fd -tf "^clang$" "${CLANG_TOOLCHAIN_DIR}"/bin)"
-        if [ -f "${TC}" ]; then
+        TC="$(find "${CLANG_TOOLCHAIN_DIR}"/bin -name clang)"
+        if [ -e "${TC}" ]; then
             CC="${CLANG_TOOLCHAIN_DIR}/bin/clang"
             KBUILD_COMPILER_STRING="$(${CC} --version | head -n 1 | cut -d \( -f 1,2 | sed 's/[[:space:]]*$//')"
             if [[ "${KBUILD_COMPILER_STRING}" =~ "llvm/llvm-project" ]]; then
