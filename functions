@@ -74,19 +74,19 @@ function kgrep() {
 
 function rebuildtc() {
     cd /mnt/mediahell/build-tools-gcc || exit 1
-    echoText "Building ARM GCC 8.x"
-    ./build -a arm -s gnu -v 8 -V -tr
+    echoText "Building ARM GCC 9.x"
+    ./build -a arm -s gnu -v 9 -V -tr
     if [ -d arm-linux-gnueabi ]; then
-        rsync -av arm-linux-gnueabi/ "${HOME}"/git-repos/halogenOS/toolchains/arm-linux-gnueabi-8.x
+        rsync -av arm-linux-gnueabi/ "${HOME}"/git-repos/halogenOS/toolchains/arm-linux-gnueabi-9.x
     else
-        reportError "ARM GCC 8.x failed to compile"
+        reportError "ARM GCC 9.x failed to compile"
     fi
-    echoText "Building ARM64 GCC 8.x"
-    ./build -a arm64 -s gnu -v 8 -V -tr
+    echoText "Building ARM64 GCC 9.x"
+    ./build -a arm64 -s gnu -v 9 -V -tr
     if [ -d aarch64-linux-gnu ]; then
-        rsync -av aarch64-linux-gnu/ "${HOME}"/git-repos/halogenOS/toolchains/aarch64-linux-gnu-8.x
+        rsync -av aarch64-linux-gnu/ "${HOME}"/git-repos/halogenOS/toolchains/aarch64-linux-gnu-9.x
     else
-        reportError "ARM64 GCC 8.x failed to compile"
+        reportError "ARM64 GCC 9.x failed to compile"
     fi
 }
 
