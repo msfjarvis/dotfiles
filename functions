@@ -110,11 +110,7 @@ function fillccache() {
 }
 
 function gettcvers() {
-    cd "${HOME}"/git-repos/halogenOS/toolchains || return 1
-    for item in arm-linux-gnueabi-8.x aarch64-linux-gnu-8.x; do
-        ./"$item"/bin/"${item/-8.x/}"-gcc --version
-    done
-    cd - >/dev/null || return 1
+    fd -tf ".*-gcc$" "${HOME}"/git-repos/halogenOS/toolchains -x {} --version
 }
 
 function fao() {
