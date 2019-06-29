@@ -208,7 +208,7 @@ function release() {
     git -C "${ANYKERNEL_DIR}" push origin "${TAG}"
     git checkout "${DEFAULT_BRANCH}"
     git merge staging
-    git push origin "${DEFAULT_BRANCH}"
+    git push --force origin "${DEFAULT_BRANCH}"
     git tag -as "${TAG}"
     git push origin "${TAG}"
     hub release create "${TAG}" -a zips/"${FILE}" -a zips/"${FILE}".md5sum
