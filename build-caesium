@@ -361,6 +361,13 @@ while getopts ":bcd:m:rt:v" OPT; do
     esac
 done
 
+if [ ! -z "${TYPE}" ] && [ ! -z "${NO_VERSIONING}" ]; then
+    BANNER_ITEMS+=("Version: ${KERNEL_VERSION}")
+    INCREMENTAL_VERSION="${KERNEL_VERSION:-Test}"
+    LOCALVERSION="-${INCREMENTAL_VERSION}"
+    GIT_HASH=$(git rev-parse --short HEAD)
+fi
+
 if [ "${TYPE}" != "stable" ] && [ -z "${NO_VERSIONING}" ]; then
     BANNER_ITEMS+=("Setting test build parameters")
     LOCALVERSION=-"${INCREMENTAL_VERSION}"-"${GIT_HASH}"
