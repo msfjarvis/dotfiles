@@ -68,7 +68,7 @@ function whitespace() {
 
 # Kernel stuff
 function kgrep() {
-    fd '(Makefile|Kconfig.*)' "${2:-.}" --type f -X ag "$1"
+    rg -nw "${1:?}"
 }
 
 
