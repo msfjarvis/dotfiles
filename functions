@@ -110,7 +110,7 @@ function fillccache() {
 }
 
 function gettcvers() {
-    fd -tf ".*-gcc$" "${HOME}"/git-repos/halogenOS/toolchains -x {} --version
+    fd -tf ".*-gcc$" /mnt/mediahell/toolchains -x {} --version
 }
 
 function fao() {
