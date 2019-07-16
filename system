@@ -9,6 +9,10 @@ source "${SCRIPT_DIR}"/server
     export GPG_TTY
 }
 
+function watch_sensors() {
+    while true; do clear; sensors; sleep 1; done
+}
+
 # shellcheck disable=SC2009
 # Consider using pgrep instead of grepping ps output.
 # We're directly grepping ps output to handle cases like android-studio, where
