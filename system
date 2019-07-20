@@ -95,6 +95,22 @@ function display_exists() {
     if xhost >&/dev/null; then echo "1"; fi
 }
 
+function lswg {
+    fd -tf 'conf$' ~/wireguard/ -x echo '{/.}'
+}
+
+function wgcp {
+    fd -tf 'conf$' ~/wireguard/ -x sudo cp -v {} /etc/wireguard/'{/}'
+}
+
+function wgbench {
+    local STATS_FILE
+    STATS_FILE="$(mktemp)"
+    fd -tf 'conf$' ~/wireguard/ -x echo '{/.}' | sed 's/mullvad-//g' | xargs -I {} ping -c 10 {}-wireguard.mullvad.net | tee "${STATS_FILE}"
+    grep transmitted "${STATS_FILE}" | awk '{print $10}' | sed 's/ms//' | sort -n | head -n1 | xargs -I {} grep -C1 {} "${STATS_FILE}"
+    rm "${STATS_FILE}" >&/dev/null
+}
+
 function wgup() {
     local region
     region="${1}"
