@@ -203,7 +203,7 @@ function release() {
     git -C "${ANYKERNEL_DIR}" tag -s "${TAG}"
     git -C "${ANYKERNEL_DIR}" push origin "${TAG}"
     git checkout "${DEFAULT_BRANCH}"
-    git merge staging
+    git reset --hard staging
     git push --force origin "${DEFAULT_BRANCH}"
     git tag -as "${TAG}"
     git push origin "${TAG}"
