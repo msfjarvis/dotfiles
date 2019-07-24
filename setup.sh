@@ -27,6 +27,7 @@ source "${SCRIPT_DIR}"/setup/bat.sh
 source "${SCRIPT_DIR}"/setup/diff-so-fancy.sh
 source "${SCRIPT_DIR}"/setup/fd.sh
 source "${SCRIPT_DIR}"/setup/gdrive.sh
+source "${SCRIPT_DIR}"/setup/gitconfig.sh
 source "${SCRIPT_DIR}"/setup/hub.sh
 source "${SCRIPT_DIR}"/setup/xclip.sh
 
@@ -57,18 +58,6 @@ for SCRIPT in "${SCRIPTS[@]}"; do
     echo -e "${CL_YLW}Processing ${SCRIPT}${CL_RST}"
     rm -rf ~/bin/"${SCRIPT}"
     ln -s "${SCRIPT_DIR}"/"${SCRIPT}" ~/bin/"${SCRIPT}"
-done
-
-echoText "Setting up gitconfig"
-mv ~/.gitconfig ~/.gitconfig.old 2>/dev/null # Failsafe in case we screw up
-cp "${SCRIPT_DIR}/.gitconfig" ~/.gitconfig
-for ITEM in $(fd -tf . gitconfig_fragments); do
-    DECRYPTED="${ITEM/.gpg/}"
-    rm -f "${DECRYPTED}" 2>/dev/null
-    gpg --decrypt "${ITEM}" > "${DECRYPTED}"
-    [ ! -f "${DECRYPTED}" ] && break
-    cat "${DECRYPTED}" >> ~/.gitconfig
-    rm "${DECRYPTED}"
 done
 
 if [[ "$*" =~ --all ]] && [ "$(display_exists)" ]; then
