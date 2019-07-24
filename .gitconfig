@@ -56,7 +56,6 @@
 	su = submodule update --init --recursive
 	ss = show --stat
 	suicide = reset --hard
-
 [merge]
 	log = true
 [gc]
@@ -75,3 +74,6 @@
 	whitespace = red reverse
 [http]
 	postBuffer = 524288000
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+    insteadOf = git://github.com/
