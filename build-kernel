@@ -41,11 +41,14 @@ function make_kernel() {
   if [ ! -z  "${MODULE}" ]; then
     make_wrapper "${MODULE}"
   else
-    make_wrapper
-    if [ ! -z "${INSTALL}" ]; then
-      make_wrapper headers_install
-      sudo make -j"$(nproc --all)" modules_install
-      sudo make -j"$(nproc --all)" install
+    if make_wrapper; then
+        if [ ! -z "${INSTALL}" ]; then
+          make_wrapper headers_install
+          sudo make -j"$(nproc --all)" modules_install
+          sudo make -j"$(nproc --all)" install
+        else
+          reportError "Compilation failed!"
+        fi
     fi
   fi
 }
