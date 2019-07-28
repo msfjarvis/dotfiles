@@ -46,9 +46,9 @@ function make_kernel() {
           make_wrapper headers_install
           sudo make -j"$(nproc --all)" modules_install
           sudo make -j"$(nproc --all)" install
-        else
-          reportError "Compilation failed!"
         fi
+    else
+      reportError "Compilation failed!"
     fi
   fi
 }
