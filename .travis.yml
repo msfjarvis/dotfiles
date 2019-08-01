@@ -1,7 +1,5 @@
 language: minimal
-
-before_install:
-    - sudo apt-get install -y bash make shellcheck
+dist: xenial
 
 script:
     - make test
