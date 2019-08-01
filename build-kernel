@@ -38,11 +38,11 @@ function make_wrapper() {
 # Duh
 function make_kernel() {
   make_defconfig
-  if [ ! -z  "${MODULE}" ]; then
+  if [ -n  "${MODULE}" ]; then
     make_wrapper "${MODULE}"
   else
     if make_wrapper; then
-        if [ ! -z "${INSTALL}" ]; then
+        if [ -n "${INSTALL}" ]; then
           make_wrapper headers_install
           sudo make -j"$(nproc --all)" modules_install
           sudo make -j"$(nproc --all)" install
@@ -57,7 +57,7 @@ function make_kernel() {
 function make_defconfig() {
   [ -z "${CLEAN}" ] || make_wrapper clean
   make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
-  if [ ! -z "${REGEN_DEFCONFIG}" ]; then
+  if [ -n "${REGEN_DEFCONFIG}" ]; then
     cp .config arch/x86/configs/"${DEFCONFIG}"
     make_wrapper savedefconfig 1>/dev/null 2>&1
     mv "$(pwd)"/defconfig arch/x86/configs/"${DEFCONFIG}"

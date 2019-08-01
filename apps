@@ -19,7 +19,7 @@ function makeapk() {
         return 1
     }; fi
     local GRADLE COMMAND
-    if [ -z "$(which gradle)" ]; then
+    if [ -z "$(command -v gradle)" ]; then
         GRADLE="./gradlew"
     else
         GRADLE="gradle"
@@ -47,7 +47,7 @@ function pushthemetg() {
 function findapks() {
     local DIR
     DIR="."
-    if [ ! -z "${1}" ]; then
+    if [ -n "${1}" ]; then
         DIR="${1}"
     fi
     fd -HI "\.apk$" "${DIR}"
