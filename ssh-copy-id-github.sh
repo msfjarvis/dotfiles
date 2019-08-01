@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #    Copy a ssh key to Github
 #    Copyright (C) 2015 Christoph "criztovyl" Schulz
-#    Copyright (C) 2018 Harsh "MSF-Jarvis" Shandilya
+#    Copyright (C) 2018 Harsh "msfjarvis" Shandilya
 #    SDPX-License-Identifier: WTFPL
 
 # Help

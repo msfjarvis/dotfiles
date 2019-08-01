@@ -15,7 +15,7 @@ function check_and_install_gdrive() {
         install_gdrive
     else
         INSTALLED_VERSION="$(gdrive version | grep gdrive | awk '{print $2}')"
-        LATEST_VERSION="$(get_latest_release MSF-Jarvis/gdrive)"
+        LATEST_VERSION="$(get_latest_release msfjarvis/gdrive)"
         if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
             reportWarning "Outdated version of gdrive detected, upgrading"
             install_gdrive
@@ -26,7 +26,7 @@ function check_and_install_gdrive() {
 }
 
 function install_gdrive() {
-    aria2c "$(get_release_assets MSF-Jarvis/gdrive | grep ${ARTIFACT_NAME})" --allow-overwrite=true -d ~/bin -o gdrive
+    aria2c "$(get_release_assets msfjarvis/gdrive | grep ${ARTIFACT_NAME})" --allow-overwrite=true -d ~/bin -o gdrive
     chmod +x ~/bin/gdrive
 }
 
