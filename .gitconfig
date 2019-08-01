@@ -27,6 +27,7 @@
 	cp = cherry-pick --signoff
 	cpa = cherry-pick --abort
 	cpc = cherry-pick --continue
+	ccc = "!ccc() { git reset; git checkout .; git cpc; }; ccc"
 	d = diff
 	dc = diff --cached
 	dcs = diff --stat --cached
@@ -49,7 +50,7 @@
 	rba = rebase --abort
 	re = reset
 	rc = rebase --continue
-	rcc = "!rcc() { git reset; git checkout .; git rebase --continue }; rcc"
+	rcc = "!rcc() { git reset; git checkout .; git rebase --continue; }; rcc"
 	rpc = reset --hard && cherry-pick --continue
 	rs = rebase --skip
 	ru = remote update
