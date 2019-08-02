@@ -70,8 +70,8 @@ function tgm_caesium() {
     [ -z "${TYPE}" ] && return
     local CHAT_ID
     case "${DEVICE}" in
-    "oneplus3") CHAT_ID="${OP3_CAESIUM_CHAT_ID}" ;;
     "wahoo") CHAT_ID="${WAHOO_CAESIUM_CHAT_ID}" ;;
+    "whyred") CHAT_ID="${MSF_TG_ID}" ;;
     esac
     if [ "${TYPE}" == "test" ] || [ "${2}" == "silent" ]; then
         tgm "${1}" &
