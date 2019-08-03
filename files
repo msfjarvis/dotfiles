@@ -118,10 +118,10 @@ function gdrivedl() {
         return 1
     fi
     if [[ "${URL:?}" =~ folders ]]; then
-        FILE_ID="$(echo "${URL}" | sed -r -e 's/https.*folders\/(.*)/\1/' -e 's/(.*)\?usp=sharing/\1/')"
+        FILE_ID="$(echo "${URL}" | sed -r -e 's/https.*folders\/(.*)/\1/' -e 's/(.*)\?.*/\1/')"
         IS_FOLDER=true
     else
-        FILE_ID="$(echo "${URL:?}" | sed -Er -e 's/(.*)&export.*/\1/' -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/(view|edit)/\1/')"
+        FILE_ID="$(echo "${URL:?}" | sed -Er -e 's/(.*)(&|\?).*/\1/' -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/(view|edit)/\1/')"
     fi
     if [ -z "${IS_FOLDER}" ]; then
         gdrive download "${FILE_ID:?}"
