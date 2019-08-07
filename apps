@@ -68,9 +68,16 @@ function andromeda() {
 
 function adbp() {
     local RAW_PACKAGE_PATH
-    RAW_PACKAGE_PATH="$(adb-"${CURRENT_DEVICE}" shell pm path "${1}")"
+    RAW_PACKAGE_PATH="$(adb-"${CURRENT_DEVICE}" shell pm path "${1:?}")"
     if [ "${RAW_PACKAGE_PATH}" != "" ]; then
-        adb-"${CURRENT_DEVICE}" pull "$(echo "${RAW_PACKAGE_PATH}" | cut -d ':' -f 2)" "${1}".apk
+        while read -r line; do
+            path="$(echo "${line}" | cut -d ':' -f 2)"
+            package="$(basename "${path}")"
+            if [ "${package}" == "base.apk" ]; then
+                package="${1}.apk"
+            fi
+            adb-"${CURRENT_DEVICE}" pull "${path}" "${package}"
+        done < <(echo "${RAW_PACKAGE_PATH}")
     else
         echoText "Package not found"
     fi
