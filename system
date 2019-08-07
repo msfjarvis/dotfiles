@@ -41,6 +41,7 @@ function hostupdate() {
     deactivate
     if [ -z "${1}" ]; then
         cp hosts_msf "${LOCAL_SITE_MIRROR}"/adblock/hosts
+        cp whitelist "${LOCAL_SITE_MIRROR}"/adblock/whitelist
         syncup adblock
     fi
     sudo cp -v hosts_msf /etc/hosts
