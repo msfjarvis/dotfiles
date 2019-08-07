@@ -42,6 +42,7 @@ function hostupdate() {
     if [ -z "${1}" ]; then
         cp hosts_msf "${LOCAL_SITE_MIRROR}"/adblock/hosts
         cp whitelist "${LOCAL_SITE_MIRROR}"/adblock/whitelist
+        cp hosts_msf ../hosts_magisk/system/etc/hosts
         syncup adblock
     fi
     sudo cp -v hosts_msf /etc/hosts
@@ -53,6 +54,16 @@ function dnsmasqupdate() {
     cd ~/git-repos/adnix || return 1
     make generate
     cp adblock.list "${LOCAL_SITE_MIRROR}"/adblock/adblock.list
+    syncup adblock
+    cd - || return 1
+}
+
+function magiskhostupdate() {
+    cd ~/git-repos/hosts_magisk || return 1
+    rm ./*.zip "${LOCAL_SITE_MIRROR}"/adblock/*.zip 2>/dev/null
+    printf 'id=msfjarvishosts\nname=msfjarvis hosts file\nversion=v%s\nversionCode=%s\nauthor=msfjarvis\ndescription=Yet another adblock list\n' "$(date "+%Y%m%d")" "$(date "+%Y%m%d")" > module.prop
+    ./deploy.sh --non-interactive
+    cp ./*.zip "${LOCAL_SITE_MIRROR}"/adblock/
     syncup adblock
     cd - || return 1
 }
