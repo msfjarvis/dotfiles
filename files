@@ -32,6 +32,8 @@ function batch_dl() {
         DEST="$(echo "${line}" | cut -d '|' -f 2)"
         if [[ "${LINK}" =~ drive.google.com ]]; then
             gdrivedl "${LINK}"
+        elif [[ "${LINK}" =~ .torrent ]]; then
+            aria2c --seed-time=1m "${LINK}"
         else
             dl "${LINK}" "${DEST}"
         fi
