@@ -19,7 +19,7 @@ function dl() {
 }
 
 function batch_dl() {
-    local INPUT_FILE GDRIVE
+    local INPUT_FILE
     INPUT_FILE="${1}"
     # Stolen from https://stackoverflow.com/a/12711853
     for arg; do
@@ -30,10 +30,10 @@ function batch_dl() {
     while read -r line; do
         LINK="$(echo "${line}" | cut -d '|' -f 1)"
         DEST="$(echo "${line}" | cut -d '|' -f 2)"
-        if [ -z "${GDRIVE}" ]; then
-            dl "${LINK}" "${DEST}"
-        else
+        if [[ "${LINK}" =~ drive.google.com ]]; then
             gdrivedl "${LINK}"
+        else
+            dl "${LINK}" "${DEST}"
         fi
     done < <(cat "${INPUT_FILE:?}")
 }
