@@ -12,7 +12,7 @@ function dl() {
     URL="${1}"
     FILE_NAME="${2}"
     if [ -z "${FILE_NAME}" ]; then
-        aria2c --split=16 --max-connection-per-server=16 --summary-interval=0 "${URL:?}"
+        aria2c --seed-time=1m --split=16 --max-connection-per-server=16 --summary-interval=0 "${URL:?}"
     else
         aria2c --split=16 --max-connection-per-server=16 --summary-interval=0 "${URL:?}" -o "${FILE_NAME}"
     fi
@@ -32,8 +32,6 @@ function batch_dl() {
         DEST="$(echo "${line}" | cut -d '|' -f 2)"
         if [[ "${LINK}" =~ drive.google.com ]]; then
             gdrivedl "${LINK}"
-        elif [[ "${LINK}" =~ .torrent ]]; then
-            aria2c --seed-time=1m "${LINK}"
         else
             dl "${LINK}" "${DEST}"
         fi
