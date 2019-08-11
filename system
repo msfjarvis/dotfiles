@@ -120,7 +120,7 @@ function lswg {
     fd -tf 'conf$' ~/wireguard/ -x echo '{/.}'
 }
 
-function wgcp {
+function wginstall {
     fd -tf 'conf$' ~/wireguard/ -x sudo cp -v {} /etc/wireguard/'{/}'
 }
 
