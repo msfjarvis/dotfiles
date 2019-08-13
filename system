@@ -124,6 +124,10 @@ function wginstall {
     fd -tf 'conf$' ~/wireguard/ -x sudo cp -v {} /etc/wireguard/'{/}'
 }
 
+function wgdiff {
+    while read -r conf; do if [ ! -f "$conf" ]; then echo "$conf doesn't exist"; fi; done < <(unzip -l mullvad-wireguard-configs.zip | grep conf | awk '{print $4}')
+}
+
 function wgbench {
     local STATS_FILE
     STATS_FILE="$(mktemp)"
