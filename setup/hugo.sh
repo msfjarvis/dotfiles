@@ -3,6 +3,8 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
+trap 'rm /tmp/hugo.deb' INT TERM EXIT
+
 source "${SCRIPT_DIR:?}"/common
 source "${SCRIPT_DIR}"/gitshit
 

@@ -3,6 +3,8 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
+trap 'rm -rf /tmp/hub.tgz /tmp/hub' INT TERM EXIT
+
 source "${SCRIPT_DIR:?}"/common
 source "${SCRIPT_DIR}"/gitshit
 
