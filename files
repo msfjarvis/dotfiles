@@ -21,13 +21,8 @@ function dl() {
 function batch_dl() {
     local INPUT_FILE
     INPUT_FILE="${1}"
-    # Stolen from https://stackoverflow.com/a/12711853
-    for arg; do
-        if [ "${arg}" == "--gdrive" ]; then
-            GDRIVE="true"
-        fi
-    done
     while read -r line; do
+        [ -z "$line" ] && continue
         LINK="$(echo "${line}" | cut -d '|' -f 1)"
         DEST="$(echo "${line}" | cut -d '|' -f 2)"
         if [[ "${LINK}" =~ drive.google.com ]]; then
