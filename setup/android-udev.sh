@@ -3,7 +3,7 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
-source "${SCRIPT_DIR}"/common
+source "${SCRIPT_DIR:?}"/common
 
 function setup_android_udev() {
     echoText "Installing latest Android udev rules"

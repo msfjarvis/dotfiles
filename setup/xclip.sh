@@ -5,7 +5,7 @@
 
 trap 'rm -rf /tmp/xclip' INT TERM EXIT
 
-source "${SCRIPT_DIR}"/common
+source "${SCRIPT_DIR:?}"/common
 source "${SCRIPT_DIR}"/gitshit
 
 function install_xclip() {
