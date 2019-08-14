@@ -29,6 +29,7 @@ source "${SCRIPT_DIR}"/setup/fd.sh
 source "${SCRIPT_DIR}"/setup/gdrive.sh
 source "${SCRIPT_DIR}"/setup/gitconfig.sh
 source "${SCRIPT_DIR}"/setup/hub.sh
+source "${SCRIPT_DIR}"/setup/hugo.sh
 source "${SCRIPT_DIR}"/setup/ripgrep.sh
 source "${SCRIPT_DIR}"/setup/shellcheck.sh
 source "${SCRIPT_DIR}"/setup/xclip.sh
