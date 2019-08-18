@@ -53,7 +53,7 @@
 	rcc = "!rcc() { git reset; git checkout .; git rebase --continue; }; rcc"
 	rpc = reset --hard && cherry-pick --continue
 	rs = rebase --skip
-	ru = remote update
+	ru = remote update --prune
 	rv = remote -v
 	reword = "!EDITOR='sed -i -re s/^pick/e/' sh -c 'git rebase -i $1 && while test -f .git/rebase-merge/interactive; do git commit --amend && git rebase --continue;done' -"
 	s = status
