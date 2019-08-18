@@ -148,3 +148,39 @@ function mediainfo() {
     [[ -z "${FILE}" || ! -f "${FILE}" ]] && return
     ffprobe -v quiet -print_format json -show_format -show_streams "${FILE}" | jq .
 }
+
+function fao() {
+    if [ -z "${1}" ]; then
+        echoText "Supply a filename moron"
+        return
+    else
+        local SEARCH_DIR EDITOR
+        EDITOR="nano"
+        SEARCH_DIR="."
+        [ -z "${2}" ] || {
+            if [ -d "${2}" ]; then
+                SEARCH_DIR="${2}"
+            else
+                EDITOR="${2}"
+            fi
+        }
+        fd "^${1}\..*" "${SEARCH_DIR}" -X "${EDITOR}"
+    fi
+}
+
+# shellcheck disable=SC2016
+function tab2space() {
+    fd --type f -0 -x bash -c 'tmp=$(mktemp); expand -t 4 "$0" > $tmp && cat $tmp > "$0"; rm $tmp' {} \;
+}
+
+function d2u() {
+    fd --type f -x dos2unix
+}
+
+function whitespace() {
+    fd --type f | xargs perl -pi -e 's/ +$//'
+}
+
+function pwallsync() {
+    adb-sync --reverse /sdcard/Pictures/Dank "${LOCAL_SITE_MIRROR}/.phone_walls/"
+}

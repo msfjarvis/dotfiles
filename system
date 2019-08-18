@@ -9,6 +9,28 @@ source "${SCRIPT_DIR}"/server
     export GPG_TTY
 }
 
+function lolsay() {
+    cowsay "${@}" | lolcat
+}
+
+function foreversay() {
+    until ! lolsay "${@}"; do sleep 0; done
+}
+
+function encrypt() {
+    [ -z "${1}" ] && return
+    gpg --encrypt --output "$(basename "${1}")".gpg --recipient "msfjarvis@gmail.com" "${1}"
+}
+
+function reboot() {
+    echo "Do you really wanna reboot??"
+    read -r confirmation
+    case "${confirmation}" in
+    'y' | 'Y' | 'yes') exec "$(command -v reboot)" ;;
+    *) ;;
+    esac
+}
+
 function watch_sensors() {
     while true; do clear; sensors; sleep 1; done
 }
