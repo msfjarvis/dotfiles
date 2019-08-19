@@ -35,13 +35,8 @@ function watch_sensors() {
     while true; do clear; sensors; sleep 1; done
 }
 
-# shellcheck disable=SC2009
-# Consider using pgrep instead of grepping ps output.
-# We're directly grepping ps output to handle cases like android-studio, where
-# a new java process is forked off after the execution of the initial shell script
-# and this the 'pgrep studio' command does not return all the processes.
 function endtask() {
-    for pid in $(ps -ef | grep "${1:?}" | awk '{print $2}'); do kill -9 "${pid}" 2>/dev/null; done
+    for pid in $(pgrep "${1:?}"); do kill -9 "${pid}" 2>/dev/null; done
 }
 
 # shellcheck disable=SC2154
