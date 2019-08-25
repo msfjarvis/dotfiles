@@ -213,14 +213,14 @@ function release() {
 # Find and set toolchain variables
 function check_toolchain() {
     local TC
-    TC="$(fd ".*-gcc$" "${ARM64_TOOLCHAIN_DIR}"/bin)"
+    TC="$(fd ".*-gcc$" "${ARM64_TOOLCHAIN_DIR}"/bin | head -n1)"
     if [ -f "${TC}" ]; then
         CROSS_COMPILE="${ARM64_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')"
         BANNER_ITEMS+=("ARM64 toolchain: $("${CROSS_COMPILE}"gcc --version | head -1)")
     else
         reportError "No suitable toolchain found in ${ARM64_TOOLCHAIN_DIR}"
     fi
-    TC="$(fd ".*-gcc$" "${ARM_TOOLCHAIN_DIR}"/bin)"
+    TC="$(fd ".*-gcc$" "${ARM_TOOLCHAIN_DIR}"/bin | head -n1)"
     if [ -f "${TC}" ]; then
         CROSS_COMPILE_ARM32="${ARM_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')"
         BANNER_ITEMS+=("ARM toolchain: $("${CROSS_COMPILE_ARM32}gcc" --version | head -1)")
