@@ -22,17 +22,17 @@ sudo apt install -y aria2 autoconf automake axel cowsay curl jq libxmu-dev lolca
 # Update all submodules
 git -C "${SCRIPT_DIR}" submodule update --init --recursive
 
-source "${SCRIPT_DIR}"/setup/android-udev.sh
-source "${SCRIPT_DIR}"/setup/bat.sh
-source "${SCRIPT_DIR}"/setup/diff-so-fancy.sh
-source "${SCRIPT_DIR}"/setup/fd.sh
-source "${SCRIPT_DIR}"/setup/gdrive.sh
-source "${SCRIPT_DIR}"/setup/gitconfig.sh
-source "${SCRIPT_DIR}"/setup/hub.sh
-source "${SCRIPT_DIR}"/setup/hugo.sh
-source "${SCRIPT_DIR}"/setup/ripgrep.sh
-source "${SCRIPT_DIR}"/setup/shellcheck.sh
-source "${SCRIPT_DIR}"/setup/xclip.sh
+bash -i "${SCRIPT_DIR}"/setup/android-udev.sh
+bash -i "${SCRIPT_DIR}"/setup/bat.sh
+bash -i "${SCRIPT_DIR}"/setup/diff-so-fancy.sh
+bash -i "${SCRIPT_DIR}"/setup/fd.sh
+bash -i "${SCRIPT_DIR}"/setup/gdrive.sh
+bash -i "${SCRIPT_DIR}"/setup/gitconfig.sh
+bash -i "${SCRIPT_DIR}"/setup/hub.sh
+bash -i "${SCRIPT_DIR}"/setup/hugo.sh
+bash -i "${SCRIPT_DIR}"/setup/ripgrep.sh
+bash -i "${SCRIPT_DIR}"/setup/shellcheck.sh
+bash -i "${SCRIPT_DIR}"/setup/xclip.sh
 
 cd "${SCRIPT_DIR}" || exit 1
 
