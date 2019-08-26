@@ -52,7 +52,7 @@
 	re = reset
 	rc = rebase --continue
 	rcc = "!rcc() { git reset; git checkout .; git rebase --continue; }; rcc"
-	rpc = reset --hard && cherry-pick --continue
+	rpc = "!rpc() { git reset --hard && git cherry-pick --continue; }; rpc"
 	rs = rebase --skip
 	ru = remote update --prune
 	rv = remote -v
