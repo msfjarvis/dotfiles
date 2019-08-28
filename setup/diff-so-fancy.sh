@@ -25,8 +25,9 @@ function check_and_install_dsf() {
 }
 
 function install_dsf() {
-    sudo aria2c 'https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy' --allow-overwrite=true -d /usr/local/bin -o diff-so-fancy
-    sudo chmod +x /usr/local/bin/diff-so-fancy
+    aria2c 'https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy' --allow-overwrite=true -d /tmp -o diff-so-fancy
+    sudo install /tmp/diff-so-fancy /usr/local/bin/diff-so-fancy
+    rm -f /tmp/diff-so-fancy 2>/dev/null
 }
 
 check_and_install_dsf
