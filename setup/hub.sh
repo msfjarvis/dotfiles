@@ -3,7 +3,7 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
-trap 'rm -rf /tmp/hub.tgz /tmp/hub' INT TERM EXIT
+trap 'rm -rf /tmp/hub.tgz /tmp/hub 2>/dev/null' INT TERM EXIT
 
 source "${SCRIPT_DIR:?}"/common
 source "${SCRIPT_DIR}"/gitshit
@@ -32,7 +32,7 @@ function install_hub() {
     mkdir -p hub
     tar -xf hub.tgz -C hub
     sudo ./hub/*/install --prefix=/usr/local/
-    rm -rf hub/ hub.tgz
+    rm -rf hub/ hub.tgz 2>/dev/null
 }
 
 check_and_install_hub

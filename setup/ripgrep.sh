@@ -3,7 +3,7 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
-trap 'rm /tmp/ripgrep.deb' INT TERM EXIT
+trap 'rm /tmp/ripgrep.deb 2>/dev/null' INT TERM EXIT
 
 source "${SCRIPT_DIR:?}"/common
 source "${SCRIPT_DIR}"/gitshit
@@ -32,7 +32,7 @@ function install_ripgrep() {
     cd /tmp || return 1
     aria2c "$(get_release_assets BurntSushi/ripgrep | grep "${RIPGREP_ARTIFACT}")" -o ripgrep.deb
     sudo dpkg -i ripgrep.deb
-    rm -rf ripgrep.deb
+    rm -rf ripgrep.deb 2>/dev/null
     cd "${SCRIPT_DIR}" || return 1
 }
 

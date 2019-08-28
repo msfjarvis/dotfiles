@@ -3,7 +3,7 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
-trap 'rm /tmp/gdrive' INT TERM EXIT
+trap 'rm /tmp/gdrive 2>/dev/null' INT TERM EXIT
 
 source "${SCRIPT_DIR:?}"/common
 source "${SCRIPT_DIR}"/gitshit

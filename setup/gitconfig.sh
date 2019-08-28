@@ -16,7 +16,7 @@ function setup_gitconfig() {
         gpg --decrypt "${ITEM}" > "${DECRYPTED}"
         [ ! -f "${DECRYPTED}" ] && break
         cat "${DECRYPTED}" >> ~/.gitconfig
-        rm "${DECRYPTED}"
+        rm -f "${DECRYPTED}" 2>/dev/null
     done
 }
 
