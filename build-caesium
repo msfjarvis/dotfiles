@@ -40,6 +40,7 @@ NO_VERSIONING=
 INCREMENTAL_VERSION=
 LOCALVERSION=
 GIT_HASH=
+FULL_CONFIG=
 declare -a CONFIGURATION=()
 
 # Trap to bail out properly
@@ -171,7 +172,7 @@ function pushcaesiumtg() {
         CHANGELOG="$(cat changelog)"
     fi
     cd zips || return
-    md5sum "${FILE}" > "${FILE}".md5sum
+    md5sum "${FILE}" >"${FILE}".md5sum
     prepdirs "${TYPE}"
     if [ "${TYPE}" == "stable" ]; then
         for ITEM in beta test alpha; do
@@ -289,7 +290,7 @@ function move_kernel_files() {
         mkdir -p "${FTM#*:}"
         cp "${OUT_DIR}/${FTM%:*}" "${FTM#*:}"
     done
-    echo "Version: $(cat "${OUT_DIR}/include/config/kernel.release")" > "${ANYKERNEL_DIR}/version"
+    echo "Version: $(cat "${OUT_DIR}/include/config/kernel.release")" >"${ANYKERNEL_DIR}/version"
 }
 
 # Called by make_kernel, used to trap defconfig regen events
@@ -297,8 +298,12 @@ function make_defconfig() {
     [ "${CLEAN}" ] && rm -rf "${OUT_DIR}"
     kmake "${DEFCONFIG}" 1>/dev/null 2>&1
     if [ "${REGEN_DEFCONFIG}" ]; then
-        kmake savedefconfig 1>/dev/null 2>&1
-        cp "${OUT_DIR}"/defconfig arch/"${ARCH}"/configs/"${DEFCONFIG}"
+        if [ -z "${FULL_CONFIG}" ]; then
+            kmake savedefconfig 1>/dev/null 2>&1
+            cp "${OUT_DIR}"/defconfig arch/"${ARCH}"/configs/"${DEFCONFIG}"
+        else
+            cp "${OUT_DIR}"/.config arch/"${ARCH}"/configs/"${DEFCONFIG}"
+        fi
         echoText "Regenerated defconfig successfully"
         exit 0
     fi
@@ -312,7 +317,7 @@ function make_defconfig() {
 function make_zip() {
     local FINAL_ZIP="${FINAL_VER}.zip"
     cd "${ANYKERNEL_DIR}" || return
-    echo "${FINAL_VER}" > version
+    echo "${FINAL_VER}" >version
     rm ./*.zip 2>/dev/null
     zip -r "${FINAL_ZIP}" ./* -x ".git/*" "README.md" ".gitignore" "*.zip" 1>/dev/null 2>&1
     mkdir -p "${ZIP_MOVE}"
