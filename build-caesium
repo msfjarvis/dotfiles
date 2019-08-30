@@ -12,7 +12,7 @@ source "${SCRIPT_DIR}"/telegram
 
 DEFCONFIG="caesium_defconfig"
 KERNEL="Image.gz-dtb"
-DEFAULT_BRANCH="pie-qpr2"
+DEFAULT_BRANCH="quinoa-qpp3"
 JARVISBOX_URL="https://download.msfjarvis.website/caesium"
 KERNEL_NAME="Caesium"
 DEVICE="wahoo"
