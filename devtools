@@ -49,5 +49,5 @@ function gettcvers() {
 }
 
 function kgrep() {
-    rg -nw "${1:?}"
+    rg -n "${1:?}" "${2:-.}"
 }
