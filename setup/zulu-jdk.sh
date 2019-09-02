@@ -22,6 +22,7 @@ function verify_checksum() {
 }
 
 function check_and_install_jdk() {
+    echoText "Checking and installing Zulu JDK"
     [ "$(java -version 2>&1 | head -n1 | sed 's/.*\"\(.*\)\"/\1/g')" == "1.8.0_222" ] && {
         reportWarning "Latest version of Zulu JDK already installed"
         return 0
