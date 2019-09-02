@@ -33,6 +33,7 @@ bash -i "${SCRIPT_DIR}"/setup/hugo.sh
 bash -i "${SCRIPT_DIR}"/setup/ripgrep.sh
 bash -i "${SCRIPT_DIR}"/setup/shellcheck.sh
 bash -i "${SCRIPT_DIR}"/setup/xclip.sh
+bash -i "${SCRIPT_DIR}"/setup/zulu-jdk.sh
 
 cd "${SCRIPT_DIR}" || exit 1
 
