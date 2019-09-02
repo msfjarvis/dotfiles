@@ -142,6 +142,7 @@ function lswg {
 
 function wginstall {
     fd -tf 'conf$' ~/wireguard/ -x sudo cp -v {} /etc/wireguard/'{/}'
+    fd -tf 'conf$' ~/wireguard/ -x sudo chmod 600 /etc/wireguard/'{/}'
 }
 
 function wgdiff {
