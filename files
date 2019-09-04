@@ -135,6 +135,10 @@ function publish() {
     local FILE REMOTE_DIR
     FILE="${1}"
     REMOTE_DIR="${2:-.superhidden}"
+    [ ! -f "${FILE}" ] && {
+        reportWarning "'${1}' does not exist!"
+        return
+    }
     mkdir -p "${LOCAL_SITE_MIRROR}/${REMOTE_DIR}"
     cp "${FILE:?}" "${LOCAL_SITE_MIRROR}/${REMOTE_DIR}/"
     syncup "${REMOTE_DIR}"
