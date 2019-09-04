@@ -4,8 +4,8 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 GERRIT_USER=MSF_Jarvis
-ANDROID_PLATFORM_ROOT="/home/msfjarvis/aosip"
-DEFAULT_AOSIP_BRANCH="pie"
+ANDROID_PLATFORM_ROOT="/home/msfjarvis/aosiq"
+DEFAULT_AOSIP_BRANCH="ten"
 AOSIP_GERRIT_URL="review.aosiprom.com"
 
 function setemail() {
