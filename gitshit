@@ -75,7 +75,11 @@ function gerrit() {
 }
 
 function gpush() {
-    git push gerrit HEAD:refs/for/"${DEFAULT_AOSIP_BRANCH}"
+    if [ -n "${1}" ]; then
+        git push gerrit HEAD:refs/for/"${DEFAULT_AOSIP_BRANCH}"/"${1}"
+    else
+        git push gerrit HEAD:refs/for/"${DEFAULT_AOSIP_BRANCH}"
+    fi
 }
 
 function gfpush() {
