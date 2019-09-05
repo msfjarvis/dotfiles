@@ -51,3 +51,7 @@ function gettcvers() {
 function kgrep() {
     rg -n "${1:?}" "${2:-.}"
 }
+
+function mkd {
+    tar -cv --exclude README.md --exclude ./.git --exclude LICENCE --exclude LICENSE -f docker.tar ./
+}
