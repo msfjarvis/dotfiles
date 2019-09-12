@@ -163,7 +163,7 @@ function prepdirs() {
 
 # The meat of the telegram notifications workflow
 function pushcaesiumtg() {
-    [ ! -z "${NO_UPLOADS}" ] && return
+    [ -n "${NO_UPLOADS}" ] && return
     local FILE TYPE FINAL_VER FILES_TO_PUBLISH MESSAGE CHANGELOG BUILD_URL
     FILE="${1}"
     TYPE="${2}"
