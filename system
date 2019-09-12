@@ -32,7 +32,11 @@ function reboot() {
 }
 
 function watch_sensors() {
-    while true; do clear; sensors; sleep 1; done
+    while true; do
+        clear
+        sensors
+        sleep 1
+    done
 }
 
 function endtask() {
@@ -78,7 +82,7 @@ function dnsmasqupdate() {
 function magiskhostupdate() {
     cd ~/git-repos/hosts_magisk || return 1
     rm ./*.zip "${LOCAL_SITE_MIRROR}"/adblock/*.zip 2>/dev/null
-    printf 'id=msfjarvishosts\nname=msfjarvis hosts file\nversion=v%s\nversionCode=%s\nauthor=msfjarvis\ndescription=Yet another adblock list\n' "$(date "+%Y%m%d")" "$(date "+%Y%m%d")" > module.prop
+    printf 'id=msfjarvishosts\nname=msfjarvis hosts file\nversion=v%s\nversionCode=%s\nauthor=msfjarvis\ndescription=Yet another adblock list\n' "$(date "+%Y%m%d")" "$(date "+%Y%m%d")" >module.prop
     ./deploy.sh --non-interactive
     cp ./*.zip "${LOCAL_SITE_MIRROR}"/adblock/
     syncup adblock
@@ -136,20 +140,20 @@ function display_exists() {
     if xhost >&/dev/null; then echo "1"; fi
 }
 
-function lswg {
+function lswg() {
     fd -tf 'conf$' ~/wireguard/ -x echo '{/.}'
 }
 
-function wginstall {
+function wginstall() {
     fd -tf 'conf$' ~/wireguard/ -x sudo cp -v {} /etc/wireguard/'{/}'
     fd -tf 'conf$' ~/wireguard/ -x sudo chmod 600 /etc/wireguard/'{/}'
 }
 
-function wgdiff {
+function wgdiff() {
     while read -r conf; do if [ -n "$conf" ]; then if [ ! -f "$conf" ]; then echo "$conf does not exist"; fi; fi; done < <(unzip -l mullvad-wireguard-configs.zip | grep conf | awk '{print $4}')
 }
 
-function wgbench {
+function wgbench() {
     local STATS_FILE
     STATS_FILE="$(mktemp)"
     fd -tf 'conf$' ~/wireguard/ -x echo '{/.}' | sed 's/mullvad-//g' | xargs -I {} ping -c 10 {}-wireguard.mullvad.net | tee "${STATS_FILE}"
