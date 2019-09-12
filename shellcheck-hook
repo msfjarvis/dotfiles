@@ -1,8 +1,2 @@
-#!/usr/bin/env bash
-
-files="$(git diff --name-only --cached --relative)"
-while read -r file; do
-    if [[ "${file}" =~ ${files} ]]; then
-        shellcheck "${file}"
-    fi
-done
+#!/bin/sh
+make
