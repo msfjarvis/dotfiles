@@ -41,6 +41,7 @@ INCREMENTAL_VERSION=
 LOCALVERSION=
 GIT_HASH=
 FULL_CONFIG=
+NO_UPLOADS=
 declare -a CONFIGURATION=()
 
 # Trap to bail out properly
@@ -162,6 +163,7 @@ function prepdirs() {
 
 # The meat of the telegram notifications workflow
 function pushcaesiumtg() {
+    [ ! -z "${NO_UPLOADS}" ] && return
     local FILE TYPE FINAL_VER FILES_TO_PUBLISH MESSAGE CHANGELOG BUILD_URL
     FILE="${1}"
     TYPE="${2}"
@@ -386,6 +388,7 @@ fi
 
 git tag -l | while read -r tag; do
     if [ "${tag}" == "${KERNEL_VERSION}" ]; then
+        NO_UPLOADS=true
         reportWarning "Forgot to bump version again..."
     fi
 done
