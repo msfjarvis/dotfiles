@@ -6,5 +6,4 @@
 alias git=hub
 alias cat=bat
 alias pidcat='pidcat -i ResourceType -i chatty'
-alias nano='nano -L'
 alias today='date +"%Y%m%d"'
