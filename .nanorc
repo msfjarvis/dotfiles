@@ -1,7 +1,6 @@
 set tabsize 4
 set autoindent
 set softwrap
-set mouse
 set nonewlines
 set smarthome
 set tabstospaces
