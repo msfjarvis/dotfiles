@@ -9,8 +9,8 @@ source "${SCRIPT_DIR:?}"/common
 source "${SCRIPT_DIR}"/gitshit
 
 function install_nano() {
-    local NANO_VER LATEST_NANO_VER SCRIPT_DIR
-    echoText "Checking and installing nano"
+    local NANO_VER LATEST_NANO_VER
+    echoText "Checking and updating nano"
     NANO_VER="$(nano --version | head -n1 | awk '{print $4}')"
     LATEST_NANO_VER="4.4"
     if [ "${NANO_VER}" != "${LATEST_NANO_VER}" ]; then
@@ -23,6 +23,7 @@ function install_nano() {
         CC=clang-9 CXX=clang++-9 ./configure --enable-color --enable-extra --enable-multibuffer --enable-nanorc --enable-utf8 --disable-libmagic
         make all -j"$(nproc)"
         sudo make install
+        cd "${SCRIPT_DIR}" || return 1
     else
         reportWarning "nano ${NANO_VER} is already installed!"
     fi
