@@ -42,6 +42,7 @@ LOCALVERSION=
 GIT_HASH=
 FULL_CONFIG=
 NO_UPLOADS=
+NO_STAGING=
 declare -a CONFIGURATION=()
 
 # Trap to bail out properly
@@ -210,8 +211,10 @@ function release() {
     git -C "${ANYKERNEL_DIR}" push
     git -C "${ANYKERNEL_DIR}" tag -s "${TAG}"
     git -C "${ANYKERNEL_DIR}" push origin "${TAG}"
-    git checkout "${DEFAULT_BRANCH}"
-    git reset --hard staging
+    if [ -z "${NO_STAGING}" ]; then
+        git checkout "${DEFAULT_BRANCH}"
+        git reset --hard staging
+    fi
     git push --force origin "${DEFAULT_BRANCH}"
     git tag -as "${TAG}"
     git push origin "${TAG}"
