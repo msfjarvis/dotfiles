@@ -13,9 +13,9 @@ function setup_gitconfig() {
     for ITEM in $(fd -tf . "${SCRIPT_DIR}/gitconfig_fragments"); do
         DECRYPTED="${ITEM/.gpg/}"
         rm -f "${DECRYPTED}" 2>/dev/null
-        gpg --decrypt "${ITEM}" > "${DECRYPTED}"
+        gpg --decrypt "${ITEM}" >"${DECRYPTED}"
         [ ! -f "${DECRYPTED}" ] && break
-        cat "${DECRYPTED}" >> ~/.gitconfig
+        cat "${DECRYPTED}" >>~/.gitconfig
         rm -f "${DECRYPTED}" 2>/dev/null
     done
 }
