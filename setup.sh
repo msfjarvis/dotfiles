@@ -39,6 +39,7 @@ cd "${SCRIPT_DIR}" || exit 1
 
 echoText 'Installing nanorc'
 cp -v "${SCRIPT_DIR}"/.nanorc ~/.nanorc
+curl --silent https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh 1>/dev/null
 
 echoText "Moving credentials"
 gpg --decrypt "${SCRIPT_DIR}"/.secretcreds.gpg > ~/.secretcreds
