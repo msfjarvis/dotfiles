@@ -37,7 +37,13 @@ function build() {
     export BUILD_BROKEN_DUP_RULES=true
     . build/envsetup.sh
     [ "${SKIP_SYNC}" ] || reposync --force-sync --detach
-    [ "${NO_REPOPICK}" ] || { [ -f picklist ] && source picklist; }
+    [ "${NO_REPOPICK}" ] || {
+        if [ -f picklist ]; then
+            source picklist
+        else
+            reportError "repopick was requested but a picklist was not found; aborting"
+        fi
+    }
     lunch aosip_"${TARGET_DEVICE}"-userdebug
     [ "${CLEAN}" ] && m deviceclean
     m kronic
