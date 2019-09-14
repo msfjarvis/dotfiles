@@ -31,14 +31,6 @@ function reboot() {
     esac
 }
 
-function watch_sensors() {
-    while true; do
-        clear
-        sensors
-        sleep 1
-    done
-}
-
 function endtask() {
     for pid in $(pgrep "${1:?}"); do kill -9 "${pid}" 2>/dev/null; done
 }
