@@ -115,6 +115,7 @@ function imgur() {
 # Download a file given the Google Drive URL
 function gdrivedl() {
     local URL GDRIVE FILE_ID
+    declare -a CONFIGURATION=()
     URL="${1}"
     shift
     GDRIVE="$(command -v gdrive)"
@@ -124,10 +125,19 @@ function gdrivedl() {
     fi
     if [[ "${URL:?}" =~ folders ]]; then
         FILE_ID="$(echo "${URL}" | sed -r -e 's/https.*folders\/(.*)/\1/' -e 's/(.*)\?.*/\1/')"
+        CONFIGURATION+=("--recursive")
     else
         FILE_ID="$(echo "${URL:?}" | sed -Er -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/(view|edit)/\1/' -e 's/(.*)(&|\?).*/\1/')"
     fi
-    gdrive download --recursive "${FILE_ID:?}"
+    # Stolen from https://stackoverflow.com/a/12711853
+    for arg; do
+        case $arg in
+        "--force" | "-f") CONFIGURATION+=("--force");;
+        "--skip" | "-s") CONFIGURATION+=("--skip");;
+        esac
+    done
+
+    gdrive download "${CONFIGURATION[@]}" "${FILE_ID:?}"
 }
 
 # Publish a file to the download server
