@@ -62,4 +62,5 @@ function bustcfcache() {
         -H "X-Auth-Key: ${CF_API_KEY}" \
         -H "Content-Type: application/json" \
         --data '{"purge_everything":true}'
+    echo ""
 }
