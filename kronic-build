@@ -10,6 +10,7 @@ trap 'exit 1' SIGINT SIGTERM
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/files
+source "${SCRIPT_DIR}"/gitshit
 source "${SCRIPT_DIR}"/server
 
 declare -a banner_items
@@ -31,12 +32,15 @@ function handle_upload() {
 
 function build() {
     local ZIP
+    export SELINUX_IGNORE_NEVERALLOWS=true
+    export TEMPORARY_DISABLE_PATH_RESTRICTIONS=true
+    export BUILD_BROKEN_DUP_RULES=true
     . build/envsetup.sh
-    [ "${SKIP_SYNC}" ] || repo sync -c --force-sync -j"$(nproc --all)" --no-tags --detach
+    [ "${SKIP_SYNC}" ] || reposync --force-sync --detach
     [ "${NO_REPOPICK}" ] || { [ -f picklist ] && source picklist; }
     lunch aosip_"${TARGET_DEVICE}"-userdebug
-    [ "${CLEAN}" ] && m -j"$(nproc --all)" deviceclean
-    m -j"$(nproc --all)" kronic
+    [ "${CLEAN}" ] && m deviceclean
+    m kronic
     if [ -z "${OUT_DIR_COMMON_BASE}" ]; then
         ZIP="out/target/product/${TARGET_DEVICE}/${AOSIP_VERSION}".zip
     else
@@ -45,7 +49,7 @@ function build() {
     if [ -f "${ZIP}" ]; then [ "${UPLOAD_BUILD}" ] && handle_upload "${ZIP}"; else tgm "${TARGET_DEVICE} build failed."; fi
 }
 
-cd "${HOME}"/aosip || exit 1
+cd "${HOME}"/aosiq || exit 1
 
 while getopts ":cd:hnsu" opt; do
     case "${opt}" in
@@ -87,7 +91,7 @@ optional arguments:
     esac
 done
 
-AOSIP_VERSION=AOSiP-9.0-"${AOSIP_BUILDTYPE:-Pizza}"-"${TARGET_DEVICE:?}"-$(date +%Y%m%d)
+AOSIP_VERSION=AOSiP-10-"${AOSIP_BUILDTYPE:-Pizza}"-"${TARGET_DEVICE:?}"-$(date +%Y%m%d)
 banner_items+=("AOSiP version: ${AOSIP_VERSION}")
 banner "${banner_items[@]/#/}"
 
