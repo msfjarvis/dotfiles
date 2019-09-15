@@ -36,8 +36,8 @@ function build() {
     export TEMPORARY_DISABLE_PATH_RESTRICTIONS=true
     export BUILD_BROKEN_DUP_RULES=true
     . build/envsetup.sh
-    [ "${SKIP_SYNC}" ] || reposync --force-sync --detach
-    [ "${NO_REPOPICK}" ] || {
+    [ "${SYNC}" ] && reposync --force-sync --detach
+    [ "${REPOPICK}" ] && {
         if [ -f picklist ]; then
             source picklist
         else
@@ -61,7 +61,7 @@ function build() {
 
 cd "${HOME}"/aosiq || exit 1
 
-while getopts ":cd:hm:nsu" opt; do
+while getopts ":cd:hm:rsu" opt; do
     case "${opt}" in
     c)
         CLEAN=true
@@ -80,23 +80,23 @@ optional arguments:
   -c        Force a deviceclean build
   -d DEVICE Build for DEVICE
   -m MODULE Build only given module
-  -n        Skip repopick tasks
-  -s        Skip syncing
+  -r        Run repopick tasks
+  -s        Run force sync
   -u        Upload build to Google Drive
 '
         exit 0
         ;;
-    n)
-        NO_REPOPICK=true
-        banner_items+=("Skipping repopick")
+    r)
+        REPOPICK=true
+        banner_items+=("Will repopick from 'picklist'")
         ;;
     m)
         MODULE="${OPTARG}"
         banner_items+=("Building module: ${MODULE}")
         ;;
     s)
-        SKIP_SYNC=true
-        banner_items+=("Skipping sync")
+        SYNC=true
+        banner_items+=("Will force sync and detach")
         ;;
     u)
         UPLOAD_BUILD=true
