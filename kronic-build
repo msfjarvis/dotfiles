@@ -36,6 +36,7 @@ function build() {
     export SELINUX_IGNORE_NEVERALLOWS=true
     export TEMPORARY_DISABLE_PATH_RESTRICTIONS=true
     export BUILD_BROKEN_DUP_RULES=true
+    export USE_CCACHE=1
     export CCACHE_EXEC
     . build/envsetup.sh
     [ "${SYNC}" ] && reposync --force-sync --detach
