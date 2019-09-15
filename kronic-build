@@ -50,7 +50,7 @@ function build() {
     if [ -z "${OUT_DIR_COMMON_BASE}" ]; then
         ZIP="out/target/product/${TARGET_DEVICE}/${AOSIP_VERSION}".zip
     else
-        ZIP="${OUT_DIR_COMMON_BASE}/$(basename $(pwd))/target/product/${TARGET_DEVICE}/${AOSIP_VERSION}".zip
+        ZIP="${OUT_DIR_COMMON_BASE}/$(basename "$(pwd)")/target/product/${TARGET_DEVICE}/${AOSIP_VERSION}".zip
     fi
     if [ -f "${ZIP}" ]; then [ "${UPLOAD_BUILD}" ] && handle_upload "${ZIP}"; else tgm "${TARGET_DEVICE} build failed."; fi
 }
