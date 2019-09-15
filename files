@@ -8,12 +8,16 @@ source "${SCRIPT_DIR}"/telegram
 
 function dl() {
     local URL FILE_NAME
+    declare -a CONFIGURATION=("--split=16" "--max-connection-per-server=16" "--summary-interval=0")
     URL="${1}"
     FILE_NAME="${2}"
+    if [[ "${URL}" =~ magnet ]] || [[ "${URL}" =~ \.torrent ]]; then
+        CONFIGURATION+=("--seed-time=1m")
+    fi
     if [ -z "${FILE_NAME}" ]; then
-        aria2c --seed-time=1m --split=16 --max-connection-per-server=16 --summary-interval=0 "${URL:?}"
+        aria2c "${CONFIGURATION[@]}" "${URL:?}"
     else
-        aria2c --split=16 --max-connection-per-server=16 --summary-interval=0 "${URL:?}" -o "${FILE_NAME}"
+        aria2c "${CONFIGURATION[@]}" "${URL:?}" -o "${FILE_NAME}"
     fi
 }
 
