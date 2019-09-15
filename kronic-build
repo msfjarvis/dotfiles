@@ -48,6 +48,7 @@ function build() {
     [ "${CLEAN}" ] && m deviceclean
     if [ -n "${MODULE}" ]; then
         m "${MODULE}"
+        return
     else
         m kronic
     fi
