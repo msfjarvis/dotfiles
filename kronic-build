@@ -46,7 +46,11 @@ function build() {
     }
     lunch aosip_"${TARGET_DEVICE}"-userdebug
     [ "${CLEAN}" ] && m deviceclean
-    m kronic
+    if [ -n "${MODULE}" ]; then
+        m "${MODULE}"
+    else
+        m kronic
+    fi
     if [ -z "${OUT_DIR_COMMON_BASE}" ]; then
         ZIP="out/target/product/${TARGET_DEVICE}/${AOSIP_VERSION}".zip
     else
@@ -57,7 +61,7 @@ function build() {
 
 cd "${HOME}"/aosiq || exit 1
 
-while getopts ":cd:hnsu" opt; do
+while getopts ":cd:hm:nsu" opt; do
     case "${opt}" in
     c)
         CLEAN=true
@@ -75,6 +79,7 @@ optional arguments:
   -h        Show this help message and exit
   -c        Force a deviceclean build
   -d DEVICE Build for DEVICE
+  -m MODULE Build only given module
   -n        Skip repopick tasks
   -s        Skip syncing
   -u        Upload build to Google Drive
@@ -84,6 +89,10 @@ optional arguments:
     n)
         NO_REPOPICK=true
         banner_items+=("Skipping repopick")
+        ;;
+    m)
+        MODULE="${OPTARG}"
+        banner_items+=("Building module: ${MODULE}")
         ;;
     s)
         SKIP_SYNC=true
