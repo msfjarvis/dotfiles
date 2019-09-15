@@ -31,10 +31,12 @@ function handle_upload() {
 }
 
 function build() {
-    local ZIP
+    local ZIP CCACHE_EXEC
+    CCACHE_EXEC="$(command -v ccache)"
     export SELINUX_IGNORE_NEVERALLOWS=true
     export TEMPORARY_DISABLE_PATH_RESTRICTIONS=true
     export BUILD_BROKEN_DUP_RULES=true
+    export CCACHE_EXEC
     . build/envsetup.sh
     [ "${SYNC}" ] && reposync --force-sync --detach
     [ "${REPOPICK}" ] && {
