@@ -100,13 +100,9 @@ function xg() {
         return 1
     fi
     PROJECT="$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#-caf.*##; s#/make##; s#\/default##; s#/#_#g#")"
-    for repo in "${INCONSISTENT_PROJECTS[@]}"; do
-        if [ "${PROJECT}" == "${repo}" ]; then
-            break
-        else
-            PROJECT="platform_${PROJECT}"
-        fi
-    done
+    if ! containsElement "${PROJECT}" "${INCONSISTENT_PROJECTS[@]}"; then
+        PROJECT="platform_${PROJECT}"
+    fi
     git remote remove gerrit 2>/dev/null
     git remote add gerrit ssh://"${GERRIT_USER}"@"${AOSIP_GERRIT_URL}":29418/AOSIP/"${PROJECT}"
     hook
