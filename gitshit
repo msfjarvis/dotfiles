@@ -92,12 +92,20 @@ function gffpush() {
 
 function xg() {
     local PROJECT
+    declare -a INCONSISTENT_PROJECTS=("device_qcom_sepolicy" "device_aosip_sepolicy")
     if ! git rev-parse --git-dir &>/dev/null; then
         reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
         return 1
     fi
     PROJECT="$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#-caf.*##; s#/make##; s#\/default##; s#/#_#g#")"
+    for repo in "${INCONSISTENT_PROJECTS[@]}"; do
+        if [ "${PROJECT}" == "${repo}" ]; then
+            break
+        else
+            PROJECT="platform_${PROJECT}"
+        fi
+    done
     git remote remove gerrit 2>/dev/null
-    git remote add gerrit ssh://"${GERRIT_USER}"@"${AOSIP_GERRIT_URL}":29418/AOSIP/platform_"${PROJECT}"
+    git remote add gerrit ssh://"${GERRIT_USER}"@"${AOSIP_GERRIT_URL}":29418/AOSIP/"${PROJECT}"
     hook
 }
