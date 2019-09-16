@@ -62,7 +62,9 @@ function get_release_assets() {
 function hook() {
     local gitdir
     gitdir="$(git rev-parse --git-dir)"
-    scp -p -P 29418 MSF_Jarvis@review.aosiprom.com:hooks/commit-msg "${gitdir}"/hooks/
+    if [ ! -f "${gitdir}"/hooks/commit-msg ]; then
+        scp -p -P 29418 MSF_Jarvis@review.aosiprom.com:hooks/commit-msg "${gitdir}"/hooks/
+    fi
 }
 
 function reposync() {
