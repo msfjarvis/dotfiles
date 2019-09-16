@@ -36,7 +36,6 @@ function makeapk() {
     else
         [ "${1}" == "install" ] && COMMAND="install$(cat .variant)" || COMMAND="assemble$(cat .variant)"
     fi
-    findapks "." | while read -r apk; do rm -v "${apk}"; done
     "${GRADLE}" "${COMMAND}"
 }
 
