@@ -49,6 +49,7 @@ function build() {
     }
     lunch aosip_"${TARGET_DEVICE}"-userdebug
     [ "${CLEAN}" ] && m deviceclean
+    [ "${FULL_CLEAN}" ] && m clean
     if [ -n "${MODULE}" ]; then
         m "${MODULE}"
         return
@@ -65,15 +66,19 @@ function build() {
 
 cd "${HOME}"/aosiq || exit 1
 
-while getopts ":cd:hm:rsu" opt; do
+while getopts ":cd:fhm:rsu" opt; do
     case "${opt}" in
     c)
         CLEAN=true
-        banner_items+=("Building clean")
+        banner_items+=("Building after deviceclean")
         ;;
     d)
         TARGET_DEVICE="${OPTARG}"
         banner_items+=("Building for ${TARGET_DEVICE}")
+        ;;
+    f)
+        FULL_CLEAN=true
+        banner_items+=("Building after full clean")
         ;;
     h)
         echo '
@@ -83,6 +88,7 @@ optional arguments:
   -h        Show this help message and exit
   -c        Force a deviceclean build
   -d DEVICE Build for DEVICE
+  -f        Force a fully clean build
   -m MODULE Build only given module
   -r        Run repopick tasks
   -s        Run force sync
