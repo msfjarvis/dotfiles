@@ -27,7 +27,7 @@ function rebuildtc() {
 function fillccache() {
     local START_TIME END_TIME BASE_DIR CUR_DIR
     START_TIME=$(date +"%s")
-    declare -a DEVICES=("wahoo")
+    declare -a DEVICES=("wahoo" "whyred")
     BASE_DIR=/home/msfjarvis/git-repos/halogenOS
     CUR_DIR="$(pwd)"
     for DEVICE in "${DEVICES[@]}"; do
