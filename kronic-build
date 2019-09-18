@@ -39,7 +39,11 @@ function build() {
     export USE_CCACHE=1
     export CCACHE_EXEC
     . build/envsetup.sh
-    [ "${SYNC}" ] && reposync --force-sync --detach
+    [ "${SYNC}" ] && {
+        reposync --force-sync --detach
+        repo start ten --all
+        repo forall -c 'git reset --hard m/ten'
+    }
     [ "${REPOPICK}" ] && {
         if [ -f picklist ]; then
             source picklist
