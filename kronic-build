@@ -70,7 +70,7 @@ function build() {
 
 cd "${HOME}"/aosiq || exit 1
 
-while getopts ":cd:fhm:rsu" opt; do
+while getopts ":cd:efhm:rsu" opt; do
     case "${opt}" in
     c)
         CLEAN=true
@@ -79,6 +79,8 @@ while getopts ":cd:fhm:rsu" opt; do
     d)
         TARGET_DEVICE="${OPTARG}"
         banner_items+=("Building for ${TARGET_DEVICE}")
+        ;;
+    e)
         ;;
     f)
         FULL_CLEAN=true
@@ -92,6 +94,7 @@ optional arguments:
   -h        Show this help message and exit
   -c        Force a deviceclean build
   -d DEVICE Build for DEVICE
+  -e        Just here for the memes
   -f        Force a fully clean build
   -m MODULE Build only given module
   -r        Run repopick tasks
