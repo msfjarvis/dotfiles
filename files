@@ -199,5 +199,5 @@ function whitespace() {
 }
 
 function pwallsync() {
-    adb-sync --reverse /sdcard/Pictures/Dank "${LOCAL_SITE_MIRROR}/.phone_walls/"
+    adb-sync --reverse /sdcard/Pictures/Dawn "${LOCAL_SITE_MIRROR}/.phone_walls/"
 }
