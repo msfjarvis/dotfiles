@@ -56,6 +56,9 @@ function mkd() {
 }
 
 function bustcfcache() {
+    local CF_API_KEY CF_ZONE_ID
+    CF_API_KEY="$(pass personal/cf-api | head -n1)"
+    CF_ZONE_ID="$(pass personal/cf-api | tail -n1)"
     curl -s -X POST "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/purge_cache" \
         -H "X-Auth-Email: msfjarvis@gmail.com" \
         -H "X-Auth-Key: ${CF_API_KEY}" \
