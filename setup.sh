@@ -17,7 +17,7 @@ mkdir -p ~/bin/
 
 # Install standard packages.
 echoText "Installing necessary packages"
-sudo apt install -y aria2 autoconf automake axel cowsay curl jq libxmu-dev lolcat mosh wget libgdk-pixbuf2.0-dev libxml2-utils inkscape sassc libncursesw5-dev
+sudo apt install -y aria2 autoconf automake cowsay curl inkscape jq libxmu-dev libgdk-pixbuf2.0-dev libncursesw5-dev libxml2-utils lolcat mosh pidcat wget sassc
 
 # Update all submodules
 git -C "${SCRIPT_DIR}" submodule update --init --recursive
