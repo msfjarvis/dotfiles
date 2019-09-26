@@ -3,6 +3,8 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
+set -e
+
 # Trap to bail out properly
 trap 'exit 1' SIGINT SIGTERM
 
