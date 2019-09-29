@@ -44,6 +44,12 @@ if [ ! -d "${HOME}/.nano" ]; then
     curl --silent https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh 1>/dev/null
 else
     git -C "${HOME}/.nano" pull --rebase
+    # add all includes from ~/.nano/nanorc if they're not already there
+    while read -r inc; do
+        if ! grep -q "$inc" ~/.nanorc; then
+            echo "$inc" >>~/.nanorc
+        fi
+    done <~/.nano/nanorc
 fi
 
 echoText "Moving credentials"
