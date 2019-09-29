@@ -20,7 +20,7 @@ function install_nano() {
         dl https://www.nano-editor.org/dist/v4/nano-"${LATEST_NANO_VER}".tar.xz nano.tar.xz
         tar xf nano.tar.xz
         cd nano-"${LATEST_NANO_VER}" || return 1
-        CC=clang-9 CXX=clang++-9 ./configure --enable-color --enable-extra --enable-multibuffer --enable-nanorc --enable-utf8 --disable-libmagic
+        CC=clang CXX=clang++ ./configure --enable-color --enable-extra --enable-multibuffer --enable-nanorc --enable-utf8 --disable-libmagic
         make all -j"$(nproc)"
         sudo make install
         cd "${SCRIPT_DIR}" || return 1
