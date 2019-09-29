@@ -1,5 +1,5 @@
-on: push
-name: ShellCheck all shell scripts
+on: [push, pull_request]
+name: ShellCheck scripts
 jobs:
   shellCheck:
     name: ShellCheck
