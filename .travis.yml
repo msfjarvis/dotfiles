@@ -1,5 +1,0 @@
-language: minimal
-dist: xenial
-
-script:
-    - make test

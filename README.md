@@ -1,4 +1,4 @@
-# dotfiles [![Build Status](https://travis-ci.com/msfjarvis/dotfiles.svg?branch=master)](https://travis-ci.com/msfjarvis/dotfiles)
+# dotfiles [![GitHub workflow](https://github.com/msfjarvis/dotfiles/workflows/ShellCheck%20all%20shell%20scripts/badge.svg)](https://github.com/msfjarvis/dotfiles/actions)
 
 Collection of little bash hacks and utilities I use frequently
 
