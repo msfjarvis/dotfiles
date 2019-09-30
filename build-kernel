@@ -12,22 +12,17 @@ source "${SCRIPT_DIR}"/common
 DEFCONFIG="${DEFCONFIG:-$(hostname)_defconfig}"
 
 # Setup variables
-CLANG=
+CC=
 CLEAN=
+HOSTCC=
 INSTALL=
 MODULE=
 REGEN_DEFCONFIG=
 
+declare -a MAKE_FLAGS=("ARCH=x86" "SUBARCH=x86_64")
+
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper() {
-  local CC HOSTCC
-  declare -a MAKE_FLAGS=("ARCH=x86" "SUBARCH=x86_64")
-  CC='ccache gcc-9'
-  HOSTCC='ccache gcc-9'
-  [ -z "${CLANG}" ] || {
-    CC='ccache clang'
-    HOSTCC='ccache clang'
-  }
   make CC="${CC}" \
     HOSTCC="${HOSTCC}" \
     "${MAKE_FLAGS[@]}" \
@@ -88,6 +83,18 @@ while getopts ":cim:r" opt; do
     reportWarning "Invalid option: -${OPTARG}" >&2
     ;;
   esac
+done
+
+CC='ccache gcc'
+HOSTCC='ccache gcc'
+
+for arg; do
+    case $arg in
+    "--clang")
+    CC='ccache clang'
+    HOSTCC='ccache clang'
+    ;;
+    esac
 done
 
 DATE_START=$(date +"%s")
