@@ -68,7 +68,7 @@ function dnsmasqupdate() {
     make generate
     cp adblock.list "${LOCAL_SITE_MIRROR}"/adblock/adblock.list
     syncup adblock
-    cd - || return 1
+    cd - 1>/dev/null || return 1
 }
 
 function magiskhostupdate() {
@@ -78,7 +78,7 @@ function magiskhostupdate() {
     ./deploy.sh --non-interactive
     cp ./*.zip "${LOCAL_SITE_MIRROR}"/adblock/
     syncup adblock
-    cd - || return 1
+    cd - 1>/dev/null || return 1
 }
 
 function maintenance() {
@@ -96,7 +96,7 @@ function theme_update() {
     ./autogen.sh --disable-gnome --disable-xfce --disable-gtk_next --disable-flashback --disable-mate --disable-openbox --disable-plank --disable-telegram --disable-tweetdeck --disable-airforstream --prefix="${HOME}"/.local
     make -j24
     make -j24 install
-    cd - || return
+    cd - 1>/dev/null || return
 }
 
 function battinfo() {
@@ -137,7 +137,7 @@ function lswg() {
 }
 
 function wginstall() {
-    unzip -o ~/wireguard/mullvad-wireguard-configs.zip -d ~/wireguard/
+    unzip -o ~/wireguard/mullvad-wireguard-configs.zip -d ~/wireguard/ 1>/dev/null
     fd -tf 'conf$' ~/wireguard/ -x sudo cp -v {} /etc/wireguard/'{/}'
     fd -tf 'conf$' ~/wireguard/ -x sudo chmod 600 /etc/wireguard/'{/}'
 }
@@ -145,7 +145,7 @@ function wginstall() {
 function wgdiff() {
     cd ~/wireguard || return 1
     while read -r conf; do if [ -n "$conf" ]; then if [ ! -f "$conf" ]; then echo "$conf does not exist"; fi; fi; done < <(unzip -l mullvad-wireguard-configs.zip | grep conf | awk '{print $4}')
-    cd - || return 1
+    cd - 1>/dev/null || return 1
 }
 
 function wgbench() {
