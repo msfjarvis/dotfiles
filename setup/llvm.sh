@@ -57,7 +57,8 @@ esac
 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
 add-apt-repository "${REPO_NAME}"
 apt update
-apt install -y clang-"$LLVM_VERSION" clang-tools-"$LLVM_VERSION" clang-"$LLVM_VERSION"-doc libclang-common-"$LLVM_VERSION"-dev libclang-"$LLVM_VERSION"-dev libclang1-"$LLVM_VERSION" clang-format-"$LLVM_VERSION" python-clang-"$LLVM_VERSION" clangd-"$LLVM_VERSION" libc++-"$LLVM_VERSION"-dev
-apt install -y clang clang-tools clang-7-doc libclang-common-7-dev libclang-dev libclang1 clang-format python-clang-7
+apt install -y clang-"$LLVM_VERSION" clang-tools-"$LLVM_VERSION" clang-"$LLVM_VERSION"-doc libclang-common-"$LLVM_VERSION"-dev libclang-"$LLVM_VERSION"-dev libclang1-"$LLVM_VERSION" clang-format-"$LLVM_VERSION" python-clang-"$LLVM_VERSION" clangd-"$LLVM_VERSION" libc++-"$LLVM_VERSION"-dev lld-"$LLVM_VERSION"
+apt install -y clang clang-tools clang-7-doc libclang-common-7-dev libclang-dev libclang1 clang-format python-clang-7 lld
 update-alternatives --install "/usr/bin/clang" "clang" "$(command -v clang-"$LLVM_VERSION")" 2
 update-alternatives --install "/usr/bin/clang++" "clang++" "$(command -v clang++-"$LLVM_VERSION")" 2
+update-alternatives --install "/usr/bin/lld" "lld" "$(command -v lld-"$LLVM_VERSION")" 2
