@@ -20,16 +20,16 @@ echoText "Installing necessary packages"
 sudo apt install -y aria2 autoconf automake cowsay curl inkscape jq libxmu-dev libgdk-pixbuf2.0-dev libncursesw5-dev libxml2-utils lolcat mosh pidcat wget sassc
 
 bash -i "${SCRIPT_DIR}"/setup/android-udev.sh
-bash -i "${SCRIPT_DIR}"/setup/bat.sh
 bash -i "${SCRIPT_DIR}"/setup/diff-so-fancy.sh
-bash -i "${SCRIPT_DIR}"/setup/diskus.sh
-bash -i "${SCRIPT_DIR}"/setup/fd.sh
 bash -i "${SCRIPT_DIR}"/setup/gdrive.sh
 bash -i "${SCRIPT_DIR}"/setup/gitconfig.sh
 bash -i "${SCRIPT_DIR}"/setup/hub.sh
 bash -i "${SCRIPT_DIR}"/setup/hugo.sh
 bash -i "${SCRIPT_DIR}"/setup/nano.sh
 bash -i "${SCRIPT_DIR}"/setup/ripgrep.sh
+bash -i "${SCRIPT_DIR}"/setup/sharkdp.sh bat
+bash -i "${SCRIPT_DIR}"/setup/sharkdp.sh diskus
+bash -i "${SCRIPT_DIR}"/setup/sharkdp.sh fd
 bash -i "${SCRIPT_DIR}"/setup/shellcheck.sh
 bash -i "${SCRIPT_DIR}"/setup/xclip.sh
 bash -i "${SCRIPT_DIR}"/setup/zulu-jdk.sh
