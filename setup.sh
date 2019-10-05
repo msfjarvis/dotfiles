@@ -22,6 +22,7 @@ sudo apt install -y aria2 autoconf automake cowsay curl inkscape jq libxmu-dev l
 bash -i "${SCRIPT_DIR}"/setup/android-udev.sh
 bash -i "${SCRIPT_DIR}"/setup/bat.sh
 bash -i "${SCRIPT_DIR}"/setup/diff-so-fancy.sh
+bash -i "${SCRIPT_DIR}"/setup/diskus.sh
 bash -i "${SCRIPT_DIR}"/setup/fd.sh
 bash -i "${SCRIPT_DIR}"/setup/gdrive.sh
 bash -i "${SCRIPT_DIR}"/setup/gitconfig.sh
