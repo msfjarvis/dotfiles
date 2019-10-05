@@ -28,8 +28,7 @@ fi
 declare -A LLVM_VERSION_PATTERNS
 LLVM_VERSION_PATTERNS[8]="-8"
 LLVM_VERSION_PATTERNS[9]="-9"
-LLVM_VERSION_PATTERNS[10]="-10"
-LLVM_VERSION_PATTERNS[11]=""
+LLVM_VERSION_PATTERNS[10]=""
 
 if [ ! ${LLVM_VERSION_PATTERNS[$LLVM_VERSION]+_} ]; then
     echo "This script does not support LLVM version $LLVM_VERSION"
@@ -60,5 +59,5 @@ add-apt-repository "${REPO_NAME}"
 apt update
 apt install -y clang-"$LLVM_VERSION" clang-tools-"$LLVM_VERSION" clang-"$LLVM_VERSION"-doc libclang-common-"$LLVM_VERSION"-dev libclang-"$LLVM_VERSION"-dev libclang1-"$LLVM_VERSION" clang-format-"$LLVM_VERSION" python-clang-"$LLVM_VERSION" clangd-"$LLVM_VERSION" libc++-"$LLVM_VERSION"-dev
 apt install -y clang clang-tools clang-7-doc libclang-common-7-dev libclang-dev libclang1 clang-format python-clang-7
-update-alternatives --install "/usr/bin/clang" "clang" "$(command -v clang$LLVM_VERSION_STRING)" 2
-update-alternatives --install "/usr/bin/clang++" "clang++" "$(command -v clang++$LLVM_VERSION_STRING)" 2
+update-alternatives --install "/usr/bin/clang" "clang" "$(command -v clang-"$LLVM_VERSION")" 2
+update-alternatives --install "/usr/bin/clang++" "clang++" "$(command -v clang++-"$LLVM_VERSION")" 2
