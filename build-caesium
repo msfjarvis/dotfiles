@@ -43,6 +43,7 @@ GIT_HASH=
 FULL_CONFIG=
 NO_UPLOADS=
 NO_STAGING=
+SILENT=
 declare -a CONFIGURATION=()
 
 # Trap to bail out properly
@@ -70,7 +71,9 @@ BANNER_ITEMS+=("Defconfig: ${DEFCONFIG}")
 ## Functions
 # Wrapper around tgm to avoid having to pass the second chat ID param everywhere
 function tgm_caesium() {
-    [ -z "${TYPE}" ] && return
+    if [ -z "${TYPE}" ] || [ -n "${SILENT}" ]; then
+        return
+    fi
     local CHAT_ID
     case "${DEVICE}" in
     "wahoo") CHAT_ID="${WAHOO_CAESIUM_CHAT_ID}" ;;
@@ -336,7 +339,7 @@ function make_zip() {
     cd "${WORKING_DIR}" || return
 }
 
-while getopts ":bcd:m:rt:v" OPT; do
+while getopts ":bcd:m:rst:v" OPT; do
     case "${OPT}" in
     b)
         BANNER_ITEMS+=("Building ZIP only")
@@ -363,6 +366,9 @@ while getopts ":bcd:m:rt:v" OPT; do
     r)
         BANNER_ITEMS+=("Regenerating defconfig")
         REGEN_DEFCONFIG=true
+        ;;
+    s)
+        SILENT=true
         ;;
     t)
         TYPE="${OPTARG}"
