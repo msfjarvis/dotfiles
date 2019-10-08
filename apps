@@ -52,15 +52,6 @@ function findapks() {
     fd -HI "\.apk$" "${DIR}"
 }
 
-function p2d() {
-    adb-whyred shell mount system
-    local FINAL_PATH
-    FINAL_PATH=$(adb-whyred shell find /system -name "$(basename "${1}")")
-    echo "${FINAL_PATH}"
-    adb-whyred push "$1" "${FINAL_PATH}"
-    adb-whyred shell umount system
-}
-
 function andromeda() {
     bash ~/git-repos/andromeda_startup_scripts/Linux/start_andromeda.sh
 }
