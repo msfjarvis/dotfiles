@@ -77,13 +77,6 @@ function tgm_caesium() {
     local CHAT_ID
     case "${DEVICE}" in
     "wahoo") CHAT_ID="${WAHOO_CAESIUM_CHAT_ID}" ;;
-    "whyred")
-        if [ "${TYPE}" == "alpha" ] || [ "${TYPE}" == "beta" ]; then
-            CHAT_ID="${WHYRED_TEST_CHAT_ID}"
-        else
-            CHAT_ID="${WHYRED_CAESIUM_CHAT_ID}"
-        fi
-        ;;
     esac
     if [ "${TYPE}" == "test" ] || [ "${2}" == "silent" ]; then
         unset CHAT_ID
