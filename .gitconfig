@@ -83,3 +83,5 @@
 [url "git@github.com:"]
     insteadOf = https://github.com/
     insteadOf = git://github.com/
+[diff]
+	noprefix = true
