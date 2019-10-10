@@ -22,7 +22,6 @@ sudo apt install -y aria2 autoconf automake cowsay curl inkscape jq libxmu-dev l
 bash -i "${SCRIPT_DIR}"/setup/android-udev.sh
 bash -i "${SCRIPT_DIR}"/setup/diff-so-fancy.sh
 bash -i "${SCRIPT_DIR}"/setup/gdrive.sh
-bash -i "${SCRIPT_DIR}"/setup/gitconfig.sh
 bash -i "${SCRIPT_DIR}"/setup/hub.sh
 bash -i "${SCRIPT_DIR}"/setup/hugo.sh
 bash -i "${SCRIPT_DIR}"/setup/nano.sh
@@ -77,3 +76,7 @@ done
 if [[ "$*" =~ --all ]] && [ "$(display_exists)" ]; then
     source "${SCRIPT_DIR}"/setup/adb-multi.sh
 fi
+
+echoText "Setting up gitconfig"
+mv ~/.gitconfig ~/.gitconfig.old 2>/dev/null # Failsafe in case we screw up
+cp "${SCRIPT_DIR}/.gitconfig" ~/.gitconfig
