@@ -64,11 +64,8 @@ function hostupdate() {
 }
 
 function dnsmasqupdate() {
-    cd ~/git-repos/adnix || return 1
-    make generate
-    cp adblock.list "${LOCAL_SITE_MIRROR}"/adblock/adblock.list
+    adnix -o "${LOCAL_SITE_MIRROR}"/adblock/adblock.list --formatter dnsmasq-server
     syncup adblock
-    cd - 1>/dev/null || return 1
 }
 
 function magiskhostupdate() {
