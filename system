@@ -156,13 +156,15 @@ function wgbench() {
 function wgup() {
     local region
     region="${1}"
-    sudo wg-quick up mullvad-"${region:?}"
+    sudo -v
+    wg-quick up mullvad-"${region:?}"
 }
 
 function wgdown() {
     local region
     region="${1}"
-    sudo wg-quick down mullvad-"${region:?}"
+    sudo -v
+    wg-quick down mullvad-"${region:?}"
 }
 
 function venv() {
