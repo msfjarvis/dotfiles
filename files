@@ -93,23 +93,25 @@ function transfer() {
 # Upload to GDrive
 function upload() {
     local FILE MD5
-    FILE="${1}"
-    [ -f "${FILE:?}" ] || {
-        reportWarning "Specified file doesn't exist"
-        return
-    }
-    ZIP_SIZE="$(du -h "${FILE}" | awk '{print $1}')"
-    MD5="$(md5sum "${FILE}" | awk '{print $1}')"
-    GDRIVE_UPLOAD_URL="$(gdrive upload --share "${FILE}" | awk '/https/ {print $7}')"
-    GDRIVE_UPLOAD_ID="$(echo "${GDRIVE_UPLOAD_URL}" | sed -r -e 's/(.*)&export.*/\1/' -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/view/\1/')"
-    UPLOAD_INFO="
+    for arg; do
+        FILE="${arg}"
+        [ -f "${FILE:?}" ] || {
+            reportWarning "File '${FILE}' doesn't exist"
+            continue
+        }
+        ZIP_SIZE="$(du -h "${FILE}" | awk '{print $1}')"
+        MD5="$(md5sum "${FILE}" | awk '{print $1}')"
+        GDRIVE_UPLOAD_URL="$(gdrive upload --share "${FILE}" | awk '/https/ {print $7}')"
+        GDRIVE_UPLOAD_ID="$(echo "${GDRIVE_UPLOAD_URL}" | sed -r -e 's/(.*)&export.*/\1/' -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/view/\1/')"
+        UPLOAD_INFO="
 File: [$(basename "${FILE}")](${GDRIVE_UPLOAD_URL})
 Size: ${ZIP_SIZE}
 MD5: \`${MD5}\`
 GDrive ID: \`${GDRIVE_UPLOAD_ID}\`
 "
-    tgm "${UPLOAD_INFO}"
-    echo "Get the file with ${GDRIVE_UPLOAD_ID}"
+        tgm "${UPLOAD_INFO}"
+        echo "Get ${FILE} with ${GDRIVE_UPLOAD_ID}"
+    done
 }
 
 # Upload a file to imgur and copy the link
