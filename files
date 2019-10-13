@@ -129,6 +129,11 @@ function imgur() {
     fi
 }
 
+# Upload the latest screenshot to imgur
+function ils() {
+    imgur "$(find /mnt/mediahell/screenshots/ -printf "%T@ %Tc %p\n" | sort | tail -n1 | awk '{print $NF}')"
+}
+
 # Download a file given the Google Drive URL
 function gdrivedl() {
     local URL GDRIVE FILE_ID
