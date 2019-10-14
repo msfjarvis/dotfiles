@@ -10,7 +10,7 @@ source "${SCRIPT_DIR}"/system
 
 trap 'exit 1' SIGINT SIGTERM
 
-declare -a SCRIPTS=("kronic-build" "build-caesium" "build-kernel" "hastebin")
+declare -a SCRIPTS=("kronic-build" "build-caesium" "build-kernel" "hastebin" "wgup" "wgdown")
 
 # Create binaries directory
 mkdir -p ~/bin/

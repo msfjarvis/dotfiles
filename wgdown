@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+region="${1}";
+sudo -v;
+wg-quick up mullvad-"${region:?}"

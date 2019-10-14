@@ -5,6 +5,7 @@
 
 # Source common functions
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+source "${SCRIPT_DIR}"/bash_completions.bash
 source "${SCRIPT_DIR}"/aliases
 source "${SCRIPT_DIR}"/apps
 source "${SCRIPT_DIR}"/common
