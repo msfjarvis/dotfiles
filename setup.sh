@@ -8,7 +8,7 @@ SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/system
 
-trap 'exit 1' SIGINT SIGTERM
+trap 'exit 1' INT TERM
 
 declare -a SCRIPTS=("kronic-build" "build-caesium" "build-kernel" "hastebin" "wgup" "wgdown")
 
