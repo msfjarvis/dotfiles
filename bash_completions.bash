@@ -7,7 +7,7 @@ _wgup_completions()
 
 _wgdown_completions()
 {
-  mapfile -t COMPREPLY < <(compgen -W "$(wg show interfaces | sed 's/mullvad-//g')")
+  mapfile -t COMPREPLY < <(compgen -W "$(wg show interfaces | sed 's/mullvad-//g')" -- "${COMP_WORDS[1]}")
 }
 
 complete -F _wgup_completions wgup
