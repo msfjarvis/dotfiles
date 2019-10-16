@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 
-_wgup_completions()
-{
+_wgup_completions() {
   mapfile -t COMPREPLY < <(compgen -W "$(fd -tf \\.conf$ ~/wireguard/ -X echo '{/.}' | sed 's/mullvad-//g')" -- "${COMP_WORDS[1]}")
 }
 
-_wgdown_completions()
-{
+_wgdown_completions() {
   mapfile -t COMPREPLY < <(compgen -W "$(wg show interfaces | sed 's/mullvad-//g')" -- "${COMP_WORDS[1]}")
 }
 
