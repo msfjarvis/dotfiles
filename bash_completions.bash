@@ -2,7 +2,7 @@
 
 _wgup_completions()
 {
-  mapfile -t COMPREPLY < <(compgen -W "$(cd ~/wireguard || exit; fd -tf  \\.conf$ -X echo | sed -e 's/mullvad-//g' -e 's/\.conf//g')" -- "${COMP_WORDS[1]}")
+  mapfile -t COMPREPLY < <(compgen -W "$(fd -tf \\.conf$ ~/wireguard/ -X echo '{/.}' | sed 's/mullvad-//g')" -- "${COMP_WORDS[1]}")
 }
 
 _wgdown_completions()
