@@ -59,6 +59,6 @@ function syncup() {
     rsync "${CONFIGURATION[@]}" "${LOCAL_DIR}/" "${CAESIUM_UPLOAD_HOST}:${REMOTE_DIR}"
 }
 
-function cicnt {
+function cicnt() {
     mosh "${CAESIUM_UPLOAD_HOST}"
 }
