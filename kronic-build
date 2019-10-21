@@ -24,7 +24,7 @@ function handle_upload() {
         upload "${FILE}"
     else
         upload "${FILE}" &# Moving along
-        echo "{ \"response\": [ { \"datetime\": $(grep ro\.build\.date\.utc "${OUT}"/system/build.prop | cut -d= -f2), \"filename\": \"${AOSIP_VERSION}.zip\", \"id\": \"$(sha256sum "${OUT}"/"${AOSIP_VERSION}".zip | cut -d ' ' -f1)\", \"romtype\": \"${AOSIP_BUILDTYPE}\", \"size\": $(stat -c%s "${OUT}"/"${AOSIP_VERSION}".zip), \"url\": \"https://download.msfjarvis.website/aosip/${TARGET_DEVICE}/${AOSIP_VERSION}.zip\", \"version\": \"10\"  }]}" >updater.json
+        echo "{ \"response\": [ { \"datetime\": $(grep ro\.build\.date\.utc "${OUT}"/system/build.prop | cut -d= -f2), \"filename\": \"${AOSIP_VERSION}.zip\", \"id\": \"$(sha256sum "${OUT}"/"${AOSIP_VERSION}".zip | cut -d ' ' -f1)\", \"romtype\": \"${AOSIP_BUILDTYPE}\", \"size\": $(stat -c%s "${OUT}"/"${AOSIP_VERSION}".zip), \"url\": \"https://dl.msfjarvis.website/aosip/${TARGET_DEVICE}/${AOSIP_VERSION}.zip\", \"version\": \"10\"  }]}" >updater.json
         mkdir -p "${LOCAL_SITE_MIRROR}/aosip/${TARGET_DEVICE}/"
         cp "${FILE}" "${LOCAL_SITE_MIRROR}/aosip/${TARGET_DEVICE}/"
         mv updater.json "${LOCAL_SITE_MIRROR}/aosip/${TARGET_DEVICE}/"
