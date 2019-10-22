@@ -61,7 +61,8 @@ if command -v clang-9; then
     apt purge -y clang-9 clang-9-doc clang-format-9 clang-tools-9 clangd-9 libclang-9-dev libclang-common-9-dev libclang-cpp9 libclang1-9 libllvm9 libomp-9-dev libomp5-9 llvm-9 llvm-9-dev llvm-9-runtime llvm-9-tools python-clang-9
 fi
 apt install -y clang-"$LLVM_VERSION" clang-tools-"$LLVM_VERSION" clang-"$LLVM_VERSION"-doc libclang-common-"$LLVM_VERSION"-dev libclang-"$LLVM_VERSION"-dev libclang1-"$LLVM_VERSION" clang-format-"$LLVM_VERSION" python-clang-"$LLVM_VERSION" clangd-"$LLVM_VERSION" libc++-"$LLVM_VERSION"-dev lld-"$LLVM_VERSION"
-apt install -y clang clang-tools clang-7-doc libclang-common-7-dev libclang-dev libclang1 clang-format python-clang-7 lld
+apt install -y clang clangd clang-tools clang-7-doc libclang-common-7-dev libclang-dev libclang1 clang-format python-clang-7 lld
 update-alternatives --install "/usr/bin/clang" "clang" "$(command -v clang-"$LLVM_VERSION")" 2
 update-alternatives --install "/usr/bin/clang++" "clang++" "$(command -v clang++-"$LLVM_VERSION")" 2
 update-alternatives --install "/usr/bin/lld" "lld" "$(command -v lld-"$LLVM_VERSION")" 2
+update-alternatives --install "/usr/bin/clangd" "clangd" "$(command -v clangd-"$LLVM_VERSION")" 2
