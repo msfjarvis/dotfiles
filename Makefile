@@ -1,6 +1,6 @@
 SCRIPTS_TO_TEST := aliases apps build-caesium build-kernel common devtools files functions gitshit hastebin kronic-build
 SCRIPTS_TO_TEST += setup.sh server system ssh-copy-id-github.sh telegram setup/diff-so-fancy.sh setup/gdrive.sh setup/hugo.sh
-SCRIPTS_TO_TEST += setup/hub.sh setup/llvm.sh setup/nano.sh setup/ripgrep.sh setup/sharkdp.sh setup/shellcheck.sh setup/xclip.sh
+SCRIPTS_TO_TEST += setup/hub.sh setup/ktlint.sh setup/llvm.sh setup/nano.sh setup/ripgrep.sh setup/sharkdp.sh setup/shellcheck.sh setup/xclip.sh
 SCRIPTS_TO_TEST += setup/zulu-jdk.sh wgup wgdown bash_completions.bash
 
 test:
