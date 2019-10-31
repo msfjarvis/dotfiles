@@ -134,14 +134,12 @@ function lswg() {
 }
 
 function wgfixup() {
-    cd ~/wireguard || exit 1
-    mkdir -p out/
-    fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x cp -v {} out/
-    cd out/ || exit 1
-    fd -tf -x sed -i -e 's/PreDown.*//g' -e 's/PostUp.*//g'
-    zip -r ../mullvad-wireguard-configs-android.zip ./*
-    cd - || exit 1
-    rm -rf ~/wireguard/out
+    local TMP_DIR
+    TMP_DIR="$(mktemp -d)"
+    fd -tf 'conf$' ~/wireguard/ -x cp -v {} "${TMP_DIR}"/
+    fd -tf 'conf$' "${TMP_DIR}" -x sed -i -e 's/PreDown.*//g' -e 's/PostUp.*//g'
+    zip -jr ~/wireguard/mullvad-wireguard-configs-android.zip "${TMP_DIR}"/*
+    rm -rf "${TMP_DIR}"
 }
 
 function wginstall() {
