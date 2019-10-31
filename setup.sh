@@ -39,9 +39,15 @@ cd "${SCRIPT_DIR}" || exit 1
 echoText 'Installing nanorc'
 cp -v "${SCRIPT_DIR}"/.nanorc ~/.nanorc
 if [ ! -d "${HOME}/.nano" ]; then
-    git clone https://github.com/scopatz/nanorc ~/.nano -b master
+    git clone https://github.com/msfjarvis/nanorc ~/.nano -b master -o origin
+    git -C "${HOME}/.nano" remote add upstream https://github.com/scopatz/nanorc
 else
-    git -C "${HOME}/.nano" pull --rebase
+    git -C "${HOME}/.nano" remote | while read -r rem; do git -C "${HOME}/.nano" remote remove "${rem}"; done
+    git -C "${HOME}/.nano" remote add origin https://github.com/msfjarvis/nanorc
+    git -C "${HOME}/.nano" remote add upstream https://github.com/scopatz/nanorc
+    git -C "${HOME}/.nano" remote update --prune
+    git -C "${HOME}/.nano" branch --set-upstream-to=origin/master
+    git -C "${HOME}/.nano" pull upstream master --rebase
 fi
 
 # add all includes from ~/.nano/nanorc if they're not already there
