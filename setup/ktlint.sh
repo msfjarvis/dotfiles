@@ -16,7 +16,7 @@ function check_and_install_ktlint() {
         INSTALLED_VERSION="$(ktlint --version)"
         LATEST_VERSION="$(get_latest_release pinterest/ktlint)"
         if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
-            reportWarning "Oudated version of 'ktlint' detected"
+            reportWarning "Outdated version of 'ktlint' detected"
             install_ktlint
         else
             reportWarning "'ktlint' ${INSTALLED_VERSION} is already installed!"

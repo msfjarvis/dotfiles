@@ -16,7 +16,7 @@ function check_and_install_dsf() {
         INSTALLED_VERSION="$(grep "my \$VERSION = " /usr/local/bin/diff-so-fancy | cut -d \" -f 2)"
         LATEST_VERSION="$(get_latest_release so-fancy/diff-so-fancy | sed 's/v//')"
         if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
-            reportWarning "Oudated version of 'diff-so-fancy' detected"
+            reportWarning "Outdated version of 'diff-so-fancy' detected"
             install_dsf
         else
             reportWarning "'diff-so-fancy' ${INSTALLED_VERSION} is already installed!"
