@@ -27,6 +27,9 @@ function syncdown() {
         if [ "${arg}" == "--dry-run" ]; then
             CONFIGURATION+=("--dry-run")
         fi
+        if [ "${arg}" == "--itemize" ]; then
+            CONFIGURATION+=("--itemize-changes")
+        fi
     done
     rsync "${CONFIGURATION[@]}" "${CAESIUM_UPLOAD_HOST}:${REMOTE_DIR}/" "${LOCAL_DIR}"
 }
@@ -54,6 +57,9 @@ function syncup() {
     for arg; do
         if [ "${arg}" == "--dry-run" ]; then
             CONFIGURATION+=("--dry-run")
+        fi
+        if [ "${arg}" == "--itemize" ]; then
+            CONFIGURATION+=("--itemize-changes")
         fi
     done
     rsync "${CONFIGURATION[@]}" "${LOCAL_DIR}/" "${CAESIUM_UPLOAD_HOST}:${REMOTE_DIR}"
