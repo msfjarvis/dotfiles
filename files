@@ -177,6 +177,26 @@ function publish() {
     printf "https://dl.msfjarvis.website/%s" "${REMOTE_DIR}/$(basename "${FILE:?}")" | xclip -rmlastnl -selection clipboard
 }
 
+# Sync wallpapers to my server and notify the announcement chat
+function wallsync() {
+    local MSG_FILE BASE_URL
+    MSG_FILE="$(mktemp)"
+    BASE_URL="https://dl.msfjarvis.website/.walls"
+    syncup .walls --itemize | while read -r l; do
+      FILE_NAME="$(echo "${l}" | awk '{print $2}')"
+      SANITIZED_NAME="$(echo "${FILE_NAME}" | sed -e 's/_/ /g' -e 's/\.jpg//g')"
+      if [[ "$l" == *deleting* ]]; then
+        printf 'Deleting: %s\n' "${SANITIZED_NAME}" >> "${MSG_FILE}"
+      elif [[ "$l" == \<f.st* ]]; then
+        printf 'Updated wallpaper: [%s](%s)\n' "${SANITIZED_NAME}" "${BASE_URL}/${FILE_NAME}" >> "${MSG_FILE}"
+      elif [[ "$l" == \<f++* ]]; then
+        printf 'New wallpaper: [%s](%s)\n' "${SANITIZED_NAME}" "${BASE_URL}/${FILE_NAME}" >> "${MSG_FILE}"
+      fi
+    done
+    tgm "$(cat "${MSG_FILE}")" "${HORBIS_WALLS_CHAT_ID}"
+    rm -f "${MSG_FILE}" 2>/dev/null
+}
+
 # Use ffmpeg to dump information about a media file in JSON format
 function mediainfo() {
     local FILE
