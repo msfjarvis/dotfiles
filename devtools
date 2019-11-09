@@ -7,20 +7,22 @@
 source "${SCRIPT_DIR}"/common
 
 function rebuildtc() {
+    local VERSION
+    VERSION="${1:-9}"
     cd /mnt/mediahell/build-tools-gcc || exit 1
-    echoText "Building ARM GCC 9.x"
-    ./build -a arm -s gnu -v 9 -V -tr
+    echoText "Building ARM GCC ${VERSION}.x"
+    ./build -a arm -s gnu -v "${VERSION}" -V -f
     if [ -d arm-linux-gnueabi ]; then
-        rsync -av arm-linux-gnueabi/ ../toolchains/arm-linux-gnueabi-9.x
+        rsync -av arm-linux-gnueabi/ ../toolchains/arm-linux-gnueabi-"${VERSION}".x
     else
-        reportError "ARM GCC 9.x failed to compile"
+        reportError "ARM GCC ${VERSION}.x failed to compile"
     fi
-    echoText "Building ARM64 GCC 9.x"
-    ./build -a arm64 -s gnu -v 9 -V -tr
+    echoText "Building ARM64 GCC ${VERSION}.x"
+    ./build -a arm64 -s gnu -v "${VERSION}" -V -f
     if [ -d aarch64-linux-gnu ]; then
-        rsync -av aarch64-linux-gnu/ ../toolchains/aarch64-linux-gnu-9.x
+        rsync -av aarch64-linux-gnu/ ../toolchains/aarch64-linux-gnu-"${VERSION}".x
     else
-        reportError "ARM64 GCC 9.x failed to compile"
+        reportError "ARM64 GCC ${VERSION}.x failed to compile"
     fi
 }
 
