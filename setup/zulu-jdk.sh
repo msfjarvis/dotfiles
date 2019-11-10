@@ -6,8 +6,8 @@
 trap "rm -f /tmp/zulu_jdk.deb 2>/dev/null" INT TERM EXIT
 source "${SCRIPT_DIR:?}"/common
 
-ZULU_PACKAGE_URL="https://cdn.azul.com/zulu/bin/zulu8.40.0.25-ca-jdk8.0.222-linux_amd64.deb"
-ZULU_PACKAGE_CHECKSUM="6489b1af75b398f661df3ab68b68b0d4f3dbeafc785337db175a53709faa5f0f"
+ZULU_PACKAGE_URL="https://cdn.azul.com/zulu/bin/zulu8.42.0.23-ca-jdk8.0.232-linux_amd64.deb"
+ZULU_PACKAGE_CHECKSUM="e6a9d177933d45f9f1d38bf14e098b5a3fe4806d9efb549066d1cfb4b03fe56f"
 
 function download_jdk() {
     aria2c "${ZULU_PACKAGE_URL}" -d "/tmp" -o "zulu_jdk.deb"
@@ -23,7 +23,7 @@ function verify_checksum() {
 
 function check_and_install_jdk() {
     echoText "Checking and installing Zulu JDK"
-    [ "$(java -version 2>&1 | head -n1 | sed 's/.*\"\(.*\)\"/\1/g')" == "1.8.0_222" ] && {
+    [ "$(java -version 2>&1 | head -n1 | sed 's/.*\"\(.*\)\"/\1/g')" == "1.8.0_232" ] && {
         reportWarning "Latest version of Zulu JDK already installed"
         return 0
     }
