@@ -63,6 +63,14 @@ function reportSuccess() {
     echo -e "${CL_RST}"
 }
 
+# Prints out a given URL and optional link text as a hyperlink
+function url() {
+    local URL TEXT
+    URL="${1:?}"
+    TEXT="${2:-Link text}"
+    echo -e "\e]8;;${URL}\a${TEXT}\e]8;;\a"
+}
+
 function banner() {
     local s=("$@") b w
     echo -e "${CL_RED}"
