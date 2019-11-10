@@ -12,7 +12,7 @@ function install_nano() {
     local NANO_VER LATEST_NANO_VER
     echoText "Checking and updating nano"
     NANO_VER="$(nano --version | head -n1 | awk '{print $4}')"
-    LATEST_NANO_VER="4.4"
+    LATEST_NANO_VER="4.5"
     if [ "${NANO_VER}" != "${LATEST_NANO_VER}" ]; then
         echoText "Building latest nano version from git"
         sudo apt purge nano -y
