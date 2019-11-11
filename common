@@ -68,6 +68,9 @@ function url() {
     local URL TEXT
     URL="${1:?}"
     TEXT="${2:-Link text}"
+    if [[ ! "${URL}" =~ :// ]]; then
+        URL="https://${URL}"
+    fi
     echo -e "\e]8;;${URL}\a${TEXT}\e]8;;\a"
 }
 
