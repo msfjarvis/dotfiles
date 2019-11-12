@@ -32,7 +32,10 @@ function setemail() {
 function dlgit() {
     local REPO BRANCH
     REPO="${1}"
-    BRANCH="${2:-master}"
+    BRANCH="${2}"
+    if [ -z "${BRANCH}" ]; then
+        BRANCH="$(curl -s https://api.github.com/repos/"${REPO:?}" | jq .default_branch | sed 's/"//g')"
+    fi
     aria2c https://github.com/"${REPO:?}"/archive/"${BRANCH}".zip -o "$(echo "${REPO}" | cut -d '/' -f 2)".zip
 }
 
