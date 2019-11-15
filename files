@@ -114,6 +114,11 @@ GDrive ID: \`${GDRIVE_UPLOAD_ID}\`
     done
 }
 
+# Batch upload files
+function batch_ul() {
+    while read -r f; do upload "$f"; done < <(cat "${1:?}")
+}
+
 # Upload a file to imgur and copy the link
 function imgur() {
     local FILE LINK USE_CLIPBOARD
