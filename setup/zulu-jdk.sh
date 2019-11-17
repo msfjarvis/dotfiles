@@ -7,7 +7,7 @@ trap "rm -f /tmp/zulu_jdk.deb 2>/dev/null" INT TERM EXIT
 source "${SCRIPT_DIR:?}"/common
 
 ZULU_PACKAGE_URL="https://cdn.azul.com/zulu/bin/zulu8.42.0.23-ca-jdk8.0.232-linux_amd64.deb"
-ZULU_PACKAGE_CHECKSUM="e6a9d177933d45f9f1d38bf14e098b5a3fe4806d9efb549066d1cfb4b03fe56f"
+ZULU_PACKAGE_CHECKSUM="5b9e97a162d702e00889f905b6f1856ec7e2b95169f4d6b5ca5963aaeec377d5"
 
 function download_jdk() {
     aria2c "${ZULU_PACKAGE_URL}" -d "/tmp" -o "zulu_jdk.deb"
