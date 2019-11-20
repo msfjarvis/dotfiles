@@ -32,7 +32,6 @@ bash -i "${SCRIPT_DIR}"/setup/sharkdp.sh diskus
 bash -i "${SCRIPT_DIR}"/setup/sharkdp.sh fd
 bash -i "${SCRIPT_DIR}"/setup/shellcheck.sh
 bash -i "${SCRIPT_DIR}"/setup/xclip.sh
-bash -i "${SCRIPT_DIR}"/setup/zulu-jdk.sh
 
 cd "${SCRIPT_DIR}" || exit 1
 
