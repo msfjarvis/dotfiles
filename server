@@ -17,10 +17,8 @@ function syncdown() {
         if [ "${CUSTOM_DIR}" == "." ]; then
             CUSTOM_DIR="$(basename "$(pwd)")"
         fi
-        if [ -d "${LOCAL_SITE_MIRROR}/${CUSTOM_DIR}" ]; then
-            LOCAL_DIR="${LOCAL_DIR}/${CUSTOM_DIR}"
-            REMOTE_DIR="${REMOTE_DIR}${CUSTOM_DIR}"
-        fi
+        LOCAL_DIR="${LOCAL_DIR}/${CUSTOM_DIR}"
+        REMOTE_DIR="${REMOTE_DIR}${CUSTOM_DIR}"
     fi
     # Stolen from https://stackoverflow.com/a/12711853
     for arg; do
