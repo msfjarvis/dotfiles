@@ -5,7 +5,9 @@
 
 trap 'rm -rf /tmp/xclip 2>/dev/null' INT TERM EXIT
 
+# shellcheck source=common
 source "${SCRIPT_DIR:?}"/common
+# shellcheck source=gitshit
 source "${SCRIPT_DIR}"/gitshit
 
 function install_xclip() {

@@ -5,9 +5,11 @@
 
 # Source common functions
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+# shellcheck source=common
 source "${SCRIPT_DIR}"/common
 
 # Resources
+# shellcheck disable=SC1091
 [ -f ".buildconfig" ] && source ".buildconfig"
 DEFCONFIG="${DEFCONFIG:-$(hostname)_defconfig}"
 

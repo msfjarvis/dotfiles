@@ -5,17 +5,28 @@
 
 # Source common functions
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+# shellcheck source=bash_completions.bash
 source "${SCRIPT_DIR}"/bash_completions.bash
+# shellcheck source=aliases
 source "${SCRIPT_DIR}"/aliases
+# shellcheck source=apps
 source "${SCRIPT_DIR}"/apps
+# shellcheck source=common
 source "${SCRIPT_DIR}"/common
+# shellcheck source=devtools
 source "${SCRIPT_DIR}"/devtools
+# shellcheck source=files
 source "${SCRIPT_DIR}"/files
+# shellcheck source=gitshit
 source "${SCRIPT_DIR}"/gitshit
+# shellcheck source=server
 source "${SCRIPT_DIR}"/server
+# shellcheck source=system
 source "${SCRIPT_DIR}"/system
+# shellcheck source=telegram
 source "${SCRIPT_DIR}"/telegram
 
 function reload() {
+    # shellcheck disable=SC1090
     source ~/.bashrc
 }

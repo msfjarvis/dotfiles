@@ -6,8 +6,11 @@
 # Source common functions
 # shellcheck disable=2029
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+# shellcheck source=common
 source "${SCRIPT_DIR}"/common
+# shellcheck source=server
 source "${SCRIPT_DIR}"/server
+# shellcheck source=telegram
 source "${SCRIPT_DIR}"/telegram
 
 DEFCONFIG="caesium_defconfig"
@@ -51,6 +54,7 @@ declare -a CONFIGURATION=()
 trap 'exit 1' SIGINT SIGTERM
 
 # Source custom options
+# shellcheck disable=SC1090
 [ -f "${CONFIG}" ] && source "${CONFIG}"
 
 # Versioning

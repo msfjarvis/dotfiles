@@ -3,7 +3,9 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
+# shellcheck source=common
 source "${SCRIPT_DIR:?}"/common
+# shellcheck source=gitshit
 source "${SCRIPT_DIR}"/gitshit
 
 function check_and_install_dsf() {

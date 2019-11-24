@@ -5,6 +5,7 @@
 
 # Source common functions
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+# shellcheck source=system
 source "${SCRIPT_DIR}"/system
 
 result=$(curl -sf --data-binary @"${1:--}" https://del.dog/documents) || {

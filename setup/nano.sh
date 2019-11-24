@@ -5,8 +5,8 @@
 
 trap 'rm -rf /tmp/nano 2>/dev/null' INT TERM EXIT
 
+# shellcheck source=common
 source "${SCRIPT_DIR:?}"/common
-source "${SCRIPT_DIR}"/gitshit
 
 function install_nano() {
     local NANO_VER LATEST_NANO_VER

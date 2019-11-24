@@ -5,7 +5,9 @@
 
 # Source common functions
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+# shellcheck source=common
 source "${SCRIPT_DIR}"/common
+# shellcheck source=system
 source "${SCRIPT_DIR}"/system
 
 trap 'exit 1' INT TERM
@@ -78,6 +80,7 @@ for SCRIPT in "${SCRIPTS[@]}"; do
 done
 
 if [[ "$*" =~ --all ]] && [ "$(display_exists)" ]; then
+    # shellcheck disable=SC1090
     source "${SCRIPT_DIR}"/setup/adb-multi.sh
 fi
 

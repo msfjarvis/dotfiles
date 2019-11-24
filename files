@@ -3,7 +3,10 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
+
+# shellcheck source=server
 source "${SCRIPT_DIR}"/server
+# shellcheck source=telegram
 source "${SCRIPT_DIR}"/telegram
 
 function dl() {

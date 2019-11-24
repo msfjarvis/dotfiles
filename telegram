@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 # Source common functions
+# shellcheck source=common
 source "${SCRIPT_DIR}"/common
 
 # Send a markdown encoded Telegram message

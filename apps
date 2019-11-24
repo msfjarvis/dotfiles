@@ -6,7 +6,7 @@
 CURRENT_DEVICE=walleye
 
 # Source common functions
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=common
 source "${SCRIPT_DIR}/common"
 
 function set_device() {

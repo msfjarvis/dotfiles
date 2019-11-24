@@ -3,6 +3,7 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
+# shellcheck source=common
 source "${SCRIPT_DIR:?}"/common
 
 function install_shellcheck() {

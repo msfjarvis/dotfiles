@@ -5,7 +5,9 @@
 
 trap 'rm /tmp/ripgrep.deb 2>/dev/null' INT TERM EXIT
 
+# shellcheck source=common
 source "${SCRIPT_DIR:?}"/common
+# shellcheck source=gitshit
 source "${SCRIPT_DIR}"/gitshit
 
 function check_and_install_ripgrep() {
