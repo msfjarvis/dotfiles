@@ -154,6 +154,20 @@ function wgbench() {
     rm "${STATS_FILE}" >&/dev/null
 }
 
+function wgup() {
+    local region
+    region="${1}"
+    sudo -v
+    wg-quick up mullvad-"${region:?}"
+}
+
+function wgdown() {
+    local region
+    region="${1}"
+    sudo -v
+    wg-quick down mullvad-"${region:?}"
+}
+
 function venv() {
     local NEW_INSTALL
     if [ ! -d venv ]; then
