@@ -3,7 +3,7 @@ SCRIPTS_TO_TEST := aliases apps build-caesium build-kernel common devtools files
 test:
 		@shellcheck ${SCRIPTS_TO_TEST}
 
-installhook:
+githook:
 		@cp -v shellcheck-hook .git/hooks/pre-commit
 		@chmod +x .git/hooks/pre-commit
 
