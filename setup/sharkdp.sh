@@ -13,7 +13,7 @@ source "${SCRIPT_DIR}"/gitshit
 function check_and_install() {
     local BIN BIN_NAME LOCAL_BIN_VERSION REMOTE_BIN_VERSION
     BIN_NAME="${1}"
-    BIN="$(command -v "${BIN_NAME}")"
+    BIN="$(command -v "${BIN_NAME:?}")"
     echoText "Checking and installing ${BIN_NAME}"
     if [ -z "${BIN}" ]; then
         install "${BIN_NAME}"
