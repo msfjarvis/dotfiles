@@ -5,26 +5,26 @@
 
 trap "rm /tmp/binary.deb 2>/dev/null" INT TERM EXIT
 
-# shellcheck source=common
-source "${SCRIPT_DIR:?}"/common
+# shellcheck source=setup/common.sh
+source "${SCRIPT_DIR:?}"/setup/common.sh
 # shellcheck source=gitshit
 source "${SCRIPT_DIR}"/gitshit
 
 function check_and_install() {
-    local BIN BIN_NAME LOCAL_BIN_VERSION REMOTE_BIN_VERSION
+    local BIN BIN_NAME INSTALLED_VERSION LATEST_VERSION
     BIN_NAME="${1}"
     BIN="$(command -v "${BIN_NAME:?}")"
     echoText "Checking and installing ${BIN_NAME}"
     if [ -z "${BIN}" ]; then
         install "${BIN_NAME}"
     else
-        LOCAL_BIN_VERSION="$(${BIN_NAME} --version | awk '{print $2}')"
-        REMOTE_BIN_VERSION="$(get_latest_release sharkdp/"${BIN_NAME}" | sed 's/v//')"
-        if [ "${LOCAL_BIN_VERSION}" != "${REMOTE_BIN_VERSION}" ]; then
-            reportWarning "Outdated version of ${BIN_NAME} detected, upgrading"
+        INSTALLED_VERSION="$(${BIN_NAME} --version | awk '{print $2}')"
+        LATEST_VERSION="$(get_latest_release sharkdp/"${BIN_NAME}" | sed 's/v//')"
+        if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
+            printUpgradeBanner "${BIN_NAME}" "${INSTALLED_VERSION}" "${LATEST_VERSION}"
             install "${BIN_NAME}"
         else
-            reportWarning "$(${BIN_NAME} --version) is already installed!"
+            printUpToDateBanner "${BIN_NAME}" "${INSTALLED_VERSION}"
         fi
     fi
 }

@@ -5,8 +5,8 @@
 
 trap 'rm -rf /tmp/hub.tgz /tmp/hub 2>/dev/null' INT TERM EXIT
 
-# shellcheck source=common
-source "${SCRIPT_DIR:?}"/common
+# shellcheck source=setup/common.sh
+source "${SCRIPT_DIR:?}"/setup/common.sh
 # shellcheck source=gitshit
 source "${SCRIPT_DIR}"/gitshit
 
@@ -21,10 +21,10 @@ function check_and_install_hub() {
         INSTALLED_VERSION="v$(hub --version | tail -n1 | awk '{print $3}')"
         LATEST_VERSION="$(get_latest_release github/hub)"
         if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
-            reportWarning "Outdated version of hub detected, upgrading"
+            printUpgradeBanner "hub" "${INSTALLED_VERSION}" "${LATEST_VERSION}"
             install_hub
         else
-            reportWarning "hub ${INSTALLED_VERSION} is already installed!"
+            printUpToDateBanner "hub" "${INSTALLED_VERSION}"
         fi
     fi
 }

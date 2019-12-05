@@ -5,25 +5,25 @@
 
 trap 'rm /tmp/ripgrep.deb 2>/dev/null' INT TERM EXIT
 
-# shellcheck source=common
-source "${SCRIPT_DIR:?}"/common
+# shellcheck source=setup/common.sh
+source "${SCRIPT_DIR:?}"/setup/common.sh
 # shellcheck source=gitshit
 source "${SCRIPT_DIR}"/gitshit
 
 function check_and_install_ripgrep() {
-    local RIPGREP RIPGREP_ARTIFACT LOCAL_RIPGREP_VERSION REMOTE_RIPGREP_VERSION
+    local RIPGREP RIPGREP_ARTIFACT INSTALLED_VERSION LATEST_VERSION
     RIPGREP="$(command -v rg)"
     echoText "Checking and installing ripgrep"
     if [ -z "${RIPGREP}" ]; then
         install_ripgrep
     else
-        LOCAL_RIPGREP_VERSION="$(rg --version | head -n1 | awk '{print $2}')"
-        REMOTE_RIPGREP_VERSION="$(get_latest_release BurntSushi/ripgrep)"
-        if [ "${LOCAL_RIPGREP_VERSION}" != "${REMOTE_RIPGREP_VERSION}" ]; then
-            reportWarning "Outdated version of ripgrep detected, upgrading"
+        INSTALLED_VERSION="$(rg --version | head -n1 | awk '{print $2}')"
+        LATEST_VERSION="$(get_latest_release BurntSushi/ripgrep)"
+        if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
+            printUpgradeBanner "ripgrep" "${INSTALLED_VERSION}" "${LATEST_VERSION}"
             install_ripgrep
         else
-            reportWarning "$(rg --version | head -n1) is already installed!"
+            printUpToDateBanner "ripgrep" "${INSTALLED_VERSION}"
         fi
     fi
 }

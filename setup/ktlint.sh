@@ -3,8 +3,8 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
-# shellcheck source=common
-source "${SCRIPT_DIR:?}"/common
+# shellcheck source=setup/common.sh
+source "${SCRIPT_DIR:?}"/setup/common.sh
 # shellcheck source=gitshit
 source "${SCRIPT_DIR}"/gitshit
 
@@ -18,10 +18,10 @@ function check_and_install_ktlint() {
         INSTALLED_VERSION="$(ktlint --version)"
         LATEST_VERSION="$(get_latest_release pinterest/ktlint)"
         if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
-            reportWarning "Outdated version of 'ktlint' detected"
+            printUpgradeBanner "ktlint" "${INSTALLED_VERSION}" "${LATEST_VERSION}"
             install_ktlint
         else
-            reportWarning "'ktlint' ${INSTALLED_VERSION} is already installed!"
+            printUpToDateBanner "ktlint" "${INSTALLED_VERSION}"
         fi
     fi
 }

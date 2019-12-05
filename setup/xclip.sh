@@ -5,17 +5,18 @@
 
 trap 'rm -rf /tmp/xclip 2>/dev/null' INT TERM EXIT
 
-# shellcheck source=common
-source "${SCRIPT_DIR:?}"/common
+# shellcheck source=setup/common.sh
+source "${SCRIPT_DIR:?}"/setup/common.sh
 # shellcheck source=gitshit
 source "${SCRIPT_DIR}"/gitshit
 
 function install_xclip() {
-    local XCLIP_VER LATEST_XCLIP_VER SCRIPT_DIR
+    local INSTALLED_VERSION LATEST_VERSION SCRIPT_DIR
     echoText "Checking and installing xclip"
-    XCLIP_VER="$(xclip -version 2>&1 | head -n1 | awk '{print $3}')"
-    LATEST_XCLIP_VER="$(get_latest_release astrand/xclip)"
-    if [ "${XCLIP_VER}" != "${LATEST_XCLIP_VER}" ]; then
+    INSTALLED_VERSION="$(xclip -version 2>&1 | head -n1 | awk '{print $3}')"
+    LATEST_VERSION="$(get_latest_release astrand/xclip)"
+    if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
+        printUpgradeBanner "xclip" "${INSTALLED_VERSION}" "${LATEST_VERSION}"
         echoText "Building latest xclip version from git"
         cd /tmp || return 1
         git clone https://github.com/astrand/xclip
@@ -25,7 +26,7 @@ function install_xclip() {
         make all -j"$(nproc)"
         sudo make install install.man
     else
-        reportWarning "xclip ${XCLIP_VER} is already installed!"
+        printUpToDateBanner "xclip" "${INSTALLED_VERSION}"
     fi
     rm -rf /tmp/xclip 2>/dev/null
 }

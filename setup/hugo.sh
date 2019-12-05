@@ -5,25 +5,25 @@
 
 trap 'rm /tmp/hugo.deb 2>/dev/null' INT TERM EXIT
 
-# shellcheck source=common
-source "${SCRIPT_DIR:?}"/common
+# shellcheck source=setup/common.sh
+source "${SCRIPT_DIR:?}"/setup/common.sh
 # shellcheck source=gitshit
 source "${SCRIPT_DIR}"/gitshit
 
 function check_and_install_hugo() {
-    local HUGO HUGO_ARTIFACT LOCAL_HUGO_VERSION REMOTE_HUGO_VERSION
+    local HUGO HUGO_ARTIFACT INSTALLED_VERSION LATEST_VERSION
     HUGO="$(command -v hugo)"
     echoText "Checking and installing hugo"
     if [ -z "${HUGO}" ]; then
         install_hugo
     else
-        LOCAL_HUGO_VERSION="$(hugo version | awk '{print $5}' | cut -d '-' -f 1)"
-        REMOTE_HUGO_VERSION="$(get_latest_release gohugoio/hugo)"
-        if [ "${LOCAL_HUGO_VERSION}" != "${REMOTE_HUGO_VERSION}" ]; then
-            reportWarning "Outdated version of hugo detected, upgrading"
-            install_hugo "${REMOTE_HUGO_VERSION}"
+        INSTALLED_VERSION="$(hugo version | awk '{print $5}' | cut -d '-' -f 1)"
+        LATEST_VERSION="$(get_latest_release gohugoio/hugo)"
+        if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
+            printUpgradeBanner "hugo" "${INSTALLED_VERSION}" "${LATEST_VERSION}"
+            install_hugo "${LATEST_VERSION}"
         else
-            reportWarning "hugo $(hugo version | awk '{print $5}' | cut -d '-' -f 1) is already installed!"
+            printUpToDateBanner "hugo" "${INSTALLED_VERSION}"
         fi
     fi
 }

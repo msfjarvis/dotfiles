@@ -5,8 +5,8 @@
 
 trap 'rm /tmp/gdrive 2>/dev/null' INT TERM EXIT
 
-# shellcheck source=common
-source "${SCRIPT_DIR:?}"/common
+# shellcheck source=setup/common.sh
+source "${SCRIPT_DIR:?}"/setup/common.sh
 # shellcheck source=gitshit
 source "${SCRIPT_DIR}"/gitshit
 
@@ -21,10 +21,10 @@ function check_and_install_gdrive() {
         INSTALLED_VERSION="$(gdrive version | grep gdrive | awk '{print $2}')"
         LATEST_VERSION="$(get_latest_release gdrive-org/gdrive)"
         if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
-            reportWarning "Outdated version of gdrive detected, upgrading"
+            printUpgradeBanner "gdrive" "${INSTALLED_VERSION}" "${LATEST_VERSION}"
             install_gdrive
         else
-            reportWarning "gdrive ${INSTALLED_VERSION} is already installed!"
+            printUpToDateBanner "gdrive" "${INSTALLED_VERSION}"
         fi
     fi
 }

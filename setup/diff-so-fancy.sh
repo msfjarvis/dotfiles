@@ -3,8 +3,8 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
-# shellcheck source=common
-source "${SCRIPT_DIR:?}"/common
+# shellcheck source=setup/common.sh
+source "${SCRIPT_DIR:?}"/setup/common.sh
 # shellcheck source=gitshit
 source "${SCRIPT_DIR}"/gitshit
 
@@ -18,10 +18,10 @@ function check_and_install_dsf() {
         INSTALLED_VERSION="$(grep "my \$VERSION = " /usr/local/bin/diff-so-fancy | cut -d \" -f 2)"
         LATEST_VERSION="$(get_latest_release so-fancy/diff-so-fancy | sed 's/v//')"
         if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
-            reportWarning "Outdated version of 'diff-so-fancy' detected"
+            printUpgradeBanner "diff-so-fancy" "${INSTALLED_VERSION}" "${LATEST_VERSION}"
             install_dsf
         else
-            reportWarning "'diff-so-fancy' ${INSTALLED_VERSION} is already installed!"
+            printUpToDateBanner "diff-so-fancy" "${INSTALLED_VERSION}"
         fi
     fi
 }
