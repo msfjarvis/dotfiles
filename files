@@ -182,14 +182,14 @@ function publish() {
     mkdir -p "${LOCAL_SITE_MIRROR}/${REMOTE_DIR}"
     cp "${FILE:?}" "${LOCAL_SITE_MIRROR}/${REMOTE_DIR}/"
     syncup "${REMOTE_DIR}"
-    printf "https://dl.msfjarvis.website/%s" "${REMOTE_DIR}/$(basename "${FILE:?}")" | xclip -rmlastnl -selection clipboard
+    printf "https://dl.msfjarvis.dev/%s" "${REMOTE_DIR}/$(basename "${FILE:?}")" | xclip -rmlastnl -selection clipboard
 }
 
 # Sync wallpapers to my server and notify the announcement chat
 function wallsync() {
     local MSG_FILE BASE_URL
     MSG_FILE="$(mktemp)"
-    BASE_URL="https://dl.msfjarvis.website/.walls"
+    BASE_URL="https://dl.msfjarvis.dev/.walls"
     syncup .walls --itemize | while read -r l; do
       FILE_NAME="$(echo "${l}" | awk '{print $2}')"
       SANITIZED_NAME="$(echo "${FILE_NAME}" | sed -e 's/_/ /g' -e 's/\.jpg//g')"

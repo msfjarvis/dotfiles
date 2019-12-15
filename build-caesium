@@ -16,7 +16,7 @@ source "${SCRIPT_DIR}"/telegram
 DEFCONFIG="caesium_defconfig"
 KERNEL="Image.gz-dtb"
 DEFAULT_BRANCH="quinoa-qpp3"
-JARVISBOX_URL="https://dl.msfjarvis.website/caesium"
+JARVISBOX_URL="https://dl.msfjarvis.dev/caesium"
 KERNEL_NAME="Caesium"
 DEVICE="wahoo"
 
