@@ -85,18 +85,6 @@ function maintenance() {
     sudo apt autoremove -y
 }
 
-function theme_update() {
-    if [ ! -d "${HOME}"/git-repos/plata-theme ]; then
-        git clone https://gitlab.com/tista500/plata-theme.git/ "${HOME}"/git-repos/plata-theme
-    fi
-    cd "${HOME}"/git-repos/plata-theme || return
-    git pull
-    ./autogen.sh --disable-gnome --disable-xfce --disable-gtk_next --disable-flashback --disable-mate --disable-openbox --disable-plank --disable-telegram --disable-tweetdeck --disable-airforstream --prefix="${HOME}"/.local
-    make -j24
-    make -j24 install
-    cd - 1>/dev/null || return
-}
-
 function battinfo() {
     local BASE
     BASE=/sys/class/power_supply/BAT0/
