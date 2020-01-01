@@ -123,8 +123,11 @@ function lswg() {
 }
 
 function wginstall() {
-    fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x rm
-    [ -z "${1}" ] && unzip -o ~/wireguard/mullvad-wireguard-configs.zip -d ~/wireguard/ 1>/dev/null
+    if [ -f ~/wireguard/mullvad-wireguard-configs.zip ]; then
+        fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x rm
+        unzip -o ~/wireguard/mullvad-wireguard-configs.zip -d ~/wireguard/ 1>/dev/null
+    fi
+    fd --maxdepth 1 -tf 'conf$' /etc/wireguard/ -x sudo rm -v {}
     fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x sudo cp -v {} /etc/wireguard/'{/}'
     fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x sudo chmod 600 /etc/wireguard/'{/}'
 }
