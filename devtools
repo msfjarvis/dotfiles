@@ -9,7 +9,7 @@ source "${SCRIPT_DIR}"/common
 
 function rebuildtc() {
     local VERSION
-    VERSION="${1:-9}"
+    VERSION="${1:-10}"
     cd /mnt/mediahell/build-tools-gcc || exit 1
     echoText "Building ARM GCC ${VERSION}.x"
     ./build -a arm -s gnu -v "${VERSION}" -V -f
