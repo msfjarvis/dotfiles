@@ -7,8 +7,8 @@ autofix:
 		@shellcheck -f diff ${SCRIPTS_TO_TEST} | git apply
 
 githook:
-		@cp -v shellcheck-hook .git/hooks/pre-commit
-		@chmod +x .git/hooks/pre-commit
+		@cp -v shellcheck-hook .git/hooks/pre-push
+		@chmod +x .git/hooks/pre-push
 
 install:
 		@./setup.sh
