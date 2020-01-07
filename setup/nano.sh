@@ -9,11 +9,11 @@ trap 'rm -rf /tmp/nano 2>/dev/null' INT TERM EXIT
 source "${SCRIPT_DIR:?}"/setup/common.sh
 
 function install_nano() {
-    local NANO_VER LATEST_VERSION
+    local INSTALLED_VERSION LATEST_VERSION
     echoText "Checking and updating nano"
-    NANO_VER="$(nano --version | head -n1 | awk '{print $4}')"
+    INSTALLED_VERSION="$(nano --version | head -n1 | awk '{print $4}')"
     LATEST_VERSION="4.5"
-    if [ "${NANO_VER}" != "${LATEST_VERSION}" ]; then
+    if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
         printUpgradeBanner "nano" "${INSTALLED_VERSION}" "${LATEST_VERSION}"
         sudo apt purge nano -y
         cd /tmp || return 1
@@ -25,7 +25,7 @@ function install_nano() {
         sudo make install
         cd "${SCRIPT_DIR}" || return 1
     else
-        printUpToDateBanner "nano" "${NANO_VER}"
+        printUpToDateBanner "nano" "${INSTALLED_VERSION}"
     fi
     rm -rf /tmp/nano 2>/dev/null
 }

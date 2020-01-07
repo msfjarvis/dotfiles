@@ -5,6 +5,7 @@
 
 # Source common functions
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+export SCRIPT_DIR
 # shellcheck source=common
 source "${SCRIPT_DIR}"/common
 # shellcheck source=system
@@ -61,7 +62,7 @@ gpg --decrypt "${SCRIPT_DIR}"/.secretcreds.gpg >~/.secretcreds
 # SC2076: Don't quote rhs of =~, it'll match literally rather than as a regex.
 # SC2088: Note that ~ does not expand in quotes.
 # shellcheck disable=SC2076,SC2088
-if [[ ! "${PATH}" =~ "~/bin" ]]; then
+if [[ ! "${PATH}" =~ '~/bin' ]]; then
     reportWarning "~/bin is not in PATH, appending the export to bashrc"
     echo $'\nexport PATH="~/bin":$PATH' >>~/.bashrc
 fi
