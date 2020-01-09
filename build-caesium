@@ -13,28 +13,28 @@ source "${SCRIPT_DIR}"/server
 # shellcheck source=telegram
 source "${SCRIPT_DIR}"/telegram
 
+# Vars
 DEFCONFIG="caesium_defconfig"
 KERNEL="Image.gz-dtb"
-DEFAULT_BRANCH="quinoa-qpp3"
-JARVISBOX_URL="https://dl.msfjarvis.dev/caesium"
+DEFAULT_BRANCH="android10"
+SERVER_URL="https://dl.msfjarvis.dev/caesium"
 KERNEL_NAME="Caesium"
 DEVICE="wahoo"
-
-# Vars
+SUPPORT_URL="https://t.me/FlashKernelPixel2"
 ARCH=arm64
 SUBARCH=arm64
 USER=MSF
 HOST=jarvisbox
 CONFIG="${CONFIG:-.buildconfig}"
 WORKING_DIR="$(pwd)"
-ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2"
-ARM64_TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/aarch64-linux-gnu"
-ARM_TOOLCHAIN_DIR="${WORKING_DIR}/../toolchains/arm-linux-gnueabi"
+ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel3_wahoo"
+ARM64_TOOLCHAIN_DIR=/mnt/mediahell/toolchains/aarch64-linux-gnu-10.x
+ARM_TOOLCHAIN_DIR=/mnt/mediahell/toolchains/arm-linux-gnueabi-10.x
 CROSS_COMPILE=
 CROSS_COMPILE_ARM32=
-CLANG_TOOLCHAIN_DIR=
-CLANG_TRIPLE=
-COMPILER="gcc"
+CLANG_TOOLCHAIN_DIR=/mnt/mediahell/tc-build/install
+CLANG_TRIPLE=aarch64-linux-gnu-
+COMPILER=clang
 OUT_DIR="${WORKING_DIR}/out"
 ZIP_MOVE="${WORKING_DIR}/zips/"
 CCACHE="$(command -v ccache)"
@@ -166,11 +166,12 @@ function prepdirs() {
 # The meat of the telegram notifications workflow
 function pushcaesiumtg() {
     [ -n "${NO_UPLOADS}" ] && return
-    local FILE TYPE FINAL_VER FILES_TO_PUBLISH MESSAGE CHANGELOG BUILD_URL
+    local FILE TYPE FINAL_VER FILES_TO_PUBLISH MESSAGE CHANGELOG BUILD_URL SHA1_SUM
     FILE="${1}"
     TYPE="${2}"
     FINAL_VER="${FILE:?/.zip/}"
-    FILES_TO_PUBLISH=("${FILE}" "${FILE}".md5sum)
+    BUILD_URL="${SERVER_URL}/${DEVICE}/${TYPE}/${FILE}"
+    FILES_TO_PUBLISH=("${FILE}" "${FILE}".md5sum "updater.json")
     case "${TYPE:-}" in
     "alpha" | "beta" | "stable" | "test") ;;
     *) reportWarning "Invalid build type; skipping upload." && return ;;
@@ -182,6 +183,8 @@ function pushcaesiumtg() {
     fi
     cd zips || return
     md5sum "${FILE}" >"${FILE}".md5sum
+    SHA1_SUM="$(sha1sum "${FILE}" | awk '{print $1}')"
+    jo -p kernel="$(jo name="$KERNEL_NAME" version="$KERNEL_VERSION" link="$BUILD_URL" changelog_url="$SERVER_URL/$DEVICE/$TYPE/changelog" date="$(date +'%b %d, %Y')" sha1="$SHA1_SUM")" support="$(jo link="$SUPPORT_URL")" >updater.json
     prepdirs "${TYPE}"
     if [ "${TYPE}" == "stable" ]; then
         for ITEM in beta test alpha; do
@@ -193,8 +196,7 @@ function pushcaesiumtg() {
     if [ "${TYPE}" == "stable" ]; then
         release "${FILE}"
     fi
-    BUILD_URL="${JARVISBOX_URL}/${DEVICE}/${TYPE}/${FILE}"
-    MESSAGE="New [${TYPE}](${JARVISBOX_URL}/${TYPE}) build uploaded : [${FILE}](${BUILD_URL})"
+    MESSAGE="New [${TYPE}](${SERVER_URL}/${TYPE}) build uploaded : [${FILE}](${BUILD_URL})"
     if [ "${CHANGELOG}" != "" ]; then
         MESSAGE="${MESSAGE}
 
