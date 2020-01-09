@@ -184,7 +184,14 @@ function pushcaesiumtg() {
     cd zips || return
     md5sum "${FILE}" >"${FILE}".md5sum
     SHA1_SUM="$(sha1sum "${FILE}" | awk '{print $1}')"
-    jo -p kernel="$(jo name="$KERNEL_NAME" version="$KERNEL_VERSION" link="$BUILD_URL" changelog_url="$SERVER_URL/$DEVICE/$TYPE/changelog" date="$(date +'%b %d, %Y')" sha1="$SHA1_SUM")" support="$(jo link="$SUPPORT_URL")" >updater.json
+    jq -n --arg kn "${KERNEL_NAME}" \
+        --arg v "${KERNEL_VERSION}" \
+        --arg l "${BUILD_URL}" \
+        --arg cl "${SERVER_URL}/${DEVICE}/${TYPE}/changelog" \
+        --arg d "$(date +'%b %d, %Y')" \
+        --arg sha1 "${SHA1_SUM}" \
+        --arg spt "${SUPPORT_URL}" \
+    '{kernel: { name: $kn, version: $v, link: $l, changelog_link: $cl, date: $d, sha1: $sha1 }, support: { link: $spt } }' >updater.json
     prepdirs "${TYPE}"
     if [ "${TYPE}" == "stable" ]; then
         for ITEM in beta test alpha; do
