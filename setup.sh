@@ -27,7 +27,6 @@ bash -i "${SCRIPT_DIR}"/setup/diff-so-fancy.sh
 bash -i "${SCRIPT_DIR}"/setup/gdrive.sh
 bash -i "${SCRIPT_DIR}"/setup/hub.sh
 bash -i "${SCRIPT_DIR}"/setup/hugo.sh
-bash -i "${SCRIPT_DIR}"/setup/ktlint.sh
 bash -i "${SCRIPT_DIR}"/setup/nano.sh
 bash -i "${SCRIPT_DIR}"/setup/ripgrep.sh
 bash -i "${SCRIPT_DIR}"/setup/sharkdp.sh bat
