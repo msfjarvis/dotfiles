@@ -191,7 +191,7 @@ function pushcaesiumtg() {
         --arg d "$(date +'%b %d, %Y')" \
         --arg sha1 "${SHA1_SUM}" \
         --arg spt "${SUPPORT_URL}" \
-    '{kernel: { name: $kn, version: $v, link: $l, changelog_link: $cl, date: $d, sha1: $sha1 }, support: { link: $spt } }' >updater.json
+    '{kernel: { name: $kn, version: $v, link: $l, changelog_url: $cl, date: $d, sha1: $sha1 }, support: { link: $spt } }' >updater.json
     prepdirs "${TYPE}"
     if [ "${TYPE}" == "stable" ]; then
         for ITEM in beta test alpha; do
