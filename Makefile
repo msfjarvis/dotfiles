@@ -10,7 +10,7 @@ autofix:
 	@shellcheck -f diff ${SCRIPTS_TO_TEST} | git apply
 
 format:
-	@shfmt -w -s -i 2 -bn -ci ${SCRIPTS_TO_TEST}
+	@shfmt -w -s -i 2 -ci ${SCRIPTS_TO_TEST}
 
 githook:
 	@cp -v shellcheck-hook .git/hooks/pre-push

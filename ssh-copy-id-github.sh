@@ -5,8 +5,8 @@
 #    SDPX-License-Identifier: WTFPL
 
 # Help
-[ "$1" == "--help" ] || [ "$1" == "-h" ] || [ "$1" == "help" ] \
-  && {
+[ "$1" == "--help" ] || [ "$1" == "-h" ] || [ "$1" == "help" ] &&
+  {
     echo "Usage: ./ssh-copy-id-github [username]"
     echo "Adds .ssh/id_ed25519.pub to your Github's SSH keys."
 
@@ -59,8 +59,8 @@ function ssh_copy_id_github() {
 
   response=$(
     curl -is https://api.github.com/user/keys -X POST -u "$username:$password" -H "application/json" \
-      -d "{\"title\": \"$USER@$HOSTNAME\", \"key\": \"$key\"}" \
-      | grep 'Status: [45][0-9]\{2\}\|X-GitHub-OTP: required; .\+\|message' | tr -d "\r"
+      -d "{\"title\": \"$USER@$HOSTNAME\", \"key\": \"$key\"}" |
+      grep 'Status: [45][0-9]\{2\}\|X-GitHub-OTP: required; .\+\|message' | tr -d "\r"
   )
 
   otp_required "$response" otp

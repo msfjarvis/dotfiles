@@ -127,8 +127,8 @@ function imgur() {
   FILE="${1}"
   USE_CLIPBOARD="$(display_exists)"
   LINK="$(curl --request POST --url https://api.imgur.com/3/image --header "authorization: Client-ID $(pass api/imgur)" \
-    --header 'content-type: multipart/form-data;' -F "image=@${FILE:?}" 2>/dev/null \
-    | jq .data.link | sed 's/"//g')"
+    --header 'content-type: multipart/form-data;' -F "image=@${FILE:?}" 2>/dev/null |
+    jq .data.link | sed 's/"//g')"
   if [ -z "${USE_CLIPBOARD}" ]; then
     echo "${LINK}"
   else

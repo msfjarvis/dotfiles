@@ -23,9 +23,7 @@ function getpfp() {
 }
 
 function get_latest_release() {
-  curl --silent "https://api.github.com/repos/${1:?}/releases/latest" \
-    |
-    
+  curl --silent "https://api.github.com/repos/${1:?}/releases/latest" |
 
     # Get latest release from GitHub API
     jq -r .tag_name # Get tag line
@@ -37,9 +35,7 @@ function get_release_assets() {
   RELEASE_TAG="${2:-latest}"
   TMP_FILE="$(mktemp)"
   if [ "${RELEASE_TAG}" == "latest" ]; then
-    RELEASE_ID=$(curl --silent "https://api.github.com/repos/${1:?}/releases/latest" \
-      |
-      
+    RELEASE_ID=$(curl --silent "https://api.github.com/repos/${1:?}/releases/latest" |
 
       # Get the latest release from GitHub API
       jq -r .id) # Get the ID of the release
