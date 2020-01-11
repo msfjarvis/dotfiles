@@ -6,168 +6,168 @@
 source "${SCRIPT_DIR}"/server
 
 [ -z "${GPG_TTY}" ] && {
-    GPG_TTY="$(tty)"
-    export GPG_TTY
+  GPG_TTY="$(tty)"
+  export GPG_TTY
 }
 
 function lolsay() {
-    cowsay "${@}" | lolcat
+  cowsay "${@}" | lolcat
 }
 
 function foreversay() {
-    until ! lolsay "${@}"; do sleep 0; done
+  until ! lolsay "${@}"; do sleep 0; done
 }
 
 function encrypt() {
-    [ -z "${1}" ] && return
-    gpg --encrypt --output "$(basename "${1}")".gpg --recipient "msfjarvis@gmail.com" "${1}"
+  [ -z "${1}" ] && return
+  gpg --encrypt --output "$(basename "${1}")".gpg --recipient "msfjarvis@gmail.com" "${1}"
 }
 
 function reboot() {
-    echo "Do you really wanna reboot??"
-    read -r confirmation
-    case "${confirmation}" in
+  echo "Do you really wanna reboot??"
+  read -r confirmation
+  case "${confirmation}" in
     'y' | 'Y' | 'yes') exec "$(command -v reboot)" ;;
     *) ;;
-    esac
+  esac
 }
 
 function endtask() {
-    for pid in $(pgrep "${1:?}"); do kill -9 "${pid}" 2>/dev/null; done
+  for pid in $(pgrep "${1:?}"); do kill -9 "${pid}" 2>/dev/null; done
 }
 
 # shellcheck disable=SC2154
 # Complains about the debian_chroot variable not being defined
 # which is supplied internally.
 function ps1() {
-    case "${1}" in
+  case "${1}" in
     "short" | "compact") export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\W\[\033[00m\]$(__git_ps1 " (%s)") \$ ' ;;
     *) export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 " (%s)") \$ ' ;;
-    esac
+  esac
 }
 
 function hostupdate() {
-    local DIR
-    DIR="$(pwd)"
-    cd ~/git-repos/hosts || return 1
-    venv 3.7
-    python msfUpdateHostsFile.py -n
-    deactivate
-    if [ -z "${1}" ]; then
-        cp hosts_msf "${LOCAL_SITE_MIRROR}"/adblock/hosts
-        cp whitelist "${LOCAL_SITE_MIRROR}"/adblock/whitelist
-        cp hosts_msf /mnt/mediahell/hosts_magisk/system/etc/hosts
-        syncup adblock
-    fi
-    sudo cp -v hosts_msf /etc/hosts
-    sudo /etc/init.d/dns-clean start
-    cd "${DIR}" || return 1
+  local DIR
+  DIR="$(pwd)"
+  cd ~/git-repos/hosts || return 1
+  venv 3.7
+  python msfUpdateHostsFile.py -n
+  deactivate
+  if [ -z "${1}" ]; then
+    cp hosts_msf "${LOCAL_SITE_MIRROR}"/adblock/hosts
+    cp whitelist "${LOCAL_SITE_MIRROR}"/adblock/whitelist
+    cp hosts_msf /mnt/mediahell/hosts_magisk/system/etc/hosts
+    syncup adblock
+  fi
+  sudo cp -v hosts_msf /etc/hosts
+  sudo /etc/init.d/dns-clean start
+  cd "${DIR}" || return 1
 }
 
 function dnsmasqupdate() {
-    adnix -o "${LOCAL_SITE_MIRROR}"/adblock/adblock.list --formatter dnsmasq-server
-    syncup adblock
+  adnix -o "${LOCAL_SITE_MIRROR}"/adblock/adblock.list --formatter dnsmasq-server
+  syncup adblock
 }
 
 function magiskhostupdate() {
-    cd /mnt/mediahell/hosts_magisk || return 1
-    rm ./*.zip "${LOCAL_SITE_MIRROR}"/adblock/*.zip 2>/dev/null
-    printf 'id=msfjarvishosts\nname=msfjarvis hosts file\nversion=v%s\nversionCode=%s\nauthor=msfjarvis\ndescription=Yet another adblock list\n' "$(date "+%Y%m%d")" "$(date "+%Y%m%d")" >module.prop
-    ./deploy.sh --non-interactive
-    cp ./*.zip "${LOCAL_SITE_MIRROR}"/adblock/
-    syncup adblock
-    cd - 1>/dev/null || return 1
+  cd /mnt/mediahell/hosts_magisk || return 1
+  rm ./*.zip "${LOCAL_SITE_MIRROR}"/adblock/*.zip 2>/dev/null
+  printf 'id=msfjarvishosts\nname=msfjarvis hosts file\nversion=v%s\nversionCode=%s\nauthor=msfjarvis\ndescription=Yet another adblock list\n' "$(date "+%Y%m%d")" "$(date "+%Y%m%d")" >module.prop
+  ./deploy.sh --non-interactive
+  cp ./*.zip "${LOCAL_SITE_MIRROR}"/adblock/
+  syncup adblock
+  cd - 1>/dev/null || return 1
 }
 
 function maintenance() {
-    sudo apt update
-    sudo apt upgrade -y
-    sudo apt autoremove -y
+  sudo apt update
+  sudo apt upgrade -y
+  sudo apt autoremove -y
 }
 
 function battinfo() {
-    local BASE
-    BASE=/sys/class/power_supply/BAT0/
-    [ ! -d "${BASE}" ] && {
-        reportWarning "${BASE} does not exist"
-        return
-    }
-    declare -a ITEMS=("capacity_level:Battery status" "charge_now:Current charge" "capacity:Battery percentage" "status:Status")
-    for ITEM in "${ITEMS[@]}"; do
-        NODE=$(echo "${ITEM}" | cut -d ':' -f 1)
-        LABEL=$(echo "${ITEM}" | cut -d ':' -f 2)
-        [ -f "${BASE}${NODE}" ] || continue
-        printf "${CL_RED}%s${CL_RST}: ${CL_YLW}%s${CL_RST}\n" "${LABEL}" "$(cat "${BASE}${NODE}")"
-    done
+  local BASE
+  BASE=/sys/class/power_supply/BAT0/
+  [ ! -d "${BASE}" ] && {
+    reportWarning "${BASE} does not exist"
+    return
+  }
+  declare -a ITEMS=("capacity_level:Battery status" "charge_now:Current charge" "capacity:Battery percentage" "status:Status")
+  for ITEM in "${ITEMS[@]}"; do
+    NODE=$(echo "${ITEM}" | cut -d ':' -f 1)
+    LABEL=$(echo "${ITEM}" | cut -d ':' -f 2)
+    [ -f "${BASE}${NODE}" ] || continue
+    printf "${CL_RED}%s${CL_RST}: ${CL_YLW}%s${CL_RST}\n" "${LABEL}" "$(cat "${BASE}${NODE}")"
+  done
 }
 
 function cpuinfo() {
-    grep -E '^model name|^cpu MHz' /proc/cpuinfo
+  grep -E '^model name|^cpu MHz' /proc/cpuinfo
 }
 
 function clip() {
-    [ "$(display_exists)" ] || return
-    if [ "${1}" ]; then
-        xclip -rmlastnl -selection clipboard -i "${1}"
-    else
-        xclip -rmlastnl -selection clipboard
-    fi
+  [ "$(display_exists)" ] || return
+  if [ "${1}" ]; then
+    xclip -rmlastnl -selection clipboard -i "${1}"
+  else
+    xclip -rmlastnl -selection clipboard
+  fi
 }
 
 function display_exists() {
-    if xhost >&/dev/null; then echo "1"; fi
+  if xhost >&/dev/null; then echo "1"; fi
 }
 
 function lswg() {
-    fd -tf 'conf$' ~/wireguard/ -x echo '{/.}'
+  fd -tf 'conf$' ~/wireguard/ -x echo '{/.}'
 }
 
 function wginstall() {
-    if [ -f ~/wireguard/mullvad-wireguard-configs.zip ]; then
-        fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x rm
-        unzip -o ~/wireguard/mullvad-wireguard-configs.zip -d ~/wireguard/ 1>/dev/null
-    fi
-    fd --maxdepth 1 -tf 'conf$' /etc/wireguard/ -x sudo rm -v {}
-    fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x sudo cp -v {} /etc/wireguard/'{/}'
-    fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x sudo chmod 600 /etc/wireguard/'{/}'
+  if [ -f ~/wireguard/mullvad-wireguard-configs.zip ]; then
+    fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x rm
+    unzip -o ~/wireguard/mullvad-wireguard-configs.zip -d ~/wireguard/ 1>/dev/null
+  fi
+  fd --maxdepth 1 -tf 'conf$' /etc/wireguard/ -x sudo rm -v {}
+  fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x sudo cp -v {} /etc/wireguard/'{/}'
+  fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x sudo chmod 600 /etc/wireguard/'{/}'
 }
 
 function wgdiff() {
-    cd ~/wireguard || return 1
-    while read -r conf; do if [ -n "$conf" ]; then if [ ! -f "$conf" ]; then echo "$conf does not exist"; fi; fi; done < <(unzip -l mullvad-wireguard-configs.zip | grep conf | awk '{print $4}')
-    cd - 1>/dev/null || return 1
+  cd ~/wireguard || return 1
+  while read -r conf; do if [ -n "$conf" ]; then if [ ! -f "$conf" ]; then echo "$conf does not exist"; fi; fi; done < <(unzip -l mullvad-wireguard-configs.zip | grep conf | awk '{print $4}')
+  cd - 1>/dev/null || return 1
 }
 
 function wgbench() {
-    local STATS_FILE
-    STATS_FILE="$(mktemp)"
-    fd -tf 'conf$' ~/wireguard/ -x echo '{/.}' | sed 's/mullvad-//g' | xargs -I {} ping -c 10 {}-wireguard.mullvad.net | tee "${STATS_FILE}"
-    grep transmitted "${STATS_FILE}" | awk '{print $10}' | sed 's/ms//' | sort -n | head -n1 | xargs -I {} grep -C1 {} "${STATS_FILE}"
-    rm "${STATS_FILE}" >&/dev/null
+  local STATS_FILE
+  STATS_FILE="$(mktemp)"
+  fd -tf 'conf$' ~/wireguard/ -x echo '{/.}' | sed 's/mullvad-//g' | xargs -I {} ping -c 10 {}-wireguard.mullvad.net | tee "${STATS_FILE}"
+  grep transmitted "${STATS_FILE}" | awk '{print $10}' | sed 's/ms//' | sort -n | head -n1 | xargs -I {} grep -C1 {} "${STATS_FILE}"
+  rm "${STATS_FILE}" >&/dev/null
 }
 
 function wgup() {
-    local region
-    region="${1}"
-    sudo -v || return 1
-    wg-quick up mullvad-"${region:?}"
+  local region
+  region="${1}"
+  sudo -v || return 1
+  wg-quick up mullvad-"${region:?}"
 }
 
 function wgdown() {
-    local region
-    region="${1}"
-    sudo -v || return 1
-    wg-quick down mullvad-"${region:?}"
+  local region
+  region="${1}"
+  sudo -v || return 1
+  wg-quick down mullvad-"${region:?}"
 }
 
 function venv() {
-    local NEW_INSTALL
-    if [ ! -d venv ]; then
-        NEW_INSTALL=true
-        python"${1:-3}" -m virtualenv --no-site-packages venv
-    fi
-    source venv/bin/activate
-    if [ -f requirements.txt ] && [ -n "${NEW_INSTALL}" ]; then
-        pip install -r requirements.txt
-    fi
+  local NEW_INSTALL
+  if [ ! -d venv ]; then
+    NEW_INSTALL=true
+    python"${1:-3}" -m virtualenv --no-site-packages venv
+  fi
+  source venv/bin/activate
+  if [ -f requirements.txt ] && [ -n "${NEW_INSTALL}" ]; then
+    pip install -r requirements.txt
+  fi
 }

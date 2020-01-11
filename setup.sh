@@ -41,19 +41,19 @@ cd "${SCRIPT_DIR}" || exit 1
 echoText 'Installing nanorc'
 cp -v "${SCRIPT_DIR}"/.nanorc ~/.nanorc
 if [ ! -d "${HOME}/.nano" ]; then
-    git clone https://github.com/msfjarvis/nanorc ~/.nano -b master -o origin
-    git -C "${HOME}/.nano" remote add upstream https://github.com/scopatz/nanorc
+  git clone https://github.com/msfjarvis/nanorc ~/.nano -b master -o origin
+  git -C "${HOME}/.nano" remote add upstream https://github.com/scopatz/nanorc
 else
-    git -C "${HOME}/.nano" remote update --prune
-    git -C "${HOME}/.nano" branch --set-upstream-to=origin/master
-    git -C "${HOME}/.nano" pull --rebase
+  git -C "${HOME}/.nano" remote update --prune
+  git -C "${HOME}/.nano" branch --set-upstream-to=origin/master
+  git -C "${HOME}/.nano" pull --rebase
 fi
 
 # add all includes from ~/.nano/nanorc if they're not already there
 while read -r inc; do
-    if ! grep -q "$inc" ~/.nanorc; then
-        echo "$inc" >>~/.nanorc
-    fi
+  if ! grep -q "$inc" ~/.nanorc; then
+    echo "$inc" >>~/.nanorc
+  fi
 done <~/.nano/nanorc
 
 echoText "Moving credentials"
@@ -62,27 +62,27 @@ gpg --decrypt "${SCRIPT_DIR}"/.secretcreds.gpg >~/.secretcreds
 # SC2076: Don't quote rhs of =~, it'll match literally rather than as a regex.
 # SC2088: Note that ~ does not expand in quotes.
 # shellcheck disable=SC2076,SC2088
-if [[ ! "${PATH}" =~ '~/bin' ]]; then
-    reportWarning "~/bin is not in PATH, appending the export to bashrc"
-    echo $'\nexport PATH="~/bin":$PATH' >>~/.bashrc
+if [[ ! ${PATH} =~ '~/bin' ]]; then
+  reportWarning "~/bin is not in PATH, appending the export to bashrc"
+  echo $'\nexport PATH="~/bin":$PATH' >>~/.bashrc
 fi
 
 ret="$(grep -qF "source ${SCRIPT_DIR}/functions" ~/.bashrc)"
 if [ "${ret}" ]; then
-    reportWarning "functions is not sourced in the bashrc, appending"
-    echo "source ${SCRIPT_DIR}/functions" >>~/.bashrc
+  reportWarning "functions is not sourced in the bashrc, appending"
+  echo "source ${SCRIPT_DIR}/functions" >>~/.bashrc
 fi
 
 echoText "Installing scripts"
 for SCRIPT in "${SCRIPTS[@]}"; do
-    echo -e "${CL_YLW}Processing ${SCRIPT}${CL_RST}"
-    rm -rf ~/bin/"${SCRIPT}"
-    ln -s "${SCRIPT_DIR}"/"${SCRIPT}" ~/bin/"${SCRIPT}"
+  echo -e "${CL_YLW}Processing ${SCRIPT}${CL_RST}"
+  rm -rf ~/bin/"${SCRIPT}"
+  ln -s "${SCRIPT_DIR}"/"${SCRIPT}" ~/bin/"${SCRIPT}"
 done
 
-if [[ "$*" =~ --all ]] && [ "$(display_exists)" ]; then
-    # shellcheck disable=SC1090
-    source "${SCRIPT_DIR}"/setup/adb-multi.sh
+if [[ $* =~ --all ]] && [ "$(display_exists)" ]; then
+  # shellcheck disable=SC1090
+  source "${SCRIPT_DIR}"/setup/adb-multi.sh
 fi
 
 echoText "Setting up gitconfig"

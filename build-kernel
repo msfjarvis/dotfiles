@@ -35,15 +35,15 @@ function make_wrapper() {
 # Duh
 function make_kernel() {
   make_defconfig
-  if [ -n  "${MODULE}" ]; then
+  if [ -n "${MODULE}" ]; then
     make_wrapper "${MODULE}"
   else
     if make_wrapper; then
-        if [ -n "${INSTALL}" ]; then
-          make_wrapper headers_install
-          sudo make -j"$(nproc --all)" modules_install
-          sudo make -j"$(nproc --all)" install
-        fi
+      if [ -n "${INSTALL}" ]; then
+        make_wrapper headers_install
+        sudo make -j"$(nproc --all)" modules_install
+        sudo make -j"$(nproc --all)" install
+      fi
     else
       reportError "Compilation failed!"
     fi
@@ -65,25 +65,25 @@ function make_defconfig() {
 
 while getopts ":cim:r" opt; do
   case $opt in
-  c)
-    echoText "Building clean" >&2
-    CLEAN=true
-    ;;
-  i)
-    echoText "Will install the compiled kernel" >&2
-    INSTALL=true
-    ;;
-  m)
-    MODULE="${OPTARG}"
-    echoText "Building module ${MODULE:?}" >&2
-    ;;
-  r)
-    echoText "Regenerating defconfig" >&2
-    REGEN_DEFCONFIG=true
-    ;;
-  \?)
-    reportWarning "Invalid option: -${OPTARG}" >&2
-    ;;
+    c)
+      echoText "Building clean" >&2
+      CLEAN=true
+      ;;
+    i)
+      echoText "Will install the compiled kernel" >&2
+      INSTALL=true
+      ;;
+    m)
+      MODULE="${OPTARG}"
+      echoText "Building module ${MODULE:?}" >&2
+      ;;
+    r)
+      echoText "Regenerating defconfig" >&2
+      REGEN_DEFCONFIG=true
+      ;;
+    \?)
+      reportWarning "Invalid option: -${OPTARG}" >&2
+      ;;
   esac
 done
 
@@ -91,12 +91,12 @@ CC='ccache gcc'
 HOSTCC='ccache gcc'
 
 for arg; do
-    case $arg in
+  case $arg in
     "--clang")
-    CC='ccache clang'
-    HOSTCC='ccache clang'
-    ;;
-    esac
+      CC='ccache clang'
+      HOSTCC='ccache clang'
+      ;;
+  esac
 done
 
 DATE_START=$(date +"%s")

@@ -9,87 +9,95 @@ DEFAULT_AOSIP_BRANCH="ten"
 AOSIP_GERRIT_URL="review.aosiprom.com"
 
 function dlgit() {
-    local REPO BRANCH
-    REPO="${1}"
-    BRANCH="${2}"
-    if [ -z "${BRANCH}" ]; then
-        BRANCH="$(curl -s https://api.github.com/repos/"${REPO:?}" | jq .default_branch | sed 's/"//g')"
-    fi
-    aria2c https://github.com/"${REPO:?}"/archive/"${BRANCH}".zip -o "$(echo "${REPO}" | cut -d '/' -f 2)".zip
+  local REPO BRANCH
+  REPO="${1}"
+  BRANCH="${2}"
+  if [ -z "${BRANCH}" ]; then
+    BRANCH="$(curl -s https://api.github.com/repos/"${REPO:?}" | jq .default_branch | sed 's/"//g')"
+  fi
+  aria2c https://github.com/"${REPO:?}"/archive/"${BRANCH}".zip -o "$(echo "${REPO}" | cut -d '/' -f 2)".zip
 }
 
 function getpfp() {
-    curl -sI https://github.com/"${1:?}".png | grep Location | awk '{print $2}' | clip
+  curl -sI https://github.com/"${1:?}".png | grep Location | awk '{print $2}' | clip
 }
 
 function get_latest_release() {
-    curl --silent "https://api.github.com/repos/${1:?}/releases/latest" | # Get latest release from GitHub API
-        jq -r .tag_name # Get tag line
+  curl --silent "https://api.github.com/repos/${1:?}/releases/latest" \
+    |
+    
+
+    # Get latest release from GitHub API
+    jq -r .tag_name # Get tag line
 }
 
 function get_release_assets() {
-    local REPOSITORY RELEASE_TAG RELEASE_ID TMP_FILE
-    REPOSITORY="${1:?}"
-    RELEASE_TAG="${2:-latest}"
-    TMP_FILE="$(mktemp)"
-    if [ "${RELEASE_TAG}" == "latest" ]; then
-        RELEASE_ID=$(curl --silent "https://api.github.com/repos/${1:?}/releases/latest" | # Get the latest release from GitHub API
-            jq -r .id) # Get the ID of the release
-    else
-        # Get all releases from the v3 API, get the id and tag_name fields (called name in the slice) for each item, and write it to a temporary file
-        curl --silent "https://api.github.com/repos/${REPOSITORY}/releases" | jq '.[] | {id: .id, name: .tag_name}' >"${TMP_FILE}"
-        # Stream across the data we sliced earlier, printing the id and name as space separated values, then cleanly filter the one we need using grep and awk
-        RELEASE_ID=$(jq -r '"\(.id) \(.name)"' "${TMP_FILE}" | grep "${RELEASE_TAG}" | awk '{print $1}') # Get the ID of the latest release
-    fi
-    curl --silent "https://api.github.com/repos/${REPOSITORY}/releases/${RELEASE_ID}" | jq -r .assets[].browser_download_url # Get the download URL of the assets
-    [ -f "${TMP_FILE}" ] && rm -f "${TMP_FILE}"
+  local REPOSITORY RELEASE_TAG RELEASE_ID TMP_FILE
+  REPOSITORY="${1:?}"
+  RELEASE_TAG="${2:-latest}"
+  TMP_FILE="$(mktemp)"
+  if [ "${RELEASE_TAG}" == "latest" ]; then
+    RELEASE_ID=$(curl --silent "https://api.github.com/repos/${1:?}/releases/latest" \
+      |
+      
+
+      # Get the latest release from GitHub API
+      jq -r .id) # Get the ID of the release
+  else
+    # Get all releases from the v3 API, get the id and tag_name fields (called name in the slice) for each item, and write it to a temporary file
+    curl --silent "https://api.github.com/repos/${REPOSITORY}/releases" | jq '.[] | {id: .id, name: .tag_name}' >"${TMP_FILE}"
+    # Stream across the data we sliced earlier, printing the id and name as space separated values, then cleanly filter the one we need using grep and awk
+    RELEASE_ID=$(jq -r '"\(.id) \(.name)"' "${TMP_FILE}" | grep "${RELEASE_TAG}" | awk '{print $1}') # Get the ID of the latest release
+  fi
+  curl --silent "https://api.github.com/repos/${REPOSITORY}/releases/${RELEASE_ID}" | jq -r .assets[].browser_download_url # Get the download URL of the assets
+  [ -f "${TMP_FILE}" ] && rm -f "${TMP_FILE}"
 }
 
 function hook() {
-    local gitdir
-    gitdir="$(git rev-parse --git-dir)"
-    if [ ! -f "${gitdir}"/hooks/commit-msg ]; then
-        scp -p -P 29418 MSF_Jarvis@review.aosiprom.com:hooks/commit-msg "${gitdir}"/hooks/
-    fi
+  local gitdir
+  gitdir="$(git rev-parse --git-dir)"
+  if [ ! -f "${gitdir}"/hooks/commit-msg ]; then
+    scp -p -P 29418 MSF_Jarvis@review.aosiprom.com:hooks/commit-msg "${gitdir}"/hooks/
+  fi
 }
 
 function reposync() {
-    repo sync -c --no-tags -j10 --fail-fast "${@}"
+  repo sync -c --no-tags -j10 --fail-fast "${@}"
 }
 
 # shellcheck disable=SC2029
 function gerrit() {
-    ssh -p 29418 "$(get_current_gerrit)" "gerrit $*"
+  ssh -p 29418 "$(get_current_gerrit)" "gerrit $*"
 }
 
 function gpush() {
-    if [ -n "${1}" ]; then
-        git push gerrit HEAD:refs/for/"${DEFAULT_AOSIP_BRANCH}"/"${1}"
-    else
-        git push gerrit HEAD:refs/for/"${DEFAULT_AOSIP_BRANCH}"
-    fi
+  if [ -n "${1}" ]; then
+    git push gerrit HEAD:refs/for/"${DEFAULT_AOSIP_BRANCH}"/"${1}"
+  else
+    git push gerrit HEAD:refs/for/"${DEFAULT_AOSIP_BRANCH}"
+  fi
 }
 
 function gfpush() {
-    git push gerrit HEAD:refs/heads/"${DEFAULT_AOSIP_BRANCH}"
+  git push gerrit HEAD:refs/heads/"${DEFAULT_AOSIP_BRANCH}"
 }
 
 function gffpush() {
-    git push --force gerrit HEAD:refs/heads/"${DEFAULT_AOSIP_BRANCH}"
+  git push --force gerrit HEAD:refs/heads/"${DEFAULT_AOSIP_BRANCH}"
 }
 
 function xg() {
-    local PROJECT
-    declare -a INCONSISTENT_PROJECTS=("device_qcom_sepolicy" "device_aosip_sepolicy")
-    if ! git rev-parse --git-dir &>/dev/null; then
-        reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
-        return 1
-    fi
-    PROJECT="$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#-caf.*##; s#/make##; s#\/default##; s#/#_#g#")"
-    if ! containsElement "${PROJECT}" "${INCONSISTENT_PROJECTS[@]}"; then
-        PROJECT="platform_${PROJECT}"
-    fi
-    git remote remove gerrit 2>/dev/null
-    git remote add gerrit ssh://"${GERRIT_USER}"@"${AOSIP_GERRIT_URL}":29418/AOSIP/"${PROJECT}"
-    hook
+  local PROJECT
+  declare -a INCONSISTENT_PROJECTS=("device_qcom_sepolicy" "device_aosip_sepolicy")
+  if ! git rev-parse --git-dir &>/dev/null; then
+    reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
+    return 1
+  fi
+  PROJECT="$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#-caf.*##; s#/make##; s#\/default##; s#/#_#g#")"
+  if ! containsElement "${PROJECT}" "${INCONSISTENT_PROJECTS[@]}"; then
+    PROJECT="platform_${PROJECT}"
+  fi
+  git remote remove gerrit 2>/dev/null
+  git remote add gerrit ssh://"${GERRIT_USER}"@"${AOSIP_GERRIT_URL}":29418/AOSIP/"${PROJECT}"
+  hook
 }

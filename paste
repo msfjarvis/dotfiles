@@ -9,13 +9,13 @@ SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 source "${SCRIPT_DIR}"/system
 
 result=$(curl -sf -X POST -H "Content-Type: text/plain" --data-binary @"${1:--}" https://bin.msfjarvis.dev) || {
-    echo "ERROR: failed to post document" >&2
-    exit 1
+  echo "ERROR: failed to post document" >&2
+  exit 1
 }
 
 trimmed="https://bin.msfjarvis.dev$(echo "$result" | awk '{print $4}')"
 if [ "$(display_exists)" ]; then
-    echo "$trimmed" | xclip -rmlastnl -selection clipboard
+  echo "$trimmed" | xclip -rmlastnl -selection clipboard
 else
-    echo "$trimmed"
+  echo "$trimmed"
 fi

@@ -59,11 +59,11 @@ trap 'exit 1' SIGINT SIGTERM
 
 # Versioning
 if [ -z "${NO_VERSIONING}" ]; then
-    INCREMENTAL_VERSION="${KERNEL_VERSION:-Test}"
-    LOCALVERSION="-${INCREMENTAL_VERSION}"
-    GIT_HASH=$(git rev-parse --short HEAD)
+  INCREMENTAL_VERSION="${KERNEL_VERSION:-Test}"
+  LOCALVERSION="-${INCREMENTAL_VERSION}"
+  GIT_HASH=$(git rev-parse --short HEAD)
 else
-    INCREMENTAL_VERSION="$(date +"%Y%m%d")"
+  INCREMENTAL_VERSION="$(date +"%Y%m%d")"
 fi
 FINAL_VER="${KERNEL_NAME}-${DEVICE}-${INCREMENTAL_VERSION}"
 
@@ -76,337 +76,337 @@ BANNER_ITEMS+=("Defconfig: ${DEFCONFIG}")
 ## Functions
 # Wrapper around tgm to avoid having to pass the second chat ID param everywhere
 function tgm_caesium() {
-    if [ -z "${TYPE}" ] || [ -n "${SILENT}" ]; then
-        return
-    fi
-    local CHAT_ID
-    case "${DEVICE}" in
+  if [ -z "${TYPE}" ] || [ -n "${SILENT}" ]; then
+    return
+  fi
+  local CHAT_ID
+  case "${DEVICE}" in
     "wahoo") CHAT_ID="${WAHOO_CAESIUM_CHAT_ID}" ;;
-    esac
-    if [ "${TYPE}" == "test" ] || [ "${2}" == "silent" ]; then
-        unset CHAT_ID
-    fi
-    tgm "${1}" "${CHAT_ID}" &
+  esac
+  if [ "${TYPE}" == "test" ] || [ "${2}" == "silent" ]; then
+    unset CHAT_ID
+  fi
+  tgm "${1}" "${CHAT_ID}" &
 }
 
 # Check all variables are set correctly before derping
 # things down the pipe
 function sanity_check() {
-    [ -d "${ARM_TOOLCHAIN_DIR}" ] || reportError "ARM toolchain not found!"
-    [ -d "${ARM64_TOOLCHAIN_DIR}" ] || reportError "ARM64 toolchain not found!"
-    [ -d "${ANYKERNEL_DIR}" ] || reportError "AnyKernel directory not found!"
-    if [ "${COMPILER}" == "clang" ]; then
-        [ -z "${CLANG_TOOLCHAIN_DIR}" ] && reportError "Clang toolchain directory not specified!"
-        [ -d "${CLANG_TOOLCHAIN_DIR}" ] || reportError "Clang toolchain not found!"
-        [ -z "${CLANG_TRIPLE}" ] && reportError "Clang triple not specified!"
-    fi
+  [ -d "${ARM_TOOLCHAIN_DIR}" ] || reportError "ARM toolchain not found!"
+  [ -d "${ARM64_TOOLCHAIN_DIR}" ] || reportError "ARM64 toolchain not found!"
+  [ -d "${ANYKERNEL_DIR}" ] || reportError "AnyKernel directory not found!"
+  if [ "${COMPILER}" == "clang" ]; then
+    [ -z "${CLANG_TOOLCHAIN_DIR}" ] && reportError "Clang toolchain directory not specified!"
+    [ -d "${CLANG_TOOLCHAIN_DIR}" ] || reportError "Clang toolchain not found!"
+    [ -z "${CLANG_TRIPLE}" ] && reportError "Clang triple not specified!"
+  fi
 }
 
 function prepare_configuration() {
-    CONFIGURATION=("O=${OUT_DIR}" "ARCH=${ARCH}" "SUBARCH=${SUBARCH}"
-        "KBUILD_BUILD_USER=${USER}" "KBUILD_BUILD_HOST=${HOST}")
-    if [ -z "${NO_VERSIONING}" ]; then
-        CONFIGURATION+=("LOCALVERSION=${LOCALVERSION}")
-    fi
+  CONFIGURATION=("O=${OUT_DIR}" "ARCH=${ARCH}" "SUBARCH=${SUBARCH}"
+    "KBUILD_BUILD_USER=${USER}" "KBUILD_BUILD_HOST=${HOST}")
+  if [ -z "${NO_VERSIONING}" ]; then
+    CONFIGURATION+=("LOCALVERSION=${LOCALVERSION}")
+  fi
 }
 
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper_gcc() {
-    make "${CONFIGURATION[@]}" \
-        CROSS_COMPILE="${CCACHE} ${CROSS_COMPILE}" \
-        CROSS_COMPILE_ARM32="${CCACHE} ${CROSS_COMPILE_ARM32}" \
-        -j"$(nproc --all)" "${@}"
+  make "${CONFIGURATION[@]}" \
+    CROSS_COMPILE="${CCACHE} ${CROSS_COMPILE}" \
+    CROSS_COMPILE_ARM32="${CCACHE} ${CROSS_COMPILE_ARM32}" \
+    -j"$(nproc --all)" "${@}"
 }
 
 function make_wrapper_clang() {
-    make "${CONFIGURATION[@]}" \
-        CROSS_COMPILE="${CROSS_COMPILE}" \
-        CROSS_COMPILE_ARM32="${CROSS_COMPILE_ARM32}" \
-        CC="${CCACHE} ${CC}" CLANG_TRIPLE="${CLANG_TRIPLE}" \
-        KBUILD_COMPILER_STRING="${KBUILD_COMPILER_STRING}" \
-        -j"$(nproc --all)" "${@}"
+  make "${CONFIGURATION[@]}" \
+    CROSS_COMPILE="${CROSS_COMPILE}" \
+    CROSS_COMPILE_ARM32="${CROSS_COMPILE_ARM32}" \
+    CC="${CCACHE} ${CC}" CLANG_TRIPLE="${CLANG_TRIPLE}" \
+    KBUILD_COMPILER_STRING="${KBUILD_COMPILER_STRING}" \
+    -j"$(nproc --all)" "${@}"
 }
 
 function kmake() {
-    PATH="${SCRIPT_DIR}/bin:${PATH}"
-    prepare_configuration
-    if [ -z "${VERBOSE}" ]; then
-        make_wrapper_"${COMPILER}" "${@}" |& rg "error:|warning"
-    else
-        make_wrapper_"${COMPILER}" "${@}"
-    fi
+  PATH="${SCRIPT_DIR}/bin:${PATH}"
+  prepare_configuration
+  if [ -z "${VERBOSE}" ]; then
+    make_wrapper_"${COMPILER}" "${@}" |& rg "error:|warning"
+  else
+    make_wrapper_"${COMPILER}" "${@}"
+  fi
 }
 # Pushes a local file to my webserver
 function publish() {
-    local FILES_TO_PUBLISH
-    FILES_TO_PUBLISH=("${@}")
-    if [ -d "${LOCAL_SITE_MIRROR}" ]; then
-        for item in "${FILES_TO_PUBLISH[@]}"; do
-            cp "${item}" "${LOCAL_SITE_MIRROR}/caesium/${DEVICE}/${TYPE}/"
-        done
-        syncup caesium
-    else
-        for item in "${FILES_TO_PUBLISH[@]}"; do
-            rsync -avR "${item}" "${CAESIUM_UPLOAD_HOST}:${CAESIUM_UPLOAD_PATH}/${DEVICE}/${TYPE}/" --progress --verbose
-        done
-    fi
+  local FILES_TO_PUBLISH
+  FILES_TO_PUBLISH=("${@}")
+  if [ -d "${LOCAL_SITE_MIRROR}" ]; then
+    for item in "${FILES_TO_PUBLISH[@]}"; do
+      cp "${item}" "${LOCAL_SITE_MIRROR}/caesium/${DEVICE}/${TYPE}/"
+    done
+    syncup caesium
+  else
+    for item in "${FILES_TO_PUBLISH[@]}"; do
+      rsync -avR "${item}" "${CAESIUM_UPLOAD_HOST}:${CAESIUM_UPLOAD_PATH}/${DEVICE}/${TYPE}/" --progress --verbose
+    done
+  fi
 }
 
 # Preps the server folder structure for new builds
 function prepdirs() {
-    if [ -d "${LOCAL_SITE_MIRROR:-}" ]; then
-        mkdir -p "${LOCAL_SITE_MIRROR}/caesium/${DEVICE}/${1}/"
-        fd -tf "${KERNEL_VERSION}" "${LOCAL_SITE_MIRROR}/caesium/${DEVICE}/${1}"/ -x rm -rfv
-    else
-        ssh "${CAESIUM_UPLOAD_HOST:?}" mkdir -p "${CAESIUM_UPLOAD_PATH}/${DEVICE}/${1}/"
-        ssh "${CAESIUM_UPLOAD_HOST}" fd -tf "${KERNEL_VERSION}" "${CAESIUM_UPLOAD_PATH}/${DEVICE}/${1}/" -x rm -rfv
-    fi
+  if [ -d "${LOCAL_SITE_MIRROR:-}" ]; then
+    mkdir -p "${LOCAL_SITE_MIRROR}/caesium/${DEVICE}/${1}/"
+    fd -tf "${KERNEL_VERSION}" "${LOCAL_SITE_MIRROR}/caesium/${DEVICE}/${1}"/ -x rm -rfv
+  else
+    ssh "${CAESIUM_UPLOAD_HOST:?}" mkdir -p "${CAESIUM_UPLOAD_PATH}/${DEVICE}/${1}/"
+    ssh "${CAESIUM_UPLOAD_HOST}" fd -tf "${KERNEL_VERSION}" "${CAESIUM_UPLOAD_PATH}/${DEVICE}/${1}/" -x rm -rfv
+  fi
 }
 
 # The meat of the telegram notifications workflow
 function pushcaesiumtg() {
-    [ -n "${NO_UPLOADS}" ] && return
-    local FILE TYPE FINAL_VER FILES_TO_PUBLISH MESSAGE CHANGELOG BUILD_URL SHA1_SUM
-    FILE="${1}"
-    TYPE="${2}"
-    FINAL_VER="${FILE:?/.zip/}"
-    BUILD_URL="${SERVER_URL}/${DEVICE}/${TYPE}/${FILE}"
-    FILES_TO_PUBLISH=("${FILE}" "${FILE}".md5sum "updater.json")
-    case "${TYPE:-}" in
+  [ -n "${NO_UPLOADS}" ] && return
+  local FILE TYPE FINAL_VER FILES_TO_PUBLISH MESSAGE CHANGELOG BUILD_URL SHA1_SUM
+  FILE="${1}"
+  TYPE="${2}"
+  FINAL_VER="${FILE:?/.zip/}"
+  BUILD_URL="${SERVER_URL}/${DEVICE}/${TYPE}/${FILE}"
+  FILES_TO_PUBLISH=("${FILE}" "${FILE}".md5sum "updater.json")
+  case "${TYPE:-}" in
     "alpha" | "beta" | "stable" | "test") ;;
     *) reportWarning "Invalid build type; skipping upload." && return ;;
-    esac
-    if [ -f changelog ]; then
-        FILES_TO_PUBLISH+=(changelog)
-        cp changelog zips/changelog
-        CHANGELOG="$(cat changelog)"
-    fi
-    cd zips || return
-    md5sum "${FILE}" >"${FILE}".md5sum
-    SHA1_SUM="$(sha1sum "${FILE}" | awk '{print $1}')"
-    jq -n --arg kn "${KERNEL_NAME}" \
-        --arg v "${KERNEL_VERSION}" \
-        --arg l "${BUILD_URL}" \
-        --arg cl "${SERVER_URL}/${DEVICE}/${TYPE}/changelog" \
-        --arg d "$(date +'%b %d, %Y')" \
-        --arg sha1 "${SHA1_SUM}" \
-        --arg spt "${SUPPORT_URL}" \
+  esac
+  if [ -f changelog ]; then
+    FILES_TO_PUBLISH+=(changelog)
+    cp changelog zips/changelog
+    CHANGELOG="$(cat changelog)"
+  fi
+  cd zips || return
+  md5sum "${FILE}" >"${FILE}".md5sum
+  SHA1_SUM="$(sha1sum "${FILE}" | awk '{print $1}')"
+  jq -n --arg kn "${KERNEL_NAME}" \
+    --arg v "${KERNEL_VERSION}" \
+    --arg l "${BUILD_URL}" \
+    --arg cl "${SERVER_URL}/${DEVICE}/${TYPE}/changelog" \
+    --arg d "$(date +'%b %d, %Y')" \
+    --arg sha1 "${SHA1_SUM}" \
+    --arg spt "${SUPPORT_URL}" \
     '{kernel: { name: $kn, version: $v, link: $l, changelog_url: $cl, date: $d, sha1: $sha1 }, support: { link: $spt } }' >updater.json
-    prepdirs "${TYPE}"
-    if [ "${TYPE}" == "stable" ]; then
-        for ITEM in beta test alpha; do
-            prepdirs "${ITEM}"
-        done
-    fi
-    publish "${FILES_TO_PUBLISH[@]}"
-    cd ../ || return
-    if [ "${TYPE}" == "stable" ]; then
-        release "${FILE}"
-    fi
-    MESSAGE="New [${TYPE}](${SERVER_URL}/${TYPE}) build uploaded : [${FILE}](${BUILD_URL})"
-    if [ "${CHANGELOG}" != "" ]; then
-        MESSAGE="${MESSAGE}
+  prepdirs "${TYPE}"
+  if [ "${TYPE}" == "stable" ]; then
+    for ITEM in beta test alpha; do
+      prepdirs "${ITEM}"
+    done
+  fi
+  publish "${FILES_TO_PUBLISH[@]}"
+  cd ../ || return
+  if [ "${TYPE}" == "stable" ]; then
+    release "${FILE}"
+  fi
+  MESSAGE="New [${TYPE}](${SERVER_URL}/${TYPE}) build uploaded : [${FILE}](${BUILD_URL})"
+  if [ "${CHANGELOG}" != "" ]; then
+    MESSAGE="${MESSAGE}
 
 Changelog:
 
 \`${CHANGELOG}\`"
-    fi
-    tgm_caesium " ${MESSAGE}"
+  fi
+  tgm_caesium " ${MESSAGE}"
 }
 
 # Called by pushcaesiumtg on release builds
 function release() {
-    local TAG
-    TAG=$(echo "${1}" | cut -d / -f 2 | cut -d '-' -f 3 | sed 's/\.zip//')
-    git -C "${ANYKERNEL_DIR}" push
-    git -C "${ANYKERNEL_DIR}" tag -s "${TAG}"
-    git -C "${ANYKERNEL_DIR}" push origin "${TAG}"
-    if [ -z "${NO_STAGING}" ]; then
-        git checkout "${DEFAULT_BRANCH}"
-        git reset --hard staging
-    fi
-    git push --force origin "${DEFAULT_BRANCH}"
-    git tag -as "${TAG}"
-    git push origin "${TAG}"
-    hub release create "${TAG}" -a zips/"${FILE}" -a zips/"${FILE}".md5sum
+  local TAG
+  TAG=$(echo "${1}" | cut -d / -f 2 | cut -d '-' -f 3 | sed 's/\.zip//')
+  git -C "${ANYKERNEL_DIR}" push
+  git -C "${ANYKERNEL_DIR}" tag -s "${TAG}"
+  git -C "${ANYKERNEL_DIR}" push origin "${TAG}"
+  if [ -z "${NO_STAGING}" ]; then
+    git checkout "${DEFAULT_BRANCH}"
+    git reset --hard staging
+  fi
+  git push --force origin "${DEFAULT_BRANCH}"
+  git tag -as "${TAG}"
+  git push origin "${TAG}"
+  hub release create "${TAG}" -a zips/"${FILE}" -a zips/"${FILE}".md5sum
 }
 
 # Find and set toolchain variables
 function check_toolchain() {
-    local TC
-    TC="$(fd ".*-gcc$" "${ARM64_TOOLCHAIN_DIR}"/bin | head -n1)"
-    if [ -f "${TC}" ]; then
-        CROSS_COMPILE="${ARM64_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')"
-        BANNER_ITEMS+=("ARM64 toolchain: $("${CROSS_COMPILE}"gcc --version | head -1)")
+  local TC
+  TC="$(fd ".*-gcc$" "${ARM64_TOOLCHAIN_DIR}"/bin | head -n1)"
+  if [ -f "${TC}" ]; then
+    CROSS_COMPILE="${ARM64_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')"
+    BANNER_ITEMS+=("ARM64 toolchain: $("${CROSS_COMPILE}"gcc --version | head -1)")
+  else
+    reportError "No suitable toolchain found in ${ARM64_TOOLCHAIN_DIR}"
+  fi
+  TC="$(fd ".*-gcc$" "${ARM_TOOLCHAIN_DIR}"/bin | head -n1)"
+  if [ -f "${TC}" ]; then
+    CROSS_COMPILE_ARM32="${ARM_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')"
+    BANNER_ITEMS+=("ARM toolchain: $("${CROSS_COMPILE_ARM32}gcc" --version | head -1)")
+  else
+    reportError "No suitable toolchain found in ${ARM_TOOLCHAIN_DIR}"
+  fi
+  if [ "${COMPILER}" == "clang" ]; then
+    TC="$(find "${CLANG_TOOLCHAIN_DIR}"/bin -name clang)"
+    if [ -e "${TC}" ]; then
+      CC="${CLANG_TOOLCHAIN_DIR}/bin/clang"
+      KBUILD_COMPILER_STRING="$(${CC} --version | head -n 1 | cut -d \( -f 1,2 | sed 's/[[:space:]]*$//')"
+      if [[ ${KBUILD_COMPILER_STRING} =~ "ClangBuiltLinux" ]]; then
+        # This is not AOSP clang, try to disaassemble it as a trunk build
+        KBUILD_COMPILER_STRING="$(${CC} --version | head -n 1 | awk '{print $1"-v"$4"-"$6}' | sed 's/)//')"
+      fi
+      export KBUILD_COMPILER_STRING
+      BANNER_ITEMS+=("Clang toolchain: ${KBUILD_COMPILER_STRING}")
     else
-        reportError "No suitable toolchain found in ${ARM64_TOOLCHAIN_DIR}"
+      reportError "Failed to find clang toolchain ${CLANG_TOOLCHAIN_DIR}"
     fi
-    TC="$(fd ".*-gcc$" "${ARM_TOOLCHAIN_DIR}"/bin | head -n1)"
-    if [ -f "${TC}" ]; then
-        CROSS_COMPILE_ARM32="${ARM_TOOLCHAIN_DIR}/bin/$(echo "${TC}" | awk -F '/' '{print $NF}' | sed -e 's/gcc//')"
-        BANNER_ITEMS+=("ARM toolchain: $("${CROSS_COMPILE_ARM32}gcc" --version | head -1)")
-    else
-        reportError "No suitable toolchain found in ${ARM_TOOLCHAIN_DIR}"
-    fi
-    if [ "${COMPILER}" == "clang" ]; then
-        TC="$(find "${CLANG_TOOLCHAIN_DIR}"/bin -name clang)"
-        if [ -e "${TC}" ]; then
-            CC="${CLANG_TOOLCHAIN_DIR}/bin/clang"
-            KBUILD_COMPILER_STRING="$(${CC} --version | head -n 1 | cut -d \( -f 1,2 | sed 's/[[:space:]]*$//')"
-            if [[ "${KBUILD_COMPILER_STRING}" =~ "ClangBuiltLinux" ]]; then
-                # This is not AOSP clang, try to disaassemble it as a trunk build
-                KBUILD_COMPILER_STRING="$(${CC} --version | head -n 1 | awk '{print $1"-v"$4"-"$6}' | sed 's/)//')"
-            fi
-            export KBUILD_COMPILER_STRING
-            BANNER_ITEMS+=("Clang toolchain: ${KBUILD_COMPILER_STRING}")
-        else
-            reportError "Failed to find clang toolchain ${CLANG_TOOLCHAIN_DIR}"
-        fi
-    fi
+  fi
 }
 
 # Duh
 function make_kernel() {
-    local RETURN_VAL BUILT_KERNEL
-    case "${DEVICE}" in
+  local RETURN_VAL BUILT_KERNEL
+  case "${DEVICE}" in
     "wahoo")
-        FILES_TO_MOVE=("arch/arm64/boot/${KERNEL}:${ANYKERNEL_DIR}/kernel"
-            "arch/arm64/boot/dtbo.img:${ANYKERNEL_DIR}"
-            "arch/arm64/boot/dts/qcom/msm8998-v2.1-soc.dtb:${ANYKERNEL_DIR}/dtbs")
-        ;;
+      FILES_TO_MOVE=("arch/arm64/boot/${KERNEL}:${ANYKERNEL_DIR}/kernel"
+        "arch/arm64/boot/dtbo.img:${ANYKERNEL_DIR}"
+        "arch/arm64/boot/dts/qcom/msm8998-v2.1-soc.dtb:${ANYKERNEL_DIR}/dtbs")
+      ;;
     *)
-        FILES_TO_MOVE=("arch/arm64/boot/${KERNEL}:${ANYKERNEL_DIR}")
-        ;;
-    esac
-    export FILES_TO_MOVE
-    mkdir -p "${OUT_DIR}"
-    fd "${KERNEL}" "${OUT_DIR}" -X rm -rf
-    make_defconfig
-    banner "${BANNER_ITEMS[@]/#/}"
-    if [ "${MODULE}" ]; then
-        kmake "${MODULE}"
-    else
-        kmake
-    fi
-    RETURN_VAL="$?"
-    BUILT_KERNEL="${FILES_TO_MOVE[0]%:*}"
-    if [ -f "${OUT_DIR}/${BUILT_KERNEL}" ]; then
-        move_kernel_files
-        return 0
-    elif [ -n "${MODULE}" ] && [ "${RETURN_VAL}" == 0 ]; then
-        echo
-    else
-        reportError "Kernel compilation failed with ${RETURN_VAL}"
-        tgm_caesium "Build failed" silent
-        exit 1
-    fi
+      FILES_TO_MOVE=("arch/arm64/boot/${KERNEL}:${ANYKERNEL_DIR}")
+      ;;
+  esac
+  export FILES_TO_MOVE
+  mkdir -p "${OUT_DIR}"
+  fd "${KERNEL}" "${OUT_DIR}" -X rm -rf
+  make_defconfig
+  banner "${BANNER_ITEMS[@]/#/}"
+  if [ "${MODULE}" ]; then
+    kmake "${MODULE}"
+  else
+    kmake
+  fi
+  RETURN_VAL="$?"
+  BUILT_KERNEL="${FILES_TO_MOVE[0]%:*}"
+  if [ -f "${OUT_DIR}/${BUILT_KERNEL}" ]; then
+    move_kernel_files
+    return 0
+  elif [ -n "${MODULE}" ] && [ "${RETURN_VAL}" == 0 ]; then
+    echo
+  else
+    reportError "Kernel compilation failed with ${RETURN_VAL}"
+    tgm_caesium "Build failed" silent
+    exit 1
+  fi
 }
 
 # Move kernel files after compilation
 function move_kernel_files() {
-    git -C "${ANYKERNEL_DIR}" clean -fdx 1>/dev/null 2>&1
-    # Move the kernel image
-    for FTM in "${FILES_TO_MOVE[@]}"; do
-        mkdir -p "${FTM#*:}"
-        cp "${OUT_DIR}/${FTM%:*}" "${FTM#*:}"
-    done
-    echo "Version: $(cat "${OUT_DIR}/include/config/kernel.release")" >"${ANYKERNEL_DIR}/version"
+  git -C "${ANYKERNEL_DIR}" clean -fdx 1>/dev/null 2>&1
+  # Move the kernel image
+  for FTM in "${FILES_TO_MOVE[@]}"; do
+    mkdir -p "${FTM#*:}"
+    cp "${OUT_DIR}/${FTM%:*}" "${FTM#*:}"
+  done
+  echo "Version: $(cat "${OUT_DIR}/include/config/kernel.release")" >"${ANYKERNEL_DIR}/version"
 }
 
 # Called by make_kernel, used to trap defconfig regen events
 function make_defconfig() {
-    [ "${CLEAN}" ] && rm -rf "${OUT_DIR}"
-    kmake "${DEFCONFIG}" 1>/dev/null 2>&1
-    if [ "${REGEN_DEFCONFIG}" ]; then
-        if [ -z "${FULL_CONFIG}" ]; then
-            kmake savedefconfig 1>/dev/null 2>&1
-            cp "${OUT_DIR}"/defconfig arch/"${ARCH}"/configs/"${DEFCONFIG}"
-        else
-            cp "${OUT_DIR}"/.config arch/"${ARCH}"/configs/"${DEFCONFIG}"
-        fi
-        echoText "Regenerated defconfig successfully"
-        exit 0
+  [ "${CLEAN}" ] && rm -rf "${OUT_DIR}"
+  kmake "${DEFCONFIG}" 1>/dev/null 2>&1
+  if [ "${REGEN_DEFCONFIG}" ]; then
+    if [ -z "${FULL_CONFIG}" ]; then
+      kmake savedefconfig 1>/dev/null 2>&1
+      cp "${OUT_DIR}"/defconfig arch/"${ARCH}"/configs/"${DEFCONFIG}"
+    else
+      cp "${OUT_DIR}"/.config arch/"${ARCH}"/configs/"${DEFCONFIG}"
     fi
-    IFS=',' read -r -a CONFIGS <<<"${EXTRA_CONFIGS}"
-    for CONFIG in "${CONFIGS[@]}"; do
-        "${WORKING_DIR}"/scripts/config --file "${OUT_DIR}"/.config -e "${CONFIG}"
-    done
+    echoText "Regenerated defconfig successfully"
+    exit 0
+  fi
+  IFS=',' read -r -a CONFIGS <<<"${EXTRA_CONFIGS}"
+  for CONFIG in "${CONFIGS[@]}"; do
+    "${WORKING_DIR}"/scripts/config --file "${OUT_DIR}"/.config -e "${CONFIG}"
+  done
 }
 
 # Create the final ZIP
 function make_zip() {
-    local FINAL_ZIP="${FINAL_VER}.zip"
-    cd "${ANYKERNEL_DIR}" || return
-    echo "${FINAL_VER}" >version
-    rm ./*.zip 2>/dev/null
-    zip -r "${FINAL_ZIP}" ./* -x ".git/*" "README.md" ".gitignore" "*.zip" 1>/dev/null 2>&1
-    mkdir -p "${ZIP_MOVE}"
-    mv "${FINAL_ZIP}" "${ZIP_MOVE}"/
-    rm "${ANYKERNEL_DIR}/${KERNEL}" 1>/dev/null 2>&1
-    cd "${WORKING_DIR}" || return
+  local FINAL_ZIP="${FINAL_VER}.zip"
+  cd "${ANYKERNEL_DIR}" || return
+  echo "${FINAL_VER}" >version
+  rm ./*.zip 2>/dev/null
+  zip -r "${FINAL_ZIP}" ./* -x ".git/*" "README.md" ".gitignore" "*.zip" 1>/dev/null 2>&1
+  mkdir -p "${ZIP_MOVE}"
+  mv "${FINAL_ZIP}" "${ZIP_MOVE}"/
+  rm "${ANYKERNEL_DIR}/${KERNEL}" 1>/dev/null 2>&1
+  cd "${WORKING_DIR}" || return
 }
 
 while getopts ":bcd:m:rst:v" OPT; do
-    case "${OPT}" in
+  case "${OPT}" in
     b)
-        BANNER_ITEMS+=("Building ZIP only")
-        ONLY_ZIP=true
-        ;;
+      BANNER_ITEMS+=("Building ZIP only")
+      ONLY_ZIP=true
+      ;;
     c)
-        BANNER_ITEMS+=("Building clean")
-        CLEAN=true
-        ;;
+      BANNER_ITEMS+=("Building clean")
+      CLEAN=true
+      ;;
     d)
-        DEVICE="${OPTARG}"
-        ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2_${DEVICE}"
-        FINAL_VER="${KERNEL_NAME}"-"${DEVICE}"-"${INCREMENTAL_VERSION}"
-        ;;
+      DEVICE="${OPTARG}"
+      ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel2_${DEVICE}"
+      FINAL_VER="${KERNEL_NAME}"-"${DEVICE}"-"${INCREMENTAL_VERSION}"
+      ;;
     m)
-        MODULE="${OPTARG}"
-        [[ "${MODULE}" == */ ]] || MODULE="${MODULE}"/
-        if [ ! "$(ls "${MODULE}"Kconfig* 2>/dev/null)" ]; then
-            reportError "Invalid module specified - ${MODULE}"
-            return 1
-        fi
-        BANNER_ITEMS+=("Building module ${MODULE}")
-        ;;
+      MODULE="${OPTARG}"
+      [[ ${MODULE} == */ ]] || MODULE="${MODULE}"/
+      if [ ! "$(ls "${MODULE}"Kconfig* 2>/dev/null)" ]; then
+        reportError "Invalid module specified - ${MODULE}"
+        return 1
+      fi
+      BANNER_ITEMS+=("Building module ${MODULE}")
+      ;;
     r)
-        BANNER_ITEMS+=("Regenerating defconfig")
-        REGEN_DEFCONFIG=true
-        ;;
+      BANNER_ITEMS+=("Regenerating defconfig")
+      REGEN_DEFCONFIG=true
+      ;;
     s)
-        SILENT=true
-        ;;
+      SILENT=true
+      ;;
     t)
-        TYPE="${OPTARG}"
-        ;;
+      TYPE="${OPTARG}"
+      ;;
     v)
-        VERBOSE=true
-        ;;
+      VERBOSE=true
+      ;;
     \?)
-        reportWarning "Invalid option: -${OPTARG}" >&2
-        ;;
-    esac
+      reportWarning "Invalid option: -${OPTARG}" >&2
+      ;;
+  esac
 done
 
 if [ -n "${TYPE}" ] && [ -n "${NO_VERSIONING}" ]; then
-    BANNER_ITEMS+=("Version: ${KERNEL_VERSION}")
-    INCREMENTAL_VERSION="${KERNEL_VERSION:-Test}"
-    LOCALVERSION="-${INCREMENTAL_VERSION}"
-    GIT_HASH=$(git rev-parse --short HEAD)
+  BANNER_ITEMS+=("Version: ${KERNEL_VERSION}")
+  INCREMENTAL_VERSION="${KERNEL_VERSION:-Test}"
+  LOCALVERSION="-${INCREMENTAL_VERSION}"
+  GIT_HASH=$(git rev-parse --short HEAD)
 fi
 
 if [ "${TYPE}" != "stable" ] && [ -z "${NO_VERSIONING}" ]; then
-    BANNER_ITEMS+=("Setting test build parameters")
-    LOCALVERSION=-"${INCREMENTAL_VERSION}"-"${GIT_HASH}"
-    FINAL_VER+="-${GIT_HASH}"
+  BANNER_ITEMS+=("Setting test build parameters")
+  LOCALVERSION=-"${INCREMENTAL_VERSION}"-"${GIT_HASH}"
+  FINAL_VER+="-${GIT_HASH}"
 fi
 
 git tag -l | while read -r tag; do
-    if [ "${tag}" == "${KERNEL_VERSION}" ]; then
-        NO_UPLOADS=true
-        reportWarning "Forgot to bump version again..."
-    fi
+  if [ "${tag}" == "${KERNEL_VERSION}" ]; then
+    NO_UPLOADS=true
+    reportWarning "Forgot to bump version again..."
+  fi
 done
 
 DATE_START=$(date +"%s")
@@ -416,16 +416,16 @@ rm "${FINAL_VER}".zip 2>/dev/null
 sanity_check
 check_toolchain
 if [ "${ONLY_ZIP}" ] && [ -z "${MODULE}" ]; then
-    make_zip
+  make_zip
 else
-    make_kernel
-    [ -z "${MODULE}" ] && make_zip
+  make_kernel
+  [ -z "${MODULE}" ] && make_zip
 fi
 DATE_END="$(date +"%s")"
 DIFF="$(bc <<<"${DATE_END} - ${DATE_START}")"
 
 if [ -f zips/"${FINAL_VER}".zip ]; then
-    echoText "Build successful in $(bc <<<"${DIFF} / 60") minute(s) and $(bc <<<"${DIFF} % 60") seconds."
-    reportSuccess "${FINAL_VER}".zip
-    pushcaesiumtg "${FINAL_VER}".zip "${TYPE}"
+  echoText "Build successful in $(bc <<<"${DIFF} / 60") minute(s) and $(bc <<<"${DIFF} % 60") seconds."
+  reportSuccess "${FINAL_VER}".zip
+  pushcaesiumtg "${FINAL_VER}".zip "${TYPE}"
 fi

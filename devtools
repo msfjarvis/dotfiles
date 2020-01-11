@@ -8,89 +8,89 @@
 source "${SCRIPT_DIR}"/common
 
 function rebuildtc() {
-    local VERSION
-    VERSION="${1:-10}"
-    cd /mnt/mediahell/build-tools-gcc || exit 1
-    echoText "Building ARM GCC ${VERSION}.x"
-    ./build -a arm -s gnu -v "${VERSION}" -V -f
-    if [ -d arm-linux-gnueabi ]; then
-        rsync -av arm-linux-gnueabi/ ../toolchains/arm-linux-gnueabi-"${VERSION}".x
-    else
-        reportError "ARM GCC ${VERSION}.x failed to compile"
-    fi
-    echoText "Building ARM64 GCC ${VERSION}.x"
-    ./build -a arm64 -s gnu -v "${VERSION}" -V -f
-    if [ -d aarch64-linux-gnu ]; then
-        rsync -av aarch64-linux-gnu/ ../toolchains/aarch64-linux-gnu-"${VERSION}".x
-    else
-        reportError "ARM64 GCC ${VERSION}.x failed to compile"
-    fi
-    cd - || exit 1
-    cd /mnt/mediahell/tc-build || exit 1
-    echoText "Building clang"
-    ./build-llvm.py --build-stage1-only --install-stage1-only -p "clang" -t "AArch64;ARM"
-    cd - || exit 1
+  local VERSION
+  VERSION="${1:-10}"
+  cd /mnt/mediahell/build-tools-gcc || exit 1
+  echoText "Building ARM GCC ${VERSION}.x"
+  ./build -a arm -s gnu -v "${VERSION}" -V -f
+  if [ -d arm-linux-gnueabi ]; then
+    rsync -av arm-linux-gnueabi/ ../toolchains/arm-linux-gnueabi-"${VERSION}".x
+  else
+    reportError "ARM GCC ${VERSION}.x failed to compile"
+  fi
+  echoText "Building ARM64 GCC ${VERSION}.x"
+  ./build -a arm64 -s gnu -v "${VERSION}" -V -f
+  if [ -d aarch64-linux-gnu ]; then
+    rsync -av aarch64-linux-gnu/ ../toolchains/aarch64-linux-gnu-"${VERSION}".x
+  else
+    reportError "ARM64 GCC ${VERSION}.x failed to compile"
+  fi
+  cd - || exit 1
+  cd /mnt/mediahell/tc-build || exit 1
+  echoText "Building clang"
+  ./build-llvm.py --build-stage1-only --install-stage1-only -p "clang" -t "AArch64;ARM"
+  cd - || exit 1
 }
 
 function fillccache() {
-    local START_TIME END_TIME BASE_DIR CUR_DIR
-    START_TIME=$(date +"%s")
-    declare -a DEVICES=("wahoo")
-    BASE_DIR=/home/msfjarvis/git-repos/halogenOS
-    CUR_DIR="$(pwd)"
-    for DEVICE in "${DEVICES[@]}"; do
-        for COUNT in {1..10}; do
-            echoText "Build ${COUNT} for device ${DEVICE}"
-            cd "${BASE_DIR}"/"${DEVICE}" || return 1
-            build-caesium -c
-        done
+  local START_TIME END_TIME BASE_DIR CUR_DIR
+  START_TIME=$(date +"%s")
+  declare -a DEVICES=("wahoo")
+  BASE_DIR=/home/msfjarvis/git-repos/halogenOS
+  CUR_DIR="$(pwd)"
+  for DEVICE in "${DEVICES[@]}"; do
+    for COUNT in {1..10}; do
+      echoText "Build ${COUNT} for device ${DEVICE}"
+      cd "${BASE_DIR}"/"${DEVICE}" || return 1
+      build-caesium -c
     done
-    cd "${CUR_DIR}" || return 1
-    END_TIME="$(date +"%s")"
-    DIFF="$(bc <<<"${END_TIME} - ${START_TIME}")"
-    echoText "Total time elapsed: $(bc <<<"${DIFF} / 60") minute(s) and $(bc <<<"${DIFF} % 60") seconds."
+  done
+  cd "${CUR_DIR}" || return 1
+  END_TIME="$(date +"%s")"
+  DIFF="$(bc <<<"${END_TIME} - ${START_TIME}")"
+  echoText "Total time elapsed: $(bc <<<"${DIFF} / 60") minute(s) and $(bc <<<"${DIFF} % 60") seconds."
 }
 
 function getmagisk() {
-    local BASE_URL CHANNEL
-    BASE_URL="https://raw.githubusercontent.com/topjohnwu/magisk_files/master/"
-    CHANNEL="${1}"
-    case "${CHANNEL:?}" in
-    "stable"|"beta") ;;
+  local BASE_URL CHANNEL
+  BASE_URL="https://raw.githubusercontent.com/topjohnwu/magisk_files/master/"
+  CHANNEL="${1}"
+  case "${CHANNEL:?}" in
+    "stable" | "beta") ;;
     *)
-        reportWarning "${CHANNEL} is not one of 'stable' and 'beta'"
-        return 1
-        ;;
-    esac
-    cd /tmp/ || return 1
-    dl "${BASE_URL}${CHANNEL}.json" magisk.json
-    cd - || return 1
-    echoText "Downloading Magisk $(jq .magisk.version /tmp/magisk.json)"
-    jq .[].link /tmp/magisk.json | xargs wget
-    rm /tmp/magisk.json
+      reportWarning "${CHANNEL} is not one of 'stable' and 'beta'"
+      return 1
+      ;;
+  esac
+  cd /tmp/ || return 1
+  dl "${BASE_URL}${CHANNEL}.json" magisk.json
+  cd - || return 1
+  echoText "Downloading Magisk $(jq .magisk.version /tmp/magisk.json)"
+  jq .[].link /tmp/magisk.json | xargs wget
+  rm /tmp/magisk.json
 }
 
 function gettcvers() {
-    fd -tf ".*-gcc$" /mnt/mediahell/toolchains -x {} --version
-    /mnt/mediahell/tc-build/install/bin/clang --version
+  fd -tf ".*-gcc$" /mnt/mediahell/toolchains -x {} --version
+  /mnt/mediahell/tc-build/install/bin/clang --version
 }
 
 function kgrep() {
-    rg -n "${1:?}" "${2:-.}"
+  rg -n "${1:?}" "${2:-.}"
 }
 
 function mkd() {
-    tar -cv --exclude README.md --exclude ./.git --exclude LICENCE --exclude LICENSE -f docker.tar ./
+  tar -cv --exclude README.md --exclude ./.git --exclude LICENCE --exclude LICENSE -f docker.tar ./
 }
 
 function bustcfcache() {
-    local CF_API_KEY CF_ZONE_ID
-    CF_API_KEY="$(pass api/cf | head -n1)"
-    CF_ZONE_ID="$(pass api/cf | tail -n1)"
-    curl -s -X POST "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/purge_cache" \
-        -H "X-Auth-Email: msfjarvis@gmail.com" \
-        -H "X-Auth-Key: ${CF_API_KEY}" \
-        -H "Content-Type: application/json" \
-        --data '{"purge_everything":true}'
-    echo ""
+  local CF_API_KEY CF_ZONE_ID
+  CF_API_KEY="$(pass api/cf | head -n1)"
+  CF_ZONE_ID="$(pass api/cf | tail -n1)"
+  curl -s -X POST "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/purge_cache" \
+    -H "X-Auth-Email: msfjarvis@gmail.com" \
+    -H "X-Auth-Key: ${CF_API_KEY}" \
+    -H "Content-Type: application/json" \
+    --data '{"purge_everything":true}'
+  echo ""
 }

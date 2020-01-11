@@ -3,248 +3,247 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
-
 # shellcheck source=server
 source "${SCRIPT_DIR}"/server
 # shellcheck source=telegram
 source "${SCRIPT_DIR}"/telegram
 
 function dl() {
-    local URL FILE_NAME
-    declare -a CONFIGURATION=("--split=16" "--max-connection-per-server=16" "--summary-interval=0")
-    URL="${1}"
-    FILE_NAME="${2}"
-    if [[ "${URL}" =~ magnet ]] || [[ "${URL}" =~ \.torrent ]]; then
-        CONFIGURATION+=("--seed-time=1m")
-    fi
-    if [ -z "${FILE_NAME}" ]; then
-        aria2c "${CONFIGURATION[@]}" "${URL:?}"
-    else
-        aria2c "${CONFIGURATION[@]}" "${URL:?}" -o "${FILE_NAME}"
-    fi
+  local URL FILE_NAME
+  declare -a CONFIGURATION=("--split=16" "--max-connection-per-server=16" "--summary-interval=0")
+  URL="${1}"
+  FILE_NAME="${2}"
+  if [[ ${URL} =~ magnet ]] || [[ ${URL} =~ \.torrent ]]; then
+    CONFIGURATION+=("--seed-time=1m")
+  fi
+  if [ -z "${FILE_NAME}" ]; then
+    aria2c "${CONFIGURATION[@]}" "${URL:?}"
+  else
+    aria2c "${CONFIGURATION[@]}" "${URL:?}" -o "${FILE_NAME}"
+  fi
 }
 
 function batch_dl() {
-    local INPUT_FILE PROTOCOL
-    INPUT_FILE="${1}"
-    while read -r line; do
-        [ -z "$line" ] && continue
-        LINK="$(echo "${line}" | cut -d '|' -f 1)"
-        DEST="$(echo "${line}" | cut -d '|' -f 2)"
-        if [[ "${LINK}" =~ http ]]; then
-            if [[ "${LINK}" =~ drive.google.com ]]; then
-                PROTOCOL=gdrive
-            else
-                PROTOCOL=ddl
-            fi
-        else
-            PROTOCOL=gdrive
-        fi
-        case "${PROTOCOL}" in
-        gdrive)
-            gdrivedl "${LINK}" --force
-            ;;
-        ddl)
-            dl "${LINK}" "${DEST}"
-            ;;
-        esac
-    done < <(cat "${INPUT_FILE:?}")
+  local INPUT_FILE PROTOCOL
+  INPUT_FILE="${1}"
+  while read -r line; do
+    [ -z "$line" ] && continue
+    LINK="$(echo "${line}" | cut -d '|' -f 1)"
+    DEST="$(echo "${line}" | cut -d '|' -f 2)"
+    if [[ ${LINK} =~ http ]]; then
+      if [[ ${LINK} =~ drive.google.com ]]; then
+        PROTOCOL=gdrive
+      else
+        PROTOCOL=ddl
+      fi
+    else
+      PROTOCOL=gdrive
+    fi
+    case "${PROTOCOL}" in
+      gdrive)
+        gdrivedl "${LINK}" --force
+        ;;
+      ddl)
+        dl "${LINK}" "${DEST}"
+        ;;
+    esac
+  done < <(cat "${INPUT_FILE:?}")
 }
 
 # Symlink $1 to $2
 function link() {
-    local SRC DEST ROOT PWD
-    SRC="${1}"
-    DEST="${2}"
-    ROOT="${3}"
-    PWD="$(pwd)"
-    case "${SRC:?}" in
+  local SRC DEST ROOT PWD
+  SRC="${1}"
+  DEST="${2}"
+  ROOT="${3}"
+  PWD="$(pwd)"
+  case "${SRC:?}" in
     /*) ;; # No action needed
     *) SRC="${PWD}"/"${SRC:?}" ;;
-    esac
-    if [ -z "${ROOT}" ]; then
-        ln -sf "${SRC:?}" "${DEST:?}"
-    else
-        sudo ln -sf "${SRC:?}" "${DEST:?}"
-    fi
+  esac
+  if [ -z "${ROOT}" ]; then
+    ln -sf "${SRC:?}" "${DEST:?}"
+  else
+    sudo ln -sf "${SRC:?}" "${DEST:?}"
+  fi
 }
 
 # Upload a file to transfer.sh
 function transfer() {
-    local URL
-    if [ "$#" -eq 0 ]; then
-        echo "No arguments specified. Usage:
+  local URL
+  if [ "$#" -eq 0 ]; then
+    echo "No arguments specified. Usage:
         echo transfer /tmp/test.md
         cat /tmp/test.md | transfer test.md"
-        return 1
-    fi
-    tmpfile=$(mktemp -t transferXXX)
-    if tty -s; then
-        basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
-        curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" 2>/dev/null >>"${tmpfile}"
-    else
-        curl --progress-bar --upload-file "-" "https://transfer.sh/$1" 2>/dev/null >>"${tmpfile}"
-    fi
-    if [ "$(display_exists)" ]; then
-        xclip -rmlastnl -selection clipboard <"$tmpfile"
-    else
-        cat "$tmpfile"
-    fi
-    rm -f "${tmpfile}"
+    return 1
+  fi
+  tmpfile=$(mktemp -t transferXXX)
+  if tty -s; then
+    basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
+    curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" 2>/dev/null >>"${tmpfile}"
+  else
+    curl --progress-bar --upload-file "-" "https://transfer.sh/$1" 2>/dev/null >>"${tmpfile}"
+  fi
+  if [ "$(display_exists)" ]; then
+    xclip -rmlastnl -selection clipboard <"$tmpfile"
+  else
+    cat "$tmpfile"
+  fi
+  rm -f "${tmpfile}"
 }
 
 # Upload to GDrive
 function upload() {
-    local FILE MD5
-    for arg; do
-        FILE="${arg}"
-        [ -f "${FILE:?}" ] || {
-            reportWarning "File '${FILE}' doesn't exist"
-            continue
-        }
-        ZIP_SIZE="$(du -h "${FILE}" | awk '{print $1}')"
-        MD5="$(md5sum "${FILE}" | awk '{print $1}')"
-        GDRIVE_UPLOAD_URL="$(gdrive upload --share "${FILE}" | awk '/https/ {print $7}')"
-        GDRIVE_UPLOAD_ID="$(echo "${GDRIVE_UPLOAD_URL}" | sed -r -e 's/(.*)&export.*/\1/' -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/view/\1/')"
-        UPLOAD_INFO="
+  local FILE MD5
+  for arg; do
+    FILE="${arg}"
+    [ -f "${FILE:?}" ] || {
+      reportWarning "File '${FILE}' doesn't exist"
+      continue
+    }
+    ZIP_SIZE="$(du -h "${FILE}" | awk '{print $1}')"
+    MD5="$(md5sum "${FILE}" | awk '{print $1}')"
+    GDRIVE_UPLOAD_URL="$(gdrive upload --share "${FILE}" | awk '/https/ {print $7}')"
+    GDRIVE_UPLOAD_ID="$(echo "${GDRIVE_UPLOAD_URL}" | sed -r -e 's/(.*)&export.*/\1/' -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/view/\1/')"
+    UPLOAD_INFO="
 File: [$(basename "${FILE}")](${GDRIVE_UPLOAD_URL})
 Size: ${ZIP_SIZE}
 MD5: \`${MD5}\`
 GDrive ID: \`${GDRIVE_UPLOAD_ID}\`
 "
-        tgm "${UPLOAD_INFO}"
-        echo "Get ${FILE} with ${GDRIVE_UPLOAD_ID}"
-    done
+    tgm "${UPLOAD_INFO}"
+    echo "Get ${FILE} with ${GDRIVE_UPLOAD_ID}"
+  done
 }
 
 # Batch upload files
 function batch_ul() {
-    while read -r f; do upload "$f"; done < <(cat "${1:?}")
+  while read -r f; do upload "$f"; done < <(cat "${1:?}")
 }
 
 # Upload a file to imgur and copy the link
 function imgur() {
-    local FILE LINK USE_CLIPBOARD
-    FILE="${1}"
-    USE_CLIPBOARD="$(display_exists)"
-    LINK="$(curl --request POST --url https://api.imgur.com/3/image --header "authorization: Client-ID $(pass api/imgur)" \
-        --header 'content-type: multipart/form-data;' -F "image=@${FILE:?}" 2>/dev/null |
-        jq .data.link | sed 's/"//g')"
-    if [ -z "${USE_CLIPBOARD}" ]; then
-        echo "${LINK}"
-    else
-        echo "${LINK}" | xclip -rmlastnl -selection clipboard
-    fi
+  local FILE LINK USE_CLIPBOARD
+  FILE="${1}"
+  USE_CLIPBOARD="$(display_exists)"
+  LINK="$(curl --request POST --url https://api.imgur.com/3/image --header "authorization: Client-ID $(pass api/imgur)" \
+    --header 'content-type: multipart/form-data;' -F "image=@${FILE:?}" 2>/dev/null \
+    | jq .data.link | sed 's/"//g')"
+  if [ -z "${USE_CLIPBOARD}" ]; then
+    echo "${LINK}"
+  else
+    echo "${LINK}" | xclip -rmlastnl -selection clipboard
+  fi
 }
 
 # Upload the latest screenshot to imgur
 function ils() {
-    imgur "$(find /mnt/mediahell/screenshots/ -printf "%T@ %Tc %p\n" | sort | tail -n1 | awk '{print $NF}')"
+  imgur "$(find /mnt/mediahell/screenshots/ -printf "%T@ %Tc %p\n" | sort | tail -n1 | awk '{print $NF}')"
 }
 
 # Download a file given the Google Drive URL
 function gdrivedl() {
-    local URL GDRIVE FILE_ID
-    declare -a CONFIGURATION=()
-    URL="${1}"
-    shift
-    GDRIVE="$(command -v gdrive)"
-    if [ -z "${GDRIVE}" ]; then
-        reportWarning "gdrive is not in \$PATH"
-        return 1
-    fi
-    if [[ "${URL:?}" =~ folders ]]; then
-        FILE_ID="$(echo "${URL}" | sed -r -e 's/https.*folders\/(.*)/\1/' -e 's/(.*)\?.*/\1/')"
-        CONFIGURATION+=("--recursive")
-    else
-        FILE_ID="$(echo "${URL:?}" | sed -Er -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/(view|edit)/\1/' -e 's/(.*)(&|\?).*/\1/')"
-    fi
-    # Stolen from https://stackoverflow.com/a/12711853
-    for arg; do
-        case $arg in
-        "--force" | "-f") CONFIGURATION+=("--force") ;;
-        "--skip" | "-s") CONFIGURATION+=("--skip") ;;
-        esac
-    done
+  local URL GDRIVE FILE_ID
+  declare -a CONFIGURATION=()
+  URL="${1}"
+  shift
+  GDRIVE="$(command -v gdrive)"
+  if [ -z "${GDRIVE}" ]; then
+    reportWarning 'gdrive is not in $PATH'
+    return 1
+  fi
+  if [[ ${URL:?} =~ folders ]]; then
+    FILE_ID="$(echo "${URL}" | sed -r -e 's/https.*folders\/(.*)/\1/' -e 's/(.*)\?.*/\1/')"
+    CONFIGURATION+=("--recursive")
+  else
+    FILE_ID="$(echo "${URL:?}" | sed -Er -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/(view|edit)/\1/' -e 's/(.*)(&|\?).*/\1/')"
+  fi
+  # Stolen from https://stackoverflow.com/a/12711853
+  for arg; do
+    case $arg in
+      "--force" | "-f") CONFIGURATION+=("--force") ;;
+      "--skip" | "-s") CONFIGURATION+=("--skip") ;;
+    esac
+  done
 
-    gdrive download "${CONFIGURATION[@]}" "${FILE_ID:?}"
+  gdrive download "${CONFIGURATION[@]}" "${FILE_ID:?}"
 }
 
 # Publish a file to the download server
 function publish() {
-    local FILE REMOTE_DIR
-    FILE="${1}"
-    REMOTE_DIR="${2:-.superhidden}"
-    [ ! -f "${FILE}" ] && {
-        reportWarning "'${1}' does not exist!"
-        return
-    }
-    mkdir -p "${LOCAL_SITE_MIRROR}/${REMOTE_DIR}"
-    cp "${FILE:?}" "${LOCAL_SITE_MIRROR}/${REMOTE_DIR}/"
-    syncup "${REMOTE_DIR}"
-    printf "https://dl.msfjarvis.dev/%s" "${REMOTE_DIR}/$(basename "${FILE:?}")" | xclip -rmlastnl -selection clipboard
+  local FILE REMOTE_DIR
+  FILE="${1}"
+  REMOTE_DIR="${2:-.superhidden}"
+  [ ! -f "${FILE}" ] && {
+    reportWarning "'${1}' does not exist!"
+    return
+  }
+  mkdir -p "${LOCAL_SITE_MIRROR}/${REMOTE_DIR}"
+  cp "${FILE:?}" "${LOCAL_SITE_MIRROR}/${REMOTE_DIR}/"
+  syncup "${REMOTE_DIR}"
+  printf "https://dl.msfjarvis.dev/%s" "${REMOTE_DIR}/$(basename "${FILE:?}")" | xclip -rmlastnl -selection clipboard
 }
 
 # Sync wallpapers to my server and notify the announcement chat
 function wallsync() {
-    local MSG_FILE BASE_URL
-    MSG_FILE="$(mktemp)"
-    BASE_URL="https://dl.msfjarvis.dev/.walls"
-    syncup .walls --itemize | while read -r l; do
-      FILE_NAME="$(echo "${l}" | awk '{print $2}')"
-      SANITIZED_NAME="$(echo "${FILE_NAME}" | sed -e 's/_/ /g' -e 's/\.jpg//g')"
-      if [[ "$l" == *deleting* ]]; then
-        printf 'Deleting: %s\n' "${SANITIZED_NAME}" >> "${MSG_FILE}"
-      elif [[ "$l" == \<f.st* ]]; then
-        printf 'Updated wallpaper: [%s](%s)\n' "${SANITIZED_NAME}" "${BASE_URL}/${FILE_NAME}" >> "${MSG_FILE}"
-      elif [[ "$l" == \<f++* ]]; then
-        printf 'New wallpaper: [%s](%s)\n' "${SANITIZED_NAME}" "${BASE_URL}/${FILE_NAME}" >> "${MSG_FILE}"
-      fi
-    done
-    tgm "$(cat "${MSG_FILE}")" "${HORBIS_WALLS_CHAT_ID}"
-    rm -f "${MSG_FILE}" 2>/dev/null
+  local MSG_FILE BASE_URL
+  MSG_FILE="$(mktemp)"
+  BASE_URL="https://dl.msfjarvis.dev/.walls"
+  syncup .walls --itemize | while read -r l; do
+    FILE_NAME="$(echo "${l}" | awk '{print $2}')"
+    SANITIZED_NAME="$(echo "${FILE_NAME}" | sed -e 's/_/ /g' -e 's/\.jpg//g')"
+    if [[ $l == *deleting* ]]; then
+      printf 'Deleting: %s\n' "${SANITIZED_NAME}" >>"${MSG_FILE}"
+    elif [[ $l == \<f.st* ]]; then
+      printf 'Updated wallpaper: [%s](%s)\n' "${SANITIZED_NAME}" "${BASE_URL}/${FILE_NAME}" >>"${MSG_FILE}"
+    elif [[ $l == \<f++* ]]; then
+      printf 'New wallpaper: [%s](%s)\n' "${SANITIZED_NAME}" "${BASE_URL}/${FILE_NAME}" >>"${MSG_FILE}"
+    fi
+  done
+  tgm "$(cat "${MSG_FILE}")" "${HORBIS_WALLS_CHAT_ID}"
+  rm -f "${MSG_FILE}" 2>/dev/null
 }
 
 # Use ffmpeg to dump information about a media file in JSON format
 function mediainfo() {
-    local FILE
-    FILE="${1}"
-    [[ -z "${FILE}" || ! -f "${FILE}" ]] && return
-    ffprobe -v quiet -print_format json -show_format -show_streams "${FILE}" | jq .
+  local FILE
+  FILE="${1}"
+  [[ -z ${FILE} || ! -f ${FILE} ]] && return
+  ffprobe -v quiet -print_format json -show_format -show_streams "${FILE}" | jq .
 }
 
 function fao() {
-    if [ -z "${1}" ]; then
-        echoText "Supply a filename moron"
-        return
-    else
-        local SEARCH_DIR EDITOR
-        EDITOR="nano"
-        SEARCH_DIR="."
-        [ -z "${2}" ] || {
-            if [ -d "${2}" ]; then
-                SEARCH_DIR="${2}"
-            else
-                EDITOR="${2}"
-            fi
-        }
-        fd "^${1}\..*" "${SEARCH_DIR}" -X "${EDITOR}"
-    fi
+  if [ -z "${1}" ]; then
+    echoText "Supply a filename moron"
+    return
+  else
+    local SEARCH_DIR EDITOR
+    EDITOR="nano"
+    SEARCH_DIR="."
+    [ -z "${2}" ] || {
+      if [ -d "${2}" ]; then
+        SEARCH_DIR="${2}"
+      else
+        EDITOR="${2}"
+      fi
+    }
+    fd "^${1}\..*" "${SEARCH_DIR}" -X "${EDITOR}"
+  fi
 }
 
 # shellcheck disable=SC2016
 function tab2space() {
-    fd --type f -0 -x bash -c 'tmp=$(mktemp); expand -t 4 "$0" > $tmp && cat $tmp > "$0"; rm $tmp' {} \;
+  fd --type f -0 -x bash -c 'tmp=$(mktemp); expand -t 4 "$0" > $tmp && cat $tmp > "$0"; rm $tmp' {} \;
 }
 
 function d2u() {
-    fd --type f -x dos2unix
+  fd --type f -x dos2unix
 }
 
 function whitespace() {
-    fd --type f | xargs perl -pi -e 's/ +$//'
+  fd --type f | xargs perl -pi -e 's/ +$//'
 }
 
 function pwallsync() {
-    adb-sync --reverse /sdcard/Pictures/Dawn "${LOCAL_SITE_MIRROR}/.phone_walls/"
+  adb-sync --reverse /sdcard/Pictures/Dawn "${LOCAL_SITE_MIRROR}/.phone_walls/"
 }
