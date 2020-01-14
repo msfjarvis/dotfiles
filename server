@@ -64,5 +64,5 @@ function syncup() {
 }
 
 function cicnt() {
-  ssh "${CAESIUM_UPLOAD_HOST}"
+  mosh "${CAESIUM_UPLOAD_HOST}"
 }
