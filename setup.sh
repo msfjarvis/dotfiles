@@ -80,11 +80,6 @@ for SCRIPT in "${SCRIPTS[@]}"; do
   ln -s "${SCRIPT_DIR}"/"${SCRIPT}" ~/bin/"${SCRIPT}"
 done
 
-if [[ $* =~ --all ]] && [ "$(display_exists)" ]; then
-  # shellcheck disable=SC1090
-  source "${SCRIPT_DIR}"/setup/adb-multi.sh
-fi
-
 echoText "Setting up gitconfig"
 mv ~/.gitconfig ~/.gitconfig.old 2>/dev/null # Failsafe in case we screw up
 cp "${SCRIPT_DIR}/.gitconfig" ~/.gitconfig
