@@ -3,7 +3,7 @@ SCRIPTS_TO_TEST := aliases apps build-caesium build-kernel common devtools files
 test:
 	@for script in ${SCRIPTS_TO_TEST} ; do \
 		echo "Checking $$script..."; \
-		shellcheck -x $$script; \
+		shellcheck -x $$script || exit 1; \
 	done
 
 autofix:
