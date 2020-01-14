@@ -184,7 +184,7 @@ function pushcaesiumtg() {
   cd zips || return
   md5sum "${FILE}" >"${FILE}".md5sum
   SHA1_SUM="$(sha1sum "${FILE}" | awk '{print $1}')"
-  jq -n --arg kn "${KERNEL_NAME}" \
+  jq -n --arg kn "${KERNEL_NAME} ${TYPE}" \
     --arg v "${KERNEL_VERSION}" \
     --arg l "${BUILD_URL}" \
     --arg cl "${SERVER_URL}/${DEVICE}/${TYPE}/changelog" \
