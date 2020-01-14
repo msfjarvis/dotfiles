@@ -15,7 +15,7 @@ function check_and_install_dsf() {
   if [ -z "${DFS}" ]; then
     install_dsf
   else
-    INSTALLED_VERSION="$(grep 'my $VERSION = ' /usr/local/bin/diff-so-fancy | cut -d \" -f 2)"
+    INSTALLED_VERSION="$(diff-so-fancy --version 2>&1 | tail -n1 | cut -d ':' -f 2 | sed 's/ //g')"
     LATEST_VERSION="$(get_latest_release so-fancy/diff-so-fancy | sed 's/v//')"
     if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
       printUpgradeBanner "diff-so-fancy" "${INSTALLED_VERSION}" "${LATEST_VERSION}"
