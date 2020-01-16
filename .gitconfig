@@ -84,5 +84,8 @@
 [url "git@github.com:"]
 	insteadOf = https://github.com/
 	insteadOf = git://github.com/
+[url "https://msfjarvis@git.msfjarvis.dev"]
+	insteadOf = https://git.msfjarvis.dev
+	insteadOf = git.msfjarvis.dev
 [diff]
 	noprefix = true
