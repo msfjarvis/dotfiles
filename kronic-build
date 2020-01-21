@@ -58,7 +58,7 @@ function build() {
       reportError "repopick was requested but a picklist was not found; aborting"
     fi
   }
-  lunch aosip_"${TARGET_DEVICE}"-userdebug
+  lunch aosip_"${TARGET_DEVICE}"-user
   [ "${CLEAN}" ] && m deviceclean
   [ "${FULL_CLEAN}" ] && m clean
   if [ -n "${MODULE}" ]; then
