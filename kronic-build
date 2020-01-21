@@ -130,7 +130,7 @@ optional arguments:
   esac
 done
 
-AOSIP_VERSION=AOSiP-10-"${AOSIP_BUILDTYPE:-Pizza}"-"${TARGET_DEVICE:?}"-$(date +%Y%m%d)
+AOSIP_VERSION=AOSiP-10-"${AOSIP_BUILDTYPE:-Quiche}"-"${TARGET_DEVICE:?}"-$(date +%Y%m%d)
 banner_items+=("AOSiP version: ${AOSIP_VERSION}")
 banner "${banner_items[@]/#/}"
 
