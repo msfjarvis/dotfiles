@@ -13,7 +13,7 @@ source "${SCRIPT_DIR}"/system
 
 trap 'exit 1' INT TERM
 
-declare -a SCRIPTS=("build-caesium" "build-kernel" "paste")
+declare -a SCRIPTS=("build-caesium" "build-kernel" "kronic-build" "paste")
 
 # Create binaries directory
 mkdir -p ~/bin/
