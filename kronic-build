@@ -18,78 +18,78 @@ source "${SCRIPT_DIR}"/server
 declare -a banner_items
 
 function handle_upload() {
-    local FILE
-    FILE="${1}"
-    if [ -z "${LOCAL_SITE_MIRROR}" ]; then
-        upload "${FILE}"
-    else
-        upload "${FILE}" &# Moving along
-        echo "{ \"response\": [ { \"datetime\": $(grep ro\.build\.date\.utc "${OUT}"/system/build.prop | cut -d= -f2), \"filename\": \"${AOSIP_VERSION}.zip\", \"id\": \"$(sha256sum "${OUT}"/"${AOSIP_VERSION}".zip | cut -d ' ' -f1)\", \"romtype\": \"${AOSIP_BUILDTYPE}\", \"size\": $(stat -c%s "${OUT}"/"${AOSIP_VERSION}".zip), \"url\": \"https://dl.msfjarvis.website/aosip/${TARGET_DEVICE}/${AOSIP_VERSION}.zip\", \"version\": \"10\"  }]}" >updater.json
-        mkdir -p "${LOCAL_SITE_MIRROR}/aosip/${TARGET_DEVICE}/"
-        cp "${FILE}" "${LOCAL_SITE_MIRROR}/aosip/${TARGET_DEVICE}/"
-        mv updater.json "${LOCAL_SITE_MIRROR}/aosip/${TARGET_DEVICE}/"
-        syncup aosip
-    fi
+  local FILE
+  FILE="${1}"
+  if [ -z "${LOCAL_SITE_MIRROR}" ]; then
+    upload "${FILE}"
+  else
+    upload "${FILE}" &# Moving along
+    echo "{ \"response\": [ { \"datetime\": $(grep ro\.build\.date\.utc "${OUT}"/system/build.prop | cut -d= -f2), \"filename\": \"${AOSIP_VERSION}.zip\", \"id\": \"$(sha256sum "${OUT}"/"${AOSIP_VERSION}".zip | cut -d ' ' -f1)\", \"romtype\": \"${AOSIP_BUILDTYPE}\", \"size\": $(stat -c%s "${OUT}"/"${AOSIP_VERSION}".zip), \"url\": \"https://dl.msfjarvis.website/aosip/${TARGET_DEVICE}/${AOSIP_VERSION}.zip\", \"version\": \"10\"  }]}" >updater.json
+    mkdir -p "${LOCAL_SITE_MIRROR}/aosip/${TARGET_DEVICE}/"
+    cp "${FILE}" "${LOCAL_SITE_MIRROR}/aosip/${TARGET_DEVICE}/"
+    mv updater.json "${LOCAL_SITE_MIRROR}/aosip/${TARGET_DEVICE}/"
+    syncup aosip
+  fi
 }
 
 function build() {
-    local ZIP CCACHE_EXEC
-    CCACHE_EXEC="$(command -v ccache)"
-    export SELINUX_IGNORE_NEVERALLOWS=true
-    export TEMPORARY_DISABLE_PATH_RESTRICTIONS=true
-    export BUILD_BROKEN_DUP_RULES=true
-    export USE_CCACHE=1
-    export CCACHE_EXEC
-    . build/envsetup.sh
-    [ "${SYNC}" ] && {
-        reposync --force-sync --detach
-        repo start ten --all
-        repo forall -c 'git reset --hard m/ten'
-    }
-    [ "${REPOPICK}" ] && {
-        if [ -f picklist ]; then
-            source picklist
-        else
-            reportError "repopick was requested but a picklist was not found; aborting"
-        fi
-    }
-    lunch aosip_"${TARGET_DEVICE}"-userdebug
-    [ "${CLEAN}" ] && m deviceclean
-    [ "${FULL_CLEAN}" ] && m clean
-    if [ -n "${MODULE}" ]; then
-        m "${MODULE}"
-        return
+  local ZIP CCACHE_EXEC
+  CCACHE_EXEC="$(command -v ccache)"
+  export SELINUX_IGNORE_NEVERALLOWS=true
+  export TEMPORARY_DISABLE_PATH_RESTRICTIONS=true
+  export BUILD_BROKEN_DUP_RULES=true
+  export USE_CCACHE=1
+  export CCACHE_EXEC
+  . build/envsetup.sh
+  [ "${SYNC}" ] && {
+    reposync --force-sync --detach
+    repo start ten --all
+    repo forall -c 'git reset --hard m/ten'
+  }
+  [ "${REPOPICK}" ] && {
+    if [ -f picklist ]; then
+      source picklist
     else
-        m kronic
+      reportError "repopick was requested but a picklist was not found; aborting"
     fi
-    if [ -z "${OUT_DIR_COMMON_BASE}" ]; then
-        ZIP="out/target/product/${TARGET_DEVICE}/${AOSIP_VERSION}".zip
-    else
-        ZIP="${OUT_DIR_COMMON_BASE}/$(basename "$(pwd)")/target/product/${TARGET_DEVICE}/${AOSIP_VERSION}".zip
-    fi
-    if [ -f "${ZIP}" ]; then [ "${UPLOAD_BUILD}" ] && handle_upload "${ZIP}"; else tgm "${TARGET_DEVICE} build failed."; fi
+  }
+  lunch aosip_"${TARGET_DEVICE}"-userdebug
+  [ "${CLEAN}" ] && m deviceclean
+  [ "${FULL_CLEAN}" ] && m clean
+  if [ -n "${MODULE}" ]; then
+    m "${MODULE}"
+    return
+  else
+    m kronic
+  fi
+  if [ -z "${OUT_DIR_COMMON_BASE}" ]; then
+    ZIP="out/target/product/${TARGET_DEVICE}/${AOSIP_VERSION}".zip
+  else
+    ZIP="${OUT_DIR_COMMON_BASE}/$(basename "$(pwd)")/target/product/${TARGET_DEVICE}/${AOSIP_VERSION}".zip
+  fi
+  if [ -f "${ZIP}" ]; then [ "${UPLOAD_BUILD}" ] && handle_upload "${ZIP}"; else tgm "${TARGET_DEVICE} build failed."; fi
 }
 
 cd "${HOME}"/aosiq || exit 1
 
 while getopts ":cd:efhm:rsu" opt; do
-    case "${opt}" in
+  case "${opt}" in
     c)
-        CLEAN=true
-        banner_items+=("Building after deviceclean")
-        ;;
+      CLEAN=true
+      banner_items+=("Building after deviceclean")
+      ;;
     d)
-        TARGET_DEVICE="${OPTARG}"
-        banner_items+=("Building for ${TARGET_DEVICE}")
-        ;;
-    e)
-        ;;
+      TARGET_DEVICE="${OPTARG}"
+      banner_items+=("Building for ${TARGET_DEVICE}")
+      ;;
+    e) ;;
+
     f)
-        FULL_CLEAN=true
-        banner_items+=("Building after full clean")
-        ;;
+      FULL_CLEAN=true
+      banner_items+=("Building after full clean")
+      ;;
     h)
-        echo '
+      echo '
 usage: kronic-build [-h] [-c] [-d DEVICE] [-n] [-s]
 
 optional arguments:
@@ -103,26 +103,26 @@ optional arguments:
   -s        Run force sync
   -u        Upload build to Google Drive
 '
-        exit 0
-        ;;
+      exit 0
+      ;;
     r)
-        REPOPICK=true
-        banner_items+=("Will repopick from 'picklist'")
-        ;;
+      REPOPICK=true
+      banner_items+=("Will repopick from 'picklist'")
+      ;;
     m)
-        MODULE="${OPTARG}"
-        banner_items+=("Building module: ${MODULE}")
-        ;;
+      MODULE="${OPTARG}"
+      banner_items+=("Building module: ${MODULE}")
+      ;;
     s)
-        SYNC=true
-        banner_items+=("Will force sync and detach")
-        ;;
+      SYNC=true
+      banner_items+=("Will force sync and detach")
+      ;;
     u)
-        UPLOAD_BUILD=true
-        banner_items+=("Will upload finished build")
-        ;;
+      UPLOAD_BUILD=true
+      banner_items+=("Will upload finished build")
+      ;;
     *) reportWarning "Invalid option: -${OPTARG}" >&2 ;;
-    esac
+  esac
 done
 
 AOSIP_VERSION=AOSiP-10-"${AOSIP_BUILDTYPE:-Pizza}"-"${TARGET_DEVICE:?}"-$(date +%Y%m%d)
