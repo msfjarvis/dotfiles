@@ -15,7 +15,7 @@ source "${SCRIPT_DIR}"/telegram
 
 # Vars
 DEFCONFIG="caesium_defconfig"
-KERNEL="Image.gz-dtb"
+KERNEL="Image.lz4-dtb"
 DEFAULT_BRANCH="android10"
 SERVER_URL="https://dl.msfjarvis.dev/caesium"
 KERNEL_NAME="Caesium"
@@ -56,6 +56,8 @@ trap 'exit 1' SIGINT SIGTERM
 # Source custom options
 # shellcheck disable=SC1090
 [ -f "${CONFIG}" ] && source "${CONFIG}"
+
+FILES_TO_MOVE=("arch/arm64/boot/${KERNEL}:${ANYKERNEL_DIR}")
 
 # Versioning
 if [ -z "${NO_VERSIONING}" ]; then
@@ -268,17 +270,6 @@ function check_toolchain() {
 # Duh
 function make_kernel() {
   local RETURN_VAL BUILT_KERNEL
-  case "${DEVICE}" in
-    "wahoo")
-      FILES_TO_MOVE=("arch/arm64/boot/${KERNEL}:${ANYKERNEL_DIR}/kernel"
-        "arch/arm64/boot/dtbo.img:${ANYKERNEL_DIR}"
-        "arch/arm64/boot/dts/qcom/msm8998-v2.1-soc.dtb:${ANYKERNEL_DIR}/dtbs")
-      ;;
-    *)
-      FILES_TO_MOVE=("arch/arm64/boot/${KERNEL}:${ANYKERNEL_DIR}")
-      ;;
-  esac
-  export FILES_TO_MOVE
   mkdir -p "${OUT_DIR}"
   fd "${KERNEL}" "${OUT_DIR}" -X rm -rf
   make_defconfig
