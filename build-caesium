@@ -14,7 +14,7 @@ source "${SCRIPT_DIR}"/server
 source "${SCRIPT_DIR}"/telegram
 
 # Vars
-DEFCONFIG="caesium_defconfig"
+DEFCONFIG="wahoo_defconfig"
 KERNEL="Image.lz4-dtb"
 DEFAULT_BRANCH="android10"
 SERVER_URL="https://dl.msfjarvis.dev/caesium"
@@ -23,8 +23,8 @@ DEVICE="wahoo"
 SUPPORT_URL="https://t.me/FlashKernelPixel2"
 ARCH=arm64
 SUBARCH=arm64
-USER=MSF
-HOST=jarvisbox
+USER="$(whoami)"
+HOST="$(hostname)"
 CONFIG="${CONFIG:-.buildconfig}"
 WORKING_DIR="$(pwd)"
 ANYKERNEL_DIR="${WORKING_DIR}/../AnyKernel3_wahoo"
