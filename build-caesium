@@ -219,18 +219,22 @@ Changelog:
 # Called by pushcaesiumtg on release builds
 function release() {
   local TAG
-  TAG=$(echo "${1}" | cut -d / -f 2 | cut -d '-' -f 3 | sed 's/\.zip//')
-  git -C "${ANYKERNEL_DIR}" push
-  git -C "${ANYKERNEL_DIR}" tag -s "${TAG}"
-  git -C "${ANYKERNEL_DIR}" push origin "${TAG}"
+  TAG="$(echo "${1}" | cut -d / -f 2 | cut -d '-' -f 3 | sed 's/\.zip//')"
+  git -C "${ANYKERNEL_DIR}" push --force
+  git -C "${ANYKERNEL_DIR}" tag -asf "${TAG}" -m "${TAG}"
+  git -C "${ANYKERNEL_DIR}" push --force origin "${TAG}"
   if [ -z "${NO_STAGING}" ]; then
     git checkout "${DEFAULT_BRANCH}"
     git reset --hard staging
   fi
   git push --force origin "${DEFAULT_BRANCH}"
-  git tag -as "${TAG}"
-  git push origin "${TAG}"
-  hub release create "${TAG}" -a zips/"${FILE}" -a zips/"${FILE}".md5sum
+  git tag -asf "${TAG}" -m "${TAG}
+
+$(cat changelog)"
+  git push --force origin "${TAG}"
+  hub release create "${TAG}" -a zips/"${FILE}" -a zips/"${FILE}".md5sum -m "${TAG}
+
+$(cat changelog)"
 }
 
 # Find and set toolchain variables
