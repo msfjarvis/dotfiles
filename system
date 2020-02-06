@@ -126,8 +126,8 @@ function wgfixup() {
   local TMP_DIR
   TMP_DIR="$(mktemp -d)"
   fd -tf 'conf$' ~/wireguard/ -x cp {} "${TMP_DIR}"/
-  fd -tf 'conf$' "${TMP_DIR}" -x sed -i -e 's/PreDown.*//g' -e 's/PostUp.*//g'
-  fd -tf 'conf$' "${TMP_DIR}" -x sed -i 's/193.138.218.74/45.90.28.125/'
+  fd -tf 'conf$' "${TMP_DIR}" -X sed -i -e '/PreDown/d' -e '/PostUp/d'
+  fd -tf 'conf$' "${TMP_DIR}" -X sed -i 's/193.138.218.74/45.90.28.125/'
   zip -jr ~/wireguard/mullvad-wireguard-configs-android.zip "${TMP_DIR}"/*
   rm -rf "${TMP_DIR}"
 }
