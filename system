@@ -158,17 +158,17 @@ function wgbench() {
 }
 
 function wgup() {
-  local region
-  region="${1}"
+  local REGION
+  REGION="${1}"
   sudo -v || return 1
-  wg-quick up mullvad-"${region:?}"
+  wg-quick up mullvad-"${REGION:?}"
 }
 
 function wgdown() {
-  local region
-  region="${1}"
+  local REGION
+  REGION="${1}"
   sudo -v || return 1
-  wg-quick down mullvad-"${region:?}"
+  wg-quick down mullvad-"${REGION:?}"
 }
 
 function venv() {
