@@ -86,3 +86,5 @@
 	insteadOf = git://github.com/
 [diff]
 	noprefix = true
+[log]
+	follow = true
