@@ -14,9 +14,10 @@ source "${SCRIPT_DIR}"/common
 DEFCONFIG="${DEFCONFIG:-$(hostname)_defconfig}"
 
 # Setup variables
-CC=
+CC="${CC:-'ccache clang'}"
+HOSTCC="${CC:-'ccache clang'}"
+LD="${CC:-'ld.lld'}"
 CLEAN=
-HOSTCC=
 INSTALL=
 MODULE=
 REGEN_DEFCONFIG=
@@ -27,6 +28,7 @@ declare -a MAKE_FLAGS=("ARCH=x86" "SUBARCH=x86_64")
 function make_wrapper() {
   make CC="${CC}" \
     HOSTCC="${HOSTCC}" \
+    LD="${LD}" \
     "${MAKE_FLAGS[@]}" \
     -j"$(nproc --all)" \
     "${@}"
@@ -56,8 +58,6 @@ function make_defconfig() {
   make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
   if [ -n "${REGEN_DEFCONFIG}" ]; then
     cp .config arch/x86/configs/"${DEFCONFIG}"
-    make_wrapper savedefconfig 1>/dev/null 2>&1
-    mv "$(pwd)"/defconfig arch/x86/configs/"${DEFCONFIG}"
     echoText "Regenerated defconfig successfully"
     exit 0
   fi
@@ -83,18 +83,6 @@ while getopts ":cim:r" opt; do
       ;;
     \?)
       reportWarning "Invalid option: -${OPTARG}" >&2
-      ;;
-  esac
-done
-
-CC='ccache gcc'
-HOSTCC='ccache gcc'
-
-for arg; do
-  case $arg in
-    "--clang")
-      CC='ccache clang'
-      HOSTCC='ccache clang'
       ;;
   esac
 done
