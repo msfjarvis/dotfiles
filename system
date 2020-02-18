@@ -171,6 +171,14 @@ function wgdown() {
   wg-quick down mullvad-"${REGION:?}"
 }
 
+function wgcycle() {
+  local REGION
+  REGION="${1}"
+  sudo -v || return 1
+  wg-quick down mullvad-"${REGION:?}"
+  wg-quick up mullvad-"${REGION:?}"
+}
+
 function venv() {
   local NEW_INSTALL
   if [ ! -d venv ]; then
