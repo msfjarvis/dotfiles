@@ -37,7 +37,7 @@
 	dsc = diff --stat --cached
 	export = archive --format zip --output
 	expire-reflog = "!exp() { git reflog expire --expire=\"$(date)\" --all ;}; exp"
-	ignore = "!gi() { curl -sL https://www.gitignore.io/api/$@ ;}; gi"
+	ign = "!gi() { curl -sL https://www.gitignore.io/api/$@ ;}; gi"
 	kang = commit --amend --reset-author
 	lo = log --oneline
 	loa = log --oneline --author='Harsh Shandilya'
