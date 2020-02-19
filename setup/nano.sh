@@ -3,7 +3,7 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
-trap 'rm -rf /tmp/nano 2>/dev/null' INT TERM EXIT
+trap 'rm -rf /tmp/nano* 2>/dev/null' INT TERM EXIT
 
 # shellcheck source=setup/common.sh
 source "${SCRIPT_DIR:?}"/setup/common.sh
@@ -12,7 +12,7 @@ function install_nano() {
   local INSTALLED_VERSION LATEST_VERSION
   echoText "Checking and updating nano"
   INSTALLED_VERSION="$(nano --version | head -n1 | awk '{print $4}')"
-  LATEST_VERSION="4.5"
+  LATEST_VERSION="4.8"
   if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
     printUpgradeBanner "nano" "${INSTALLED_VERSION}" "${LATEST_VERSION}"
     sudo apt purge nano -y
@@ -24,6 +24,7 @@ function install_nano() {
     make all -j"$(nproc)"
     sudo make install
     cd "${SCRIPT_DIR}" || return 1
+    rm -rf /tmp/nano.tar.xz /tmp/nano-"${LATEST_VERSION}" || return 1
   else
     printUpToDateBanner "nano" "${INSTALLED_VERSION}"
   fi
