@@ -19,5 +19,6 @@ _syncdown_completions() {
 
 complete -F _wgup_completions wgup
 complete -F _wgdown_completions wgdown
+complete -F _wgdown_completions wgcycle
 complete -F _syncup_completions syncup
 complete -F _syncdown_completions syncdown
