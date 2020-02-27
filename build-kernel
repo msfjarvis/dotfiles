@@ -14,9 +14,8 @@ source "${SCRIPT_DIR}"/common
 DEFCONFIG="${DEFCONFIG:-$(hostname)_defconfig}"
 
 # Setup variables
-CC="${CC:-ccache clang}"
-HOSTCC="${CC:-ccache clang}"
-LD="${CC:-ld.lld}"
+CC="${CC:-ccache gcc}"
+HOSTCC="${CC:-ccache gcc}"
 CLEAN=
 INSTALL=
 MODULE=
@@ -28,9 +27,8 @@ declare -a MAKE_FLAGS=("ARCH=x86" "SUBARCH=x86_64")
 function make_wrapper() {
   make CC="${CC}" \
     HOSTCC="${HOSTCC}" \
-    LD="${LD}" \
     "${MAKE_FLAGS[@]}" \
-    -j"$(nproc --all)" \
+    -j24 \
     "${@}"
 }
 
@@ -43,8 +41,8 @@ function make_kernel() {
     if make_wrapper; then
       if [ -n "${INSTALL}" ]; then
         make_wrapper headers_install
-        sudo make -j"$(nproc --all)" modules_install
-        sudo make -j"$(nproc --all)" install
+        sudo make -j24 modules_install
+        sudo make -j24 install
       fi
     else
       reportError "Compilation failed!"
