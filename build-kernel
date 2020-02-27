@@ -52,7 +52,7 @@ function make_kernel() {
 
 # Called by make_kernel, used to trap defconfig regen events
 function make_defconfig() {
-  [ -z "${CLEAN}" ] || make_wrapper clean
+  [ -z "${CLEAN}" ] || sudo make -j24 clean
   make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
   if [ -n "${REGEN_DEFCONFIG}" ]; then
     cp .config arch/x86/configs/"${DEFCONFIG}"
