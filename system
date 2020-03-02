@@ -20,7 +20,7 @@ function foreversay() {
 
 function encrypt() {
   [ -z "${1}" ] && return
-  gpg --encrypt --output "$(basename "${1}")".gpg --recipient "msfjarvis@gmail.com" "${1}"
+  gpg --encrypt --output "$(basename "${1}")".gpg --recipient "me@msfjarvis.dev" "${1}"
 }
 
 function reboot() {
