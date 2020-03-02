@@ -85,6 +85,12 @@ function maintenance() {
   sudo apt autoremove -y
 }
 
+function brewclr() {
+  cd "${SCRIPT_DIR}"/homebrew || return 1
+  brew bundle --force cleanup
+  cd - || return 1
+}
+
 function battinfo() {
   local BASE
   BASE=/sys/class/power_supply/BAT0/
