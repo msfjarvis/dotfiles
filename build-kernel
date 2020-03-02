@@ -28,7 +28,7 @@ function make_wrapper() {
   make CC="${CC}" \
     HOSTCC="${HOSTCC}" \
     "${MAKE_FLAGS[@]}" \
-    -j24 \
+    -j"$(nproc --all)" \
     "${@}"
 }
 
@@ -41,8 +41,8 @@ function make_kernel() {
     if make_wrapper; then
       if [ -n "${INSTALL}" ]; then
         make_wrapper headers_install
-        sudo make -j24 modules_install
-        sudo make -j24 install
+        sudo make -j"$(nproc --all)" modules_install
+        sudo make -j"$(nproc --all)" install
       fi
     else
       reportError "Compilation failed!"
@@ -52,7 +52,7 @@ function make_kernel() {
 
 # Called by make_kernel, used to trap defconfig regen events
 function make_defconfig() {
-  [ -z "${CLEAN}" ] || sudo make -j24 clean
+  [ -z "${CLEAN}" ] || sudo make -j"$(nproc --all)" clean
   make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
   if [ -n "${REGEN_DEFCONFIG}" ]; then
     cp .config arch/x86/configs/"${DEFCONFIG}"
