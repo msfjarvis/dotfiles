@@ -3,6 +3,7 @@ tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/core"
 brew "git-extras"
+brew "curl", args: ["HEAD"]
 brew "go"
 brew "make"
 brew "node"
