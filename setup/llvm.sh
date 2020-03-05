@@ -11,7 +11,7 @@
 set -eux
 
 # read optional command line argument
-LLVM_VERSION=10
+LLVM_VERSION=11
 if [ "$#" -eq 1 ]; then
   LLVM_VERSION=$1
 fi
@@ -28,7 +28,8 @@ fi
 declare -A LLVM_VERSION_PATTERNS
 LLVM_VERSION_PATTERNS[8]="-8"
 LLVM_VERSION_PATTERNS[9]="-9"
-LLVM_VERSION_PATTERNS[10]=""
+LLVM_VERSION_PATTERNS[10]="-10"
+LLVM_VERSION_PATTERNS[11]=""
 
 if [ ! ${LLVM_VERSION_PATTERNS[$LLVM_VERSION]+_} ]; then
   echo "This script does not support LLVM version $LLVM_VERSION"
@@ -58,7 +59,10 @@ esac
 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
 add-apt-repository "${REPO_NAME}"
 apt update
-apt install -y clang-"$LLVM_VERSION" clang-tools-"$LLVM_VERSION" clang-"$LLVM_VERSION"-doc libclang-common-"$LLVM_VERSION"-dev libclang-"$LLVM_VERSION"-dev libclang1-"$LLVM_VERSION" clang-format-"$LLVM_VERSION" python-clang-"$LLVM_VERSION" clangd-"$LLVM_VERSION" libc++-"$LLVM_VERSION"-dev lld-"$LLVM_VERSION"
+apt install -y clang-"$LLVM_VERSION" clang-tools-"$LLVM_VERSION" clang-"$LLVM_VERSION"-doc libclang-common-"$LLVM_VERSION"-dev libclang-"$LLVM_VERSION"-dev libclang1-"$LLVM_VERSION" clang-format-"$LLVM_VERSION" clangd-"$LLVM_VERSION" libc++-"$LLVM_VERSION"-dev lld-"$LLVM_VERSION"
+if [ "$LLVM_VERSION" -lt 11 ]; then
+  apt install -y python-clang-"$LLVM_VERSION"
+fi
 update-alternatives --install "/usr/bin/clang" "clang" "$(command -v clang-"$LLVM_VERSION")" 2
 update-alternatives --install "/usr/bin/clang++" "clang++" "$(command -v clang++-"$LLVM_VERSION")" 2
 update-alternatives --install "/usr/bin/lld" "lld" "$(command -v lld-"$LLVM_VERSION")" 2
