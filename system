@@ -91,6 +91,15 @@ function brewclr() {
   cd - || return 1
 }
 
+function gnomext() {
+  local EXT_ARCHIVE EXT_UUID
+  EXT_ARCHIVE="$1"
+  EXT_UUID="$(unzip -c "${EXT_ARCHIVE:?}" metadata.json | grep uuid | cut -d \" -f4)"
+  mkdir -p ~/.local/share/gnome-shell/extensions/"${EXT_UUID}"
+  unzip -qo "${EXT_ARCHIVE}" -d ~/.local/share/gnome-shell/extensions/"${EXT_UUID}"
+  gnome-extensions enable "${EXT_UUID}"
+}
+
 function battinfo() {
   local BASE
   BASE=/sys/class/power_supply/BAT0/
