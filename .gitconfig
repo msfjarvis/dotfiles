@@ -6,7 +6,7 @@
 	fixes = Fixes: %h (\"%s\")
 	list = %h (\"%s\")
 [user]
-	signingkey = 8F87050B0F9CB84115157399B7843F823355E9B9
+	signingkey = B7843F823355E9B9
 	name = Harsh Shandilya
 	email = me@msfjarvis.dev
 [push]
