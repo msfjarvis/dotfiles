@@ -40,7 +40,7 @@ function make_kernel() {
   else
     if make_wrapper; then
       if [ -n "${INSTALL}" ]; then
-        make_wrapper headers_install
+        sudo make -j"$(nproc --all)" headers_install
         sudo make -j"$(nproc --all)" modules_install
         sudo make -j"$(nproc --all)" install
       fi
