@@ -8,6 +8,27 @@ ANDROID_PLATFORM_ROOT="/home/msfjarvis/aosiq"
 DEFAULT_AOSIP_BRANCH="ten"
 AOSIP_GERRIT_URL="review.aosiprom.com"
 
+function setemail() {
+    [ ! -d .git ] && {
+        reportWarning "This command needs to run in a git tree"
+        return 1
+    }
+    local EMAIL GPG_KEY
+    case "${1:?}" in
+    "work" | "prjkt")
+        EMAIL="harsh@prjkt.io"
+        GPG_KEY="4AD75758D9EE741C"
+        ;;
+    esac
+    if [ -z "${EMAIL}" ] && [ -z "${GPG_KEY}" ]; then {
+        git config --unset user.email
+        git config --unset user.signingkey
+        return 0
+    }; fi
+    git config user.email "${EMAIL}"
+    git config user.signingkey "${GPG_KEY}"
+}
+
 function dlgit() {
   local REPO BRANCH
   REPO="${1}"
