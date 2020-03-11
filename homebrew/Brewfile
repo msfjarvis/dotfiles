@@ -1,7 +1,7 @@
 tap "github/gh"
 tap "homebrew/bundle"
 tap "homebrew/core"
-brew "curl", args: ["HEAD"]
+brew "curl"
 brew "git-extras"
 brew "go"
 brew "make"
