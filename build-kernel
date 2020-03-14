@@ -16,18 +16,18 @@ DEFCONFIG="${DEFCONFIG:-$(hostname)_defconfig}"
 # Setup variables
 CC="${CC:-clang}"
 HOSTCC="${CC:-clang}"
+LD="${LD:-ld}"
 CLEAN=
 INSTALL=
 MODULE=
 REGEN_DEFCONFIG=
+LOCALVERSION="${LOCALVERSION:--caesium}"
 
-declare -a MAKE_FLAGS=("ARCH=x86" "SUBARCH=x86_64")
+declare -a MAKE_FLAGS=("ARCH=x86" "SUBARCH=x86_64" "CC=${CC}" "HOSTCC=${HOSTCC}" "LD=${LD}" "LOCALVERSION=${LOCALVERSION}")
 
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper() {
-  make CC="${CC}" \
-    HOSTCC="${HOSTCC}" \
-    "${MAKE_FLAGS[@]}" \
+  make "${MAKE_FLAGS[@]}" \
     -j"$(nproc --all)" \
     "${@}"
 }
