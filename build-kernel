@@ -55,7 +55,8 @@ function make_defconfig() {
   [ -z "${CLEAN}" ] || sudo make -j"$(nproc --all)" clean
   make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
   if [ -n "${REGEN_DEFCONFIG}" ]; then
-    cp .config arch/x86/configs/"${DEFCONFIG}"
+    make_wrapper savedefconfig
+    mv defconfig arch/x86/configs/"${DEFCONFIG}"
     echoText "Regenerated defconfig successfully"
     exit 0
   fi
