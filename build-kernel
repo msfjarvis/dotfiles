@@ -32,6 +32,12 @@ function make_wrapper() {
     "${@}"
 }
 
+function sudo_make_wrapper() {
+  sudo make "${MAKE_FLAGS[@]}" \
+    -j"$(nproc --all)" \
+    "${@}"
+}
+
 # Duh
 function make_kernel() {
   make_defconfig
@@ -40,9 +46,9 @@ function make_kernel() {
   else
     if make_wrapper; then
       if [ -n "${INSTALL}" ]; then
-        sudo make -j"$(nproc --all)" headers_install
-        sudo make -j"$(nproc --all)" modules_install
-        sudo make -j"$(nproc --all)" install
+        sudo_make_wrapper headers_install
+        sudo_make_wrapper modules_install
+        sudo_make_wrapper install
       fi
     else
       reportError "Compilation failed!"
@@ -52,7 +58,7 @@ function make_kernel() {
 
 # Called by make_kernel, used to trap defconfig regen events
 function make_defconfig() {
-  [ -z "${CLEAN}" ] || sudo make -j"$(nproc --all)" clean
+  [ -z "${CLEAN}" ] || sudo_make_wrapper clean
   make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
   if [ -n "${REGEN_DEFCONFIG}" ]; then
     make_wrapper savedefconfig
