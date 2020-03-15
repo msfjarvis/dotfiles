@@ -91,6 +91,14 @@ function brewclr() {
   cd - || return 1
 }
 
+function brewsync() {
+  cd "${SCRIPT_DIR}"/homebrew || return 1
+  brew bundle dump --force
+  git cam "homebrew: Sync"
+  git push --no-verify
+  cd - || return 1
+}
+
 function gnomext() {
   local EXT_ARCHIVE EXT_UUID
   EXT_ARCHIVE="$1"
