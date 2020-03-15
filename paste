@@ -8,12 +8,14 @@ SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 # shellcheck source=system
 source "${SCRIPT_DIR}"/system
 
-result=$(curl -sf -X POST -H "Content-Type: text/plain" --data-binary @"${1:--}" https://bin.msfjarvis.dev) || {
+BIN_URL="${BIN_URL:-https://bin.msfjarvis.dev}"
+
+result=$(curl -sf -X POST -H "Content-Type: text/plain" --data-binary @"${1:--}" "${BIN_URL}") || {
   echo "ERROR: failed to post document" >&2
   exit 1
 }
 
-trimmed="https://bin.msfjarvis.dev$(echo "$result" | awk '{print $4}')"
+trimmed="${BIN_URL}$(echo "$result" | awk '{print $4}')"
 if [ "$(display_exists)" ]; then
   echo "$trimmed" | xclip -rmlastnl -selection clipboard
 else
