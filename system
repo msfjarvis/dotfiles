@@ -155,6 +155,14 @@ function wgfixup() {
   rm -rf "${TMP_DIR}"
 }
 
+function wgpack() {
+  local TMP_DIR
+  TMP_DIR="$(mktemp -d)"
+  fd -tf 'conf$' ~/wireguard/ -x cp {} "${TMP_DIR}"/
+  zip -jr ~/wireguard/mullvad-wireguard-configs.zip "${TMP_DIR}"/*
+  rm -rf "${TMP_DIR}"
+}
+
 function wginstall() {
   if [ -f ~/wireguard/mullvad-wireguard-configs.zip ]; then
     fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x rm
