@@ -14,8 +14,8 @@ source "${SCRIPT_DIR}"/common
 DEFCONFIG="${DEFCONFIG:-$(hostname)_defconfig}"
 
 # Setup variables
-CC="${CC:-clang}"
-HOSTCC="${CC:-clang}"
+CC="${CC:-ccache clang}"
+HOSTCC="${CC:-ccache clang}"
 LD="${LD:-ld.lld}"
 CLEAN=
 INSTALL=
@@ -58,7 +58,7 @@ function make_kernel() {
 
 # Called by make_kernel, used to trap defconfig regen events
 function make_defconfig() {
-  [ -z "${CLEAN}" ] || sudo_make_wrapper clean
+  [ -z "${CLEAN}" ] || make_wrapper clean
   make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
   if [ -n "${REGEN_DEFCONFIG}" ]; then
     make_wrapper savedefconfig
