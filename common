@@ -35,7 +35,7 @@ function reportError() {
   if [ -z "${2:-}" ]; then
     echo -e ""
   fi
-  exit 1
+  return 1
 }
 
 # Prints a warning in bold yellow
