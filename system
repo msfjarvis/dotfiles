@@ -15,6 +15,20 @@ function encrypt() {
   gpg --encrypt --output "$(basename "${1}")".gpg --recipient "me@msfjarvis.dev" "${1}"
 }
 
+function rmkernel() {
+  local VERSION
+  VERSION="${1}"
+  if [ ! -f /boot/config-"${VERSION:?}" ]; then
+    reportError "Kernel version ${VERSION} not found!"
+  elif [ "$(uname --kernel-release)" == "${VERSION}" ]; then
+    reportError "Trying to delete current kernel, exiting!"
+  else
+    declare -a FILES=(/boot/config-"${VERSION}" /boot/vmlinuz-"${VERSION}" /boot/initrd.img-"${VERSION}" /boot/System.map-"${VERSION}" /lib/modules/"${VERSION}")
+    sudo rm -rf "${FILES[@]}"
+    sudo update-grub
+  fi
+}
+
 function reboot() {
   echo "Do you really wanna reboot??"
   read -r confirmation
