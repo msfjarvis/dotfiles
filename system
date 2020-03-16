@@ -10,14 +10,6 @@ source "${SCRIPT_DIR}"/server
   export GPG_TTY
 }
 
-function lolsay() {
-  cowsay "${@}" | lolcat
-}
-
-function foreversay() {
-  until ! lolsay "${@}"; do sleep 0; done
-}
-
 function encrypt() {
   [ -z "${1}" ] && return
   gpg --encrypt --output "$(basename "${1}")".gpg --recipient "me@msfjarvis.dev" "${1}"
@@ -46,57 +38,10 @@ function ps1() {
   esac
 }
 
-function hostupdate() {
-  local DIR
-  DIR="$(pwd)"
-  cd ~/git-repos/hosts || return 1
-  venv 3.7
-  python msfUpdateHostsFile.py -n
-  deactivate
-  if [ -z "${1}" ]; then
-    cp hosts_msf "${LOCAL_SITE_MIRROR}"/adblock/hosts
-    cp whitelist "${LOCAL_SITE_MIRROR}"/adblock/whitelist
-    cp hosts_msf /mnt/mediahell/hosts_magisk/system/etc/hosts
-    syncup adblock
-  fi
-  sudo cp -v hosts_msf /etc/hosts
-  sudo /etc/init.d/dns-clean start
-  cd "${DIR}" || return 1
-}
-
-function dnsmasqupdate() {
-  adnix -o "${LOCAL_SITE_MIRROR}"/adblock/adblock.list --formatter dnsmasq-server
-  syncup adblock
-}
-
-function magiskhostupdate() {
-  cd /mnt/mediahell/hosts_magisk || return 1
-  rm ./*.zip "${LOCAL_SITE_MIRROR}"/adblock/*.zip 2>/dev/null
-  printf 'id=msfjarvishosts\nname=msfjarvis hosts file\nversion=v%s\nversionCode=%s\nauthor=msfjarvis\ndescription=Yet another adblock list\n' "$(date "+%Y%m%d")" "$(date "+%Y%m%d")" >module.prop
-  ./deploy.sh --non-interactive
-  cp ./*.zip "${LOCAL_SITE_MIRROR}"/adblock/
-  syncup adblock
-  cd - 1>/dev/null || return 1
-}
-
 function maintenance() {
   sudo apt update
   sudo apt upgrade -y
   sudo apt autoremove -y
-}
-
-function brewclr() {
-  cd "${SCRIPT_DIR}"/homebrew || return 1
-  brew bundle --force cleanup
-  cd - || return 1
-}
-
-function brewsync() {
-  cd "${SCRIPT_DIR}"/homebrew || return 1
-  brew bundle dump --force
-  git cam "homebrew: Sync"
-  git push --no-verify
-  cd - || return 1
 }
 
 function gnomext() {
@@ -139,75 +84,6 @@ function clip() {
 
 function display_exists() {
   if xhost >&/dev/null; then echo "1"; fi
-}
-
-function lswg() {
-  fd -tf 'conf$' ~/wireguard/ -x echo '{/.}'
-}
-
-function wgfixup() {
-  local TMP_DIR
-  TMP_DIR="$(mktemp -d)"
-  fd -tf 'conf$' ~/wireguard/ -x cp {} "${TMP_DIR}"/
-  fd -tf 'conf$' "${TMP_DIR}" -X sed -i -e '/PreDown/d' -e '/PostUp/d'
-  fd -tf 'conf$' "${TMP_DIR}" -X sed -i 's/193.138.218.74/45.90.28.125/'
-  zip -jr ~/wireguard/mullvad-wireguard-configs-android.zip "${TMP_DIR}"/*
-  rm -rf "${TMP_DIR}"
-}
-
-function wgpack() {
-  local TMP_DIR
-  TMP_DIR="$(mktemp -d)"
-  fd -tf 'conf$' ~/wireguard/ -x cp {} "${TMP_DIR}"/
-  zip -jr ~/wireguard/mullvad-wireguard-configs.zip "${TMP_DIR}"/*
-  rm -rf "${TMP_DIR}"
-}
-
-function wginstall() {
-  if [ -f ~/wireguard/mullvad-wireguard-configs.zip ]; then
-    fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x rm
-    unzip -o ~/wireguard/mullvad-wireguard-configs.zip -d ~/wireguard/ 1>/dev/null
-  fi
-  fd --maxdepth 1 -tf 'conf$' /etc/wireguard/ -x sudo rm -v {}
-  fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x sed -i 's/193.138.218.74/45.90.28.125/'
-  fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x sudo cp -v {} /etc/wireguard/'{/}'
-  fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x sudo chmod 600 /etc/wireguard/'{/}'
-}
-
-function wgdiff() {
-  cd ~/wireguard || return 1
-  while read -r conf; do if [ -n "$conf" ]; then if [ ! -f "$conf" ]; then echo "$conf does not exist"; fi; fi; done < <(unzip -l mullvad-wireguard-configs.zip | grep conf | awk '{print $4}')
-  cd - 1>/dev/null || return 1
-}
-
-function wgbench() {
-  local STATS_FILE
-  STATS_FILE="$(mktemp)"
-  fd -tf 'conf$' ~/wireguard/ -x echo '{/.}' | sed 's/mullvad-//g' | xargs -I {} ping -c 10 {}-wireguard.mullvad.net | tee "${STATS_FILE}"
-  grep transmitted "${STATS_FILE}" | awk '{print $10}' | sed 's/ms//' | sort -n | head -n1 | xargs -I {} grep -C1 {} "${STATS_FILE}"
-  rm "${STATS_FILE}" >&/dev/null
-}
-
-function wgup() {
-  local REGION
-  REGION="${1}"
-  sudo -v || return 1
-  wg-quick up mullvad-"${REGION:?}"
-}
-
-function wgdown() {
-  local REGION
-  REGION="${1}"
-  sudo -v || return 1
-  wg-quick down mullvad-"${REGION:?}"
-}
-
-function wgcycle() {
-  local REGION
-  REGION="${1}"
-  sudo -v || return 1
-  wg-quick down mullvad-"${REGION:?}"
-  wg-quick up mullvad-"${REGION:?}"
 }
 
 function venv() {

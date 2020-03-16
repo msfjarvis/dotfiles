@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+# Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
+# SPDX-License-Identifier: GPL-3.0-only
+# shellcheck source=server
+source "${SCRIPT_DIR}"/server
+
+function hostupdate() {
+  local DIR
+  DIR="$(pwd)"
+  cd ~/git-repos/hosts || return 1
+  venv 3.7
+  python msfUpdateHostsFile.py -n
+  deactivate
+  if [ -z "${1}" ]; then
+    cp hosts_msf "${LOCAL_SITE_MIRROR}"/adblock/hosts
+    cp whitelist "${LOCAL_SITE_MIRROR}"/adblock/whitelist
+    cp hosts_msf /mnt/mediahell/hosts_magisk/system/etc/hosts
+    syncup adblock
+  fi
+  sudo cp -v hosts_msf /etc/hosts
+  sudo /etc/init.d/dns-clean start
+  cd "${DIR}" || return 1
+}
+
+function dnsmasqupdate() {
+  adnix -o "${LOCAL_SITE_MIRROR}"/adblock/adblock.list --formatter dnsmasq-server
+  syncup adblock
+}
+
+function magiskhostupdate() {
+  cd /mnt/mediahell/hosts_magisk || return 1
+  rm ./*.zip "${LOCAL_SITE_MIRROR}"/adblock/*.zip 2>/dev/null
+  printf 'id=msfjarvishosts\nname=msfjarvis hosts file\nversion=v%s\nversionCode=%s\nauthor=msfjarvis\ndescription=Yet another adblock list\n' "$(date "+%Y%m%d")" "$(date "+%Y%m%d")" >module.p
+rop
+  ./deploy.sh --non-interactive
+  cp ./*.zip "${LOCAL_SITE_MIRROR}"/adblock/
+  syncup adblock
+  cd - 1>/dev/null || return 1
+}

@@ -11,12 +11,16 @@ source "${SCRIPT_DIR}"/bash_completions.bash
 source "${SCRIPT_DIR}"/aliases
 # shellcheck source=apps
 source "${SCRIPT_DIR}"/apps
+# shellcheck source=brew
+source "${SCRIPT_DIR}"/brew
 # shellcheck source=common
 source "${SCRIPT_DIR}"/common
 # shellcheck source=devtools
 source "${SCRIPT_DIR}"/devtools
 # shellcheck source=files
 source "${SCRIPT_DIR}"/files
+# shellcheck source=hosts
+source "${SCRIPT_DIR}"/hosts
 # shellcheck source=gitshit
 source "${SCRIPT_DIR}"/gitshit
 # shellcheck source=server
@@ -25,6 +29,8 @@ source "${SCRIPT_DIR}"/server
 source "${SCRIPT_DIR}"/system
 # shellcheck source=telegram
 source "${SCRIPT_DIR}"/telegram
+# shellcheck source=wireguard
+source "${SCRIPT_DIR}"/wireguard
 
 function reload() {
   # shellcheck disable=SC1090

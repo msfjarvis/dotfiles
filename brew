@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
+# SPDX-License-Identifier: GPL-3.0-only
+
+function brewclr() {
+  cd "${SCRIPT_DIR}"/homebrew || return 1
+  brew bundle --force cleanup
+  cd - || return 1
+}
+
+function brewsync() {
+  cd "${SCRIPT_DIR}"/homebrew || return 1
+  brew bundle dump --force
+  git cam "homebrew: Sync"
+  git push --no-verify
+  cd - || return 1
+}

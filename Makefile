@@ -1,4 +1,4 @@
-SCRIPTS_TO_TEST := aliases apps build-caesium build-kernel common devtools files functions gitshit install.sh kronic-build paste server system ssh-copy-id-github.sh telegram setup/common.sh setup/diff-so-fancy.sh setup/gdrive.sh setup/gnome.sh setup/hugo.sh setup/hub.sh setup/llvm.sh setup/nano.sh setup/ripgrep.sh setup/sharkdp.sh setup/shellcheck.sh setup/shfmt.sh setup/xclip.sh bash_completions.bash
+SCRIPTS_TO_TEST := aliases apps brew build-caesium build-kernel common devtools files functions gitshit hosts install.sh kronic-build paste server system ssh-copy-id-github.sh telegram wireguard setup/common.sh setup/diff-so-fancy.sh setup/gdrive.sh setup/gnome.sh setup/hugo.sh setup/hub.sh setup/llvm.sh setup/nano.sh setup/ripgrep.sh setup/sharkdp.sh setup/shellcheck.sh setup/shfmt.sh setup/xclip.sh bash_completions.bash
 
 test:
 	@for script in ${SCRIPTS_TO_TEST} ; do \
