@@ -19,7 +19,7 @@ function setup_android_sdk() {
   while read -r package; do
     yes | ./tools/bin/sdkmanager --sdk_root="$(pwd)" "${package:?}"
   done <"${SCRIPT_DIR}"/setup/sdk-packages-android.txt
-  # rm "${SDK_TOOLS}"
+  rm "${SDK_TOOLS}"
   cd - || exit
 }
 
