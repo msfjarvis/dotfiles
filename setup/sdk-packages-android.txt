@@ -1,0 +1,7 @@
+build-tools;29.0.3
+cmake;3.6.4111459
+ndk-bundle
+platform-tools
+tools
+platforms;android-28
+platforms;android-29
