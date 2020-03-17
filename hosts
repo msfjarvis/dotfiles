@@ -31,8 +31,7 @@ function dnsmasqupdate() {
 function magiskhostupdate() {
   cd /mnt/mediahell/hosts_magisk || return 1
   rm ./*.zip "${LOCAL_SITE_MIRROR}"/adblock/*.zip 2>/dev/null
-  printf 'id=msfjarvishosts\nname=msfjarvis hosts file\nversion=v%s\nversionCode=%s\nauthor=msfjarvis\ndescription=Yet another adblock list\n' "$(date "+%Y%m%d")" "$(date "+%Y%m%d")" >module.p
-rop
+  printf 'id=msfjarvishosts\nname=msfjarvis hosts file\nversion=v%s\nversionCode=%s\nauthor=msfjarvis\ndescription=Yet another adblock list\n' "$(date "+%Y%m%d")" "$(date "+%Y%m%d")" >module.prop
   ./deploy.sh --non-interactive
   cp ./*.zip "${LOCAL_SITE_MIRROR}"/adblock/
   syncup adblock
