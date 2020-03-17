@@ -25,7 +25,6 @@ sudo apt install -y aria2 autoconf automake cowsay curl fortune-mod fortunes for
 bash -i "${SCRIPT_DIR}"/setup/android-udev.sh
 bash -i "${SCRIPT_DIR}"/setup/diff-so-fancy.sh
 bash -i "${SCRIPT_DIR}"/setup/gdrive.sh
-bash -i "${SCRIPT_DIR}"/setup/hub.sh
 bash -i "${SCRIPT_DIR}"/setup/nano.sh
 bash -i "${SCRIPT_DIR}"/setup/shellcheck.sh
 bash -i "${SCRIPT_DIR}"/setup/shfmt.sh
