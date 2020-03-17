@@ -29,10 +29,6 @@ bash -i "${SCRIPT_DIR}"/setup/hub.sh
 bash -i "${SCRIPT_DIR}"/setup/hugo.sh
 bash -i "${SCRIPT_DIR}"/setup/nano.sh
 bash -i "${SCRIPT_DIR}"/setup/ripgrep.sh
-bash -i "${SCRIPT_DIR}"/setup/sharkdp.sh bat
-bash -i "${SCRIPT_DIR}"/setup/sharkdp.sh diskus
-bash -i "${SCRIPT_DIR}"/setup/sharkdp.sh fd
-bash -i "${SCRIPT_DIR}"/setup/sharkdp.sh hyperfine
 bash -i "${SCRIPT_DIR}"/setup/shellcheck.sh
 bash -i "${SCRIPT_DIR}"/setup/shfmt.sh
 bash -i "${SCRIPT_DIR}"/setup/xclip.sh
