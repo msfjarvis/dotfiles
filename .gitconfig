@@ -48,6 +48,7 @@
 	p = push
 	pf = push --force
 	pr = pull --rebase
+	publish = "!publish() { git push origin --set-upstream "$(git rev-parse --abbrev-ref HEAD)"; }; publish"
 	r = remote
 	ra = remote add
 	rba = rebase --abort
