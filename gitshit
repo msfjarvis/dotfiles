@@ -3,11 +3,6 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
-GERRIT_USER="MSF-Jarvis"
-ANDROID_PLATFORM_ROOT="/home/msfjarvis/aosiq"
-DEFAULT_AOSIP_BRANCH="ten"
-AOSIP_GERRIT_URL="review.aosiprom.com"
-
 function setemail() {
   [ ! -d .git ] && {
     reportWarning "This command needs to run in a git tree"
@@ -62,53 +57,4 @@ function get_release_assets() {
   fi
   curl --silent "https://api.github.com/repos/${REPOSITORY}/releases/${RELEASE_ID}" | jq -r .assets[].browser_download_url # Get the download URL of the assets
   [ -f "${TMP_FILE}" ] && rm -f "${TMP_FILE}"
-}
-
-function hook() {
-  local gitdir
-  gitdir="$(git rev-parse --git-dir)"
-  if [ ! -f "${gitdir}"/hooks/commit-msg ]; then
-    scp -p -P 29418 MSF_Jarvis@review.aosiprom.com:hooks/commit-msg "${gitdir}"/hooks/
-  fi
-}
-
-function reposync() {
-  repo sync -c --no-tags -j10 --fail-fast "${@}"
-}
-
-# shellcheck disable=SC2029
-function gerrit() {
-  ssh -p 29418 "$(get_current_gerrit)" "gerrit $*"
-}
-
-function gpush() {
-  if [ -n "${1}" ]; then
-    git push gerrit HEAD:refs/for/"${DEFAULT_AOSIP_BRANCH}"/"${1}"
-  else
-    git push gerrit HEAD:refs/for/"${DEFAULT_AOSIP_BRANCH}"
-  fi
-}
-
-function gfpush() {
-  git push gerrit HEAD:refs/heads/"${DEFAULT_AOSIP_BRANCH}"
-}
-
-function gffpush() {
-  git push --force gerrit HEAD:refs/heads/"${DEFAULT_AOSIP_BRANCH}"
-}
-
-function xg() {
-  local PROJECT
-  declare -a INCONSISTENT_PROJECTS=("device_qcom_sepolicy" "device_aosip_sepolicy")
-  if ! git rev-parse --git-dir &>/dev/null; then
-    reportError ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
-    return 1
-  fi
-  PROJECT="$(pwd -P | sed -e "s#${ANDROID_PLATFORM_ROOT}/##; s#-caf.*##; s#/make##; s#\/default##; s#/#_#g#")"
-  if ! containsElement "${PROJECT}" "${INCONSISTENT_PROJECTS[@]}"; then
-    PROJECT="platform_${PROJECT}"
-  fi
-  git remote remove gerrit 2>/dev/null
-  git remote add gerrit ssh://"${GERRIT_USER}"@"${AOSIP_GERRIT_URL}":29418/AOSIP/"${PROJECT}"
-  hook
 }
