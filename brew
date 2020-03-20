@@ -5,6 +5,7 @@
 
 function brewclr() {
   cd "${SCRIPT_DIR}"/homebrew || return 1
+  brew bundle
   brew bundle --force cleanup
   cd - || return 1
 }
