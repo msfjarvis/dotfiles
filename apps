@@ -3,7 +3,7 @@
 # Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
 # SPDX-License-Identifier: GPL-3.0-only
 
-CURRENT_DEVICE=walleye
+CURRENT_DEVICE=m30s
 
 # Source common functions
 # shellcheck source=common
