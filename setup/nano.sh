@@ -12,12 +12,14 @@ function install_nano() {
   local INSTALLED_VERSION LATEST_VERSION
   echoText "Checking and updating nano"
   INSTALLED_VERSION="$(nano --version | head -n1 | awk '{print $4}')"
-  LATEST_VERSION="4.8"
+  LATEST_VERSION="4.9"
   if [ "${INSTALLED_VERSION}" != "${LATEST_VERSION}" ]; then
     printUpgradeBanner "nano" "${INSTALLED_VERSION}" "${LATEST_VERSION}"
     sudo apt purge nano -y
     cd /tmp || return 1
     dl https://www.nano-editor.org/dist/v4/nano-"${LATEST_VERSION}".tar.xz nano.tar.xz
+    dl https://www.nano-editor.org/dist/v4/nano-"${LATEST_VERSION}".tar.xz.asc nano.tar.xz.asc
+    gpg --verify nano.tar.xz.asc nano.tar.xz || return 1
     tar xf nano.tar.xz
     cd nano-"${LATEST_VERSION}" || return 1
     CC=clang CXX=clang++ ./configure --enable-color --enable-extra --enable-multibuffer --enable-nanorc --enable-utf8 --disable-libmagic
