@@ -26,10 +26,6 @@ function rebuildtc() {
     reportError "ARM64 GCC ${VERSION}.x failed to compile"
   fi
   cd - || exit 1
-  cd /mnt/mediahell/tc-build || exit 1
-  echoText "Building clang"
-  ./build-llvm.py --build-stage1-only --install-stage1-only -p "clang" -t "AArch64;ARM"
-  cd - || exit 1
 }
 
 function fillccache() {
