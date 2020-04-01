@@ -126,7 +126,7 @@ function upload_dir() {
   fd --threads 1 . "${DIR}" | while read -r f; do
     GDRIVE_UPLOAD_URL="$(gdrive upload --share "${f}" | awk '/https/ {print $7}')"
     echo "Get ${f} at ${GDRIVE_UPLOAD_URL}"
-    echo "${GDRIVE_UPLOAD_URL}" >> links.txt
+    echo "${GDRIVE_UPLOAD_URL}" >>links.txt
   done
 }
 
