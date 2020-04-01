@@ -116,6 +116,20 @@ GDrive ID: \`${GDRIVE_UPLOAD_ID}\`
   done
 }
 
+function upload_dir() {
+  local DIR
+  DIR="${1}"
+  [ -d "${DIR:?}" ] || {
+    reportWarning "Directory '${DIR}' does not exist"
+    return 1
+  }
+  fd --threads 1 . "${DIR}" | while read -r f; do
+    GDRIVE_UPLOAD_URL="$(gdrive upload --share "${f}" | awk '/https/ {print $7}')"
+    echo "Get ${f} at ${GDRIVE_UPLOAD_URL}"
+    echo "${GDRIVE_UPLOAD_URL}" >> links.txt
+  done
+}
+
 # Batch upload files
 function batch_ul() {
   while read -r f; do upload "$f"; done < <(cat "${1:?}")
