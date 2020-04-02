@@ -47,6 +47,7 @@ KERNEL_VERSION=
 FULL_CONFIG=
 NO_UPLOADS=
 NO_STAGING=
+ONLY_ZIP=
 SILENT=
 declare -a CONFIGURATION=()
 
@@ -407,7 +408,6 @@ done
 DATE_START=$(date +"%s")
 
 # Make
-rm "${FINAL_VER}".zip 2>/dev/null
 sanity_check
 check_toolchain
 if [ "${ONLY_ZIP}" ] && [ -z "${MODULE}" ]; then
