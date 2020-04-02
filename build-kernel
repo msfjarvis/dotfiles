@@ -14,8 +14,8 @@ source "${SCRIPT_DIR}"/common
 DEFCONFIG="${DEFCONFIG:-$(hostname)_defconfig}"
 
 # Setup variables
-CC="${CC:-ccache clang}"
-HOSTCC="${CC:-ccache clang}"
+CC="${CC:-clang}"
+HOSTCC="${CC:-clang}"
 LD="${LD:-ld.lld}"
 CLEAN=
 INSTALL=
