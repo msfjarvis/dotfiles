@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+# Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
+# SPDX-License-Identifier: GPL-3.0-only
+
+SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+
+# Linuxbrew config
+LINUXBREW_DIR='/home/linuxbrew/.linuxbrew'
+if [ -d "${LINUXBREW_DIR}" ]; then
+  eval "$(${LINUXBREW_DIR}/bin/brew shellenv)"
+  export PATH="${LINUXBREW_DIR}/opt/ccache/libexec:${HOME}/bin:${HOME}/go/bin:${HOME}/.cargo/bin:${PATH:+:${PATH}}"
+  export LD_LIBRARY_PATH="${LINUXBREW_DIR}/lib/:${LD_LIBRARY_PATH:+:${PATH}}"
+  # shellcheck disable=SC1090
+  source "${LINUXBREW_DIR}"/etc/bash_completion.d/*
+fi
+
+# Bash completion
+# shellcheck disable=SC1090
+source "${HOME}"/bash_completion.d/*
+
+# Shell PS1
+# shellcheck disable=SC2154
+export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\W\[\033[00m\]$(__git_ps1 " (%s)") \$ '
+
+# Set ccache dir
+export CCACHE_DIR="${HOME}/.ccache"
+
+# Android env variables
+export ANDROID_SDK_ROOT="${HOME}"/Android/Sdk
+export ANDROID_HOME="${ANDROID_SDK_ROOT}"
+export GRADLE_USER_HOME=/mnt/mediahell/.gradle
+
+# Nano love
+export EDITOR=nano
+
+# Setup zoxide and fzf
+export FZF_DEFAULT_COMMAND='fd -tf'
+eval "$(zoxide init bash)"
+alias cd=z
+
+# SDKMAN!
+export SDKMAN_DIR="${HOME}/.sdkman"
+# shellcheck disable=SC1090
+[[ -s "${HOME}/.sdkman/bin/sdkman-init.sh" ]] && source "${HOME}/.sdkman/bin/sdkman-init.sh"
+
+# shellcheck source=bash_completions.bash
+source "${SCRIPT_DIR}"/bash_completions.bash
+# shellcheck source=aliases
+source "${SCRIPT_DIR}"/aliases
+# shellcheck source=apps
+source "${SCRIPT_DIR}"/apps
+# shellcheck source=brew
+source "${SCRIPT_DIR}"/brew
+# shellcheck source=common
+source "${SCRIPT_DIR}"/common
+# shellcheck source=devtools
+source "${SCRIPT_DIR}"/devtools
+# shellcheck source=files
+source "${SCRIPT_DIR}"/files
+# shellcheck source=hosts
+source "${SCRIPT_DIR}"/hosts
+# shellcheck source=gitshit
+source "${SCRIPT_DIR}"/gitshit
+# shellcheck source=server
+source "${SCRIPT_DIR}"/server
+# shellcheck source=system
+source "${SCRIPT_DIR}"/system
+# shellcheck source=telegram
+source "${SCRIPT_DIR}"/telegram
+# shellcheck source=wireguard
+source "${SCRIPT_DIR}"/wireguard
+
+function reload() {
+  # shellcheck disable=SC1090
+  source ~/.bashrc
+}
