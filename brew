@@ -13,7 +13,7 @@ function brewclr() {
 function brewsync() {
   cd "${SCRIPT_DIR}"/homebrew || return 1
   brew bundle dump --force
-  git cam "homebrew: Sync"
+  git cam "homebrew: sync"
   git push --no-verify
   cd - || return 1
 }
