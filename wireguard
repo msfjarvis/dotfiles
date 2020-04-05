@@ -12,7 +12,6 @@ function wgfixup() {
   TMP_DIR="$(mktemp -d)"
   fd -tf 'conf$' ~/wireguard/ -x cp {} "${TMP_DIR}"/
   fd -tf 'conf$' "${TMP_DIR}" -X sed -i -e '/PreDown/d' -e '/PostUp/d'
-  fd -tf 'conf$' "${TMP_DIR}" -X sed -i 's/193.138.218.74/45.90.28.125/'
   zip -jr ~/wireguard/mullvad-wireguard-configs-android.zip "${TMP_DIR}"/*
   rm -rf "${TMP_DIR}"
 }
@@ -31,7 +30,6 @@ function wginstall() {
     unzip -o ~/wireguard/mullvad-wireguard-configs.zip -d ~/wireguard/ 1>/dev/null
   fi
   fd --maxdepth 1 -tf 'conf$' /etc/wireguard/ -X sudo rm -v {}
-  fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -X sed -i 's/193.138.218.74/45.90.28.125/'
   fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x sudo cp -v {} /etc/wireguard/'{/}'
   fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x sudo chmod 600 /etc/wireguard/'{/}'
 }
