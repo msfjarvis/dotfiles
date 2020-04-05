@@ -17,7 +17,9 @@ fi
 
 # Bash completion
 # shellcheck disable=SC1090
-source "${HOME}"/bash_completion.d/*
+if [ -d "${HOME}"/bash_completion.d ]; then
+  source "${HOME}"/bash_completion.d/*
+fi
 
 # Shell PS1
 # shellcheck disable=SC2154
@@ -36,8 +38,10 @@ export EDITOR=nano
 
 # Setup zoxide and fzf
 export FZF_DEFAULT_COMMAND='fd -tf'
-eval "$(zoxide init bash)"
-alias cd=z
+if type zoxide &>/dev/null; then
+  eval "$(zoxide init bash)"
+  alias cd=z
+fi
 
 # SDKMAN!
 export SDKMAN_DIR="${HOME}/.sdkman"
