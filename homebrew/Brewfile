@@ -24,7 +24,7 @@ brew "ninja"
 brew "meson"
 brew "nano"
 brew "node"
-brew "shfmt", args: ["HEAD"]
+brew "shfmt"
 brew "youtube-dl"
 brew "burntsushi/ripgrep/ripgrep-bin"
 brew "filosottile/gomod/brew-gomod"
