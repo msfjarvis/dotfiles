@@ -227,7 +227,13 @@ function mediainfo() {
 }
 
 function fao() {
-  nano "$(fzf)"
+  local ARG
+  ARG="${1}"
+  if [ -z "${ARG}" ]; then
+    nano "$(fzf)"
+  else
+    nano "$(fzf -q"${ARG}")"
+  fi
 }
 
 # shellcheck disable=SC2016
