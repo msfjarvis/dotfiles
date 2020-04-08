@@ -13,8 +13,7 @@ format:
 	@shfmt -w -s -i 2 -ci ${SCRIPTS_TO_TEST}
 
 githook:
-	@cp -v shellcheck-hook .git/hooks/pre-push
-	@chmod +x .git/hooks/pre-push
+	@ln -sf $$(pwd)/pre-push-hook .git/hooks/pre-push
 
 install:
 	@./install.sh
