@@ -11,14 +11,19 @@ if [ -d "${LINUXBREW_DIR}" ]; then
   eval "$(${LINUXBREW_DIR}/bin/brew shellenv)"
   export PATH="${LINUXBREW_DIR}/opt/ccache/libexec:${HOME}/bin:${HOME}/go/bin:${HOME}/.cargo/bin:${PATH:+:${PATH}}"
   export LD_LIBRARY_PATH="${LINUXBREW_DIR}/lib/:${LD_LIBRARY_PATH:+:${PATH}}"
-  # shellcheck disable=SC1090
-  source "${LINUXBREW_DIR}"/etc/bash_completion.d/*
+  for COMPLETION in "${LINUXBREW_DIR}/etc/bash_completion.d/"*; do
+    # shellcheck disable=SC1090
+    [[ -r $COMPLETION ]] && source "$COMPLETION"
+  done
 fi
 
 # Bash completion
 # shellcheck disable=SC1090
 if [ -d "${HOME}"/bash_completion.d ]; then
-  source "${HOME}"/bash_completion.d/*
+  for COMPLETION in "${HOME}/bash_completion.d/"*; do
+    # shellcheck disable=SC1090
+    [[ -r $COMPLETION ]] && source "$COMPLETION"
+  done
 fi
 
 # Shell PS1
