@@ -20,7 +20,7 @@ mkdir -p ~/bin/
 
 # Install standard packages.
 echoText "Installing necessary packages"
-sudo apt install -y aria2 autoconf automake cowsay curl fortune-mod fortunes fortunes-off inkscape jq libxmu-dev libgdk-pixbuf2.0-dev libncursesw5-dev libxml2-utils lolcat mosh pidcat wget sassc
+sudo apt install -y aria2 autoconf automake cowsay fortune-mod fortunes fortunes-off inkscape jq libxmu-dev libgdk-pixbuf2.0-dev libncursesw5-dev libxml2-utils lolcat mosh pidcat wget sassc
 
 bash -i "${SCRIPT_DIR}"/setup/android-udev.sh
 bash -i "${SCRIPT_DIR}"/setup/gdrive.sh
