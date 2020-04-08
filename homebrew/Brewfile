@@ -24,6 +24,7 @@ brew "ninja"
 brew "meson"
 brew "nano"
 brew "node"
+brew "pfetch", args: ["HEAD"]
 brew "shfmt"
 brew "youtube-dl"
 brew "burntsushi/ripgrep/ripgrep-bin"
