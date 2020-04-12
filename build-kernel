@@ -19,7 +19,6 @@ HOSTCC="${CC:-$(command -v ccache) clang}"
 LD="${LD:-ld.lld}"
 CLEAN=
 INSTALL=
-MODULE=
 REGEN_DEFCONFIG=
 LOCALVERSION="${LOCALVERSION:--caesium}"
 
@@ -41,18 +40,14 @@ function sudo_make_wrapper() {
 # Duh
 function make_kernel() {
   make_defconfig
-  if [ -n "${MODULE}" ]; then
-    make_wrapper "${MODULE}"
-  else
-    if make_wrapper; then
-      if [ -n "${INSTALL}" ]; then
-        sudo_make_wrapper headers_install
-        sudo_make_wrapper modules_install
-        sudo_make_wrapper install
-      fi
-    else
-      reportError "Compilation failed!"
+  if make_wrapper; then
+    if [ -n "${INSTALL}" ]; then
+      sudo_make_wrapper headers_install
+      sudo_make_wrapper modules_install
+      sudo_make_wrapper install
     fi
+  else
+    reportError "Compilation failed!"
   fi
 }
 
@@ -68,7 +63,7 @@ function make_defconfig() {
   fi
 }
 
-while getopts ":cim:r" opt; do
+while getopts ":ci:r" opt; do
   case $opt in
     c)
       echoText "Building clean" >&2
@@ -77,10 +72,6 @@ while getopts ":cim:r" opt; do
     i)
       echoText "Will install the compiled kernel" >&2
       INSTALL=true
-      ;;
-    m)
-      MODULE="${OPTARG}"
-      echoText "Building module ${MODULE:?}" >&2
       ;;
     r)
       echoText "Regenerating defconfig" >&2
