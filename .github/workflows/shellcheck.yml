@@ -15,4 +15,4 @@ jobs:
     - name: Install shfmt
       run: GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
     - name: Run shellcheck.
-      run: make
+      run: PATH=$HOME/go/bin:$PATH make
