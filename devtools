@@ -80,13 +80,22 @@ function mkd() {
 }
 
 function bustcfcache() {
-  local CF_API_KEY CF_ZONE_ID
+  local CF_API_KEY CF_ZONE_ID DATA
   CF_API_KEY="$(pass api/cf | head -n1)"
   CF_ZONE_ID="$(pass api/cf | tail -n1)"
+  if [ -z "${1}" ]; then
+    DATA='{"purge_everything": true}'
+  else
+    DATA="{\"files\": [\"${1}\""
+    shift
+    for arg in "${@}"; do
+      DATA="${DATA}, \"${arg}\""
+    done
+    DATA="${DATA}]}"
+  fi
   curl -s -X POST "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/purge_cache" \
-    -H "X-Auth-Email: msfjarvis@gmail.com" \
+    -H "X-Auth-Email: me@msfjarvis.dev" \
     -H "X-Auth-Key: ${CF_API_KEY}" \
     -H "Content-Type: application/json" \
-    --data '{"purge_everything":true}'
-  echo ""
+    --data "${DATA}" | jq .
 }
