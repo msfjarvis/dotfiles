@@ -32,13 +32,13 @@ function fillccache() {
   local START_TIME END_TIME BASE_DIR CUR_DIR
   START_TIME=$(date +"%s")
   declare -a DEVICES=("wahoo")
-  BASE_DIR=/home/msfjarvis/git-repos/halogenOS
+  BASE_DIR=/home/msfjarvis/git-repos
   CUR_DIR="$(pwd)"
   for DEVICE in "${DEVICES[@]}"; do
     for COUNT in {1..10}; do
       echoText "Build ${COUNT} for device ${DEVICE}"
       cd "${BASE_DIR}"/"${DEVICE}" || return 1
-      build-caesium -c
+      build-caesium -c || return 1
     done
   done
   cd "${CUR_DIR}" || return 1
