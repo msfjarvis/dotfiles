@@ -1,8 +1,8 @@
 on: [push, pull_request]
-name: ShellCheck scripts
+name: Run shellcheck and shfmt on scripts
 jobs:
-  shellCheck:
-    name: ShellCheck
+  test:
+    name: static analysis and formatting
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
