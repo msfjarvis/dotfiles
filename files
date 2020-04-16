@@ -250,7 +250,11 @@ function whitespace() {
 }
 
 function pwallsync() {
-  adb-sync --reverse /sdcard/Pictures/Dawn "${LOCAL_SITE_MIRROR}/.phone_walls/"
+  if [ -n "${1}" ]; then
+    adb-sync "${LOCAL_SITE_MIRROR}/.phone_walls/Dawn" /sdcard/Pictures/
+  else
+    adb-sync --reverse /sdcard/Pictures/Dawn "${LOCAL_SITE_MIRROR}/.phone_walls/"
+  fi
 }
 
 function mkgif() {
