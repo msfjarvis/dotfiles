@@ -30,6 +30,8 @@ brew "youtube-dl"
 brew "burntsushi/ripgrep/ripgrep-bin"
 brew "filosottile/gomod/brew-gomod"
 brew "github/gh/gh"
+brew "msfjarvis/tap/pass-slim"
+brew "msfjarvis/tap/pass-clip", args: ["HEAD"]
 brew "msfjarvis/tap/pfetch", args: ["HEAD"]
 brew "msfjarvis/tap/procs-bin"
 brew "msfjarvis/tap/shellcheck-bin"
