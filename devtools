@@ -48,18 +48,25 @@ function fillccache() {
 }
 
 function getmagisk() {
-  local BASE_URL CHANNEL
-  BASE_URL="https://raw.githubusercontent.com/topjohnwu/magisk_files/master/"
+  local BASE_URL CHANNEL BRANCH JSON_NAME
+  BASE_URL="https://raw.githubusercontent.com/topjohnwu/magisk_files"
   CHANNEL="${1}"
   case "${CHANNEL:?}" in
-    "stable" | "beta") ;;
+    "stable" | "beta")
+      BRANCH="master"
+      JSON_NAME="${CHANNEL}"
+      ;;
+    "canary")
+      BRANCH="canary"
+      JSON_NAME="release"
+      ;;
     *)
-      reportWarning "${CHANNEL} is not one of 'stable' and 'beta'"
+      reportWarning "Invalid channel: ${CHANNEL}"
       return 1
       ;;
   esac
   cd /tmp/ || return 1
-  dl "${BASE_URL}${CHANNEL}.json" magisk.json
+  dl "${BASE_URL}/${BRANCH}/${JSON_NAME}.json" magisk.json
   cd - || return 1
   echoText "Downloading Magisk $(jq .magisk.version /tmp/magisk.json)"
   jq .[].link /tmp/magisk.json | xargs wget
