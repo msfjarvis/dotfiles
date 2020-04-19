@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright (C) Harsh Shandilya <msfjarvis@gmail.com>
+# Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
 # SPDX-License-Identifier: GPL-3.0-only
 
 CURRENT_DEVICE=m30s
