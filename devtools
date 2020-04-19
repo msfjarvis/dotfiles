@@ -66,10 +66,16 @@ function getmagisk() {
       ;;
   esac
   cd /tmp/ || return 1
-  dl "${BASE_URL}/${BRANCH}/${JSON_NAME}.json" magisk.json
+  curl -sL "${BASE_URL}/${BRANCH}/${JSON_NAME}.json" -o magisk.json || {
+    reportError "Failed to download JSON"
+    return 1
+  }
   cd - || return 1
   echoText "Downloading Magisk $(jq .magisk.version /tmp/magisk.json)"
-  jq .[].link /tmp/magisk.json | xargs wget
+  while read -r link; do
+    echo -e "${CL_YLW}Downloading $(echo "${link}" | rev | cut -d '/' -f 1 | rev)${CL_RST}"
+    wget -q "${link}"
+  done < <(jq -r .[].link /tmp/magisk.json)
   rm /tmp/magisk.json
 }
 
