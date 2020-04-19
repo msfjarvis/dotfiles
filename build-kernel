@@ -42,7 +42,7 @@ function make_kernel() {
   make_defconfig
   if make_wrapper; then
     if [ -n "${INSTALL}" ]; then
-      sudo_make_wrapper headers_install
+      sudo_make_wrapper INSTALL_HDR_PATH=/usr/ headers_install
       sudo_make_wrapper modules_install
       sudo_make_wrapper install
     fi
@@ -53,7 +53,7 @@ function make_kernel() {
 
 # Called by make_kernel, used to trap defconfig regen events
 function make_defconfig() {
-  [ -z "${CLEAN}" ] || sudo_make_wrapper clean
+  [ -z "${CLEAN}" ] || make_wrapper clean
   make_wrapper "${DEFCONFIG}" 1>/dev/null 2>&1
   if [ -n "${REGEN_DEFCONFIG}" ]; then
     make_wrapper savedefconfig
