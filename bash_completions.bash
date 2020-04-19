@@ -17,8 +17,13 @@ _syncdown_completions() {
   _syncup_completions
 }
 
+_getmagisk_completions() {
+  mapfile -t COMPREPLY < <(compgen -W "stable canary beta" -- "${COMP_WORDS[1]}")
+}
+
 complete -F _wgup_completions wgup
 complete -F _wgdown_completions wgdown
 complete -F _wgdown_completions wgcycle
 complete -F _syncup_completions syncup
 complete -F _syncdown_completions syncdown
+complete -F _getmagisk_completions getmagisk
