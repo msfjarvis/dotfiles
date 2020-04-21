@@ -88,4 +88,5 @@ function reload() {
 
 if type starship &>/dev/null; then
   eval "$(starship init bash)"
+  export STARSHIP_CONFIG="${SCRIPT_DIR}/starship.toml"
 fi
