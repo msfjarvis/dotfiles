@@ -85,3 +85,7 @@ function reload() {
   # shellcheck disable=SC1090
   source ~/.bashrc
 }
+
+if type starship &>/dev/null; then
+  eval "$(starship init bash)"
+fi
