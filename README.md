@@ -1,4 +1,4 @@
-# dotfiles [![GitHub workflow](https://github.com/msfjarvis/dotfiles/workflows/ShellCheck%20scripts/badge.svg)](https://github.com/msfjarvis/dotfiles/actions)
+# dotfiles ![Run shellcheck and shfmt on scripts](https://github.com/msfjarvis/dotfiles/workflows/Run%20shellcheck%20and%20shfmt%20on%20scripts/badge.svg)
 
 Collection of little bash hacks and utilities I use frequently
 
