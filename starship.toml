@@ -8,6 +8,11 @@ symbol = "➜ "
 [git_branch]
 symbol = " "
 
+[git_status]
+ahead = ""
+behind = ""
+diverged = ""
+
 [java]
 symbol = " "
 
