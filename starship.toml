@@ -1,9 +1,18 @@
 # Don't print a new line at the start of the prompt
 add_newline = false
 
-# Replace the "❯" symbol in the prompt with "➜"
+# Replace some prompt characters for size and legibility reasons
 [character]
 symbol = "➜"
+
+[git_branch]
+symbol = " "
+
+[java]
+symbol = " "
+
+[rust]
+symbol = " "
 
 # Disable all the modules I don't use
 [aws]
@@ -43,9 +52,6 @@ disabled = true
 disabled = true
 
 [hostname]
-disabled = true
-
-[java]
 disabled = true
 
 [jobs]
