@@ -63,15 +63,11 @@ apt install -y clang-"$LLVM_VERSION" clang-tools-"$LLVM_VERSION" clang-"$LLVM_VE
 if [ "$LLVM_VERSION" -lt 11 ]; then
   apt install -y python-clang-"$LLVM_VERSION"
 fi
-update-alternatives --remove-all "cc"
-update-alternatives --remove-all "c++"
 update-alternatives --remove-all "clang"
 update-alternatives --remove-all "clang++"
 update-alternatives --remove-all "lld"
 update-alternatives --remove-all "ld.lld"
 update-alternatives --remove-all "clangd"
-update-alternatives --install "/usr/bin/cc" "cc" "$(command -v clang-"$LLVM_VERSION")" 1
-update-alternatives --install "/usr/bin/c++" "c++" "$(command -v clang++-"$LLVM_VERSION")" 1
 update-alternatives --install "/usr/bin/clang" "clang" "$(command -v clang-"$LLVM_VERSION")" 1
 update-alternatives --install "/usr/bin/clang++" "clang++" "$(command -v clang++-"$LLVM_VERSION")" 1
 update-alternatives --install "/usr/bin/lld" "lld" "$(command -v lld-"$LLVM_VERSION")" 1
