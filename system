@@ -23,7 +23,7 @@ function rmkernel() {
   elif [ "$(uname --kernel-release)" == "${VERSION}" ]; then
     reportError "Trying to delete current kernel, exiting!"
   else
-    declare -a FILES=(/boot/config-"${VERSION}" /boot/vmlinuz-"${VERSION}" /boot/initrd.img-"${VERSION}" /boot/System.map-"${VERSION}" /lib/modules/"${VERSION}" /usr/src/linux-headers-"${VERSION}")
+    declare -a FILES=(/boot/config-"${VERSION}" /boot/vmlinuz-"${VERSION}" /boot/initrd.img-"${VERSION}" /boot/System.map-"${VERSION}" /lib/modules/"${VERSION}" /usr/src/linux-headers-"${VERSION}" /var/lib/initramfs-tools/"${VERSION}")
     sudo rm -rf "${FILES[@]}"
     sudo update-grub
   fi
