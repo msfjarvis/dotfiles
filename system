@@ -29,6 +29,11 @@ function rmkernel() {
   fi
 }
 
+function dkmsrebuild() {
+  # shellcheck disable=SC1083
+  fd -tf . /var/lib/initramfs-tools -x sudo /usr/lib/dkms/dkms_autoinstaller start {/}
+}
+
 function reboot() {
   echo "Do you really wanna reboot??"
   read -r confirmation
