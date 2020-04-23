@@ -11,7 +11,7 @@ if [ -d "${LINUXBREW_DIR}" ]; then
   eval "$(${LINUXBREW_DIR}/bin/brew shellenv)"
   export PATH="${LINUXBREW_DIR}/opt/ccache/libexec:${HOME}/bin:${HOME}/go/bin:${HOME}/.cargo/bin:${PATH:+:${PATH}}"
   export LD_LIBRARY_PATH="${LINUXBREW_DIR}/lib/:${LD_LIBRARY_PATH:+:${PATH}}"
-  [ -d "${LINUXBREW_DIR}/Cellar/openssl@1.1" ] && export OPENSSL_DIR="${LINUXBREW_DIR}/Cellar/openssl@1.1/1.1.1f"
+  [ -d "${LINUXBREW_DIR}/Cellar/openssl@1.1" ] && export OPENSSL_DIR="${LINUXBREW_DIR}/Cellar/openssl@1.1/1.1.1g"
   for COMPLETION in "${LINUXBREW_DIR}/etc/bash_completion.d/"*; do
     # shellcheck disable=SC1090
     [[ -r $COMPLETION ]] && source "$COMPLETION"
