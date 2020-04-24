@@ -23,7 +23,7 @@ brew "make"
 brew "ninja"
 brew "meson"
 brew "nano"
-brew "neofetch", args: ["HEAD"]
+brew "neofetch"
 brew "node"
 brew "shfmt"
 brew "starship"
