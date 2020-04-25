@@ -20,7 +20,7 @@ LD="${LD:-ld.lld}"
 CLEAN=
 INSTALL=
 REGEN_DEFCONFIG=
-LOCALVERSION="${LOCALVERSION:--caesium}"
+LOCALVERSION="${LOCALVERSION}"
 
 declare -a MAKE_FLAGS=("ARCH=x86" "SUBARCH=x86_64" "CC=${CC}" "HOSTCC=${HOSTCC}" "LD=${LD}" "LOCALVERSION=${LOCALVERSION}" "INSTALL_MOD_STRIP=1")
 
@@ -42,7 +42,7 @@ function make_kernel() {
   make_defconfig
   if make_wrapper; then
     if [ -n "${INSTALL}" ]; then
-      sudo_make_wrapper INSTALL_HDR_PATH=/usr/src/linux-headers-"$(make kernelversion)"-"${LOCALVERSION}" headers_install
+      sudo_make_wrapper INSTALL_HDR_PATH=/usr/src/linux-headers-"$(make kernelversion)${LOCALVERSION}" headers_install
       sudo_make_wrapper modules_install
       sudo_make_wrapper install
     fi
