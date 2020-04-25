@@ -20,9 +20,9 @@ LD="${LD:-ld.lld}"
 CLEAN=
 INSTALL=
 REGEN_DEFCONFIG=
-LOCALVERSION="${LOCALVERSION:-caesium}"
+LOCALVERSION="${LOCALVERSION:--caesium}"
 
-declare -a MAKE_FLAGS=("ARCH=x86" "SUBARCH=x86_64" "CC=${CC}" "HOSTCC=${HOSTCC}" "LD=${LD}" "LOCALVERSION=-${LOCALVERSION}" "INSTALL_MOD_STRIP=1")
+declare -a MAKE_FLAGS=("ARCH=x86" "SUBARCH=x86_64" "CC=${CC}" "HOSTCC=${HOSTCC}" "LD=${LD}" "LOCALVERSION=${LOCALVERSION}" "INSTALL_MOD_STRIP=1")
 
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper() {
