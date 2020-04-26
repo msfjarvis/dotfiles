@@ -26,15 +26,15 @@ declare -a MAKE_FLAGS=("ARCH=x86" "SUBARCH=x86_64" "CC=${CC}" "HOSTCC=${HOSTCC}"
 
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper() {
-  make "${MAKE_FLAGS[@]}" \
-    -j"$(nproc --all)" \
-    "${@}"
+  make -j"$(nproc --all)" \
+    "${@}" \
+    "${MAKE_FLAGS[@]}"
 }
 
 function sudo_make_wrapper() {
-  sudo make "${MAKE_FLAGS[@]}" \
-    -j"$(nproc --all)" \
-    "${@}"
+  sudo make -j"$(nproc --all)" \
+    "${@}" \
+    "${MAKE_FLAGS[@]}"
 }
 
 # Duh
