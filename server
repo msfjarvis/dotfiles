@@ -12,7 +12,7 @@ function syncdown() {
   declare -a CONFIGURATION=("-ahv" "--progress" "--delete" "--no-o" "--no-g")
   LOCAL_DIR="${LOCAL_SITE_MIRROR}"
   REMOTE_DIR="${CAESIUM_UPLOAD_PATH/caesium/}"
-  if [ -n "${1}" ]; then
+  if [ -n "${1}" ] && [ "${1}" != "--dry-run" ]; then
     CUSTOM_DIR="$(basename "${1}")"
     if [ "${CUSTOM_DIR}" == "." ]; then
       CUSTOM_DIR="$(basename "$(pwd)")"
@@ -41,7 +41,7 @@ function syncup() {
   declare -a CONFIGURATION=("-ahv" "--progress" "--delete" "--no-o" "--no-g")
   LOCAL_DIR="${LOCAL_SITE_MIRROR}"
   REMOTE_DIR="${CAESIUM_UPLOAD_PATH/caesium/}"
-  if [ -n "${1}" ]; then
+  if [ -n "${1}" ] && [ "${1}" != "--dry-run" ]; then
     CUSTOM_DIR="$(basename "${1}")"
     if [ "${CUSTOM_DIR}" == "." ]; then
       CUSTOM_DIR="$(basename "$(pwd)")"
