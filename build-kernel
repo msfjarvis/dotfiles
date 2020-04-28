@@ -22,7 +22,18 @@ INSTALL=
 REGEN_DEFCONFIG=
 LOCALVERSION="${LOCALVERSION}"
 
-declare -a MAKE_FLAGS=("ARCH=x86" "SUBARCH=x86_64" "CC=${CC}" "HOSTCC=${HOSTCC}" "LD=${LD}" "LOCALVERSION=${LOCALVERSION}" "INSTALL_MOD_STRIP=1")
+declare -a MAKE_FLAGS=(
+  "ARCH=x86"
+  "CC=${CC}"
+  "HOSTCC=${HOSTCC}"
+  "HOSTLD=${LD}"
+  "INSTALL_MOD_STRIP=1"
+  "LD=${LD}"
+  "LOCALVERSION=${LOCALVERSION}"
+  "OBJCOPY=llvm-objcopy"
+  "NM=llvm-nm"
+  "SUBARCH=x86_64"
+)
 
 # Wrapper function around make to ensure all the variables go through
 function make_wrapper() {
