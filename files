@@ -183,6 +183,11 @@ function gdrivedl() {
   gdrive download "${CONFIGURATION[@]}" "${FILE_ID:?}"
 }
 
+# Search for a file in Google Drive
+function gs() {
+  gdrive list -q "name contains '${1:?}'"
+}
+
 # Publish a file to the download server
 function publish() {
   local FILE REMOTE_DIR
