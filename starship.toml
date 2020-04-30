@@ -32,6 +32,9 @@ disabled = true
 [conda]
 disabled = true
 
+[crystal]
+disabled = true
+
 [docker_context]
 disabled = true
 
@@ -45,6 +48,9 @@ disabled = true
 disabled = true
 
 [env_var]
+disabled = true
+
+[erlang]
 disabled = true
 
 [golang]
@@ -81,9 +87,6 @@ disabled = true
 disabled = true
 
 [ruby]
-disabled = true
-
-[crystal]
 disabled = true
 
 [php]
