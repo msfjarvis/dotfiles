@@ -24,8 +24,7 @@ function syncdown() {
   for arg; do
     if [ "${arg}" == "--dry-run" ]; then
       CONFIGURATION+=("--dry-run")
-    fi
-    if [ "${arg}" == "--itemize" ]; then
+    elif [ "${arg}" == "--itemize" ]; then
       CONFIGURATION+=("--itemize-changes")
     fi
   done
@@ -55,8 +54,7 @@ function syncup() {
   for arg; do
     if [ "${arg}" == "--dry-run" ]; then
       CONFIGURATION+=("--dry-run")
-    fi
-    if [ "${arg}" == "--itemize" ]; then
+    elif [ "${arg}" == "--itemize" ]; then
       CONFIGURATION+=("--itemize-changes")
     fi
   done
