@@ -23,6 +23,7 @@ REGEN_DEFCONFIG=
 LOCALVERSION="${LOCALVERSION}"
 
 declare -a MAKE_FLAGS=(
+  "AR=llvm-ar"
   "ARCH=x86"
   "CC=${CC}"
   "HOSTCC=${HOSTCC}"
