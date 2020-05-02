@@ -33,6 +33,7 @@ declare -a MAKE_FLAGS=(
   "LOCALVERSION=${LOCALVERSION}"
   "OBJCOPY=llvm-objcopy"
   "NM=llvm-nm"
+  "STRIP=llvm-strip"
   "SUBARCH=x86_64"
 )
 
