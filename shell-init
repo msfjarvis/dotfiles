@@ -54,6 +54,12 @@ export SDKMAN_DIR="${HOME}/.sdkman"
 # shellcheck disable=SC1090
 [[ -s "${HOME}/.sdkman/bin/sdkman-init.sh" ]] && source "${HOME}/.sdkman/bin/sdkman-init.sh"
 
+# jEnv
+[ -d "${HOME}/.jenv" ] && {
+  export PATH="${HOME}/.jenv/bin:${PATH}"
+  eval "$(jenv init -)"
+}
+
 # shellcheck source=bash_completions.bash
 source "${SCRIPT_DIR}"/bash_completions.bash
 # shellcheck source=aliases
