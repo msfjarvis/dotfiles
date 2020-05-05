@@ -6,6 +6,7 @@ cmake-3.16.5
 curl-7.68.0
 diff-so-fancy-1.2.7
 diskus-0.6.0
+dnscontrol-3.0.0
 fd-8.0.0
 fzf-0.21.1
 gh-0.6.4
