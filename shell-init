@@ -69,6 +69,8 @@ source "${SCRIPT_DIR}"/files
 source "${SCRIPT_DIR}"/hosts
 # shellcheck source=gitshit
 source "${SCRIPT_DIR}"/gitshit
+# shellcheck source=nix
+source "${SCRIPT_DIR}"/nix
 # shellcheck source=server
 source "${SCRIPT_DIR}"/server
 # shellcheck source=system
