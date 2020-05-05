@@ -5,18 +5,6 @@
 
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 
-# Linuxbrew config
-LINUXBREW_DIR='/home/linuxbrew/.linuxbrew'
-if [ -d "${LINUXBREW_DIR}" ]; then
-  eval "$(${LINUXBREW_DIR}/bin/brew shellenv)"
-  export PATH="${LINUXBREW_DIR}/opt/ccache/libexec:${HOME}/bin:${HOME}/go/bin:${HOME}/.cargo/bin:${PATH:+:${PATH}}"
-  export LD_LIBRARY_PATH="${LINUXBREW_DIR}/lib/:${LD_LIBRARY_PATH:+:${PATH}}"
-  [ -d "${LINUXBREW_DIR}/Cellar/openssl@1.1" ] && export OPENSSL_DIR="${LINUXBREW_DIR}/Cellar/openssl@1.1/1.1.1g"
-  for COMPLETION in "${LINUXBREW_DIR}/etc/bash_completion.d/"*; do
-    # shellcheck disable=SC1090
-    [[ -r $COMPLETION ]] && source "$COMPLETION"
-  done
-fi
 
 # Bash completion
 # shellcheck disable=SC1090
@@ -66,8 +54,6 @@ source "${SCRIPT_DIR}"/bash_completions.bash
 source "${SCRIPT_DIR}"/aliases
 # shellcheck source=apps
 source "${SCRIPT_DIR}"/apps
-# shellcheck source=brew
-source "${SCRIPT_DIR}"/brew
 # shellcheck source=common
 source "${SCRIPT_DIR}"/common
 # shellcheck source=devtools
