@@ -5,6 +5,11 @@
 
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 
+# Nix installer
+# shellcheck disable=SC1090
+if [ -e "${HOME}"/.nix-profile/etc/profile.d/nix.sh ]; then
+  source "${HOME}"/.nix-profile/etc/profile.d/nix.sh
+fi
 
 # Bash completion
 # shellcheck disable=SC1090
