@@ -12,14 +12,14 @@ function rebuildtc() {
   VERSION="${1:-10}"
   cd /mnt/mediahell/build-tools-gcc || exit 1
   echoText "Building ARM GCC ${VERSION}.x"
-  ./build -a arm -s gnu -v "${VERSION}" -V -f
+  ./build -a arm -s gnu -v "${VERSION}" -V -tr
   if [ -d arm-linux-gnueabi ]; then
     rsync -av arm-linux-gnueabi/ ../toolchains/arm-linux-gnueabi-"${VERSION}".x
   else
     reportError "ARM GCC ${VERSION}.x failed to compile"
   fi
   echoText "Building ARM64 GCC ${VERSION}.x"
-  ./build -a arm64 -s gnu -v "${VERSION}" -V -f
+  ./build -a arm64 -s gnu -v "${VERSION}" -V -tr
   if [ -d aarch64-linux-gnu ]; then
     rsync -av aarch64-linux-gnu/ ../toolchains/aarch64-linux-gnu-"${VERSION}".x
   else
