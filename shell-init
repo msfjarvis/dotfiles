@@ -31,6 +31,7 @@ export CCACHE_DIR="${HOME}/.ccache"
 export ANDROID_SDK_ROOT="${HOME}"/Android/Sdk
 export ANDROID_HOME="${ANDROID_SDK_ROOT}"
 export GRADLE_USER_HOME=/mnt/mediahell/.gradle
+export PATH="${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
 
 # Nano love
 export EDITOR=nano
