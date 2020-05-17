@@ -54,6 +54,13 @@ export SDKMAN_DIR="${HOME}/.sdkman"
   eval "$(jenv init -)"
 }
 
+# Local bin directory
+[ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:${PATH}"
+
+# cargo env
+# shellcheck disable=SC1090
+[ -d "${HOME}/.cargo" ] && source "${HOME}"/.cargo/env
+
 # shellcheck source=bash_completions.bash
 source "${SCRIPT_DIR}"/bash_completions.bash
 # shellcheck source=aliases
