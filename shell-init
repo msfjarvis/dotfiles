@@ -61,6 +61,9 @@ export SDKMAN_DIR="${HOME}/.sdkman"
 # shellcheck disable=SC1090
 [ -d "${HOME}/.cargo" ] && source "${HOME}"/.cargo/env
 
+# Golang binaries
+[ -d "${HOME}/go/bin" ] && export PATH="${HOME}/go/bin:${PATH}"
+
 # shellcheck source=bash_completions.bash
 source "${SCRIPT_DIR}"/bash_completions.bash
 # shellcheck source=aliases
