@@ -74,7 +74,7 @@ function getmagisk() {
   echoText "Downloading Magisk $(jq -r .magisk.version /tmp/magisk.json)"
   while read -r link; do
     echo -e "${CL_YLW}Downloading ${link##*/}"
-    wget -q "${link}"
+    wget -Nq "${link}"
   done < <(jq -r .[].link /tmp/magisk.json)
   rm /tmp/magisk.json
 }
