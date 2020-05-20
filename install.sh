@@ -16,7 +16,7 @@ trap 'exit 1' INT TERM
 if ! command -v apt; then
   IS_NIX=true
 fi
-declare -a SCRIPTS=("build-caesium" "build-kernel" "kronic-build" "paste" "zpl")
+declare -a SCRIPTS=("build-caesium" "build-kernel" "paste" "zpl")
 
 # Create binaries directory
 mkdir -p ~/bin/
