@@ -56,15 +56,10 @@ done <~/.nano/nanorc
 echoText "Moving credentials"
 gpg --decrypt "${SCRIPT_DIR}"/.secretcreds.gpg >~/.secretcreds
 
-if [[ ":$PATH:" != *":$HOME/bin:"* ]]; then
-  reportWarning "$HOME/bin is not in PATH, appending the export to bashrc"
-  echo $'\nexport PATH="~/bin":$PATH' >>~/.bashrc
-fi
-
-ret="$(grep -qF "source ${SCRIPT_DIR}/functions" ~/.bashrc)"
+ret="$(grep -qF "shell-init" ~/.bashrc)"
 if [ "${ret}" ]; then
-  reportWarning "functions is not sourced in the bashrc, appending"
-  echo "source ${SCRIPT_DIR}/functions" >>~/.bashrc
+  reportWarning "shell-init is not sourced in the bashrc, appending"
+  echo "source ${SCRIPT_DIR}/shell-init" >>~/.bashrc
 fi
 
 echoText "Installing scripts"
