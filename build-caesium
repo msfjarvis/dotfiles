@@ -362,7 +362,7 @@ while getopts ":bcd:m:rst:v" OPT; do
       [[ ${MODULE} == */ ]] || MODULE="${MODULE}"/
       if [ ! "$(ls "${MODULE}"Kconfig* 2>/dev/null)" ]; then
         reportError "Invalid module specified - ${MODULE}"
-        return 1
+        exit 1
       fi
       BANNER_ITEMS+=("Building module ${MODULE}")
       ;;
