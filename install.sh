@@ -13,18 +13,25 @@ source "${SCRIPT_DIR}"/system
 
 trap 'exit 1' INT TERM
 
+if ! command -v apt; then
+  IS_NIX=true
+fi
 declare -a SCRIPTS=("build-caesium" "build-kernel" "kronic-build" "paste" "zpl")
 
 # Create binaries directory
 mkdir -p ~/bin/
 
 # Install standard packages.
-echoText "Installing necessary packages"
-sudo apt install -y aria2 autoconf automake cowsay fortune-mod fortunes fortunes-off inkscape jq libxmu-dev libgdk-pixbuf2.0-dev libncursesw5-dev libxml2-utils lolcat mosh pidcat wget sassc
+if [ -z "${IS_NIX}" ]; then
+  echoText "Installing necessary packages"
+  sudo apt install -y aria2 autoconf automake cowsay fortune-mod fortunes fortunes-off inkscape jq libxmu-dev libgdk-pixbuf2.0-dev libncursesw5-dev libxml2-utils lolcat mosh pidcat wget sassc
+fi
 
-bash -i "${SCRIPT_DIR}"/setup/android-udev.sh
+if [ -z "${IS_NIX}" ]; then
+  bash -i "${SCRIPT_DIR}"/setup/android-udev.sh
+  bash -i "${SCRIPT_DIR}"/setup/xclip.sh
+fi
 bash -i "${SCRIPT_DIR}"/setup/gdrive.sh
-bash -i "${SCRIPT_DIR}"/setup/xclip.sh
 
 cd "${SCRIPT_DIR}" || exit 1
 
