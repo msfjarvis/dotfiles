@@ -28,8 +28,8 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "ryzenbox"; # Define your hostname.
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.hostName = "jarvisbox"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -54,10 +54,19 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    cmake
+    curl
+    networkmanager
+    ninja
+    plata-theme
+    python38
+    python38Packages.python-fontconfig
     wget
     wireguard
     wireguard-go
     wireguard-tools
+    unzip
+    xclip
     #linuxPackages_latest.rtl8821ce
   ];
 
@@ -109,7 +118,6 @@ in
 
   # Stuff for gnome-shell-extensions to work properly
   services.gnome3.chrome-gnome-shell.enable = true;
-  nixpkgs.config.firefox.enableGnomeExtensions = true;
 
   # Disable services for faster boot times
   systemd.services.NetworkManager-wait-online.enable = false;
@@ -130,8 +138,6 @@ in
     bat
     ccache
     chrome-gnome-shell
-    cmake
-    curl
     gitAndTools.diff-so-fancy
     diskus
     unstable.dnscontrol
@@ -152,16 +158,12 @@ in
     gitAndTools.hub
     hugo
     hyperfine
+    jq
     meson
     nano
     ncdu
     neofetch
-    networkmanager
-    ninja
-    plata-theme
     procs
-    python38
-    python38Packages.python-fontconfig
     ripgrep
     tdesktop
     shellcheck
@@ -169,6 +171,7 @@ in
     starship
     vscode
     unstable.zoxide
+    zulu8
   ];
 
   # This value determines the NixOS release from which the default
