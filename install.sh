@@ -6,6 +6,7 @@
 # Source common functions
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 export SCRIPT_DIR
+
 # shellcheck source=common
 source "${SCRIPT_DIR}"/common
 # shellcheck source=system
