@@ -139,6 +139,7 @@ in
     ccache
     chrome-gnome-shell
     gitAndTools.diff-so-fancy
+    gitAndTools.git-crypt
     diskus
     unstable.dnscontrol
     fastlane
@@ -163,6 +164,7 @@ in
     nano
     ncdu
     neofetch
+    patchelf
     procs
     ripgrep
     tdesktop
