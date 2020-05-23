@@ -20,7 +20,7 @@ This is a bit of a hack, but that's how I did it.
 patchelf --set-interpreter "$(nix eval nixpkgs.glibc.outPath | sed 's/"//g')/lib/ld-linux-x86-64.so.2" ~/Android/Sdk/platform-tools/adb
 ```
 
-This first uses the `nix` package manager's `eval` option to get the direectory for glib, then strips the quotes from that output, and tacks on the ld path at the end. Then it is all passsed to `patchelf` which sets it as the interperter of whatever binary is provided, in my case, the `adb` binary from Google.
+This first uses the `nix` package manager's `eval` option to get the directory for glib, then strips the quotes from that output, and tacks on the ld path at the end. Then it is all passsed to `patchelf` which sets it as the interperter of whatever binary is provided, in my case, the `adb` binary from Google.
 
 ### Caveats with this approach
 
