@@ -180,6 +180,7 @@ in
     nano
     ncdu
     neofetch
+    pass
     patchelf
     procs
     ripgrep
