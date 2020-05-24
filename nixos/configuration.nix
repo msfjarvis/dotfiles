@@ -53,6 +53,7 @@ in
   environment.systemPackages = with pkgs; [
     cmake
     curl
+    htop
     networkmanager
     ninja
     plata-theme
