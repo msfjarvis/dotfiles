@@ -156,6 +156,7 @@ in
     asciinema
     bandwhich
     bat
+    browserpass
     ccache
     chrome-gnome-shell
     gitAndTools.diff-so-fancy
