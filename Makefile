@@ -18,4 +18,8 @@ githook:
 install:
 	@./install.sh
 
+nix-install:
+	@sudo cp nixos/configuration.nix /etc/nixos/configuration.nix
+	@sudo nixos-rebuild switch
+
 .PHONY: test
