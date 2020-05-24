@@ -28,18 +28,15 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "jarvisbox"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = false;
-  networking.interfaces.enp2s0.useDHCP = true;
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  # Networking settings
+  networking = {
+    nameservers = [ "::1" ];
+    hostName = "jarvisbox";
+    resolvconf.dnsExtensionMechanism = false;
+    networkmanager.dns = "none";
+    useDHCP = false;
+    interfaces.enp2s0.useDHCP = true;
+  };
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
@@ -85,6 +82,28 @@ in
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
+  # Disable the resolved service
+  services.resolved.enable = false;
+
+  services.dnscrypt-proxy2 = {
+    enable = true;
+    settings = {
+      listen_addresses = [ "127.0.0.1:43" ];
+      ipv6_servers = true;
+      require_dnssec = true;
+      sources.public-resolvers = {
+        urls = [
+          "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v2/public-resolvers.md"
+        ];
+        cache_file = "/var/lib/dnscrypt-proxy2/public-resolvers.md";
+        minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
+      };
+      server_names = [ "cloudflare" ];
+    };
+  };
+  services.dnsmasq.enable = true;
+  services.dnsmasq.servers = [ "127.0.0.1#43" ];
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
@@ -98,13 +117,11 @@ in
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
-  # Enable the X11 windowing system.
+  # Enable the X11 windowing system and GNOME Desktop Environment.
   services.xserver = {
     enable = true;
-    displayManager.lightdm.greeters.mini = {
-      enable = true;
-      user = "msfjarvis";
-    };
+    displayManager.gdm.enable = true;
+    desktopManager.gnome3.enable = true;
     layout = "us";
   };
 
@@ -112,8 +129,6 @@ in
   services.xserver.libinput.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome3.enable = true;
   services.gvfs.enable = true;
   services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
 
