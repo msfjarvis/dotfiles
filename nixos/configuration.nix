@@ -69,6 +69,7 @@ in
     xclip
     #linuxPackages_latest.rtl8821ce
   ];
+  environment.homeBinInPath = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
