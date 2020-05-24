@@ -4,6 +4,7 @@
 
 { config, pkgs, ... }:
 
+# Fetch the latest copy of nixpkgs repo's nixos-unstable branch.
 let unstableTarball = fetchTarball https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
 
 in
@@ -13,6 +14,8 @@ in
       ./hardware-configuration.nix
     ];
 
+  # Enable non-free packages, and add an unstable reference to use packages
+  # from the NixOS unstable channel.
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
@@ -22,13 +25,14 @@ in
     };
   };
 
+  # Use the latest available kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Networking settings
+  # Networking settings.
   networking = {
     nameservers = [ "::1" ];
     hostName = "jarvisbox";
@@ -48,8 +52,7 @@ in
   # Set your time zone.
   time.timeZone = "Asia/Kolkata";
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
     cmake
     curl
@@ -67,6 +70,8 @@ in
     xclip
     #linuxPackages_latest.rtl8821ce
   ];
+
+  # Make sure ~/bin is in $PATH.
   environment.homeBinInPath = true;
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -78,17 +83,16 @@ in
     pinentryFlavor = "gnome3";
   };
 
-  # List services that you want to enable:
-
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  # Disable the resolved service
+  # Disable the resolved service.
   services.resolved.enable = false;
 
-  # Enable PCSC-Lite daemon for use with my Yubikey
+  # Enable PCSC-Lite daemon for use with my Yubikey.
   services.pcscd.enable = true;
 
+  # Configure dnscrypt-proxy with the Cloudflare DoH resolver and dnsmasq to work alongside.
   services.dnscrypt-proxy2 = {
     enable = true;
     settings = {
@@ -114,14 +118,11 @@ in
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
 
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
-  # Enable the X11 windowing system and GNOME Desktop Environment.
+  # Enable the X11 windowing system and additional services for GNOME Desktop Environment.
   services.xserver = {
     enable = true;
     displayManager.gdm.enable = true;
@@ -136,10 +137,10 @@ in
   services.gvfs.enable = true;
   services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
 
-  # Stuff for gnome-shell-extensions to work properly
+  # Stuff for gnome-shell-extensions to work properly.
   services.gnome3.chrome-gnome-shell.enable = true;
 
-  # Disable services for faster boot times
+  # Disable services for faster boot times.
   systemd.services.NetworkManager-wait-online.enable = false;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -148,6 +149,7 @@ in
     extraGroups = [ "wheel" "networking" ]; # Enable ‘sudo’ for the user.
   };
 
+  # User-specific packages for me, myself and I.
   users.users.msfjarvis.packages = with pkgs; [
     android-studio
     android-udev-rules
