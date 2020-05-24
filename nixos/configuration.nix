@@ -4,8 +4,8 @@
 
 { config, pkgs, ... }:
 
-# Fetch the latest copy of nixpkgs repo's nixos-unstable branch.
-let unstableTarball = fetchTarball https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
+# Fetch the latest copy of the nixos-unstable channel.
+let unstableTarball = fetchTarball https://github.com/msfjarvis/nixpkgs/archive/nixos-unstable.tar.gz;
 
 in
 {
@@ -27,6 +27,9 @@ in
 
   # Use the latest available kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  # Enable the rtl8821ce module
+  boot.extraModulePackages = with config.boot.kernelPackages; [ pkgs.unstable.linuxPackages_latest.rtl8821ce ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -68,7 +71,6 @@ in
     wireguard-tools
     unzip
     xclip
-    #linuxPackages_latest.rtl8821ce
   ];
 
   # Make sure ~/bin is in $PATH.
