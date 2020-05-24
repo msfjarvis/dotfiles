@@ -170,6 +170,7 @@ in
     tdesktop
     shellcheck
     shfmt
+    spotify
     starship
     vscode
     unstable.zoxide
