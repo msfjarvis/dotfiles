@@ -86,6 +86,9 @@ in
   # Disable the resolved service
   services.resolved.enable = false;
 
+  # Enable PCSC-Lite daemon for use with my Yubikey
+  services.pcscd.enable = true;
+
   services.dnscrypt-proxy2 = {
     enable = true;
     settings = {
