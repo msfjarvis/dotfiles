@@ -19,7 +19,8 @@ install:
 	@./install.sh
 
 nix-install:
-	@sudo cp nixos/configuration.nix /etc/nixos/configuration.nix
+	@sudo cp -v nixos/configuration.nix /etc/nixos/configuration.nix
+	@sudo nix-channel --update
 	@sudo nixos-rebuild switch
 
 .PHONY: test
