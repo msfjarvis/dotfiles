@@ -193,6 +193,7 @@ in
     hyperfine
     jq
     meson
+    mosh
     nano
     ncdu
     neofetch
