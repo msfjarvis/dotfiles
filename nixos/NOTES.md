@@ -30,7 +30,7 @@ This first uses the `nix` package manager's `eval` option to get the directory f
 
 ## Updating a package that sources from GitHub
 
-Throughout the [nixpkgs](https://github.com/NixOS/nixpkgs) repository you'll notice a lot of formulas containing a closure looking something like this:
+Throughout the [nixpkgs](https://github.com/NixOS/nixpkgs) repository you'll notice a lot of package definitions containing a closure looking something like this:
 
 ```nix
 src = fetchFromGitHub {
