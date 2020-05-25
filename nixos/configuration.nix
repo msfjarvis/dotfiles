@@ -104,14 +104,8 @@ in
       listen_addresses = [ "127.0.0.1:43" ];
       ipv6_servers = true;
       require_dnssec = true;
-      sources.public-resolvers = {
-        urls = [
-          "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v2/public-resolvers.md"
-        ];
-        cache_file = "/var/lib/dnscrypt-proxy2/public-resolvers.md";
-        minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-      };
       server_names = [ "cloudflare" ];
+      static."cloudflare".stamp = "sdns://AgEAAAAAAAAACjQ1LjkwLjI4LjAADmRucy5uZXh0ZG5zLmlvBy9iMTFkM2I";
     };
   };
   services.dnsmasq.enable = true;
