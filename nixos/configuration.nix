@@ -131,7 +131,10 @@ in
   };
 
   # Configure Ryzen and AMDGPU
-  hardware.cpu.amd.updateMicrocode = true;                                                                                                                                                         hardware.enableRedistributableFirmware = true;                                                                                                                                                   hardware.opengl.enable = true;                                                                                                                                                                   hardware.opengl.driSupport = true;
+  hardware.cpu.amd.updateMicrocode = true;
+  hardware.enableRedistributableFirmware = true;
+  hardware.opengl.enable = true;
+  hardware.opengl.driSupport = true;
 
   # Enable touchpad support.
   services.xserver.libinput.enable = true;
