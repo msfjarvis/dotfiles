@@ -26,10 +26,10 @@ in
   };
 
   # Use the latest available kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_4_19;
 
   # Enable the rtl8821ce module
-  boot.extraModulePackages = with config.boot.kernelPackages; [ pkgs.unstable.linuxPackages_latest.rtl8821ce ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ rtl8821ce ];
 
   # Set come cmdline options for AMDGPU
   boot.kernelParams = [ "amd_iommu=pt" "ivrs_ioapic[32]=00:14.0" "iommu=soft" ];
