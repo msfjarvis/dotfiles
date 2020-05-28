@@ -62,6 +62,7 @@ in
   environment.systemPackages = with pkgs; [
     bind
     busybox
+    clang_10
     cmake
     curl
     htop
