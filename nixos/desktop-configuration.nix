@@ -96,7 +96,6 @@ in
 
   # Enable U2F support
   hardware.u2f.enable = true;
-  udev.packages = [ pkgs.libu2f-host ];
 
   # Configure dnscrypt-proxy with the Cloudflare DoH resolver and dnsmasq to work alongside.
   services.dnscrypt-proxy2 = {
@@ -140,9 +139,11 @@ in
   # Enable touchpad support.
   services.xserver.libinput.enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  services.gvfs.enable = true;
-  services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
+  # Install udev packages
+  services.udev.packages = with pkgs; [
+    libu2f-host
+    gnome3.gnome-settings-daemon
+  ];
 
   # Stuff for gnome-shell-extensions to work properly.
   services.gnome3.chrome-gnome-shell.enable = true;
