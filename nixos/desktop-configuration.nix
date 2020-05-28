@@ -26,13 +26,7 @@ in
   };
 
   # Use the latest available kernel.
-  boot.kernelPackages = pkgs.linuxPackages_4_19;
-
-  # Enable the rtl8821ce module
-  boot.extraModulePackages = with config.boot.kernelPackages; [ rtl8821ce ];
-
-  # Set come cmdline options for AMDGPU
-  boot.kernelParams = [ "amd_iommu=pt" "ivrs_ioapic[32]=00:14.0" "iommu=soft" ];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -41,7 +35,7 @@ in
   # Networking settings.
   networking = {
     nameservers = [ "::1" ];
-    hostName = "jarvisbox";
+    hostName = "ryzenbox";
     resolvconf.dnsExtensionMechanism = false;
     networkmanager.dns = "none";
     useDHCP = false;
@@ -134,10 +128,10 @@ in
     displayManager.gdm.enable = true;
     desktopManager.gnome3.enable = true;
     layout = "us";
-    videoDrivers = [ "amdgpu" ];
+    videoDrivers = [ "nvidia" ];
   };
 
-  # Configure Ryzen and AMDGPU
+  # Configure Ryzen
   hardware.cpu.amd.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
   hardware.opengl.enable = true;
