@@ -63,7 +63,7 @@ export SDKMAN_DIR="${HOME}/.sdkman"
 
 # cargo env
 # shellcheck disable=SC1090
-[ -d "${HOME}/.cargo" ] && source "${HOME}"/.cargo/env
+[ -f "${HOME}"/.cargo/env ] && source "${HOME}"/.cargo/env
 
 # Golang binaries
 [ -d "${HOME}/go/bin" ] && export PATH="${HOME}/go/bin:${PATH}"
