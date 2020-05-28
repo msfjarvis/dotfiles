@@ -211,6 +211,7 @@ in
     patchelf
     procs
     ripgrep
+    rustup
     tdesktop
     shellcheck
     shfmt
