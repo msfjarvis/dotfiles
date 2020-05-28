@@ -7,46 +7,6 @@
 # shellcheck source=common
 source "${SCRIPT_DIR}"/common
 
-function rebuildtc() {
-  local VERSION
-  VERSION="${1:-10}"
-  cd /mnt/mediahell/build-tools-gcc || exit 1
-  echoText "Building ARM GCC ${VERSION}.x"
-  ./build -a arm -s gnu -v "${VERSION}" -V -tr
-  if [ -d arm-linux-gnueabi ]; then
-    rsync -av arm-linux-gnueabi/ ../toolchains/arm-linux-gnueabi-"${VERSION}".x
-  else
-    reportError "ARM GCC ${VERSION}.x failed to compile"
-  fi
-  echoText "Building ARM64 GCC ${VERSION}.x"
-  ./build -a arm64 -s gnu -v "${VERSION}" -V -tr
-  if [ -d aarch64-linux-gnu ]; then
-    rsync -av aarch64-linux-gnu/ ../toolchains/aarch64-linux-gnu-"${VERSION}".x
-  else
-    reportError "ARM64 GCC ${VERSION}.x failed to compile"
-  fi
-  cd - || exit 1
-}
-
-function fillccache() {
-  local START_TIME END_TIME BASE_DIR CUR_DIR
-  START_TIME=$(date +"%s")
-  declare -a DEVICES=("wahoo")
-  BASE_DIR=/home/msfjarvis/git-repos
-  CUR_DIR="$(pwd)"
-  for DEVICE in "${DEVICES[@]}"; do
-    for COUNT in {1..10}; do
-      echoText "Build ${COUNT} for device ${DEVICE}"
-      cd "${BASE_DIR}"/"${DEVICE}" || return 1
-      build-caesium -c || return 1
-    done
-  done
-  cd "${CUR_DIR}" || return 1
-  END_TIME="$(date +"%s")"
-  DIFF="$(bc <<<"${END_TIME} - ${START_TIME}")"
-  echoText "Total time elapsed: $(bc <<<"${DIFF} / 60") minute(s) and $(bc <<<"${DIFF} % 60") seconds."
-}
-
 function getmagisk() {
   local BASE_URL CHANNEL BRANCH JSON_NAME
   BASE_URL="https://raw.githubusercontent.com/topjohnwu/magisk_files"
@@ -77,15 +37,6 @@ function getmagisk() {
     wget -Nq "${link}"
   done < <(jq -r .[].link /tmp/magisk.json)
   rm /tmp/magisk.json
-}
-
-function gettcvers() {
-  fd -tf ".*-gcc$" /mnt/mediahell/toolchains -x {} --version
-  /mnt/mediahell/tc-build/install/bin/clang --version
-}
-
-function kgrep() {
-  rg -n "${1:?}" "${2:-.}"
 }
 
 function mkd() {
