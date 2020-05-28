@@ -61,6 +61,8 @@ in
     curl
     htop
     networkmanager
+    lld_10
+    llvmPackages.bintools
     ninja
     plata-theme
     python38

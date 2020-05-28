@@ -66,6 +66,8 @@ in
     cmake
     curl
     htop
+    lld_10
+    llvmPackages.bintools
     networkmanager
     ninja
     plata-theme
