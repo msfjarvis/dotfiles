@@ -62,7 +62,7 @@ in
     htop
     networkmanager
     lld_10
-    llvmPackages.bintools
+    llvmPackages_10.bintools
     ninja
     plata-theme
     python38

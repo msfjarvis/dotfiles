@@ -67,7 +67,7 @@ in
     curl
     htop
     lld_10
-    llvmPackages.bintools
+    llvmPackages_10.bintools
     networkmanager
     ninja
     plata-theme
