@@ -170,10 +170,21 @@ in
     bandwhich
     bat
     browserpass
+    cargo
+    cargo-audit
+    cargo-bloat
+    cargo-deps
+    cargo-edit
+    cargo-outdated
+    cargo-release
+    cargo-sweep
+    cargo-update
     chrome-gnome-shell
     gitAndTools.diff-so-fancy
     gitAndTools.git-crypt
     diskus
+    du-dust
+    exa
     fd
     figlet
     fontconfig

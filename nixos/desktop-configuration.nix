@@ -167,11 +167,22 @@ in
     bat
     browserpass
     ccache
+    cargo
+    cargo-audit
+    cargo-bloat
+    cargo-deps
+    cargo-edit
+    cargo-outdated
+    cargo-release
+    cargo-sweep
+    cargo-update
     chrome-gnome-shell
     gitAndTools.diff-so-fancy
     gitAndTools.git-crypt
+    du-dust
     diskus
     unstable.dnscontrol
+    exa
     fastlane
     fd
     figlet
