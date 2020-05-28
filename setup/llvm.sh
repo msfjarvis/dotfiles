@@ -59,7 +59,7 @@ esac
 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
 add-apt-repository "${REPO_NAME}"
 apt update
-apt install -y clang-"$LLVM_VERSION" clang-tools-"$LLVM_VERSION" clang-"$LLVM_VERSION"-doc libclang-common-"$LLVM_VERSION"-dev libclang-"$LLVM_VERSION"-dev libclang1-"$LLVM_VERSION" clang-format-"$LLVM_VERSION" clangd-"$LLVM_VERSION" libc++-"$LLVM_VERSION"-dev lld-"$LLVM_VERSION" llvm
+apt install -y clang-"$LLVM_VERSION" clang-tools-"$LLVM_VERSION" clang-"$LLVM_VERSION"-doc libclang-common-"$LLVM_VERSION"-dev libclang-"$LLVM_VERSION"-dev libclang1-"$LLVM_VERSION" clang-format-"$LLVM_VERSION" clangd-"$LLVM_VERSION" libc++-"$LLVM_VERSION"-dev lld-"$LLVM_VERSION" llvm llvm-"$LLVM_VERSION"-dev
 if [ "$LLVM_VERSION" -lt 11 ]; then
   apt install -y python-clang-"$LLVM_VERSION"
 fi
