@@ -31,8 +31,8 @@ fi
 if [ -z "${IS_NIX}" ]; then
   bash -i "${SCRIPT_DIR}"/setup/android-udev.sh
   bash -i "${SCRIPT_DIR}"/setup/xclip.sh
+  bash -i "${SCRIPT_DIR}"/setup/gdrive.sh
 fi
-bash -i "${SCRIPT_DIR}"/setup/gdrive.sh
 
 cd "${SCRIPT_DIR}" || exit 1
 
@@ -57,8 +57,13 @@ done <~/.nano/nanorc
 echoText "Moving credentials"
 gpg --decrypt "${SCRIPT_DIR}"/.secretcreds.gpg >~/.secretcreds
 
-ret="$(grep -qF "shell-init" ~/.bashrc)"
-if [ "${ret}" ]; then
+if [ -f ~/.bashrc ]; then
+  ret="$(grep -qF "shell-init" ~/.bashrc)"
+  if [ "${ret}" ]; then
+    reportWarning "shell-init is not sourced in the bashrc, appending"
+    echo "source ${SCRIPT_DIR}/shell-init" >>~/.bashrc
+  fi
+else
   reportWarning "shell-init is not sourced in the bashrc, appending"
   echo "source ${SCRIPT_DIR}/shell-init" >>~/.bashrc
 fi
