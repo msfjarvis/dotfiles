@@ -60,6 +60,8 @@ in
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
+    bind
+    busybox
     cmake
     curl
     htop
@@ -68,6 +70,7 @@ in
     plata-theme
     python38
     python38Packages.python-fontconfig
+    traceroute
     wget
     wireguard
     wireguard-go
