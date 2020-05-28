@@ -18,8 +18,13 @@ githook:
 install:
 	@./install.sh
 
-nix-install:
-	@sudo cp -v nixos/configuration.nix /etc/nixos/configuration.nix
+nix-laptop-install:
+	@sudo cp -v nixos/laptop-configuration.nix /etc/nixos/configuration.nix
+	@sudo nix-channel --update
+	@sudo nixos-rebuild switch
+
+nix-desktop-install:
+	@sudo cp -v nixos/desktop-configuration.nix /etc/nixos/configuration.nix
 	@sudo nix-channel --update
 	@sudo nixos-rebuild switch
 
