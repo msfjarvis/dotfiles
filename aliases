@@ -3,6 +3,9 @@
 # Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
 # SPDX-License-Identifier: GPL-3.0-only
 
+if command -v exa 1>/dev/null; then
+  alias ls=exa
+fi
 alias git=hub
 alias cat='bat --theme="zenburn"'
 alias pidcat='pidcat -i ResourceType -i chatty'
