@@ -191,6 +191,7 @@ in
     exa
     fd
     figlet
+    firefox
     fontconfig
     fzf
     gitAndTools.gh
@@ -199,7 +200,6 @@ in
     gnome3.gnome-shell-extensions
     gnome3.gnome-tweaks
     gnumake
-    google-chrome-beta
     gitAndTools.hub
     hugo
     hyperfine
