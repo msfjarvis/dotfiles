@@ -58,6 +58,12 @@ in
   # Set your time zone.
   time.timeZone = "Asia/Kolkata";
 
+  # Configure fonts
+  fonts.fonts = with pkgs; [
+    jetbrains-mono
+    noto-fonts
+  ];
+
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
     bind
