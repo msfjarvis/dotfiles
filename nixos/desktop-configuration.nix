@@ -64,6 +64,7 @@ in
     lld_10
     llvmPackages_10.bintools
     ninja
+    openssl_1_1
     plata-theme
     python38
     python38Packages.python-fontconfig
