@@ -211,6 +211,7 @@ in
     nano
     ncdu
     neofetch
+    nodejs-13_x
     pass
     patchelf
     procs
