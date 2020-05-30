@@ -59,10 +59,24 @@ in
   time.timeZone = "Asia/Kolkata";
 
   # Configure fonts
-  fonts.fonts = with pkgs; [
-    jetbrains-mono
-    noto-fonts
-  ];
+  fonts = {
+    enableDefaultFonts = true;
+    fonts = with pkgs; [
+      cascadia-code
+      jetbrains-mono
+      noto-fonts
+      roboto
+      ubuntu_font_family
+    ];
+    fontconfig = {
+      penultimate.enable = false;
+      defaultFonts = {
+        serif = [ "Ubuntu" ];
+        sansSerif = [ "Ubuntu" ];
+        monospace = [ "Jetbrains Mono" ];
+      };
+    };
+  };
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
