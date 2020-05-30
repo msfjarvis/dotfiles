@@ -184,6 +184,7 @@ in
     chrome-gnome-shell
     gitAndTools.diff-so-fancy
     gitAndTools.git-crypt
+    gitAndTools.git-extras
     du-dust
     diskus
     unstable.dnscontrol

@@ -193,6 +193,7 @@ in
     chrome-gnome-shell
     gitAndTools.diff-so-fancy
     gitAndTools.git-crypt
+    gitAndTools.git-extras
     diskus
     du-dust
     exa
