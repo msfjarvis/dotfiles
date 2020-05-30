@@ -23,9 +23,19 @@ nix-laptop-install:
 	@sudo nix-channel --update
 	@sudo nixos-rebuild switch
 
+nix-laptop-test:
+	@sudo cp -v nixos/laptop-configuration.nix /etc/nixos/configuration.nix
+	@sudo nix-channel --update
+	@sudo nixos-rebuild test
+
 nix-desktop-install:
 	@sudo cp -v nixos/desktop-configuration.nix /etc/nixos/configuration.nix
 	@sudo nix-channel --update
 	@sudo nixos-rebuild switch
+
+nix-desktop-test:
+	@sudo cp -v nixos/desktop-configuration.nix /etc/nixos/configuration.nix
+	@sudo nix-channel --update
+	@sudo nixos-rebuild test
 
 .PHONY: test
