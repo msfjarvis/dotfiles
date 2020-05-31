@@ -5,23 +5,21 @@
 { config, pkgs, ... }:
 
 # Fetch the latest copy of the nixos-unstable channel.
-let unstableTarball = fetchTarball https://github.com/msfjarvis/nixpkgs/archive/nixos-unstable.tar.gz;
+let
+  unstableTarball = fetchTarball
+    "https://github.com/msfjarvis/nixpkgs/archive/nixos-unstable.tar.gz";
 
-in
-{
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+in {
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Enable non-free packages, and add an unstable reference to use packages
   # from the NixOS unstable channel.
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
-      unstable = import unstableTarball {
-        config = config.nixpkgs.config;
-      };
+      unstable = import unstableTarball { config = config.nixpkgs.config; };
     };
   };
 
@@ -111,7 +109,6 @@ in
   # programs.mtr.enable = true;
   programs.gnupg.agent = {
     enable = true;
-  #   enableSSHSupport = true;
     pinentryFlavor = "gnome3";
   };
 
@@ -135,7 +132,8 @@ in
       ipv6_servers = true;
       require_dnssec = true;
       server_names = [ "cloudflare" ];
-      static."cloudflare".stamp = "sdns://AgEAAAAAAAAACjQ1LjkwLjI4LjAADmRucy5uZXh0ZG5zLmlvBy9iMTFkM2I";
+      static."cloudflare".stamp =
+        "sdns://AgEAAAAAAAAACjQ1LjkwLjI4LjAADmRucy5uZXh0ZG5zLmlvBy9iMTFkM2I";
     };
   };
   services.dnsmasq.enable = true;
@@ -230,6 +228,7 @@ in
     nano
     ncdu
     neofetch
+    nixfmt
     nodejs-13_x
     pass
     patchelf
