@@ -8,6 +8,8 @@
 let
   unstableTarball = fetchTarball
     "https://github.com/msfjarvis/nixpkgs/archive/nixos-unstable.tar.gz";
+  customTarball = fetchTarball
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/cec5c9cf897502a444d3843f7a0aaaa852bd3fe2.tar.gz";
 
 in {
   imports = [ # Include the results of the hardware scan.
@@ -20,6 +22,7 @@ in {
     allowUnfree = true;
     packageOverrides = pkgs: {
       unstable = import unstableTarball { config = config.nixpkgs.config; };
+      custom = import customTarball { };
     };
   };
 
@@ -61,7 +64,7 @@ in {
     enableDefaultFonts = true;
     fonts = with pkgs; [
       cascadia-code
-      jetbrains-mono
+      custom.jetbrains-mono-nerdfonts
       noto-fonts
       roboto
       ubuntu_font_family
