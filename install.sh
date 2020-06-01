@@ -39,11 +39,8 @@ cd "${SCRIPT_DIR}" || exit 1
 echoText 'Installing nanorc'
 cp -v "${SCRIPT_DIR}"/.nanorc ~/.nanorc
 if [ ! -d "${HOME}/.nano" ]; then
-  git clone https://github.com/msfjarvis/nanorc ~/.nano -b master -o origin
-  git -C "${HOME}/.nano" remote add upstream https://github.com/scopatz/nanorc
+  git clone https://github.com/scopatz/nanorc ~/.nano -b master
 else
-  git -C "${HOME}/.nano" remote update --prune
-  git -C "${HOME}/.nano" branch --set-upstream-to=origin/master
   git -C "${HOME}/.nano" pull --rebase
 fi
 
