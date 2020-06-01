@@ -98,16 +98,18 @@ in {
   # Enable U2F support
   hardware.u2f.enable = true;
 
-  # Configure dnscrypt-proxy with the NextDNS DoH resolver and dnsmasq to work alongside.
+  # Configure dnscrypt-proxy with the Cloudflare DoH resolver and dnsmasq to work alongside.
   services.dnscrypt-proxy2 = {
     enable = true;
     settings = {
       listen_addresses = [ "127.0.0.1:43" ];
       ipv6_servers = true;
       require_dnssec = true;
-      server_names = [ "NextDNS" ];
-      static."NextDNS".stamp =
-        "sdns://AgEAAAAAAAAACjQ1LjkwLjI4LjAADmRucy5uZXh0ZG5zLmlvBy9iMTFkM2I";
+      server_names = [ "cloudflare-security" "cloudflare-security-ipv6" ];
+      static."cloudflare-security".stamp =
+        "sdns://AgMAAAAAAAAABzEuMC4wLjIAG3NlY3VyaXR5LmNsb3VkZmxhcmUtZG5zLmNvbQovZG5zLXF1ZXJ5";
+      static."cloudflare-security-ipv6".stamp =
+        "sdns://AgMAAAAAAAAAGlsyNjA2OjQ3MDA6NDcwMDo6MTExMl06NDQzABtzZWN1cml0eS5jbG91ZGZsYXJlLWRucy5jb20KL2Rucy1xdWVyeQ";
     };
   };
   services.dnsmasq.enable = true;
