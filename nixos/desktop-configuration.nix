@@ -80,6 +80,7 @@ in {
     clang_10
     cmake
     curl
+    file
     htop
     llvmPackages_10.bintools
     lsb-release
