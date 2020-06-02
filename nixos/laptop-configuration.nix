@@ -88,6 +88,7 @@ in {
     curl
     htop
     llvmPackages_10.bintools
+    lsb-release
     networkmanager
     ninja
     openssl_1_1
