@@ -87,7 +87,6 @@ in {
     cmake
     curl
     htop
-    lld_10
     llvmPackages_10.bintools
     networkmanager
     ninja
