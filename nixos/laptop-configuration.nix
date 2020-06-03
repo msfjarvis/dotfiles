@@ -142,11 +142,8 @@ in {
         "sdns://AgMAAAAAAAAAGlsyNjA2OjQ3MDA6NDcwMDo6MTExMl06NDQzABtzZWN1cml0eS5jbG91ZGZsYXJlLWRucy5jb20KL2Rucy1xdWVyeQ";
     };
   };
-  services.dnsmasq = {
-    enable = true;
-    servers = [ "127.0.0.1#43" ];
-    extraConfig = "min-cache-ttl=3600";
-  };
+  services.dnsmasq.enable = true;
+  services.dnsmasq.servers = [ "127.0.0.1#43" ];
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
