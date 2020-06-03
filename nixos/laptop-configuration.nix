@@ -244,7 +244,7 @@ in {
     tdesktop
     shellcheck
     shfmt
-    spotify
+    spotify-tui
     starship
     vscode
     unstable.zoxide
