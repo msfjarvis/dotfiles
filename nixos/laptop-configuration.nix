@@ -4,10 +4,9 @@
 
 { config, pkgs, ... }:
 
-# Fetch the latest copy of the nixos-unstable channel.
 let
-  unstableTarball = fetchTarball
-    "https://github.com/msfjarvis/nixpkgs/archive/nixos-unstable.tar.gz";
+  masterTarball = fetchTarball
+    "https://github.com/NixOS/nixpkgs/archive/master.tar.gz";
   customTarball = fetchTarball
     "https://github.com/msfjarvis/custom-nixpkgs/archive/cec5c9cf897502a444d3843f7a0aaaa852bd3fe2.tar.gz";
 
@@ -16,12 +15,12 @@ in {
     ./hardware-configuration.nix
   ];
 
-  # Enable non-free packages, and add an unstable reference to use packages
-  # from the NixOS unstable channel.
+  # Enable non-free packages, and add an `latest` reference to use packages
+  # from the nixpkgs master branch.
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
-      unstable = import unstableTarball { config = config.nixpkgs.config; };
+      latest = import masterTarball { config = config.nixpkgs.config; };
       custom = import customTarball { };
     };
   };
@@ -63,11 +62,11 @@ in {
   fonts = {
     enableDefaultFonts = true;
     fonts = with pkgs; [
-      cascadia-code
+      latest.cascadia-code
       custom.jetbrains-mono-nerdfonts
-      noto-fonts
-      roboto
-      ubuntu_font_family
+      latest.noto-fonts
+      latest.roboto
+      latest.ubuntu_font_family
     ];
     fontconfig = {
       penultimate.enable = false;
@@ -81,28 +80,28 @@ in {
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
-    bind
-    busybox
-    clang_10
-    cmake
-    curl
-    file
-    htop
-    llvmPackages_10.bintools
-    lsb-release
-    networkmanager
-    ninja
-    openssl_1_1
-    plata-theme
-    python38
-    python38Packages.python-fontconfig
-    traceroute
-    wget
-    wireguard
-    wireguard-go
-    wireguard-tools
-    unzip
-    xclip
+    latest.bind
+    latest.busybox
+    latest.clang_10
+    latest.cmake
+    latest.curl
+    latest.file
+    latest.htop
+    latest.llvmPackages_10.bintools
+    latest.lsb-release
+    latest.networkmanager
+    latest.ninja
+    latest.openssl_1_1
+    latest.plata-theme
+    latest.python38
+    latest.python38Packages.python-fontconfig
+    latest.traceroute
+    latest.wget
+    latest.wireguard
+    latest.wireguard-go
+    latest.wireguard-tools
+    latest.unzip
+    latest.xclip
   ];
 
   # Make sure ~/bin is in $PATH.
@@ -193,62 +192,62 @@ in {
 
   # User-specific packages for me, myself and I.
   users.users.msfjarvis.packages = with pkgs; [
-    android-udev-rules
-    aria2
-    asciinema
-    bandwhich
-    bat
-    brave
-    browserpass
-    cargo
-    cargo-audit
-    cargo-bloat
-    cargo-deps
-    cargo-edit
-    cargo-outdated
-    cargo-release
-    cargo-sweep
-    cargo-update
-    gitAndTools.diff-so-fancy
-    gitAndTools.git-crypt
-    gitAndTools.git-extras
-    diskus
-    du-dust
-    exa
-    fd
-    figlet
-    fontconfig
-    fzf
-    gitAndTools.gh
-    git
-    glow
-    gnome3.gnome-shell-extensions
-    gnome3.gnome-tweaks
-    gnumake
-    gitAndTools.hub
-    hugo
-    hyperfine
-    jq
-    mosh
-    nano
-    ncdu
-    neo-cowsay
-    neofetch
-    nixfmt
-    nodejs-13_x
-    pass
-    patchelf
-    procs
-    ripgrep
-    rustup
-    tdesktop
-    sass
-    shellcheck
-    shfmt
-    spotify-tui
-    starship
-    vscode
-    unstable.zoxide
+    latest.android-udev-rules
+    latest.aria2
+    latest.asciinema
+    latest.bandwhich
+    latest.bat
+    latest.brave
+    latest.browserpass
+    latest.cargo
+    latest.cargo-audit
+    latest.cargo-bloat
+    latest.cargo-deps
+    latest.cargo-edit
+    latest.cargo-outdated
+    latest.cargo-release
+    latest.cargo-sweep
+    latest.cargo-update
+    latest.gitAndTools.diff-so-fancy
+    latest.gitAndTools.git-crypt
+    latest.gitAndTools.git-extras
+    latest.diskus
+    latest.du-dust
+    latest.exa
+    latest.fd
+    latest.figlet
+    latest.fontconfig
+    latest.fzf
+    latest.gitAndTools.gh
+    latest.git
+    latest.glow
+    latest.gnome3.gnome-shell-extensions
+    latest.gnome3.gnome-tweaks
+    latest.gnumake
+    latest.gitAndTools.hub
+    latest.hugo
+    latest.hyperfine
+    latest.jq
+    latest.mosh
+    latest.nano
+    latest.ncdu
+    latest.neo-cowsay
+    latest.neofetch
+    latest.nixfmt
+    latest.nodejs-13_x
+    latest.pass
+    latest.patchelf
+    latest.procs
+    latest.ripgrep
+    latest.rustup
+    latest.tdesktop
+    latest.sass
+    latest.shellcheck
+    latest.shfmt
+    latest.spotify-tui
+    latest.starship
+    latest.vscode
+    latest.zoxide
   ];
 
   # This value determines the NixOS release from which the default
