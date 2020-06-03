@@ -198,6 +198,7 @@ in {
     asciinema
     bandwhich
     bat
+    brave
     browserpass
     cargo
     cargo-audit
@@ -217,7 +218,6 @@ in {
     exa
     fd
     figlet
-    firefox
     fontconfig
     fzf
     gitAndTools.gh
