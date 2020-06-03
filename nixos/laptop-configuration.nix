@@ -209,7 +209,6 @@ in {
     cargo-release
     cargo-sweep
     cargo-update
-    chrome-gnome-shell
     gitAndTools.diff-so-fancy
     gitAndTools.git-crypt
     gitAndTools.git-extras
@@ -233,6 +232,7 @@ in {
     mosh
     nano
     ncdu
+    neo-cowsay
     neofetch
     nixfmt
     nodejs-13_x
@@ -242,6 +242,7 @@ in {
     ripgrep
     rustup
     tdesktop
+    sass
     shellcheck
     shfmt
     spotify-tui
