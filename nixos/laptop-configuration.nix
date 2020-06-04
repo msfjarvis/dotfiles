@@ -126,6 +126,9 @@ in {
     pinentryFlavor = "gnome3";
   };
 
+  # Enable browserpass
+  programs.browserpass.enable = true;
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
