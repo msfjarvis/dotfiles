@@ -113,6 +113,7 @@ in {
     latest.wireguard-tools
     latest.unzip
     latest.xclip
+    latest.xorg.xhost
   ];
 
   # Make sure ~/bin is in $PATH.
@@ -241,7 +242,6 @@ in {
     latest.asciinema
     latest.bandwhich
     latest.bat
-    latest.brave
     latest.browserpass
     latest.cargo
     latest.cargo-audit
@@ -284,12 +284,13 @@ in {
     latest.procs
     latest.ripgrep
     latest.rustup
-    latest.tdesktop
     latest.sass
     latest.shellcheck
     latest.shfmt
     latest.spotify-tui
     latest.starship
+    latest.tdesktop
+    latest.vivaldi
     latest.vscode
     latest.zoxide
   ];
