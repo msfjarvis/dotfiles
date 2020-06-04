@@ -4,10 +4,9 @@
 
 { config, pkgs, ... }:
 
-# Fetch the latest copy of the nixos-unstable channel.
 let
-  unstableTarball = fetchTarball
-    "https://github.com/msfjarvis/nixpkgs/archive/nixos-unstable.tar.gz";
+  masterTarball =
+    fetchTarball "https://github.com/NixOS/nixpkgs/archive/master.tar.gz";
   customTarball = fetchTarball
     "https://github.com/msfjarvis/custom-nixpkgs/archive/cec5c9cf897502a444d3843f7a0aaaa852bd3fe2.tar.gz";
 
@@ -16,12 +15,12 @@ in {
     ./hardware-configuration.nix
   ];
 
-  # Enable non-free packages, and add an unstable reference to use packages
-  # from the NixOS unstable channel.
+  # Enable non-free packages, and add an `latest` reference to use packages
+  # from the nixpkgs master branch.
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
-      unstable = import unstableTarball { config = config.nixpkgs.config; };
+      latest = import masterTarball { config = config.nixpkgs.config; };
       custom = import customTarball { };
     };
   };
@@ -57,11 +56,11 @@ in {
   fonts = {
     enableDefaultFonts = true;
     fonts = with pkgs; [
-      cascadia-code
+      latest.cascadia-code
       custom.jetbrains-mono-nerdfonts
-      noto-fonts
-      roboto
-      ubuntu_font_family
+      latest.noto-fonts
+      latest.roboto
+      latest.ubuntu_font_family
     ];
     fontconfig = {
       penultimate.enable = false;
@@ -75,28 +74,29 @@ in {
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
-    bind
-    busybox
-    clang_10
-    cmake
-    curl
-    file
-    htop
-    llvmPackages_10.bintools
-    lsb-release
-    networkmanager
-    ninja
-    openssl_1_1
-    plata-theme
-    python38
-    python38Packages.python-fontconfig
-    traceroute
-    wget
-    wireguard
-    wireguard-go
-    wireguard-tools
-    unzip
-    xclip
+    latest.bind
+    latest.busybox
+    latest.clang_10
+    latest.cmake
+    latest.curl
+    latest.file
+    latest.htop
+    latest.llvmPackages_10.bintools
+    latest.lsb-release
+    latest.networkmanager
+    latest.ninja
+    latest.openssl_1_1
+    latest.plata-theme
+    latest.python38
+    latest.python38Packages.python-fontconfig
+    latest.traceroute
+    latest.wget
+    latest.wireguard
+    latest.wireguard-go
+    latest.wireguard-tools
+    latest.unzip
+    latest.xclip
+    latest.xorg.xhost
   ];
 
   # Make sure ~/bin is in $PATH.
@@ -109,6 +109,9 @@ in {
     enable = true;
     pinentryFlavor = "gnome3";
   };
+
+  # Enable browserpass
+  programs.browserpass.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -129,11 +132,41 @@ in {
       listen_addresses = [ "127.0.0.1:43" ];
       ipv6_servers = true;
       require_dnssec = true;
-      server_names = [ "cloudflare-security" "cloudflare-security-ipv6" ];
+      server_names = [
+        "adguard"
+        "cloudflare"
+        "cloudflare-security"
+        "cloudflare-security-ipv6"
+        "decloudus-nogoogle-tst"
+        "google"
+        "google-ipv6"
+        "nextdns"
+        "nextdns-ipv6"
+        "skyfighter-dns"
+        "quad9-dnscrypt-ipv4-nofilter-pri"
+      ];
+      static."adguard".stamp =
+        "sdns://AQIAAAAAAAAAFDE3Ni4xMDMuMTMwLjEzMDo1NDQzINErR_JS3PLCu_iZEIbq95zkSV2LFsigxDIuUso_OQhzIjIuZG5zY3J5cHQuZGVmYXVsdC5uczEuYWRndWFyZC5jb20";
+      static."cloudflare".stamp =
+        "sdns://AgcAAAAAAAAABzEuMC4wLjEAEmRucy5jbG91ZGZsYXJlLmNvbQovZG5zLXF1ZXJ5";
       static."cloudflare-security".stamp =
         "sdns://AgMAAAAAAAAABzEuMC4wLjIAG3NlY3VyaXR5LmNsb3VkZmxhcmUtZG5zLmNvbQovZG5zLXF1ZXJ5";
       static."cloudflare-security-ipv6".stamp =
         "sdns://AgMAAAAAAAAAGlsyNjA2OjQ3MDA6NDcwMDo6MTExMl06NDQzABtzZWN1cml0eS5jbG91ZGZsYXJlLWRucy5jb20KL2Rucy1xdWVyeQ";
+      static."decloudus-nogoogle-tst".stamp =
+        "sdns://AQMAAAAAAAAAEjE3Ni45LjE5OS4xNTg6ODQ0MyD73Ye9XeCsS7TdFu9fRP7s5k-0aL91yygulGVmeOAKLh4yLmRuc2NyeXB0LWNlcnQuRGVDbG91ZFVzLXRlc3Q";
+      static."google".stamp =
+        "sdns://AgUAAAAAAAAABzguOC44LjigHvYkz_9ea9O63fP92_3qVlRn43cpncfuZnUWbzAMwbkgdoAkR6AZkxo_AEMExT_cbBssN43Evo9zs5_ZyWnftEUKZG5zLmdvb2dsZQovZG5zLXF1ZXJ5";
+      static."google-ipv6".stamp =
+        "sdns://AgUAAAAAAAAAFlsyMDAxOjQ4NjA6NDg2MDo6ODg4OF2gHvYkz_9ea9O63fP92_3qVlRn43cpncfuZnUWbzAMwbkgdoAkR6AZkxo_AEMExT_cbBssN43Evo9zs5_ZyWnftEUKZG5zLmdvb2dsZQovZG5zLXF1ZXJ5";
+      static."nextdns".stamp =
+        "sdns://AgcAAAAAAAAACjQ1LjkwLjI4LjAgPhoaD2xT8-l6SS1XCEtbmAcFnuBXqxUFh2_YP9o9uDgOZG5zLm5leHRkbnMuaW8PL2Ruc2NyeXB0LXByb3h5";
+      static."nextdns-ipv6".stamp =
+        "sdns://AgcAAAAAAAAADVsyYTA3OmE4YzA6Ol0gPhoaD2xT8-l6SS1XCEtbmAcFnuBXqxUFh2_YP9o9uDgOZG5zLm5leHRkbnMuaW8PL2Ruc2NyeXB0LXByb3h5";
+      static."skyfighter-dns".stamp =
+        "sdns://AQcAAAAAAAAACzUxLjE1LjYyLjY1INFr3LQKTn-quuLUnNelOU5_Pu-w6mo6-B6ljqcvmJebIjIuZG5zY3J5cHQtY2VydC5za3lmaWdodGVyLWRucy5jb20";
+      static."quad9-dnscrypt-ipv4-nofilter-pri".stamp =
+        "sdns://AQYAAAAAAAAADTkuOS45LjEwOjg0NDMgZ8hHuMh1jNEgJFVDvnVnRt803x2EwAuMRwNo34Idhj4ZMi5kbnNjcnlwdC1jZXJ0LnF1YWQ5Lm5ldA";
     };
   };
   services.dnsmasq.enable = true;
@@ -187,70 +220,62 @@ in {
 
   # User-specific packages for me, myself and I.
   users.users.msfjarvis.packages = with pkgs; [
-    android-studio
-    android-udev-rules
-    androidStudioPackages.canary
-    aria2
-    asciinema
-    bandwhich
-    bat
-    browserpass
-    ccache
-    cargo
-    cargo-audit
-    cargo-bloat
-    cargo-deps
-    cargo-edit
-    cargo-outdated
-    cargo-release
-    cargo-sweep
-    cargo-update
-    chrome-gnome-shell
-    gitAndTools.diff-so-fancy
-    gitAndTools.git-crypt
-    gitAndTools.git-extras
-    diskus
-    unstable.dnscontrol
-    du-dust
-    exa
-    fastlane
-    fd
-    figlet
-    fontconfig
-    fortune
-    fzf
-    gitAndTools.gh
-    git
-    glow
-    gnome3.gnome-shell-extensions
-    gnome3.gnome-tweaks
-    gnumake
-    go
-    google-chrome-beta
-    gitAndTools.hub
-    hugo
-    hyperfine
-    jq
-    meson
-    mosh
-    nano
-    ncdu
-    neofetch
-    nixfmt
-    nodejs-13_x
-    pass
-    patchelf
-    procs
-    ripgrep
-    rustup
-    tdesktop
-    shellcheck
-    shfmt
-    spotify
-    starship
-    vscode
-    unstable.zoxide
-    zulu8
+    latest.android-udev-rules
+    latest.aria2
+    latest.asciinema
+    latest.bandwhich
+    latest.bat
+    latest.browserpass
+    latest.cargo
+    latest.cargo-audit
+    latest.cargo-bloat
+    latest.cargo-deps
+    latest.cargo-edit
+    latest.cargo-outdated
+    latest.cargo-release
+    latest.cargo-sweep
+    latest.cargo-update
+    latest.gitAndTools.diff-so-fancy
+    latest.gitAndTools.git-crypt
+    latest.gitAndTools.git-extras
+    latest.diskus
+    latest.du-dust
+    latest.exa
+    latest.fd
+    latest.figlet
+    latest.fontconfig
+    latest.fzf
+    latest.gitAndTools.gh
+    latest.git
+    latest.glow
+    latest.gnome3.gnome-shell-extensions
+    latest.gnome3.gnome-tweaks
+    latest.gnumake
+    latest.gitAndTools.hub
+    latest.hugo
+    latest.hyperfine
+    latest.jq
+    latest.mosh
+    latest.nano
+    latest.ncdu
+    latest.neo-cowsay
+    latest.neofetch
+    latest.nixfmt
+    latest.nodejs-13_x
+    latest.pass
+    latest.patchelf
+    latest.procs
+    latest.ripgrep
+    latest.rustup
+    latest.sass
+    latest.shellcheck
+    latest.shfmt
+    latest.spotify-tui
+    latest.starship
+    latest.tdesktop
+    latest.vivaldi
+    latest.vscode
+    latest.zoxide
   ];
 
   # This value determines the NixOS release from which the default
@@ -260,4 +285,6 @@ in {
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "20.03"; # Did you read the comment?
+
+  system.copySystemConfiguration = true;
 }
