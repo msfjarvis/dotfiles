@@ -26,10 +26,21 @@ in {
   };
 
   # Use the latest available kernel.
-  boot.kernelPackages = pkgs.linuxPackages_4_19;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Enable the rtl8821ce module
-  boot.extraModulePackages = with config.boot.kernelPackages; [ rtl8821ce ];
+  boot.extraModulePackages = with config.boot.kernelPackages;
+    [
+      (rtl8821ce.overrideAttrs (old: {
+        version = "5.5.2_34066.20200325";
+        src = pkgs.fetchFromGitHub {
+          owner = "tomaspinho";
+          repo = "rtl8821ce";
+          rev = "69765eb288a8dfad3b055b906760b53e02ab1dea";
+          sha256 = "17jiw25k74kv5lnvgycvj2g1n06hbrpjz6p4znk4a62g136rhn4s";
+        };
+      }))
+    ];
 
   # Set come cmdline options for AMDGPU
   boot.kernelParams = [ "amd_iommu=pt" "ivrs_ioapic[32]=00:14.0" "iommu=soft" ];
