@@ -256,9 +256,9 @@ function whitespace() {
 
 function pwallsync() {
   if [ -n "${1}" ]; then
-    adb-sync -d "${LOCAL_SITE_MIRROR}/.phone_walls/Dawn" /sdcard/Pictures/
+    adb-sync -dt "${LOCAL_SITE_MIRROR}/.phone_walls/Dawn" /sdcard/Pictures/
   else
-    adb-sync --reverse /sdcard/Pictures/Dawn "${LOCAL_SITE_MIRROR}/.phone_walls/"
+    adb-sync -dtR /sdcard/Pictures/Dawn "${LOCAL_SITE_MIRROR}/.phone_walls/"
   fi
 }
 
