@@ -260,6 +260,7 @@ in {
     latest.exa
     latest.fd
     latest.figlet
+    latest.firefox
     latest.fontconfig
     latest.fzf
     latest.gitAndTools.gh
@@ -290,7 +291,6 @@ in {
     latest.spotify-tui
     latest.starship
     latest.tdesktop
-    latest.vivaldi
     latest.vscode
     latest.zoxide
   ];
