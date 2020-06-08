@@ -25,6 +25,8 @@ in {
     };
   };
 
+  fileSystems."/".options = [ "noatime" ];
+
   # Use the latest available kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
