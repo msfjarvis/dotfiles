@@ -9,6 +9,8 @@
 	signingkey = B7843F823355E9B9
 	name = Harsh Shandilya
 	email = me@msfjarvis.dev
+[pull]
+	rebase = true
 [push]
 	default = simple
 [color]
