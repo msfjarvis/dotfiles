@@ -283,6 +283,7 @@ in {
     latest.nixfmt
     latest.nodejs-13_x
     latest.pass
+    latest.passff-host
     latest.patchelf
     latest.procs
     latest.ripgrep
