@@ -185,7 +185,7 @@ function gdrivedl() {
 
 # Search for a file in Google Drive
 function gs() {
-  gdrive list -q "name contains '${1:?}'"
+  gdrive list -m 100 --name-width 0 -q "name contains '${1:?}'"
 }
 
 # Publish a file to the download server
