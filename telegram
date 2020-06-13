@@ -15,13 +15,6 @@ function tgm() {
   curl -F chat_id="${CHAT_ID}" -F parse_mode="markdown" -F disable_web_page_preview="true" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" >/dev/null 2>&1
 }
 
-function tgcow() {
-  local CHAT_ID="${1}"
-  [ -z "${CHAT_ID}" ] && CHAT_ID="${OP3_CAESIUM_CHAT_ID}"
-  shift
-  tgm "\`$(cowsay "${@}")\`" "${CHAT_ID}"
-}
-
 function tgpaste() {
   local MESSAGE LINK
   [ -f "${1:?}" ] || return
