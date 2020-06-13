@@ -278,6 +278,7 @@ in {
     latest.mosh
     latest.nano
     latest.ncdu
+    latest.ncspot
     latest.neo-cowsay
     latest.neofetch
     latest.nixfmt
@@ -291,7 +292,6 @@ in {
     latest.sass
     latest.shellcheck
     latest.shfmt
-    latest.spotify-tui
     latest.starship
     latest.tdesktop
     latest.vscode
