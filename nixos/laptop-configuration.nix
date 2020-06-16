@@ -100,6 +100,7 @@ in {
     latest.curl
     latest.file
     latest.htop
+    latest.ldns
     latest.llvmPackages_10.bintools
     latest.lsb-release
     latest.networkmanager
@@ -245,6 +246,7 @@ in {
     latest.bandwhich
     latest.bat
     latest.browserpass
+    latest.caddy
     latest.cargo
     latest.cargo-audit
     latest.cargo-bloat
@@ -254,24 +256,24 @@ in {
     latest.cargo-release
     latest.cargo-sweep
     latest.cargo-update
-    latest.gitAndTools.diff-so-fancy
-    latest.gitAndTools.git-crypt
-    latest.gitAndTools.git-extras
     latest.diskus
     latest.du-dust
     latest.exa
     latest.fd
     latest.figlet
-    latest.firefox
     latest.fontconfig
     latest.fzf
+    latest.gitAndTools.diff-so-fancy
     latest.gitAndTools.gh
+    latest.gitAndTools.git-crypt
+    latest.gitAndTools.git-extras
+    latest.gitAndTools.hub
     latest.git
     latest.glow
     latest.gnome3.gnome-shell-extensions
     latest.gnome3.gnome-tweaks
     latest.gnumake
-    latest.gitAndTools.hub
+    latest.google-chrome-dev
     latest.hugo
     latest.hyperfine
     latest.jq
@@ -284,7 +286,6 @@ in {
     latest.nixfmt
     latest.nodejs-13_x
     latest.pass
-    latest.passff-host
     latest.patchelf
     latest.procs
     latest.ripgrep
