@@ -25,6 +25,8 @@ in {
     };
   };
 
+  fileSystems."/".options = [ "noatime" ];
+
   # Use the latest available kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
@@ -81,6 +83,7 @@ in {
     latest.curl
     latest.file
     latest.htop
+    latest.ldns
     latest.llvmPackages_10.bintools
     latest.lsb-release
     latest.networkmanager
@@ -226,18 +229,14 @@ in {
     latest.bandwhich
     latest.bat
     latest.browserpass
+    latest.caddy
     latest.cargo
     latest.cargo-audit
-    latest.cargo-bloat
     latest.cargo-deps
     latest.cargo-edit
-    latest.cargo-outdated
     latest.cargo-release
     latest.cargo-sweep
     latest.cargo-update
-    latest.gitAndTools.diff-so-fancy
-    latest.gitAndTools.git-crypt
-    latest.gitAndTools.git-extras
     latest.diskus
     latest.du-dust
     latest.exa
@@ -245,13 +244,21 @@ in {
     latest.figlet
     latest.fontconfig
     latest.fzf
+    latest.gitAndTools.diff-so-fancy
     latest.gitAndTools.gh
+    latest.gitAndTools.git-crypt
+    latest.gitAndTools.git-extras
+    latest.gitAndTools.hub
     latest.git
     latest.glow
     latest.gnome3.gnome-shell-extensions
     latest.gnome3.gnome-tweaks
     latest.gnumake
-    latest.gitAndTools.hub
+    (latest.google-chrome.overrideAttrs(old: {
+      sha256 = "16rmzyzjmxmhmr5yqbzqbwf5sq94iqcwlm04fkafiwcycd17nyhs";
+      sha256bin64 = "0wjmc1wdmwiq9d1f5gk4c9jkj1p116kaz9nb0hvhjf01iv07xl2m";
+      version = "85.0.4168.2";
+    }))
     latest.hugo
     latest.hyperfine
     latest.jq
@@ -270,10 +277,9 @@ in {
     latest.sass
     latest.shellcheck
     latest.shfmt
-    latest.spotify-tui
+    latest.spotify
     latest.starship
     latest.tdesktop
-    latest.vivaldi
     latest.vscode
     latest.zoxide
   ];
