@@ -232,16 +232,13 @@ in {
     latest.caddy
     latest.cargo
     latest.cargo-audit
-    latest.cargo-deps
     latest.cargo-edit
     latest.cargo-release
     latest.cargo-sweep
     latest.cargo-update
     latest.diskus
-    latest.du-dust
     latest.exa
     latest.fd
-    latest.figlet
     latest.fontconfig
     latest.fzf
     latest.gitAndTools.diff-so-fancy
@@ -250,7 +247,6 @@ in {
     latest.gitAndTools.git-extras
     latest.gitAndTools.hub
     latest.git
-    latest.glow
     latest.gnome3.gnome-shell-extensions
     latest.gnome3.gnome-tweaks
     latest.gnumake
@@ -265,13 +261,11 @@ in {
     latest.mosh
     latest.nano
     latest.ncdu
-    latest.neo-cowsay
     latest.neofetch
     latest.nixfmt
     latest.nodejs-13_x
     latest.pass
     latest.patchelf
-    latest.procs
     latest.ripgrep
     latest.rustup
     latest.sass
