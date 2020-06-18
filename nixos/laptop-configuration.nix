@@ -247,12 +247,7 @@ in {
     latest.bat
     latest.browserpass
     latest.caddy
-    latest.cargo
-    latest.cargo-audit
-    latest.cargo-bloat
-    latest.cargo-deps
     latest.cargo-edit
-    latest.cargo-outdated
     latest.cargo-release
     latest.cargo-sweep
     latest.cargo-update
