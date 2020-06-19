@@ -6,15 +6,16 @@
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 export SCRIPT_DIR
 
-if type starship &>/dev/null; then
-  eval "$(starship init bash)"
-  export STARSHIP_CONFIG="${SCRIPT_DIR}/starship.toml"
-fi
-
 # Nix installer
 # shellcheck disable=SC1090
 if [ -e "${HOME}"/.nix-profile/etc/profile.d/nix.sh ]; then
   source "${HOME}"/.nix-profile/etc/profile.d/nix.sh
+fi
+
+# Starship
+if type starship &>/dev/null; then
+  eval "$(starship init bash)"
+  export STARSHIP_CONFIG="${SCRIPT_DIR}/starship.toml"
 fi
 
 # Bash completion
