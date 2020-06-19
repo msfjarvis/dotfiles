@@ -8,7 +8,7 @@ let
   masterTarball =
     fetchTarball "https://github.com/NixOS/nixpkgs/archive/master.tar.gz";
   customTarball = fetchTarball
-    "https://github.com/msfjarvis/custom-nixpkgs/archive/cec5c9cf897502a444d3843f7a0aaaa852bd3fe2.tar.gz";
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/fe53e3a96226.tar.gz";
 
 in {
   imports = [ # Include the results of the hardware scan.
