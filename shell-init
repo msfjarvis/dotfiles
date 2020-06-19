@@ -6,6 +6,11 @@
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 export SCRIPT_DIR
 
+if type starship &>/dev/null; then
+  eval "$(starship init bash)"
+  export STARSHIP_CONFIG="${SCRIPT_DIR}/starship.toml"
+fi
+
 # Nix installer
 # shellcheck disable=SC1090
 if [ -e "${HOME}"/.nix-profile/etc/profile.d/nix.sh ]; then
@@ -24,6 +29,11 @@ fi
 # bash history setup
 export HISTCONTROL="ignoreboth"
 
+# Enable pass user extensions
+if type pass &>/dev/null; then
+  export PASSWORD_STORE_ENABLE_EXTENSIONS=true
+fi
+
 # Shell PS1
 # shellcheck disable=SC2154
 export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\W\[\033[00m\]$(__git_ps1 " (%s)") \$ '
@@ -32,10 +42,15 @@ export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]: 
 export CCACHE_DIR="${HOME}/.ccache"
 
 # Android env variables
-export ANDROID_SDK_ROOT="${HOME}"/Android/Sdk
-export ANDROID_HOME="${ANDROID_SDK_ROOT}"
-export GRADLE_USER_HOME=/mnt/mediahell/.gradle
-export PATH="${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
+if [ -d "${HOME}"/Android/Sdk ]; then
+  export ANDROID_SDK_ROOT="${HOME}"/Android/Sdk
+  export ANDROID_HOME="${ANDROID_SDK_ROOT}"
+  export PATH="${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
+fi
+# Gradle
+if [ -d /mnt/mediahell ]; then
+  export GRADLE_USER_HOME=/mnt/mediahell/.gradle
+fi
 
 # Nano love
 export EDITOR=nano
@@ -51,12 +66,6 @@ fi
 export SDKMAN_DIR="${HOME}/.sdkman"
 # shellcheck disable=SC1090
 [[ -s "${HOME}/.sdkman/bin/sdkman-init.sh" ]] && source "${HOME}/.sdkman/bin/sdkman-init.sh"
-
-# jEnv
-[ -d "${HOME}/.jenv" ] && {
-  export PATH="${HOME}/.jenv/bin:${PATH}"
-  eval "$(jenv init -)"
-}
 
 # Local bin directory
 [ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:${PATH}"
@@ -99,8 +108,3 @@ function reload() {
   # shellcheck disable=SC1090
   source ~/.bashrc
 }
-
-if type starship &>/dev/null; then
-  eval "$(starship init bash)"
-  export STARSHIP_CONFIG="${SCRIPT_DIR}/starship.toml"
-fi
