@@ -188,21 +188,6 @@ function gs() {
   gdrive list -m 100 --name-width 0 -q "name contains '${1:?}'"
 }
 
-# Publish a file to the download server
-function publish() {
-  local FILE REMOTE_DIR
-  FILE="${1}"
-  REMOTE_DIR="${2:-.superhidden}"
-  [ ! -f "${FILE}" ] && {
-    reportWarning "'${1}' does not exist!"
-    return
-  }
-  mkdir -p "${LOCAL_SITE_MIRROR}/${REMOTE_DIR}"
-  cp "${FILE:?}" "${LOCAL_SITE_MIRROR}/${REMOTE_DIR}/"
-  syncup "${REMOTE_DIR}"
-  printf "https://dl.msfjarvis.dev/%s" "${REMOTE_DIR}/$(basename "${FILE:?}")" | xclip -rmlastnl -selection clipboard
-}
-
 # Sync wallpapers to my server and notify the announcement chat
 function wallsync() {
   local MSG_FILE BASE_URL
