@@ -250,6 +250,7 @@ in {
     latest.gnome3.gnome-shell-extensions
     latest.gnome3.gnome-tweaks
     latest.gnumake
+    latest.go
     (latest.google-chrome.overrideAttrs(old: {
       sha256 = "16rmzyzjmxmhmr5yqbzqbwf5sq94iqcwlm04fkafiwcycd17nyhs";
       sha256bin64 = "0wjmc1wdmwiq9d1f5gk4c9jkj1p116kaz9nb0hvhjf01iv07xl2m";
@@ -259,6 +260,7 @@ in {
     latest.hyperfine
     latest.jq
     latest.mosh
+    latest.mpv
     latest.nano
     latest.ncdu
     latest.neofetch
