@@ -252,6 +252,7 @@ in {
     latest.cargo-sweep
     latest.cargo-update
     latest.diskus
+    latest.dnscontrol
     latest.exa
     latest.fd
     latest.fontconfig
