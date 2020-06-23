@@ -13,3 +13,4 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 alias zpl="xclip -out -selection clipboard | xargs \$HOME/bin/zpl | clip"
+alias avengers=gradle
