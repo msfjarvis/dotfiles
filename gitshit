@@ -58,3 +58,28 @@ function get_release_assets() {
   curl --silent "https://api.github.com/repos/${REPOSITORY}/releases/${RELEASE_ID}" | jq -r .assets[].browser_download_url # Get the download URL of the assets
   [ -f "${TMP_FILE}" ] && rm -f "${TMP_FILE}"
 }
+
+function gcp() {
+  [ ! -d ".git/" ] && {
+    reportError "Must be run in a work tree"
+    return 1
+  }
+
+  local COMMITISH="${1}"
+  local PREFIX="g/"
+  local REPO_SLUG
+  REPO_SLUG="$(git remote get-url origin | cut -d ':' -f 2)/"
+
+  if [ -z "${COMMITISH}" ]; then
+    COMMITISH="$(git rev-parse --short HEAD)"
+  fi
+
+  if [[ ${REPO_SLUG} =~ android-password-store ]]; then
+    PREFIX="ga/"
+    REPO_SLUG=""
+  fi
+
+  REPO_SLUG="$(echo "${REPO_SLUG}" | cut -d '/' -f 2)"
+
+  echo "https://msfjarvis.dev/${PREFIX}${REPO_SLUG}${COMMITISH}" | clip
+}
