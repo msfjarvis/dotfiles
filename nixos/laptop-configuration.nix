@@ -222,6 +222,7 @@ in {
 
   # Install udev packages
   services.udev.packages = with pkgs; [
+    android-udev-rules
     libu2f-host
     gnome3.gnome-settings-daemon
   ];
