@@ -79,7 +79,7 @@ function gcp() {
     REPO_SLUG=""
   fi
 
-  REPO_SLUG="$(echo "${REPO_SLUG}" | cut -d '/' -f 2)/"
+  REPO_SLUG="$(echo "${REPO_SLUG}" | cut -d '/' -f 2 | sed 's/\.git$//g')/"
 
   echo "https://msfjarvis.dev/${PREFIX}${REPO_SLUG}${COMMITISH:0:12}" | clip
 }
