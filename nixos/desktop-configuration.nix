@@ -57,12 +57,12 @@ in {
   # Configure fonts
   fonts = {
     enableDefaultFonts = true;
-    fonts = with pkgs; [
-      latest.cascadia-code
-      custom.jetbrains-mono-nerdfonts
-      latest.noto-fonts
-      latest.roboto
-      latest.ubuntu_font_family
+    fonts = with pkgs.latest; [
+      cascadia-code
+      pkgs.custom.jetbrains-mono-nerdfonts
+      noto-fonts
+      roboto
+      ubuntu_font_family
     ];
     fontconfig = {
       penultimate.enable = false;
@@ -75,31 +75,31 @@ in {
   };
 
   # List packages installed in system profile.
-  environment.systemPackages = with pkgs; [
-    latest.bind
-    latest.busybox
-    latest.clang_10
-    latest.cmake
-    latest.curl
-    latest.file
-    latest.htop
-    latest.ldns
-    latest.llvmPackages_10.bintools
-    latest.lsb-release
-    latest.networkmanager
-    latest.ninja
-    latest.openssl_1_1
-    latest.plata-theme
-    latest.python38
-    latest.python38Packages.python-fontconfig
-    latest.traceroute
-    latest.wget
-    latest.wireguard
-    latest.wireguard-go
-    latest.wireguard-tools
-    latest.unzip
-    latest.xclip
-    latest.xorg.xhost
+  environment.systemPackages = with pkgs.latest; [
+    bind
+    busybox
+    clang_10
+    cmake
+    curl
+    file
+    htop
+    ldns
+    llvmPackages_10.bintools
+    lsb-release
+    networkmanager
+    ninja
+    openssl_1_1
+    plata-theme
+    python38
+    python38Packages.python-fontconfig
+    traceroute
+    wget
+    wireguard
+    wireguard-go
+    wireguard-tools
+    unzip
+    xclip
+    xorg.xhost
   ];
 
   # Make sure ~/bin is in $PATH.
@@ -223,60 +223,60 @@ in {
   };
 
   # User-specific packages for me, myself and I.
-  users.users.msfjarvis.packages = with pkgs; [
-    latest.android-udev-rules
-    latest.aria2
-    latest.asciinema
-    latest.bandwhich
-    latest.bat
-    latest.browserpass
-    latest.caddy
-    latest.cargo-edit
-    latest.cargo-release
-    latest.cargo-sweep
-    latest.cargo-update
-    latest.diskus
-    latest.exa
-    latest.fd
-    latest.fontconfig
-    latest.fzf
-    latest.gitAndTools.diff-so-fancy
-    latest.gitAndTools.gh
-    latest.gitAndTools.git-crypt
-    latest.gitAndTools.git-extras
-    latest.gitAndTools.hub
-    latest.git
-    latest.gnome3.gnome-shell-extensions
-    latest.gnome3.gnome-tweaks
-    latest.gnumake
-    latest.go
-    (latest.google-chrome.overrideAttrs(old: {
+  users.users.msfjarvis.packages = with pkgs.latest; [
+    android-udev-rules
+    aria2
+    asciinema
+    bandwhich
+    bat
+    browserpass
+    caddy
+    cargo-edit
+    cargo-release
+    cargo-sweep
+    cargo-update
+    diskus
+    exa
+    fd
+    fontconfig
+    fzf
+    gitAndTools.diff-so-fancy
+    gitAndTools.gh
+    gitAndTools.git-crypt
+    gitAndTools.git-extras
+    gitAndTools.hub
+    git
+    gnome3.gnome-shell-extensions
+    gnome3.gnome-tweaks
+    gnumake
+    go
+    (google-chrome.overrideAttrs(old: {
       sha256 = "16rmzyzjmxmhmr5yqbzqbwf5sq94iqcwlm04fkafiwcycd17nyhs";
       sha256bin64 = "0wjmc1wdmwiq9d1f5gk4c9jkj1p116kaz9nb0hvhjf01iv07xl2m";
       version = "85.0.4168.2";
     }))
-    latest.hugo
-    latest.hyperfine
-    latest.jq
-    latest.mosh
-    latest.mpv
-    latest.nano
-    latest.ncdu
-    latest.neofetch
-    latest.nixfmt
-    latest.nodejs-13_x
-    latest.pass
-    latest.patchelf
-    latest.ripgrep
-    latest.rustup
-    latest.sass
-    latest.shellcheck
-    latest.shfmt
-    latest.spotify
-    latest.starship
-    latest.tdesktop
-    latest.vscode
-    latest.zoxide
+    hugo
+    hyperfine
+    jq
+    mosh
+    mpv
+    nano
+    ncdu
+    neofetch
+    nixfmt
+    nodejs-13_x
+    pass
+    patchelf
+    ripgrep
+    rustup
+    sass
+    shellcheck
+    shfmt
+    spotify
+    starship
+    tdesktop
+    vscode
+    zoxide
   ];
 
   # This value determines the NixOS release from which the default
