@@ -8,7 +8,7 @@ let
   masterTarball =
     fetchTarball "https://github.com/NixOS/nixpkgs/archive/master.tar.gz";
   customTarball = fetchTarball
-    "https://github.com/msfjarvis/custom-nixpkgs/archive/fe53e3a96226.tar.gz";
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/ca7357505641.tar.gz";
 
 in {
   imports = [ # Include the results of the hardware scan.
@@ -224,6 +224,7 @@ in {
 
   # User-specific packages for me, myself and I.
   users.users.msfjarvis.packages = with pkgs.latest; [
+    pkgs.custom.adx
     android-udev-rules
     aria2
     asciinema
