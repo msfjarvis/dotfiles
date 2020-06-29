@@ -14,26 +14,15 @@ source "${SCRIPT_DIR}"/common
 DEFCONFIG="${DEFCONFIG:-$(hostname)_defconfig}"
 
 # Setup variables
-CC="${CC:-$(command -v ccache) clang}"
-HOSTCC="${CC:-$(command -v ccache) clang}"
-LD="${LD:-ld.lld}"
 CLEAN=
 INSTALL=
 REGEN_DEFCONFIG=
 LOCALVERSION="${LOCALVERSION}"
 
 declare -a MAKE_FLAGS=(
-  "AR=llvm-ar"
   "ARCH=x86"
-  "CC=${CC}"
-  "HOSTCC=${HOSTCC}"
-  "HOSTLD=${LD}"
   "INSTALL_MOD_STRIP=1"
-  "LD=${LD}"
   "LOCALVERSION=${LOCALVERSION}"
-  "OBJCOPY=llvm-objcopy"
-  "NM=llvm-nm"
-  "STRIP=llvm-strip"
   "SUBARCH=x86_64"
 )
 
