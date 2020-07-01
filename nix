@@ -12,7 +12,7 @@ function nixsync() {
 }
 
 function nixrstr() {
-  [ -f "${SCRIPT_DIR}"/packages.nix.list ] && return
+  [ -f "${SCRIPT_DIR}"/packages.nix.list ] || return
   while read -r pkg; do nix-env -i "${pkg}"; done < <(cat "${SCRIPT_DIR}"/packages.nix.list)
 }
 
