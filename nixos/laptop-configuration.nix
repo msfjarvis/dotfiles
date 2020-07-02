@@ -108,6 +108,7 @@ in {
     openssl_1_1
     plata-theme
     python38
+    python38Packages.pip
     python38Packages.python-fontconfig
     traceroute
     wget
