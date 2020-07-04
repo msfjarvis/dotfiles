@@ -5,7 +5,7 @@
 
 alias git=hub
 alias cat='bat --style=grid --theme="zenburn"'
-alias pidcat='pidcat -i ResourceType -i chatty'
+alias pidcat='pidcat -i ResourceType -i chatty -i AppCompatDelegate'
 alias today='date +"%Y%m%d"'
 alias ..="cd .."
 alias ...="cd ../.."
