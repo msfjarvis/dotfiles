@@ -27,8 +27,8 @@ in {
 
   fileSystems."/".options = [ "noatime" ];
 
-  # Use the latest available kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Use the latest RC kernel.
+  boot.kernelPackages = pkgs.linuxPackages_testing;
 
   # Enable the rtl8821ce module
   boot.extraModulePackages = with config.boot.kernelPackages;
