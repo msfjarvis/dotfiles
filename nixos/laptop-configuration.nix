@@ -38,8 +38,8 @@ in {
         src = pkgs.fetchFromGitHub {
           owner = "tomaspinho";
           repo = "rtl8821ce";
-          rev = "69765eb288a8dfad3b055b906760b53e02ab1dea";
-          sha256 = "17jiw25k74kv5lnvgycvj2g1n06hbrpjz6p4znk4a62g136rhn4s";
+          rev = "18c1f607c10307a249be82cb398fb08eb7857a9f";
+          sha256 = "078la5nfa3kq3477j4vlbpch954swz6di0yf9185ddf80rr5da20";
         };
       }))
     ];
