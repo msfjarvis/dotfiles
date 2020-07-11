@@ -283,6 +283,7 @@ in {
     neofetch
     nixfmt
     nodejs-13_x
+    oathToolkit
     pass
     patchelf
     ripgrep
