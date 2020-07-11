@@ -238,9 +238,7 @@ in {
     extraGroups = [ "wheel" "networking" ]; # Enable ‘sudo’ for the user.
   };
 
-  users.users.shruti = {
-    isNormalUser = true;
-  };
+  users.users.shruti = { isNormalUser = true; };
 
   # User-specific packages for me, myself and I.
   users.users.msfjarvis.packages = with pkgs.latest; [
@@ -273,11 +271,7 @@ in {
     gnome3.gnome-tweaks
     gnumake
     go
-    (google-chrome.overrideAttrs(old: {
-      sha256 = "16rmzyzjmxmhmr5yqbzqbwf5sq94iqcwlm04fkafiwcycd17nyhs";
-      sha256bin64 = "0wjmc1wdmwiq9d1f5gk4c9jkj1p116kaz9nb0hvhjf01iv07xl2m";
-      version = "85.0.4168.2";
-    }))
+    google-chrome-dev
     hugo
     hyperfine
     jq
@@ -302,14 +296,7 @@ in {
     zoxide
   ];
 
-  users.users.shruti.packages = with pkgs.latest; [
-    (google-chrome.overrideAttrs(old: {
-      sha256 = "16rmzyzjmxmhmr5yqbzqbwf5sq94iqcwlm04fkafiwcycd17nyhs";
-      sha256bin64 = "0wjmc1wdmwiq9d1f5gk4c9jkj1p116kaz9nb0hvhjf01iv07xl2m";
-      version = "85.0.4168.2";
-    }))
-  ];
-
+  users.users.shruti.packages = with pkgs.latest; [ google-chrome-dev ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
