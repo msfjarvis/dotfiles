@@ -93,6 +93,7 @@ in {
     python38
     python38Packages.pip
     python38Packages.python-fontconfig
+    sqlite
     traceroute
     wget
     wireguard
