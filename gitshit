@@ -65,21 +65,30 @@ function gcp() {
     return 1
   }
 
-  local COMMITISH="${1}"
+  local OG_COMMITISH="${1}"
   local PREFIX="g/"
-  local REPO_SLUG
+  local REPO_SLUG COMMITISH
   REPO_SLUG="$(git remote get-url origin | cut -d ':' -f 2)/"
 
-  if [ -z "${COMMITISH}" ]; then
-    COMMITISH="$(git rev-parse --short HEAD)"
+  if [ -z "${OG_COMMITISH}" ]; then
+    OG_COMMITISH="HEAD"
   fi
 
+  COMMITISH="$(git rev-parse --short "${OG_COMMITISH}" 2>/dev/null)"
+
+  if [ -z "${COMMITISH}" ]; then
+    reportWarning "Failed to find a commit for '${OG_COMMITISH}'"
+    return 1
+  fi
+
+
   if [[ ${REPO_SLUG} =~ android-password-store ]]; then
-    PREFIX="ga/"
+    PREFIX="aps/"
     REPO_SLUG=""
   fi
 
-  REPO_SLUG="$(echo "${REPO_SLUG}" | cut -d '/' -f 2 | sed 's/\.git$//g')/"
+  REPO_SLUG="$(echo "${REPO_SLUG}" | cut -d '/' -f 2 | sed 's/\.git$//g')"
+  [ -n "${REPO_SLUG}" ] && REPO_SLUG="${REPO_SLUG}/"
 
   echo "https://msfjarvis.dev/${PREFIX}${REPO_SLUG}${COMMITISH:0:12}" | clip
 }
