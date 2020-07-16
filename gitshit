@@ -81,7 +81,6 @@ function gcp() {
     return 1
   fi
 
-
   if [[ ${REPO_SLUG} =~ android-password-store ]]; then
     PREFIX="aps/"
     REPO_SLUG=""
