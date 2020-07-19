@@ -6,13 +6,14 @@ ccache-3.7.10
 cmake-3.17.3
 curl-7.71.0
 diff-so-fancy-1.3.0
+direnv-2.21.3
 diskus-0.6.0
 dnscontrol-3.2.0
 exa-0.9.0
 fd-8.1.1
 ffmpeg-4.3
 fzf-0.21.1
-gh-0.10.1
+gh-0.11.0
 git-extras-6.0.0
 glow-0.2.0
 go-1.15beta1
