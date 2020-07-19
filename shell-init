@@ -18,6 +18,11 @@ if type starship &>/dev/null; then
   export STARSHIP_CONFIG="${SCRIPT_DIR}/starship.toml"
 fi
 
+# direnv
+if type direnv &>/dev/null; then
+  eval "$(direnv hook bash)"
+fi
+
 # Bash completion
 # shellcheck disable=SC1090
 if [ -d "${HOME}"/bash_completion.d ]; then
