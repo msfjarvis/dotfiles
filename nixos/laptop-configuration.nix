@@ -112,6 +112,7 @@ in {
     python38Packages.python-fontconfig
     sqlite
     traceroute
+    tree
     wget
     wireguard-tools
     unzip
@@ -250,7 +251,6 @@ in {
     bandwhich
     bat
     browserpass
-    caddy
     cargo-edit
     cargo-release
     cargo-sweep
@@ -275,6 +275,7 @@ in {
     google-chrome-dev
     hugo
     hyperfine
+    imagemagick
     jq
     mosh
     mpv
