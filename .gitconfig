@@ -81,3 +81,5 @@
 	noprefix = true
 [log]
 	follow = true
+[init]
+	defaultBranch = main
