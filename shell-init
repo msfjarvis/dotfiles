@@ -73,15 +73,18 @@ export SDKMAN_DIR="${HOME}/.sdkman"
 # shellcheck disable=SC1090
 [[ -s "${HOME}/.sdkman/bin/sdkman-init.sh" ]] && source "${HOME}/.sdkman/bin/sdkman-init.sh"
 
-# Local bin directory
-[ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:${PATH}"
-
 # cargo env
 # shellcheck disable=SC1090
 [ -f "${HOME}"/.cargo/env ] && source "${HOME}"/.cargo/env
 
+# Local bin directory
+[ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:${PATH}"
+
 # Golang binaries
 [ -d "${HOME}/go/bin" ] && export PATH="${HOME}/go/bin:${PATH}"
+
+# npm
+[ -d "${HOME}/.npm-global/bin" ]; export PATH="${HOME}/.npm-global/bin:${PATH}"
 
 # shellcheck source=bash_completions.bash
 source "${SCRIPT_DIR}"/bash_completions.bash
