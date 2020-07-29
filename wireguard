@@ -20,14 +20,14 @@ function wgpack() {
   local TMP_DIR
   TMP_DIR="$(mktemp -d)"
   fd -tf 'conf$' ~/wireguard/ -x cp {} "${TMP_DIR}"/
-  zip -jr ~/wireguard/mullvad-wireguard-configs.zip "${TMP_DIR}"/*
+  zip -jr ~/wireguard/mullvad_wireguard_linux_all_all.zip "${TMP_DIR}"/*
   rm -rf "${TMP_DIR}"
 }
 
 function wginstall() {
-  if [ -f ~/wireguard/mullvad-wireguard-configs.zip ]; then
+  if [ -f ~/wireguard/mullvad_wireguard_linux_all_all.zip ]; then
     fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -X rm
-    unzip -o ~/wireguard/mullvad-wireguard-configs.zip -d ~/wireguard/ 1>/dev/null
+    unzip -o ~/wireguard/mullvad_wireguard_linux_all_all.zip -d ~/wireguard/ 1>/dev/null
   fi
   fd --maxdepth 1 -tf 'conf$' /etc/wireguard/ -X sudo rm -v {}
   fd --maxdepth 1 -tf 'conf$' ~/wireguard/ -x sudo cp -v {} /etc/wireguard/'{/}'
@@ -36,7 +36,7 @@ function wginstall() {
 
 function wgdiff() {
   cd ~/wireguard || return 1
-  while read -r conf; do if [ -n "$conf" ]; then if [ ! -f "$conf" ]; then echo "$conf does not exist"; fi; fi; done < <(unzip -l mullvad-wireguard-configs.zip | grep conf | awk '{print $4}')
+  while read -r conf; do if [ -n "$conf" ]; then if [ ! -f "$conf" ]; then echo "$conf does not exist"; fi; fi; done < <(unzip -l mullvad_wireguard_linux_all_all.zip | grep conf | awk '{print $4}')
   cd - 1>/dev/null || return 1
 }
 
