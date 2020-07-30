@@ -1,0 +1,100 @@
+# Don't print a new line at the start of the prompt
+add_newline = false
+
+# Replace some prompt characters for size and legibility reasons
+[character]
+symbol = "➜"
+
+[git_branch]
+symbol = " "
+
+[git_status]
+disabled = true
+ahead = ""
+behind = ""
+diverged = ""
+
+[java]
+symbol = " "
+
+[rust]
+symbol = " "
+
+# Disable all the modules I don't use
+[aws]
+disabled = true
+
+[battery]
+disabled = true
+
+[cmd_duration]
+disabled = true
+
+[conda]
+disabled = true
+
+[crystal]
+disabled = true
+
+[docker_context]
+disabled = true
+
+[dotnet]
+disabled = true
+
+[elixir]
+disabled = true
+
+[elm]
+disabled = true
+
+[env_var]
+disabled = true
+
+[erlang]
+disabled = true
+
+[golang]
+disabled = true
+
+[haskell]
+disabled = true
+
+[hg_branch]
+disabled = true
+
+[hostname]
+disabled = true
+
+[jobs]
+disabled = true
+
+[julia]
+disabled = true
+
+[kubernetes]
+disabled = true
+
+[line_break]
+disabled = true
+
+[memory_usage]
+disabled = true
+
+[nix_shell]
+disabled = true
+
+[nodejs]
+disabled = true
+
+[ruby]
+disabled = true
+
+[php]
+disabled = true
+
+[terraform]
+disabled = true
+
+[singularity]
+disabled = true
