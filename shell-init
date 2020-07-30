@@ -14,7 +14,7 @@ fi
 
 # Starship
 if type starship &>/dev/null; then
-  eval "$(starship init bash)"
+  eval "$(starship init "$(basename "${SHELL}")")"
   export STARSHIP_CONFIG="${SCRIPT_DIR}/starship.toml"
 fi
 
