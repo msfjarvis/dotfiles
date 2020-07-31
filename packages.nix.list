@@ -13,15 +13,15 @@ exa-0.9.0
 fd-8.1.1
 ffmpeg-4.3.1
 fzf-0.21.1
-gh-0.11.0
+gh-0.11.1
 git-extras-6.0.0
 glow-0.2.0
-go-1.15beta1
+go-1.14.6
+htop-2.2.0
 hub-2.14.2
-hugo-0.73.0
+hugo-0.74.3
 hyperfine-1.10.0
 meson-0.54.2
-nano-4.9.3
 neofetch-7.0.0
 ninja-1.10.0
 nix-2.3.7
@@ -32,5 +32,5 @@ ripgrep-12.1.1
 shellcheck-0.7.1
 shfmt-3.1.2
 starship-0.44.0
-youtube-dl-2020.06.16.1
+youtube-dl-2020.07.28
 zoxide-0.4.3
