@@ -285,7 +285,7 @@ in {
     ncspot
     neofetch
     nixfmt
-    nodejs-13_x
+    nodejs-14_x
     oathToolkit
     pass
     patchelf
