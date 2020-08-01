@@ -95,9 +95,9 @@ in {
     python38Packages.python-fontconfig
     sqlite
     traceroute
+    tree
     wget
     wireguard
-    wireguard-go
     wireguard-tools
     unzip
     xclip
@@ -239,7 +239,9 @@ in {
     cargo-sweep
     cargo-update
     cargo-watch
+    direnv
     diskus
+    dnscontrol
     exa
     fd
     fontconfig
@@ -257,6 +259,7 @@ in {
     google-chrome-dev
     hugo
     hyperfine
+    imagemagick
     jq
     mosh
     mpv
@@ -286,7 +289,7 @@ in {
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "20.03"; # Did you read the comment?
+  system.stateVersion = "20.09"; # Did you read the comment?
 
   system.copySystemConfiguration = true;
 }

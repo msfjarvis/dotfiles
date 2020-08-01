@@ -256,6 +256,7 @@ in {
     cargo-sweep
     cargo-update
     cargo-watch
+    direnv
     diskus
     dnscontrol
     exa
