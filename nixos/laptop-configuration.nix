@@ -134,6 +134,9 @@ in {
   # Enable browserpass
   programs.browserpass.enable = true;
 
+  # Enable TLP
+  services.tlp.enable = true;
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
