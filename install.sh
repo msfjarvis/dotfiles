@@ -32,7 +32,6 @@ fi
 if [ -z "${IS_NIX}" ]; then
   bash -i "${SCRIPT_DIR}"/setup/android-udev.sh
   bash -i "${SCRIPT_DIR}"/setup/xclip.sh
-  bash -i "${SCRIPT_DIR}"/setup/gdrive.sh
 fi
 
 cd "${SCRIPT_DIR}" || exit 1
