@@ -73,5 +73,5 @@ for SCRIPT in "${SCRIPTS[@]}"; do
 done
 
 echoText "Setting up gitconfig"
-mv ~/.gitconfig ~/.gitconfig.old 2>/dev/null # Failsafe in case we screw up
 cp "${SCRIPT_DIR}/.gitconfig" ~/.gitconfig
+cp "${SCRIPT_DIR}/.global-gitignore" ~/.gitignore
