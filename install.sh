@@ -14,8 +14,9 @@ source "${SCRIPT_DIR}"/system
 
 trap 'exit 1' INT TERM
 
-if ! command -v apt; then
-  IS_NIX=true
+IS_NIX=true
+if type apt &>/dev/null; then
+  unset IS_NIX
 fi
 declare -a SCRIPTS=("build-kernel" "paste" "zpl")
 
