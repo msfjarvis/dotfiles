@@ -201,6 +201,9 @@ in {
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
+  networking.hosts = {
+    "192.168.0.102" = [ "ryzenbox" ];
+  };
 
   # Enable sound.
   sound.enable = true;
