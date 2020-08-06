@@ -301,7 +301,7 @@ in {
     shellcheck
     shfmt
     starship
-    tdesktop
+    pkgs.tdesktop
     vscode
     zoxide
   ];
