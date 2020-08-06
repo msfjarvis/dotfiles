@@ -11,7 +11,7 @@ source "${SCRIPT_DIR}"/common
 function tgm() {
   local CHAT_ID
   CHAT_ID="${2}"
-  [ "${2}" == "" ] && CHAT_ID="${MSF_TG_ID}"
+  [ "${2}" == "" ] && CHAT_ID="${MY_TG_ID}"
   curl -F chat_id="${CHAT_ID}" -F parse_mode="markdown" -F disable_web_page_preview="true" -F text="${1}" "https://api.telegram.org/bot${TG_BOT_ID}/sendMessage" >/dev/null 2>&1
 }
 
@@ -30,12 +30,12 @@ function tg() {
   local CAPTION
   CAPTION="${3}"
   if [ "${2}" == "" ]; then
-    CHAT_ID="${MSF_TG_ID}"
+    CHAT_ID="${MY_TG_ID}"
   elif [[ ${2} =~ "-100" ]]; then
     CHAT_ID="${2}"
   else
     CAPTION="${2}"
-    CHAT_ID="${MSF_TG_ID}"
+    CHAT_ID="${MY_TG_ID}"
   fi
   curl -F chat_id="${CHAT_ID}" -F document="@${1}" -F caption="${CAPTION}" -F parse_mode="Markdown" "https://api.telegram.org/bot${TG_BOT_ID}/sendDocument" >/dev/null 2>&1
 }
