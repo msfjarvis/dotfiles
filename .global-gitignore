@@ -1,3 +1,4 @@
 .envrc
 *.jks
 keystore.properties
+.direnv/
