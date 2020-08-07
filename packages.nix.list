@@ -2,6 +2,7 @@ act-0.2.10
 asciinema-2.0.2
 bandwhich-0.16.0
 bat-0.15.4
+caddy-1.0.5
 ccache-3.7.10
 cmake-3.17.3
 curl-7.71.1
@@ -16,7 +17,7 @@ fzf-0.21.1
 gh-0.11.1
 git-extras-6.0.0
 glow-0.2.0
-go-1.14.6
+go-1.15beta1
 htop-2.2.0
 hub-2.14.2
 hugo-0.74.3
@@ -25,6 +26,7 @@ meson-0.54.2
 neofetch-7.0.0
 ninja-1.10.0
 nix-2.3.7
+nixfmt-0.4.0
 nodejs-12.18.3
 oath-toolkit-2.6.2
 procs-0.10.3
