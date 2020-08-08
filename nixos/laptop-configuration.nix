@@ -30,6 +30,9 @@ in {
   # Use the latest RC kernel.
   boot.kernelPackages = pkgs.latest.linuxPackages_testing;
 
+  # Enable NTFS support
+  boot.supportedFilesystems = [ "ntfs" ];
+
   # Enable the rtl8821ce module
   boot.extraModulePackages = with config.boot.kernelPackages;
     [
