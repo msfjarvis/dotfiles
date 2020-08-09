@@ -32,6 +32,13 @@ if [ -d "${HOME}"/bash_completion.d ]; then
   done
 fi
 
+if [ -d "${HOME}"/.nix-profile/etc/bash_completion.d ]; then
+  for COMPLETION in "${HOME}/.nix-profile/etc/bash_completion.d/"*; do
+    # shellcheck disable=SC1090
+    [[ -r $COMPLETION ]] && source "$COMPLETION"
+  done
+fi
+
 # bash history setup
 export HISTCONTROL="ignoreboth"
 
