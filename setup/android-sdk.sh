@@ -6,7 +6,7 @@
 # shellcheck source=setup/common.sh
 source "${SCRIPT_DIR:?}"/setup/common.sh
 
-SDK_TOOLS=commandlinetools-linux-6200805_latest.zip
+SDK_TOOLS=commandlinetools-linux-6609375_latest.zip
 
 function setup_android_sdk() {
   echoText "Installing Android SDK"
