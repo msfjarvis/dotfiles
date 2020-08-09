@@ -3,7 +3,10 @@
 # Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
 # SPDX-License-Identifier: GPL-3.0-only
 
+set -euo pipefail
+
 trap "rm -f /tmp/zulu_jdk.deb 2>/dev/null" INT TERM EXIT
+
 # shellcheck source=common
 source "${SCRIPT_DIR:?}"/common
 

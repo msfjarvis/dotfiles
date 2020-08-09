@@ -3,6 +3,8 @@
 # Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
 # SPDX-License-Identifier: GPL-3.0-only
 
+set -euo pipefail
+
 trap 'rm -rf /tmp/xclip 2>/dev/null' INT TERM EXIT
 
 # shellcheck source=setup/common.sh
