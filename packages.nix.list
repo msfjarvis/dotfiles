@@ -16,7 +16,6 @@ ffmpeg-4.3.1
 fzf-0.22.0
 gh-0.11.1
 git-extras-6.0.0
-git-minimal-2.28.0
 glow-0.2.0
 go-1.14.6
 htop-2.2.0
@@ -30,7 +29,6 @@ nix-2.3.7
 nixfmt-0.4.0
 nodejs-12.18.3
 oath-toolkit-2.6.2
-password-store-1.7.3
 procs-0.10.3
 ripgrep-12.1.1
 shellcheck-0.7.1
