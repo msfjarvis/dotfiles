@@ -60,9 +60,6 @@ if [ -f ~/.bashrc ]; then
     reportWarning "shell-init is not sourced in the bashrc, appending"
     echo "source ${SCRIPT_DIR}/shell-init" >>~/.bashrc
   fi
-else
-  reportWarning "shell-init is not sourced in the bashrc, appending"
-  echo "source ${SCRIPT_DIR}/shell-init" >>~/.bashrc
 fi
 
 echoText "Installing scripts"
@@ -75,3 +72,9 @@ done
 echoText "Setting up gitconfig"
 cp "${SCRIPT_DIR}/.gitconfig" ~/.gitconfig
 cp "${SCRIPT_DIR}/.global-gitignore" ~/.gitignore
+
+if type kitty &>/dev/null; then
+  mkdir -p "${HOME}/.config/kitty"
+  ln -sf "${SCRIPT_DIR}/kitty/kitty.conf" "${HOME}/.config/kitty"
+  ln -sf "${SCRIPT_DIR}/kitty/snazzy.conf" "${HOME}/.config/kitty"
+fi
