@@ -270,6 +270,7 @@ in {
     dnscontrol
     exa
     fd
+    firefox-bin
     fontconfig
     fzf
     gitAndTools.diff-so-fancy
