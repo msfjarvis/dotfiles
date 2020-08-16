@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 alias git=hub
-alias cat='bat --style=grid --theme="zenburn"'
+alias cat='bat --style=grid,header --theme="zenburn"'
 alias pidcat='pidcat -i ResourceType -i chatty -i AppCompatDelegate'
 alias today='date +"%Y%m%d"'
 alias ..="cd .."
