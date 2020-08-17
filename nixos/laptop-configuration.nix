@@ -11,8 +11,11 @@ let
     "https://github.com/msfjarvis/custom-nixpkgs/archive/ca7357505641.tar.gz";
 
 in {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    # Include musnix
+    ./musnix
   ];
 
   # Enable non-free packages, and add an `latest` reference to use packages
@@ -48,7 +51,20 @@ in {
     ];
 
   # Set come cmdline options for AMDGPU
-  boot.kernelParams = [ "amd_iommu=pt" "ivrs_ioapic[32]=00:14.0" "iommu=soft" ];
+  boot.kernelParams = [
+    "amd_iommu=pt"
+    "ivrs_ioapic[32]=00:14.0"
+    "iommu=soft"
+    "nosmt"
+    "isolcpus=1-7"
+    "nohz_full=1-7"
+    "rcu_nocbs=1-7"
+    "transparent_hugepage=never"
+    "mitigations=off"
+  ];
+
+  # Set sysctl parameters
+  boot.kernel.sysctl = { "vm.stat_interval" = "120"; };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -94,6 +110,9 @@ in {
     };
   };
 
+  # Enable musnix
+  musnix.enable = true;
+
   # List packages installed in system profile.
   environment.systemPackages = with pkgs.latest; [
     bind
@@ -136,9 +155,6 @@ in {
 
   # Enable browserpass
   programs.browserpass.enable = true;
-
-  # Enable TLP
-  services.tlp.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -246,7 +262,8 @@ in {
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.msfjarvis = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networking" ]; # Enable ‘sudo’ for the user.
+    extraGroups =
+      [ "wheel" "networking" "audio" ]; # Enable ‘sudo’ for the user.
   };
 
   users.users.shruti = { isNormalUser = true; };
