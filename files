@@ -247,11 +247,17 @@ function whitespace() {
 }
 
 function pwallsync() {
-  if [ -n "${1}" ]; then
-    adb-sync -dt "${LOCAL_SITE_MIRROR}/.phone_walls/Dawn" /sdcard/Pictures/
-  else
-    adb-sync -dtR /sdcard/Pictures/Dawn "${LOCAL_SITE_MIRROR}/.phone_walls/"
+  local OPTIONS
+  if [ -n "${DEVICE}" ]; then
+    OPTIONS="-s ${DEVICE}"
   fi
+  if [ -n "${1}" ]; then
+    OPTIONS="${OPTIONS} -dt ${LOCAL_SITE_MIRROR:?}/.phone_walls/Dawn /sdcard/Pictures/"
+  else
+    OPTIONS="${OPTIONS} -dtR /sdcard/Pictures/Dawn ${LOCAL_SITE_MIRROR:?}/.phone_walls/"
+  fi
+  # I have no fucking idea why I need to do this
+  echo adb-sync "${OPTIONS[@]}" | bash
 }
 
 function mkgif() {
