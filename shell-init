@@ -59,7 +59,8 @@ if [ -d "${HOME}"/Android/Sdk ]; then
   export ANDROID_SDK_ROOT="${HOME}"/Android/Sdk
   export ANDROID_HOME="${ANDROID_SDK_ROOT}"
   if [ -d "${ANDROID_SDK_ROOT}"/build-tools ]; then
-    export PATH="${ANDROID_SDK_ROOT}/build-tools/$(ls -t ${ANDROID_SDK_ROOT}/build-tools | head -n1):${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
+    BUILD_TOOLS_DIR="$(fd -td --maxdepth 1 . "${ANDROID_SDK_ROOT}"/build-tools | sort -nr | head -n1)"
+    export PATH="${BUILD_TOOLS_DIR}:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
   else
     export PATH="${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
   fi
