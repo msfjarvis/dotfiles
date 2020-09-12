@@ -72,9 +72,3 @@ done
 echoText "Setting up gitconfig"
 cp "${SCRIPT_DIR}/.gitconfig" ~/.gitconfig
 cp "${SCRIPT_DIR}/.global-gitignore" ~/.gitignore
-
-if type kitty &>/dev/null; then
-  mkdir -p "${HOME}/.config/kitty"
-  ln -sf "${SCRIPT_DIR}/kitty/kitty.conf" "${HOME}/.config/kitty"
-  ln -sf "${SCRIPT_DIR}/kitty/snazzy.conf" "${HOME}/.config/kitty"
-fi
