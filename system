@@ -43,6 +43,14 @@ function reboot() {
   esac
 }
 
+function pkgdiff() {
+  comm -13 <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort) <(
+    comm -23 \
+      <(dpkg-query -W -f='${Package}\n' | sed 1d | sort) \
+      <(apt-mark showauto | sort)
+  )
+}
+
 function endtask() {
   for pid in $(pgrep "${1:?}"); do kill -9 "${pid}" 2>/dev/null; done
 }
