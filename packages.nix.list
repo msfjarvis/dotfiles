@@ -1,9 +1,11 @@
 act-0.2.13
+aria2-1.35.0
 asciinema-2.0.2
 bandwhich-0.17.0
 bat-0.15.4
 ccache-3.7.11
 cmake-3.18.2
+cowsay-3.03+dfsg2
 curl-7.72.0
 diff-so-fancy-1.3.0
 direnv-2.22.0
@@ -22,6 +24,8 @@ htop-3.0.1
 hub-2.14.2
 hugo-0.74.3
 hyperfine-1.10.0
+jq-1.6
+lolcat-100.0.1
 meson-0.55.1
 neofetch-7.1.0
 ninja-1.10.1
