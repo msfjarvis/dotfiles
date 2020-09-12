@@ -26,7 +26,7 @@ mkdir -p ~/bin/
 # Install standard packages.
 if [ -z "${IS_NIX}" ]; then
   echoText "Installing necessary packages"
-  sudo apt install -y aria2 autoconf automake cowsay fortune-mod fortunes fortunes-off inkscape jq libxmu-dev libgdk-pixbuf2.0-dev libncursesw5-dev libxml2-utils lolcat mosh wget sassc
+  sudo apt install -y autoconf automake inkscape mosh wget
 fi
 
 if [ -z "${IS_NIX}" ]; then

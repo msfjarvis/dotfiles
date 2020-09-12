@@ -14,7 +14,7 @@ ZULU_PACKAGE_URL="https://cdn.azul.com/zulu/bin/zulu14.27.1-ca-jdk14-linux_amd64
 ZULU_PACKAGE_CHECKSUM="16a7bad82c0f427f1896ec42914b67f5fc0b7841859c3b61b776c30773b44e78"
 
 function download_jdk() {
-  aria2c "${ZULU_PACKAGE_URL}" -d "/tmp" -o "zulu_jdk.deb"
+  wget "${ZULU_PACKAGE_URL}" -O /tmp/zulu_jdk.deb
 }
 
 function verify_checksum() {
