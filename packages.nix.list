@@ -1,5 +1,6 @@
 act-0.2.13
 aria2-1.35.0
+arp-scan-1.9.7
 asciinema-2.0.2
 bandwhich-0.17.0
 bat-0.15.4
@@ -27,6 +28,7 @@ hyperfine-1.10.0
 jq-1.6
 lolcat-100.0.1
 meson-0.55.1
+ncdu-1.15.1
 neofetch-7.1.0
 ninja-1.10.1
 nix-2.3.7
