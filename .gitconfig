@@ -47,7 +47,7 @@
 	los = log --oneline --stat
 	lof = log --format=fixes
 	lst = ls-tree --full-tree -r HEAD
-	pf = push --force
+	pf = push --force-with-lease
 	publish = "!git push origin --set-upstream $(git rev-parse --abbrev-ref HEAD)"
 	rc = rebase --continue
 	ru = remote update --prune
