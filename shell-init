@@ -66,11 +66,6 @@ if [ -d "${HOME}"/Android/Sdk ]; then
   fi
 fi
 
-# Gradle
-if [ -d /mnt/mediahell ]; then
-  export GRADLE_USER_HOME=/mnt/mediahell/.gradle
-fi
-
 # Nano love
 export EDITOR=nano
 
