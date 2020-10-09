@@ -3,7 +3,7 @@ add_newline = false
 
 # Replace some prompt characters for size and legibility reasons
 [character]
-symbol = "➜"
+success_symbol = "➜"
 
 [git_branch]
 symbol = " "
