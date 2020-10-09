@@ -1,8 +1,8 @@
-act-0.2.13
+act-0.2.15
 aria2-1.35.0
 arp-scan-1.9.7
 asciinema-2.0.2
-bandwhich-0.18.1
+bandwhich-0.19.0
 bat-0.15.4
 ccache-3.7.11
 cmake-3.18.2
@@ -21,9 +21,9 @@ gh-1.0.0
 git-extras-6.0.0
 glow-0.2.0
 go-1.15.2
-htop-3.0.1
+htop-3.0.2
 hub-2.14.2
-hugo-0.74.3
+hugo-0.75.1
 hyperfine-1.10.0
 jq-1.6
 lolcat-100.0.1
@@ -41,6 +41,6 @@ rustup-1.22.1
 scrcpy-1.15.1
 shellcheck-0.7.1
 shfmt-3.1.2
-starship-0.44.0
+starship-0.45.2
 youtube-dl-2020.09.20
 zoxide-0.4.3
