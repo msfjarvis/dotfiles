@@ -27,6 +27,9 @@ disabled = true
 [battery]
 disabled = true
 
+[cmake]
+disabled = true
+
 [cmd_duration]
 disabled = true
 
@@ -34,6 +37,9 @@ disabled = true
 disabled = true
 
 [crystal]
+disabled = true
+
+[dart]
 disabled = true
 
 [docker_context]
@@ -58,6 +64,9 @@ disabled = true
 disabled = true
 
 [haskell]
+disabled = true
+
+[helm]
 disabled = true
 
 [hg_branch]
@@ -87,6 +96,9 @@ disabled = true
 [nodejs]
 disabled = true
 
+[perl]
+disabled = true
+
 [ruby]
 disabled = true
 
@@ -96,5 +108,14 @@ disabled = true
 [terraform]
 disabled = true
 
+[shlvl]
+disabled = true
+
 [singularity]
+disabled = true
+
+[status]
+disabled = true
+
+[swift]
 disabled = true
