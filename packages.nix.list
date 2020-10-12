@@ -3,7 +3,8 @@ aria2-1.35.0
 arp-scan-1.9.7
 asciinema-2.0.2
 bandwhich-0.19.0
-bat-0.15.4
+bat-0.16.0
+cachix-0.3.8
 ccache-3.7.11
 cmake-3.18.2
 cowsay-3.03+dfsg2
@@ -18,7 +19,6 @@ ffmpeg-4.3.1
 figlet-2.2.5
 fzf-0.22.0
 gh-1.0.0
-git-extras-6.0.0
 glow-0.2.0
 go-1.15.2
 htop-3.0.2
@@ -30,6 +30,7 @@ lolcat-100.0.1
 meson-0.55.1
 ncdu-1.15.1
 neofetch-7.1.0
+neuron-7.5
 ninja-1.10.1
 nix-2.3.7
 nixfmt-0.4.0
