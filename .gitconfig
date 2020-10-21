@@ -40,6 +40,7 @@
 	dsc = diff --stat --cached
 	export = archive --format zip --output
 	expire-reflog = "!git reflog expire --expire=\"$(date)\" --all"
+	fix = ca --fixup
 	kang = commit --amend --reset-author
 	lo = log --oneline
 	loa = log --oneline --author='Harsh Shandilya'
