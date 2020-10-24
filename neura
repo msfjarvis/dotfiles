@@ -17,5 +17,5 @@ if [[ ! -f "$FILE_NAME" ]]; then
     git add "${FILE_NAME}"
   fi
 else
-  EDITOR=code xdg-open "${FILE_NAME}"
+  code "${FILE_NAME}"
 fi
