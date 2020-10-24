@@ -18,7 +18,7 @@ IS_NIX=true
 if type apt &>/dev/null; then
   unset IS_NIX
 fi
-declare -a SCRIPTS=("build-kernel" "paste" "zpl")
+declare -a SCRIPTS=("build-kernel" "neura" "paste" "zpl")
 
 # Create binaries directory
 mkdir -p ~/bin/

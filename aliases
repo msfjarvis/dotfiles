@@ -8,4 +8,3 @@ alias cat='bat --style=grid,header --theme="zenburn"'
 alias pidcat='pidcat -i ResourceType -i chatty -i AppCompatDelegate'
 alias today='date +"%Y%m%d"'
 alias zpl="xclip -out -selection clipboard | xargs \$HOME/bin/zpl | clip"
-alias new="neuron new -e"
