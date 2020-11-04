@@ -12,6 +12,25 @@ if [ -e "${HOME}"/.nix-profile/etc/profile.d/nix.sh ]; then
   source "${HOME}"/.nix-profile/etc/profile.d/nix.sh
 fi
 
+# cargo env
+# shellcheck disable=SC1090
+if [ -f "${HOME}"/.cargo/env ]; then
+  source "${HOME}"/.cargo/env
+elif [ -d "${HOME}"/.cargo/bin ]; then
+  export PATH="${HOME}/.cargo/bin:${PATH}"
+fi
+
+# Local bin directory
+[ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:${PATH}"
+
+# Golang binaries
+[ -d "${HOME}/go/bin" ] && export PATH="${HOME}/go/bin:${PATH}"
+
+# npm
+if [ -d "${HOME}/.npm-global/bin" ]; then
+  export PATH="${HOME}/.npm-global/bin:${PATH}"
+fi
+
 # Starship
 if type starship &>/dev/null; then
   eval "$(starship init "$(basename "${SHELL}")")"
@@ -91,25 +110,6 @@ fi
 export SDKMAN_DIR="${HOME}/.sdkman"
 # shellcheck disable=SC1090
 [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
-
-# cargo env
-# shellcheck disable=SC1090
-if [ -f "${HOME}"/.cargo/env ]; then
-  source "${HOME}"/.cargo/env
-elif [ -d "${HOME}"/.cargo/bin ]; then
-  export PATH="${HOME}/.cargo/bin:${PATH}"
-fi
-
-# Local bin directory
-[ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:${PATH}"
-
-# Golang binaries
-[ -d "${HOME}/go/bin" ] && export PATH="${HOME}/go/bin:${PATH}"
-
-# npm
-if [ -d "${HOME}/.npm-global/bin" ]; then
-  export PATH="${HOME}/.npm-global/bin:${PATH}"
-fi
 
 # shellcheck source=bash_completions.bash
 source "${SCRIPT_DIR}"/bash_completions.bash
