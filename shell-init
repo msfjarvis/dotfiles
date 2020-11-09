@@ -82,7 +82,6 @@ export CCACHE_DIR="${HOME}/.ccache"
 # Android env variables
 if [ -d "${HOME}"/Android/Sdk ]; then
   export ANDROID_SDK_ROOT="${HOME}"/Android/Sdk
-  export ANDROID_HOME="${ANDROID_SDK_ROOT}"
   if [ -d "${ANDROID_SDK_ROOT}"/build-tools ]; then
     BUILD_TOOLS_DIR="$(fd -td --maxdepth 1 . "${ANDROID_SDK_ROOT}"/build-tools | sort -nr | head -n1)"
     export PATH="${BUILD_TOOLS_DIR}:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
