@@ -3,6 +3,12 @@
 # Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
 # SPDX-License-Identifier: GPL-3.0-only
 
+function backup() {
+  local DIR
+  DIR="${1}"
+  DL_UPLOAD_HOST=msfjarvis@backup DL_UPLOAD_PATH=~/ LOCAL_SITE_MIRROR=$(pwd) syncup "${DIR:?}"
+}
+
 function syncdown() {
   [ -z "${LOCAL_SITE_MIRROR}" ] && {
     echo 'LOCAL_SITE_MIRROR not set!'
