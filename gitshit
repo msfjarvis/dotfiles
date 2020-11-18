@@ -90,5 +90,5 @@ function gcp() {
   REPO_SLUG="$(echo "${REPO_SLUG}" | cut -d '/' -f 2 | sed 's/\.git$//g')"
   [ -n "${REPO_SLUG}" ] && REPO_SLUG="${REPO_SLUG}/"
 
-  echo "https://msfjarvis.dev/${PREFIX}${REPO_SLUG}commit/${COMMITISH:0:12}" | clip
+  echo "https://msfjarvis.dev/${PREFIX}${REPO_SLUG}${COMMITISH:0:12}" | clip
 }
