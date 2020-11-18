@@ -26,11 +26,6 @@ fi
 # Golang binaries
 [ -d "${HOME}/go/bin" ] && export PATH="${HOME}/go/bin:${PATH}"
 
-# npm
-if [ -d "${HOME}/.npm-global/bin" ]; then
-  export PATH="${HOME}/.npm-global/bin:${PATH}"
-fi
-
 # Starship
 if type starship &>/dev/null; then
   eval "$(starship init "$(basename "${SHELL}")")"
