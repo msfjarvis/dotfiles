@@ -11,12 +11,12 @@ function nixsync() {
   }
 }
 
-function nixrstr() {
-  [ -f "${SCRIPT_DIR}"/packages.nix.list ] || return
-  while read -r pkg; do nix-env -i "${pkg}"; done < <(cat "${SCRIPT_DIR}"/packages.nix.list)
-}
-
 function nixpatch() {
   [ -z "${1}" ] && return
   patchelf --set-interpreter "$(nix eval nixpkgs.glibc.outPath | sed 's/"//g')/lib/ld-linux-x86-64.so.2" "${1}"
+}
+
+# This madness tries to convert `nix-env -q` output into a list of packages that can be passed to `nix-env -iA`
+function listnixpkgs() {
+  "${SCRIPT_DIR}"/nixsplit.kts <"${SCRIPT_DIR}"/packages.nix.list | xargs -I {} nix search '^{}$' 2>/dev/null | rg unstable | choose 1
 }
