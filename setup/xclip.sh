@@ -3,8 +3,6 @@
 # Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
 # SPDX-License-Identifier: GPL-3.0-only
 
-set -euo pipefail
-
 trap 'rm -rf /tmp/xclip 2>/dev/null' INT TERM EXIT
 
 # shellcheck source=setup/common.sh
@@ -12,7 +10,7 @@ source "${SCRIPT_DIR:?}"/setup/common.sh
 # shellcheck source=gitshit
 source "${SCRIPT_DIR}"/gitshit
 
-function install_xclip() {
+function setup_xclip() {
   local INSTALLED_VERSION LATEST_VERSION SCRIPT_DIR
   echoText "Checking and installing xclip"
   INSTALLED_VERSION="$(xclip -version 2>&1 | head -n1 | awk '{print $3}')"
@@ -32,5 +30,3 @@ function install_xclip() {
   fi
   rm -rf /tmp/xclip 2>/dev/null
 }
-
-install_xclip

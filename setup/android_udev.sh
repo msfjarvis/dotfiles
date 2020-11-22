@@ -3,8 +3,6 @@
 # Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
 # SPDX-License-Identifier: GPL-3.0-only
 
-set -euo pipefail
-
 # shellcheck source=setup/common.sh
 source "${SCRIPT_DIR:?}"/setup/common.sh
 
@@ -15,5 +13,3 @@ function setup_android_udev() {
   sudo udevadm control --reload-rules
   sudo service udev restart
 }
-
-setup_android_udev

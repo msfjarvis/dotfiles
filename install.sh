@@ -23,8 +23,13 @@ mkdir -p ~/bin/
 echoText "Installing necessary packages"
 sudo apt install -y autoconf automake inkscape mosh wget
 
-bash -i "${SCRIPT_DIR}"/setup/android-udev.sh
-bash -i "${SCRIPT_DIR}"/setup/xclip.sh
+for i in "${SCRIPT_DIR}"/setup/*.sh; do
+  name="$(basename "${i/.sh/}")"
+  # shellcheck disable=SC1090
+  . "$i"
+  setup_"$name"
+  unset name setup_"$name"
+done
 
 cd "${SCRIPT_DIR}" || exit 1
 
