@@ -17,7 +17,7 @@ function setup_adb() {
     git clone https://github.com/Kreach3r/adb-multi -b master "${CLONE_DIR}"
   fi
   echoText "Setting up multi-adb"
-  cp "${SCRIPT_DIR}/config.cfg" "${CLONE_DIR}"/config.cfg
+  cp "${SCRIPT_DIR}/configs/adb-multi/config.cfg" "${CLONE_DIR}"/config.cfg
   "${CLONE_DIR}"/adb-multi generate "${HOME}/bin"
   cp "${CLONE_DIR}"/adb-multi ~/bin
   cp "${CLONE_DIR}"/config.cfg ~/bin
