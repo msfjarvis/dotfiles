@@ -14,25 +14,17 @@ source "${SCRIPT_DIR}"/system
 
 trap 'exit 1' INT TERM
 
-IS_NIX=true
-if type apt &>/dev/null; then
-  unset IS_NIX
-fi
 declare -a SCRIPTS=("build-kernel" "neura" "paste" "zpl")
 
 # Create binaries directory
 mkdir -p ~/bin/
 
 # Install standard packages.
-if [ -z "${IS_NIX}" ]; then
-  echoText "Installing necessary packages"
-  sudo apt install -y autoconf automake inkscape mosh wget
-fi
+echoText "Installing necessary packages"
+sudo apt install -y autoconf automake inkscape mosh wget
 
-if [ -z "${IS_NIX}" ]; then
-  bash -i "${SCRIPT_DIR}"/setup/android-udev.sh
-  bash -i "${SCRIPT_DIR}"/setup/xclip.sh
-fi
+bash -i "${SCRIPT_DIR}"/setup/android-udev.sh
+bash -i "${SCRIPT_DIR}"/setup/xclip.sh
 
 cd "${SCRIPT_DIR}" || exit 1
 
