@@ -22,10 +22,10 @@ figlet-2.2.5
 fzf-0.24.3
 getmail-5.14
 gh-1.2.0
+git-absorb-0.6.6
 glow-1.1.0
 go-1.15.4
 gron-0.6.0
-hstr-2.2
 htop-3.0.2
 hub-2.14.2
 hugo-0.78.0
@@ -50,6 +50,7 @@ rustup-1.22.1
 scrcpy-1.15.1
 shellcheck-0.7.1
 shfmt-3.2.0
+silicon-0.3.2
 starship-0.46.2
 vivid-0.6.0
 youtube-dl-2020.11.01.1
