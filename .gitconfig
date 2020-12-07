@@ -59,6 +59,7 @@
 	su = submodule update --init --recursive
 	ss = show --stat
 	suicide = reset --hard
+	wip = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads
 [merge]
 	log = true
 [gc]
