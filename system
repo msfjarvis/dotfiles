@@ -59,6 +59,9 @@ function maintenance() {
   sudo apt update
   sudo apt upgrade -y
   sudo apt autoremove -y
+  nix-channel --update
+  nix-env -u
+  nix-collect-garbage -d
 }
 
 function gnomext() {
