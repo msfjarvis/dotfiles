@@ -92,3 +92,10 @@ function gcp() {
 
   echo "https://msfjarvis.dev/${PREFIX}${REPO_SLUG}${COMMITISH:0:12}" | clip
 }
+
+function gitsync() {
+  fd -Htd \\.git$ -x echo '{//}' | while read -r dir; do
+    echoText "$dir"
+    hub -C "$dir" sync
+  done
+}
