@@ -99,3 +99,10 @@ function gitsync() {
     hub -C "$dir" sync
   done
 }
+
+function gitprune() {
+  fd -Htd \\.git$ -x echo '{//}' | while read -r dir; do
+    echoText "Pruning $dir"
+    git -C "$dir" gc --aggressive --keep-largest-pack --prune="$(date)"
+  done
+}
