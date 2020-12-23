@@ -1,4 +1,4 @@
-SCRIPTS_TO_TEST := aliases apps bash_completions.bash build-kernel common devtools files gitshit hosts install.sh nix paste server shell-init system telegram wireguard setup/android_sdk.sh setup/adb_multi.sh setup/android_udev.sh setup/common.sh scripts/gnome.sh scripts/llvm.sh setup/xclip.sh scripts/zulu-jdk.sh
+SCRIPTS_TO_TEST := aliases apps bash_completions.bash build-kernel common devtools files gitshit hosts install.sh nix paste server shell-init system telegram wireguard setup/00-android_sdk.sh setup/01-adb_multi.sh setup/02-android_udev.sh setup/common.sh scripts/gnome.sh scripts/llvm.sh setup/03-xclip.sh scripts/zulu-jdk.sh
 
 test: format
 	@for script in ${SCRIPTS_TO_TEST} ; do \
