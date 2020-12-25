@@ -41,6 +41,7 @@
 	export = archive --format zip --output
 	expire-reflog = "!git reflog expire --expire=\"$(date)\" --all"
 	fix = ca --fixup
+	ignore = "!gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ >> .gitignore ;}; gi"
 	kang = commit --amend --reset-author
 	lo = log --oneline
 	loa = log --oneline --author='Harsh Shandilya'
