@@ -85,7 +85,6 @@ in {
       ubuntu_font_family
     ];
     fontconfig = {
-      penultimate.enable = false;
       defaultFonts = {
         serif = [ "Ubuntu" ];
         sansSerif = [ "Ubuntu" ];
@@ -148,9 +147,6 @@ in {
 
   # Enable PCSC-Lite daemon for use with my Yubikey.
   services.pcscd.enable = true;
-
-  # Enable U2F support
-  hardware.u2f.enable = true;
 
   # Configure dnscrypt-proxy with the Cloudflare DoH resolver and dnsmasq to work alongside.
   services.dnscrypt-proxy2 = {
