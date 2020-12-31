@@ -41,8 +41,8 @@ in {
         src = pkgs.fetchFromGitHub {
           owner = "tomaspinho";
           repo = "rtl8821ce";
-          rev = "18c1f607c10307a249be82cb398fb08eb7857a9f";
-          sha256 = "078la5nfa3kq3477j4vlbpch954swz6di0yf9185ddf80rr5da20";
+          rev = "14b536f0c9ad2d0abbdab8afc7ade684900ca9cf";
+          sha256 = "0z7r7spsgn22gwv9pcmkdjn9ingi8jj7xkxasph8118h46fw8ip2";
         };
       }))
     ];
@@ -204,7 +204,7 @@ in {
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
-  networking.hosts = { "192.168.0.102" = [ "ryzenbox" ]; };
+  networking.hosts = { "192.168.1.39" = [ "ryzenbox" ]; };
 
   # Enable sound.
   sound.enable = true;
@@ -247,8 +247,6 @@ in {
     extraGroups = [ "wheel" "networking" ]; # Enable ‘sudo’ for the user.
   };
 
-  users.users.shruti = { isNormalUser = true; };
-
   # User-specific packages for me, myself and I.
   users.users.msfjarvis.packages = with pkgs.latest; [
     pkgs.custom.adx
@@ -268,13 +266,12 @@ in {
     dnscontrol
     exa
     fd
-    firefox-bin
     fontconfig
     fzf
     gitAndTools.diff-so-fancy
     gitAndTools.gh
+    gitAndTools.git-absorb
     gitAndTools.git-crypt
-    gitAndTools.git-extras
     gitAndTools.hub
     git
     gnome3.gnome-shell-extensions
@@ -282,11 +279,13 @@ in {
     gnumake
     go
     google-chrome-dev
+    gron
     hugo
     hyperfine
     imagemagick
     jq
     mosh
+    micro
     mpv
     nano
     ncdu
@@ -297,18 +296,17 @@ in {
     oathToolkit
     pass
     patchelf
+    procs
     ripgrep
     rustup
-    sass
     shellcheck
     shfmt
     starship
     pkgs.tdesktop
+    vivid
     vscode
     zoxide
   ];
-
-  users.users.shruti.packages = with pkgs.latest; [ google-chrome-dev ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
