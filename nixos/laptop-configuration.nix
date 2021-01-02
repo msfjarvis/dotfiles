@@ -273,7 +273,7 @@ in {
     gnome3.gnome-tweaks
     gnumake
     go
-    google-chrome-dev
+    google-chrome
     gron
     hugo
     hyperfine
