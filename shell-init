@@ -103,8 +103,12 @@ if [ -d "${HOME}"/Android/Sdk ]; then
   fi
 fi
 
-# Nano love
-export EDITOR=nano
+# Nano love, or is it?
+if type micro &>/dev/null; then
+  export EDITOR=micro
+else
+  export EDITOR=nano
+fi
 
 # Setup fzf
 if type fzf &>/dev/null; then
