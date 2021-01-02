@@ -28,7 +28,7 @@ in {
   fileSystems."/".options = [ "noatime" ];
 
   # Use the latest RC kernel.
-  boot.kernelPackages = pkgs.latest.linuxPackages_testing;
+  boot.kernelPackages = pkgs.latest.linuxPackages_latest;
 
   # Enable NTFS support
   boot.supportedFilesystems = [ "ntfs" ];
@@ -245,7 +245,6 @@ in {
 
   # User-specific packages for me, myself and I.
   users.users.msfjarvis.packages = with pkgs.latest; [
-    pkgs.custom.adx
     android-udev-rules
     aria2
     asciinema
