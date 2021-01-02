@@ -293,6 +293,7 @@ in {
     patchelf
     procs
     ripgrep
+    rust-analyzer
     rustup
     shellcheck
     shfmt
