@@ -282,7 +282,6 @@ in {
     mosh
     micro
     mpv
-    nano
     ncdu
     ncspot
     neofetch
