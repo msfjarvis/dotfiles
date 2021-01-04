@@ -8,7 +8,7 @@ let
   masterTarball =
     fetchTarball "https://github.com/NixOS/nixpkgs/archive/master.tar.gz";
   customTarball = fetchTarball
-    "https://github.com/msfjarvis/custom-nixpkgs/archive/ca7357505641.tar.gz";
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/da6b3b00f39f.tar.gz";
 
 in {
   imports = [ # Include the results of the hardware scan.
@@ -245,6 +245,7 @@ in {
 
   # User-specific packages for me, myself and I.
   users.users.msfjarvis.packages = with pkgs.latest; [
+    pkgs.custom.adx
     android-udev-rules
     aria2
     asciinema
@@ -279,6 +280,7 @@ in {
     hyperfine
     imagemagick
     jq
+    pkgs.custom.lychee
     mosh
     micro
     mpv
