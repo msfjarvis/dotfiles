@@ -97,13 +97,13 @@ in {
   environment.systemPackages = with pkgs.latest; [
     bind
     busybox
-    clang_10
+    clang_11
     cmake
     curl
     file
     htop
     ldns
-    llvmPackages_10.bintools
+    llvmPackages_11.bintools
     lsb-release
     networkmanager
     ninja
