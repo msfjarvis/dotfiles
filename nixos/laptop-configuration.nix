@@ -1,39 +1,37 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 let
-  masterTarball =
+  unstableTarball =
     fetchTarball "https://github.com/NixOS/nixpkgs/archive/master.tar.gz";
   customTarball = fetchTarball
-    "https://github.com/msfjarvis/custom-nixpkgs/archive/da6b3b00f39f.tar.gz";
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/8d450b25de13.tar.gz";
 
 in {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
     ./hardware-configuration.nix
   ];
 
   # Enable non-free packages, and add an `latest` reference to use packages
-  # from the nixpkgs master branch.
+  # from the nixpkgs-unstable branch.
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
-      latest = import masterTarball { config = config.nixpkgs.config; };
+      latest = import unstableTarball { config = config.nixpkgs.config; };
       custom = import customTarball { };
     };
   };
 
+  # Setting noatime in the fstab greatly improves filesystem performance.
   fileSystems."/".options = [ "noatime" ];
 
-  # Use the latest RC kernel.
+  # Use the latest stable kernel.
   boot.kernelPackages = pkgs.latest.linuxPackages_latest;
 
-  # Enable NTFS support
+  # Enable NTFS support.
   boot.supportedFilesystems = [ "ntfs" ];
 
-  # Enable the rtl8821ce module
+  # Enable the rtl8821ce module, and override the version to the latest.
+  # This is easier than having to wait for nixpkgs to merge pull requests.
   boot.extraModulePackages = with config.boot.kernelPackages;
     [
       (rtl8821ce.overrideAttrs (old: {
@@ -47,7 +45,7 @@ in {
       }))
     ];
 
-  # Set come cmdline options for AMDGPU
+  # Set some cmdline options for the AMDGPU driver.
   boot.kernelParams = [ "amd_iommu=pt" "ivrs_ioapic[32]=00:14.0" "iommu=soft" ];
 
   # Use the systemd-boot EFI boot loader.
@@ -64,7 +62,7 @@ in {
     interfaces.enp2s0.useDHCP = true;
   };
 
-  # Select internationalisation properties.
+  # Set i18n properties.
   i18n.defaultLocale = "en_GB.UTF-8";
   console = {
     font = "Lat2-Terminus16";
@@ -74,7 +72,7 @@ in {
   # Set your time zone.
   time.timeZone = "Asia/Kolkata";
 
-  # Configure fonts
+  # Configure fonts.
   fonts = {
     enableDefaultFonts = true;
     fonts = with pkgs.latest; [
@@ -95,25 +93,21 @@ in {
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs.latest; [
-    bind
     busybox
     clang_11
     cmake
     curl
     file
     htop
-    ldns
     llvmPackages_11.bintools
     lsb-release
     networkmanager
     ninja
     openssl_1_1
-    plata-theme
     python38
     python38Packages.pip
     python38Packages.python-fontconfig
     sqlite
-    traceroute
     tree
     wget
     wireguard-tools
@@ -133,10 +127,10 @@ in {
     pinentryFlavor = "gnome3";
   };
 
-  # Enable browserpass
+  # Enable browserpass.
   programs.browserpass.enable = true;
 
-  # Enable TLP
+  # Enable TLP.
   services.tlp.enable = true;
 
   # Enable the OpenSSH daemon.
@@ -158,26 +152,15 @@ in {
       server_names = [
         "adguard"
         "cloudflare"
-        "cloudflare-security"
-        "cloudflare-security-ipv6"
-        "decloudus-nogoogle-tst"
         "google"
         "google-ipv6"
         "nextdns"
         "nextdns-ipv6"
-        "skyfighter-dns"
-        "quad9-dnscrypt-ipv4-nofilter-pri"
       ];
       static."adguard".stamp =
         "sdns://AQIAAAAAAAAAFDE3Ni4xMDMuMTMwLjEzMDo1NDQzINErR_JS3PLCu_iZEIbq95zkSV2LFsigxDIuUso_OQhzIjIuZG5zY3J5cHQuZGVmYXVsdC5uczEuYWRndWFyZC5jb20";
       static."cloudflare".stamp =
         "sdns://AgcAAAAAAAAABzEuMC4wLjEAEmRucy5jbG91ZGZsYXJlLmNvbQovZG5zLXF1ZXJ5";
-      static."cloudflare-security".stamp =
-        "sdns://AgMAAAAAAAAABzEuMC4wLjIAG3NlY3VyaXR5LmNsb3VkZmxhcmUtZG5zLmNvbQovZG5zLXF1ZXJ5";
-      static."cloudflare-security-ipv6".stamp =
-        "sdns://AgMAAAAAAAAAGlsyNjA2OjQ3MDA6NDcwMDo6MTExMl06NDQzABtzZWN1cml0eS5jbG91ZGZsYXJlLWRucy5jb20KL2Rucy1xdWVyeQ";
-      static."decloudus-nogoogle-tst".stamp =
-        "sdns://AQMAAAAAAAAAEjE3Ni45LjE5OS4xNTg6ODQ0MyD73Ye9XeCsS7TdFu9fRP7s5k-0aL91yygulGVmeOAKLh4yLmRuc2NyeXB0LWNlcnQuRGVDbG91ZFVzLXRlc3Q";
       static."google".stamp =
         "sdns://AgUAAAAAAAAABzguOC44LjigHvYkz_9ea9O63fP92_3qVlRn43cpncfuZnUWbzAMwbkgdoAkR6AZkxo_AEMExT_cbBssN43Evo9zs5_ZyWnftEUKZG5zLmdvb2dsZQovZG5zLXF1ZXJ5";
       static."google-ipv6".stamp =
@@ -186,10 +169,6 @@ in {
         "sdns://AgcAAAAAAAAACjQ1LjkwLjI4LjAgPhoaD2xT8-l6SS1XCEtbmAcFnuBXqxUFh2_YP9o9uDgOZG5zLm5leHRkbnMuaW8PL2Ruc2NyeXB0LXByb3h5";
       static."nextdns-ipv6".stamp =
         "sdns://AgcAAAAAAAAADVsyYTA3OmE4YzA6Ol0gPhoaD2xT8-l6SS1XCEtbmAcFnuBXqxUFh2_YP9o9uDgOZG5zLm5leHRkbnMuaW8PL2Ruc2NyeXB0LXByb3h5";
-      static."skyfighter-dns".stamp =
-        "sdns://AQcAAAAAAAAACzUxLjE1LjYyLjY1INFr3LQKTn-quuLUnNelOU5_Pu-w6mo6-B6ljqcvmJebIjIuZG5zY3J5cHQtY2VydC5za3lmaWdodGVyLWRucy5jb20";
-      static."quad9-dnscrypt-ipv4-nofilter-pri".stamp =
-        "sdns://AQYAAAAAAAAADTkuOS45LjEwOjg0NDMgZ8hHuMh1jNEgJFVDvnVnRt803x2EwAuMRwNo34Idhj4ZMi5kbnNjcnlwdC1jZXJ0LnF1YWQ5Lm5ldA";
     };
   };
   services.dnsmasq.enable = true;
@@ -198,7 +177,6 @@ in {
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
   networking.firewall.enable = true;
   networking.hosts = { "192.168.1.39" = [ "ryzenbox" ]; };
 
@@ -215,7 +193,7 @@ in {
     videoDrivers = [ "amdgpu" ];
   };
 
-  # Configure Ryzen and AMDGPU
+  # Configure Ryzen and AMDGPU.
   hardware.cpu.amd.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
   hardware.opengl.enable = true;
@@ -246,21 +224,17 @@ in {
   # User-specific packages for me, myself and I.
   users.users.msfjarvis.packages = with pkgs.latest; [
     pkgs.custom.adx
-    android-udev-rules
     aria2
     asciinema
     bandwhich
     bat
     browserpass
     cargo-edit
-    cargo-release
-    cargo-sweep
     cargo-update
     cargo-watch
     direnv
     diskus
     dnscontrol
-    exa
     fd
     fontconfig
     fzf
@@ -298,19 +272,13 @@ in {
     shellcheck
     shfmt
     starship
-    pkgs.tdesktop
+    tdesktop
     vivid
     vscode
     zoxide
   ];
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "20.09"; # Did you read the comment?
+  system.stateVersion = "20.09";
   system.defaultChannel = "https://nixos.org/channels/nixpkgs-unstable";
 
   system.copySystemConfiguration = true;
