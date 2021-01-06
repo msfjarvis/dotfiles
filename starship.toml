@@ -81,6 +81,9 @@ disabled = true
 [julia]
 disabled = true
 
+[kotlin]
+disabled = true
+
 [kubernetes]
 disabled = true
 
