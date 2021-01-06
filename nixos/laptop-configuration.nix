@@ -130,6 +130,11 @@ in {
   # Enable browserpass.
   programs.browserpass.enable = true;
 
+  # Enable redshift
+  services.redshift.enable = true;
+  location.latitude = 28.688384;
+  location.longitude = 77.152256;
+
   # Enable TLP.
   services.tlp.enable = true;
 
