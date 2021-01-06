@@ -4,7 +4,7 @@ let
   unstableTarball =
     fetchTarball "https://github.com/NixOS/nixpkgs/archive/master.tar.gz";
   customTarball = fetchTarball
-    "https://github.com/msfjarvis/custom-nixpkgs/archive/8d450b25de13.tar.gz";
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/b1f2c6d85360.tar.gz";
 
 in {
   imports = [
