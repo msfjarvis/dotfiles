@@ -12,6 +12,7 @@ SDK_TOOLS=commandlinetools-linux-6609375_latest.zip
 
 function setup_android_sdk() {
   SDK_DIR="${HOME:?}/Android/Sdk"
+  [ -d "${SDK_DIR}/build-tools" ] && return
   echoText "Installing Android SDK"
   mkdir -p "${SDK_DIR}"
   if [ ! -f "${SDK_TOOLS}" ]; then
