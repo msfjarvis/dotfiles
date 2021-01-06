@@ -260,7 +260,6 @@ in {
     hyperfine
     imagemagick
     jq
-    pkgs.custom.lychee
     mosh
     micro
     mpv
