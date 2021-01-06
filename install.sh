@@ -25,10 +25,12 @@ sudo apt install -y autoconf automake inkscape mosh wget
 
 for i in "${SCRIPT_DIR}"/setup/*.sh; do
   name="$(basename "${i/.sh/}")"
+  normalized_name="${name//[[:digit:]]/}"
+  normalized_name="${normalized_name/-/}"
   # shellcheck disable=SC1090
   . "$i"
-  setup_"$name"
-  unset name setup_"$name"
+  setup_"$normalized_name"
+  unset name setup_"$normalized_name"
 done
 
 cd "${SCRIPT_DIR}" || exit 1
