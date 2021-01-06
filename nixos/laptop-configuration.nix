@@ -249,6 +249,7 @@ in {
     gnumake
     go
     google-chrome
+    gradle
     gron
     hugo
     hyperfine
@@ -266,6 +267,7 @@ in {
     oathToolkit
     pass
     patchelf
+    pkgs.custom.pidcat
     procs
     ripgrep
     rustup
@@ -276,6 +278,7 @@ in {
     vivid
     vscode
     zoxide
+    zulu8
   ];
 
   system.stateVersion = "20.09";
