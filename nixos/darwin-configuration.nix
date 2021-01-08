@@ -22,6 +22,7 @@
     gitAndTools.hub
     git
     gnumake
+    gnused
     gnupg
     gradle
     hugo
@@ -32,6 +33,7 @@
     neofetch
     nixfmt
     oathToolkit
+    openssl
     pass
     patchelf
     procs
