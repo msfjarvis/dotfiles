@@ -32,6 +32,7 @@
     ncdu
     neofetch
     nixfmt
+    nodejs-14_x
     oathToolkit
     openssl
     pass
