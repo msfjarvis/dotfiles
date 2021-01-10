@@ -29,6 +29,9 @@ fi
 # Swift toolchain
 [ -d "${HOME}/swift/usr/bin" ] && export PATH="${HOME}/swift/usr/bin:${PATH}"
 
+# NodeJS alternative home
+[ -d "${HOME}/.npm-global/bin" ] && export PATH="${HOME}/.npm-global/bin:${PATH}"
+
 # Starship
 if type starship &>/dev/null; then
   eval "$(starship init "$(basename "${SHELL}")")"
