@@ -6,6 +6,8 @@
   environment.systemPackages = with pkgs;
     [
     bat
+    browserpass
+    cacert
     cargo-edit
     cargo-update
     cargo-watch
@@ -44,6 +46,7 @@
     shellcheck
     shfmt
     starship
+    topgrade
     vivid
     zoxide
     ];
