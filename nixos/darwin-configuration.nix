@@ -27,6 +27,7 @@
     gradle
     hugo
     jq
+    lsd
     mosh
     micro
     ncdu
