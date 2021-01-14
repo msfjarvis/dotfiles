@@ -106,6 +106,17 @@ if [ -d "${HOME}"/Android/Sdk ]; then
   fi
 fi
 
+# Android, but macOS
+if [ -d "${HOME}"/Library/Android/sdk/ ]; then
+  export ANDROID_SDK_ROOT="${HOME}"/Library/Android/sdk
+  if [ -d "${ANDROID_SDK_ROOT}"/build-tools ]; then
+    BUILD_TOOLS_DIR="$(fd -td --maxdepth 1 . "${ANDROID_SDK_ROOT}"/build-tools | sort -nr | head -n1)"
+    export PATH="${BUILD_TOOLS_DIR}:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
+  else
+    export PATH="${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
+  fi
+fi
+
 # Nano love, or is it?
 if type micro &>/dev/null; then
   export EDITOR=micro
