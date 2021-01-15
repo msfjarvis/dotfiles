@@ -55,15 +55,6 @@ function endtask() {
   for pid in $(pgrep "${1:?}"); do kill -9 "${pid}" 2>/dev/null; done
 }
 
-function maintenance() {
-  sudo apt update
-  sudo apt upgrade -y
-  sudo apt autoremove -y
-  nix-channel --update
-  nix-env -u
-  nix-collect-garbage -d
-}
-
 function gnomext() {
   local EXT_ARCHIVE EXT_UUID
   EXT_ARCHIVE="$1"
