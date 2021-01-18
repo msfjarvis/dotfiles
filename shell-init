@@ -117,6 +117,11 @@ if [ -d "${HOME}"/Library/Android/sdk/ ]; then
   fi
 fi
 
+# Flutter
+if [ -d "${HOME}"/Android/flutter ]; then
+  export PATH="${HOME}/Android/flutter/bin:${PATH}"
+fi
+
 # Nano love, or is it?
 if type micro &>/dev/null; then
   export EDITOR=micro
