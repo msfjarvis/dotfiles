@@ -272,6 +272,7 @@ in {
     pass
     patchelf
     pkgs.custom.pidcat
+    plata-theme
     procs
     ripgrep
     rustup
