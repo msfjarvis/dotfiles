@@ -57,8 +57,6 @@ repos = [
 
 # Custom commands
 [commands]
-"Nix channels update" = "nix-channel --update"
-"Nix packages update" = "nix-env -u"
 "Purge unused APT packages" = "sudo apt autoremove"
 #"Python Environment" = "~/dev/.env/bin/pip install -i https://pypi.python.org/simple -U --upgrade-strategy eager jupyter"
 
