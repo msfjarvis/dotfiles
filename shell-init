@@ -34,7 +34,6 @@ fi
 
 # Starship
 if type starship &>/dev/null; then
-  eval "$(starship init "$(basename "${SHELL}")")"
   export STARSHIP_CONFIG="${SCRIPT_DIR}/starship.toml"
 fi
 
@@ -42,26 +41,6 @@ fi
 if type vivid &>/dev/null; then
   LS_COLORS="$(vivid generate molokai)"
   export LS_COLORS
-fi
-
-# hstr
-if type hstr &>/dev/null; then
-  export HSTR_CONFIG=hicolor      # get more colors
-  shopt -s histappend             # append new history items to .bash_history
-  export HISTCONTROL=ignorespace  # leading space hides commands from history
-  export HISTFILESIZE=10000       # increase history file size (default is 500)
-  export HISTSIZE=${HISTFILESIZE} # increase history size (default is 500)
-  # ensure synchronization between bash memory and history file
-  export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"
-  # if this is interactive shell, then bind hstr to Ctrl-r (for Vi mode check doc)
-  if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr -- \C-j"'; fi
-  # if this is interactive shell, then bind 'kill last command' to Ctrl-x k
-  if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
-fi
-
-# direnv
-if type direnv &>/dev/null; then
-  eval "$(direnv hook bash)"
 fi
 
 # Bash completion
@@ -79,9 +58,6 @@ if [ -d "${HOME}"/.nix-profile/etc/bash_completion.d ]; then
     [[ -r $COMPLETION ]] && source "$COMPLETION"
   done
 fi
-
-# bash history setup
-export HISTCONTROL="ignoreboth"
 
 # Enable pass user extensions
 if type pass &>/dev/null; then
@@ -129,15 +105,8 @@ else
   export EDITOR=nano
 fi
 
-# Setup fzf
-if type fzf &>/dev/null; then
-  export FZF_DEFAULT_COMMAND='fd -tf'
-  export FZF_DEFAULT_OPTS='--height 40%'
-fi
-
 # Setup zoxide
 if type zoxide &>/dev/null; then
-  eval "$(zoxide init bash)"
   alias cd=z
 fi
 
