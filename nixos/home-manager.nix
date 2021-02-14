@@ -54,12 +54,6 @@
     enableBashIntegration = true;
   };
 
-  programs.gh = {
-    enable = true;
-    editor = "micro";
-    gitProtocol = "ssh";
-  };
-
 #  Disabled until I make this match the .gitconfig file
 #  programs.git = {
 #    enable = true;
