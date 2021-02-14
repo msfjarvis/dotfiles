@@ -18,4 +18,12 @@ githook:
 install:
 	@./install.sh
 
+home-check:
+	cp nixos/home-manager.nix ~/.config/nixpkgs/home.nix
+	home-manager build
+
+home-switch:
+	cp nixos/home-manager.nix ~/.config/nixpkgs/home.nix
+	home-manager switch
+
 .PHONY: test
