@@ -60,11 +60,12 @@
 
   programs.git = {
     enable = true;
-#    userName = "Harsh Shandilya";
-#    userEmail = "me@msfjarvis.dev";
-#    ignores = [
-#      ".envrc"
-#    ];
+    ignores = [
+      ".envrc"
+    ];
+    includes = [
+      { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig"; }
+    ];
   };
 
   programs.gpg = {
