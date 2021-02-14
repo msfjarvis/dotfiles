@@ -3,6 +3,7 @@
 {
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
+  nixpkgs.config.allowUnfree = true;
 
   programs.aria2 = {
     enable = true;
@@ -96,6 +97,10 @@
   programs.starship = {
     enable = true;
     enableBashIntegration = true;
+  };
+
+  programs.vscode = {
+    enable = true;
   };
 
   programs.zoxide = {
