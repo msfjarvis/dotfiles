@@ -54,15 +54,14 @@
     enableBashIntegration = true;
   };
 
-#  Disabled until I make this match the .gitconfig file
-#  programs.git = {
-#    enable = true;
+  programs.git = {
+    enable = true;
 #    userName = "Harsh Shandilya";
 #    userEmail = "me@msfjarvis.dev";
 #    ignores = [
 #      ".envrc"
 #    ];
-#  };
+  };
 
   programs.gpg = {
     enable = true;
