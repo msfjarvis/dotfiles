@@ -14,14 +14,10 @@ source "${SCRIPT_DIR}"/system
 
 trap 'exit 1' INT TERM
 
-declare -a SCRIPTS=("build-kernel" "neura" "paste" "zpl")
+declare -a SCRIPTS=("paste")
 
 # Create binaries directory
 mkdir -p ~/bin/
-
-# Install standard packages.
-echoText "Installing necessary packages"
-sudo apt install -y autoconf automake inkscape mosh wget
 
 for i in "${SCRIPT_DIR}"/setup/*.sh; do
   name="$(basename "${i/.sh/}")"
