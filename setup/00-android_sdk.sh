@@ -19,7 +19,7 @@ function setup_android_sdk() {
   fi
   unzip -qo /tmp/tools.zip -d "${SDK_DIR}"
   while read -r package; do
-    yes | "${SDK_DIR}"/tools/bin/sdkmanager "${package:?}"
+    yes | "${SDK_DIR}"/cmdline-tools/bin/sdkmanager --sdk_root="${SDK_DIR}" "${package:?}"
   done <"${SCRIPT_DIR}"/setup/sdk-packages-android.txt
   rm /tmp/tools.zip
   cd - || exit
