@@ -1,9 +1,16 @@
 { config, pkgs, ... }:
 
-{
+let customTarball = fetchTarball
+  "https://github.com/msfjarvis/custom-nixpkgs/archive/b1f2c6d85360.tar.gz";
+in {
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    packageOverrides = pkgs: {
+      custom = import customTarball { };
+    };
+  };
 
   programs.aria2 = {
     enable = true;
@@ -148,6 +155,7 @@
     nodejs-14_x
     oathToolkit
     patchelf
+    custom.pidcat
     procs
     ripgrep
     rustup
