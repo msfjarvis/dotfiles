@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let customTarball = fetchTarball
-  "https://github.com/msfjarvis/custom-nixpkgs/archive/508de05a7a68.tar.gz";
+  "https://github.com/msfjarvis/custom-nixpkgs/archive/9cdd22409776.tar.gz";
 in {
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
@@ -117,6 +117,7 @@ in {
 
   home.packages = with pkgs; [
     act
+    custom.adb-sync
     asciinema
     bandwhich
     bat
