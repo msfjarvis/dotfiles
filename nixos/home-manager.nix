@@ -138,6 +138,7 @@ in {
     fzf
     gitAndTools.gh
     gitAndTools.git-absorb
+    gitAndTools.git-crypt
     glow
     go
     gron
