@@ -133,6 +133,7 @@ in {
     diskus
     dnscontrol
     dos2unix
+    espanso
     fd
     ffmpeg
     figlet
