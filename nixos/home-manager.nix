@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let customTarball = fetchTarball
-  "https://github.com/msfjarvis/custom-nixpkgs/archive/9cdd22409776.tar.gz";
+  "https://github.com/msfjarvis/custom-nixpkgs/archive/febe612a8e44.tar.gz";
 in {
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
@@ -137,6 +137,7 @@ in {
     dnscontrol
     dos2unix
     espanso
+    custom.fclones
     fd
     ffmpeg
     figlet
