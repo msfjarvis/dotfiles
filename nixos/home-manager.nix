@@ -124,6 +124,8 @@ in {
     bat
     bottom
     cachix
+    cargo-edit
+    cargo-update
     ccache
     choose
     cmake
