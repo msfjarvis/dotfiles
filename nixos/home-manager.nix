@@ -23,6 +23,7 @@ in {
     historyFileSize = 1000;
     historyControl = [
       "ignorespace"
+      "erasedups"
     ];
     bashrcExtra = "
     # Source shell-init from my dotfiles
