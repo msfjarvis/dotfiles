@@ -136,6 +136,7 @@ in {
     diskus
     dnscontrol
     dos2unix
+    droidcam
     espanso
     custom.fclones
     fd
