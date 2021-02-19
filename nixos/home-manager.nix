@@ -165,6 +165,7 @@ in {
     patchelf
     custom.pidcat
     procs
+    qrencode
     ripgrep
     rustup
     scrcpy
