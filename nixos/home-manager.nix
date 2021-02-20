@@ -157,6 +157,7 @@ in {
     lolcat
     meson
     micro
+    mosh
     ncdu
     neofetch
     ninja
