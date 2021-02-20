@@ -119,6 +119,7 @@ in {
   home.packages = with pkgs; [
     act
     custom.adb-sync
+    custom.adx
     asciinema
     bandwhich
     bat
