@@ -72,8 +72,8 @@ export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]: 
 export CCACHE_DIR="${HOME}/.ccache"
 
 # Android env variables
-if [ -d "${HOME}"/Android/Sdk ]; then
-  export ANDROID_SDK_ROOT="${HOME}"/Android/Sdk
+if [ -d /mnt/mediahell/Android/Sdk ]; then
+  export ANDROID_SDK_ROOT=/mnt/mediahell/Android/Sdk
   if [ -d "${ANDROID_SDK_ROOT}"/build-tools ]; then
     BUILD_TOOLS_DIR="$(fd -td --maxdepth 1 . "${ANDROID_SDK_ROOT}"/build-tools | sort -nr | head -n1)"
     export PATH="${BUILD_TOOLS_DIR}:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
@@ -98,8 +98,9 @@ if [ -d /mnt/mediahell/.gradle ]; then
 fi
 
 # Flutter
-if [ -d "${HOME}"/Android/flutter ]; then
-  export PATH="${HOME}/Android/flutter/bin:${HOME}/Android/flutter/.pub-cache/bin:${PATH}"
+if [ -d "${ANDROID_SDK_ROOT/Sdk/flutter}" ]; then
+  FLUTTER_DIR="${ANDROID_SDK_ROOT/Sdk/flutter}"
+  export PATH="${FLUTTER_DIR}/bin:${FLUTTER_DIR}/.pub-cache/bin:${PATH}"
 fi
 
 # Nano love, or is it?
