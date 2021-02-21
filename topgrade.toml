@@ -35,12 +35,13 @@ set_title = false
 # Cleanup temporary or old files
 cleanup = true
 
-[git]
-max_concurrency = 5
+#[git]
+#max_concurrency = 5
 # Additional git repositories to pull
-repos = [
-    "~/git-repos/*/"
-]
+#repos = [
+#    "~/src/*/",
+#    "~/.config/something"
+#]
 
 # Don't pull the predefined git repos
 #predefined_repos = false
