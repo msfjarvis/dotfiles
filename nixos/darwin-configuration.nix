@@ -1,71 +1,159 @@
 { config, pkgs, ... }:
 
-{
-  nixpkgs.config.allowUnfree = true;
-  # List packages installed in system profile. To search by name, run:
-  # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs;
-    [
+let customTarball = fetchTarball
+  "https://github.com/msfjarvis/custom-nixpkgs/archive/4b83f66a2e42.tar.gz";
+in {
+  home.username = "msfjarvis";
+  home.homeDirectory = "/Users/msfjarvis";
+  nixpkgs.config = {
+    allowUnfree = true;
+    packageOverrides = pkgs: {
+      custom = import customTarball { };
+    };
+  };
+
+  programs.bash = {
+    enable = true;
+    historySize = 100;
+    historyFile = "${config.home.homeDirectory}/.bash_history";
+    historyFileSize = 1000;
+    historyControl = [
+      "ignorespace"
+      "erasedups"
+    ];
+    bashrcExtra = ''
+    if [ -e "${config.home.homeDirectory}"/.nix-profile/etc/profile.d/nix.sh ]; then
+      source "${config.home.homeDirectory}"/.nix-profile/etc/profile.d/nix.sh
+    fi
+    # Source shell-init from my dotfiles
+    source ${config.home.homeDirectory}/git-repos/dotfiles/darwin-init
+    # Load completions from system
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+      . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+      . /etc/bash_completion
+    fi
+    # Load completions from Git
+    source ${pkgs.git}/share/bash-completion/completions/git
+    '';
+  };
+
+  programs.bat = {
+    enable = true;
+    config = {
+      theme = "zenburn";
+    };
+  };
+
+  programs.browserpass = {
+    enable = true;
+    browsers = [
+      "chrome"
+    ];
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
+  programs.fzf = {
+    enable = true;
+    defaultCommand = "fd -tf";
+    defaultOptions = [
+      "--height 40%"
+    ];
+    enableBashIntegration = true;
+  };
+
+  programs.git = {
+    enable = true;
+    ignores = [
+      ".envrc"
+    ];
+    includes = [
+      { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig"; }
+    ];
+  };
+
+  programs.gpg = {
+    enable = true;
+  };
+
+  programs.home-manager = {
+    enable = true;
+  };
+
+  programs.htop = {
+    enable = true;
+  };
+
+  programs.jq = {
+    enable = true;
+  };
+
+  programs.lsd = {
+    enable = true;
+    enableAliases = true;
+  };
+
+  programs.password-store = {
+    enable = true;
+  };
+
+  programs.starship = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
+  home.packages = with pkgs; [
+    custom.adb-sync
+    custom.adx
     bat
-    browserpass
-    cacert
-    cargo-edit
-    cargo-update
-    cargo-watch
+    bottom
+    cachix
+    choose
     coreutils
+    curl
+    diff-so-fancy
     direnv
     diskus
-    dnscontrol
+    dos2unix
     fd
+    figlet
     fzf
-    gitAndTools.diff-so-fancy
     gitAndTools.gh
     gitAndTools.git-absorb
-    gitAndTools.git-crypt
+    glow
     gitAndTools.hub
-    git
-    gnumake
-    gnused
-    gnupg
-    gradle
     hugo
-    jq
-    lsd
-    mosh
+    lolcat
     micro
+    mosh
     ncdu
     neofetch
     nixfmt
-    nodejs-14_x
-    oathToolkit
-    openssl
-    pass
-    patchelf
+    custom.pidcat
     procs
     ripgrep
-    rustup
-    shellcheck
     shfmt
-    starship
+    tokei
     topgrade
-    unrar
     vivid
-    zoxide
-    ];
+  ];
 
-  # Use a custom configuration.nix location.
-  # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
-  # environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
-
-  # Auto upgrade nix package and the daemon service.
-  # services.nix-daemon.enable = true;
-  # nix.package = pkgs.nix;
-
-  # Create /etc/bashrc that loads the nix-darwin environment.
-  programs.zsh.enable = true;  # default shell on catalina
-  # programs.fish.enable = true;
-
-  # Used for backwards compatibility, please read the changelog before changing.
-  # $ darwin-rebuild changelog
-  system.stateVersion = 4;
+  # This value determines the Home Manager release that your
+  # configuration is compatible with. This helps avoid breakage
+  # when a new Home Manager release introduces backwards
+  # incompatible changes.
+  #
+  # You can update Home Manager without changing this value. See
+  # the Home Manager release notes for a list of state version
+  # changes in each release.
+  home.stateVersion = "21.05";
 }

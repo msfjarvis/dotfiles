@@ -6,12 +6,6 @@
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 export SCRIPT_DIR
 
-# Nix installer
-# shellcheck disable=SC1090
-if [ -e "${HOME}"/.nix-profile/etc/profile.d/nix.sh ]; then
-  source "${HOME}"/.nix-profile/etc/profile.d/nix.sh
-fi
-
 # Local bin directory
 [ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:${PATH}"
 
@@ -23,7 +17,6 @@ fi
 
 # Starship
 if type starship &>/dev/null; then
-  eval "$(starship init "$(basename "${SHELL}")")"
   export STARSHIP_CONFIG="${SCRIPT_DIR}/starship.toml"
 fi
 
@@ -31,11 +24,6 @@ fi
 if type vivid &>/dev/null; then
   LS_COLORS="$(vivid generate molokai)"
   export LS_COLORS
-fi
-
-# direnv
-if type direnv &>/dev/null; then
-  eval "$(direnv hook bash)"
 fi
 
 # Bash completion
@@ -53,9 +41,6 @@ if [ -d "${HOME}"/.nix-profile/etc/bash_completion.d ]; then
     [[ -r $COMPLETION ]] && source "$COMPLETION"
   done
 fi
-
-# bash history setup
-export HISTCONTROL="ignoreboth"
 
 # Enable pass user extensions
 if type pass &>/dev/null; then
@@ -82,18 +67,6 @@ if type micro &>/dev/null; then
   export EDITOR=micro
 else
   export EDITOR=nano
-fi
-
-# Setup fzf
-if type fzf &>/dev/null; then
-  export FZF_DEFAULT_COMMAND='fd -tf'
-  export FZF_DEFAULT_OPTS='--height 40%'
-fi
-
-# Setup zoxide
-if type zoxide &>/dev/null; then
-  eval "$(zoxide init bash)"
-  alias cd=z
 fi
 
 # SDKMAN!
