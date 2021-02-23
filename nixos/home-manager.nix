@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let customTarball = fetchTarball
-  "https://github.com/msfjarvis/custom-nixpkgs/archive/4b83f66a2e42.tar.gz";
+  "https://github.com/msfjarvis/custom-nixpkgs/archive/ccff171df745.tar.gz";
 in {
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
@@ -147,6 +147,7 @@ in {
     gitAndTools.gh
     gitAndTools.git-absorb
     gitAndTools.git-crypt
+    custom.git-quickfix
     glow
     go
     gron
