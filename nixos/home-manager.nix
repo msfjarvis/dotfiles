@@ -156,6 +156,7 @@ in {
     hyperfine
     libwebp
     lolcat
+    magic-wormhole
     meson
     micro
     mosh

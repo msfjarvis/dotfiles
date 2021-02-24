@@ -133,6 +133,7 @@ in {
     gitAndTools.hub
     hugo
     lolcat
+    magic-wormhole
     micro
     mosh
     ncdu
