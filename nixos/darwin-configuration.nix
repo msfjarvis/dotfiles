@@ -12,6 +12,10 @@ in {
     };
   };
 
+  programs.aria2 = {
+    enable = true;
+  };
+
   programs.bash = {
     enable = true;
     historySize = 100;
