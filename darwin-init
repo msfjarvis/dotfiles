@@ -62,6 +62,12 @@ if [ -d "${HOME}"/Library/Android/sdk/ ]; then
   fi
 fi
 
+# Flutter
+if [ -d "${ANDROID_SDK_ROOT/sdk/flutter}" ]; then
+  FLUTTER_DIR="${ANDROID_SDK_ROOT/sdk/flutter}"
+  export PATH="${FLUTTER_DIR}/bin:${FLUTTER_DIR}/.pub-cache/bin:${PATH}"
+fi
+
 # Nano love, or is it?
 if type micro &>/dev/null; then
   export EDITOR=micro
