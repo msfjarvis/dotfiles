@@ -179,6 +179,7 @@ in {
     topgrade
     vivid
     xclip
+    xdotool
   ];
 
   # This value determines the Home Manager release that your
