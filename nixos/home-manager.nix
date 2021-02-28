@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let customTarball = fetchTarball
-  "https://github.com/msfjarvis/custom-nixpkgs/archive/ccff171df745.tar.gz";
+  "https://github.com/msfjarvis/custom-nixpkgs/archive/9d0a79cb185e.tar.gz";
 in {
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
@@ -133,6 +133,7 @@ in {
     cowsay
     curl
     diff-so-fancy
+    custom.diffuse
     direnv
     diskus
     dnscontrol
