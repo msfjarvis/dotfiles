@@ -48,7 +48,7 @@ function batch_dl() {
     fi
     case "${PROTOCOL}" in
       gdrive)
-        gdrivedl "${LINK}" --force
+        gdrivedl "${LINK}" --skip
         ;;
       ddl)
         dl "${LINK}" "${DEST}"
