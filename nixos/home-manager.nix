@@ -155,6 +155,7 @@ in {
     gitAndTools.hub
     hugo
     hyperfine
+    kazam
     libwebp
     lolcat
     magic-wormhole
