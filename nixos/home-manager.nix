@@ -171,6 +171,8 @@ in {
     patchelf
     custom.pidcat
     procs
+    python38
+    python38Packages.virtualenv
     qrencode
     ripgrep
     rustup
