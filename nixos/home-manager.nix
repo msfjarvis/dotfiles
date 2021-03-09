@@ -172,6 +172,7 @@ in {
     custom.pidcat
     procs
     python38
+    python38Packages.poetry
     python38Packages.virtualenv
     qrencode
     ripgrep
