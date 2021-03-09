@@ -9,12 +9,6 @@ export SCRIPT_DIR
 # Local bin directory
 [ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:${PATH}"
 
-# Swift toolchain
-[ -d "${HOME}/swift/usr/bin" ] && export PATH="${HOME}/swift/usr/bin:${PATH}"
-
-# NodeJS alternative home
-[ -d "${HOME}/.npm-global/bin" ] && export PATH="${HOME}/.npm-global/bin:${PATH}"
-
 # Starship
 if type starship &>/dev/null; then
   export STARSHIP_CONFIG="${SCRIPT_DIR}/starship.toml"
@@ -73,6 +67,11 @@ if type micro &>/dev/null; then
   export EDITOR=micro
 else
   export EDITOR=nano
+fi
+
+# Setup zoxide
+if type zoxide &>/dev/null; then
+  alias cd=z
 fi
 
 # SDKMAN!
