@@ -178,6 +178,7 @@ in {
     ripgrep
     rustup
     scrcpy
+    sd
     shellcheck
     shfmt
     tokei
