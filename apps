@@ -3,45 +3,9 @@
 # Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
 # SPDX-License-Identifier: GPL-3.0-only
 
-CURRENT_DEVICE=m30s
-
 # Source common functions
 # shellcheck source=common
 source "${SCRIPT_DIR}/common"
-
-function set_device() {
-  CURRENT_DEVICE="${1:?}"
-}
-
-function makeapk() {
-  if [ ! -f "build.gradle" ] && [ ! -f "build.gradle.kts" ]; then {
-    reportError "No gradle configuration found!"
-    return 1
-  }; fi
-  local GRADLE COMMAND
-  if [ -z "$(command -v gradle)" ]; then
-    GRADLE="./gradlew"
-  else
-    GRADLE="gradle"
-  fi
-  if [ ! -f ".variant" ]; then
-    if [ "${1}" != "install" ]; then
-      COMMAND="assemble${1:-Debug}"
-    elif [ "${1}" == "install" ]; then
-      COMMAND="installDebug"
-    fi
-    if [ "${2}" == "install" ]; then
-      COMMAND="install${COMMAND/assemble/}"
-    fi
-  else
-    [ "${1}" == "install" ] && COMMAND="install$(cat .variant)" || COMMAND="assemble$(cat .variant)"
-  fi
-  "${GRADLE}" "${COMMAND}"
-}
-
-function pushthemetg() {
-  tg "${1}" "${THEME_TESTERS_CHAT_ID}" "${2}"
-}
 
 function findapks() {
   local DIR
@@ -50,25 +14,4 @@ function findapks() {
     DIR="${1}"
   fi
   fd -HI "\.apk$" "${DIR}"
-}
-
-function andromeda() {
-  bash ~/git-repos/andromeda_startup_scripts/Linux/start_andromeda.sh
-}
-
-function adbp() {
-  local RAW_PACKAGE_PATH
-  RAW_PACKAGE_PATH="$(adb-"${CURRENT_DEVICE}" shell pm path "${1:?}")"
-  if [ "${RAW_PACKAGE_PATH}" != "" ]; then
-    while read -r line; do
-      path="$(echo "${line}" | cut -d ':' -f 2)"
-      package="$(basename "${path}")"
-      if [ "${package}" == "base.apk" ]; then
-        package="${1}.apk"
-      fi
-      adb-"${CURRENT_DEVICE}" pull "${path}" "${package}"
-    done < <(echo "${RAW_PACKAGE_PATH}")
-  else
-    echoText "Package not found"
-  fi
 }
