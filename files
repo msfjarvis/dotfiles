@@ -75,87 +75,6 @@ function link() {
   fi
 }
 
-# Upload a file to transfer.sh
-function transfer() {
-  local URL
-  if [ "$#" -eq 0 ]; then
-    echo "No arguments specified. Usage:
-        echo transfer /tmp/test.md
-        cat /tmp/test.md | transfer test.md"
-    return 1
-  fi
-  tmpfile=$(mktemp -t transferXXX)
-  if tty -s; then
-    basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
-    curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" 2>/dev/null >>"${tmpfile}"
-  else
-    curl --progress-bar --upload-file "-" "https://transfer.sh/$1" 2>/dev/null >>"${tmpfile}"
-  fi
-  if [ "$(display_exists)" ]; then
-    xclip -rmlastnl -selection clipboard <"$tmpfile"
-  else
-    cat "$tmpfile"
-  fi
-  rm -f "${tmpfile}"
-}
-
-# Upload to GDrive
-function upload() {
-  local FILE MD5
-  for arg; do
-    FILE="${arg}"
-    [ -f "${FILE:?}" ] || {
-      reportWarning "File '${FILE}' doesn't exist"
-      continue
-    }
-    ZIP_SIZE="$(du -h "${FILE}" | awk '{print $1}')"
-    MD5="$(md5sum "${FILE}" | awk '{print $1}')"
-    GDRIVE_UPLOAD_URL="$(gdrive upload --share "${FILE}" | awk '/https/ {print $7}')"
-    GDRIVE_UPLOAD_ID="$(echo "${GDRIVE_UPLOAD_URL}" | sed -r -e 's/(.*)&export.*/\1/' -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/view/\1/')"
-    UPLOAD_INFO="
-File: [$(basename "${FILE}")](${GDRIVE_UPLOAD_URL})
-Size: ${ZIP_SIZE}
-MD5: \`${MD5}\`
-GDrive ID: \`${GDRIVE_UPLOAD_ID}\`
-"
-    tgm "${UPLOAD_INFO}"
-    echo "Get ${FILE} with ${GDRIVE_UPLOAD_ID}"
-  done
-}
-
-function upload_dir() {
-  local DIR
-  DIR="${1}"
-  [ -d "${DIR:?}" ] || {
-    reportWarning "Directory '${DIR}' does not exist"
-    return 1
-  }
-  fd --threads 1 . "${DIR}" | while read -r f; do
-    GDRIVE_UPLOAD_URL="$(gdrive upload --share "${f}" | awk '/https/ {print $7}')"
-    echo "Get ${f} at ${GDRIVE_UPLOAD_URL}"
-    echo "${GDRIVE_UPLOAD_URL}" >>links.txt
-  done
-}
-
-# Batch upload files
-function batch_ul() {
-  while read -r f; do upload "$f"; done < <(cat "${1:?}")
-}
-
-# Upload a file to imgur and copy the link
-function imgur() {
-  local FILE LINK USE_CLIPBOARD
-  FILE="${1}"
-  USE_CLIPBOARD="$(display_exists)"
-  LINK="$(curl --request POST --url https://api.imgur.com/3/image --header "authorization: Client-ID $(pass api/imgur)" \
-    --header 'content-type: multipart/form-data;' -F "image=@${FILE:?}" 2>/dev/null | jq .data.link | sed 's/"//g')"
-  if [ -z "${USE_CLIPBOARD}" ]; then
-    echo "${LINK}"
-  else
-    echo "${LINK}" | xclip -rmlastnl -selection clipboard
-  fi
-}
-
 # Upload the latest screenshot to imgur
 function ils() {
   imgur "$(find /mnt/mediahell/screenshots/ -printf "%T@ %Tc %p\n" | sort | tail -n1 | awk '{print $NF}')"
@@ -215,6 +134,19 @@ function wallsync() {
   rm -f "${MSG_FILE}" 2>/dev/null
 }
 
+function pwallsync() {
+  local OPTIONS
+  if [ -n "${DEVICE}" ]; then
+    OPTIONS="-s ${DEVICE}"
+  fi
+  if [ -n "${1}" ]; then
+    OPTIONS="${OPTIONS} -dt ${LOCAL_SITE_MIRROR:?}/.phone_walls/Dawn /sdcard/Pictures/"
+  else
+    OPTIONS="${OPTIONS} -dtR /sdcard/Pictures/Dawn ${LOCAL_SITE_MIRROR:?}/.phone_walls/"
+  fi
+  adb-sync "${OPTIONS[@]}"
+}
+
 # Use ffmpeg to dump information about a media file in JSON format
 function mediainfo() {
   local FILE
@@ -246,20 +178,20 @@ function whitespace() {
   fd --type f | xargs perl -pi -e 's/ +$//'
 }
 
-function pwallsync() {
-  local OPTIONS
-  if [ -n "${DEVICE}" ]; then
-    OPTIONS="-s ${DEVICE}"
-  fi
-  if [ -n "${1}" ]; then
-    OPTIONS="${OPTIONS} -dt ${LOCAL_SITE_MIRROR:?}/.phone_walls/Dawn /sdcard/Pictures/"
-  else
-    OPTIONS="${OPTIONS} -dtR /sdcard/Pictures/Dawn ${LOCAL_SITE_MIRROR:?}/.phone_walls/"
-  fi
-  # I have no fucking idea why I need to do this
-  echo adb-sync "${OPTIONS[@]}" | bash
-}
-
 function mkgif() {
   ffmpeg -i "${1:?}" -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 "${1%.*}".gif
+}
+
+# Upload a file to imgur and copy the link
+function imgur() {
+  local FILE LINK USE_CLIPBOARD
+  FILE="${1}"
+  USE_CLIPBOARD="$(display_exists)"
+  LINK="$(curl --request POST --url https://api.imgur.com/3/image --header "authorization: Client-ID $(pass api/imgur)" \
+    --header 'content-type: multipart/form-data;' -F "image=@${FILE:?}" 2>/dev/null | jq .data.link | sed 's/"//g')"
+  if [ -z "${USE_CLIPBOARD}" ]; then
+    echo "${LINK}"
+  else
+    echo "${LINK}" | xclip -rmlastnl -selection clipboard
+  fi
 }
