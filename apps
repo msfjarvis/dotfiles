@@ -15,3 +15,16 @@ function findapks() {
   fi
   fd -HI "\.apk$" "${DIR}"
 }
+
+function boot_emu() {
+  cd "${ANDROID_SDK_ROOT}" || return 1
+  ./cmdline-tools/latest/bin/avdmanager create avd --force \
+    -n Pixel_XL_API_30 \
+    --abi 'google_apis/x86' \
+    --package 'system-images;android-30;google_apis;x86' \
+    --device 'pixel_xl'
+  ./emulator/emulator -avd Pixel_XL_API_30 -no-window \
+    -gpu swiftshader_indirect \
+    -no-snapshot -noaudio -no-boot-anim
+  cd - || return 1
+}
