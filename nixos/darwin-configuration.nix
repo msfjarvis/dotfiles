@@ -122,6 +122,7 @@ in {
     bottom
     cachix
     choose
+    cocoapods
     coreutils
     curl
     diff-so-fancy
