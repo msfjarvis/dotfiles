@@ -135,14 +135,19 @@ function wallsync() {
 }
 
 function pwallsync() {
-  local OPTIONS
+  declare -a OPTIONS=()
   if [ -n "${DEVICE}" ]; then
-    OPTIONS="-s ${DEVICE}"
+    OPTIONS+=("-s")
+    OPTIONS+=("${DEVICE}")
   fi
   if [ -n "${1}" ]; then
-    OPTIONS="${OPTIONS} -dt ${LOCAL_SITE_MIRROR:?}/.phone_walls/Dawn /sdcard/Pictures/"
+    OPTIONS+=("-dt")
+    OPTIONS+=("${LOCAL_SITE_MIRROR:?}/.phone_walls/Dawn")
+    OPTIONS+=("/sdcard/Pictures/")
   else
-    OPTIONS="${OPTIONS} -dtR /sdcard/Pictures/Dawn ${LOCAL_SITE_MIRROR:?}/.phone_walls/"
+    OPTIONS+=("-dtR")
+    OPTIONS+=("/sdcard/Pictures/Dawn")
+    OPTIONS+=("${LOCAL_SITE_MIRROR:?}/.phone_walls/")
   fi
   adb-sync "${OPTIONS[@]}"
 }
