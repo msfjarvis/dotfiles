@@ -124,6 +124,7 @@ in {
     bandwhich
     bat
     bottom
+    broot
     cachix
     cargo-edit
     cargo-update
