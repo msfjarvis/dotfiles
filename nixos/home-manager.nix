@@ -18,9 +18,9 @@ in {
 
   programs.bash = {
     enable = true;
-    historySize = 100;
+    historySize = 1000;
     historyFile = "${config.home.homeDirectory}/.bash_history";
-    historyFileSize = 1000;
+    historyFileSize = 10000;
     historyControl = [
       "ignorespace"
       "erasedups"
