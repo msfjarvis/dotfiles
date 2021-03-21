@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let customTarball = fetchTarball
-  "https://github.com/msfjarvis/custom-nixpkgs/archive/9d0a79cb185e.tar.gz";
+  "https://github.com/msfjarvis/custom-nixpkgs/archive/c307574b3ac3.tar.gz";
 in {
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
@@ -172,6 +172,7 @@ in {
     patchelf
     custom.pidcat
     procs
+    custom.prs
     python38
     python38Packages.poetry
     python38Packages.virtualenv
