@@ -26,3 +26,9 @@ function boot_emu() {
     -gpu swiftshader_indirect \
     -no-snapshot -noaudio -no-boot-anim
 }
+
+function wait_for_emu() {
+  until [ "$(adb shell getprop sys.boot_completed)" == "1" ]; do
+    sleep 5
+  done
+}
