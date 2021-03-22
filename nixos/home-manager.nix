@@ -172,7 +172,6 @@ in {
     patchelf
     custom.pidcat
     procs
-    custom.prs
     python38
     python38Packages.poetry
     python38Packages.virtualenv
