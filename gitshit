@@ -39,7 +39,7 @@ function getpfp() {
 }
 
 function get_latest_release() {
-  curl --silent "https://api.github.com/repos/${1:?}/releases/latest" | jq -r .tag_name
+  curl --silent "https://api.github.com/repos/${1:?}/releases" | jq -r '.[0].tag_name'
 }
 
 function get_release_assets() {
