@@ -188,7 +188,6 @@ in {
     vivid
     xclip
     xdotool
-    zoom-us
   ];
 
   # This value determines the Home Manager release that your
