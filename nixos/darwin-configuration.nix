@@ -97,8 +97,8 @@ in {
   };
 
   programs.lsd = {
-    enable = true;
-    enableAliases = true;
+    enable = false;
+    enableAliases = false;
   };
 
   programs.password-store = {
@@ -129,6 +129,7 @@ in {
     direnv
     diskus
     dos2unix
+    exa
     fd
     figlet
     fzf

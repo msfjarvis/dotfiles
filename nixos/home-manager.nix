@@ -94,8 +94,8 @@ in {
   };
 
   programs.lsd = {
-    enable = true;
-    enableAliases = true;
+    enable = false;
+    enableAliases = false;
   };
 
   programs.password-store = {
@@ -141,6 +141,7 @@ in {
     dos2unix
     droidcam
     espanso
+    exa
     custom.fclones
     fd
     ffmpeg
