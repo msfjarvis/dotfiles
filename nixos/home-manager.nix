@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let customTarball = fetchTarball
-  "https://github.com/msfjarvis/custom-nixpkgs/archive/c307574b3ac3.tar.gz";
+  "https://github.com/msfjarvis/custom-nixpkgs/archive/95c6e0efdcd7.tar.gz";
 in {
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
@@ -163,6 +163,7 @@ in {
     meson
     micro
     mosh
+    custom.natls
     ncdu
     neofetch
     ninja
@@ -187,6 +188,7 @@ in {
     vivid
     xclip
     xdotool
+    zoom-us
   ];
 
   # This value determines the Home Manager release that your
