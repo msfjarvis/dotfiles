@@ -71,6 +71,9 @@ in {
     enable = true;
     ignores = [
       ".envrc"
+      "key.properties"
+      "keystore.properties"
+      "*.jks"
     ];
     includes = [
       { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig"; }

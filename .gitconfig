@@ -1,7 +1,6 @@
 [core]
 	abbrev = 12
 	pager = diff-so-fancy | less --tabs=4 -RFX
-	excludesfile = ~/.gitignore
 [pretty]
 	fixes = Fixes: %h (\"%s\")
 	list = %h (\"%s\")
