@@ -46,6 +46,11 @@ in {
     };
   };
 
+  programs.broot = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
   programs.browserpass = {
     enable = true;
     browsers = [
@@ -127,7 +132,6 @@ in {
     bandwhich
     bat
     bottom
-    broot
     cachix
     cargo-edit
     cargo-update
