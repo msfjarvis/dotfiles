@@ -32,3 +32,23 @@ function wait_for_emu() {
     sleep 5
   done
 }
+
+function adbp() {
+  local RAW_PACKAGE_PATH
+  RAW_PACKAGE_PATH="$(adb shell pm path "${1:?}")"
+  if [ "${RAW_PACKAGE_PATH}" != "" ]; then
+    mkdir "${1}"
+    cd "${1}" || return 1
+    while read -r line; do
+      path="$(echo "${line}" | cut -d ':' -f 2)"
+      package="$(basename "${path}")"
+      if [ "${package}" == "base.apk" ]; then
+        package="${1}.apk"
+      fi
+      adb pull "${path}" "${package}"
+    done < <(echo "${RAW_PACKAGE_PATH}")
+    cd - || return 1
+  else
+    echoText "Package not found"
+  fi
+}
