@@ -3,7 +3,7 @@
 
 # Disable specific steps - same options as the command line flag
 #disable = ["system", "emacs"]
-disable = ["sdkman", "flutter"]
+disable = ["sdkman", "flutter", "node"]
 
 # Ignore failures for these steps
 #ignore_failures = ["powershell"]
