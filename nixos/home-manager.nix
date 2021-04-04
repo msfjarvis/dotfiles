@@ -25,7 +25,7 @@ in {
       "ignorespace"
       "erasedups"
     ];
-    bashrcExtra = "
+    initExtra = ''
     # Source shell-init from my dotfiles
     source ${config.home.homeDirectory}/git-repos/dotfiles/shell-init
     # Load completions from system
@@ -36,7 +36,7 @@ in {
     fi
     # Load completions from Git
     source ${pkgs.git}/share/bash-completion/completions/git
-    ";
+    '';
   };
 
   programs.bat = {
