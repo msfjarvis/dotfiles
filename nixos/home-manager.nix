@@ -4,7 +4,7 @@ let customTarball = fetchTarball
   "https://github.com/msfjarvis/custom-nixpkgs/archive/53294e12f480.tar.gz";
 in {
   home.username = "msfjarvis";
-  home.homeDirectory = "/home/msfjarvis";
+  home.homeDirectory = if pkgs.stdenv.isLinux then "/home/msfjarvis" else "/Users/msfjarvis";
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
@@ -26,8 +26,6 @@ in {
       "erasedups"
     ];
     initExtra = ''
-    # Source shell-init from my dotfiles
-    source ${config.home.homeDirectory}/git-repos/dotfiles/shell-init
     # Load completions from system
     if [ -f /usr/share/bash-completion/bash_completion ]; then
       . /usr/share/bash-completion/bash_completion
@@ -36,6 +34,12 @@ in {
     fi
     # Load completions from Git
     source ${pkgs.git}/share/bash-completion/completions/git
+    '' + pkgs.lib.optionalString pkgs.stdenv.isLinux ''
+    # Source shell-init from my dotfiles
+    source ${config.home.homeDirectory}/git-repos/dotfiles/shell-init
+    '' + pkgs.lib.optionalString pkgs.stdenv.isDarwin ''
+    # Source shell-init from my dotfiles
+    source ${config.home.homeDirectory}/git-repos/dotfiles/darwin-init
     '';
   };
 
@@ -146,10 +150,7 @@ in {
     diskus
     dnscontrol
     dos2unix
-    droidcam
-    espanso
     exa
-    custom.fclones
     fd
     ffmpeg
     figlet
@@ -165,7 +166,6 @@ in {
     gitAndTools.hub
     hugo
     hyperfine
-    kazam
     libwebp
     lolcat
     magic-wormhole
@@ -188,7 +188,6 @@ in {
     qrencode
     ripgrep
     rustup
-    scrcpy
     sd
     shellcheck
     shfmt
@@ -196,6 +195,12 @@ in {
     topgrade
     vivid
     xclip
+  ] ++ pkgs.lib.optionals stdenv.isLinux [
+    droidcam
+    espanso
+    custom.fclones
+    kazam
+    scrcpy
     xdotool
   ];
 
