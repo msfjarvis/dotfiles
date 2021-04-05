@@ -28,9 +28,4 @@ home-switch:
 	cp nixos/home-manager.nix ~/.config/nixpkgs/home.nix
 	home-manager switch
 
-darwin-switch:
-	nix-channel --update
-	cp nixos/darwin-configuration.nix ~/.config/nixpkgs/home.nix
-	home-manager switch
-
 .PHONY: test
