@@ -13,7 +13,7 @@ in {
   };
 
   programs.aria2 = {
-    enable = true;
+    enable = pkgs.stdenv.isLinux;
   };
 
   programs.bash = {
@@ -51,7 +51,7 @@ in {
   };
 
   programs.broot = {
-    enable = true;
+    enable = pkgs.stdenv.isLinux;
     enableBashIntegration = true;
   };
 
