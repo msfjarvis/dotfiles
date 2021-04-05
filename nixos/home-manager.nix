@@ -139,7 +139,6 @@ in {
     cachix
     cargo-edit
     cargo-update
-    ccache
     choose
     cmake
     cowsay
@@ -196,6 +195,7 @@ in {
     vivid
     xclip
   ] ++ pkgs.lib.optionals stdenv.isLinux [
+    ccache
     droidcam
     espanso
     custom.fclones
