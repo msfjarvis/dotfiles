@@ -129,79 +129,80 @@ in {
   };
 
   home.packages = with pkgs; [
-    act
-    custom.adb-sync
-    custom.adx
-    asciinema
-    bandwhich
     bat
     bottom
     cachix
-    cargo-edit
-    cargo-update
-    choose
-    cmake
-    cowsay
     curl
     diff-so-fancy
     custom.diffuse
     direnv
     diskus
-    dnscontrol
     dos2unix
-    exa
     fd
-    ffmpeg
-    figlet
     fzf
     gitAndTools.gh
     gitAndTools.git-absorb
-    gitAndTools.git-crypt
     custom.git-quickfix
-    glow
-    go
-    custom.grit
-    gron
     gitAndTools.hub
-    hugo
-    hyperfine
-    libwebp
-    lolcat
     magic-wormhole
-    meson
     micro
     mosh
     custom.natls
     ncdu
     neofetch
-    ninja
     nixfmt
-    nodejs-14_x
     oathToolkit
-    patchelf
     custom.pidcat
-    procs
-    python38
-    python38Packages.poetry
-    python38Packages.virtualenv
     qrencode
     ripgrep
-    rustup
-    sd
     shellcheck
     shfmt
     tokei
     topgrade
     vivid
-    xclip
-  ] ++ pkgs.lib.optionals stdenv.isLinux [
+  ] ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
+    act
+    custom.adb-sync
+    custom.adx
+    asciinema
+    bandwhich
+    cargo-edit
+    cargo-update
     ccache
+    choose
+    cmake
+    cowsay
+    dnscontrol
     droidcam
     espanso
+    exa
     custom.fclones
+    ffmpeg
+    figlet
+    gitAndTools.git-crypt
+    glow
+    go
+    custom.grit
+    gron
+    hugo
+    hyperfine
     kazam
+    libwebp
+    lolcat
+    meson
+    ninja
+    nodejs-14_x
+    patchelf
+    procs
+    python38
+    python38Packages.poetry
+    python38Packages.virtualenv
+    rustup
     scrcpy
+    sd
+    xclip
     xdotool
+  ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
   ];
 
   # This value determines the Home Manager release that your
