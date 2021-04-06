@@ -1,8 +1,6 @@
 { config, pkgs, ... }:
 
 let
-  unstableTarball =
-    fetchTarball "https://github.com/NixOS/nixpkgs/archive/master.tar.gz";
   customTarball = fetchTarball
     "https://github.com/msfjarvis/custom-nixpkgs/archive/b1f2c6d85360.tar.gz";
 
@@ -16,7 +14,6 @@ in {
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
-      latest = import unstableTarball { config = config.nixpkgs.config; };
       custom = import customTarball { };
     };
   };
@@ -75,9 +72,9 @@ in {
   # Configure fonts.
   fonts = {
     enableDefaultFonts = true;
-    fonts = with pkgs.latest; [
+    fonts = with pkgs; [
       cascadia-code
-      pkgs.custom.jetbrains-mono-nerdfonts
+      custom.jetbrains-mono-nerdfonts
       noto-fonts
       roboto
       ubuntu_font_family
@@ -92,7 +89,7 @@ in {
   };
 
   # List packages installed in system profile.
-  environment.systemPackages = with pkgs.latest; [
+  environment.systemPackages = with pkgs; [
     busybox
     clang_11
     cmake
@@ -116,9 +113,6 @@ in {
     xorg.xhost
   ];
 
-  # Make sure ~/bin is in $PATH.
-  environment.homeBinInPath = true;
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -126,9 +120,6 @@ in {
     enable = true;
     pinentryFlavor = "gnome3";
   };
-
-  # Enable browserpass.
-  programs.browserpass.enable = true;
 
   # Enable redshift
   services.redshift.enable = true;
@@ -179,11 +170,7 @@ in {
   services.dnsmasq.enable = true;
   services.dnsmasq.servers = [ "127.0.0.1#43" ];
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
   networking.firewall.enable = true;
-  networking.hosts = { "192.168.1.39" = [ "ryzenbox" ]; };
 
   # Enable sound.
   sound.enable = true;
@@ -226,68 +213,7 @@ in {
     extraGroups = [ "wheel" "networking" ]; # Enable ‘sudo’ for the user.
   };
 
-  # User-specific packages for me, myself and I.
-  users.users.msfjarvis.packages = with pkgs.latest; [
-    pkgs.custom.adx
-    aria2
-    asciinema
-    bandwhich
-    bat
-    browserpass
-    cargo-edit
-    cargo-update
-    cargo-watch
-    direnv
-    diskus
-    dnscontrol
-    fd
-    fontconfig
-    fzf
-    gitAndTools.diff-so-fancy
-    gitAndTools.gh
-    gitAndTools.git-absorb
-    gitAndTools.git-crypt
-    gitAndTools.hub
-    git
-    gnome3.gnome-shell-extensions
-    gnome3.gnome-tweaks
-    gnumake
-    go
-    google-chrome
-    gradle
-    gron
-    hugo
-    hyperfine
-    imagemagick
-    jq
-    mosh
-    micro
-    mpv
-    ncdu
-    ncspot
-    neofetch
-    nixfmt
-    nodejs-14_x
-    oathToolkit
-    pass
-    patchelf
-    pkgs.custom.pidcat
-    plata-theme
-    procs
-    ripgrep
-    rustup
-    shellcheck
-    shfmt
-    starship
-    tdesktop
-    vivid
-    vscode
-    zoxide
-    zulu8
-  ];
-
   system.stateVersion = "20.09";
   system.defaultChannel = "https://nixos.org/channels/nixpkgs-unstable";
-
   system.copySystemConfiguration = true;
 }

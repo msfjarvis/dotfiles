@@ -1,17 +1,11 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 let
-  masterTarball =
-    fetchTarball "https://github.com/NixOS/nixpkgs/archive/master.tar.gz";
   customTarball = fetchTarball
     "https://github.com/msfjarvis/custom-nixpkgs/archive/ca7357505641.tar.gz";
 
 in {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
     ./hardware-configuration.nix
   ];
 
@@ -20,7 +14,6 @@ in {
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
-      latest = import masterTarball { config = config.nixpkgs.config; };
       custom = import customTarball { };
     };
   };
@@ -57,9 +50,9 @@ in {
   # Configure fonts
   fonts = {
     enableDefaultFonts = true;
-    fonts = with pkgs.latest; [
+    fonts = with pkgs; [
       cascadia-code
-      pkgs.custom.jetbrains-mono-nerdfonts
+      custom.jetbrains-mono-nerdfonts
       noto-fonts
       roboto
       ubuntu_font_family
@@ -75,7 +68,7 @@ in {
   };
 
   # List packages installed in system profile.
-  environment.systemPackages = with pkgs.latest; [
+  environment.systemPackages = with pkgs; [
     bind
     busybox
     clang_10
@@ -104,9 +97,6 @@ in {
     xorg.xhost
   ];
 
-  # Make sure ~/bin is in $PATH.
-  environment.homeBinInPath = true;
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -114,9 +104,6 @@ in {
     enable = true;
     pinentryFlavor = "gnome3";
   };
-
-  # Enable browserpass
-  programs.browserpass.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -177,10 +164,6 @@ in {
   services.dnsmasq.enable = true;
   services.dnsmasq.servers = [ "127.0.0.1#43" ];
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
   networking.firewall.enable = true;
 
   # Enable sound.
@@ -224,73 +207,7 @@ in {
     extraGroups = [ "wheel" "networking" ]; # Enable ‘sudo’ for the user.
   };
 
-  # User-specific packages for me, myself and I.
-  users.users.msfjarvis.packages = with pkgs.latest; [
-    pkgs.custom.adx
-    android-udev-rules
-    aria2
-    asciinema
-    bandwhich
-    bat
-    browserpass
-    caddy
-    cargo-edit
-    cargo-release
-    cargo-sweep
-    cargo-update
-    cargo-watch
-    direnv
-    diskus
-    dnscontrol
-    exa
-    fd
-    fontconfig
-    fzf
-    gitAndTools.diff-so-fancy
-    gitAndTools.gh
-    gitAndTools.git-crypt
-    gitAndTools.git-extras
-    gitAndTools.hub
-    git
-    gnome3.gnome-shell-extensions
-    gnome3.gnome-tweaks
-    gnumake
-    go
-    google-chrome-dev
-    hugo
-    hyperfine
-    imagemagick
-    jq
-    mosh
-    mpv
-    nano
-    ncdu
-    neofetch
-    nixfmt
-    nodejs-14_x
-    oathToolkit
-    pass
-    patchelf
-    ripgrep
-    rustup
-    sass
-    shellcheck
-    shfmt
-    spotify
-    starship
-    tdesktop
-    vscode
-    zoxide
-  ];
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "20.09"; # Did you read the comment?
+  system.stateVersion = "20.09";
   system.defaultChannel = "https://nixos.org/channels/nixpkgs-unstable";
-
   system.copySystemConfiguration = true;
 }
