@@ -189,6 +189,7 @@ in {
     kazam
     libwebp
     lolcat
+    custom.lychee
     meson
     ninja
     nodejs-14_x
