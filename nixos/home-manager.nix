@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let customTarball = fetchTarball
-  "https://github.com/msfjarvis/custom-nixpkgs/archive/b478a6791dd6.tar.gz";
+  "https://github.com/msfjarvis/custom-nixpkgs/archive/53777c5bcb2d.tar.gz";
 in {
   home.username = "msfjarvis";
   home.homeDirectory = if pkgs.stdenv.isLinux then "/home/msfjarvis" else "/Users/msfjarvis";
@@ -184,6 +184,7 @@ in {
     go
     custom.grit
     gron
+    custom.himalaya
     hugo
     hyperfine
     kazam
