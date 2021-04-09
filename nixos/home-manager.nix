@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let customTarball = fetchTarball
-  "https://github.com/msfjarvis/custom-nixpkgs/archive/53777c5bcb2d.tar.gz";
+  "https://github.com/msfjarvis/custom-nixpkgs/archive/cb2465c60a1c.tar.gz";
 in {
   home.username = "msfjarvis";
   home.homeDirectory = if pkgs.stdenv.isLinux then "/home/msfjarvis" else "/Users/msfjarvis";
