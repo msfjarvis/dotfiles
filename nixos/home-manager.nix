@@ -199,7 +199,6 @@ in {
     python38
     python38Packages.poetry
     python38Packages.virtualenv
-    rustup
     scrcpy
     sd
     xclip
