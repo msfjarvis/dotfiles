@@ -9,11 +9,6 @@ export SCRIPT_DIR
 # Local bin directory
 [ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:${PATH}"
 
-# Starship
-if type starship &>/dev/null; then
-  export STARSHIP_CONFIG="${SCRIPT_DIR}/starship.toml"
-fi
-
 # Sexy colors in `ls`
 if type vivid &>/dev/null; then
   LS_COLORS="$(vivid generate molokai)"
