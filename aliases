@@ -15,8 +15,3 @@ fi
 if type micro &>/dev/null; then
   alias nano=micro
 fi
-if type exa &>/dev/null; then
-  alias ls='exa'
-elif type lsd &>/dev/null; then
-  alias ls='lsd --icon=never'
-fi

@@ -62,6 +62,11 @@ in {
     ];
   };
 
+  programs.exa = {
+    enable = true;
+    enableAliases = true;
+  };
+
   programs.direnv = {
     enable = true;
     enableBashIntegration = true;
@@ -175,7 +180,6 @@ in {
     dnscontrol
     droidcam
     espanso
-    exa
     custom.fclones
     ffmpeg
     figlet
