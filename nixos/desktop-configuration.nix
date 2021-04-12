@@ -4,7 +4,8 @@ let
   customTarball = fetchTarball
     "https://github.com/msfjarvis/custom-nixpkgs/archive/ca7357505641.tar.gz";
 
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
   ];

@@ -2,7 +2,8 @@
 
 let customTarball = fetchTarball
   "https://github.com/msfjarvis/custom-nixpkgs/archive/dbd134f33137.tar.gz";
-in {
+in
+{
   home.username = "msfjarvis";
   home.homeDirectory = if pkgs.stdenv.isLinux then "/home/msfjarvis" else "/Users/msfjarvis";
   nixpkgs.config = {
@@ -26,20 +27,20 @@ in {
       "erasedups"
     ];
     initExtra = ''
-    # Load completions from system
-    if [ -f /usr/share/bash-completion/bash_completion ]; then
-      . /usr/share/bash-completion/bash_completion
-    elif [ -f /etc/bash_completion ]; then
-      . /etc/bash_completion
-    fi
-    # Load completions from Git
-    source ${pkgs.git}/share/bash-completion/completions/git
+      # Load completions from system
+      if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+      elif [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+      fi
+      # Load completions from Git
+      source ${pkgs.git}/share/bash-completion/completions/git
     '' + pkgs.lib.optionalString pkgs.stdenv.isLinux ''
-    # Source shell-init from my dotfiles
-    source ${config.home.homeDirectory}/git-repos/dotfiles/shell-init
+      # Source shell-init from my dotfiles
+      source ${config.home.homeDirectory}/git-repos/dotfiles/shell-init
     '' + pkgs.lib.optionalString pkgs.stdenv.isDarwin ''
-    # Source shell-init from my dotfiles
-    source ${config.home.homeDirectory}/git-repos/dotfiles/darwin-init
+      # Source shell-init from my dotfiles
+      source ${config.home.homeDirectory}/git-repos/dotfiles/darwin-init
     '';
   };
 
