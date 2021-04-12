@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let customTarball = fetchTarball
-  "https://github.com/msfjarvis/custom-nixpkgs/archive/fe8eadb2c86.tar.gz";
+  "https://github.com/msfjarvis/custom-nixpkgs/archive/dbd134f33137.tar.gz";
 in {
   home.username = "msfjarvis";
   home.homeDirectory = if pkgs.stdenv.isLinux then "/home/msfjarvis" else "/Users/msfjarvis";
@@ -208,6 +208,7 @@ in {
     ncdu
     neofetch
     nixfmt
+    nixpkgs-fmt
     oathToolkit
     custom.pidcat
     qrencode
