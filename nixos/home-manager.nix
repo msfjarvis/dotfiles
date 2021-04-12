@@ -122,6 +122,58 @@ in {
   programs.starship = {
     enable = true;
     enableBashIntegration = true;
+    settings = pkgs.lib.mkMerge [
+      {
+        add_newline = false;
+        character = {
+          error_symbol = "➜";
+          success_symbol = "➜";
+        };
+        git_branch.symbol = " ";
+        git_status = {
+          ahead = "";
+          behind = "";
+          diverged = "";
+        };
+        java.symbol = " ";
+        rust.symbol = " ";
+
+        aws.disabled = true;
+        battery.disabled = true;
+        cmake.disabled = true;
+        cmd_duration.disabled = true;
+        conda.disabled = true;
+        crystal.disabled = true;
+        dart.disabled = true;
+        docker_context.disabled = true;
+        dotnet.disabled = true;
+        elixir.disabled = true;
+        elm.disabled = true;
+        env_var.disabled = true;
+        erlang.disabled = true;
+        golang.disabled = true;
+        haskell.disabled = true;
+        helm.disabled = true;
+        hg_branch.disabled = true;
+        hostname.disabled = true;
+        jobs.disabled = true;
+        julia.disabled = true;
+        kotlin.disabled = true;
+        kubernetes.disabled = true;
+        line_break.disabled = true;
+        memory_usage.disabled = true;
+        nodejs.disabled = true;
+        perl.disabled = true;
+        ruby.disabled = true;
+        php.disabled = true;
+        terraform.disabled = true;
+        shlvl.disabled = true;
+        singularity.disabled = true;
+        status.disabled = true;
+        swift.disabled = true;
+        vagrant.disabled = true;
+      }
+    ];
   };
 
   programs.vscode = {
