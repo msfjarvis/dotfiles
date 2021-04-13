@@ -178,7 +178,7 @@ in
   };
 
   programs.topgrade = {
-    enable = true;
+    enable = pkgs.stdenv.isLinux;
 
     settings = pkgs.lib.mkMerge [
       {
