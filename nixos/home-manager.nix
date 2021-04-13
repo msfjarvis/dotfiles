@@ -177,6 +177,38 @@ in
     ];
   };
 
+  programs.topgrade = {
+    enable = true;
+
+    settings = pkgs.lib.mkMerge [
+      {
+        disable = [
+          "sdkman"
+          "flutter"
+          "node"
+          "nix"
+          "home_manager"
+        ];
+
+        remote_topgrades = [
+          "backup"
+          "ci"
+        ];
+
+        remote_topgrade_path = "bin/topgrade";
+      }
+
+      {
+        set_title = false;
+        cleanup = true;
+
+        commands = {
+          "Purge unused APT packages" = "sudo apt autoremove";
+        };
+      }
+    ];
+  };
+
   programs.vscode = {
     enable = true;
   };
@@ -217,7 +249,6 @@ in
     shellcheck
     shfmt
     tokei
-    topgrade
     vivid
   ] ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
     act
