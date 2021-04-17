@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
-# SPDX-License-Identifier: GPL-3.0-only
+# SPDX-License-Identifier: MIT
 
 # Import all the bot tokens and IDs
 # shellcheck disable=SC1090

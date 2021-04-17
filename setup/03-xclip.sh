@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
-# SPDX-License-Identifier: GPL-3.0-only
+# SPDX-License-Identifier: MIT
 
 trap 'rm -rf /tmp/xclip 2>/dev/null' INT TERM EXIT
 

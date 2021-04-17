@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
-# SPDX-License-Identifier: GPL-3.0-only
+# SPDX-License-Identifier: MIT
 
 # Source common functions
 # shellcheck source=common
