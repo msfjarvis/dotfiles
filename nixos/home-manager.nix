@@ -71,6 +71,7 @@ in
   programs.direnv = {
     enable = true;
     enableBashIntegration = true;
+    enableNixDirenvIntegration = true;
   };
 
   programs.fzf = {
