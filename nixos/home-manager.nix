@@ -26,18 +26,6 @@ in
       "ignorespace"
       "erasedups"
     ];
-    shellOptions = [ ] ++ pkgs.lib.optionals pkgs.stdenv.isLinux config.programs.bash.shellOptions.default
-      ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
-      # Append to history file rather than replacing it.
-      "histappend"
-
-      # check the window size after each command and, if
-      # necessary, update the values of LINES and COLUMNS.
-      "checkwinsize"
-
-      # Extended globbing.
-      "extglob"
-    ];
     initExtra = ''
       # Load completions from system
       if [ -f /usr/share/bash-completion/bash_completion ]; then
