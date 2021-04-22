@@ -223,7 +223,7 @@ in
   };
 
   programs.vscode = {
-    enable = true;
+    enable = pkgs.stdenv.isLinux;
   };
 
   programs.zoxide = {
