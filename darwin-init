@@ -6,6 +6,20 @@
 SCRIPT_DIR="$(python -c 'import os,sys;print(os.path.dirname(os.path.realpath(sys.argv[1])))' "${BASH_SOURCE[0]}")"
 export SCRIPT_DIR
 
+# Nix installer
+# shellcheck disable=SC1090
+if [ -e "${HOME}"/.nix-profile/etc/profile.d/nix.sh ]; then
+  source "${HOME}"/.nix-profile/etc/profile.d/nix.sh
+fi
+
+# cargo env
+# shellcheck disable=SC1090
+if [ -f "${HOME}"/.cargo/env ]; then
+  source "${HOME}"/.cargo/env
+elif [ -d "${HOME}"/.cargo/bin ]; then
+  export PATH="${HOME}/.cargo/bin:${PATH}"
+fi
+
 # Local bin directory
 [ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:${PATH}"
 
