@@ -34,6 +34,26 @@ function dkmsrebuild() {
   fd -tf . /var/lib/initramfs-tools -x sudo /usr/lib/dkms/dkms_autoinstaller start {/}
 }
 
+function apt-history() {
+  case "$1" in
+    install)
+      grep 'install ' /var/log/dpkg.log
+      ;;
+    upgrade | remove)
+      grep "$1" /var/log/dpkg.log
+      ;;
+    rollback)
+      grep upgrade /var/log/dpkg.log |
+        grep "$2" -A10000000 |
+        grep "$3" -B10000000 |
+        awk '{print $4"="$5}'
+      ;;
+    *)
+      cat /var/log/dpkg.log
+      ;;
+  esac
+}
+
 function reboot() {
   echo "Do you really wanna reboot??"
   read -r confirmation
