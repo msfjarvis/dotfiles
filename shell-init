@@ -126,6 +126,8 @@ source "${SCRIPT_DIR}"/nix
 source "${SCRIPT_DIR}"/server
 # shellcheck source=system
 source "${SCRIPT_DIR}"/system
+# shellcheck source=system_linux
+source "${SCRIPT_DIR}"/system_linux
 # shellcheck source=telegram
 source "${SCRIPT_DIR}"/telegram
 # shellcheck source=wireguard

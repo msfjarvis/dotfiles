@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
+# SPDX-License-Identifier: MIT
+
+function clip() {
+  if [ "${1}" ]; then
+    cat "${1}" | pbcopy
+  else
+    pbcopy
+  fi
+}
+
+function clrclip() {
+  printf '' | pbcopy
+}
