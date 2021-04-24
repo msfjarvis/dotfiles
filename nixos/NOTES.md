@@ -80,10 +80,10 @@ $ home-manager generations
 2021-03-26 17:20 : id 71 -> /nix/store/vja2mv341nr7pgijdapn2m2s23yzmsk8-home-manager-generation
 ```
 
-Grab the path for the generation you wanna look at
+You can either use the direct path from the command output, or compute it yourself using this 'formula': `/nix/var/nix/profiles/per-user/$(whoami)/home-manager-${ID}-link`.
 
 ```shell
-$ nix-store -qR /nix/store/q676f4hvizjwxz55b73s1kwpimb9zybr-home-manager-generation
+$ nix-store -qR /nix/var/nix/profiles/per-user/msfjarvis/home-manager-74-link
 /nix/store/fnkixi37wfz5nlyzwab2l51p29793a1m-libunistring-0.9.10
 /nix/store/ai6j2i00rik53akq8r5pi2nqjvrqi7ky-libidn2-2.3.0
 /nix/store/90illc73xfs933d06daq6d41njs8yh66-glibc-2.32-37
@@ -103,7 +103,7 @@ $ nix-store -qR /nix/store/q676f4hvizjwxz55b73s1kwpimb9zybr-home-manager-generat
 To diff, do this:
 
 ```shell
-$ diff -Naur <(nix-store -qR /nix/store/q676f4hvizjwxz55b73s1kwpimb9zybr-home-manager-generation | sort) <(nix-store -qR /nix/store/3bvifdmw7wq6l4axm9303hh536zpv5br-home-manager-generation | sort)
+$ diff -Naur <(nix-store -qR /nix/var/nix/profiles/per-user/msfjarvis/home-manager-74-link | sort) <(nix-store -qR /nix/var/nix/profiles/per-user/msfjarvis/home-manager-73-link | sort)
 ```
 
 Using `sort` on the result ensures that the diffs only contain actual changes and not just derivations changing their location in the `nix-store` output for any reason.
