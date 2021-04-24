@@ -154,7 +154,6 @@ in
         env_var.disabled = true;
         erlang.disabled = true;
         golang.disabled = true;
-        haskell.disabled = true;
         helm.disabled = true;
         hg_branch.disabled = true;
         hostname.disabled = true;
