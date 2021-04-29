@@ -14,7 +14,7 @@ if command -v nix-channel; then
   fi
 
   # Add the nix channels we're interested in
-  nix-channel --add https://github.com/msfjarvis/home-manager/archive/add-topgrade.tar.gz home-manager
+  nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
   nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
 
   # Update channels
