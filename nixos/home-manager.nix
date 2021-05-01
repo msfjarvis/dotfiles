@@ -230,10 +230,10 @@ in
     dos2unix
     fd
     fzf
-    gitAndTools.gh
-    gitAndTools.git-absorb
+    gh
+    git-absorb
     custom.git-quickfix
-    gitAndTools.hub
+    hub
     magic-wormhole
     micro
     mosh
@@ -268,7 +268,7 @@ in
     custom.fclones
     ffmpeg
     figlet
-    gitAndTools.git-crypt
+    git-crypt
     glow
     go
     custom.grit
