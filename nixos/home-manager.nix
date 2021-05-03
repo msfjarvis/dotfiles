@@ -60,6 +60,7 @@ in
     enable = true;
     browsers = [
       "chrome"
+      "firefox"
     ];
   };
 
