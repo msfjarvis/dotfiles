@@ -196,10 +196,6 @@ in
 
       set_title = false;
       cleanup = true;
-
-      commands = {
-        "Purge unused APT packages" = "sudo apt autoremove";
-      };
     };
   };
 
