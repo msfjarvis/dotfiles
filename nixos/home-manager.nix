@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let customTarball = fetchTarball
-  "https://github.com/msfjarvis/custom-nixpkgs/archive/1217b6aba8e3.tar.gz";
+  "https://github.com/msfjarvis/custom-nixpkgs/archive/6421c0f5ec8c.tar.gz";
 in
 {
   home.username = "msfjarvis";
@@ -236,6 +236,7 @@ in
     custom.pidcat
     qrencode
     ripgrep
+    custom.rust-script
     shellcheck
     shfmt
     tokei
