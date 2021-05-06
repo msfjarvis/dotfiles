@@ -113,11 +113,6 @@ in
     enable = true;
   };
 
-  programs.lsd = {
-    enable = false;
-    enableAliases = false;
-  };
-
   programs.password-store = {
     enable = true;
   };
@@ -227,7 +222,6 @@ in
     magic-wormhole
     micro
     mosh
-    custom.natls
     ncdu
     neofetch
     nixfmt
