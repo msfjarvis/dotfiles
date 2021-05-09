@@ -219,6 +219,7 @@ in
     git-absorb
     custom.git-quickfix
     hub
+    hyperfine
     magic-wormhole
     micro
     mosh
@@ -260,7 +261,6 @@ in
     gron
     custom.himalaya
     hugo
-    hyperfine
     kazam
     libwebp
     lolcat
