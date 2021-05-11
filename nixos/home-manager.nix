@@ -280,6 +280,7 @@ in
     xclip
     xdotool
   ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
+    openssh
   ];
 
   # This value determines the Home Manager release that your
