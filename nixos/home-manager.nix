@@ -220,7 +220,9 @@ in
     custom.git-quickfix
     hub
     hyperfine
-    magic-wormhole
+    (magic-wormhole.overrideAttrs(oldAttrs: {
+      doCheck = !pkgs.stdenv.isDarwin;
+    }))
     micro
     mosh
     ncdu
