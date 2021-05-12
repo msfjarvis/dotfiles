@@ -113,6 +113,11 @@ in
     enable = true;
   };
 
+  programs.nix-index = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
   programs.password-store = {
     enable = true;
   };
