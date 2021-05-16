@@ -172,6 +172,7 @@ in
       status.disabled = true;
       swift.disabled = true;
       vagrant.disabled = true;
+      vlang.disabled = true;
     };
   };
 
