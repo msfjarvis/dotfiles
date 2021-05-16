@@ -244,7 +244,6 @@ in
     shfmt
     tokei
     vivid
-    zig
   ] ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
     act
     custom.adb-sync
@@ -286,6 +285,7 @@ in
     sd
     xclip
     xdotool
+    zig
   ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
     openssh
   ];
