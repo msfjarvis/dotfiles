@@ -28,4 +28,9 @@ home-switch:
 	cp nixos/home-manager.nix ~/.config/nixpkgs/home.nix
 	home-manager switch
 
+server-switch:
+	nix-channel --update
+	cp nixos/server-configuration.nix ~/.config/nixpkgs/home.nix
+	home-manager switch
+
 .PHONY: test
