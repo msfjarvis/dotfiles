@@ -41,6 +41,7 @@ in
     '' + pkgs.lib.optionalString pkgs.stdenv.isDarwin ''
       # Source shell-init from my dotfiles
       source ${config.home.homeDirectory}/git-repos/dotfiles/darwin-init
+      export BASH_SILENCE_DEPRECATION_WARNING=1
     '';
   };
 
