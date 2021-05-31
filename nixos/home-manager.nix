@@ -5,6 +5,8 @@ let
     "https://github.com/msfjarvis/custom-nixpkgs/archive/d409e2b0e75d.tar.gz";
   fenix-overlay =
     fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz";
+  zig-overlay =
+    fetchTarball "https://github.com/arqv/zig-overlay/archive/main.tar.gz";
 
 in
 {
@@ -14,6 +16,7 @@ in
     allowUnfree = true;
     packageOverrides = pkgs: {
       custom = import customTarball { };
+      zigf = import zig-overlay { };
     };
   };
   nixpkgs.overlays = [
@@ -304,7 +307,7 @@ in
     sd
     xclip
     xdotool
-    zig
+    zigf.master.latest
   ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
     openssh
   ];
