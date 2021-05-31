@@ -232,7 +232,7 @@ in
     custom.git-quickfix
     hub
     hyperfine
-    (magic-wormhole.overrideAttrs(oldAttrs: {
+    (magic-wormhole.overrideAttrs (oldAttrs: {
       doCheck = !pkgs.stdenv.isDarwin;
     }))
     micro
@@ -268,13 +268,13 @@ in
     espanso
     custom.fclones
     (with fenix;
-      combine (with default; [
-        cargo
-        clippy-preview
-        rust-std
-        rustc
-        rustfmt-preview
-      ])
+    combine (with default; [
+      cargo
+      clippy-preview
+      rust-std
+      rustc
+      rustfmt-preview
+    ])
     )
     ffmpeg
     figlet
