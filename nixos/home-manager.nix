@@ -12,6 +12,10 @@ in
       custom = import customTarball { };
     };
   };
+  nixpkgs.overlays = [
+    (import (fetchTarball
+      "https://github.com/nix-community/fenix/archive/main.tar.gz"))
+  ];
 
   programs.aria2 = {
     enable = pkgs.stdenv.isLinux;
@@ -221,6 +225,15 @@ in
     diskus
     dos2unix
     fd
+    (with fenix;
+      combine (with default; [
+        cargo
+        clippy-preview
+        rust-std
+        rustc
+        rustfmt-preview
+      ])
+    )
     fzf
     gh
     git-absorb
