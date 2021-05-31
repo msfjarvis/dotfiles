@@ -17,8 +17,7 @@ jobs:
       with:
         nix_path: nixpkgs=channel:nixos-unstable
 
-    - name: Enter nix-shell
-      run: nix-shell --pure
-
     - name: Run checks
-      run: make
+      run: |
+        nix-shell --pure
+        make
