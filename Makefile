@@ -21,7 +21,7 @@ install:
 home-check:
 	nix-channel --update
 	cp nixos/home-manager.nix ~/.config/nixpkgs/home.nix
-	home-manager build
+	home-manager build --show-trace
 
 home-switch:
 	nix-channel --update
