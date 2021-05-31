@@ -226,15 +226,6 @@ in
     diskus
     dos2unix
     fd
-    (with fenix;
-      combine (with default; [
-        cargo
-        clippy-preview
-        rust-std
-        rustc
-        rustfmt-preview
-      ])
-    )
     fzf
     gh
     git-absorb
@@ -276,6 +267,15 @@ in
     droidcam
     espanso
     custom.fclones
+    (with fenix;
+      combine (with default; [
+        cargo
+        clippy-preview
+        rust-std
+        rustc
+        rustfmt-preview
+      ])
+    )
     ffmpeg
     figlet
     git-crypt
