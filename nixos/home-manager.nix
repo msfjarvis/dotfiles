@@ -96,6 +96,7 @@ in
       "key.properties"
       "keystore.properties"
       "*.jks"
+      ".direnv/"
     ];
     includes = [
       { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig"; }
