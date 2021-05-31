@@ -1,7 +1,11 @@
 { config, pkgs, ... }:
 
-let customTarball = fetchTarball
-  "https://github.com/msfjarvis/custom-nixpkgs/archive/d409e2b0e75d.tar.gz";
+let
+  customTarball = fetchTarball
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/d409e2b0e75d.tar.gz";
+  fenix-overlay =
+    fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz";
+
 in
 {
   home.username = "msfjarvis";
@@ -13,8 +17,7 @@ in
     };
   };
   nixpkgs.overlays = [
-    (import (fetchTarball
-      "https://github.com/nix-community/fenix/archive/main.tar.gz"))
+    (import fenix-overlay)
   ];
 
   programs.aria2 = {
