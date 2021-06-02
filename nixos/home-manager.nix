@@ -194,10 +194,7 @@ in
     settings = {
       disable = [
         "sdkman"
-        "flutter"
         "node"
-        "nix"
-        "home_manager"
       ];
 
       remote_topgrades = [
