@@ -2,7 +2,7 @@
 
 let
   customTarball = fetchTarball
-    "https://github.com/msfjarvis/custom-nixpkgs/archive/5836d10dfbf1732c1396c876b2803ca3913c956e.tar.gz";
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/7e58234b45fee4678b5f0cc2b8f633a716bcd09a.tar.gz";
   fenix-overlay =
     fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz";
   zig-overlay =
