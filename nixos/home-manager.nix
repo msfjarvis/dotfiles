@@ -309,6 +309,16 @@ in
     xclip
     xdotool
     zigf.master.latest
+    (zls.overrideAttrs (oldAttrs: {
+      src = fetchFromGitHub {
+        owner = "zigtools";
+        repo = "zls";
+        rev = "39d87188647bd8c8eed304ee18f2dd1df6942f60";
+        sha256 = "07m4s4b63lyjbxkmby4zy7cy9z2cdlw8m0145x7gv40mrg9pjqyv";
+        fetchSubmodules = true;
+      };
+      nativeBuildInputs = [ zigf.master.latest ];
+    }))
   ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
     openssh
   ];
