@@ -211,7 +211,6 @@ in {
       ncdu
       neofetch
       nixfmt
-      nixpkgs-fmt
       oathToolkit
       custom.pidcat
       qrencode
@@ -219,14 +218,11 @@ in {
       custom.rust-script
       shellcheck
       shfmt
-      tokei
       vivid
     ] ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
       act
       custom.adb-sync
       custom.adx
-      asciinema
-      bandwhich
       cargo-edit
       cargo-update
       ccache
@@ -235,8 +231,6 @@ in {
       cmake
       cowsay
       dnscontrol
-      droidcam
-      espanso
       custom.fclones
       (with fenix;
         combine
@@ -245,22 +239,11 @@ in {
       figlet
       git-crypt
       glow
-      go
-      custom.grit
-      gron
-      custom.helix
-      custom.himalaya
       hugo
       custom.jetbrains-mono-nerdfonts
-      kazam
       libwebp
       lolcat
-      custom.lychee
-      meson
-      ninja
-      nodejs-14_x
       patchelf
-      procs
       python38
       python38Packages.poetry
       python38Packages.virtualenv
