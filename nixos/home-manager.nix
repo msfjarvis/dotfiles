@@ -23,6 +23,8 @@ in
     (import fenix-overlay)
   ];
 
+  fonts.fontconfig.enable = true;
+
   programs.aria2 = {
     enable = pkgs.stdenv.isLinux;
   };
@@ -292,6 +294,7 @@ in
     custom.helix
     custom.himalaya
     hugo
+    custom.jetbrains-mono-nerdfonts
     kazam
     libwebp
     lolcat
