@@ -4,19 +4,14 @@ let
   customTarball = fetchTarball
     "https://github.com/msfjarvis/custom-nixpkgs/archive/b1f2c6d85360.tar.gz";
 
-in
-{
-  imports = [
-    ./hardware-configuration.nix
-  ];
+in {
+  imports = [ ./hardware-configuration.nix ];
 
   # Enable non-free packages, and add an `latest` reference to use packages
   # from the nixpkgs-unstable branch.
   nixpkgs.config = {
     allowUnfree = true;
-    packageOverrides = pkgs: {
-      custom = import customTarball { };
-    };
+    packageOverrides = pkgs: { custom = import customTarball { }; };
   };
 
   # Setting noatime in the fstab greatly improves filesystem performance.

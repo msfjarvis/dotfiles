@@ -1,16 +1,14 @@
 { config, pkgs, ... }:
 
-let customTarball = fetchTarball
-  "https://github.com/msfjarvis/custom-nixpkgs/archive/d409e2b0e75d.tar.gz";
-in
-{
+let
+  customTarball = fetchTarball
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/d409e2b0e75d.tar.gz";
+in {
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
   nixpkgs.config = {
     allowUnfree = true;
-    packageOverrides = pkgs: {
-      custom = import customTarball { };
-    };
+    packageOverrides = pkgs: { custom = import customTarball { }; };
   };
 
   programs.bash = {
@@ -18,10 +16,7 @@ in
     historySize = 1000;
     historyFile = "${config.home.homeDirectory}/.bash_history";
     historyFileSize = 10000;
-    historyControl = [
-      "ignorespace"
-      "erasedups"
-    ];
+    historyControl = [ "ignorespace" "erasedups" ];
     initExtra = ''
       # Load completions from system
       if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -38,9 +33,7 @@ in
 
   programs.bat = {
     enable = true;
-    config = {
-      theme = "zenburn";
-    };
+    config = { theme = "zenburn"; };
   };
 
   programs.exa = {
@@ -57,40 +50,25 @@ in
   programs.fzf = {
     enable = true;
     defaultCommand = "fd -tf";
-    defaultOptions = [
-      "--height 40%"
-    ];
+    defaultOptions = [ "--height 40%" ];
     enableBashIntegration = true;
   };
 
   programs.git = {
     enable = true;
-    ignores = [
-      ".envrc"
-      "key.properties"
-      "keystore.properties"
-      "*.jks"
-    ];
-    includes = [
-      { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig"; }
-    ];
+    ignores = [ ".envrc" "key.properties" "keystore.properties" "*.jks" ];
+    includes = [{
+      path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig";
+    }];
   };
 
-  programs.gpg = {
-    enable = true;
-  };
+  programs.gpg = { enable = true; };
 
-  programs.home-manager = {
-    enable = true;
-  };
+  programs.home-manager = { enable = true; };
 
-  programs.htop = {
-    enable = true;
-  };
+  programs.htop = { enable = true; };
 
-  programs.jq = {
-    enable = true;
-  };
+  programs.jq = { enable = true; };
 
   programs.nix-index = {
     enable = true;
@@ -155,11 +133,7 @@ in
     enable = pkgs.stdenv.isLinux;
 
     settings = {
-      only = [
-        "system"
-        "nix"
-        "home_manager"
-      ];
+      only = [ "system" "nix" "home_manager" ];
       set_title = false;
       cleanup = true;
     };

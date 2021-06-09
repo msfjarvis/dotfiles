@@ -8,10 +8,10 @@ let
   zig-overlay =
     fetchTarball "https://github.com/arqv/zig-overlay/archive/main.tar.gz";
 
-in
-{
+in {
   home.username = "msfjarvis";
-  home.homeDirectory = if pkgs.stdenv.isLinux then "/home/msfjarvis" else "/Users/msfjarvis";
+  home.homeDirectory =
+    if pkgs.stdenv.isLinux then "/home/msfjarvis" else "/Users/msfjarvis";
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
@@ -19,25 +19,18 @@ in
       zigf = import zig-overlay { };
     };
   };
-  nixpkgs.overlays = [
-    (import fenix-overlay)
-  ];
+  nixpkgs.overlays = [ (import fenix-overlay) ];
 
   fonts.fontconfig.enable = true;
 
-  programs.aria2 = {
-    enable = pkgs.stdenv.isLinux;
-  };
+  programs.aria2 = { enable = pkgs.stdenv.isLinux; };
 
   programs.bash = {
     enable = true;
     historySize = 1000;
     historyFile = "${config.home.homeDirectory}/.bash_history";
     historyFileSize = 10000;
-    historyControl = [
-      "ignorespace"
-      "erasedups"
-    ];
+    historyControl = [ "ignorespace" "erasedups" ];
     initExtra = ''
       # Load completions from system
       if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -59,9 +52,7 @@ in
 
   programs.bat = {
     enable = true;
-    config = {
-      theme = "zenburn";
-    };
+    config = { theme = "zenburn"; };
   };
 
   programs.broot = {
@@ -71,10 +62,7 @@ in
 
   programs.browserpass = {
     enable = true;
-    browsers = [
-      "chrome"
-      "firefox"
-    ];
+    browsers = [ "chrome" "firefox" ];
   };
 
   programs.exa = {
@@ -91,9 +79,7 @@ in
   programs.fzf = {
     enable = true;
     defaultCommand = "fd -tf";
-    defaultOptions = [
-      "--height 40%"
-    ];
+    defaultOptions = [ "--height 40%" ];
     enableBashIntegration = true;
     fileWidgetCommand = "fd -H";
     changeDirWidgetCommand = "fd -Htd";
@@ -102,42 +88,27 @@ in
 
   programs.git = {
     enable = true;
-    ignores = [
-      ".envrc"
-      "key.properties"
-      "keystore.properties"
-      "*.jks"
-      ".direnv/"
-    ];
-    includes = [
-      { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig"; }
-    ];
+    ignores =
+      [ ".envrc" "key.properties" "keystore.properties" "*.jks" ".direnv/" ];
+    includes = [{
+      path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig";
+    }];
   };
 
-  programs.gpg = {
-    enable = true;
-  };
+  programs.gpg = { enable = true; };
 
-  programs.home-manager = {
-    enable = true;
-  };
+  programs.home-manager = { enable = true; };
 
-  programs.htop = {
-    enable = true;
-  };
+  programs.htop = { enable = true; };
 
-  programs.jq = {
-    enable = true;
-  };
+  programs.jq = { enable = true; };
 
   programs.nix-index = {
     enable = true;
     enableBashIntegration = true;
   };
 
-  programs.password-store = {
-    enable = true;
-  };
+  programs.password-store = { enable = true; };
 
   programs.starship = {
     enable = true;
@@ -197,15 +168,9 @@ in
     enable = pkgs.stdenv.isLinux;
 
     settings = {
-      disable = [
-        "sdkman"
-        "node"
-      ];
+      disable = [ "sdkman" "node" ];
 
-      remote_topgrades = [
-        "backup"
-        "ci"
-      ];
+      remote_topgrades = [ "backup" "ci" ];
 
       remote_topgrade_path = "bin/topgrade";
 
@@ -214,117 +179,107 @@ in
     };
   };
 
-  programs.vscode = {
-    enable = pkgs.stdenv.isLinux;
-  };
+  programs.vscode = { enable = pkgs.stdenv.isLinux; };
 
   programs.zoxide = {
     enable = true;
     enableBashIntegration = true;
   };
 
-  home.packages = with pkgs; [
-    bat
-    bottom
-    cachix
-    curl
-    diff-so-fancy
-    custom.diffuse
-    direnv
-    diskus
-    dos2unix
-    fd
-    fzf
-    gh
-    git-absorb
-    custom.git-quickfix
-    hub
-    hyperfine
-    (magic-wormhole.overrideAttrs (oldAttrs: {
-      doCheck = !pkgs.stdenv.isDarwin;
-    }))
-    micro
-    mosh
-    ncdu
-    neofetch
-    nixfmt
-    nixpkgs-fmt
-    oathToolkit
-    custom.pidcat
-    qrencode
-    ripgrep
-    custom.rust-script
-    shellcheck
-    shfmt
-    tokei
-    vivid
-  ] ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
-    act
-    custom.adb-sync
-    custom.adx
-    asciinema
-    bandwhich
-    cargo-edit
-    cargo-update
-    ccache
-    choose
-    clang_11
-    cmake
-    cowsay
-    dnscontrol
-    droidcam
-    espanso
-    custom.fclones
-    (with fenix;
-    combine (with default; [
-      cargo
-      clippy-preview
-      rust-std
-      rustc
-      rustfmt-preview
-    ])
-    )
-    ffmpeg
-    figlet
-    git-crypt
-    glow
-    go
-    custom.grit
-    gron
-    custom.helix
-    custom.himalaya
-    hugo
-    custom.jetbrains-mono-nerdfonts
-    kazam
-    libwebp
-    lolcat
-    custom.lychee
-    meson
-    ninja
-    nodejs-14_x
-    patchelf
-    procs
-    python38
-    python38Packages.poetry
-    python38Packages.virtualenv
-    scrcpy
-    sd
-    xclip
-    xdotool
-    zigf.master.latest
-    (zls.overrideAttrs (oldAttrs: {
-      src = fetchFromGitHub {
-        owner = "zigtools";
-        repo = "zls";
-        rev = "39d87188647bd8c8eed304ee18f2dd1df6942f60";
-        sha256 = "07m4s4b63lyjbxkmby4zy7cy9z2cdlw8m0145x7gv40mrg9pjqyv";
-        fetchSubmodules = true;
-      };
-      nativeBuildInputs = [ zigf.master.latest ];
-    }))
-  ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
-    openssh
-  ];
+  home.packages = with pkgs;
+    [
+      bat
+      bottom
+      cachix
+      curl
+      diff-so-fancy
+      custom.diffuse
+      direnv
+      diskus
+      dos2unix
+      fd
+      fzf
+      gh
+      git-absorb
+      custom.git-quickfix
+      hub
+      hyperfine
+      (magic-wormhole.overrideAttrs
+        (oldAttrs: { doCheck = !pkgs.stdenv.isDarwin; }))
+      micro
+      mosh
+      ncdu
+      neofetch
+      nixfmt
+      nixpkgs-fmt
+      oathToolkit
+      custom.pidcat
+      qrencode
+      ripgrep
+      custom.rust-script
+      shellcheck
+      shfmt
+      tokei
+      vivid
+    ] ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
+      act
+      custom.adb-sync
+      custom.adx
+      asciinema
+      bandwhich
+      cargo-edit
+      cargo-update
+      ccache
+      choose
+      clang_11
+      cmake
+      cowsay
+      dnscontrol
+      droidcam
+      espanso
+      custom.fclones
+      (with fenix;
+        combine
+        (with default; [ cargo clippy-preview rust-std rustc rustfmt-preview ]))
+      ffmpeg
+      figlet
+      git-crypt
+      glow
+      go
+      custom.grit
+      gron
+      custom.helix
+      custom.himalaya
+      hugo
+      custom.jetbrains-mono-nerdfonts
+      kazam
+      libwebp
+      lolcat
+      custom.lychee
+      meson
+      ninja
+      nodejs-14_x
+      patchelf
+      procs
+      python38
+      python38Packages.poetry
+      python38Packages.virtualenv
+      scrcpy
+      sd
+      xclip
+      xdotool
+      zigf.master.latest
+      (zls.overrideAttrs (oldAttrs: {
+        src = fetchFromGitHub {
+          owner = "zigtools";
+          repo = "zls";
+          rev = "39d87188647bd8c8eed304ee18f2dd1df6942f60";
+          sha256 = "07m4s4b63lyjbxkmby4zy7cy9z2cdlw8m0145x7gv40mrg9pjqyv";
+          fetchSubmodules = true;
+        };
+        nativeBuildInputs = [ zigf.master.latest ];
+      }))
+    ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ openssh ];
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

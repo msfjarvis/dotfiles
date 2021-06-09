@@ -4,19 +4,14 @@ let
   customTarball = fetchTarball
     "https://github.com/msfjarvis/custom-nixpkgs/archive/ca7357505641.tar.gz";
 
-in
-{
-  imports = [
-    ./hardware-configuration.nix
-  ];
+in {
+  imports = [ ./hardware-configuration.nix ];
 
   # Enable non-free packages, and add an `latest` reference to use packages
   # from the nixpkgs master branch.
   nixpkgs.config = {
     allowUnfree = true;
-    packageOverrides = pkgs: {
-      custom = import customTarball { };
-    };
+    packageOverrides = pkgs: { custom = import customTarball { }; };
   };
 
   fileSystems."/".options = [ "noatime" ];

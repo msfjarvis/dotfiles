@@ -1,2 +1,1 @@
-with import <nixpkgs> { };
-mkShell { buildInputs = [ shellcheck shfmt ]; }
+with import <nixpkgs> { }; mkShell { buildInputs = [ shellcheck shfmt ]; }
