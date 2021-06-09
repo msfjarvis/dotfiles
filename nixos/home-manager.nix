@@ -243,7 +243,9 @@ in {
       custom.jetbrains-mono-nerdfonts
       libwebp
       lolcat
+      openssl
       patchelf
+      pkg-config
       python38
       python38Packages.poetry
       python38Packages.virtualenv
