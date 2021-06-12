@@ -1,23 +1,18 @@
-on:
-  pull_request:
-  push:
-    branches:
-      - main
-
-name: Run checks
+on: [push, pull_request]
+name: Run shellcheck and shfmt on scripts
 jobs:
-  check:
+  test:
+    name: static analysis and formatting
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f
-
-    - name: Install Nix
-      uses: cachix/install-nix-action@8d6d5e949675fbadb765c6b1a975047fa5f09b27
+    - uses: actions/checkout@v1
+    - uses: actions/cache@v1
       with:
-        nix_path: nixpkgs=channel:nixos-unstable
-
-    - name: Run checks
-      run: |
-        nix-shell --pure
-        make
+        path: ~/go/pkg/mod
+        key: ${{ runner.os }}-go
+        restore-keys: |
+          ${{ runner.os }}-go-
+    - name: Install shfmt
+      run: GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
+    - name: Run shellcheck.
+      run: PATH=$HOME/go/bin:$PATH make
