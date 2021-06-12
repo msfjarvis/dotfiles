@@ -11,7 +11,7 @@ autofix:
 
 format:
 	@shfmt -w -s -i 2 -ci ${SCRIPTS_TO_TEST}
-	@fd -tf \\.nix -X nixfmt
+	@find . -type f -name '*.nix' -exec nixfmt {} \;
 
 githook:
 	@ln -sf $$(pwd)/pre-push-hook .git/hooks/pre-push
