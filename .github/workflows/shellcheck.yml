@@ -6,13 +6,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+
     - uses: actions/cache@v1
       with:
         path: ~/go/pkg/mod
         key: ${{ runner.os }}-go
         restore-keys: |
           ${{ runner.os }}-go-
+
     - name: Install shfmt
       run: GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
-    - name: Run shellcheck.
+
+    - name: Install shellcheck from HEAD
+      run: |
+        pushd $(mktemp -d)
+        curl -sL https://github.com/koalaman/shellcheck/releases/download/latest/shellcheck-latest.linux.x86_64.tar.xz | tar xvJ
+        mkdir -p ~/bin
+        mv -v shellcheck-latest/shellcheck ~/bin
+        popd
+
+    - name: Run checks
       run: PATH=$HOME/go/bin:$PATH make
