@@ -233,8 +233,14 @@ in {
       dnscontrol
       custom.fclones
       (with fenix;
-        combine
-        (with default; [ cargo clippy-preview rust-std rustc rustfmt-preview ]))
+        combine (with default; [
+          cargo
+          clippy-preview
+          latest.rust-src
+          rust-std
+          rustc
+          rustfmt-preview
+        ]))
       ffmpeg
       figlet
       git-crypt
