@@ -216,6 +216,7 @@ in {
       qrencode
       ripgrep
       custom.rust-script
+      sd
       shellcheck
       shfmt
       vivid
@@ -256,7 +257,6 @@ in {
       python38Packages.poetry
       python38Packages.virtualenv
       scrcpy
-      sd
       xclip
       xdotool
       zigf.master.latest
