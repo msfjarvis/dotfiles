@@ -2,7 +2,7 @@
 
 let
   customTarball = fetchTarball
-    "https://github.com/msfjarvis/custom-nixpkgs/archive/37180f4e07492914fe8492fd773fa6ea96944158.tar.gz";
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/0d04eb8ca1dcc2b823f0063c3e61fa4f74b78c62.tar.gz";
   fenix-overlay =
     fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz";
   zig-overlay =
@@ -201,6 +201,7 @@ in {
       fzf
       gh
       git-absorb
+      custom.git-branchless
       custom.git-quickfix
       hub
       hyperfine
