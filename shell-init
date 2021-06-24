@@ -23,15 +23,6 @@ fi
 # Local bin directory
 [ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:${PATH}"
 
-# Golang binaries
-[ -d "${HOME}/go/bin" ] && export PATH="${HOME}/go/bin:${PATH}"
-
-# Swift toolchain
-[ -d "${HOME}/swift/usr/bin" ] && export PATH="${HOME}/swift/usr/bin:${PATH}"
-
-# NodeJS alternative home
-[ -d "${HOME}/.npm-global/bin" ] && export PATH="${HOME}/.npm-global/bin:${PATH}"
-
 # Sexy colors in `ls`
 if type vivid &>/dev/null; then
   LS_COLORS="$(vivid generate molokai)"
@@ -116,8 +107,6 @@ source "${SCRIPT_DIR}"/common
 source "${SCRIPT_DIR}"/devtools
 # shellcheck source=files
 source "${SCRIPT_DIR}"/files
-# shellcheck source=hosts
-source "${SCRIPT_DIR}"/hosts
 # shellcheck source=gitshit
 source "${SCRIPT_DIR}"/gitshit
 # shellcheck source=nix
@@ -128,8 +117,6 @@ source "${SCRIPT_DIR}"/server
 source "${SCRIPT_DIR}"/system
 # shellcheck source=system_linux
 source "${SCRIPT_DIR}"/system_linux
-# shellcheck source=telegram
-source "${SCRIPT_DIR}"/telegram
 # shellcheck source=wireguard
 source "${SCRIPT_DIR}"/wireguard
 

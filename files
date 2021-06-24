@@ -5,8 +5,6 @@
 
 # shellcheck source=server
 source "${SCRIPT_DIR}"/server
-# shellcheck source=telegram
-source "${SCRIPT_DIR}"/telegram
 
 function dl() {
   local URL FILE_NAME
@@ -114,26 +112,6 @@ function gs() {
   gdrive list -m 100 --name-width 0 -q "name contains '${1:?}'"
 }
 
-# Sync wallpapers to my server and notify the announcement chat
-function wallsync() {
-  local MSG_FILE BASE_URL
-  MSG_FILE="$(mktemp)"
-  BASE_URL="https://dl.msfjarvis.dev/.walls"
-  syncup .walls --itemize | while read -r l; do
-    FILE_NAME="$(echo "${l}" | awk '{print $2}')"
-    SANITIZED_NAME="$(echo "${FILE_NAME}" | sed -e 's/_/ /g' -e 's/\.jpg//g')"
-    if [[ $l == *deleting* ]]; then
-      printf 'Deleting: %s\n' "${SANITIZED_NAME}" >>"${MSG_FILE}"
-    elif [[ $l == \<f.st* ]]; then
-      printf 'Updated wallpaper: [%s](%s)\n' "${SANITIZED_NAME}" "${BASE_URL}/${FILE_NAME}" >>"${MSG_FILE}"
-    elif [[ $l == \<f++* ]]; then
-      printf 'New wallpaper: [%s](%s)\n' "${SANITIZED_NAME}" "${BASE_URL}/${FILE_NAME}" >>"${MSG_FILE}"
-    fi
-  done
-  tgm "$(cat "${MSG_FILE}")" "${HORBIS_WALLS_CHAT_ID}"
-  rm -f "${MSG_FILE}" 2>/dev/null
-}
-
 function pwallsync() {
   declare -a OPTIONS=()
   if [ -n "${DEVICE}" ]; then
@@ -180,7 +158,7 @@ function d2u() {
 }
 
 function whitespace() {
-  fd --type f | xargs perl -pi -e 's/ +$//'
+  fd --type f -X perl -pi -e 's/ +$//'
 }
 
 function mkgif() {

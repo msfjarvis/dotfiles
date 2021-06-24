@@ -15,25 +15,6 @@ function encrypt() {
   gpg --encrypt --output "$(basename "${1}")".gpg --recipient "me@msfjarvis.dev" "${1}"
 }
 
-function rmkernel() {
-  local VERSION
-  VERSION="${1}"
-  if [ ! -f /boot/config-"${VERSION:?}" ]; then
-    reportError "Kernel version ${VERSION} not found!"
-  elif [ "$(uname --kernel-release)" == "${VERSION}" ]; then
-    reportError "Trying to delete current kernel, exiting!"
-  else
-    declare -a FILES=(/boot/config-"${VERSION}" /boot/vmlinuz-"${VERSION}" /boot/initrd.img-"${VERSION}" /boot/System.map-"${VERSION}" /lib/modules/"${VERSION}" /usr/src/linux-headers-"${VERSION}" /var/lib/initramfs-tools/"${VERSION}")
-    sudo rm -rf "${FILES[@]}"
-    sudo update-grub
-  fi
-}
-
-function dkmsrebuild() {
-  # shellcheck disable=SC1083
-  fd -tf . /var/lib/initramfs-tools -x sudo /usr/lib/dkms/dkms_autoinstaller start {/}
-}
-
 function apt-history() {
   case "$1" in
     install)
@@ -54,15 +35,6 @@ function apt-history() {
   esac
 }
 
-function reboot() {
-  echo "Do you really wanna reboot??"
-  read -r confirmation
-  case "${confirmation}" in
-    'y' | 'Y' | 'yes') exec "$(command -v reboot)" ;;
-    *) ;;
-  esac
-}
-
 function pkgdiff() {
   comm -13 <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort) <(
     comm -23 \
@@ -73,31 +45,6 @@ function pkgdiff() {
 
 function endtask() {
   for pid in $(pgrep "${1:?}"); do kill -9 "${pid}" 2>/dev/null; done
-}
-
-function gnomext() {
-  local EXT_ARCHIVE EXT_UUID
-  EXT_ARCHIVE="$1"
-  EXT_UUID="$(unzip -c "${EXT_ARCHIVE:?}" metadata.json | grep uuid | cut -d \" -f4)"
-  mkdir -p ~/.local/share/gnome-shell/extensions/"${EXT_UUID}"
-  unzip -qo "${EXT_ARCHIVE}" -d ~/.local/share/gnome-shell/extensions/"${EXT_UUID}"
-  gnome-extensions enable "${EXT_UUID}"
-}
-
-function battinfo() {
-  local BASE
-  BASE=/sys/class/power_supply/BAT0/
-  [ ! -d "${BASE}" ] && {
-    reportWarning "${BASE} does not exist"
-    return
-  }
-  declare -a ITEMS=("capacity_level:Battery status" "charge_now:Current charge" "capacity:Battery percentage" "status:Status")
-  for ITEM in "${ITEMS[@]}"; do
-    NODE=$(echo "${ITEM}" | cut -d ':' -f 1)
-    LABEL=$(echo "${ITEM}" | cut -d ':' -f 2)
-    [ -f "${BASE}${NODE}" ] || continue
-    printf "${CL_RED}%s${CL_RST}: ${CL_YLW}%s${CL_RST}\n" "${LABEL}" "$(cat "${BASE}${NODE}")"
-  done
 }
 
 function cpuinfo() {

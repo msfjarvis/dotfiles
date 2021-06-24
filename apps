@@ -16,23 +16,6 @@ function findapks() {
   fd -HI "\.apk$" "${DIR}"
 }
 
-function boot_emu() {
-  "${ANDROID_SDK_ROOT}"/cmdline-tools/latest/bin/avdmanager create avd --force \
-    -n Pixel_XL_API_30 \
-    --abi 'google_apis/x86' \
-    --package 'system-images;android-30;google_apis;x86' \
-    --device 'pixel_xl'
-  "${ANDROID_SDK_ROOT}"/emulator/emulator -avd Pixel_XL_API_30 -no-window \
-    -gpu swiftshader_indirect \
-    -no-snapshot -noaudio -no-boot-anim
-}
-
-function wait_for_emu() {
-  until [ "$(adb shell getprop sys.boot_completed)" == "1" ]; do
-    sleep 5
-  done
-}
-
 function adbp() {
   local RAW_PACKAGE_PATH
   RAW_PACKAGE_PATH="$(adb shell pm path "${1:?}")"

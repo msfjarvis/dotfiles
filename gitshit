@@ -3,27 +3,6 @@
 # Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
 # SPDX-License-Identifier: MIT
 
-function setemail() {
-  [ ! -d .git ] && {
-    reportWarning "This command needs to run in a git tree"
-    return 1
-  }
-  local EMAIL GPG_KEY
-  case "${1:?}" in
-    "work")
-      EMAIL="harsh@navanatech.in"
-      GPG_KEY="68EA95DC595AB14601685FB27E697335C2186DA9"
-      ;;
-  esac
-  if [ -z "${EMAIL}" ] && [ -z "${GPG_KEY}" ]; then {
-    git config --unset user.email
-    git config --unset user.signingkey
-    return 0
-  }; fi
-  git config user.email "${EMAIL}"
-  git config user.signingkey "${GPG_KEY}"
-}
-
 function dlgit() {
   local REPO BRANCH
   REPO="${1}"

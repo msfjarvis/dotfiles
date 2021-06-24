@@ -95,7 +95,3 @@ function publish() {
   syncup "${REMOTE_DIR}"
   printf "https://dl.msfjarvis.dev/%s" "${REMOTE_DIR}/$(basename "${FILE:?}")" | xclip -rmlastnl -selection clipboard
 }
-
-function cicnt() {
-  mosh "${DL_UPLOAD_HOST}"
-}

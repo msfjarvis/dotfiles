@@ -5,7 +5,6 @@
 
 alias pidcat='pidcat -i ResourceType -i chatty -i AppCompatDelegate'
 alias today='date +"%Y%m%d"'
-alias zpl="xclip -out -selection clipboard | xargs \$HOME/bin/zpl | clip"
 if type hub &>/dev/null; then
   alias git=hub
 fi
