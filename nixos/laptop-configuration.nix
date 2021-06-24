@@ -97,9 +97,9 @@ in {
     networkmanager
     ninja
     openssl_1_1
-    python38
-    python38Packages.pip
-    python38Packages.python-fontconfig
+    python39
+    python39Packages.pip
+    python39Packages.python-fontconfig
     sqlite
     tree
     wget

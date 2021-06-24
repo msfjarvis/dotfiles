@@ -254,9 +254,9 @@ in {
       openssl
       patchelf
       pkg-config
-      python38
-      python38Packages.poetry
-      python38Packages.virtualenv
+      python39
+      python39Packages.poetry
+      python39Packages.virtualenv
       scrcpy
       xclip
       xdotool

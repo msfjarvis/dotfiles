@@ -79,9 +79,9 @@ in {
     ninja
     openssl_1_1
     plata-theme
-    python38
-    python38Packages.pip
-    python38Packages.python-fontconfig
+    python39
+    python39Packages.pip
+    python39Packages.python-fontconfig
     sqlite
     traceroute
     tree

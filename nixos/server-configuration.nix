@@ -170,9 +170,9 @@ in {
     ninja
     patchelf
     procs
-    python38
-    python38Packages.poetry
-    python38Packages.virtualenv
+    python39
+    python39Packages.poetry
+    python39Packages.virtualenv
     ripgrep
     custom.rust-script
     sd
