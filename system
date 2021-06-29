@@ -62,3 +62,10 @@ function venv() {
     pip install -r requirements.txt
   fi
 }
+
+function update_paper() {
+  local VERSION
+  VERSION="$(curl -s 'https://papermc.io/api/v2/projects/paper/versions/1.17' -H 'accept: application/json' | jq .builds[-1])"
+  curl --progress-bar -L "https://papermc.io/api/v2/projects/paper/versions/1.17/builds/${VERSION}/downloads/paper-1.17-${VERSION}.jar" -o "paper-1.17-${VERSION}.jar"
+  echo "paper-1.17-${VERSION}.jar" >.paper-version
+}
