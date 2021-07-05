@@ -2,7 +2,7 @@
 
 let
   customTarball = fetchTarball
-    "https://github.com/msfjarvis/custom-nixpkgs/archive/09202d97a9028728a199a0c7b32e59b7f66ff715.tar.gz";
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/a5b6484e610a94e20a490904dfd6788a14e4c936.tar.gz";
   fenix-overlay =
     fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz";
   zig-overlay =
@@ -191,6 +191,7 @@ in {
       custom.adx
       bat
       bottom
+      custom.bundletool
       cachix
       curl
       diff-so-fancy
