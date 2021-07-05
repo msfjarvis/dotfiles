@@ -188,6 +188,7 @@ in {
 
   home.packages = with pkgs;
     [
+      custom.adx
       bat
       bottom
       cachix
@@ -217,6 +218,7 @@ in {
       qrencode
       ripgrep
       custom.rust-script
+      scrcpy
       sd
       shellcheck
       shfmt
@@ -224,7 +226,6 @@ in {
     ] ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
       act
       custom.adb-sync
-      custom.adx
       cargo-edit
       cargo-update
       ccache
@@ -257,7 +258,6 @@ in {
       python39
       python39Packages.poetry
       python39Packages.virtualenv
-      scrcpy
       xclip
       xdotool
       zigf.master.latest
