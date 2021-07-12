@@ -2,7 +2,7 @@
 
 let
   customTarball = fetchTarball
-    "https://github.com/msfjarvis/custom-nixpkgs/archive/d409e2b0e75d.tar.gz";
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/c805935e4c674394315f4488d29fdc042965c622.tar.gz";
 in {
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
@@ -44,7 +44,7 @@ in {
   programs.direnv = {
     enable = true;
     enableBashIntegration = true;
-    enableNixDirenvIntegration = true;
+    nix-direnv.enable = true;
   };
 
   programs.fzf = {
