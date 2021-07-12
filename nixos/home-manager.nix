@@ -110,6 +110,11 @@ in {
 
   programs.password-store = { enable = true; };
 
+  services.password-store-sync = {
+    enable = true;
+    frequency = "*-*-* *:00:00";
+  };
+
   programs.starship = {
     enable = true;
     enableBashIntegration = true;
