@@ -242,14 +242,15 @@ in {
       dnscontrol
       custom.fclones
       (with fenix;
-        combine (with default; [
-          cargo
-          clippy-preview
+        combine [
+          latest.cargo
+          latest.clippy-preview
           latest.rust-src
-          rust-std
-          rustc
-          rustfmt-preview
-        ]))
+          latest.rust-std
+          latest.rustc
+          latest.rustfmt-preview
+          targets.x86_64-unknown-linux-musl.latest.toolchain
+        ])
       ffmpeg
       figlet
       git-crypt
@@ -258,6 +259,7 @@ in {
       custom.jetbrains-mono-nerdfonts
       libwebp
       lolcat
+      musl
       openssl
       patchelf
       pkg-config
