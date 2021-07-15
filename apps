@@ -16,6 +16,10 @@ function findapks() {
   fd -HI "\.apk$" "${DIR}"
 }
 
+function findjars() {
+  fd -Itf jar$ build
+}
+
 function adbp() {
   local RAW_PACKAGE_PATH
   RAW_PACKAGE_PATH="$(adb shell pm path "${1:?}")"
