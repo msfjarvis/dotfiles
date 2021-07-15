@@ -2,7 +2,7 @@
 
 let
   customTarball = fetchTarball
-    "https://github.com/msfjarvis/custom-nixpkgs/archive/c805935e4c674394315f4488d29fdc042965c622.tar.gz";
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/5224a9bad1a069ee4a2548bbd118e5ee3b35f9e7.tar.gz";
   fenix-overlay =
     fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz";
   zig-overlay =
@@ -260,6 +260,7 @@ in {
       libwebp
       lolcat
       musl
+      nix-update
       openssl
       patchelf
       pkg-config
