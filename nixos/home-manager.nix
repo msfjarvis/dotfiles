@@ -184,7 +184,10 @@ in {
     };
   };
 
-  programs.vscode = { enable = pkgs.stdenv.isLinux; };
+  programs.vscode = {
+    enable = pkgs.stdenv.isLinux;
+    extensions = with pkgs.vscode-extensions; [ matklad.rust-analyzer-nightly ];
+  };
 
   programs.zoxide = {
     enable = true;
@@ -242,15 +245,15 @@ in {
       dnscontrol
       custom.fclones
       (with fenix;
-        combine [
-          latest.cargo
-          latest.clippy-preview
+        combine (with default; [
+          cargo
+          clippy-preview
+          rust-analyzer
+          rust-std
+          rustc
+          rustfmt-preview
           latest.rust-src
-          latest.rust-std
-          latest.rustc
-          latest.rustfmt-preview
-          targets.x86_64-unknown-linux-musl.latest.toolchain
-        ])
+        ]))
       ffmpeg
       figlet
       git-crypt
