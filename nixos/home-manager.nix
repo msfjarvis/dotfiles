@@ -110,6 +110,8 @@ in {
 
   programs.password-store = { enable = true; };
 
+  services.lorri.enable = true;
+
   services.password-store-sync = {
     enable = true;
     frequency = "*-*-* *:00:00";
