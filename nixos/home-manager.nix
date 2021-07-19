@@ -110,10 +110,10 @@ in {
 
   programs.password-store = { enable = true; };
 
-  services.lorri.enable = true;
+  services.lorri.enable = pkgs.stdenv.isLinux;
 
   services.password-store-sync = {
-    enable = true;
+    enable = pkgs.stdenv.isLinux;
     frequency = "*-*-* *:00:00";
   };
 
