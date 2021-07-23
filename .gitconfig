@@ -26,7 +26,7 @@
 	a = add
 	add-change-id = "!EDITOR='sed -i -re s/^pick/e/' sh -c 'git rebase -i $1 && while test -f .git/rebase-merge/interactive; do git commit --amend --no-edit && git rebase --continue; done' -"
 	amc = "!xclip -out -selection clipboard | git am $@"
-	branches = !"git for-each-ref --sort='-authordate:iso8601' --format=' %(color:green)%(authordate:iso8601)%09%(color:white)%(refname:short)' refs/heads"
+	branches = !"git for-each-ref --sort='-authordate:iso8601' --format=' %(color:green)%(authordate:iso8601)%09%(color:white)%(refname:short)' refs/remotes"
 	c = commit
 	ca = commit -a
 	cam = commit -am
