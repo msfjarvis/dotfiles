@@ -86,6 +86,12 @@ in {
     historyWidgetOptions = [ "--sort" "--exact" ];
   };
 
+  programs.gh = {
+    enable = true;
+    editor = "micro";
+    gitProtocol = "ssh";
+  };
+
   programs.git = {
     enable = true;
     ignores =
@@ -209,7 +215,6 @@ in {
       dos2unix
       fd
       fzf
-      gh
       git-absorb
       custom.git-branchless
       custom.git-quickfix
