@@ -216,7 +216,6 @@ in {
       fd
       fzf
       git-absorb
-      custom.git-branchless
       custom.git-quickfix
       hub
       hyperfine
