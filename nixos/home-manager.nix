@@ -55,11 +55,6 @@ in {
     config = { theme = "zenburn"; };
   };
 
-  programs.broot = {
-    enable = pkgs.stdenv.isLinux;
-    enableBashIntegration = true;
-  };
-
   programs.browserpass = {
     enable = true;
     browsers = [ "chrome" "firefox" ];
