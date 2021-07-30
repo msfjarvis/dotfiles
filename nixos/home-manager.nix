@@ -2,7 +2,7 @@
 
 let
   customTarball = fetchTarball
-    "https://github.com/msfjarvis/custom-nixpkgs/archive/632b922a7a6d1858cce0f43d6e551ec4a73af0d3.tar.gz";
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/545dff4ce199aa25d90cd4a6575364f4d4250207.tar.gz";
   fenix-overlay =
     fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz";
   zig-overlay =
@@ -255,6 +255,7 @@ in {
         ]))
       ffmpeg
       figlet
+      gdrive
       git-crypt
       glow
       hugo
