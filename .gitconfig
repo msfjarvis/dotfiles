@@ -5,7 +5,6 @@
   difffilter = diff-so-fancy --patch
 [pretty]
 	fixes = Fixes: %h (\"%s\")
-	list = %h (\"%s\")
 [user]
 	signingkey = B7843F823355E9B9
 	name = Harsh Shandilya
@@ -18,15 +17,13 @@
 	ui = true
 [commit]
 	gpgsign = true
-[format]
-	signoff = true
 [credential]
 	helper = cache --timeout=3000
 [alias]
 	a = add
 	add-change-id = "!EDITOR='sed -i -re s/^pick/e/' sh -c 'git rebase -i $1 && while test -f .git/rebase-merge/interactive; do git commit --amend --no-edit && git rebase --continue; done' -"
 	amc = "!xclip -out -selection clipboard | git am $@"
-	branches = !"git for-each-ref --sort='-authordate:iso8601' --format=' %(color:green)%(authordate:iso8601)%09%(color:white)%(refname:short)' refs/remotes"
+	branches = for-each-ref --sort='-authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/remotes
 	c = commit
 	ca = commit -a
 	cam = commit -am
@@ -60,7 +57,6 @@
 	su = submodule update --init --recursive
 	ss = show --stat
 	suicide = reset --hard
-	wip = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/remotes/
 [merge]
 	log = true
 [gc]
