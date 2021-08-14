@@ -26,4 +26,4 @@ jobs:
         popd
 
     - name: Run checks
-      run: PATH=$HOME/go/bin:$PATH ./x
+      run: PATH=$HOME/go/bin:$HOME/bin:$PATH ./x
