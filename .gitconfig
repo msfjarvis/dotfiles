@@ -6,7 +6,6 @@
 [pretty]
 	fixes = Fixes: %h (\"%s\")
 [user]
-	signingkey = B7843F823355E9B9
 	name = Harsh Shandilya
 	email = me@msfjarvis.dev
 [pull]
@@ -15,8 +14,6 @@
 	default = simple
 [color]
 	ui = true
-[commit]
-	gpgsign = true
 [credential]
 	helper = cache --timeout=3000
 [alias]

@@ -91,9 +91,13 @@ in {
     enable = true;
     ignores =
       [ ".envrc" "key.properties" "keystore.properties" "*.jks" ".direnv/" ];
-    includes = [{
-      path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig";
-    }];
+    includes = [
+      { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig"; }
+      {
+        path =
+          "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig-auth";
+      }
+    ];
   };
 
   programs.gpg = { enable = true; };
