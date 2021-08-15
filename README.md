@@ -1,3 +1,3 @@
-# dotfiles ![Run shellcheck and shfmt on scripts](https://github.com/msfjarvis/dotfiles/workflows/Run%20shellcheck%20and%20shfmt%20on%20scripts/badge.svg)
+# dotfiles [![Run checks](https://github.com/msfjarvis/dotfiles/actions/workflows/check.yml/badge.svg)](https://github.com/msfjarvis/dotfiles/actions/workflows/check.yml)
 
 This is mostly super specific but feel free to cherry-pick off bits.
