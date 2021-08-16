@@ -180,7 +180,7 @@ in {
     settings = {
       disable = [ "sdkman" "node" "nix" ];
 
-      remote_topgrades = [ "backup" "ci" ];
+      remote_topgrades = [ "backup" "ci" "oracle" ];
 
       remote_topgrade_path = "bin/topgrade";
 
