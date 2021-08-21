@@ -20,8 +20,13 @@ _syncdown_completions() {
   _syncup_completions
 }
 
+_x_completions() {
+  mapfile -t COMPREPLY < <(compgen -W "autofix format githook home-check home-switch install server-switch test" -- "${COMP_WORDS[1]}")
+}
+
 complete -F _wgup_completions wgup
 complete -F _wgdown_completions wgdown
 complete -F _wgdown_completions wgcycle
 complete -F _syncup_completions syncup
 complete -F _syncdown_completions syncdown
+complete -F _x_completions x
