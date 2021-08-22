@@ -16,10 +16,6 @@ function findapks() {
   fd -HI "\.apk$" "${DIR}"
 }
 
-function findjars() {
-  fd -Itf jar$ build
-}
-
 function adbp() {
   local RAW_PACKAGE_PATH
   RAW_PACKAGE_PATH="$(adb shell pm path "${1:?}")"
@@ -41,12 +37,12 @@ function adbp() {
 }
 
 function buildmod() {
-  fd -Itf jar$ build/ -X rm -v
+  findjars -X rm -v
   gradle --no-daemon build
   while read -r line; do
     if [[ $(echo "${line}" | cut -d '=' -f 1) == "archives_base_name" ]]; then
       fd "$(echo "${line}" | cut -d '=' -f 2)" "${HOME}/.minecraft/mods/" -X rm -v
     fi
   done <gradle.properties
-  fd -Itf jar$ build/ | rg -v '(sources|dev|api)' | xargs -I {} mv -v {} "${HOME}/.minecraft/mods/"
+  findjars | rg -v '(sources|dev|api)' | xargs -I {} mv -v {} "${HOME}/.minecraft/mods/"
 }

@@ -17,3 +17,6 @@ fi
 if type aria2c &>/dev/null; then
   alias batch="aria2c --conditional-get true --continue true --auto-file-renaming=false --input-file"
 fi
+if type fd &>/dev/null; then
+  alias findjars="fd -Itf jar$ build"
+fi
