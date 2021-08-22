@@ -48,5 +48,5 @@ function buildmod() {
       fd "$(echo "${line}" | cut -d '=' -f 2)" "${HOME}/.minecraft/mods/" -X rm -v
     fi
   done <gradle.properties
-  fd -Itf jar$ build/ | rg -v '(sources|dev)' | xargs -I {} mv -v {} "${HOME}/.minecraft/mods/"
+  fd -Itf jar$ build/ | rg -v '(sources|dev|api)' | xargs -I {} mv -v {} "${HOME}/.minecraft/mods/"
 }
