@@ -12,3 +12,8 @@ function nixdiff() {
   [[ -z ${1} || -z ${2} ]] && return
   diff -Naur <(nix-store -qR /nix/var/nix/profiles/per-user/"$(whoami)"/home-manager-"${1}"-link | sort) <(nix-store -qR /nix/var/nix/profiles/per-user/"$(whoami)"/home-manager-"${2}"-link | sort)
 }
+
+function nixshell() {
+  [[ -z ${1} ]] && return
+  cp -v "${SCRIPT_DIR}/nixos/shell-configs/${1}.nix" shell.nix
+}
