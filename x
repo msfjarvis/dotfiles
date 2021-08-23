@@ -58,10 +58,8 @@ case "${1:-nothing}" in
     home-manager switch
     ;;
   test | nothing)
-    ./x format
-    for script in "${SCRIPTS_TO_TEST[@]}"; do
-      echo "Checking ${script}..."
-      shellcheck -x "${script}"
-    done
+    shfmt -d -s -i 2 -ci "${SCRIPTS_TO_TEST[@]}"
+    find . -type f -name '*.nix' -exec nixfmt -c {} \;
+    shellcheck -x "${SCRIPTS_TO_TEST[@]}"
     ;;
 esac
