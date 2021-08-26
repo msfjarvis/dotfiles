@@ -225,6 +225,7 @@ in {
       ncdu
       neofetch
       nixfmt
+      nvd
       oathToolkit
       custom.pidcat
       qrencode

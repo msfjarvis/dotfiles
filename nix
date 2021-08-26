@@ -10,7 +10,16 @@ function nixpatch() {
 
 function nixdiff() {
   [[ -z ${1} || -z ${2} ]] && return
-  diff -Naur <(nix-store -qR /nix/var/nix/profiles/per-user/"$(whoami)"/home-manager-"${1}"-link | sort) <(nix-store -qR /nix/var/nix/profiles/per-user/"$(whoami)"/home-manager-"${2}"-link | sort)
+  local gen1 gen2
+  gen1="/nix/var/nix/profiles/per-user/$(whoami)/home-manager-${1}-link"
+  gen2="/nix/var/nix/profiles/per-user/$(whoami)/home-manager-${2}-link"
+  if [[ ! -e ${gen1} ]]; then
+    echoText "Generation ${1} does not exist"
+    return 1
+  elif [[ ! -e ${gen2} ]]; then
+    echoText "Generation ${2} does not exist"
+  fi
+  nvd diff "${gen1}" "${gen2}"
 }
 
 function nixshell() {

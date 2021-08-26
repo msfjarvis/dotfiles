@@ -169,6 +169,7 @@ in {
     ncdu
     neofetch
     ninja
+    nvd
     patchelf
     procs
     python39
