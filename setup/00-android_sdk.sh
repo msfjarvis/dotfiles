@@ -8,7 +8,7 @@ source "${SCRIPT_DIR:?}"/setup/common.sh
 
 trap 'rm -rf /tmp/tools.zip 2>/dev/null' INT TERM EXIT
 
-SDK_TOOLS=commandlinetools-linux-6858069_latest.zip
+SDK_TOOLS=commandlinetools-linux-7583922_latest.zip
 
 function setup_android_sdk() {
   SDK_DIR="${HOME:?}/Android/Sdk"
