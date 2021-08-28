@@ -11,7 +11,10 @@ trap 'rm -rf /tmp/tools.zip 2>/dev/null' INT TERM EXIT
 SDK_TOOLS=commandlinetools-linux-7583922_latest.zip
 
 function setup_android_sdk() {
-  SDK_DIR="${HOME:?}/Android/Sdk"
+  SDK_DIR="/mnt/mediahell/Android/Sdk"
+  if [ ! -d "${SDK_DIR}" ]; then
+    mkdir -p "${SDK_DIR}"
+  fi
   echoText "Installing Android SDK"
   mkdir -p "${SDK_DIR}"
   if [ ! -f "${SDK_TOOLS}" ]; then
