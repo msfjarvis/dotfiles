@@ -2,7 +2,7 @@
 
 let
   customTarball = fetchTarball
-    "https://github.com/msfjarvis/custom-nixpkgs/archive/d87b492135eba9af3b13ddb262c430a3f08d1f22.tar.gz";
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/1a6c30595a7c6b4c9fd9c9eedf870d59dd4cc02e.tar.gz";
 in {
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
@@ -160,6 +160,7 @@ in {
     ffmpeg
     figlet
     fzf
+    custom.healthchecks-monitor
     hyperfine
     libwebp
     magic-wormhole
