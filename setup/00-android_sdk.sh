@@ -27,3 +27,9 @@ function setup_android_sdk() {
   rm /tmp/tools.zip
   cd - || exit
 }
+
+if [[ ${BASH_SOURCE[0]} == "${0}" ]]; then
+  set -euo pipefail
+  setup_android_sdk
+  set +euo pipefail
+fi

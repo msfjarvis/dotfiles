@@ -20,3 +20,9 @@ function setup_adb_multi() {
   cp "${CLONE_DIR}"/adb-multi ~/bin
   cp "${CLONE_DIR}"/config.cfg ~/bin
 }
+
+if [[ ${BASH_SOURCE[0]} == "${0}" ]]; then
+  set -euo pipefail
+  setup_adb_multi
+  set +euo pipefail
+fi

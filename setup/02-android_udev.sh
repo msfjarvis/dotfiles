@@ -13,3 +13,9 @@ function setup_android_udev() {
   sudo udevadm control --reload-rules
   sudo service udev restart
 }
+
+if [[ ${BASH_SOURCE[0]} == "${0}" ]]; then
+  set -euo pipefail
+  setup_android_udev
+  set +euo pipefail
+fi
