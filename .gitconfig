@@ -71,9 +71,6 @@
 	whitespace = red reverse
 [http]
 	postBuffer = 524288000
-[url "git@github.com:"]
-	insteadOf = https://github.com/
-	insteadOf = git://github.com/
 [diff]
 	noprefix = true
 [log]
