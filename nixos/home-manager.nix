@@ -279,7 +279,11 @@ in {
       xdotool
       zigf.master.latest
       zls
-    ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ openssh ];
+    ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
+      openssh
+      python39
+      python39Packages.pillow
+    ];
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
