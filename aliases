@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 
 alias pidcat='pidcat -i ResourceType -i chatty -i AppCompatDelegate'
-alias today='date +"%Y%m%d"'
+alias today='date +"%F"'
 if type hub &>/dev/null; then
   alias git=hub
 fi
