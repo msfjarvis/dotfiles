@@ -2,7 +2,7 @@
 
 let
   customTarball = fetchTarball
-    "https://github.com/msfjarvis/custom-nixpkgs/archive/95ce920231df51a64fc8eee2d4c698035a317ba4.tar.gz";
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/ca9a34702d34953ce90dd836f297961646d31f15.tar.gz";
   fenix-overlay =
     fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz";
   zig-overlay =
@@ -216,6 +216,7 @@ in {
       fzf
       git-absorb
       custom.git-quickfix
+      custom.hcctl
       hub
       hyperfine
       (magic-wormhole.overrideAttrs
