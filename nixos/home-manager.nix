@@ -19,7 +19,7 @@ in {
       zigf = import zig-overlay { };
     };
   };
-  nixpkgs.overlays = [ (import fenix-overlay) ];
+  nixpkgs.overlays = [ (import "${fenix-overlay}/overlay.nix") ];
 
   fonts.fontconfig.enable = true;
 
@@ -249,16 +249,14 @@ in {
       cowsay
       dnscontrol
       custom.fclones
-      (with fenix;
-        combine (with default; [
-          cargo
-          clippy-preview
-          rust-analyzer
-          rust-std
-          rustc
-          rustfmt-preview
-          latest.rust-src
-        ]))
+      (fenix.complete.withComponents [
+        "cargo"
+        "clippy-preview"
+        "rust-src"
+        "rustc"
+        "rustfmt-preview"
+      ])
+      rust-analyzer-nightly
       ffmpeg
       figlet
       gdrive
