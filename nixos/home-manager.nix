@@ -248,7 +248,7 @@ in {
       cmake
       cowsay
       dnscontrol
-      custom.fclones
+      fclones
       (fenix.complete.withComponents [
         "cargo"
         "clippy-preview"
