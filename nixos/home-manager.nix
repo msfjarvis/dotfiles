@@ -5,19 +5,13 @@ let
     "https://github.com/msfjarvis/custom-nixpkgs/archive/6de82cf9ea2eae5bc0d0f6eab4843e48af63250c.tar.gz";
   fenix-overlay =
     fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz";
-  zig-overlay =
-    fetchTarball "https://github.com/arqv/zig-overlay/archive/main.tar.gz";
-
 in {
   home.username = "msfjarvis";
   home.homeDirectory =
     if pkgs.stdenv.isLinux then "/home/msfjarvis" else "/Users/msfjarvis";
   nixpkgs.config = {
     allowUnfree = true;
-    packageOverrides = pkgs: {
-      custom = import customTarball { };
-      zigf = import zig-overlay { };
-    };
+    packageOverrides = pkgs: { custom = import customTarball { }; };
   };
   nixpkgs.overlays = [ (import "${fenix-overlay}/overlay.nix") ];
 
@@ -297,8 +291,6 @@ in {
       sccache
       xclip
       xdotool
-      zigf.master.latest
-      zls
     ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
       openssh
       python39
