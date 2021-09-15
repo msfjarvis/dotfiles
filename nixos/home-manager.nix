@@ -258,7 +258,6 @@ in {
       cargo-update
       ccache
       choose
-      clang_11
       cmake
       cowsay
       dnscontrol
