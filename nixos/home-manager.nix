@@ -54,6 +54,8 @@ in {
     config = { theme = "zenburn"; };
   };
 
+  programs.bottom = { enable = true; };
+
   programs.browserpass = {
     enable = true;
     browsers = [ "chrome" "firefox" ];
@@ -217,7 +219,6 @@ in {
     [
       custom.adx
       bat
-      bottom
       custom.bundletool-bin
       cachix
       curl
