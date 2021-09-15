@@ -31,7 +31,7 @@ case "${1:-nothing}" in
   autofix)
     shellcheck -f diff "${SCRIPTS_TO_TEST[@]}" | git apply
     ;;
-  format)
+  fmt | format)
     shfmt -w -s -i 2 -ci "${SCRIPTS_TO_TEST[@]}"
     find . -type f -name '*.nix' -exec nixfmt {} \;
     ;;
