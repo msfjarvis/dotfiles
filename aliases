@@ -19,6 +19,7 @@ if type aria2c &>/dev/null; then
 fi
 if type fd &>/dev/null; then
   alias findjars="fd -Itf jar$ build"
+  alias findapks="fd -Itf apk$"
 fi
 if type youtube-dl &>/dev/null; then
   alias ytdl="youtube-dl --external-downloader aria2c --external-downloader-args '-c -j 3 -x 3 -s 3 -k 1M'"

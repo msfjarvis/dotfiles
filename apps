@@ -7,15 +7,6 @@
 # shellcheck source=common
 source "${SCRIPT_DIR}/common"
 
-function findapks() {
-  local DIR
-  DIR="."
-  if [ -n "${1}" ]; then
-    DIR="${1}"
-  fi
-  fd -HI "\.apk$" "${DIR}"
-}
-
 function adbp() {
   local RAW_PACKAGE_PATH
   RAW_PACKAGE_PATH="$(adb shell pm path "${1:?}")"
