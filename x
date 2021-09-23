@@ -27,9 +27,15 @@ SCRIPTS_TO_TEST+=("system")
 SCRIPTS_TO_TEST+=("wireguard")
 SCRIPTS_TO_TEST+=("x")
 
+NIXPKGS_OLD_REVISION=6de82cf9ea2eae5bc0d0f6eab4843e48af63250c
+NIXPKGS_NEW_REVISION=3f6a707aca7aab979cfbba3fe8deec9775d39cb8
+
 case "${1:-nothing}" in
   autofix)
     shellcheck -f diff "${SCRIPTS_TO_TEST[@]}" | git apply
+    ;;
+  bump)
+    fd -tf \\.nix$ -X sd "$NIXPKGS_OLD_REVISION" "$NIXPKGS_NEW_REVISION"
     ;;
   fmt | format)
     shfmt -w -s -i 2 -ci "${SCRIPTS_TO_TEST[@]}"
