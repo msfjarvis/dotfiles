@@ -291,11 +291,7 @@ in {
       sccache
       xclip
       xdotool
-    ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
-      openssh
-      python39
-      python39Packages.pillow
-    ];
+    ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ openssh ];
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
