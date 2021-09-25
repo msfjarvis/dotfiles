@@ -15,11 +15,6 @@ in {
   };
   nixpkgs.overlays = [ (import "${fenix-overlay}/overlay.nix") ];
 
-  home.file.".cargo/config".text = ''
-    [build]
-    rustc-wrapper = "${pkgs.sccache}/bin/sccache"
-  '';
-
   fonts.fontconfig.enable = true;
 
   programs.aria2 = { enable = pkgs.stdenv.isLinux; };
@@ -200,21 +195,6 @@ in {
     enableBashIntegration = true;
   };
 
-  systemd.user.services.sccache = {
-    Unit = { Description = "Run the sccache server"; };
-    Service = {
-      Type = "simple";
-      ExecStart = "${pkgs.sccache}/bin/sccache --start-server";
-      ExecStop = "${pkgs.sccache}/bin/sccache --stop-server";
-      KillMode = "mixed";
-      Environment = [
-        "SCCACHE_DIR=${config.home.homeDirectory}/.cache/sccache"
-        "SCCACHE_CACHE_SIZE=3G"
-      ];
-      WantedBy = [ "multi-user.target" ];
-    };
-  };
-
   home.packages = with pkgs;
     [
       custom.adx
@@ -288,7 +268,6 @@ in {
       python39
       python39Packages.poetry
       python39Packages.virtualenv
-      sccache
       xclip
       xdotool
     ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ openssh ];
