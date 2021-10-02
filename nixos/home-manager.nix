@@ -226,7 +226,7 @@ in {
       custom.pidcat
       qrencode
       ripgrep
-      custom.rust-script
+      rust-script
       scrcpy
       sd
       shellcheck
