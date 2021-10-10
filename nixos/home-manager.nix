@@ -176,7 +176,7 @@ in {
     enable = pkgs.stdenv.isLinux;
 
     settings = {
-      disable = [ "sdkman" "node" "nix" ];
+      disable = [ "sdkman" "node" ];
 
       remote_topgrades = [ "backup" "ci" "oracle" ];
 
