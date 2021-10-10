@@ -79,8 +79,10 @@ in {
 
   programs.gh = {
     enable = true;
-    editor = "micro";
-    gitProtocol = "ssh";
+    settings = {
+      editor = "micro";
+      git_protocol = "ssh";
+    };
   };
 
   programs.git = {
