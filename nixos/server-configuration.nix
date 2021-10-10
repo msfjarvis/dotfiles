@@ -42,6 +42,11 @@ in {
     nix-direnv.enable = true;
   };
 
+  programs.exa = {
+    enable = true;
+    enableAliases = true;
+  };
+
   programs.fzf = {
     enable = true;
     defaultCommand = "fd -tf";
