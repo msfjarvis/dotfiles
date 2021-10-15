@@ -17,7 +17,7 @@ NixOS does not conform to this, and instead hosts it within the `glibc` package'
 This is a bit of a hack, but that's how I did it.
 
 ```
-patchelf --set-interpreter "$(nix eval nixpkgs.glibc.outPath | sed 's/"//g')/lib/ld-linux-x86-64.so.2" $(command -v adb)
+patchelf --set-interpreter "$(nix eval --raw nixpkgs.glibc.outPath)/lib/ld-linux-x86-64.so.2" $(command -v adb)
 ```
 
 This first uses the `nix` package manager's `eval` option to get the directory for glibc, then strips the quotes from that output, and tacks on the ld path at the end. Then it is all passsed to `patchelf` which sets it as the interperter of whatever binary is provided, in my case, the `adb` binary from Google.
@@ -70,40 +70,35 @@ index 4be462991223..554b578308e7 100644
 
 ## Diffing between home-manager generations
 
-`nix-store` lets you dump your entire Nix package tree per-generation so it is relatively easy to diff between two of them. Use `home-manager generations` to list your currently installed generations:
+Install [nvd](https://gitlab.com/khumba/nvd)
+
+```shell
+$ nix-env -iA nixpkgs.nvd
+```
+
+Get the store paths and call `nvd diff`
 
 ```shell
 $ home-manager generations
-2021-04-01 07:25 : id 74 -> /nix/store/q676f4hvizjwxz55b73s1kwpimb9zybr-home-manager-generation
-2021-04-01 07:13 : id 73 -> /nix/store/3bvifdmw7wq6l4axm9303hh536zpv5br-home-manager-generation
-2021-03-29 03:48 : id 72 -> /nix/store/q676f4hvizjwxz55b73s1kwpimb9zybr-home-manager-generation
-2021-03-26 17:20 : id 71 -> /nix/store/vja2mv341nr7pgijdapn2m2s23yzmsk8-home-manager-generation
+2021-10-15 18:22 : id 135 -> /nix/store/66vgjgg2rfpjhcs065gc5fn8pkiq10wd-home-manager-generation
+2021-10-10 19:45 : id 134 -> /nix/store/j4g7wmd7yfd47zr5pc86p9aaalmi05qc-home-manager-generation
+2021-10-10 12:16 : id 133 -> /nix/store/kh1c4g37kda90a1zzsynrbjcfw79sz3s-home-manager-generation
+
+$ nvd diff /nix/store/j4g7wmd7yfd47zr5pc86p9aaalmi05qc-home-manager-generation /nix/store/66vgjgg2rfpjhcs065gc5fn8pkiq10wd-home-manager-generation<<< /nix/store/j4g7wmd7yfd47zr5pc86p9aaalmi05qc-home-manager-generation
+>>> /nix/store/66vgjgg2rfpjhcs065gc5fn8pkiq10wd-home-manager-generation
+Version changes:
+[U.]  #1  cargo-nightly-complete                 2021-10-10 -> 2021-10-13
+[U.]  #2  clippy-preview-nightly-complete        2021-10-10 -> 2021-10-13
+[U.]  #3  rust-nightly-complete-with-components  2021-10-10 -> 2021-10-13
+[U.]  #4  rust-src-nightly-complete              2021-10-10 -> 2021-10-13
+[U.]  #5  rust-std-nightly-complete              2021-10-10 -> 2021-10-13
+[U.]  #6  rustc-nightly-complete                 2021-10-10 -> 2021-10-13
+[U.]  #7  rustfmt-preview-nightly-complete       2021-10-10 -> 2021-10-13
+Added packages:
+[A.]  #1  rust-analyzer-nightly           137ac67
+[A.]  #2  vscode-extension-rust-analyzer  137ac67
+Removed packages:
+[R.]  #1  rust-analyzer-nightly-ce86534           <none>
+[R.]  #2  vscode-extension-rust-analyzer-ce86534  <none>
+Closure size: 535 -> 535 (13 paths added, 13 paths removed, delta +0).
 ```
-
-You can either use the direct path from the command output, or compute it yourself using this 'formula': `/nix/var/nix/profiles/per-user/$(whoami)/home-manager-${ID}-link`.
-
-```shell
-$ nix-store -qR /nix/var/nix/profiles/per-user/msfjarvis/home-manager-74-link
-/nix/store/fnkixi37wfz5nlyzwab2l51p29793a1m-libunistring-0.9.10
-/nix/store/ai6j2i00rik53akq8r5pi2nqjvrqi7ky-libidn2-2.3.0
-/nix/store/90illc73xfs933d06daq6d41njs8yh66-glibc-2.32-37
-/nix/store/6hhqb94ilrdmh0cx5bhdqb92m6bqkvdj-zlib-1.2.11
-/nix/store/3akvw7y0mfxq1l4xlpsqydm512ggn78p-libpng-apng-1.6.37
-/nix/store/agprkg7bv4mnnhj7kddbhzhzm2w1iywj-libjpeg-turbo-2.0.6
-/nix/store/r64zwzppipac695hx9vwgawmg1k0w20f-pcre-8.44
-/nix/store/6cgq2g3v1jhr793qx6j6hr2mpicg0lp7-libselinux-3.0
-/nix/store/bb4l2lmd6vrcyy40ciac8g6wb49a8szp-util-linux-2.36.1
-/nix/store/j924jn8sw7kggc773wllw3kmimmr8z4x-libffi-3.3
-/nix/store/cxbw3sfj8vvp2v7yydpd2f5xhsfn68zd-glib-2.66.4
-/nix/store/2cw85jfh8yj20cj62lcs21y5jfcq28bi-xz-5.2.5
-/nix/store/fmxgxr7kx29aqbzjp662v5mhkrbjvl91-gcc-10.2.0-lib
-...
-```
-
-To diff, do this:
-
-```shell
-$ diff -Naur <(nix-store -qR /nix/var/nix/profiles/per-user/msfjarvis/home-manager-74-link | sort) <(nix-store -qR /nix/var/nix/profiles/per-user/msfjarvis/home-manager-73-link | sort)
-```
-
-Using `sort` on the result ensures that the diffs only contain actual changes and not just derivations changing their location in the `nix-store` output for any reason.
