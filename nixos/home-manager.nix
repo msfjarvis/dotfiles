@@ -3,8 +3,8 @@
 let
   customTarball = fetchTarball
     "https://github.com/msfjarvis/custom-nixpkgs/archive/2788a623c3a2c8bde7104ccfc085f3bf65654fb1.tar.gz";
-  fenix-overlay =
-    fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz";
+  oxalica-rust = fetchTarball
+    "https://github.com/oxalica/rust-overlay/archive/master.tar.gz";
 in {
   home.username = "msfjarvis";
   home.homeDirectory =
@@ -13,7 +13,7 @@ in {
     allowUnfree = true;
     packageOverrides = pkgs: { custom = import customTarball { }; };
   };
-  nixpkgs.overlays = [ (import "${fenix-overlay}/overlay.nix") ];
+  nixpkgs.overlays = [ (import oxalica-rust) ];
 
   fonts.fontconfig.enable = true;
 
@@ -189,7 +189,7 @@ in {
 
   programs.vscode = {
     enable = pkgs.stdenv.isLinux;
-    extensions = with pkgs.vscode-extensions; [ matklad.rust-analyzer-nightly ];
+    extensions = with pkgs.vscode-extensions; [ matklad.rust-analyzer ];
   };
 
   programs.zoxide = {
@@ -245,14 +245,10 @@ in {
       cowsay
       dnscontrol
       fclones
-      (fenix.complete.withComponents [
-        "cargo"
-        "clippy-preview"
-        "rust-src"
-        "rustc"
-        "rustfmt-preview"
-      ])
-      rust-analyzer-nightly
+      (rust-bin.selectLatestNightlyWith (toolchain:
+        toolchain.default.override {
+          extensions = [ "rust-analyzer-preview" "rust-src" "rustfmt-preview" ];
+        }))
       ffmpeg
       figlet
       gdrive
