@@ -25,9 +25,8 @@ function batch_dl() {
   local INPUT_FILE PROTOCOL
   INPUT_FILE="${1}"
   if [ -z "${INPUT_FILE}" ]; then
-    reportWarning "No file provided"
-    return 1
-  elif [ ! -f "${INPUT_FILE}" ]; then
+    INPUT_FILE="/dev/stdin"
+  elif [ ! -e "${INPUT_FILE}" ]; then
     reportWarning "'${INPUT_FILE}' doesn't exist"
     return 1
   fi
