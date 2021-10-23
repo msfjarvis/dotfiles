@@ -31,7 +31,7 @@ function buildmod() {
   local CONFIG=()
   [ -z "${1}" ] && CONFIG+=("--no-daemon")
   findjars -X rm -v
-  gradle "${CONFIG[@]}" build
+  gradle "${CONFIG[@]}" assemble
   while read -r line; do
     if [[ $(echo "${line}" | cut -d '=' -f 1) == "archives_base_name" ]]; then
       fd "$(echo "${line}" | cut -d '=' -f 2)" "${HOME}/.minecraft/mods/" -X rm -v
