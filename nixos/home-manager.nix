@@ -251,7 +251,7 @@ in {
         }))
       ffmpeg
       figlet
-      gdrive
+      custom.gdrive
       git-crypt
       glow
       hugo
