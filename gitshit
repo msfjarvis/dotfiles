@@ -73,18 +73,10 @@ function gcp() {
 }
 
 function gitsync() {
-  # Parallelised to run in batches of 4
-  # Source: https://unix.stackexchange.com/a/216475
-  local N
-  N=4
-  (
-    fd -Htd \\.git$ -x echo '{//}' | while read -r dir; do
-      ((i = i % N))
-      ((i++ == 0)) && wait
-      echoText "$dir"
-      hub -C "$dir" sync &
-    done
-  )
+  fd -Htd \\.git$ -x echo '{//}' | while read -r dir; do
+    echoText "$dir"
+    hub -C "$dir" sync
+  done
 }
 
 function gitprune() {
