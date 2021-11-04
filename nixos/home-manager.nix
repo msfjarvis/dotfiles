@@ -176,7 +176,7 @@ in {
     enable = pkgs.stdenv.isLinux;
 
     settings = {
-      disable = [ "sdkman" "node" "nix" ];
+      disable = [ "gnome_shell_extensions" "nix" "node" "sdkman" ];
 
       remote_topgrades = [ "backup" "ci" "oracle" ];
 
