@@ -53,7 +53,7 @@ in {
 
   programs.browserpass = {
     enable = true;
-    browsers = [ "chrome" ];
+    browsers = [ "chrome" "firefox" ];
   };
 
   programs.exa = {
