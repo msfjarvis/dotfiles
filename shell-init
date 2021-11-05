@@ -95,6 +95,17 @@ export SDKMAN_DIR="${HOME}/.sdkman"
 # shellcheck disable=SC1091
 [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
 
+# Clipboard and other system-specific functions
+read -r PROCVER </proc/version
+if [[ ${PROCVER} =~ microsoft ]]; then
+  # shellcheck source=system_wsl
+  source "${SCRIPT_DIR}"/system_wsl
+else
+  # shellcheck source=system_linux
+  source "${SCRIPT_DIR}"/system_linux
+fi
+unset PROCVER
+
 # shellcheck source=bash_completions.bash
 source "${SCRIPT_DIR}"/bash_completions.bash
 # shellcheck source=aliases
@@ -115,8 +126,6 @@ source "${SCRIPT_DIR}"/nix
 source "${SCRIPT_DIR}"/server
 # shellcheck source=system
 source "${SCRIPT_DIR}"/system
-# shellcheck source=system_linux
-source "${SCRIPT_DIR}"/system_linux
 # shellcheck source=wireguard
 source "${SCRIPT_DIR}"/wireguard
 

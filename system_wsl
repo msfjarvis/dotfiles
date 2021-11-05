@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
+# SPDX-License-Identifier: MIT
+
+function clip() {
+  clip.exe <"${1:-/dev/stdin}"
+}
+
+function clrclip() {
+  clip.exe <"/dev/null"
+}
