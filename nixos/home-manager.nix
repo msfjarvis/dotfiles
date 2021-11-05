@@ -113,6 +113,11 @@ in {
 
   programs.password-store = { enable = true; };
 
+  services.gpg-agent = {
+    enable = true;
+    pinentryFlavor = "tty";
+  };
+
   services.password-store-sync = {
     enable = pkgs.stdenv.isLinux;
     frequency = "*-*-* *:00:00";
