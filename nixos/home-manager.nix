@@ -201,6 +201,7 @@ in {
     [
       custom.adx
       bat
+      bash
       custom.bundletool-bin
       cachix
       curl
