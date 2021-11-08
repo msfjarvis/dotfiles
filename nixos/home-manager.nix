@@ -114,7 +114,7 @@ in {
   programs.password-store = { enable = true; };
 
   services.gpg-agent = {
-    enable = true;
+    enable = pkgs.stdenv.isLinux;
     pinentryFlavor = "tty";
   };
 
