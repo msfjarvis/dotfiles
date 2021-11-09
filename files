@@ -8,7 +8,7 @@ source "${SCRIPT_DIR}"/server
 
 function dl() {
   local URL FILE_NAME
-  declare -a CONFIGURATION=("--split=16" "--max-connection-per-server=16" "--summary-interval=0")
+  declare -a CONFIGURATION=("--split=16" "--max-connection-per-server=16" "--summary-interval=0" "--auto-file-renaming=false")
   URL="${1}"
   FILE_NAME="${2}"
   if [[ ${URL} =~ magnet ]] || [[ ${URL} =~ \.torrent ]]; then
