@@ -16,6 +16,7 @@ if command -v nix-channel; then
   # Add the nix channels we're interested in
   nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
   nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
+  nix-channel --add https://github.com/oxalica/rust-overlay/archive/master.tar.gz rust-overlay
 
   # Update channels
   nix-channel --update
