@@ -115,7 +115,8 @@ in {
 
   services.gpg-agent = {
     enable = pkgs.stdenv.isLinux;
-    pinentryFlavor = "tty";
+    defaultCacheTtl = 600;
+    pinentryFlavor = "gtk2";
   };
 
   services.password-store-sync = {
