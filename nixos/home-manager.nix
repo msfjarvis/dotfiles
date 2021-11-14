@@ -267,6 +267,7 @@ in {
       lolcat
       musl
       nix-update
+      nixpkgs-review
       openssl
       patchelf
       pkg-config
