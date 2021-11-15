@@ -248,6 +248,7 @@ in {
       cargo-update
       ccache
       choose
+      custom.clipboard-substitutor
       cmake
       cowsay
       dnscontrol
