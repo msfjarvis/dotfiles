@@ -2,7 +2,7 @@
 
 let
   customTarball = fetchTarball
-    "https://github.com/msfjarvis/custom-nixpkgs/archive/e3a75c6c67862eb5076b6cfb275c8cf74dfae793.tar.gz";
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/650332fb97a990ab60722cd597998464b9f87820.tar.gz";
   oxalica-rust = fetchTarball
     "https://github.com/oxalica/rust-overlay/archive/master.tar.gz";
 in {
