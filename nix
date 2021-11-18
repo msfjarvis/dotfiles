@@ -5,7 +5,10 @@
 
 function nixpatch() {
   [ -z "${1}" ] && return
-  patchelf --set-interpreter "$(nix eval --raw nixpkgs.glibc.outPath)/lib/ld-linux-x86-64.so.2" "${1}"
+  local glibc_path
+  # shellcheck disable=SC2076
+  if [[ "$(nix --version)" =~ "2.4" ]]; then glibc_path="$(nix eval --raw nixpkgs#glibc.outPath)"; else glibc_path="$(nix eval --raw nixpkgs.glibc.outPath)"; fi
+  patchelf --set-interpreter "${glibc_path}/lib/ld-linux-x86-64.so.2" "${1}"
 }
 
 function nixdiff() {
