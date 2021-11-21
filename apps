@@ -32,5 +32,12 @@ function buildmod() {
   [ -z "${1}" ] && CONFIG+=("--no-daemon")
   findjars -X rm -v
   gradle "${CONFIG[@]}" assemble
-  findjars | rg -v '(sources|dev|api)' | xargs -I {} mv -v {} ./
+  while read -r line; do
+    if [[ $(echo "${line}" | cut -d '=' -f 1) == "archives_base_name" ]]; then
+      fd "$(echo "${line}" | cut -d '=' -f 2)" "${HOME}/.minecraft/mods/" -X rm -v
+    else
+      fd "$(basename "$(pwd)")" "${HOME}/.minecraft/mods/" -X rm -v
+    fi
+  done <gradle.properties
+  findjars | rg -v '(sources|dev|api)' | xargs -I {} mv -v {} "${HOME}/.minecraft/mods/"
 }
