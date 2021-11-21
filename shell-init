@@ -120,6 +120,8 @@ source "${SCRIPT_DIR}"/devtools
 source "${SCRIPT_DIR}"/files
 # shellcheck source=gitshit
 source "${SCRIPT_DIR}"/gitshit
+# shellcheck source=minecraft
+source "${SCRIPT_DIR}"/minecraft
 # shellcheck source=nix
 source "${SCRIPT_DIR}"/nix
 # shellcheck source=server

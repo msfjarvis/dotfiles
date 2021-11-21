@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+# Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
+# SPDX-License-Identifier: MIT
+
+# Source common functions
+# shellcheck source=common
+source "${SCRIPT_DIR}/common"
+
+function buildmod() {
+  local CONFIG=()
+  local DEST_DIR
+  if [ -n "${MC_DIR}" ]; then
+    DEST_DIR="${MC_DIR}/mods/"
+  else
+    DEST_DIR="$(pwd)"
+  fi
+  [ -z "${1}" ] && CONFIG+=("--no-daemon")
+  findjars -X rm -v
+  gradle "${CONFIG[@]}" assemble
+  while read -r line; do
+    if [[ $(echo "${line}" | cut -d '=' -f 1) == "archives_base_name" ]]; then
+      fd "$(echo "${line}" | cut -d '=' -f 2)" "${DEST_DIR}" -X rm -v
+    else
+      fd "$(basename "$(pwd)")" "${DEST_DIR}" -X rm -v
+    fi
+  done <gradle.properties
+  findjars | rg -v '(sources|dev|api)' | xargs -I {} mv -v {} "${DEST_DIR}"
+}
+
+function buildrespack() {
+  local PACK_NAME
+  local DEST_DIR
+  PACK_NAME="$(basename "$(pwd)")"
+  if [ -n "${MC_DIR}" ]; then
+    DEST_DIR="${MC_DIR}/resourcepacks"
+  else
+    DEST_DIR="$(pwd)"
+  fi
+  fd "${PACK_NAME}" "${DEST_DIR}" -X rm -v
+  zip -ur "${DEST_DIR}/${PACK_NAME}.zip" ./ -x ".git/**" -x "README.md"
+}
+
+function buildshaderpack() {
+  local PACK_NAME
+  local DEST_DIR
+  PACK_NAME="$(basename "$(pwd)")"
+  if [ -n "${MC_DIR}" ]; then
+    DEST_DIR="${MC_DIR}/shaderpacks"
+  else
+    DEST_DIR="$(pwd)"
+  fi
+  fd "${PACK_NAME}" "${DEST_DIR}" -X rm -v
+  zip -ur "${DEST_DIR}/${PACK_NAME}.zip" ./ -x ".git/**" -x "README.md"
+}
