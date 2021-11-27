@@ -2,6 +2,3 @@
 	signingkey = B7843F823355E9B9
 [commit]
 	gpgsign = true
-[url "git@github.com:"]
-	insteadOf = https://github.com/
-	insteadOf = git://github.com/
