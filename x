@@ -32,8 +32,8 @@ SCRIPTS_TO_TEST+=("system_wsl")
 SCRIPTS_TO_TEST+=("wireguard")
 SCRIPTS_TO_TEST+=("x")
 
-NIXPKGS_OLD_REVISION=650332fb97a990ab60722cd597998464b9f87820
-NIXPKGS_NEW_REVISION=9aa3dd2134809d2f52e98ce1823a327c15aa2455
+NIXPKGS_OLD_REVISION=9aa3dd2134809d2f52e98ce1823a327c15aa2455
+NIXPKGS_NEW_REVISION=acb15c2917a840df38656fe8dd257c1a245339ab
 
 case "${1:-nothing}" in
   autofix)
@@ -41,6 +41,7 @@ case "${1:-nothing}" in
     ;;
   bump)
     fd -tf \\.nix$ -X sd "$NIXPKGS_OLD_REVISION" "$NIXPKGS_NEW_REVISION"
+    git commit -am "nixos: bump custom-nixpkgs"
     ;;
   fmt | format)
     shfmt -w -s -i 2 -ci "${SCRIPTS_TO_TEST[@]}"
