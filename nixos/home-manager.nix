@@ -238,7 +238,9 @@ in {
       sd
       shellcheck
       shfmt
+      unzip
       vivid
+      zip
     ] ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
       act
       custom.adb-sync
