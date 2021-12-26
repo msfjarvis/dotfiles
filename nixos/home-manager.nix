@@ -3,8 +3,8 @@
 let
   customTarball = fetchTarball
     "https://github.com/msfjarvis/custom-nixpkgs/archive/e2a001c8688d4bfe1af995ccb36af9a6c816ab21.tar.gz";
-  zig-overlay =
-    fetchTarball "https://github.com/arqv/zig-overlay/archive/main.tar.gz";
+  zig-overlay = fetchTarball
+    "https://github.com/arqv/zig-overlay/archive/151d4bb403a86eac42ed53eae1cd64db247ce37f.tar.gz";
 
 in {
   home.username = "msfjarvis";
@@ -283,7 +283,7 @@ in {
       python39Packages.virtualenv
       xclip
       xdotool
-      zigf.master.latest
+      zigf."0.9.0"
       zls
     ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ openssh ];
 
