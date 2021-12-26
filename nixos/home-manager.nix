@@ -3,13 +3,19 @@
 let
   customTarball = fetchTarball
     "https://github.com/msfjarvis/custom-nixpkgs/archive/e2a001c8688d4bfe1af995ccb36af9a6c816ab21.tar.gz";
+  zig-overlay =
+    fetchTarball "https://github.com/arqv/zig-overlay/archive/main.tar.gz";
+
 in {
   home.username = "msfjarvis";
   home.homeDirectory =
     if pkgs.stdenv.isLinux then "/home/msfjarvis" else "/Users/msfjarvis";
   nixpkgs.config = {
     allowUnfree = true;
-    packageOverrides = pkgs: { custom = import customTarball { }; };
+    packageOverrides = pkgs: {
+      custom = import customTarball { };
+      zigf = import zig-overlay { };
+    };
   };
   nixpkgs.overlays = [ (import <rust-overlay>) ];
 
@@ -277,6 +283,8 @@ in {
       python39Packages.virtualenv
       xclip
       xdotool
+      zigf.master.latest
+      zls
     ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ openssh ];
 
   # This value determines the Home Manager release that your
