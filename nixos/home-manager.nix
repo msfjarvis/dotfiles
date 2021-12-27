@@ -197,10 +197,7 @@ in {
     };
   };
 
-  programs.vscode = {
-    enable = pkgs.stdenv.isLinux;
-    extensions = with pkgs.vscode-extensions; [ matklad.rust-analyzer ];
-  };
+  programs.vscode = { enable = pkgs.stdenv.isLinux; };
 
   programs.zoxide = {
     enable = true;
@@ -262,7 +259,7 @@ in {
       fclones
       (rust-bin.selectLatestNightlyWith (toolchain:
         toolchain.default.override {
-          extensions = [ "rust-analyzer-preview" "rust-src" "rustfmt-preview" ];
+          extensions = [ "rust-src" "rustfmt-preview" ];
           targets = [ "x86_64-unknown-linux-musl" ];
         }))
       ffmpeg
