@@ -263,6 +263,7 @@ in {
       (rust-bin.selectLatestNightlyWith (toolchain:
         toolchain.default.override {
           extensions = [ "rust-analyzer-preview" "rust-src" "rustfmt-preview" ];
+          targets = [ "x86_64-unknown-linux-musl" ];
         }))
       ffmpeg
       figlet
@@ -273,7 +274,7 @@ in {
       custom.jetbrains-mono-nerdfonts
       libwebp
       lolcat
-      musl
+      musl.dev
       nix-update
       nixpkgs-review
       openssl
