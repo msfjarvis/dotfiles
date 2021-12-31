@@ -168,6 +168,12 @@ function mkgif() {
   ffmpeg -i "${1:?}" -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 "${1%.*}".gif
 }
 
+function tmpshare() {
+  local FILE
+  FILE="${1}"
+  curl -F"file=@${FILE:?}" https://0x0.st
+}
+
 # Upload a file to imgur and copy the link
 function imgur() {
   local FILE LINK USE_CLIPBOARD
