@@ -3,7 +3,7 @@ mkShell {
   buildInputs = [
     (rust-bin.selectLatestNightlyWith (toolchain:
       toolchain.default.override {
-        extensions = [ "rust-analyzer-preview" "rust-src" "rustfmt-preview" ];
+        extensions = [ "rust-src" "rustfmt-preview" ];
       }))
   ];
 }
