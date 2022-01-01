@@ -204,6 +204,17 @@ in {
     enableBashIntegration = true;
   };
 
+  systemd.user.services.clipboard-substitutor = {
+    Unit = { Description = "Run the clipboard-substitutor CLI"; };
+    Service = {
+      Type = "simple";
+      ExecStart =
+        "${pkgs.custom.clipboard-substitutor}/bin/clipboard-substitutor";
+      KillMode = "mixed";
+      WantedBy = [ "multi-user.target" ];
+    };
+  };
+
   home.packages = with pkgs;
     [
       custom.adx
