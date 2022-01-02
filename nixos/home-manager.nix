@@ -211,8 +211,8 @@ in {
       ExecStart =
         "${pkgs.custom.clipboard-substitutor}/bin/clipboard-substitutor";
       KillMode = "mixed";
-      WantedBy = [ "multi-user.target" ];
     };
+    Install = { WantedBy = [ "multi-user.target" ]; };
   };
 
   home.packages = with pkgs;
