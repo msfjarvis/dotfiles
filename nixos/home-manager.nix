@@ -212,7 +212,7 @@ in {
         "${pkgs.custom.clipboard-substitutor}/bin/clipboard-substitutor";
       KillMode = "mixed";
     };
-    Install = { WantedBy = [ "multi-user.target" ]; };
+    Install = { WantedBy = [ "default.target" ]; };
   };
 
   home.packages = with pkgs;
