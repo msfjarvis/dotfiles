@@ -61,9 +61,11 @@ function gcp() {
     return 1
   fi
 
-  if [[ ${REPO_SLUG} =~ android-password-store ]]; then
+  if [[ ${REPO_SLUG} =~ "android-password-store/Android-Password-Store" ]]; then
     PREFIX="aps/"
     REPO_SLUG=""
+  elif [[ ${REPO_SLUG} =~ android-password-store ]]; then
+    PREFIX="apsg/"
   fi
 
   REPO_SLUG="$(echo "${REPO_SLUG}" | cut -d '/' -f 2 | sed 's/\.git$//g')"
