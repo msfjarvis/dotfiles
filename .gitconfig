@@ -18,6 +18,7 @@
 	helper = cache --timeout=3000
 [alias]
 	a = add
+    add-signoff = "!EDITOR='sed -i -re s/^pick/e/' sh -c 'git rebase -i $1 && while test -f .git/rebase-merge/interactive; do git commit --signoff --amend --no-edit && git rebase --continue; done' -"
 	amc = "!xclip -out -selection clipboard | git am $@"
 	branches = for-each-ref --sort='-authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/remotes
 	c = commit
