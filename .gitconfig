@@ -1,3 +1,5 @@
+[advice]
+	skippedCherryPicks = false
 [core]
 	abbrev = 12
 	pager = diff-so-fancy | less --tabs=4 -RFX
