@@ -67,6 +67,15 @@ in {
 
   programs.home-manager = { enable = true; };
 
+  programs.htop = { enable = true; };
+
+  programs.jq = { enable = true; };
+
+  programs.nix-index = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
   programs.starship = {
     enable = true;
     enableBashIntegration = true;
