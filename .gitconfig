@@ -56,7 +56,7 @@
 	su = submodule update --init --recursive
 	ss = show --stat
 	suicide = reset --hard
-	sw = "!git switch $(git branch | fzf | tr -d '[:space:]')"
+	sw = "!git switch $(git branch | fzf | tr -d '*[:space:]')"
 [merge]
 	log = true
 [gc]
