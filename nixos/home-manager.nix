@@ -84,8 +84,12 @@ in {
   programs.gh = {
     enable = true;
     settings = {
+      git_protocol = "https";
       editor = "micro";
-      git_protocol = "ssh";
+      prompt = "enabled";
+      pager = "bat";
+      aliases = { co = "pr checkout"; };
+      browser = "google-chrome-stable";
     };
   };
 
