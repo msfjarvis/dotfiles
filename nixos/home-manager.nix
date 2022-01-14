@@ -213,14 +213,12 @@ in {
   };
 
   systemd.user.services.clipboard-substitutor = {
-    Unit = { Description = "Run the clipboard-substitutor CLI"; };
     Service = {
       Type = "simple";
       ExecStart =
         "${pkgs.custom.clipboard-substitutor}/bin/clipboard-substitutor";
-      KillMode = "mixed";
     };
-    Install = { WantedBy = [ "default.target" ]; };
+    Install = { WantedBy = [ "gnome-session-x11.target" ]; };
   };
 
   home.packages = with pkgs;
