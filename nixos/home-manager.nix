@@ -134,8 +134,12 @@ in {
     settings = {
       add_newline = false;
       character = {
-        error_symbol = "➜";
-        success_symbol = "➜";
+        error_symbol = ''
+
+          [➜](bold red)'';
+        success_symbol = ''
+
+          [➜](bold green)'';
       };
       git_branch.symbol = " ";
       git_status = {
