@@ -48,7 +48,10 @@ function gcp() {
   local PREFIX="g/"
   local REMOTE="${REMOTE:-origin}"
   local REPO_SLUG COMMITISH
-  REPO_SLUG="$(git remote get-url "${REMOTE}" | cut -d ':' -f 2)/"
+  REPO_SLUG="$(git remote get-url "${REMOTE}" | cut -d '/' -f 4-5)/"
+  if [ "${REPO_SLUG}" == "/" ]; then
+    REPO_SLUG="$(git remote get-url "${REMOTE}" | cut -d ':' -f 2)/"
+  fi
 
   if [ -z "${OG_COMMITISH}" ]; then
     OG_COMMITISH="HEAD"
