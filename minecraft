@@ -8,6 +8,15 @@
 source "${SCRIPT_DIR}/common"
 
 function buildmod() {
+  if [ -f brachyurabootstrapconf.txt ]; then
+    rm -rf build && false
+    java -jar brachyura-bootstrap-0.jar build
+    fd -Itf . build/libs/ -X echo '{/}' | cut -d '-' -f1 | while read -r name; do
+      fd -tf "$name" "$MC_DIR/mods/" -X rm -v {}
+    done
+    mv -v build/libs/* "$MC_DIR/mods/"
+    return
+  fi
   local CONFIG=()
   local DEST_DIR
   if [ -n "${MC_DIR}" ]; then
