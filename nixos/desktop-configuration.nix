@@ -67,7 +67,7 @@ in {
   environment.systemPackages = with pkgs; [
     bind
     busybox
-    clang_10
+    clang_12
     cmake
     curl
     file

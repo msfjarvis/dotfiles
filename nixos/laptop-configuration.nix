@@ -87,7 +87,7 @@ in {
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
     busybox
-    clang_11
+    clang_12
     cmake
     curl
     file
