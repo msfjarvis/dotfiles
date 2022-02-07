@@ -277,7 +277,11 @@ in {
       (rust-bin.selectLatestNightlyWith (toolchain:
         toolchain.default.override {
           extensions = [ "rust-src" "rustfmt-preview" ];
-          targets = [ "x86_64-unknown-linux-musl" ];
+          targets = [
+            "x86_64-unknown-linux-musl"
+            "aarch64-linux-android"
+            "armv7-linux-androideabi"
+          ];
         }))
       ffmpeg
       figlet
