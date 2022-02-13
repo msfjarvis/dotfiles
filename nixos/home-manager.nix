@@ -301,6 +301,7 @@ in {
       python39
       python39Packages.poetry
       python39Packages.virtualenv
+      custom.when
       xclip
       xdotool
       zigf."0.9.0"
