@@ -278,7 +278,10 @@ in {
     ] ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
       act
       custom.adb-sync
+      cargo-deb
+      cargo-depgraph
       cargo-edit
+      cargo-release
       cargo-update
       ccache
       choose
