@@ -101,7 +101,6 @@ in {
       git_protocol = "https";
       editor = "micro";
       prompt = "enabled";
-      pager = "bat";
       aliases = { co = "pr checkout"; };
       browser = "google-chrome-stable";
     };
