@@ -4,7 +4,7 @@ let
   customTarball = fetchTarball
     "https://github.com/msfjarvis/custom-nixpkgs/archive/18533dc2cdbf2a12c08569122f5de098497591d5.tar.gz";
   zig-overlay = fetchTarball
-    "https://github.com/arqv/zig-overlay/archive/151d4bb403a86eac42ed53eae1cd64db247ce37f.tar.gz";
+    "https://github.com/roarkanize/zig-overlay/archive/main.tar.gz";
 
 in {
   home.username = "msfjarvis";
@@ -320,7 +320,7 @@ in {
       custom.when
       xclip
       xdotool
-      zigf."0.9.0"
+      zigf.master.latest
       zls
     ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ openssh ];
 
