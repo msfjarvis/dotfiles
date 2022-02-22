@@ -90,3 +90,10 @@ function gitprune() {
     git -C "$dir" gc --aggressive --keep-largest-pack --prune="$(date)"
   done
 }
+
+function apsync() {
+  gh poi
+  gh repo sync
+  gh repo sync "msfjarvis/$(basename "$(pwd)")"
+  git ru
+}
