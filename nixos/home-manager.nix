@@ -38,6 +38,8 @@ in {
       fi
       # Load completions from Git
       source ${pkgs.git}/share/bash-completion/completions/git
+      # Load completions from scrcpy
+      source ${pkgs.scrcpy}/share/bash-completion/completions/scrcpy
     '' + pkgs.lib.optionalString pkgs.stdenv.isLinux ''
       # Source shell-init from my dotfiles
       source ${config.home.homeDirectory}/git-repos/dotfiles/shell-init
