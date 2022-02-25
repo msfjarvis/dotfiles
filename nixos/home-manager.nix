@@ -289,7 +289,7 @@ in {
       cargo-update
       ccache
       choose
-      clang_12
+      clang_13
       custom.clipboard-substitutor
       cmake
       cowsay

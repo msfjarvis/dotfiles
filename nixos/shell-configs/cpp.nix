@@ -3,9 +3,9 @@
 pkgs.mkShell {
   buildInputs = with pkgs; [
     busybox
-    clang_12
+    clang_13
     cmake
-    lld_12
+    lld_13
     openssl
     pkgconfig
     zlib
