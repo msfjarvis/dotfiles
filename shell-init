@@ -6,6 +6,8 @@
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 export SCRIPT_DIR
 
+export MICRO_TRUECOLOR=1
+
 # SDKMAN!
 export SDKMAN_DIR="${HOME}/.sdkman"
 # shellcheck disable=SC1091
