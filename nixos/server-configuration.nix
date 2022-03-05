@@ -2,7 +2,7 @@
 
 let
   customTarball = fetchTarball
-    "https://github.com/msfjarvis/custom-nixpkgs/archive/aee9d2a36355761bb255b9499698e0e1d251da4a.tar.gz";
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/4b5c4ce247cfe02db36f296fed4f3a76051d44f8.tar.gz";
 in {
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
