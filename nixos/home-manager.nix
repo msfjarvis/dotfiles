@@ -282,6 +282,7 @@ in {
     ] ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
       act
       custom.adb-sync
+      custom.argc
       cargo-deb
       cargo-depgraph
       cargo-edit
