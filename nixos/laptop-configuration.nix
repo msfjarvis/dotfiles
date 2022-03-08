@@ -2,7 +2,7 @@
 
 let
   customTarball = fetchTarball
-    "https://github.com/msfjarvis/custom-nixpkgs/archive/e7fb76460fe4227dfe0de9df94e6a3026f6c9fb0.tar.gz";
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/4b3f401528c2a67794e5c16d34efa2c4e3862fd2.tar.gz";
 
 in {
   imports = [ ./hardware-configuration.nix ];
