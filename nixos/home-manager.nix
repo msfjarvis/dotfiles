@@ -48,6 +48,22 @@ in {
       source ${config.home.homeDirectory}/git-repos/dotfiles/darwin-init
       export BASH_SILENCE_DEPRECATION_WARNING=1
     '';
+    shellOptions = [
+      # Append to history file rather than replacing it.
+      "histappend"
+
+      # check the window size after each command and, if
+      # necessary, update the values of LINES and COLUMNS.
+      "checkwinsize"
+
+      # Extended globbing.
+      "extglob"
+    ] ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
+      "globstar"
+
+      # Warn if closing shell with running jobs.
+      "checkjobs"
+    ];
   };
 
   programs.bat = {
