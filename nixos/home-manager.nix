@@ -329,6 +329,7 @@ in {
       custom.jetbrains-mono-nerdfonts
       libwebp
       lolcat
+      mold
       musl.dev
       nix-update
       nixpkgs-review
