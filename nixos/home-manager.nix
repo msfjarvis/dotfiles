@@ -227,7 +227,7 @@ in {
     settings = {
       disable = [ "gnome_shell_extensions" "nix" "node" "sdkman" ];
 
-      remote_topgrades = [ "backup" "ci" "oracle" ];
+      remote_topgrades = [ "backup" "ci" ];
 
       remote_topgrade_path = "bin/topgrade";
 
