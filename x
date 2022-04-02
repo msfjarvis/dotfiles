@@ -43,6 +43,11 @@ case "${1:-nothing}" in
     fd -tf \\.nix$ -X sd "$NIXPKGS_OLD_REVISION" "$NIXPKGS_NEW_REVISION"
     git commit -am "nixos: bump custom-nixpkgs"
     ;;
+  darwin-switch)
+    nix-channel --update
+    cp nixos//darwin-configuration.nix ~/.nixpkgs/darwin-configuration.nix
+    darwin-rebuild switch --show-trace
+    ;;
   fmt | format)
     shfmt -w -s -i 2 -ci "${SCRIPTS_TO_TEST[@]}"
     find . -type f -name '*.nix' -exec nixfmt {} \;

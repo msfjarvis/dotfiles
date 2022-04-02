@@ -21,7 +21,7 @@ _syncdown_completions() {
 }
 
 _x_completions() {
-  mapfile -t COMPREPLY < <(compgen -W "autofix bump fmt format githook home-check home-switch install server-switch test" -- "${COMP_WORDS[1]}")
+  mapfile -t COMPREPLY < <(compgen -W "autofix bump darwin-switch fmt format githook home-check home-switch install server-switch test" -- "${COMP_WORDS[1]}")
 }
 
 complete -F _wgup_completions wgup
