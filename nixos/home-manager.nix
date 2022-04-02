@@ -8,8 +8,7 @@ let
 
 in {
   home.username = "msfjarvis";
-  home.homeDirectory =
-    if pkgs.stdenv.isLinux then "/home/msfjarvis" else "/Users/msfjarvis";
+  home.homeDirectory = "/home/msfjarvis";
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
@@ -21,7 +20,7 @@ in {
 
   fonts.fontconfig.enable = true;
 
-  programs.aria2 = { enable = pkgs.stdenv.isLinux; };
+  programs.aria2 = { enable = true; };
 
   programs.bash = {
     enable = true;
@@ -40,13 +39,8 @@ in {
       source ${pkgs.git}/share/bash-completion/completions/git
       # Load completions from scrcpy
       source ${pkgs.scrcpy}/share/bash-completion/completions/scrcpy
-    '' + pkgs.lib.optionalString pkgs.stdenv.isLinux ''
       # Source shell-init from my dotfiles
       source ${config.home.homeDirectory}/git-repos/dotfiles/shell-init
-    '' + pkgs.lib.optionalString pkgs.stdenv.isDarwin ''
-      # Source shell-init from my dotfiles
-      source ${config.home.homeDirectory}/git-repos/dotfiles/darwin-init
-      export BASH_SILENCE_DEPRECATION_WARNING=1
     '';
     shellOptions = [
       # Append to history file rather than replacing it.
@@ -58,7 +52,6 @@ in {
 
       # Extended globbing.
       "extglob"
-    ] ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
       "globstar"
 
       # Warn if closing shell with running jobs.
@@ -153,13 +146,13 @@ in {
   programs.password-store = { enable = true; };
 
   services.gpg-agent = {
-    enable = pkgs.stdenv.isLinux;
+    enable = true;
     defaultCacheTtl = 600;
     pinentryFlavor = "gtk2";
   };
 
   services.password-store-sync = {
-    enable = pkgs.stdenv.isLinux;
+    enable = true;
     frequency = "*-*-* *:00:00";
   };
 
@@ -222,7 +215,7 @@ in {
   };
 
   programs.topgrade = {
-    enable = pkgs.stdenv.isLinux;
+    enable = true;
 
     settings = {
       disable = [ "gnome_shell_extensions" "nix" "node" "sdkman" ];
@@ -236,7 +229,7 @@ in {
     };
   };
 
-  programs.vscode = { enable = pkgs.stdenv.isLinux; };
+  programs.vscode = { enable = true; };
 
   programs.zoxide = {
     enable = true;
@@ -255,96 +248,91 @@ in {
     Install = { WantedBy = [ "default.target" ]; };
   };
 
-  home.packages = with pkgs;
-    [
-      custom.adx
-      bat
-      bash
-      custom.bundletool-bin
-      cachix
-      curl
-      diff-so-fancy
-      custom.diffuse-bin
-      direnv
-      diskus
-      dos2unix
-      fd
-      fzf
-      git-absorb
-      git-quickfix
-      custom.hcctl
-      hub
-      hyperfine
-      (magic-wormhole.overrideAttrs
-        (oldAttrs: { doCheck = !pkgs.stdenv.isDarwin; }))
-      micro
-      mosh
-      ncdu
-      neofetch
-      nixfmt
-      nvd
-      oathToolkit
-      custom.pidcat
-      qrencode
-      ripgrep
-      rust-script
-      scrcpy
-      sd
-      shellcheck
-      shfmt
-      unzip
-      vivid
-      zip
-    ] ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
-      act
-      custom.adb-sync
-      custom.argc
-      cargo-deb
-      cargo-depgraph
-      cargo-edit
-      cargo-release
-      cargo-update
-      ccache
-      choose
-      clang_13
-      custom.clipboard-substitutor
-      cmake
-      cowsay
-      dnscontrol
-      fclones
-      (rust-bin.selectLatestNightlyWith (toolchain:
-        toolchain.default.override {
-          extensions = [ "rust-src" "rustfmt-preview" "llvm-tools-preview" ];
-          targets =
-            pkgs.lib.optionals pkgs.stdenv.isDarwin [ "aarch64-apple-darwin" ]
-            ++ pkgs.lib.optionals pkgs.stdenv.isLinux
-            [ "x86_64-unknown-linux-musl" ];
-        }))
-      ffmpeg
-      figlet
-      custom.gdrive
-      git-crypt
-      glow
-      hugo
-      custom.jetbrains-mono-nerdfonts
-      libwebp
-      lolcat
-      mold
-      musl.dev
-      nix-update
-      nixpkgs-review
-      openssl
-      patchelf
-      pkg-config
-      python39
-      python39Packages.poetry
-      python39Packages.virtualenv
-      custom.when
-      xclip
-      xdotool
-      zigf.master.latest
-      zls
-    ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ openssh ];
+  home.packages = with pkgs; [
+    act
+    custom.adb-sync
+    custom.adx
+    custom.argc
+    bat
+    bash
+    custom.bundletool-bin
+    cachix
+    cargo-deb
+    cargo-depgraph
+    cargo-edit
+    cargo-release
+    cargo-update
+    ccache
+    choose
+    clang_13
+    custom.clipboard-substitutor
+    cmake
+    cowsay
+    curl
+    diff-so-fancy
+    custom.diffuse-bin
+    direnv
+    diskus
+    dnscontrol
+    dos2unix
+    fclones
+    fd
+    ffmpeg
+    figlet
+    fzf
+    custom.gdrive
+    git-absorb
+    git-crypt
+    git-quickfix
+    glow
+    custom.hcctl
+    hub
+    hugo
+    hyperfine
+    custom.jetbrains-mono-nerdfonts
+    libwebp
+    lolcat
+    magic-wormhole
+    micro
+    mold
+    mosh
+    musl.dev
+    ncdu
+    neofetch
+    nixfmt
+    nix-update
+    nixpkgs-review
+    nvd
+    oathToolkit
+    openssl
+    patchelf
+    custom.pidcat
+    pkg-config
+    python39
+    python39Packages.poetry
+    python39Packages.virtualenv
+    qrencode
+    ripgrep
+    (rust-bin.selectLatestNightlyWith (toolchain:
+      toolchain.default.override {
+        extensions = [ "rust-src" "rustfmt-preview" "llvm-tools-preview" ];
+        targets = pkgs.lib.optionals pkgs.stdenv.isLinux
+          [ "x86_64-unknown-linux-musl" ];
+      }))
+    rust-script
+    scrcpy
+    sd
+    shellcheck
+    shfmt
+    unzip
+    vivid
+    custom.when
+    xclip
+    xdotool
+    zip
+    zigf.master.latest
+    zls
+  ];
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
