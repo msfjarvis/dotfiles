@@ -17,6 +17,9 @@ if command -v nix-channel; then
   nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
   nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
   nix-channel --add https://github.com/oxalica/rust-overlay/archive/master.tar.gz rust-overlay
+  if [[ "$(uname)" == "Darwin" ]]; then
+    nix-channel --add https://github.com/LnL7/nix-darwin/archive/master.tar.gz darwin
+  fi
 
   # Update channels
   nix-channel --update
