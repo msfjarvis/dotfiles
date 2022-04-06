@@ -26,3 +26,7 @@ function adbp() {
     echoText "Package not found"
   fi
 }
+
+function dbgwork() {
+  pidcat -t WM-PackageManagerHelper -t WM-Schedulers -t WM-ForceStopRunnable -t WM-SystemJobScheduler -t WM-GreedyScheduler "$@"
+}
