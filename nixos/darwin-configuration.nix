@@ -55,6 +55,11 @@ in {
       config = { theme = "zenburn"; };
     };
 
+    programs.browserpass = {
+      enable = true;
+      browsers = [ "chrome" ];
+    };
+
     programs.exa = {
       enable = true;
       enableAliases = true;
