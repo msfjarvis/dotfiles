@@ -7,6 +7,7 @@ pkgs.mkShell {
     git
     micro
     nixfmt
+    rnix-lsp
     shellcheck
     shfmt
   ];
