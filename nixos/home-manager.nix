@@ -3,18 +3,12 @@
 let
   customTarball = fetchTarball
     "https://github.com/msfjarvis/custom-nixpkgs/archive/073e562c646075670a48acf0b7ae3e086578018d.tar.gz";
-  zig-overlay = fetchTarball
-    "https://github.com/roarkanize/zig-overlay/archive/main.tar.gz";
-
 in {
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
   nixpkgs.config = {
     allowUnfree = true;
-    packageOverrides = pkgs: {
-      custom = import customTarball { };
-      zigf = import zig-overlay { };
-    };
+    packageOverrides = pkgs: { custom = import customTarball { }; };
   };
   nixpkgs.overlays = [ (import <rust-overlay>) ];
 
@@ -249,12 +243,9 @@ in {
   };
 
   home.packages = with pkgs; [
-    act
     custom.adb-sync
     custom.adx
-    custom.argc
     bat
-    bash
     custom.bundletool-bin
     cachix
     cargo-deb
@@ -262,37 +253,27 @@ in {
     cargo-edit
     cargo-release
     cargo-update
-    ccache
     choose
     clang_13
     custom.clipboard-substitutor
-    cmake
     cowsay
     curl
     diff-so-fancy
     custom.diffuse-bin
     direnv
     diskus
-    dnscontrol
     dos2unix
     fclones
     fd
-    ffmpeg
-    figlet
     fzf
     custom.gdrive
     git-absorb
     git-crypt
     git-quickfix
-    glow
     custom.hcctl
     hub
-    hugo
     hyperfine
     custom.jetbrains-mono-nerdfonts
-    libwebp
-    lolcat
-    magic-wormhole
     micro
     mold
     mosh
@@ -319,7 +300,6 @@ in {
         targets = pkgs.lib.optionals pkgs.stdenv.isLinux
           [ "x86_64-unknown-linux-musl" ];
       }))
-    rust-script
     scrcpy
     sd
     shellcheck
@@ -330,8 +310,6 @@ in {
     xclip
     xdotool
     zip
-    zigf.master.latest
-    zls
   ];
 
   # This value determines the Home Manager release that your
