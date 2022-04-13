@@ -92,10 +92,10 @@ in {
   };
 
   programs.topgrade = {
-    enable = pkgs.stdenv.isLinux;
+    enable = true;
 
     settings = {
-      only = [ "system" "nix" "home_manager" ];
+      only = [ "bin" "cargo" "system" "nix" "home_manager" "micro" ];
       set_title = false;
       cleanup = true;
     };
