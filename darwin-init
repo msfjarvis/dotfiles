@@ -76,6 +76,7 @@ fi
 # Nano love, or is it?
 if type micro &>/dev/null; then
   export EDITOR=micro
+  export MICRO_TRUECOLOR=1
 else
   export EDITOR=nano
 fi
@@ -89,6 +90,10 @@ fi
 export SDKMAN_DIR="${HOME}/.sdkman"
 # shellcheck disable=SC1091
 [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
+
+# Mitigation against CVE-2022-24765 in Git
+# https://github.blog/2022-04-12-git-security-vulnerability-announced/
+export GIT_CEILING_DIRECTORIES="${HOME}"
 
 # shellcheck source=bash_completions.bash
 source "${SCRIPT_DIR}"/bash_completions.bash

@@ -6,8 +6,6 @@
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 export SCRIPT_DIR
 
-export MICRO_TRUECOLOR=1
-
 # SDKMAN!
 export SDKMAN_DIR="${HOME}/.sdkman"
 # shellcheck disable=SC1091
@@ -90,6 +88,7 @@ fi
 # Nano love, or is it?
 if type micro &>/dev/null; then
   export EDITOR=micro
+  export MICRO_TRUECOLOR=1
 else
   export EDITOR=nano
 fi
@@ -98,6 +97,10 @@ fi
 if type zoxide &>/dev/null; then
   alias cd=z
 fi
+
+# Mitigation against CVE-2022-24765 in Git
+# https://github.blog/2022-04-12-git-security-vulnerability-announced/
+export GIT_CEILING_DIRECTORIES="${HOME}"
 
 # Clipboard and other system-specific functions
 read -r PROCVER </proc/version
