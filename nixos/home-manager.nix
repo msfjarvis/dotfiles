@@ -274,6 +274,7 @@ in {
     hub
     hyperfine
     custom.jetbrains-mono-nerdfonts
+    mcfly
     micro
     mold
     mosh

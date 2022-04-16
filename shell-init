@@ -98,6 +98,11 @@ if type zoxide &>/dev/null; then
   alias cd=z
 fi
 
+# Setup mcfly
+if type mcfly &>/dev/null; then
+  eval "$(mcfly init bash)"
+fi
+
 # Mitigation against CVE-2022-24765 in Git
 # https://github.blog/2022-04-12-git-security-vulnerability-announced/
 export GIT_CEILING_DIRECTORIES="${HOME}"
