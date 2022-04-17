@@ -287,6 +287,7 @@ in {
     direnv
     diskus
     dos2unix
+    duf
     fclones
     fd
     fzf
@@ -314,6 +315,7 @@ in {
     patchelf
     custom.pidcat
     pkg-config
+    procs
     python39
     python39Packages.poetry
     python39Packages.virtualenv
