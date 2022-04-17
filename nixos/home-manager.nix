@@ -139,17 +139,6 @@ in {
 
   programs.password-store = { enable = true; };
 
-  services.gpg-agent = {
-    enable = true;
-    defaultCacheTtl = 600;
-    pinentryFlavor = "gtk2";
-  };
-
-  services.password-store-sync = {
-    enable = true;
-    frequency = "*-*-* *:00:00";
-  };
-
   programs.starship = {
     enable = true;
     enableBashIntegration = true;
@@ -230,6 +219,17 @@ in {
     enableBashIntegration = true;
   };
 
+  services.gpg-agent = {
+    enable = true;
+    defaultCacheTtl = 600;
+    pinentryFlavor = "gtk2";
+  };
+
+  services.password-store-sync = {
+    enable = true;
+    frequency = "*-*-* *:00:00";
+  };
+
   systemd.user.services.clipboard-substitutor = {
     Unit = { Description = "SystemD service for clipboard-substitutor"; };
     Service = {
@@ -240,6 +240,30 @@ in {
       RestartSec = 3;
     };
     Install = { WantedBy = [ "default.target" ]; };
+  };
+
+  systemd.user.services.nix-collect-garbage = {
+    Unit = { Description = "Nix garbage collection"; };
+
+    Service = {
+      CPUSchedulingPolicy = "idle";
+      IOSchedulingClass = "idle";
+      ExecStart = toString (pkgs.writeShellScript "nix-garbage-collection" ''
+        ${pkgs.nix}/bin/nix-collect-garbage -d
+      '');
+    };
+  };
+
+  systemd.user.timers.nix-collect-garbage = {
+    Unit = { Description = "Nix periodic garbage collection"; };
+
+    Timer = {
+      Unit = "nix-collect-garbage.service";
+      OnCalendar = "*-*-* *:00:00";
+      Persistent = true;
+    };
+
+    Install = { WantedBy = [ "timers.target" ]; };
   };
 
   home.packages = with pkgs; [

@@ -106,6 +106,30 @@ in {
     enableBashIntegration = true;
   };
 
+  systemd.user.services.nix-collect-garbage = {
+    Unit = { Description = "Nix garbage collection"; };
+
+    Service = {
+      CPUSchedulingPolicy = "idle";
+      IOSchedulingClass = "idle";
+      ExecStart = toString (pkgs.writeShellScript "nix-garbage-collection" ''
+        ${pkgs.nix}/bin/nix-collect-garbage -d
+      '');
+    };
+  };
+
+  systemd.user.timers.nix-collect-garbage = {
+    Unit = { Description = "Nix periodic garbage collection"; };
+
+    Timer = {
+      Unit = "nix-collect-garbage.service";
+      OnCalendar = "*-*-* *:00:00";
+      Persistent = true;
+    };
+
+    Install = { WantedBy = [ "timers.target" ]; };
+  };
+
   home.packages = with pkgs; [
     bat
     cachix
