@@ -273,10 +273,12 @@ in {
     custom.bundletool-bin
     cachix
     cargo-deb
+    cargo-deny
     cargo-depgraph
     cargo-edit
     cargo-release
     cargo-update
+    cargo-wipe
     choose
     clang_13
     custom.clipboard-substitutor
@@ -331,6 +333,7 @@ in {
     sd
     shellcheck
     shfmt
+    tokio-console
     unzip
     vivid
     custom.when
