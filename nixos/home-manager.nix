@@ -323,7 +323,7 @@ in {
     ripgrep
     (rust-bin.selectLatestNightlyWith (toolchain:
       toolchain.default.override {
-        extensions = [ "rust-src" "rustfmt-preview" "llvm-tools-preview" ];
+        extensions = [ "rust-src" "rustc-dev" "rustfmt-preview" "llvm-tools-preview" ];
         targets = pkgs.lib.optionals pkgs.stdenv.isLinux
           [ "x86_64-unknown-linux-musl" ];
       }))
