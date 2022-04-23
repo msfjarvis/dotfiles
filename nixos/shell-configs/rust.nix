@@ -7,7 +7,7 @@ mkShell {
         targets =
           pkgs.lib.optionals pkgs.stdenv.isDarwin [ "aarch64-apple-darwin" ]
           ++ pkgs.lib.optionals pkgs.stdenv.isLinux
-          [ "x86_64-unknown-linux-musl" ];
+          [ "x86_64-unknown-linux-gnu" ];
       }))
   ];
 }

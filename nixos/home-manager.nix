@@ -327,7 +327,7 @@ in {
       toolchain.default.override {
         extensions = [ "rust-src" "rustc-dev" "rustfmt-preview" "llvm-tools-preview" ];
         targets = pkgs.lib.optionals pkgs.stdenv.isLinux
-          [ "x86_64-unknown-linux-musl" ];
+          [ "x86_64-unknown-linux-gnu" ];
       }))
     scrcpy
     sd
