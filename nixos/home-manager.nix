@@ -270,7 +270,6 @@ in {
     custom.adb-sync
     custom.adx
     bat
-    custom.bundletool-bin
     cachix
     cargo-deb
     cargo-deny
@@ -280,7 +279,6 @@ in {
     cargo-update
     cargo-wipe
     choose
-    clang_13
     custom.clipboard-substitutor
     cowsay
     curl
@@ -305,7 +303,6 @@ in {
     micro
     mold
     mosh
-    musl.dev
     ncdu
     neofetch
     nixfmt
@@ -318,9 +315,6 @@ in {
     custom.pidcat
     pkg-config
     procs
-    python39
-    python39Packages.poetry
-    python39Packages.virtualenv
     qrencode
     ripgrep
     (rust-bin.selectLatestNightlyWith (toolchain:
