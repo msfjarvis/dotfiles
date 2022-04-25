@@ -96,4 +96,5 @@ function apsync() {
   gh repo sync
   gh repo sync "msfjarvis/$(basename "$(pwd)")"
   git ru
+  git fetch --force --tags
 }
