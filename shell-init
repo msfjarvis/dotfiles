@@ -118,6 +118,11 @@ else
 fi
 unset PROCVER
 
+# Spicetify
+if [ -d "${HOME}/.spicetify" ]; then
+  export PATH="${PATH}:${HOME}/.spicetify"
+fi
+
 # shellcheck source=bash_completions.bash
 source "${SCRIPT_DIR}"/bash_completions.bash
 # shellcheck source=aliases
