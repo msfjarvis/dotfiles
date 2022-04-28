@@ -94,7 +94,7 @@ function gitprune() {
 function apsync() {
   gh poi
   gh repo sync
-  gh repo sync "msfjarvis/$(basename "$(pwd)")"
+  [[ "$(git remote | wc -l)" -gt 1 ]] && gh repo sync "msfjarvis/$(basename "$(pwd)")"
   git ru
   git fetch --force --tags
 }
