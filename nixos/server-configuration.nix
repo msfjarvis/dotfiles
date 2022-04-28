@@ -143,7 +143,7 @@ in {
     magic-wormhole
     micro
     mosh
-    ncdu
+    ncdu_2
     neofetch
     nvd
     patchelf

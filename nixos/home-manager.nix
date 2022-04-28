@@ -303,7 +303,7 @@ in {
     micro
     mold
     mosh
-    ncdu
+    ncdu_2
     neofetch
     nixfmt
     nix-update
