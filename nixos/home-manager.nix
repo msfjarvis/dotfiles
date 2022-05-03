@@ -280,6 +280,7 @@ in {
     cargo-wipe
     choose
     custom.clipboard-substitutor
+    comma
     cowsay
     curl
     diff-so-fancy
