@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 let
   customTarball = fetchTarball
-    "https://github.com/msfjarvis/custom-nixpkgs/archive/ff26e78d503abc4081121728c3f2f6468fc5eb62.tar.gz";
+    "https://github.com/msfjarvis/custom-nixpkgs/archive/a0ddd7f070d3bf07405d9416738e6a219a5c3f96.tar.gz";
 
 in {
 
