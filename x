@@ -80,4 +80,9 @@ case "${1:-nothing}" in
     find . -type f -name '*.nix' -exec nixfmt -c {} \;
     shellcheck -x "${SCRIPTS_TO_TEST[@]}"
     ;;
+  wsl-switch)
+    nix-channel --update
+    cp nixos/wsl-configuration.nix ~/.config/nixpkgs/home.nix
+    home-manager switch
+    ;;
 esac
