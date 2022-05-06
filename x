@@ -45,7 +45,7 @@ case "${1:-nothing}" in
     ;;
   darwin-switch)
     nix-channel --update
-    cp nixos//darwin-configuration.nix ~/.nixpkgs/darwin-configuration.nix
+    cp nixos/darwin-configuration.nix ~/.nixpkgs/darwin-configuration.nix
     darwin-rebuild switch --show-trace
     ;;
   fmt | format)
@@ -59,12 +59,12 @@ case "${1:-nothing}" in
     ;;
   home-check)
     nix-channel --update
-    cp nixos/home-manager.nix ~/.config/nixpkgs/home.nix
+    cp nixos/ryzenbox-configuration.nix ~/.config/nixpkgs/home.nix
     home-manager build --show-trace
     ;;
   home-switch)
     nix-channel --update
-    cp nixos/home-manager.nix ~/.config/nixpkgs/home.nix
+    cp nixos/ryzenbox-configuration.nix ~/.config/nixpkgs/home.nix
     home-manager switch
     ;;
   install)
