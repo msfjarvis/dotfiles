@@ -300,6 +300,7 @@ in {
     hub
     hyperfine
     custom.jetbrains-mono-nerdfonts
+    custom.katbin
     mcfly
     micro
     mold

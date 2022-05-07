@@ -140,6 +140,7 @@ in {
     fd
     ffmpeg
     custom.healthchecks-monitor
+    custom.katbin
     magic-wormhole
     micro
     mosh

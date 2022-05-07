@@ -198,6 +198,7 @@ in {
     git-quickfix
     hub
     hyperfine
+    custom.katbin
     micro
     mosh
     nixfmt

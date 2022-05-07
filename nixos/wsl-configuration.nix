@@ -211,6 +211,7 @@ in {
     git-quickfix
     custom.hcctl
     hub
+    custom.katbin
     mcfly
     micro
     ncdu_2
