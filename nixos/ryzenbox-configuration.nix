@@ -201,7 +201,8 @@ in {
     enable = true;
 
     settings = {
-      disable = [ "gnome_shell_extensions" "nix" "node" "sdkman" ];
+      disable =
+        [ "gnome_shell_extensions" "home_manager" "nix" "node" "sdkman" ];
 
       remote_topgrades = [ "backup" "ci" ];
 
