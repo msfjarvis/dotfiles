@@ -189,6 +189,8 @@ in {
     custom.adx
     curl
     diff-so-fancy
+    cachix
+    comma
     custom.diffuse-bin
     direnv
     diskus
