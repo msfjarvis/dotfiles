@@ -24,6 +24,7 @@ if command -v nix-channel; then
       nix-channel --add https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz home-manager
       nix-channel --add https://nixos.org/channels/nixos-21.11 nixpkgs
       nix-channel --add https://github.com/LnL7/nix-darwin/archive/master.tar.gz darwin
+      nix-channel --add https://github.com/oxalica/rust-overlay/archive/master.tar.gz rust-overlay
       ;;
   esac
 
