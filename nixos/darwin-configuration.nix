@@ -119,6 +119,8 @@ in {
 
     programs.home-manager = { enable = true; };
 
+    programs.jq = { enable = true; };
+
     programs.password-store = { enable = true; };
 
     programs.starship = {
@@ -196,6 +198,7 @@ in {
     diskus
     fd
     fzf
+    custom.gdrive
     git-absorb
     git-quickfix
     hub
