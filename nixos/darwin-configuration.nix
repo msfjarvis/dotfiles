@@ -204,7 +204,6 @@ in {
     hub
     hyperfine
     custom.katbin
-    mcfly
     micro
     mosh
     nixfmt
