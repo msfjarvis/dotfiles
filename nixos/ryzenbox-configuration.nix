@@ -14,6 +14,16 @@ in {
 
   fonts.fontconfig.enable = true;
 
+  home.file.".imwheelrc".text = ''
+    ".*"
+    None,      Up,   Button4, 3
+    None,      Down, Button5, 3
+    Control_L, Up,   Control_L|Button4
+    Control_L, Down, Control_L|Button5
+    Shift_L,   Up,   Shift_L|Button4
+    Shift_L,   Down, Shift_L|Button5
+  '';
+
   programs.aria2 = { enable = true; };
 
   programs.bash = {
@@ -243,6 +253,17 @@ in {
     Install = { WantedBy = [ "default.target" ]; };
   };
 
+  systemd.user.services.imwheel = {
+    Unit = { Description = "SystemD service for imwheel"; };
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.imwheel}/bin/imwheel -kill";
+      Restart = "on-failure";
+      RestartSec = 3;
+    };
+    Install = { WantedBy = [ "default.target" ]; };
+  };
+
   systemd.user.services.nix-collect-garbage = {
     Unit = { Description = "Nix garbage collection"; };
 
@@ -300,6 +321,7 @@ in {
     custom.hcctl
     hub
     hyperfine
+    imwheel
     custom.jetbrains-mono-nerdfonts
     custom.katbin
     mcfly
