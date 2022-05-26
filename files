@@ -145,9 +145,9 @@ function fao() {
   local ARG
   ARG="${1}"
   if [ -z "${ARG}" ]; then
-    nano "$(fzf)"
+    micro "$(fzf)"
   else
-    nano "$(fzf -q"${ARG}")"
+    micro "$(fzf -q"${ARG}")"
   fi
 }
 
