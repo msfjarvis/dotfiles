@@ -254,14 +254,18 @@ in {
   };
 
   systemd.user.services.imwheel = {
-    Unit = { Description = "SystemD service for imwheel"; };
+    Unit = {
+      Description = "SystemD service for imwheel";
+      Wants = "display-manager.service";
+      After = "display-manager.service";
+    };
     Service = {
       Type = "simple";
-      ExecStart = "${pkgs.imwheel}/bin/imwheel -kill";
-      Restart = "on-failure";
-      RestartSec = 3;
+      ExecStart = "${pkgs.imwheel}/bin/imwheel -d";
+      ExecStop = "/usr/bin/pkill imwheel";
+      RemainAfterExit = "yes";
     };
-    Install = { WantedBy = [ "default.target" ]; };
+    Install = { WantedBy = [ "graphical-session.target" ]; };
   };
 
   systemd.user.services.nix-collect-garbage = {
