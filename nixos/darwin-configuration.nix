@@ -198,6 +198,7 @@ in {
     diskus
     fd
     fzf
+    custom.fsrx
     custom.gdrive
     git-absorb
     git-quickfix

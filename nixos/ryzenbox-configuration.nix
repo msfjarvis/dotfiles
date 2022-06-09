@@ -317,6 +317,7 @@ in {
     duf
     fclones
     fd
+    custom.fsrx
     fzf
     custom.gdrive
     git-absorb
