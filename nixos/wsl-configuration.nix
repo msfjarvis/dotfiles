@@ -191,6 +191,12 @@ in {
     enableBashIntegration = true;
   };
 
+  services.gpg-agent = {
+    enable = true;
+    defaultCacheTtl = 600;
+    pinentryFlavor = "gtk2";
+  };
+
   home.packages = with pkgs; [
     bat
     cachix
