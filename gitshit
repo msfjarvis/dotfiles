@@ -98,3 +98,12 @@ function apsync() {
   git ru
   git fetch --force --tags
 }
+
+function tempclone() {
+  local SLUG TEMP_DIR
+  SLUG="${1}"
+  TEMP_DIR="$(mktemp -d)"
+  gh repo clone "${SLUG:?}" "${TEMP_DIR}" && {
+    pushd "${TEMP_DIR}" || exit 1
+  }
+}
