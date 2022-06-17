@@ -348,8 +348,13 @@ in {
     qrencode
     ripgrep
     (rust-bin.stable.latest.default.override {
-      extensions =
-        [ "rust-src" "rustc-dev" "rustfmt-preview" "llvm-tools-preview" ];
+      extensions = [
+        "clippy"
+        "llvm-tools-preview"
+        "rust-src"
+        "rustc-dev"
+        "rustfmt-preview"
+      ];
       targets = [ "x86_64-unknown-linux-gnu" ];
     })
     scrcpy
