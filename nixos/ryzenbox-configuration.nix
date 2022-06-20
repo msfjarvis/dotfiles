@@ -10,7 +10,6 @@ in {
     allowUnfree = true;
     packageOverrides = pkgs: { custom = import customTarball { }; };
   };
-  nixpkgs.overlays = [ (import <rust-overlay>) ];
 
   fonts.fontconfig.enable = true;
 
@@ -347,16 +346,6 @@ in {
     procs
     qrencode
     ripgrep
-    (rust-bin.stable.latest.default.override {
-      extensions = [
-        "clippy"
-        "llvm-tools-preview"
-        "rust-src"
-        "rustc-dev"
-        "rustfmt-preview"
-      ];
-      targets = [ "x86_64-unknown-linux-gnu" ];
-    })
     scrcpy
     sd
     shellcheck
