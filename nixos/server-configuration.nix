@@ -11,6 +11,8 @@ in {
     packageOverrides = pkgs: { custom = import customTarball { }; };
   };
 
+  programs.aria2 = { enable = true; };
+
   programs.bash = {
     enable = true;
     historySize = 1000;
