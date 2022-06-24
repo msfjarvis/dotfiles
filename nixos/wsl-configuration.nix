@@ -10,7 +10,6 @@ in {
     allowUnfree = true;
     packageOverrides = pkgs: { custom = import customTarball { }; };
   };
-  nixpkgs.overlays = [ (import <rust-overlay>) ];
 
   fonts.fontconfig.enable = true;
 
@@ -229,11 +228,6 @@ in {
     pkg-config
     qrencode
     ripgrep
-    (rust-bin.stable.latest.default.override {
-      extensions =
-        [ "rust-src" "rustc-dev" "rustfmt-preview" "llvm-tools-preview" ];
-      targets = [ "x86_64-unknown-linux-gnu" ];
-    })
     sd
     shellcheck
     shfmt
