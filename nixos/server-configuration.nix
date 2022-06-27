@@ -97,7 +97,7 @@ in {
     enable = true;
 
     settings = {
-      only = [ "bin" "cargo" "system" "home_manager" "micro" ];
+      only = [ "bin" "cargo" "system" "micro" ];
       set_title = false;
       cleanup = true;
     };
