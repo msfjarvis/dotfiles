@@ -65,6 +65,16 @@ in {
     includes = [{ path = "${config.home.homeDirectory}/dotfiles/.gitconfig"; }];
   };
 
+  programs.gh = {
+    enable = true;
+    settings = {
+      git_protocol = "https";
+      editor = "micro";
+      prompt = "enabled";
+      aliases = { co = "pr checkout"; };
+    };
+  };
+
   programs.gpg = { enable = true; };
 
   programs.home-manager = { enable = true; };
