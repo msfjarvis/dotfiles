@@ -32,15 +32,15 @@ SCRIPTS_TO_TEST+=("system_wsl")
 SCRIPTS_TO_TEST+=("wireguard")
 SCRIPTS_TO_TEST+=("x")
 
-NIXPKGS_OLD_REVISION=e33fdbaf5495094df4a6be01279b8bbcf2ee96bf
-NIXPKGS_NEW_REVISION=4c020b5ce0d99fa12d448a5e3f79ce7cc512863c
-
 case "${1:-nothing}" in
   autofix)
     shellcheck -f diff "${SCRIPTS_TO_TEST[@]}" | git apply
     ;;
   bump)
+    NIXPKGS_OLD_REVISION="$(cat .nix_rev)"
+    NIXPKGS_NEW_REVISION="$(curl --silent -H 'Accept: application/vnd.github.sha' https://api.github.com/repos/msfjarvis/custom-nixpkgs/commits/main)"
     fd -tf \\.nix$ -X sd "$NIXPKGS_OLD_REVISION" "$NIXPKGS_NEW_REVISION"
+    echo "${NIXPKGS_NEW_REVISION}" >".nix_rev"
     git commit -am "nixos: bump custom-nixpkgs"
     ;;
   darwin-switch)
