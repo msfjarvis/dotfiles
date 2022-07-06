@@ -141,6 +141,15 @@ in {
 
   programs.jq = { enable = true; };
 
+  programs.micro = {
+    enable = true;
+    settings = {
+      colorscheme = "dracula";
+      softwrap = true;
+      wordwrap = true;
+    };
+  };
+
   programs.nix-index = {
     enable = true;
     enableBashIntegration = true;
@@ -329,7 +338,6 @@ in {
     custom.jetbrains-mono-nerdfonts
     custom.katbin
     mcfly
-    micro
     mold
     mosh
     ncdu_2
