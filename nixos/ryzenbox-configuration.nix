@@ -264,7 +264,7 @@ in {
       ExecStop = "/usr/bin/pkill imwheel";
       RemainAfterExit = "yes";
     };
-    Install = { WantedBy = [ "graphical-session.target" ]; };
+    Install = { WantedBy = [ "default.target" ]; };
   };
 
   systemd.user.services.nix-collect-garbage = {
