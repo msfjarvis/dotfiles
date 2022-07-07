@@ -272,6 +272,8 @@ in {
       ExecStart = "${pkgs.imwheel}/bin/imwheel -d";
       ExecStop = "/usr/bin/pkill imwheel";
       RemainAfterExit = "yes";
+      Restart = "on-failure";
+      RestartSec = 3;
     };
     Install = { WantedBy = [ "default.target" ]; };
   };
