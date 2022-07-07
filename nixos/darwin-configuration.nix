@@ -193,6 +193,7 @@ in {
     diff-so-fancy
     cachix
     comma
+    dasel
     custom.diffuse-bin
     direnv
     diskus

@@ -205,6 +205,7 @@ in {
     comma
     cowsay
     curl
+    dasel
     diff-so-fancy
     direnv
     diskus

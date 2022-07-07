@@ -319,6 +319,7 @@ in {
     comma
     cowsay
     curl
+    dasel
     diff-so-fancy
     custom.diffuse-bin
     direnv

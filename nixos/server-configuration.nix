@@ -146,6 +146,7 @@ in {
     bat
     cachix
     curl
+    dasel
     diff-so-fancy
     diskus
     dos2unix
