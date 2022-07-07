@@ -205,6 +205,7 @@ in {
     git-quickfix
     hub
     hyperfine
+    just
     custom.katbin
     micro
     mosh

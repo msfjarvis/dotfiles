@@ -339,6 +339,7 @@ in {
     hyperfine
     imwheel
     custom.jetbrains-mono-nerdfonts
+    just
     custom.katbin
     mcfly
     mold

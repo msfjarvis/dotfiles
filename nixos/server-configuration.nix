@@ -153,6 +153,7 @@ in {
     fd
     ffmpeg
     custom.healthchecks-monitor
+    just
     custom.katbin
     magic-wormhole
     micro

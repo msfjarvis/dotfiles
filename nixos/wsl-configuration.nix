@@ -217,6 +217,7 @@ in {
     git-quickfix
     custom.hcctl
     hub
+    just
     custom.katbin
     mcfly
     micro
