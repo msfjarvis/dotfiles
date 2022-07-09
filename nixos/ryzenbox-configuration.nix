@@ -365,6 +365,7 @@ in {
     tokio-console
     unzip
     vivid
+    watchman
     custom.when
     xclip
     xdotool
