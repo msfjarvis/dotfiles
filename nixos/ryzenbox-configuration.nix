@@ -347,7 +347,6 @@ in {
     openssl
     patchelf
     custom.pidcat
-    pkg-config
     procs
     qrencode
     ripgrep
