@@ -107,16 +107,8 @@ fi
 # https://github.blog/2022-04-12-git-security-vulnerability-announced/
 export GIT_CEILING_DIRECTORIES="${HOME}"
 
-# Clipboard and other system-specific functions
-read -r PROCVER </proc/version
-if [[ ${PROCVER} =~ microsoft ]]; then
-  # shellcheck source=system_wsl
-  source "${SCRIPT_DIR}"/system_wsl
-else
-  # shellcheck source=system_linux
-  source "${SCRIPT_DIR}"/system_linux
-fi
-unset PROCVER
+# shellcheck source=system_linux
+source "${SCRIPT_DIR}"/system_linux
 
 # Spicetify
 if [ -d "${HOME}/.spicetify" ]; then

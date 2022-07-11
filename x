@@ -28,7 +28,6 @@ SCRIPTS_TO_TEST+=("shell-init")
 SCRIPTS_TO_TEST+=("system")
 SCRIPTS_TO_TEST+=("system_darwin")
 SCRIPTS_TO_TEST+=("system_linux")
-SCRIPTS_TO_TEST+=("system_wsl")
 SCRIPTS_TO_TEST+=("wireguard")
 SCRIPTS_TO_TEST+=("x")
 
@@ -79,10 +78,5 @@ case "${1:-nothing}" in
     shfmt -d -s -i 2 -ci "${SCRIPTS_TO_TEST[@]}"
     find . -type f -name '*.nix' -exec nixfmt -c {} \;
     shellcheck -x "${SCRIPTS_TO_TEST[@]}"
-    ;;
-  wsl-switch)
-    nix-channel --update
-    cp nixos/wsl-configuration.nix ~/.config/nixpkgs/home.nix
-    home-manager switch
     ;;
 esac
