@@ -307,13 +307,6 @@ in {
     custom.adx
     bat
     cachix
-    cargo-deb
-    cargo-deny
-    cargo-depgraph
-    cargo-edit
-    cargo-release
-    cargo-update
-    cargo-wipe
     choose
     custom.clipboard-substitutor
     comma
