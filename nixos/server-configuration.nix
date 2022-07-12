@@ -154,6 +154,7 @@ in {
     ffmpeg
     custom.healthchecks-monitor
     hub
+    hyperfine
     just
     custom.katbin
     magic-wormhole
