@@ -82,7 +82,7 @@ in {
 
   programs.browserpass = {
     enable = true;
-    browsers = [ "chrome" ];
+    browsers = [ "chrome" "chrome-unstable" ];
   };
 
   programs.exa = {
