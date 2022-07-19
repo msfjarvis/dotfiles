@@ -107,3 +107,13 @@ function tempclone() {
     pushd "${TEMP_DIR}" || exit 1
   }
 }
+
+function purge_gha() {
+  local REPO_SLUG ACTION_NAME
+  REPO_SLUG="${1}"
+  ACTION_NAME="${2}"
+  gh api --paginate --header 'Accept: application/vnd.github+json' \
+    /repos/"${REPO_SLUG:?}"/actions/workflows/"${ACTION_NAME:?}"/runs \
+    -q '.workflow_runs[] | select(.conclusion == "failure") | .id' | xargs \
+    -n1 -I % gh api /repos/"${REPO_SLUG:?}"/actions/runs/% -X DELETE
+}
