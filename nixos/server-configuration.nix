@@ -145,6 +145,7 @@ in {
   home.packages = with pkgs; [
     bat
     cachix
+    comma
     curl
     dasel
     diff-so-fancy
@@ -161,6 +162,7 @@ in {
     micro
     mosh
     ncdu_2
+    nix-update
     neofetch
     nvd
     patchelf
