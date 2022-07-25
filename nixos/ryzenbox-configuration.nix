@@ -345,6 +345,7 @@ in {
     custom.jetbrains-mono-nerdfonts
     just
     custom.katbin
+    custom.lurk
     mcfly
     mold
     mosh
