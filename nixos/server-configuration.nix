@@ -107,9 +107,10 @@ in {
     enable = true;
 
     settings = {
-      only = [ "bin" "cargo" "system" "micro" ];
+      only = [ "bin" "system" "micro" ];
       set_title = false;
       cleanup = true;
+      commands = { "Cargo" = "cargo install-update --all"; };
     };
   };
 
