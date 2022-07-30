@@ -5,6 +5,8 @@
 	pager = diff-so-fancy | less --tabs=4 -RFX
 [interactive]
   difffilter = diff-so-fancy --patch
+[add "interactive"]
+	useBuiltin = false
 [pretty]
 	fixes = Fixes: %h (\"%s\")
 [user]
