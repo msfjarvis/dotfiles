@@ -260,6 +260,17 @@ in {
     frequency = "*-*-* *:00:00";
   };
 
+  systemd.user.services.file-collector = {
+    Unit = { Description = "SystemD service for file-collector"; };
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.custom.file-collector}/bin/file-collector";
+      Restart = "on-failure";
+      RestartSec = 3;
+    };
+    Install = { WantedBy = [ "default.target" ]; };
+  };
+
   systemd.user.services.clipboard-substitutor = {
     Unit = { Description = "SystemD service for clipboard-substitutor"; };
     Service = {
@@ -319,7 +330,6 @@ in {
     bat
     cachix
     choose
-    custom.clipboard-substitutor
     comma
     cowsay
     curl
