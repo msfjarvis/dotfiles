@@ -261,12 +261,16 @@ in {
   };
 
   systemd.user.services.file-collector = {
-    Unit = { Description = "SystemD service for file-collector"; };
+    Unit = {
+      Description = "SystemD service for file-collector";
+      After = "local-fs.target";
+    };
     Service = {
       Type = "simple";
       ExecStart = "${pkgs.custom.file-collector}/bin/file-collector";
       Restart = "on-failure";
       RestartSec = 3;
+      Environment = "PATH=${pkgs.watchman}/bin";
     };
     Install = { WantedBy = [ "default.target" ]; };
   };
