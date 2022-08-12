@@ -262,7 +262,7 @@ in {
 
   systemd.user.services.file-collector = {
     Unit = {
-      Description = "SystemD service for file-collector";
+      Description = "systemd service for file-collector";
       After = "local-fs.target";
     };
     Service = {
@@ -276,7 +276,7 @@ in {
   };
 
   systemd.user.services.clipboard-substitutor = {
-    Unit = { Description = "SystemD service for clipboard-substitutor"; };
+    Unit = { Description = "systemd service for clipboard-substitutor"; };
     Service = {
       Type = "simple";
       ExecStart =
@@ -289,7 +289,7 @@ in {
 
   systemd.user.services.imwheel = {
     Unit = {
-      Description = "SystemD service for imwheel";
+      Description = "systemd service for imwheel";
       Wants = "display-manager.service";
       After = "display-manager.service";
     };
