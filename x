@@ -36,10 +36,8 @@ case "${1:-nothing}" in
     shellcheck -f diff "${SCRIPTS_TO_TEST[@]}" | git apply
     ;;
   bump)
-    NIXPKGS_OLD_REVISION="$(cat .nix_rev)"
     NIXPKGS_NEW_REVISION="$(curl --silent -H 'Accept: application/vnd.github.sha' https://api.github.com/repos/msfjarvis/custom-nixpkgs/commits/main)"
-    fd -tf \\.nix$ -X sd "$NIXPKGS_OLD_REVISION" "$NIXPKGS_NEW_REVISION"
-    echo "${NIXPKGS_NEW_REVISION}" >".nix_rev"
+    fd -tf \\.nix$ -X sd '(.*/custom-nixpkgs/archive)/(.*).tar.gz' "\$1/$NIXPKGS_NEW_REVISION.tar.gz"
     git commit -am "nixos: bump custom-nixpkgs"
     ;;
   darwin-switch)
