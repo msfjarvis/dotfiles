@@ -233,7 +233,7 @@ in {
       disable =
         [ "gnome_shell_extensions" "home_manager" "nix" "node" "sdkman" ];
 
-      remote_topgrades = [ "backup" "ci" ];
+      remote_topgrades = [ "ci" ];
 
       remote_topgrade_path = "bin/topgrade";
 
