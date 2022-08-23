@@ -1,4 +1,10 @@
 [user]
-	signingkey = B7843F823355E9B9
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEoNv1E/D4IzNIJeJg7Rp49Jizw8aoCLSyFLcUmD1F6K msfjarvis@ryzenbox
 [commit]
 	gpgsign = true
+[tag]
+	gpgsign = true
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	allowedSignersFile = ~/.config/git/allowed_signers
