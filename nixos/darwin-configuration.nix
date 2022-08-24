@@ -115,8 +115,6 @@ in {
       ];
     };
 
-    programs.gpg = { enable = true; };
-
     programs.home-manager = { enable = true; };
 
     programs.jq = { enable = true; };
