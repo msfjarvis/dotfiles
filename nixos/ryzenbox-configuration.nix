@@ -144,8 +144,6 @@ in {
     ];
   };
 
-  programs.gpg = { enable = true; };
-
   programs.home-manager = { enable = true; };
 
   programs.htop = { enable = true; };
@@ -247,12 +245,6 @@ in {
   programs.zoxide = {
     enable = true;
     enableBashIntegration = true;
-  };
-
-  services.gpg-agent = {
-    enable = true;
-    defaultCacheTtl = 600;
-    pinentryFlavor = "gtk2";
   };
 
   services.password-store-sync = {
