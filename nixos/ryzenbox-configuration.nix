@@ -247,6 +247,12 @@ in {
     enableBashIntegration = true;
   };
 
+  services.gpg-agent = {
+    enable = true;
+    defaultCacheTtl = 600;
+    pinentryFlavor = "gtk2";
+  };
+
   services.password-store-sync = {
     enable = true;
     frequency = "*-*-* *:00:00";
