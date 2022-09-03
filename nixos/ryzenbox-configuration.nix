@@ -377,7 +377,6 @@ in {
     sd
     shellcheck
     shfmt
-    tokio-console
     unzip
     vivid
     watchman
