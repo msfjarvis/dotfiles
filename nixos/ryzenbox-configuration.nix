@@ -355,7 +355,9 @@ in {
     hub
     hyperfine
     imwheel
-    custom.jetbrains-mono-nerdfonts
+    (nerdfonts.override {
+      fonts = [ "CascadiaCode" "FiraCode" "Inconsolata" "JetBrainsMono" ];
+    })
     just
     custom.katbin
     mcfly
