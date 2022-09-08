@@ -351,6 +351,7 @@ in {
     git-crypt
     git-quickfix
     custom.hcctl
+    helix
     hub
     hyperfine
     imwheel
