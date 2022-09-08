@@ -119,6 +119,20 @@ in {
     enableBashIntegration = true;
   };
 
+  systemd.user.services.code-server = {
+    Unit = {
+      Description = "Visual Studio Code - server component";
+      After = "network.target";
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = "/usr/local/bin/code-server";
+      Restart = "on-failure";
+      RestartSec = 15;
+    };
+    Install = { WantedBy = [ "default.target" ]; };
+  };
+
   systemd.user.services.nix-collect-garbage = {
     Unit = { Description = "Nix garbage collection"; };
 
