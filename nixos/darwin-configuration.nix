@@ -210,6 +210,7 @@ in {
     nixfmt
     oathToolkit
     openssh
+    openssl
     custom.pidcat
     ripgrep
     sd
