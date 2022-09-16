@@ -187,7 +187,9 @@ in {
     ripgrep
     shellcheck
     shfmt
+    unzip
     vivid
+    zip
   ];
 
   # This value determines the Home Manager release that your
