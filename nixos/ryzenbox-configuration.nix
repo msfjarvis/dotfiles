@@ -333,7 +333,6 @@ in {
     cachix
     choose
     comma
-    cowsay
     curl
     dasel
     diff-so-fancy
@@ -344,7 +343,7 @@ in {
     duf
     fclones
     fd
-    custom.fsrx
+    ferium
     fzf
     custom.gdrive
     git-absorb
