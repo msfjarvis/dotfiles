@@ -337,7 +337,6 @@ in {
     dasel
     diff-so-fancy
     custom.diffuse-bin
-    direnv
     diskus
     dos2unix
     duf
@@ -364,6 +363,7 @@ in {
     mosh
     ncdu_2
     neofetch
+    niv
     nixfmt
     nix-update
     nixpkgs-review
