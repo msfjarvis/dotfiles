@@ -379,6 +379,7 @@ in {
     sd
     shellcheck
     shfmt
+    silicon
     unzip
     vivid
     watchman
