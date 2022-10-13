@@ -127,7 +127,8 @@ in {
     };
     Service = {
       Type = "simple";
-      ExecStart = "/usr/local/bin/code-server --disable-telemetry --accept-server-license-terms --log debug";
+      ExecStart =
+        "/usr/local/bin/code-server --disable-telemetry --accept-server-license-terms --log debug";
       Restart = "on-failure";
       RestartSec = 15;
     };
