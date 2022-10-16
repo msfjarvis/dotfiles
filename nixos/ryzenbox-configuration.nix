@@ -133,8 +133,14 @@ in {
 
   programs.git = {
     enable = true;
-    ignores =
-      [ ".envrc" "key.properties" "keystore.properties" "*.jks" ".direnv/" ];
+    ignores = [
+      ".envrc"
+      "key.properties"
+      "keystore.properties"
+      "*.jks"
+      ".direnv/"
+      "fleet.toml"
+    ];
     includes = [
       { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig"; }
       {
