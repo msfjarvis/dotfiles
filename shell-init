@@ -6,6 +6,9 @@
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 export SCRIPT_DIR
 
+# Local bin directory
+[ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:${PATH}"
+
 # SDKMAN!
 export SDKMAN_DIR="${HOME}/.sdkman"
 # shellcheck disable=SC1091
@@ -18,9 +21,6 @@ if [ -f "${HOME}"/.cargo/env ]; then
 elif [ -d "${HOME}"/.cargo/bin ]; then
   export PATH="${HOME}/.cargo/bin:${PATH}"
 fi
-
-# Local bin directory
-[ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:${PATH}"
 
 # Flutter
 if [ -d "${ANDROID_SDK_ROOT/Sdk/flutter}" ]; then
