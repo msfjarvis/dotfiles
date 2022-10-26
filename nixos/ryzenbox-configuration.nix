@@ -322,13 +322,7 @@ in {
 
   systemd.user.timers.nix-collect-garbage = {
     Unit = { Description = "Nix periodic garbage collection"; };
-
-    Timer = {
-      Unit = "nix-collect-garbage.service";
-      OnCalendar = "*-*-* *:00:00";
-      Persistent = true;
-    };
-
+    Timer = { OnCalendar = "daily"; };
     Install = { WantedBy = [ "timers.target" ]; };
   };
 
