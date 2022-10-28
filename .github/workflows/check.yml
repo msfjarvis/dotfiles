@@ -16,7 +16,7 @@ jobs:
        uses: actions/checkout@1f9a0c22da41e6ebfa534300ef656657ea2c6707
 
      - name: Install Nix
-       uses: cachix/install-nix-action@07da2520eebede906fbeefa9dd0a2b635323909d
+       uses: cachix/install-nix-action@11f4ad19be46fd34c005a2864996d8f197fb51c6
        with:
          nix_path: nixpkgs=channel:nixos-unstable
 
