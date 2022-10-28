@@ -112,6 +112,9 @@ function purge_gha() {
   local REPO_SLUG ACTION_NAME
   REPO_SLUG="${1}"
   ACTION_NAME="${2}"
+  if [[ -z ${ACTION_NAME} && -d ".github/workflows/" ]]; then
+    ACTION_NAME="$(fd . .github/workflows/ -x echo '{/}' | fzf --select-1)"
+  fi
   gh api --paginate --header 'Accept: application/vnd.github+json' \
     /repos/"${REPO_SLUG:?}"/actions/workflows/"${ACTION_NAME:?}"/runs \
     -q '.workflow_runs[] | select(.conclusion == "failure") | .id' | xargs \
