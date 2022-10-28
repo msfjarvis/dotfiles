@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      - name: Checkout repository
-       uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f
+       uses: actions/checkout@1f9a0c22da41e6ebfa534300ef656657ea2c6707
 
      - name: Install Nix
        uses: cachix/install-nix-action@07da2520eebede906fbeefa9dd0a2b635323909d
