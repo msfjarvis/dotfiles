@@ -142,13 +142,9 @@ function mediainfo() {
 }
 
 function fao() {
-  local ARG
-  ARG="${1}"
-  if [ -z "${ARG}" ]; then
-    micro "$(fzf)"
-  else
-    micro "$(fzf -q"${ARG}")"
-  fi
+  local FILE
+  FILE="$(fzf --query="$1" --select-1 --exit-0)"
+  [[ -n ${FILE} ]] && ${EDITOR:-micro} "${FILE}"
 }
 
 # shellcheck disable=SC2016
