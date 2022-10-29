@@ -188,7 +188,7 @@ in {
   environment.systemPackages = with pkgs; [
     custom.adx
     curl
-    diff-so-fancy
+    delta
     cachix
     comma
     dasel

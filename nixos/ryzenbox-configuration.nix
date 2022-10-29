@@ -359,7 +359,6 @@ in {
     curl
     dasel
     delta
-    diff-so-fancy
     custom.diffuse-bin
     diskus
     dos2unix

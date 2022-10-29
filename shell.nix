@@ -3,7 +3,7 @@
 pkgs.mkShell {
   buildInputs = with pkgs; [
     bash
-    diff-so-fancy
+    delta
     git
     micro
     nixfmt

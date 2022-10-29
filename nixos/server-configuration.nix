@@ -182,7 +182,7 @@ in {
     comma
     curl
     dasel
-    diff-so-fancy
+    delta
     diskus
     dos2unix
     fd
