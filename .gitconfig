@@ -41,7 +41,9 @@
 	skippedCherryPicks = false
 [core]
 	abbrev = 12
-	pager = delta
+[pager]
+	diff = delta
+	show = delta
 [interactive]
 	diffFilter = delta --color-only
 [pretty]
