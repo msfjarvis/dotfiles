@@ -403,6 +403,7 @@ in {
     shellcheck
     shfmt
     silicon
+    custom.twt
     unzip
     vivid
     watchman
