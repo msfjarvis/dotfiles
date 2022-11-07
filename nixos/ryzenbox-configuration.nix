@@ -239,7 +239,7 @@ in {
 
       remote_topgrades = [ "ci" ];
 
-      remote_topgrade_path = "bin/topgrade";
+      remote_topgrade_path = ".cargo/bin/topgrade";
 
       set_title = false;
       cleanup = true;
