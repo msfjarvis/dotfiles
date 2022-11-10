@@ -99,15 +99,10 @@ function gdrivedl() {
   else
     FILE_ID="$(echo "${URL:?}" | sed -Er -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/(view|edit)/\1/' -e 's/(.*)(&|\?).*/\1/')"
   fi
-  # Stolen from https://stackoverflow.com/a/12711853
   for arg; do
-    case $arg in
-      "--force" | "-f") CONFIGURATION+=("--force") ;;
-      "--skip" | "-s") CONFIGURATION+=("--skip") ;;
-    esac
+    CONFIGURATION+=("$arg")
   done
-
-  gdrive download "${CONFIGURATION[@]}" "${FILE_ID:?}"
+  $GDRIVE download "${CONFIGURATION[@]}" "${FILE_ID:?}"
 }
 
 # Search for a file in Google Drive
