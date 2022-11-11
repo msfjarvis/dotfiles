@@ -366,6 +366,7 @@ in {
     fclones
     fd
     ferium
+    flyctl
     fzf
     custom.gdrive
     git-absorb
