@@ -353,6 +353,7 @@ in {
     custom.adb-sync
     custom.adx
     bat
+    custom.bundletool-bin
     cachix
     choose
     comma
