@@ -135,21 +135,22 @@ in {
     Install = { WantedBy = [ "default.target" ]; };
   };
 
-  systemd.user.services.nix-collect-garbage = {
-    Unit = { Description = "Nix garbage collection"; };
+  systemd.user.services.optimise-nix-store = {
+    Unit = { Description = "nix store maintenance"; };
 
     Service = {
       CPUSchedulingPolicy = "idle";
       IOSchedulingClass = "idle";
-      ExecStart = toString (pkgs.writeShellScript "nix-garbage-collection" ''
-        ${pkgs.nix}/bin/nix-collect-garbage -d
+      ExecStart = toString (pkgs.writeShellScript "nix-optimise-store" ''
+        ${pkgs.nix}/bin/nix store gc
+        ${pkgs.nix}/bin/nix store optimise
       '');
     };
   };
 
-  systemd.user.timers.nix-collect-garbage = {
-    Unit = { Description = "Nix periodic garbage collection"; };
-    Timer = { OnCalendar = "daily"; };
+  systemd.user.timers.optimise-nix-store = {
+    Unit = { Description = "nix store maintenance"; };
+    Timer = { OnCalendar = "hourly"; };
     Install = { WantedBy = [ "timers.target" ]; };
   };
 
