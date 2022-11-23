@@ -18,14 +18,6 @@ export SDKMAN_DIR="${HOME}/.sdkman"
 # shellcheck disable=SC1091
 if [ -f "${HOME}"/.cargo/env ]; then
   source "${HOME}"/.cargo/env
-elif [ -d "${HOME}"/.cargo/bin ]; then
-  export PATH="${HOME}/.cargo/bin:${PATH}"
-fi
-
-# Flutter
-if [ -d "${ANDROID_SDK_ROOT/Sdk/flutter}" ]; then
-  FLUTTER_DIR="${ANDROID_SDK_ROOT/Sdk/flutter}"
-  export PATH="${FLUTTER_DIR}/bin:${FLUTTER_DIR}/.pub-cache/bin:${PATH}"
 fi
 
 # Shell PS1
@@ -39,23 +31,10 @@ if [ -d /mnt/mediahell/.gradle ]; then
   export GRADLE_USER_HOME="/mnt/mediahell/.gradle"
 fi
 
-# Nix installer
-# shellcheck disable=SC1091
-if [ -e "${HOME}"/.nix-profile/etc/profile.d/nix.sh ]; then
-  source "${HOME}"/.nix-profile/etc/profile.d/nix.sh
-fi
-
 # Android env variables
 if [ -d /mnt/mediahell/Android/Sdk ]; then
   export ANDROID_SDK_ROOT=/mnt/mediahell/Android/Sdk
   export PATH="${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
-  if [ -d "${ANDROID_SDK_ROOT}"/build-tools ]; then
-    BUILD_TOOLS_DIR="$(fd -td --maxdepth 1 . "${ANDROID_SDK_ROOT}"/build-tools | sort -nr | head -n1)"
-    export PATH="${BUILD_TOOLS_DIR}:${PATH}"
-  fi
-  if [ -d "${ANDROID_SDK_ROOT}"/cmdline-tools/latest ]; then
-    export PATH="${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${PATH}"
-  fi
 fi
 
 # Sexy colors in `ls`
@@ -73,13 +52,6 @@ if [ -d "${HOME}"/bash_completion.d ]; then
   done
 fi
 
-if [ -d "${HOME}"/.nix-profile/etc/bash_completion.d ]; then
-  for COMPLETION in "${HOME}/.nix-profile/etc/bash_completion.d/"*; do
-    # shellcheck disable=SC1090
-    [[ -r $COMPLETION ]] && source "$COMPLETION"
-  done
-fi
-
 # Enable pass user extensions
 if type pass &>/dev/null; then
   export PASSWORD_STORE_ENABLE_EXTENSIONS=true
@@ -89,8 +61,6 @@ fi
 if type micro &>/dev/null; then
   export EDITOR=micro
   export MICRO_TRUECOLOR=1
-else
-  export EDITOR=micro
 fi
 
 # Setup zoxide
@@ -102,10 +72,6 @@ fi
 if type mcfly &>/dev/null; then
   eval "$(mcfly init bash)"
 fi
-
-# Mitigation against CVE-2022-24765 in Git
-# https://github.blog/2022-04-12-git-security-vulnerability-announced/
-export GIT_CEILING_DIRECTORIES="${HOME}"
 
 # shellcheck source=system_linux
 source "${SCRIPT_DIR}"/system_linux
@@ -139,8 +105,3 @@ source "${SCRIPT_DIR}"/server
 source "${SCRIPT_DIR}"/system
 # shellcheck source=wireguard
 source "${SCRIPT_DIR}"/wireguard
-
-function reload() {
-  # shellcheck disable=SC1090
-  source ~/.bashrc
-}
