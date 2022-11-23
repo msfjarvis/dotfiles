@@ -13,12 +13,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      - name: Checkout repository
-       uses: actions/checkout@bf085276cecdb0cc76fbbe0687a5a0e786646936
+       uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # tag=v3
 
      - name: Install Nix
-       uses: cachix/install-nix-action@11f4ad19be46fd34c005a2864996d8f197fb51c6
+       uses: cachix/install-nix-action@daddc62a2e67d1decb56e028c9fa68344b9b7c2a # tag=v18
        with:
          nix_path: nixpkgs=channel:nixos-unstable
 
-     - name: Run checks
-       run: nix-shell --pure --run ./x
+     - name: Set up Cachix (msfjarvis)
+       uses: cachix/cachix-action@6a9a34cdd93d0ae4b4b59fd678660efb08109f2f # tag=v12
+       with:
+         name: msfjarvis
+         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+         cachixArgs: -c9 --omit-deriver
+
+     - name: Set up Cachix (nix-community)
+       uses: cachix/cachix-action@6a9a34cdd93d0ae4b4b59fd678660efb08109f2f # tag=v12
+       with:
+         name: nix-community
+
+     - name: Check formatting
+       shell: bash
+       run: nix-shell --pure --run './x test'
+
+     - name: Build
+       shell: bash
+       run: |
+         nix build .#homeConfigurations.ryzenbox.activationPackage
+         nix build .#homeConfigurations.server.activationPackage
