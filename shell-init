@@ -103,5 +103,3 @@ source "${SCRIPT_DIR}"/nix
 source "${SCRIPT_DIR}"/server
 # shellcheck source=system
 source "${SCRIPT_DIR}"/system
-# shellcheck source=wireguard
-source "${SCRIPT_DIR}"/wireguard

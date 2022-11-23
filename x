@@ -26,7 +26,6 @@ SCRIPTS_TO_TEST+=("setup/common.sh")
 SCRIPTS_TO_TEST+=("shell-init")
 SCRIPTS_TO_TEST+=("system")
 SCRIPTS_TO_TEST+=("system_linux")
-SCRIPTS_TO_TEST+=("wireguard")
 SCRIPTS_TO_TEST+=("x")
 
 case "${1:-nothing}" in
