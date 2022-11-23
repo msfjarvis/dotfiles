@@ -19,6 +19,9 @@ in {
     historyFile = "${config.home.homeDirectory}/.bash_history";
     historyFileSize = 10000;
     historyControl = [ "ignorespace" "erasedups" ];
+    bashrcExtra = ''
+      PATH="''${PATH:+"$PATH:"}:/nix/var/nix/profiles/default/bin/"
+    '';
     initExtra = ''
       # Load completions from system
       if [ -f /usr/share/bash-completion/bash_completion ]; then
