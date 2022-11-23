@@ -33,9 +33,8 @@ case "${1:-nothing}" in
     shellcheck -f diff "${SCRIPTS_TO_TEST[@]}" | git apply
     ;;
   bump)
-    NIXPKGS_NEW_REVISION="$(curl --silent -H 'Accept: application/vnd.github.sha' https://api.github.com/repos/msfjarvis/custom-nixpkgs/commits/main)"
-    fd -tf \\.nix$ -X sd '(.*/custom-nixpkgs/archive)/(.*).tar.gz' "\$1/$NIXPKGS_NEW_REVISION.tar.gz"
-    git commit -am "nixos: bump custom-nixpkgs"
+    nix flake update
+    git commit -am "chore(nix): bump flake inputs"
     ;;
   fmt | format)
     shfmt -w -s -i 2 -ci "${SCRIPTS_TO_TEST[@]}"
