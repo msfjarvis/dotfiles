@@ -47,22 +47,16 @@ case "${1:-nothing}" in
     set +x
     ;;
   home-check)
-    nix-channel --update
-    cp nixos/ryzenbox-configuration.nix ~/.config/nixpkgs/home.nix
-    home-manager build --show-trace
+    home-manager build --flake .#ryzenbox
     ;;
   home-switch)
-    nix-channel --update
-    cp nixos/ryzenbox-configuration.nix ~/.config/nixpkgs/home.nix
-    home-manager switch
+    home-manager switch --flake .#ryzenbox
     ;;
   install)
     ./install.sh
     ;;
   server-switch)
-    nix-channel --update
-    cp nixos/server-configuration.nix ~/.config/nixpkgs/home.nix
-    home-manager switch
+    home-manager switch --flake .#server
     ;;
   test | nothing)
     shfmt -d -s -i 2 -ci "${SCRIPTS_TO_TEST[@]}"

@@ -1,15 +1,8 @@
 { config, pkgs, ... }:
 
-let
-  customTarball = fetchTarball
-    "https://github.com/msfjarvis/custom-nixpkgs/archive/e6ce40c3e84d005d723d6aa6c26d841d6f5e677e.tar.gz";
-in {
+{
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
-  nixpkgs.config = {
-    allowUnfree = true;
-    packageOverrides = pkgs: { custom = import customTarball { }; };
-  };
 
   programs.aria2 = { enable = true; };
 
