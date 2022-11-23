@@ -315,6 +315,7 @@ in {
       CPUSchedulingPolicy = "idle";
       IOSchedulingClass = "idle";
       ExecStart = toString (pkgs.writeShellScript "nix-optimise-store" ''
+        ${pkgs.nix}/bin/nix-collect-garbage -d
         ${pkgs.nix}/bin/nix store gc
         ${pkgs.nix}/bin/nix store optimise
       '');
