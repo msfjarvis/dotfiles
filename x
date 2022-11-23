@@ -9,7 +9,6 @@ SCRIPTS_TO_TEST+=("aliases")
 SCRIPTS_TO_TEST+=("apps")
 SCRIPTS_TO_TEST+=("bash_completions.bash")
 SCRIPTS_TO_TEST+=("common")
-SCRIPTS_TO_TEST+=("darwin-init")
 SCRIPTS_TO_TEST+=("devtools")
 SCRIPTS_TO_TEST+=("files")
 SCRIPTS_TO_TEST+=("gitshit")
@@ -26,7 +25,6 @@ SCRIPTS_TO_TEST+=("setup/02-android_udev.sh")
 SCRIPTS_TO_TEST+=("setup/common.sh")
 SCRIPTS_TO_TEST+=("shell-init")
 SCRIPTS_TO_TEST+=("system")
-SCRIPTS_TO_TEST+=("system_darwin")
 SCRIPTS_TO_TEST+=("system_linux")
 SCRIPTS_TO_TEST+=("wireguard")
 SCRIPTS_TO_TEST+=("x")
@@ -39,11 +37,6 @@ case "${1:-nothing}" in
     NIXPKGS_NEW_REVISION="$(curl --silent -H 'Accept: application/vnd.github.sha' https://api.github.com/repos/msfjarvis/custom-nixpkgs/commits/main)"
     fd -tf \\.nix$ -X sd '(.*/custom-nixpkgs/archive)/(.*).tar.gz' "\$1/$NIXPKGS_NEW_REVISION.tar.gz"
     git commit -am "nixos: bump custom-nixpkgs"
-    ;;
-  darwin-switch)
-    nix-channel --update
-    cp nixos/darwin-configuration.nix ~/.nixpkgs/darwin-configuration.nix
-    darwin-rebuild switch --show-trace
     ;;
   fmt | format)
     shfmt -w -s -i 2 -ci "${SCRIPTS_TO_TEST[@]}"
