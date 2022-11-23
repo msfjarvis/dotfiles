@@ -179,7 +179,6 @@
     cachix
     comma
     curl
-    dasel
     delta
     diskus
     dos2unix
@@ -187,23 +186,15 @@
     ffmpeg
     custom.healthchecks-monitor
     hub
-    hyperfine
     just
     custom.katbin
-    magic-wormhole
     micro
     mosh
     ncdu_2
     nix-update
     neofetch
     nvd
-    patchelf
-    python39
-    python39Packages.poetry
-    python39Packages.virtualenv
     ripgrep
-    shellcheck
-    shfmt
     unzip
     vivid
     zip

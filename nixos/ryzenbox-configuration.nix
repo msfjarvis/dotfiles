@@ -353,52 +353,39 @@
     choose
     comma
     curl
-    dasel
     delta
     custom.diffuse-bin
     diskus
     dos2unix
-    duf
     fclones
     fd
     ferium
-    flyctl
     fzf
     custom.gdrive
     git-absorb
-    git-crypt
     git-quickfix
     custom.hcctl
-    helix
     hub
-    hyperfine
     imwheel
     (nerdfonts.override {
       fonts = [ "CascadiaCode" "FiraCode" "Inconsolata" "JetBrainsMono" ];
     })
-    just
     custom.katbin
     mcfly
     mold
     mosh
     ncdu_2
     neofetch
-    niv
     nixfmt
     nix-update
     nixpkgs-review
     nvd
-    oathToolkit
     openssl
-    patchelf
     custom.pidcat
     procs
-    qrencode
     ripgrep
     scrcpy
     sd
-    shellcheck
-    shfmt
     silicon
     custom.twt
     unzip
