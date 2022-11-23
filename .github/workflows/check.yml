@@ -34,7 +34,7 @@ jobs:
 
      - name: Check formatting
        shell: bash
-       run: nix-shell --pure --run './x test'
+       run: ./x test
 
      - name: Build
        shell: bash

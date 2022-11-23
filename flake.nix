@@ -34,5 +34,17 @@
         inherit pkgs;
         modules = [ ./nixos/server-configuration.nix ];
       };
+      devShells.${system}.default = pkgs.mkShell {
+        nativeBuildInputs = with pkgs; [
+          bash
+          delta
+          git
+          micro
+          nixfmt
+          rnix-lsp
+          shellcheck
+          shfmt
+        ];
+      };
     };
 }
