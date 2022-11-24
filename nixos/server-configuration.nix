@@ -176,27 +176,18 @@
 
   systemd.user.services.walls-bot-rs = {
     Unit = {
-      Description = "Telegram bot that has nothing to do with wallpapers";
+      Description = "Telegram bot with an identity crisis";
       After = "network.target";
     };
     Service = {
-      Restart = "on-abort";
       Type = "simple";
       EnvironmentFile = "${config.home.homeDirectory}/walls-bot.config";
       ExecStart = "${pkgs.custom.walls-bot-rs}/bin/walls-bot-rs";
-      ExecReload = "/bin/kill -USR1 $MAINPID";
-      KillMode = "mixed";
-      KillSignal = "SIGINT";
+      Restart = "on-failure";
+      RestartSec = 3;
       TimeoutStopSec = "10s";
-      # PrivateTmp = "true";
-      # ProtectSystem = "full";
-      # ProtectControlGroups = "true";
-      # ProtectKernelModules = "true";
-      # ProtectKernelTunables = "true";
-      # PrivateDevices = "true";
-      # SystemCallArchitectures = "native";
     };
-    Install = { WantedBy = [ "multi-user.target" ]; };
+    Install = { WantedBy = [ "default.target" ]; };
   };
 
   home.packages = with pkgs; [
