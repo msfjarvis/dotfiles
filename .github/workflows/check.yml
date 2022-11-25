@@ -32,12 +32,9 @@ jobs:
        with:
          name: nix-community
 
-     - name: Check formatting
-       shell: bash
-       run: ./x test
-
-     - name: Build
+     - name: Check and build
        shell: bash
        run: |
+         ./x test
          nix build .#homeConfigurations.ryzenbox.activationPackage
          nix build .#homeConfigurations.server.activationPackage
