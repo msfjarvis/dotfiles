@@ -27,5 +27,12 @@ function nixdiff() {
 
 function nixshell() {
   [[ -z ${1} ]] && return
-  cp -v "${SCRIPT_DIR}/nixos/shell-configs/${1}.nix" shell.nix
+  [[ ! -f "${SCRIPT_DIR}/nixos/shell-configs/${1}.nix" ]] && {
+    reportWarning "No shell config exists for ${1}"
+    return
+  }
+  cp -v "${SCRIPT_DIR}/nixos/shell-configs/${1}.nix" flake.nix
+  git add flake.nix
+  nix flake update
+  nix develop
 }
