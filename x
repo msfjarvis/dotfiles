@@ -56,6 +56,9 @@ case "${1:-nothing}" in
   install)
     ./install.sh
     ;;
+  server-check)
+    home-manager build --flake .#server
+    ;;
   server-switch)
     home-manager switch --flake .#server
     ;;
