@@ -22,6 +22,9 @@
       elif [ -f /etc/bash_completion ]; then
         . /etc/bash_completion
       fi
+      if [ -d ${config.home.homeDirectory}/android-sdk ]; then
+        export ANDROID_SDK_ROOT="${config.home.homeDirectory}/android-sdk"
+      fi
       # Load completions from Git
       source ${pkgs.git}/share/bash-completion/completions/git
       # Source shell-init from my dotfiles
