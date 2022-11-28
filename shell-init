@@ -34,6 +34,9 @@ fi
 # Android env variables
 if [ -d /mnt/mediahell/Android/Sdk ]; then
   export ANDROID_SDK_ROOT=/mnt/mediahell/Android/Sdk
+fi
+
+if [ -n "${ANDROID_SDK_ROOT}" ]; then
   export PATH="${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
   if [ -d "${ANDROID_SDK_ROOT}"/cmdline-tools/latest ]; then
     export PATH="${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${PATH}"
