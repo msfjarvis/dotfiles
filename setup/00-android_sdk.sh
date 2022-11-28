@@ -12,7 +12,7 @@ SDK_TOOLS=commandlinetools-linux-7583922_latest.zip
 
 function setup_android_sdk() {
   local SDK_DIR TMP_DIR
-  SDK_DIR="${SDK_DIR:-/mnt/mediahell/Android/Sdk}"
+  SDK_DIR="${1:-/mnt/mediahell/Android/Sdk}"
   TMP_DIR="$(mktemp -d)"
   if [ ! -d "${SDK_DIR}" ]; then
     mkdir -p "${SDK_DIR}"
@@ -36,6 +36,6 @@ function setup_android_sdk() {
 
 if [[ ${BASH_SOURCE[0]} == "${0}" ]]; then
   set -euo pipefail
-  setup_android_sdk
+  setup_android_sdk "$@"
   set +euo pipefail
 fi
