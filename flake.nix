@@ -4,11 +4,12 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     custom-nixpkgs = {
-      url = "github:msfjarvis/custom-nixpkgs/main";
+      url =
+        "github:msfjarvis/custom-nixpkgs/9e2bd90083345a985fd34ad6e2eb50bc97fc6547";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
