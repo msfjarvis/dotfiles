@@ -203,6 +203,7 @@
     dos2unix
     fd
     ffmpeg
+    flyctl
     custom.healthchecks-monitor
     hub
     just
