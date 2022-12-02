@@ -405,6 +405,7 @@
     custom.when
     xclip
     xdotool
+    yt-dlp
     zip
   ];
 
