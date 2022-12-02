@@ -8,8 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     custom-nixpkgs = {
-      url =
-        "github:msfjarvis/custom-nixpkgs/9e2bd90083345a985fd34ad6e2eb50bc97fc6547";
+      url = "github:msfjarvis/custom-nixpkgs/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
