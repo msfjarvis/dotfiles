@@ -36,3 +36,8 @@ function nixshell() {
   nix flake update
   nix develop
 }
+
+function nixb() {
+  nix flake update
+  git commit -am "chore(nix): bump flake inputs"
+}
