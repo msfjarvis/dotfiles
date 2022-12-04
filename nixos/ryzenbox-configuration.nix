@@ -225,6 +225,7 @@
 
   programs.topgrade = {
     enable = true;
+    package = pkgs.custom.topgrade-og;
 
     settings = {
       disable =
