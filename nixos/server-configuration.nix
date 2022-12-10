@@ -120,21 +120,6 @@
     enableBashIntegration = true;
   };
 
-  systemd.user.services.code-server = {
-    Unit = {
-      Description = "Visual Studio Code - server component";
-      After = "network.target";
-    };
-    Service = {
-      Type = "simple";
-      ExecStart =
-        "/usr/local/bin/code-server --disable-telemetry --accept-server-license-terms --log debug";
-      Restart = "on-failure";
-      RestartSec = 15;
-    };
-    Install = { WantedBy = [ "default.target" ]; };
-  };
-
   systemd.user.services.optimise-nix-store = {
     Unit = { Description = "nix store maintenance"; };
 
