@@ -348,6 +348,7 @@
   home.packages = with pkgs; [
     custom.adb-sync
     custom.adx
+    age
     bat
     custom.bundletool-bin
     cachix
