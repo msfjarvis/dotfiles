@@ -32,7 +32,7 @@ function echoText() {
 function reportError() {
   echo -e ""
   echo -e "${CL_RED}${1:?}${CL_RST}"
-  if [ -z "${2:-}" ]; then
+  if [ -z "${2-}" ]; then
     echo -e ""
   fi
   return 1
@@ -42,7 +42,7 @@ function reportError() {
 function reportWarning() {
   echo -e ""
   echo -e "${CL_YLW}${1:?}${CL_RST}"
-  if [ -z "${2:-}" ]; then
+  if [ -z "${2-}" ]; then
     echo -e ""
   fi
 }
