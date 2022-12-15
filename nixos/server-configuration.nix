@@ -199,9 +199,11 @@
     mosh
     ncdu_2
     nix-update
+    nixfmt
     neofetch
     nvd
     ripgrep
+    sd
     unzip
     vivid
     zip
