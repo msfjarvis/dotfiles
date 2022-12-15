@@ -163,15 +163,16 @@
     Install = { WantedBy = [ "timers.target" ]; };
   };
 
-  systemd.user.services.walls-bot-rs = {
+  systemd.user.services.linkleaner = {
     Unit = {
-      Description = "Telegram bot with an identity crisis";
+      Description =
+        "Telegram bot to improve link previews of social media posts";
       After = "network.target";
     };
     Service = {
       Type = "simple";
-      EnvironmentFile = "${config.home.homeDirectory}/walls-bot.config";
-      ExecStart = "${pkgs.custom.walls-bot-rs}/bin/walls-bot-rs";
+      EnvironmentFile = "${config.home.homeDirectory}/linkleaner.config";
+      ExecStart = "${pkgs.custom.linkleaner}/bin/linkleaner";
       Restart = "on-failure";
       RestartSec = 3;
       TimeoutStopSec = "10s";
