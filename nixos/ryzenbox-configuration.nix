@@ -399,6 +399,8 @@
       '';
     }))
     sd
+    shellcheck
+    shfmt
     silicon
     custom.twt
     unzip

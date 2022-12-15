@@ -1,6 +1,4 @@
-#!/usr/bin/env nix-shell
-#!nix-shell -i bash -p git nix nixfmt shellcheck shfmt
-# shellcheck shell=bash
+#!/usr/bin/env bash
 
 set -e
 set -u

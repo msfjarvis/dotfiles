@@ -204,6 +204,8 @@
     nvd
     ripgrep
     sd
+    shellcheck
+    shfmt
     unzip
     vivid
     zip
