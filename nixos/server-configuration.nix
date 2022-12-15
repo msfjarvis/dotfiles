@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 
 {
-  home.username = "msfjarvis";
-  home.homeDirectory = "/home/msfjarvis";
+  home.username = "ubuntu";
+  home.homeDirectory = "/home/ubuntu";
 
   programs.aria2 = { enable = true; };
 
