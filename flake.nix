@@ -16,22 +16,29 @@
   outputs = { nixpkgs, home-manager, custom-nixpkgs, ... }:
     let
       system = "x86_64-linux";
+      config = {
+        allowUnfree = true;
+        packageOverrides = pkgs: {
+          custom = import custom-nixpkgs { inherit pkgs; };
+        };
+      };
       pkgs = import nixpkgs {
         inherit system;
-        config = {
-          allowUnfree = true;
-          packageOverrides = pkgs: {
-            custom = import custom-nixpkgs { inherit pkgs; };
-          };
-        };
+        inherit config;
       };
     in {
       homeConfigurations.ryzenbox = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+        pkgs = import nixpkgs {
+          system = "x86_64-linux";
+          inherit config;
+        };
         modules = [ ./nixos/ryzenbox-configuration.nix ];
       };
       homeConfigurations.server = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+        pkgs = import nixpkgs {
+          system = "aarch64-linux";
+          inherit config;
+        };
         modules = [ ./nixos/server-configuration.nix ];
       };
       devShells.${system}.default = pkgs.mkShell {
