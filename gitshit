@@ -127,3 +127,15 @@ function purge_gha() {
     -q '.workflow_runs[] | select(.conclusion == "failure") | .id' | xargs \
     -I % gh api /repos/"${REPO_SLUG:?}"/actions/runs/% -X DELETE
 }
+
+function refresh_cachix_tokens() {
+  local TOKEN
+  TOKEN="${1}"
+  readarray -t REPOS < <(gh repo list -l Rust --json name -q .[].name)
+  REPOS+=("dotfiles")
+  for repo in "${REPOS[@]}"; do
+    if [[ "$(gh -R msfjarvis/"${repo}" secret list -a actions)" =~ CACHIX_AUTH_TOKEN ]]; then
+      gh -R "msfjarvis/${repo}" secret set CACHIX_AUTH_TOKEN -a actions -b "${TOKEN:?}"
+    fi
+  done
+}
