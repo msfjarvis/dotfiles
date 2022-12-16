@@ -1,5 +1,3 @@
 emulator
 platform-tools
-platforms;android-29
-platforms;android-30
 tools
