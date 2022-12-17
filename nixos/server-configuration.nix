@@ -25,7 +25,7 @@
       source ${pkgs.git}/share/bash-completion/completions/git
       # Source shell-init from my dotfiles
       source ${config.home.homeDirectory}/dotfiles/shell-init
-      _byobu_sourced=1 . /usr/bin/byobu-launch 2>/dev/null || true
+      # _byobu_sourced=1 . /usr/bin/byobu-launch 2>/dev/null || true
     '';
   };
 
