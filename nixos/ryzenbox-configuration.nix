@@ -318,7 +318,7 @@
 
   systemd.user.timers.optimise-nix-store = {
     Unit = { Description = "nix store maintenance"; };
-    Timer = { OnCalendar = "hourly"; };
+    Timer = { OnCalendar = "daily"; };
     Install = { WantedBy = [ "timers.target" ]; };
   };
 
