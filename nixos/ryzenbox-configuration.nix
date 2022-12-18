@@ -233,7 +233,7 @@
 
       remote_topgrades = ["boatymcboatface" "ci"];
 
-      remote_topgrade_path = ".cargo/bin/topgrade";
+      remote_topgrade_path = ".nix-profile/bin/topgrade";
 
       set_title = false;
       cleanup = true;
