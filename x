@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC1091
 
 set -e
 set -u
@@ -46,18 +47,27 @@ case "${1:-nothing}" in
     set +x
     ;;
   home-check)
-    home-manager build --flake .#ryzenbox
+    nix build .#homeConfigurations.x86_64-linux.ryzenbox.activationPackage
     ;;
   home-switch)
-    home-manager switch --flake .#ryzenbox
+    nix build .#homeConfigurations.x86_64-linux.ryzenbox.activationPackage
+    source ./result/activate
     ;;
   install)
     ./install.sh
     ;;
+  oracle-check)
+    nix build .#homeConfigurations.aarch64-linux.server.activationPackage
+    ;;
+  oracle-switch)
+    nix build .#homeConfigurations.aarch64-linux.server.activationPackage
+    source ./result/activate
+    ;;
   server-check)
-    home-manager build --flake .#server
+    nix build .#homeConfigurations.x86_64-linux.server.activationPackage
     ;;
   server-switch)
-    home-manager switch --flake .#server
+    nix build .#homeConfigurations.x86_64-linux.server.activationPackage
+    source ./result/activate
     ;;
 esac
