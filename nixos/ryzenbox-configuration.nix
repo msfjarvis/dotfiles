@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
 
@@ -27,14 +29,14 @@
     Name=VSCode
   '';
 
-  programs.aria2 = { enable = true; };
+  programs.aria2 = {enable = true;};
 
   programs.bash = {
     enable = true;
     historySize = 1000;
     historyFile = "${config.home.homeDirectory}/.bash_history";
     historyFileSize = 10000;
-    historyControl = [ "ignorespace" "erasedups" ];
+    historyControl = ["ignorespace" "erasedups"];
     initExtra = ''
       # Load completions from system
       if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -68,14 +70,14 @@
 
   programs.bat = {
     enable = true;
-    config = { theme = "zenburn"; };
+    config = {theme = "zenburn";};
   };
 
-  programs.bottom = { enable = true; };
+  programs.bottom = {enable = true;};
 
   programs.browserpass = {
     enable = true;
-    browsers = [ "chrome" ];
+    browsers = ["chrome"];
   };
 
   programs.exa = {
@@ -88,7 +90,7 @@
     enableBashIntegration = true;
     nix-direnv.enable = true;
     stdlib = ''
-      # iterate on pairs of [candidate] [version] and invoke `sdk use` on each of them 
+      # iterate on pairs of [candidate] [version] and invoke `sdk use` on each of them
       use_sdk() {
         [[ -s "''${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "''${SDKMAN_DIR}/bin/sdkman-init.sh"
 
@@ -106,11 +108,11 @@
   programs.fzf = {
     enable = true;
     defaultCommand = "fd -tf";
-    defaultOptions = [ "--height 40%" ];
+    defaultOptions = ["--height 40%"];
     enableBashIntegration = true;
     fileWidgetCommand = "fd -H";
     changeDirWidgetCommand = "fd -Htd";
-    historyWidgetOptions = [ "--sort" "--exact" ];
+    historyWidgetOptions = ["--sort" "--exact"];
   };
 
   programs.gh = {
@@ -119,7 +121,7 @@
       git_protocol = "https";
       editor = "micro";
       prompt = "enabled";
-      aliases = { co = "pr checkout"; };
+      aliases = {co = "pr checkout";};
       browser = "google-chrome-stable";
     };
   };
@@ -135,19 +137,18 @@
       "fleet.toml"
     ];
     includes = [
-      { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig"; }
+      {path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig";}
       {
-        path =
-          "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig-auth";
+        path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig-auth";
       }
     ];
   };
 
-  programs.home-manager = { enable = true; };
+  programs.home-manager = {enable = true;};
 
-  programs.htop = { enable = true; };
+  programs.htop = {enable = true;};
 
-  programs.jq = { enable = true; };
+  programs.jq = {enable = true;};
 
   programs.micro = {
     enable = true;
@@ -163,7 +164,7 @@
     enableBashIntegration = true;
   };
 
-  programs.password-store = { enable = true; };
+  programs.password-store = {enable = true;};
 
   programs.starship = {
     enable = true;
@@ -228,10 +229,9 @@
     package = pkgs.custom.topgrade-og;
 
     settings = {
-      disable =
-        [ "gnome_shell_extensions" "home_manager" "nix" "node" "sdkman" ];
+      disable = ["gnome_shell_extensions" "home_manager" "nix" "node" "sdkman"];
 
-      remote_topgrades = [ "ci" ];
+      remote_topgrades = ["ci"];
 
       remote_topgrade_path = ".cargo/bin/topgrade";
 
@@ -240,7 +240,7 @@
     };
   };
 
-  programs.vscode = { enable = true; };
+  programs.vscode = {enable = true;};
 
   programs.zoxide = {
     enable = true;
@@ -270,19 +270,18 @@
       RestartSec = 3;
       Environment = "PATH=${pkgs.watchman}/bin";
     };
-    Install = { WantedBy = [ "default.target" ]; };
+    Install = {WantedBy = ["default.target"];};
   };
 
   systemd.user.services.clipboard-substitutor = {
-    Unit = { Description = "systemd service for clipboard-substitutor"; };
+    Unit = {Description = "systemd service for clipboard-substitutor";};
     Service = {
       Type = "simple";
-      ExecStart =
-        "${pkgs.custom.clipboard-substitutor}/bin/clipboard-substitutor";
+      ExecStart = "${pkgs.custom.clipboard-substitutor}/bin/clipboard-substitutor";
       Restart = "on-failure";
       RestartSec = 3;
     };
-    Install = { WantedBy = [ "default.target" ]; };
+    Install = {WantedBy = ["default.target"];};
   };
 
   systemd.user.services.imwheel = {
@@ -299,11 +298,11 @@
       Restart = "on-failure";
       RestartSec = 3;
     };
-    Install = { WantedBy = [ "default.target" ]; };
+    Install = {WantedBy = ["default.target"];};
   };
 
   systemd.user.services.optimise-nix-store = {
-    Unit = { Description = "nix store maintenance"; };
+    Unit = {Description = "nix store maintenance";};
 
     Service = {
       CPUSchedulingPolicy = "idle";
@@ -317,18 +316,18 @@
   };
 
   systemd.user.timers.optimise-nix-store = {
-    Unit = { Description = "nix store maintenance"; };
-    Timer = { OnCalendar = "daily"; };
-    Install = { WantedBy = [ "timers.target" ]; };
+    Unit = {Description = "nix store maintenance";};
+    Timer = {OnCalendar = "daily";};
+    Install = {WantedBy = ["timers.target"];};
   };
 
   systemd.user.services.nix-index-database = {
-    Unit = { Description = "nix-index database cache updater"; };
+    Unit = {Description = "nix-index database cache updater";};
     Service = {
       Type = "oneshot";
       ExecStart = "${pkgs.writeShellScript "nix-index-database-fetch.sh" ''
         set -exuo pipefail
-        PATH=${pkgs.lib.makeBinPath [ pkgs.coreutils pkgs.wget ]};
+        PATH=${pkgs.lib.makeBinPath [pkgs.coreutils pkgs.wget]};
         XDG_CACHE_HOME=${config.home.homeDirectory}/.cache
         filename="index-$(uname -m)-$(uname | tr '[:upper:]' '[:lower:]')"
         mkdir -p "$XDG_CACHE_HOME/nix-index"
@@ -340,9 +339,9 @@
   };
 
   systemd.user.timers.nix-index-database = {
-    Unit = { Description = "Update the nix-index database cache"; };
-    Timer = { OnCalendar = "daily"; };
-    Install = { WantedBy = [ "timers.target" ]; };
+    Unit = {Description = "Update the nix-index database cache";};
+    Timer = {OnCalendar = "daily";};
+    Install = {WantedBy = ["timers.target"];};
   };
 
   home.packages = with pkgs; [
@@ -371,7 +370,7 @@
     hub
     imwheel
     (nerdfonts.override {
-      fonts = [ "CascadiaCode" "FiraCode" "Inconsolata" "JetBrainsMono" ];
+      fonts = ["CascadiaCode" "FiraCode" "Inconsolata" "JetBrainsMono"];
     })
     custom.katbin
     mcfly

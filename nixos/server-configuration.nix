@@ -1,16 +1,19 @@
-{ config, pkgs, ... }: {
-
+{
+  config,
+  pkgs,
+  ...
+}: {
   home.username = "ubuntu";
   home.homeDirectory = "/home/ubuntu";
 
-  programs.aria2 = { enable = true; };
+  programs.aria2 = {enable = true;};
 
   programs.bash = {
     enable = true;
     historySize = 1000;
     historyFile = "${config.home.homeDirectory}/.bash_history";
     historyFileSize = 10000;
-    historyControl = [ "ignorespace" "erasedups" ];
+    historyControl = ["ignorespace" "erasedups"];
     initExtra = ''
       # Load completions from system
       if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -31,7 +34,7 @@
 
   programs.bat = {
     enable = true;
-    config = { theme = "zenburn"; };
+    config = {theme = "zenburn";};
   };
 
   programs.direnv = {
@@ -48,17 +51,17 @@
   programs.fzf = {
     enable = true;
     defaultCommand = "fd -tf";
-    defaultOptions = [ "--height 40%" ];
+    defaultOptions = ["--height 40%"];
     enableBashIntegration = true;
     fileWidgetCommand = "fd -H";
     changeDirWidgetCommand = "fd -Htd";
-    historyWidgetOptions = [ "--sort" "--exact" ];
+    historyWidgetOptions = ["--sort" "--exact"];
   };
 
   programs.git = {
     enable = true;
-    ignores = [ ".envrc" "key.properties" "keystore.properties" "*.jks" ];
-    includes = [{ path = "${config.home.homeDirectory}/dotfiles/.gitconfig"; }];
+    ignores = [".envrc" "key.properties" "keystore.properties" "*.jks"];
+    includes = [{path = "${config.home.homeDirectory}/dotfiles/.gitconfig";}];
   };
 
   programs.gh = {
@@ -67,17 +70,17 @@
       git_protocol = "https";
       editor = "micro";
       prompt = "enabled";
-      aliases = { co = "pr checkout"; };
+      aliases = {co = "pr checkout";};
     };
   };
 
-  programs.gpg = { enable = true; };
+  programs.gpg = {enable = true;};
 
-  programs.home-manager = { enable = true; };
+  programs.home-manager = {enable = true;};
 
-  programs.htop = { enable = true; };
+  programs.htop = {enable = true;};
 
-  programs.jq = { enable = true; };
+  programs.jq = {enable = true;};
 
   programs.nix-index = {
     enable = true;
@@ -104,10 +107,10 @@
     package = pkgs.custom.topgrade-og;
 
     settings = {
-      only = [ "bin" "system" "micro" ];
+      only = ["bin" "system" "micro"];
       set_title = false;
       cleanup = true;
-      commands = { "Cargo" = "cargo install-update --all"; };
+      commands = {"Cargo" = "cargo install-update --all";};
     };
   };
 
@@ -117,7 +120,7 @@
   };
 
   systemd.user.services.optimise-nix-store = {
-    Unit = { Description = "nix store maintenance"; };
+    Unit = {Description = "nix store maintenance";};
 
     Service = {
       CPUSchedulingPolicy = "idle";
@@ -131,18 +134,18 @@
   };
 
   systemd.user.timers.optimise-nix-store = {
-    Unit = { Description = "nix store maintenance"; };
-    Timer = { OnCalendar = "weekly"; };
-    Install = { WantedBy = [ "timers.target" ]; };
+    Unit = {Description = "nix store maintenance";};
+    Timer = {OnCalendar = "weekly";};
+    Install = {WantedBy = ["timers.target"];};
   };
 
   systemd.user.services.nix-index-database = {
-    Unit = { Description = "nix-index database cache updater"; };
+    Unit = {Description = "nix-index database cache updater";};
     Service = {
       Type = "oneshot";
       ExecStart = "${pkgs.writeShellScript "nix-index-database-fetch.sh" ''
         set -exuo pipefail
-        PATH=${pkgs.lib.makeBinPath [ pkgs.coreutils pkgs.wget ]};
+        PATH=${pkgs.lib.makeBinPath [pkgs.coreutils pkgs.wget]};
         XDG_CACHE_HOME=${config.home.homeDirectory}/.cache
         filename="index-$(uname -m)-$(uname | tr '[:upper:]' '[:lower:]')"
         mkdir -p "$XDG_CACHE_HOME/nix-index"
@@ -154,15 +157,14 @@
   };
 
   systemd.user.timers.nix-index-database = {
-    Unit = { Description = "Update the nix-index database cache"; };
-    Timer = { OnCalendar = "daily"; };
-    Install = { WantedBy = [ "timers.target" ]; };
+    Unit = {Description = "Update the nix-index database cache";};
+    Timer = {OnCalendar = "daily";};
+    Install = {WantedBy = ["timers.target"];};
   };
 
   systemd.user.services.linkleaner = {
     Unit = {
-      Description =
-        "Telegram bot to improve link previews of social media posts";
+      Description = "Telegram bot to improve link previews of social media posts";
       After = "network.target";
     };
     Service = {
@@ -173,7 +175,7 @@
       RestartSec = 3;
       TimeoutStopSec = "10s";
     };
-    Install = { WantedBy = [ "default.target" ]; };
+    Install = {WantedBy = ["default.target"];};
   };
 
   home.packages = with pkgs; [
