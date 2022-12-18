@@ -59,10 +59,10 @@
         dontBuild = true;
         strictDeps = true;
         src = ./.;
-        nativeBuildInputs = with pkgs; [fd alejandra shellcheck shfmt];
+        nativeBuildInputs = with pkgs; [alejandra shellcheck shfmt];
         checkPhase = ''
           shfmt -d -s -i 2 -ci ${files}
-          fd -tf \\.nix$ -X alejandra -c
+          alejandra -c .
           shellcheck -x ${files}
         '';
         installPhase = ''
@@ -76,11 +76,11 @@
         doCheck = false;
         strictDeps = true;
         src = ./.;
-        nativeBuildInputs = with pkgs; [fd alejandra shfmt];
+        nativeBuildInputs = with pkgs; [alejandra shfmt];
         buildPhase = ''
           mkdir -p $out/bin
           echo "shfmt -w -s -i 2 -ci ${files}" > $out/bin/format
-          echo "fd -tf \\.nix$ -X alejandra" >> $out/bin/format
+          echo "alejandra ." >> $out/bin/format
           chmod +x $out/bin/format
         '';
       };
