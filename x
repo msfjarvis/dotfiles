@@ -30,17 +30,6 @@ SCRIPTS_TO_TEST+=("system_linux")
 SCRIPTS_TO_TEST+=("x")
 
 case "${1:-nothing}" in
-  autofix)
-    shellcheck -f diff "${SCRIPTS_TO_TEST[@]}" | git apply
-    ;;
-  bump)
-    nix flake update
-    git commit -am "chore(nix): bump flake inputs"
-    ;;
-  fmt | format)
-    shfmt -w -s -i 2 -ci "${SCRIPTS_TO_TEST[@]}"
-    find . -type f -name '*.nix' -exec alejandra {} \;
-    ;;
   githook)
     set -x
     ln -sf "$(pwd)"/pre-push-hook .git/hooks/pre-push
