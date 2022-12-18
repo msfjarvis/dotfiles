@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "github:numtide/flake-utils/master";
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -13,45 +14,45 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, custom-nixpkgs, ... }:
-    let
-      system = "x86_64-linux";
-      config = {
-        allowUnfree = true;
-        packageOverrides = pkgs: {
-          custom = import custom-nixpkgs { inherit pkgs; };
+  outputs = { nixpkgs, home-manager, custom-nixpkgs, flake-utils, ... }:
+    flake-utils.lib.eachSystem [ "aarch64-linux" "x86_64-linux" ] (system:
+      let
+        config = {
+          allowUnfree = true;
+          packageOverrides = pkgs: {
+            custom = import custom-nixpkgs { inherit pkgs; };
+          };
         };
-      };
-      pkgs = import nixpkgs {
-        inherit system;
-        inherit config;
-      };
-    in {
-      homeConfigurations.ryzenbox = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
+        pkgs = import nixpkgs { inherit system config; };
+        pkgsX86 = import nixpkgs {
           system = "x86_64-linux";
           inherit config;
         };
-        modules = [ ./nixos/ryzenbox-configuration.nix ];
-      };
-      homeConfigurations.server = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
+        pkgsAarch64 = import nixpkgs {
           system = "aarch64-linux";
           inherit config;
         };
-        modules = [ ./nixos/server-configuration.nix ];
-      };
-      devShells.${system}.default = pkgs.mkShell {
-        nativeBuildInputs = with pkgs; [
-          bash
-          delta
-          git
-          micro
-          nixfmt
-          rnix-lsp
-          shellcheck
-          shfmt
-        ];
-      };
-    };
+      in {
+        homeConfigurations.ryzenbox =
+          home-manager.lib.homeManagerConfiguration {
+            pkgs = pkgsX86;
+            modules = [ ./nixos/ryzenbox-configuration.nix ];
+          };
+        homeConfigurations.server = home-manager.lib.homeManagerConfiguration {
+          pkgs = pkgsAarch64;
+          modules = [ ./nixos/server-configuration.nix ];
+        };
+        devShells.default = pkgs.mkShell {
+          nativeBuildInputs = with pkgs; [
+            bash
+            delta
+            git
+            micro
+            nixfmt
+            rnix-lsp
+            shellcheck
+            shfmt
+          ];
+        };
+      });
 }
