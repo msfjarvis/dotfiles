@@ -60,9 +60,4 @@ case "${1:-nothing}" in
   server-switch)
     home-manager switch --flake .#server
     ;;
-  test | nothing)
-    shfmt -d -s -i 2 -ci "${SCRIPTS_TO_TEST[@]}"
-    find . -type f -name '*.nix' -exec nixfmt -c {} \;
-    shellcheck -x "${SCRIPTS_TO_TEST[@]}"
-    ;;
 esac
