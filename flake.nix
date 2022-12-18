@@ -22,6 +22,13 @@
     ...
   }:
     flake-utils.lib.eachSystem ["aarch64-linux" "x86_64-linux"] (system: let
+      config = {
+        allowUnfree = true;
+        packageOverrides = pkgs: {
+          custom = import custom-nixpkgs {inherit pkgs;};
+        };
+      };
+      pkgs = import nixpkgs {inherit system config;};
       files = pkgs.lib.concatStringsSep " " [
         "aliases"
         "apps"
@@ -46,13 +53,6 @@
         "system_linux"
         "x"
       ];
-      config = {
-        allowUnfree = true;
-        packageOverrides = pkgs: {
-          custom = import custom-nixpkgs {inherit pkgs;};
-        };
-      };
-      pkgs = import nixpkgs {inherit system config;};
       fmt-check = pkgs.stdenvNoCC.mkDerivation {
         name = "fmt-check";
         doCheck = true;
