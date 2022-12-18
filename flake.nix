@@ -76,6 +76,7 @@
         };
       in {
         checks = { inherit fmt; };
+        formatter = pkgs.alejandra;
         homeConfigurations.ryzenbox =
           home-manager.lib.homeManagerConfiguration {
             pkgs = pkgsX86;
