@@ -71,9 +71,22 @@
           runHook postInstall
         '';
       };
+      format = pkgs.stdenvNoCC.mkDerivation {
+        name = "format";
+        doCheck = false;
+        strictDeps = true;
+        src = ./.;
+        nativeBuildInputs = with pkgs; [fd alejandra shfmt];
+        buildPhase = ''
+          mkdir -p $out/bin
+          echo "shfmt -w -s -i 2 -ci ${files}" > $out/bin/format
+          echo "fd -tf \\.nix$ -X alejandra" >> $out/bin/format
+          chmod +x $out/bin/format
+        '';
+      };
     in {
       checks = {inherit fmt;};
-      formatter = pkgs.alejandra;
+      formatter = format;
       homeConfigurations.ryzenbox = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [./nixos/ryzenbox-configuration.nix];
