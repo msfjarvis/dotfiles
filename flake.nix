@@ -102,7 +102,7 @@
           delta
           git
           micro
-          rnix-lsp
+          nil
           shellcheck
           shfmt
         ];
