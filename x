@@ -38,7 +38,7 @@ case "${1:-nothing}" in
     ;;
   fmt | format)
     shfmt -w -s -i 2 -ci "${SCRIPTS_TO_TEST[@]}"
-    find . -type f -name '*.nix' -exec nixfmt {} \;
+    find . -type f -name '*.nix' -exec alejandra {} \;
     ;;
   githook)
     set -x

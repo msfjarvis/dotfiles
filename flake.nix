@@ -62,10 +62,10 @@
           dontBuild = true;
           strictDeps = true;
           src = ./.;
-          nativeBuildInputs = with pkgs; [ fd nixfmt shellcheck shfmt ];
+          nativeBuildInputs = with pkgs; [ fd alejandra shellcheck shfmt ];
           checkPhase = ''
             shfmt -d -s -i 2 -ci ${files}
-            fd -tf \\.nix$ -X nixfmt -c
+            fd -tf \\.nix$ -X alejandra -c
             shellcheck -x ${files}
           '';
           installPhase = ''
@@ -87,11 +87,11 @@
         };
         devShells.default = pkgs.mkShell {
           nativeBuildInputs = with pkgs; [
+            alejandra
             bash
             delta
             git
             micro
-            nixfmt
             rnix-lsp
             shellcheck
             shfmt

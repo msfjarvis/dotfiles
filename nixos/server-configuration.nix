@@ -177,6 +177,7 @@
   };
 
   home.packages = with pkgs; [
+    alejandra
     bat
     cachix
     comma
@@ -195,7 +196,6 @@
     mosh
     ncdu_2
     nix-update
-    nixfmt
     neofetch
     nvd
     ripgrep

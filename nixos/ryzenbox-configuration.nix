@@ -349,6 +349,7 @@
     custom.adb-sync
     custom.adx
     age
+    alejandra
     bat
     custom.bundletool-bin
     cachix
@@ -378,7 +379,6 @@
     mosh
     ncdu_2
     neofetch
-    nixfmt
     nix-update
     nixpkgs-review
     nvd
