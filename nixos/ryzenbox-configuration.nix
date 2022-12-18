@@ -349,7 +349,6 @@
     custom.adx
     age
     alejandra
-    bat
     custom.bundletool-bin
     cachix
     choose
@@ -378,6 +377,7 @@
     mosh
     ncdu_2
     neofetch
+    nix
     nix-update
     nixpkgs-review
     nvd

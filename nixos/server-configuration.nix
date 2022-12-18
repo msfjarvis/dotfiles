@@ -180,7 +180,6 @@
 
   home.packages = with pkgs; [
     alejandra
-    bat
     cachix
     comma
     curl
@@ -197,6 +196,7 @@
     micro
     mosh
     ncdu_2
+    nix
     nix-update
     neofetch
     nvd
