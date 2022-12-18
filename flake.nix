@@ -53,8 +53,8 @@
         };
       };
       pkgs = import nixpkgs {inherit system config;};
-      fmt = pkgs.stdenvNoCC.mkDerivation {
-        name = "fmt";
+      fmt-check = pkgs.stdenvNoCC.mkDerivation {
+        name = "fmt-check";
         doCheck = true;
         dontBuild = true;
         strictDeps = true;
@@ -71,22 +71,22 @@
           runHook postInstall
         '';
       };
-      format = pkgs.stdenvNoCC.mkDerivation {
-        name = "format";
+      formatter = pkgs.stdenvNoCC.mkDerivation {
+        name = "formatter";
         doCheck = false;
         strictDeps = true;
         src = ./.;
         nativeBuildInputs = with pkgs; [alejandra shfmt];
         buildPhase = ''
           mkdir -p $out/bin
-          echo "shfmt -w -s -i 2 -ci ${files}" > $out/bin/format
-          echo "alejandra ." >> $out/bin/format
-          chmod +x $out/bin/format
+          echo "shfmt -w -s -i 2 -ci ${files}" > $out/bin/$name
+          echo "alejandra ." >> $out/bin/$name
+          chmod +x $out/bin/$name
         '';
       };
     in {
-      checks = {inherit fmt;};
-      formatter = format;
+      checks = {inherit fmt-check;};
+      formatter = formatter;
       homeConfigurations.ryzenbox = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [./nixos/ryzenbox-configuration.nix];
