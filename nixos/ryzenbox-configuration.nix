@@ -240,7 +240,12 @@
     };
   };
 
-  programs.vscode = {enable = true;};
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscode.overrideAttrs (old: {
+      nativeBuildInputs = old.nativeBuildInputs ++ [pkgs.curl];
+    });
+  };
 
   programs.zoxide = {
     enable = true;
