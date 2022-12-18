@@ -53,14 +53,6 @@
         };
       };
       pkgs = import nixpkgs {inherit system config;};
-      pkgsX86 = import nixpkgs {
-        system = "x86_64-linux";
-        inherit config;
-      };
-      pkgsAarch64 = import nixpkgs {
-        system = "aarch64-linux";
-        inherit config;
-      };
       fmt = pkgs.stdenvNoCC.mkDerivation {
         name = "fmt";
         doCheck = true;
@@ -83,11 +75,11 @@
       checks = {inherit fmt;};
       formatter = pkgs.alejandra;
       homeConfigurations.ryzenbox = home-manager.lib.homeManagerConfiguration {
-        pkgs = pkgsX86;
+        inherit pkgs;
         modules = [./nixos/ryzenbox-configuration.nix];
       };
       homeConfigurations.server = home-manager.lib.homeManagerConfiguration {
-        pkgs = pkgsAarch64;
+        inherit pkgs;
         modules = [./nixos/server-configuration.nix];
       };
       devShells.default = pkgs.mkShell {
