@@ -171,8 +171,9 @@
       Type = "simple";
       EnvironmentFile = "${config.home.homeDirectory}/linkleaner.config";
       ExecStart = "${pkgs.custom.linkleaner}/bin/linkleaner";
-      Restart = "on-failure";
+      Restart = "on-abort";
       RestartSec = 3;
+      StandardOutput = "journal";
       TimeoutStopSec = "10s";
     };
     Install = {WantedBy = ["default.target"];};
