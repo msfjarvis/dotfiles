@@ -124,7 +124,7 @@ function purge_gha() {
   fi
   gh api --paginate --header 'Accept: application/vnd.github+json' \
     /repos/"${REPO_SLUG:?}"/actions/workflows/"${ACTION_NAME:?}"/runs \
-    -q '.workflow_runs[] | select(.conclusion == "failure") | .id' | xargs \
+    -q '.workflow_runs[] | select(.conclusion == "failure" or .conclusion == "cancelled" or .conclusion == "startup_failure") | .id' | xargs \
     -I % gh api /repos/"${REPO_SLUG:?}"/actions/runs/% -X DELETE
 }
 
