@@ -204,6 +204,7 @@
     sd
     shellcheck
     shfmt
+    temurin-bin-18
     unzip
     vivid
     zip
