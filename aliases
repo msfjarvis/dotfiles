@@ -5,6 +5,7 @@
 
 alias pidcat='pidcat -i ResourceType -i chatty -i AppCompatDelegate'
 alias today='date +"%F"'
+alias gi=git
 if type hub &>/dev/null; then
   alias git=hub
 fi
