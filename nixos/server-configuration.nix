@@ -162,23 +162,6 @@
     Install = {WantedBy = ["timers.target"];};
   };
 
-  systemd.user.services.linkleaner = {
-    Unit = {
-      Description = "Telegram bot to improve link previews of social media posts";
-      After = "network.target";
-    };
-    Service = {
-      Type = "simple";
-      EnvironmentFile = "${config.home.homeDirectory}/linkleaner.config";
-      ExecStart = "${pkgs.custom.linkleaner}/bin/linkleaner";
-      Restart = "on-abort";
-      RestartSec = 3;
-      StandardOutput = "journal";
-      TimeoutStopSec = "10s";
-    };
-    Install = {WantedBy = ["default.target"];};
-  };
-
   home.packages = with pkgs; [
     alejandra
     cachix
