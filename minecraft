@@ -65,8 +65,8 @@ function buildshaderpack() {
 
 function update_paper() {
   local VERSION
-  VERSION="$(curl -s 'https://papermc.io/api/v2/projects/paper/versions/1.18.1' -H 'accept: application/json' | jq .builds[-1])"
-  [ -f "paper-1.18.1-${VERSION}.jar" ] && return
-  curl --progress-bar -L "https://papermc.io/api/v2/projects/paper/versions/1.18.1/builds/${VERSION}/downloads/paper-1.18.1-${VERSION}.jar" -o "paper-1.18.1-${VERSION}.jar"
-  echo "paper-1.18.1-${VERSION}.jar" >.paper-version
+  VERSION="$(curl -s 'https://papermc.io/api/v2/projects/paper/versions/1.19.3' -H 'accept: application/json' | jq .builds[-1])"
+  [ -f "paper-1.19.3-${VERSION}.jar" ] && return
+  curl --progress-bar -L "https://papermc.io/api/v2/projects/paper/versions/1.19.3/builds/${VERSION}/downloads/paper-1.19.3-${VERSION}.jar" -o "paper-1.19.3-${VERSION}.jar"
+  echo "paper-1.19.3-${VERSION}.jar" >.paper-version
 }
