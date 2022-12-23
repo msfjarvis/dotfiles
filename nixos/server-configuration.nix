@@ -175,6 +175,7 @@
     flyctl
     custom.healthchecks-monitor
     hub
+    git-absorb
     just
     custom.katbin
     micro
