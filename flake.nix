@@ -62,7 +62,7 @@
         nativeBuildInputs = with pkgs; [alejandra shellcheck shfmt];
         checkPhase = ''
           shfmt -d -s -i 2 -ci ${files}
-          alejandra -c .
+          alejandra --quiet -c .
           shellcheck -x ${files}
         '';
         installPhase = ''
@@ -80,7 +80,7 @@
         buildPhase = ''
           mkdir -p $out/bin
           echo "shfmt -w -s -i 2 -ci ${files}" > $out/bin/$name
-          echo "alejandra ." >> $out/bin/$name
+          echo "alejandra --quiet ." >> $out/bin/$name
           chmod +x $out/bin/$name
         '';
       };
