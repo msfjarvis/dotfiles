@@ -371,6 +371,7 @@
     git-absorb
     git-quickfix
     custom.hcctl
+    helix
     hub
     imwheel
     (nerdfonts.override {

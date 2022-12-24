@@ -174,6 +174,7 @@
     ffmpeg
     flyctl
     custom.healthchecks-monitor
+    helix
     hub
     git-absorb
     just
