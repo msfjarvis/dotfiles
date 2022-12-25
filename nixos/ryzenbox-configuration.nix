@@ -18,17 +18,6 @@
     Shift_L,   Down, Shift_L|Button5
   '';
 
-  home.file.".local/share/applications/vscode.desktop".text = ''
-    #!/usr/bin/env xdg-open
-    [Desktop Entry]
-    Version=1.0
-    Type=Application
-    Terminal=false
-    Icon=${pkgs.vscode}/lib/vscode/resources/app/resources/linux/code.png
-    Exec=${pkgs.vscode}/bin/code
-    Name=VSCode
-  '';
-
   programs.aria2 = {enable = true;};
 
   programs.bash = {
