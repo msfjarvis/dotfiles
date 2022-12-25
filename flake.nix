@@ -86,7 +86,7 @@
       };
     in {
       checks = {inherit fmt-check;};
-      formatter = formatter;
+      inherit formatter;
       homeConfigurations.ryzenbox = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [./nixos/ryzenbox-configuration.nix];
