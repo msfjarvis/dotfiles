@@ -50,13 +50,15 @@ if type vivid &>/dev/null; then
 fi
 
 # Bash completion
-# shellcheck disable=SC1090
-if [ -d "${HOME}"/bash_completion.d ]; then
-  for COMPLETION in "${HOME}/bash_completion.d/"*; do
-    # shellcheck disable=SC1090
-    [[ -r $COMPLETION ]] && source "$COMPLETION"
-  done
-fi
+for DIR in "${HOME}"/bash_completion.d "${HOME}"/.nix-profile/share/bash-completion/completions; do
+  # shellcheck disable=SC1090
+  if [ -d "${DIR}" ]; then
+    for COMPLETION in "${DIR}"/*; do
+      # shellcheck disable=SC1090
+      [[ -r $COMPLETION ]] && source "$COMPLETION"
+    done
+  fi
+done
 
 # Enable pass user extensions
 if type pass &>/dev/null; then

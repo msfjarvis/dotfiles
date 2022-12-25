@@ -33,10 +33,6 @@
       elif [ -f /etc/bash_completion ]; then
         . /etc/bash_completion
       fi
-      # Load completions from Git
-      source ${pkgs.git}/share/bash-completion/completions/git
-      # Load completions from scrcpy
-      source ${pkgs.scrcpy}/share/bash-completion/completions/scrcpy
       # Source shell-init from my dotfiles
       source ${config.home.homeDirectory}/git-repos/dotfiles/shell-init
     '';
