@@ -139,29 +139,6 @@
     Install = {WantedBy = ["timers.target"];};
   };
 
-  systemd.user.services.nix-index-database = {
-    Unit = {Description = "nix-index database cache updater";};
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.writeShellScript "nix-index-database-fetch.sh" ''
-        set -exuo pipefail
-        PATH=${pkgs.lib.makeBinPath [pkgs.coreutils pkgs.wget]};
-        XDG_CACHE_HOME=${config.home.homeDirectory}/.cache
-        filename="index-$(uname -m)-$(uname | tr '[:upper:]' '[:lower:]')"
-        mkdir -p "$XDG_CACHE_HOME/nix-index"
-        cd "$XDG_CACHE_HOME/nix-index"
-        wget -nv -N https://github.com/Mic92/nix-index-database/releases/latest/download/"$filename"
-        ln -f "$filename" files
-      ''}";
-    };
-  };
-
-  systemd.user.timers.nix-index-database = {
-    Unit = {Description = "Update the nix-index database cache";};
-    Timer = {OnCalendar = "daily";};
-    Install = {WantedBy = ["timers.target"];};
-  };
-
   home.packages = with pkgs; [
     alejandra
     cachix

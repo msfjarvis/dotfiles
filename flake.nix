@@ -4,21 +4,26 @@
   inputs = {
     nixpkgs.url = "github:msfjarvis/nixpkgs/548e82d650b95f51cbaad7e958fa668f6fecbb02";
     flake-utils.url = "github:numtide/flake-utils/master";
+    custom-nixpkgs = {
+      url = "github:msfjarvis/custom-nixpkgs/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    custom-nixpkgs = {
-      url = "github:msfjarvis/custom-nixpkgs/main";
+    nix-index-database = {
+      url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs = {
     nixpkgs,
-    home-manager,
     custom-nixpkgs,
     flake-utils,
+    home-manager,
+    nix-index-database,
     ...
   }:
     flake-utils.lib.eachSystem ["aarch64-linux" "x86_64-linux"] (system: let
@@ -89,11 +94,17 @@
       inherit formatter;
       homeConfigurations.ryzenbox = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [./nixos/ryzenbox-configuration.nix];
+        modules = [
+          nix-index-database.hmModules.nix-index
+          ./nixos/ryzenbox-configuration.nix
+        ];
       };
       homeConfigurations.server = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [./nixos/server-configuration.nix];
+        modules = [
+          nix-index-database.hmModules.nix-index
+          ./nixos/server-configuration.nix
+        ];
       };
       devShells.default = pkgs.mkShell {
         nativeBuildInputs = with pkgs; [
