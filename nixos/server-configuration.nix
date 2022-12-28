@@ -5,6 +5,7 @@
 }: {
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
+  targets.genericLinux.enable = true;
 
   programs.aria2 = {enable = true;};
 
