@@ -13,6 +13,8 @@
     mime.enable = true;
   };
 
+  targets.genericLinux.enable = true;
+
   home.file.".imwheelrc".text = ''
     ".*"
     None,      Up,   Button4, 3
