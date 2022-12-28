@@ -2,7 +2,7 @@
   description = "Home Manager configurations of Harsh Shandilya";
 
   inputs = {
-    nixpkgs.url = "github:msfjarvis/nixpkgs/548ee0337fbc647901338326f7f48c391934ccca";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils/master";
     custom-nixpkgs = {
       url = "github:msfjarvis/custom-nixpkgs/main";

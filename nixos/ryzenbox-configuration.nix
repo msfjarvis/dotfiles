@@ -353,7 +353,18 @@
     custom.pidcat
     procs
     ripgrep
-    scrcpy
+    # Remove once https://github.com/Genymobile/scrcpy/issues/3497 is fixed
+    (scrcpy.overrideAttrs (old: {
+      postInstall = ''
+        mkdir -p "$out/share/scrcpy"
+        ln -s "${
+          pkgs.fetchurl {
+            url = "https://tmp.rom1v.com/scrcpy/3497/3/scrcpy-server";
+            sha256 = "sha256-khWXNgPk6CEK75JSet1EmK1ERRZ6cWIcFFdvpNC496s=";
+          }
+        }" "$out/share/scrcpy/scrcpy-server"
+      '';
+    }))
     sd
     shellcheck
     shfmt
