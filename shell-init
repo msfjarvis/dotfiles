@@ -6,11 +6,6 @@
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 export SCRIPT_DIR
 
-# shellcheck disable=SC1091
-if [ -e "${HOME}"/.nix-profile/etc/profile.d/nix.sh ]; then
-  source "${HOME}"/.nix-profile/etc/profile.d/nix.sh
-fi
-
 # Local bin directory
 [ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:${PATH}"
 
@@ -86,6 +81,9 @@ if type mcfly &>/dev/null; then
   eval "$(mcfly init bash)"
 fi
 
+# shellcheck source=system_linux
+source "${SCRIPT_DIR}"/system_linux
+
 # Spicetify
 if [ -d "${HOME}/.spicetify" ]; then
   export PATH="${PATH}:${HOME}/.spicetify"
@@ -111,5 +109,3 @@ source "${SCRIPT_DIR}"/nix
 source "${SCRIPT_DIR}"/server
 # shellcheck source=system
 source "${SCRIPT_DIR}"/system
-# shellcheck source=system_linux
-source "${SCRIPT_DIR}"/system_linux
