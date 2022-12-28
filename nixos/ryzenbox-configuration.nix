@@ -8,6 +8,11 @@
 
   fonts.fontconfig.enable = true;
 
+  xdg = {
+    enable = true;
+    mime.enable = true;
+  };
+
   home.file.".imwheelrc".text = ''
     ".*"
     None,      Up,   Button4, 3
