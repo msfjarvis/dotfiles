@@ -62,6 +62,7 @@
         name = "fmt-check";
         doCheck = true;
         dontBuild = true;
+        allowSubstitutes = false;
         strictDeps = true;
         src = ./.;
         nativeBuildInputs = with pkgs; [alejandra shellcheck shfmt];
@@ -80,6 +81,7 @@
         name = "formatter";
         doCheck = false;
         strictDeps = true;
+        allowSubstitutes = false;
         src = ./.;
         nativeBuildInputs = with pkgs; [alejandra shfmt];
         buildPhase = ''
