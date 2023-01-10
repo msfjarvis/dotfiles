@@ -325,6 +325,7 @@
 
   home.packages = with pkgs; [
     custom.adb-sync
+    custom.adbtuifm
     custom.adx
     age
     alejandra
