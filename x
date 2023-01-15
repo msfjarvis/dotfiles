@@ -17,6 +17,7 @@ case "${1:-nothing}" in
     shift
     nix build --print-build-logs .#homeConfigurations.x86_64-linux.ryzenbox.activationPackage "${@}"
     source ./result/activate
+    rm -rf ./result
     ;;
   install)
     ./install.sh
@@ -29,6 +30,7 @@ case "${1:-nothing}" in
     shift
     nix build --print-build-logs .#homeConfigurations.aarch64-linux.server.activationPackage "${@}"
     source ./result/activate
+    rm -rf ./result
     ;;
   server-check)
     shift
@@ -38,5 +40,6 @@ case "${1:-nothing}" in
     shift
     nix build --print-build-logs .#homeConfigurations.x86_64-linux.server.activationPackage "${@}"
     source ./result/activate
+    rm -rf ./result
     ;;
 esac
