@@ -344,6 +344,7 @@
     fzf
     custom.gdrive
     git-absorb
+    git-crypt
     git-quickfix
     custom.hcctl
     helix
