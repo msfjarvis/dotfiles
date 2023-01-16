@@ -223,7 +223,7 @@
     settings = {
       disable = ["gnome_shell_extensions" "home_manager" "nix" "node" "sdkman"];
 
-      remote_topgrades = ["boatymcboatface" "ci"];
+      remote_topgrades = ["boatymcboatface"];
 
       remote_topgrade_path = ".nix-profile/bin/topgrade";
 
