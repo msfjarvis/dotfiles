@@ -159,6 +159,13 @@ function mkgif() {
   ffmpeg -i "${1:?}" -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 "${1%.*}".gif
 }
 
+function encode() {
+  local INPUT OUTPUT
+  INPUT="${1}"
+  OUTPUT="${2:-output.mp4}"
+  ffmpeg -y -vsync 0 -hwaccel cuda -i "${INPUT:?}" -c:v h264_nvenc -rc constqp -qmin 17 -qmax 51 -qp 24 -preset p7 -tune hq -pix_fmt yuv420p -rc-lookahead 4 -profile:v high -bf 0 -keyint_min 1 -refs 7 -qdiff 20 -qcomp 0.9 -me_method umh -subq 9 -me_range 36 -b:v 0 -g 300 -c:a copy "${OUTPUT:?}"
+}
+
 function tmpshare() {
   local FILE
   FILE="${1}"
