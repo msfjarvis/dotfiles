@@ -344,6 +344,26 @@
     fclones
     fd
     ferium
+    (ffmpeg-full.override {
+      nonfreeLicensing = true;
+      ffplayProgram = false;
+      ffprobeProgram = false;
+      qtFaststartProgram = false;
+      dav1d = pkgs.dav1d;
+      lame = pkgs.lame;
+      libass = pkgs.libass;
+      libdrm = pkgs.libdrm;
+      libva = pkgs.libva;
+      libvdpau = pkgs.libvdpau;
+      libvorbis = pkgs.libvorbis;
+      libvpx = pkgs.libvpx;
+      libwebp = pkgs.libwebp;
+      nv-codec-headers = pkgs.nv-codec-headers;
+      nvdec = true;
+      nvenc = true;
+      x264 = pkgs.x264;
+      x265 = pkgs.x265;
+    })
     fzf
     custom.gdrive
     git-absorb
