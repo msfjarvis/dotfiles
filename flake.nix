@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils/master";
     custom-nixpkgs = {
       url = "github:msfjarvis/custom-nixpkgs/main";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,104 +20,111 @@
   outputs = {
     nixpkgs,
     custom-nixpkgs,
-    flake-utils,
     home-manager,
     nix-index-database,
     ...
-  }:
-    flake-utils.lib.eachSystem ["aarch64-linux" "x86_64-linux"] (system: let
-      config = {
-        allowUnfree = true;
-        packageOverrides = pkgs: {
-          custom = import custom-nixpkgs {inherit pkgs;};
-        };
+  }: let
+    config = {
+      allowUnfree = true;
+      packageOverrides = pkgs: {
+        custom = import custom-nixpkgs {inherit pkgs;};
       };
-      pkgs = import nixpkgs {inherit system config;};
-      files = pkgs.lib.concatStringsSep " " [
-        "aliases"
-        "apps"
-        "bash_completions.bash"
-        "common"
-        "devtools"
-        "files"
-        "gitshit"
-        "install.sh"
-        "minecraft"
-        "nix"
-        "nixos/setup-channels.sh"
-        "paste"
-        "pre-push-hook"
-        "server"
-        "setup/00-android_sdk.sh"
-        "setup/01-adb_multi.sh"
-        "setup/02-android_udev.sh"
-        "setup/common.sh"
-        "shell-init"
-        "system"
-        "system_linux"
-        "x"
+    };
+    pkgs = import nixpkgs {
+      inherit config;
+      system = "x86_64-linux";
+    };
+    files = pkgs.lib.concatStringsSep " " [
+      "aliases"
+      "apps"
+      "bash_completions.bash"
+      "common"
+      "devtools"
+      "files"
+      "gitshit"
+      "install.sh"
+      "minecraft"
+      "nix"
+      "nixos/setup-channels.sh"
+      "paste"
+      "pre-push-hook"
+      "server"
+      "setup/00-android_sdk.sh"
+      "setup/01-adb_multi.sh"
+      "setup/02-android_udev.sh"
+      "setup/common.sh"
+      "shell-init"
+      "system"
+      "system_linux"
+      "x"
+    ];
+    fmt-check = pkgs.stdenvNoCC.mkDerivation {
+      name = "fmt-check";
+      doCheck = true;
+      dontBuild = true;
+      allowSubstitutes = false;
+      strictDeps = true;
+      src = ./.;
+      nativeBuildInputs = with pkgs; [alejandra shellcheck shfmt];
+      checkPhase = ''
+        shfmt -d -s -i 2 -ci ${files}
+        alejandra --quiet -c .
+        shellcheck -x ${files}
+      '';
+      installPhase = ''
+        runHook preInstall
+        mkdir "$out"
+        runHook postInstall
+      '';
+    };
+    formatter = pkgs.stdenvNoCC.mkDerivation {
+      name = "formatter";
+      doCheck = false;
+      strictDeps = true;
+      allowSubstitutes = false;
+      src = ./.;
+      nativeBuildInputs = with pkgs; [alejandra shfmt];
+      buildPhase = ''
+        mkdir -p $out/bin
+        echo "shfmt -w -s -i 2 -ci ${files}" > $out/bin/$name
+        echo "alejandra --quiet ." >> $out/bin/$name
+        chmod +x $out/bin/$name
+      '';
+    };
+  in {
+    checks = {inherit fmt-check;};
+    formatter.x86_64-linux = formatter;
+    homeConfigurations.ryzenbox = home-manager.lib.homeManagerConfiguration {
+      pkgs = import nixpkgs {
+        inherit config;
+        system = "x86_64-linux";
+      };
+      modules = [
+        nix-index-database.hmModules.nix-index
+        ./nixos/ryzenbox-configuration.nix
       ];
-      fmt-check = pkgs.stdenvNoCC.mkDerivation {
-        name = "fmt-check";
-        doCheck = true;
-        dontBuild = true;
-        allowSubstitutes = false;
-        strictDeps = true;
-        src = ./.;
-        nativeBuildInputs = with pkgs; [alejandra shellcheck shfmt];
-        checkPhase = ''
-          shfmt -d -s -i 2 -ci ${files}
-          alejandra --quiet -c .
-          shellcheck -x ${files}
-        '';
-        installPhase = ''
-          runHook preInstall
-          mkdir "$out"
-          runHook postInstall
-        '';
+    };
+    homeConfigurations.server = home-manager.lib.homeManagerConfiguration {
+      pkgs = import nixpkgs {
+        inherit config;
+        system = "aarch64-linux";
       };
-      formatter = pkgs.stdenvNoCC.mkDerivation {
-        name = "formatter";
-        doCheck = false;
-        strictDeps = true;
-        allowSubstitutes = false;
-        src = ./.;
-        nativeBuildInputs = with pkgs; [alejandra shfmt];
-        buildPhase = ''
-          mkdir -p $out/bin
-          echo "shfmt -w -s -i 2 -ci ${files}" > $out/bin/$name
-          echo "alejandra --quiet ." >> $out/bin/$name
-          chmod +x $out/bin/$name
-        '';
-      };
-    in {
-      checks = {inherit fmt-check;};
-      inherit formatter;
-      homeConfigurations.ryzenbox = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          nix-index-database.hmModules.nix-index
-          ./nixos/ryzenbox-configuration.nix
-        ];
-      };
-      homeConfigurations.server = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          nix-index-database.hmModules.nix-index
-          ./nixos/server-configuration.nix
-        ];
-      };
-      devShells.default = pkgs.mkShell {
-        nativeBuildInputs = with pkgs; [
-          alejandra
-          bash
-          delta
-          git
-          micro
-          nil
-          shellcheck
-          shfmt
-        ];
-      };
-    });
+      modules = [
+        nix-index-database.hmModules.nix-index
+        ./nixos/server-configuration.nix
+      ];
+    };
+    devShells.x86_64-linux.default = pkgs.mkShell {
+      nativeBuildInputs = with pkgs; [
+        alejandra
+        bash
+        delta
+        git
+        micro
+        nil
+        shellcheck
+        shfmt
+      ];
+    };
+  };
 }

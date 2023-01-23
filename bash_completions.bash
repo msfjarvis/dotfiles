@@ -11,7 +11,7 @@ _syncdown_completions() {
 }
 
 _x_completions() {
-  mapfile -t COMPREPLY < <(compgen -W "githook home-check home-switch install oracle-check oracle-switch server-check server-switch" -- "${COMP_WORDS[1]}")
+  mapfile -t COMPREPLY < <(compgen -W "githook home-check home-switch install oracle-check oracle-switch" -- "${COMP_WORDS[1]}")
 }
 
 complete -F _syncup_completions syncup

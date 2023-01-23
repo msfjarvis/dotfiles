@@ -11,35 +11,21 @@ case "${1:-nothing}" in
     ;;
   home-check)
     shift
-    nix build --print-build-logs .#homeConfigurations.x86_64-linux.ryzenbox.activationPackage "${@}"
+    home-manager build --flake .#ryzenbox
     ;;
   home-switch)
     shift
-    nix build --print-build-logs .#homeConfigurations.x86_64-linux.ryzenbox.activationPackage "${@}"
-    source ./result/activate
-    rm -rf ./result
+    home-manager switch --flake .#ryzenbox
     ;;
   install)
     ./install.sh
     ;;
   oracle-check)
     shift
-    nix build --print-build-logs .#homeConfigurations.aarch64-linux.server.activationPackage "${@}"
+    home-manager build --flake .#server
     ;;
   oracle-switch)
     shift
-    nix build --print-build-logs .#homeConfigurations.aarch64-linux.server.activationPackage "${@}"
-    source ./result/activate
-    rm -rf ./result
-    ;;
-  server-check)
-    shift
-    nix build --print-build-logs .#homeConfigurations.x86_64-linux.server.activationPackage "${@}"
-    ;;
-  server-switch)
-    shift
-    nix build --print-build-logs .#homeConfigurations.x86_64-linux.server.activationPackage "${@}"
-    source ./result/activate
-    rm -rf ./result
+    home-manager switch --flake .#server
     ;;
 esac
