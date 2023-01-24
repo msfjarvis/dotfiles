@@ -11,6 +11,10 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    darwin = {
+      url = "github:lnl7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,6 +25,7 @@
     nixpkgs,
     custom-nixpkgs,
     home-manager,
+    darwin,
     nix-index-database,
     ...
   }: let
@@ -92,6 +97,17 @@
       modules = [
         nix-index-database.hmModules.nix-index
         ./nixos/server-configuration.nix
+      ];
+    };
+    darwinConfigurations."work-macbook" = darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
+      pkgs = import nixpkgs {
+        inherit config;
+        system = "aarch64-darwin";
+      };
+      modules = [
+        home-manager.darwinModules.home-manager
+        ./nixos/darwin-configuration.nix
       ];
     };
     devShells.x86_64-linux.default = pkgs.mkShell {
