@@ -25,8 +25,6 @@
       if [ -d ${config.home.homeDirectory}/android-sdk ]; then
         export ANDROID_SDK_ROOT="${config.home.homeDirectory}/android-sdk"
       fi
-      # Load completions from Git
-      source ${pkgs.git}/share/bash-completion/completions/git
       # Source shell-init from my dotfiles
       source ${config.home.homeDirectory}/dotfiles/shell-init
       # _byobu_sourced=1 . /usr/bin/byobu-launch 2>/dev/null || true
