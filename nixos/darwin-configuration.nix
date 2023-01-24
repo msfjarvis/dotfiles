@@ -8,6 +8,15 @@
     home = "/Users/msfjarvis";
   };
 
+  fonts = {
+    fontDir.enable = true;
+    fonts = with pkgs; [
+      (nerdfonts.override {
+        fonts = ["CascadiaCode" "FiraCode" "Inconsolata" "JetBrainsMono"];
+      })
+    ];
+  };
+
   home-manager.useGlobalPkgs = true;
   home-manager.users.msfjarvis = {pkgs, ...}: {
     programs.bash = {
