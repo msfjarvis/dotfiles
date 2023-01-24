@@ -6,6 +6,12 @@ set -u
 set -o pipefail
 
 case "${1:-nothing}" in
+  darwin-check)
+    darwin-rebuild build --flake .#work-macbook
+    ;;
+  darwin-switch)
+    darwin-rebuild switch --flake .#work-macbook
+    ;;
   githook)
     ln -sf "$(pwd)"/pre-push-hook .git/hooks/pre-push
     ;;

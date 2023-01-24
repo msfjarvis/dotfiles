@@ -44,6 +44,7 @@
       "apps"
       "bash_completions.bash"
       "common"
+      "darwin-init"
       "devtools"
       "files"
       "gitshit"
@@ -60,6 +61,7 @@
       "setup/common.sh"
       "shell-init"
       "system"
+      "system_darwin"
       "system_linux"
       "x"
     ];
