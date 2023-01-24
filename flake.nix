@@ -58,25 +58,6 @@
       "system_linux"
       "x"
     ];
-    fmt-check = pkgs.stdenvNoCC.mkDerivation {
-      name = "fmt-check";
-      doCheck = true;
-      dontBuild = true;
-      allowSubstitutes = false;
-      strictDeps = true;
-      src = ./.;
-      nativeBuildInputs = with pkgs; [alejandra shellcheck shfmt];
-      checkPhase = ''
-        shfmt -d -s -i 2 -ci ${files}
-        alejandra --quiet -c .
-        shellcheck -x ${files}
-      '';
-      installPhase = ''
-        runHook preInstall
-        mkdir "$out"
-        runHook postInstall
-      '';
-    };
     formatter = pkgs.stdenvNoCC.mkDerivation {
       name = "formatter";
       doCheck = false;
@@ -92,7 +73,6 @@
       '';
     };
   in {
-    checks = {inherit fmt-check;};
     formatter.x86_64-linux = formatter;
     homeConfigurations.ryzenbox = home-manager.lib.homeManagerConfiguration {
       pkgs = import nixpkgs {
