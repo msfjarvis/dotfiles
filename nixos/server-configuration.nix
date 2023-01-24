@@ -146,6 +146,7 @@
   home.packages = with pkgs; [
     alejandra
     cachix
+    cargo-wipe
     comma
     curl
     delta
