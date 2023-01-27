@@ -166,6 +166,7 @@
     ncdu_2
     nix
     nix-update
+    nixpkgs-review
     neofetch
     nvd
     ripgrep
