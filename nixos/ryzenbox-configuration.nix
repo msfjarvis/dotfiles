@@ -247,11 +247,6 @@
     enableBashIntegration = true;
   };
 
-  services.cachix-agent = {
-    enable = true;
-    name = "ryzenbox";
-  };
-
   services.gpg-agent = {
     enable = true;
     defaultCacheTtl = 600;

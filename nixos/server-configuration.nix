@@ -118,11 +118,6 @@
     enableBashIntegration = true;
   };
 
-  services.cachix-agent = {
-    enable = true;
-    name = "oracle";
-  };
-
   systemd.user.services.optimise-nix-store = {
     Unit = {Description = "nix store maintenance";};
 
