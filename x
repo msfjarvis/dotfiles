@@ -7,31 +7,31 @@ set -o pipefail
 
 case "${1:-nothing}" in
   darwin-check)
-    darwin-rebuild build --flake .#work-macbook
+    darwin-rebuild build --print-build-logs --flake .#work-macbook
     ;;
   darwin-switch)
-    darwin-rebuild switch --flake .#work-macbook
+    darwin-rebuild switch --print-build-logs --flake .#work-macbook
     ;;
   githook)
     ln -sf "$(pwd)"/pre-push-hook .git/hooks/pre-push
     ;;
   home-check)
     shift
-    home-manager build --flake .#ryzenbox
+    home-manager build --print-build-logs --flake .#ryzenbox
     ;;
   home-switch)
     shift
-    home-manager switch --flake .#ryzenbox
+    home-manager switch --print-build-logs --flake .#ryzenbox
     ;;
   install)
     ./install.sh
     ;;
   oracle-check)
     shift
-    home-manager build --flake .#server
+    home-manager build --print-build-logs --flake .#server
     ;;
   oracle-switch)
     shift
-    home-manager switch --flake .#server
+    home-manager switch --print-build-logs --flake .#server
     ;;
 esac
