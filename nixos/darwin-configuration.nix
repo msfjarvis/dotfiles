@@ -32,8 +32,6 @@
         elif [ -f /etc/bash_completion ]; then
           . /etc/bash_completion
         fi
-        # Load completions from Git
-        source ${pkgs.git}/share/bash-completion/completions/git
         # Source shell-init from my dotfiles
         source /Users/msfjarvis/git-repos/dotfiles/darwin-init
         export BASH_SILENCE_DEPRECATION_WARNING=1
