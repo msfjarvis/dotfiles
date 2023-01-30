@@ -148,13 +148,11 @@
     diskus
     dos2unix
     fd
-    ffmpeg
     flyctl
     custom.healthchecks-monitor
     helix
     hub
     git-absorb
-    just
     custom.katbin
     micro
     mosh
@@ -168,7 +166,6 @@
     sd
     shellcheck
     shfmt
-    temurin-bin-18
     unzip
     vivid
     zip
