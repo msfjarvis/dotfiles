@@ -158,6 +158,7 @@
     micro
     mosh
     ncdu_2
+    nil
     nix
     nix-update
     nixpkgs-review

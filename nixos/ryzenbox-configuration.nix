@@ -377,6 +377,7 @@
     mosh
     ncdu_2
     neofetch
+    nil
     nix
     nix-update
     nixpkgs-review
