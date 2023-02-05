@@ -374,6 +374,7 @@
     custom.katbin
     mcfly
     mold
+    custom.monocraft-nerdfonts
     mosh
     ncdu_2
     neofetch
