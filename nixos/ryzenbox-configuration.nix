@@ -327,6 +327,7 @@
     custom.adx
     age
     alejandra
+    birdtray
     custom.bundletool-bin
     cachix
     choose
@@ -392,6 +393,7 @@
     shellcheck
     shfmt
     silicon
+    thunderbird
     custom.twt
     unzip
     vivid
