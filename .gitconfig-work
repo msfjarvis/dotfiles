@@ -1,0 +1,6 @@
+[user]
+	email = harsh.shandilya@dyte.io
+[commit]
+	gpgsign = false
+[tag]
+	gpgsign = false

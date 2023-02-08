@@ -118,7 +118,7 @@
       includes = [
         {path = "/Users/msfjarvis/git-repos/dotfiles/.gitconfig";}
         {
-          path = "/Users/msfjarvis/git-repos/dotfiles/.gitconfig-auth";
+          path = "/Users/msfjarvis/git-repos/dotfiles/.gitconfig-work";
         }
       ];
     };
