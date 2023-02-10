@@ -234,6 +234,7 @@
     hub
     custom.katbin
     mosh
+    nil
     openssh
     openssl
     custom.pidcat
