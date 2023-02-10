@@ -26,13 +26,17 @@ function nixdiff() {
 
 function nixshell() {
   [[ -z ${1} ]] && return
-  [[ ! -f "${SCRIPT_DIR}/nixos/shell-configs/${1}.nix" ]] && {
+  BASE_DIR="${SCRIPT_DIR}/nixos/shell-configs"
+  [[ ! -f "${BASE_DIR}/${1}.nix" ]] && {
     reportWarning "No shell config exists for ${1}"
     return
   }
-  cp -v "${SCRIPT_DIR}/nixos/shell-configs/${1}.nix" flake.nix
-  git add flake.nix
+  cp -v "${BASE_DIR}/${1}.nix" flake.nix
+  cp "${BASE_DIR}/default.nix" default.nix
+  cp "${BASE_DIR}/shell.nix" shell.nix
+  git add flake.nix default.nix shell.nix
   nix flake update
+  git add flake.lock
   nix develop
 }
 
