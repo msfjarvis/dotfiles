@@ -230,6 +230,7 @@
     fd
     fzf
     custom.gdrive
+    gradle-completion
     git-absorb
     git-quickfix
     hub

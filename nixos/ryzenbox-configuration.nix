@@ -362,6 +362,7 @@
     })
     fzf
     custom.gdrive
+    gradle-completion
     git-absorb
     git-crypt
     git-quickfix
