@@ -340,25 +340,23 @@
     fclones
     fd
     ferium
-    (ffmpeg-full.override {
-      nonfreeLicensing = true;
-      ffplayProgram = false;
-      ffprobeProgram = false;
-      qtFaststartProgram = false;
-      dav1d = pkgs.dav1d;
-      lame = pkgs.lame;
-      libass = pkgs.libass;
-      libdrm = pkgs.libdrm;
-      libva = pkgs.libva;
-      libvdpau = pkgs.libvdpau;
-      libvorbis = pkgs.libvorbis;
-      libvpx = pkgs.libvpx;
-      libwebp = pkgs.libwebp;
-      nv-codec-headers = pkgs.nv-codec-headers;
-      nvdec = true;
-      nvenc = true;
-      x264 = pkgs.x264;
-      x265 = pkgs.x265;
+    (ffmpeg.override {
+      buildFfplay = false;
+      buildFfprobe = false;
+      buildQtFaststart = false;
+      withDav1d = true;
+      withMp3lame = true;
+      withAss = true;
+      withDrm = true;
+      withVaapi = true;
+      withVdpau = true;
+      withVorbis = true;
+      withVpx = true;
+      withWebp = true;
+      withNvdec = true;
+      withNvenc = true;
+      withX264 = true;
+      withX265 = true;
     })
     fzf
     custom.gdrive
