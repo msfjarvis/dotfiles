@@ -25,3 +25,6 @@ fi
 if type yt-dlp &>/dev/null; then
   alias ytdl="yt-dlp --compat-options filename --external-downloader aria2c --external-downloader-args '-c -j 3 -x 3 -s 3 -k 1M'"
 fi
+if type nix &>/dev/null; then
+  alias nix="nix --print-build-logs"
+fi
