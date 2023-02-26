@@ -182,7 +182,10 @@
         elm.disabled = true;
         env_var.disabled = true;
         erlang.disabled = true;
+        fennel.disabled = true;
+        fossil_branch.disabled = true;
         golang.disabled = true;
+        gradle.disabled = false;
         helm.disabled = true;
         hg_branch.disabled = true;
         hostname.disabled = true;
@@ -194,6 +197,7 @@
         memory_usage.disabled = true;
         nodejs.disabled = true;
         perl.disabled = true;
+        pijul_channel.disabled = true;
         ruby.disabled = true;
         php.disabled = true;
         terraform.disabled = true;
@@ -215,7 +219,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    (ruby.withPackages (p: with p; [ cocoapods cocoapods-generate ]))
+    (ruby.withPackages (p: with p; [cocoapods cocoapods-generate]))
     custom.adx
     alejandra
     cachix
