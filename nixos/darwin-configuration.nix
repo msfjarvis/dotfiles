@@ -241,6 +241,7 @@
     custom.katbin
     mosh
     nil
+    nvd
     openssh
     openssl
     custom.pidcat
