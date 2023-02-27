@@ -219,7 +219,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    (ruby.withPackages (p: with p; [cocoapods cocoapods-generate]))
+    (ruby_3_1.withPackages (p: with p; [cocoapods cocoapods-generate]))
     custom.adx
     alejandra
     cachix
