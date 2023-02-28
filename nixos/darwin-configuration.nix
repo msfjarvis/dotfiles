@@ -218,8 +218,14 @@
     home.stateVersion = "21.05";
   };
 
+  homebrew = {
+    enable = true;
+    brews = [
+      "cocoapods"
+    ];
+  };
+
   environment.systemPackages = with pkgs; [
-    (ruby_3_1.withPackages (p: with p; [cocoapods cocoapods-generate]))
     custom.adx
     alejandra
     cachix

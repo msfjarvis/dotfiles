@@ -74,6 +74,10 @@ if type zoxide &>/dev/null; then
   alias cd=z
 fi
 
+if [ -d /opt/homebrew/bin ]; then
+  export PATH="/opt/homebrew/bin:${PATH}"
+fi
+
 # shellcheck source=bash_completions.bash
 source "${SCRIPT_DIR}"/bash_completions.bash
 # shellcheck source=aliases
