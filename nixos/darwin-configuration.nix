@@ -100,7 +100,11 @@
         git_protocol = "https";
         editor = "micro";
         prompt = "enabled";
-        aliases = {co = "pr checkout";};
+        aliases = {
+          co = "pr checkout";
+          personal = "!cp ~/.config/gh/hosts.yml.personal ~/.config/gh/hosts.yml && gh auth status";
+          work = "!cp ~/.config/gh/hosts.yml.work ~/.config/gh/hosts.yml && gh auth status";
+        };
       };
     };
 
