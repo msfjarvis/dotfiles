@@ -346,7 +346,7 @@
     ferium
     (ffmpeg.override {
       buildFfplay = false;
-      buildFfprobe = false;
+      buildFfprobe = true;
       buildQtFaststart = false;
       withDav1d = true;
       withMp3lame = true;
