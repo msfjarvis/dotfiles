@@ -41,6 +41,5 @@ function nixshell() {
 }
 
 function nixb() {
-  nix flake update
-  git commit -am "chore(nix): bump flake inputs"
+  nix flake update --commit-lock-file
 }
