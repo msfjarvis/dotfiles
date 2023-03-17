@@ -11,14 +11,6 @@ export SDKMAN_DIR="${HOME}/.sdkman"
 # shellcheck disable=SC1091
 [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
 
-# cargo env
-# shellcheck disable=SC1091
-if [ -f "${HOME}"/.cargo/env ]; then
-  source "${HOME}"/.cargo/env
-elif [ -d "${HOME}"/.cargo/bin ]; then
-  export PATH="${HOME}/.cargo/bin:${PATH}"
-fi
-
 # Local bin directory
 [ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:${PATH}"
 
@@ -65,8 +57,6 @@ fi
 if type micro &>/dev/null; then
   export EDITOR=micro
   export MICRO_TRUECOLOR=1
-else
-  export EDITOR=nano
 fi
 
 # Setup zoxide
