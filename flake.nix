@@ -52,7 +52,6 @@
       "minecraft"
       "nix"
       "nixos/setup-channels.sh"
-      "paste"
       "pre-push-hook"
       "server"
       "setup/00-android_sdk.sh"
