@@ -57,7 +57,6 @@
       "setup/00-android_sdk.sh"
       "setup/01-adb_multi.sh"
       "setup/02-android_udev.sh"
-      "setup/common.sh"
       "shell-init"
       "system"
       "system_darwin"

@@ -3,8 +3,8 @@
 # Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
 # SPDX-License-Identifier: MIT
 
-# shellcheck source=setup/common.sh
-source "${SCRIPT_DIR:?}"/setup/common.sh
+# shellcheck source=common
+source "${SCRIPT_DIR:?}"/common
 
 trap 'rm -rf /tmp/tools.zip 2>/dev/null' INT TERM EXIT
 

@@ -3,8 +3,8 @@
 # Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
 # SPDX-License-Identifier: MIT
 
-# shellcheck source=setup/common.sh
-source "${SCRIPT_DIR:?}"/setup/common.sh
+# shellcheck source=common
+source "${SCRIPT_DIR:?}"/common
 
 function setup_android_udev() {
   echoText "Installing latest Android udev rules"
