@@ -22,9 +22,9 @@ export CL_BOLD CL_INV CL_RED CL_RST CL_YLW CL_BLUE
 function echoText() {
   echo -e "${CL_RED}"
   echo -e "${CL_BOLD}"
-  echo -e "====$(for i in $(seq ${#1}); do echo -e "=\c"; done)===="
+  echo -e "====$(for _ in $(seq ${#1}); do echo -e "=\c"; done)===="
   echo -e "==  ${1}  =="
-  echo -e "====$(for i in $(seq ${#1}); do echo -e "=\c"; done)===="
+  echo -e "====$(for _ in $(seq ${#1}); do echo -e "=\c"; done)===="
   echo -e "${CL_RST}"
 }
 
@@ -45,61 +45,4 @@ function reportWarning() {
   if [ -z "${2-}" ]; then
     echo -e ""
   fi
-}
-
-# Prints the success banner
-# SC2034: i appears unused. Verify it or export it.
-function reportSuccess() {
-  echo -e "${CL_GRN}"
-  echo -e "${CL_BOLD}"
-  echo -e "====$(for i in $(seq ${#1}); do
-    echo -e "=\c"
-    echo "${i}" >/dev/null
-  done)===="
-  echo -e "==  ${1}  =="
-  echo -e "====$(for i in $(seq ${#1}); do
-    echo -e "=\c"
-    echo "${i}" >/dev/null
-  done)===="
-  echo -e "${CL_RST}"
-}
-
-# Prints out a given URL and optional link text as a hyperlink
-function url() {
-  local URL TEXT
-  URL="${1:?}"
-  TEXT="${2:-Link text}"
-  if [[ ! ${URL} =~ :// ]]; then
-    URL="https://${URL}"
-  fi
-  echo -e "\e]8;;${URL}\a${TEXT}\e]8;;\a"
-}
-
-function banner() {
-  local s=("$@") b w
-  echo -e "${CL_RED}"
-  echo -e "${CL_BOLD}"
-  for l in "${s[@]}"; do
-    ((w < ${#l})) && {
-      b="$l"
-      w="${#l}"
-    }
-  done
-  echo "##${b//?/#}##
-# ${b//?/ } #"
-  for l in "${s[@]}"; do
-    printf '# %*s #\n' "-$w" "$l"
-  done
-  echo "# ${b//?/ } #
-##${b//?/#}##"
-  echo -e "${CL_RST}"
-}
-
-# Check if array contains element
-# Taken from https://stackoverflow.com/a/8574392
-function containsElement() {
-  local e match="$1"
-  shift
-  for e; do [[ $e == "$match" ]] && return 0; done
-  return 1
 }
