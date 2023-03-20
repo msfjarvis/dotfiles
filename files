@@ -163,7 +163,7 @@ function encode() {
   local INPUT OUTPUT
   INPUT="${1}"
   OUTPUT="${2:-output.mp4}"
-  LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu ffmpeg -y -vsync 0 -hwaccel cuda -i "${INPUT:?}" -c:v h264_nvenc -rc constqp -qmin 17 -qmax 51 -qp 24 -preset p7 -tune hq -pix_fmt yuv420p -rc-lookahead 4 -profile:v high -bf 0 -keyint_min 1 -refs 7 -qdiff 20 -qcomp 0.9 -me_method umh -subq 9 -me_range 36 -b:v 0 -g 300 -c:a copy "${OUTPUT:?}"
+  LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu ffmpeg -i "${INPUT:?}" -c:v hevc_nvenc -c:a copy "${OUTPUT:?}"
 }
 
 function tmpshare() {
