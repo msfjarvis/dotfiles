@@ -383,6 +383,7 @@
     neofetch
     nil
     nix
+    nix-init
     nix-update
     nixpkgs-review
     nvd
