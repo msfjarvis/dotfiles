@@ -23,7 +23,7 @@ if type fd &>/dev/null; then
   alias findapks="fd -Itf apk$"
 fi
 if type yt-dlp &>/dev/null; then
-  alias ytdl="yt-dlp --compat-options filename --external-downloader aria2c --external-downloader-args '-c -j 3 -x 3 -s 3 -k 1M'"
+  alias ytdl="yt-dlp --external-downloader aria2c --external-downloader-args '-c -j 3 -x 3 -s 3 -k 1M' -N 5"
 fi
 if type nix &>/dev/null; then
   alias nix="nix --print-build-logs"
