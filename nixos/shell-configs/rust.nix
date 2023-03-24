@@ -53,25 +53,29 @@
       rustStable =
         pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
       craneLib = (crane.mkLib pkgs).overrideToolchain rustStable;
-      src = ./.;
-      cargoArtifacts = craneLib.buildDepsOnly {inherit src buildInputs;};
-      buildInputs = [];
-
-      my-rust-package = craneLib.buildPackage {
-        inherit src;
-        doCheck = false;
-      };
-      my-rust-package-clippy = craneLib.cargoClippy {
-        inherit cargoArtifacts src buildInputs;
+      commonArgs = {
+        src = craneLib.cleanCargoSource ./.;
+        buildInputs = [];
+        nativeBuildInputs = [];
         cargoClippyExtraArgs = "--all-targets -- --deny warnings";
+        cargoToml = ./my-rust-package/Cargo.toml;
       };
-      my-rust-package-fmt = craneLib.cargoFmt {inherit src;};
-      my-rust-package-audit = craneLib.cargoAudit {inherit src advisory-db;};
-      my-rust-package-nextest = craneLib.cargoNextest {
-        inherit cargoArtifacts src buildInputs;
-        partitions = 1;
-        partitionType = "count";
-      };
+      cargoArtifacts = craneLib.buildDepsOnly (commonArgs // {doCheck = false;});
+
+      my-rust-package = craneLib.buildPackage (commonArgs // {doCheck = false;});
+      my-rust-package-clippy = craneLib.cargoClippy (commonArgs
+        // {
+          inherit cargoArtifacts;
+        });
+      my-rust-package-fmt = craneLib.cargoFmt (commonArgs // {});
+      my-rust-package-audit = craneLib.cargoAudit (commonArgs // {inherit advisory-db;});
+      my-rust-package-nextest = craneLib.cargoNextest (commonArgs
+        // {
+          inherit cargoArtifacts;
+          src = ./.;
+          partitions = 1;
+          partitionType = "count";
+        });
     in {
       checks = {
         inherit my-rust-package my-rust-package-audit my-rust-package-clippy my-rust-package-fmt my-rust-package-nextest;
@@ -89,6 +93,8 @@
           cargo-release
           rustStable
         ];
+
+        CARGO_REGISTRIES_CRATES_IO_PROTOCOL = "sparse";
       };
     });
 }
