@@ -58,7 +58,6 @@
         buildInputs = [];
         nativeBuildInputs = [];
         cargoClippyExtraArgs = "--all-targets -- --deny warnings";
-        cargoToml = ./my-rust-package/Cargo.toml;
       };
       cargoArtifacts = craneLib.buildDepsOnly (commonArgs // {doCheck = false;});
 
