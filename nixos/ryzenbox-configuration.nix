@@ -333,7 +333,6 @@
     alejandra
     custom.bundletool-bin
     cachix
-    choose
     comma
     curl
     delta
@@ -363,12 +362,10 @@
     })
     fzf
     custom.gdrive
-    gradle-completion
     git-absorb
     git-crypt
     git-quickfix
     custom.hcctl
-    helix
     hub
     imwheel
     (nerdfonts.override {
@@ -376,8 +373,6 @@
     })
     custom.katbin
     mcfly
-    mold
-    custom.monocraft-nerdfonts
     megatools
     mosh
     ncdu_2
@@ -390,20 +385,16 @@
     nvd
     openssl
     custom.pidcat
-    procs
     ripgrep
     scrcpy
     sd
     shellcheck
     shfmt
-    silicon
     custom.twt
     unzip
     vivid
-    watchman
     custom.when
     xclip
-    xdotool
     yt-dlp
     zip
   ];
