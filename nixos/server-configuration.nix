@@ -193,6 +193,7 @@
     hub
     git-absorb
     custom.katbin
+    megatools
     micro
     mosh
     ncdu_2

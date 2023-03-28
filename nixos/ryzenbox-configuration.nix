@@ -378,6 +378,7 @@
     mcfly
     mold
     custom.monocraft-nerdfonts
+    megatools
     mosh
     ncdu_2
     neofetch
