@@ -266,6 +266,7 @@
     enable = true;
     brews = [
       "cocoapods"
+      "carthage"
     ];
   };
 
@@ -282,6 +283,7 @@
     diskus
     dos2unix
     fd
+    flock
     fzf
     custom.gdrive
     gradle-completion
