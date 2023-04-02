@@ -39,7 +39,7 @@
       inherit config;
       system = "x86_64-linux";
     };
-    files = pkgs.lib.concatStringsSep " " [
+    fileList = [
       "aliases"
       "apps"
       "bash_completions.bash"
@@ -63,12 +63,13 @@
       "system_linux"
       "x"
     ];
+    files = pkgs.lib.concatStringsSep " " fileList;
     formatter = pkgs.stdenvNoCC.mkDerivation {
       name = "formatter";
       doCheck = false;
       strictDeps = true;
       allowSubstitutes = false;
-      src = ./.;
+      src = builtins.filterSource (p: t: builtins.elem (/. + p) fileList) ./.;
       nativeBuildInputs = with pkgs; [alejandra shfmt];
       buildPhase = ''
         mkdir -p $out/bin
