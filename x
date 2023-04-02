@@ -5,7 +5,9 @@ set -e
 set -u
 set -o pipefail
 
-case "${1:-nothing}" in
+ARG="${1:-nothing}"
+
+case "${ARG}" in
   darwin-check)
     darwin-rebuild build --print-build-logs --flake .#work-macbook
     ;;
@@ -16,22 +18,22 @@ case "${1:-nothing}" in
     ln -sf "$(pwd)"/pre-push-hook .git/hooks/pre-push
     ;;
   home-check)
-    shift
     home-manager build --print-build-logs --flake .#ryzenbox
     ;;
   home-switch)
-    shift
     home-manager switch --print-build-logs --flake .#ryzenbox
     ;;
   install)
     ./install.sh
     ;;
   oracle-check)
-    shift
     home-manager build --print-build-logs --flake .#server
     ;;
   oracle-switch)
-    shift
     home-manager switch --print-build-logs --flake .#server
+    ;;
+  *)
+    echo "Invalid command: ${ARG}"
+    exit 1
     ;;
 esac
