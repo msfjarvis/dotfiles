@@ -284,6 +284,7 @@
     alejandra
     cachix
     comma
+    coreutils
     curl
     delta
     dasel
