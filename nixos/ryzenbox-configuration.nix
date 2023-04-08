@@ -437,6 +437,7 @@
     nixpkgs-review
     nvd
     openssl
+    custom.patreon-dl
     custom.pidcat
     ripgrep
     scrcpy
