@@ -164,15 +164,6 @@
   programs.starship = {
     enable = true;
     enableBashIntegration = true;
-    package = pkgs.starship.overrideAttrs (self: super: {
-      patches = [
-        (pkgs.fetchpatch {
-          name = "gradle-rc-support.patch";
-          url = "https://github.com/starship/starship/commit/f7fe41f9c6c455e8ced284ad2d55d2a51a5da748.patch";
-          sha256 = "sha256-IuHVnfSDzAgVdiMqkkY5V/BzFaELQNic2XBPMcenlrc=";
-        })
-      ];
-    });
     settings = {
       add_newline = false;
       aws.disabled = true;
