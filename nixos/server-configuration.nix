@@ -150,7 +150,7 @@
       memory_usage.disabled = true;
       meson.disabled = true;
       nim.disabled = true;
-      nix_shell.disabled = true;
+      nix_shell.disabled = false;
       nodejs.disabled = true;
       ocaml.disabled = true;
       opa.disabled = true;
