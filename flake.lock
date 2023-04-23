@@ -2,16 +2,17 @@
   "nodes": {
     "custom-nixpkgs": {
       "inputs": {
+        "fenix": "fenix",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1682229960,
-        "narHash": "sha256-xKyOuuWnWjo3DtBLFGZrVrINwJSH9+Z66S0ZSzEWo80=",
+        "lastModified": 1682262215,
+        "narHash": "sha256-aZ7VajL1wGQCvB7IVwelLr8dQvB2OJHtRofvYQdLL6k=",
         "owner": "msfjarvis",
         "repo": "custom-nixpkgs",
-        "rev": "9104e9254311a225b501f6c775f3ffb9a8153f1b",
+        "rev": "9d49ec4cdcd88f1f5abecb404e6cc4c8b09b8f2a",
         "type": "github"
       },
       "original": {
@@ -39,6 +40,28 @@
         "owner": "lnl7",
         "ref": "master",
         "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
+    "fenix": {
+      "inputs": {
+        "nixpkgs": [
+          "custom-nixpkgs",
+          "nixpkgs"
+        ],
+        "rust-analyzer-src": "rust-analyzer-src"
+      },
+      "locked": {
+        "lastModified": 1682230876,
+        "narHash": "sha256-vCnd1pZRQKCdNvivQBD7WzaOlU1GcN91OCAz1rnoe5M=",
+        "owner": "nix-community",
+        "repo": "fenix",
+        "rev": "378f052d9f1cd90060ec4329f81782fee80490a4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "fenix",
         "type": "github"
       }
     },
@@ -106,6 +129,23 @@
         "home-manager": "home-manager",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs"
+      }
+    },
+    "rust-analyzer-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1682163822,
+        "narHash": "sha256-u7vaRlI6rYiutytoTk8lyOtNKO/rz5Q63Z6S6QzYCtU=",
+        "owner": "rust-lang",
+        "repo": "rust-analyzer",
+        "rev": "2feabc4dc462644287372922928110eea4c60ca7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rust-lang",
+        "ref": "nightly",
+        "repo": "rust-analyzer",
+        "type": "github"
       }
     }
   },
