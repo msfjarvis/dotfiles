@@ -244,7 +244,7 @@
       pijul_channel.disabled = true;
       pulumi.disabled = true;
       purescript.disabled = true;
-      python.disabled = false;
+      python.disabled = true;
       rlang.disabled = true;
       raku.disabled = true;
       red.disabled = true;
@@ -430,6 +430,7 @@
     openssl
     custom.patreon-dl
     custom.pidcat
+    (python39.withPackages (ps: with ps; [virtualenv]))
     ripgrep
     scrcpy
     sd
