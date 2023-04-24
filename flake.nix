@@ -2,7 +2,7 @@
   description = "Home Manager configurations of Harsh Shandilya";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:msfjarvis/nixpkgs/hs/flock-0.4.0";
     custom-nixpkgs = {
       url = "github:msfjarvis/custom-nixpkgs/main";
       inputs.nixpkgs.follows = "nixpkgs";
