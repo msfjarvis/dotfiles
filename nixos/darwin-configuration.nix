@@ -267,6 +267,7 @@
     brews = [
       "cocoapods"
       "carthage"
+      "ruby"
     ];
   };
 
