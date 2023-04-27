@@ -22,9 +22,6 @@
       elif [ -f /etc/bash_completion ]; then
         . /etc/bash_completion
       fi
-      if [ -d ${config.home.homeDirectory}/android-sdk ]; then
-        export ANDROID_SDK_ROOT="${config.home.homeDirectory}/android-sdk"
-      fi
       # Source shell-init from my dotfiles
       source ${config.home.homeDirectory}/dotfiles/shell-init
       # _byobu_sourced=1 . /usr/bin/byobu-launch 2>/dev/null || true
@@ -225,21 +222,16 @@
   home.packages = with pkgs; [
     alejandra
     cachix
-    custom.cargo-dist
-    cargo-wipe
     comma
     curl
     delta
     diskus
     dos2unix
     fd
-    flyctl
     custom.healthchecks-monitor
-    helix
     hub
     git-absorb
     custom.katbin
-    megatools
     micro
     mosh
     ncdu_2
