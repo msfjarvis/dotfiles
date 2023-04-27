@@ -418,6 +418,7 @@
     custom.katbin
     mcfly
     megatools
+    mmv-go
     mosh
     ncdu_2
     neofetch
