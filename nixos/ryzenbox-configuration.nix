@@ -81,20 +81,6 @@
     enable = true;
     enableBashIntegration = true;
     nix-direnv.enable = true;
-    stdlib = ''
-      # iterate on pairs of [candidate] [version] and invoke `sdk use` on each of them
-      use_sdk() {
-        [[ -s "''${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "''${SDKMAN_DIR}/bin/sdkman-init.sh"
-
-        while (( "$#" >= 2 )); do
-          local candidate=''${1}
-          local candidate_version=''${2}
-          SDKMAN_OFFLINE_MODE=true sdk use ''${candidate} ''${candidate_version}
-
-          shift 2
-        done
-      }
-    '';
   };
 
   programs.fzf = {
@@ -137,8 +123,6 @@
   };
 
   programs.home-manager = {enable = true;};
-
-  programs.htop = {enable = true;};
 
   programs.jq = {enable = true;};
 
@@ -285,9 +269,6 @@
 
   programs.vscode = {
     enable = true;
-    package = pkgs.vscode.overrideAttrs (old: {
-      nativeBuildInputs = old.nativeBuildInputs ++ [pkgs.curl];
-    });
   };
 
   programs.zoxide = {
@@ -299,6 +280,7 @@
     enable = true;
     defaultCacheTtl = 600;
     pinentryFlavor = "gtk2";
+    enableBashIntegration = true;
   };
 
   services.password-store-sync = {
