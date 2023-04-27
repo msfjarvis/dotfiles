@@ -26,6 +26,21 @@
       source ${config.home.homeDirectory}/dotfiles/shell-init
       # _byobu_sourced=1 . /usr/bin/byobu-launch 2>/dev/null || true
     '';
+    shellOptions = [
+      # Append to history file rather than replacing it.
+      "histappend"
+
+      # check the window size after each command and, if
+      # necessary, update the values of LINES and COLUMNS.
+      "checkwinsize"
+
+      # Extended globbing.
+      "extglob"
+      "globstar"
+
+      # Warn if closing shell with running jobs.
+      "checkjobs"
+    ];
   };
 
   programs.bat = {
