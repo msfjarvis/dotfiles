@@ -34,13 +34,13 @@ export CCACHE_DIR="${HOME}/.ccache"
 
 # Android env variables
 if [ -d ~/Android/Sdk ]; then
-  export ANDROID_SDK_ROOT=~/Android/Sdk
+  export ANDROID_HOME=~/Android/Sdk
 fi
 
-if [ -n "${ANDROID_SDK_ROOT}" ]; then
-  export PATH="${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
-  if [ -d "${ANDROID_SDK_ROOT}"/cmdline-tools/latest ]; then
-    export PATH="${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${PATH}"
+if [ -n "${ANDROID_HOME}" ]; then
+  export PATH="${ANDROID_HOME}/platform-tools:${PATH}"
+  if [ -d "${ANDROID_HOME}"/cmdline-tools/latest ]; then
+    export PATH="${ANDROID_HOME}/cmdline-tools/latest/bin:${PATH}"
   fi
 fi
 

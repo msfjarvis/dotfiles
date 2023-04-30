@@ -42,14 +42,14 @@ export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]: 
 
 # Android, but macOS
 if [ -d "${HOME}"/Library/Android/sdk/ ]; then
-  export ANDROID_SDK_ROOT="${HOME}"/Library/Android/sdk
-  export PATH="${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
-  if [ -d "${ANDROID_SDK_ROOT}"/build-tools ]; then
-    BUILD_TOOLS_DIR="$(fd -td --maxdepth 1 . "${ANDROID_SDK_ROOT}"/build-tools | sort -nr | head -n1)"
+  export ANDROID_HOME="${HOME}"/Library/Android/sdk
+  export PATH="${ANDROID_HOME}/platform-tools:${PATH}"
+  if [ -d "${ANDROID_HOME}"/build-tools ]; then
+    BUILD_TOOLS_DIR="$(fd -td --maxdepth 1 . "${ANDROID_HOME}"/build-tools | sort -nr | head -n1)"
     export PATH="${BUILD_TOOLS_DIR}:${PATH}"
   fi
-  if [ -d "${ANDROID_SDK_ROOT}"/cmdline-tools/latest ]; then
-    export PATH="${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${PATH}"
+  if [ -d "${ANDROID_HOME}"/cmdline-tools/latest ]; then
+    export PATH="${ANDROID_HOME}/cmdline-tools/latest/bin:${PATH}"
   fi
 fi
 
