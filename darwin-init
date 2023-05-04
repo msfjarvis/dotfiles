@@ -65,7 +65,7 @@ if type zoxide &>/dev/null; then
 fi
 
 if [ -d /opt/homebrew/bin ]; then
-  export PATH="/opt/homebrew/bin:${PATH}"
+  export PATH="/opt/homebrew/opt/ruby/bin:/opt/homebrew/bin:${PATH}"
 fi
 
 # shellcheck source=bash_completions.bash
