@@ -166,6 +166,14 @@ function encode() {
   LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu ffmpeg -i "${INPUT:?}" -c:v hevc_nvenc -c:a copy "${OUTPUT:?}"
 }
 
+function encmasto() {
+  local INPUT OUTPUT
+  INPUT="${1}"
+  OUTPUT="${2:-output.webm}"
+  ffmpeg -hwaccel vaapi -hwaccel_output_format vaapi -vaapi_device /dev/dri/renderD128 \
+    -i "${INPUT:?}" -vf scale_vaapi=1920:-1 -codec:v vp8_vaapi -b:v 2M "${OUTPUT}"
+}
+
 function tmpshare() {
   local FILE
   FILE="${1}"
