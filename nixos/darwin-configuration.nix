@@ -294,6 +294,7 @@
     hub
     custom.katbin
     mosh
+    nodejs
     nil
     nvd
     openssh
@@ -305,6 +306,7 @@
     shfmt
     unzip
     vivid
+    yarn
     zip
   ];
 
