@@ -4,3 +4,6 @@
 	gpgsign = false
 [tag]
 	gpgsign = false
+[url "https://github.com/"]
+	insteadOf = git@github.com:
+	insteadOf = git://github.com/
