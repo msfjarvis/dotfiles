@@ -293,6 +293,8 @@
     git-quickfix
     hub
     custom.katbin
+    kubectl
+    kubernetes-helm
     mosh
     nodejs
     nil
@@ -304,6 +306,7 @@
     sd
     shellcheck
     shfmt
+    skaffold
     unzip
     vivid
     yarn
