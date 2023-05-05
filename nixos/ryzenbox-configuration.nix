@@ -398,6 +398,9 @@
       fonts = ["CascadiaCode" "FiraCode" "Inconsolata" "JetBrainsMono"];
     })
     custom.katbin
+    (maestro.overrideAttrs (self: super: {
+      postFixup = "";
+    }))
     mcfly
     megatools
     mmv-go
