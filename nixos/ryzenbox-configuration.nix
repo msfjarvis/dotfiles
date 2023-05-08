@@ -130,6 +130,7 @@
     enable = true;
     settings = {
       colorscheme = "dracula";
+      mkparents = true;
       softwrap = true;
       wordwrap = true;
     };
