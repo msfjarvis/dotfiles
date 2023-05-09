@@ -68,6 +68,10 @@ if [ -d /opt/homebrew/bin ]; then
   export PATH="/opt/homebrew/opt/ruby/bin:/opt/homebrew/bin:${PATH}"
 fi
 
+if [ -d ~/go/bin ]; then
+  export PATH="${HOME}/go/bin:${PATH}"
+fi
+
 # shellcheck source=bash_completions.bash
 source "${SCRIPT_DIR}"/bash_completions.bash
 # shellcheck source=aliases
