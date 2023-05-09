@@ -291,6 +291,7 @@
     gradle-completion
     git-absorb
     git-quickfix
+    go
     hub
     custom.katbin
     kubectl
