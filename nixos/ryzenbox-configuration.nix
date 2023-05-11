@@ -254,13 +254,12 @@
 
   programs.topgrade = {
     enable = true;
-    package = pkgs.custom.topgrade-og;
 
     settings = {
       disable = ["gnome_shell_extensions" "home_manager" "nix" "node" "sdkman"];
+      display_preamble = false;
 
       remote_topgrades = ["boatymcboatface"];
-
       remote_topgrade_path = ".nix-profile/bin/topgrade";
 
       set_title = false;

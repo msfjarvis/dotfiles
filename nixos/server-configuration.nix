@@ -199,7 +199,6 @@
 
   programs.topgrade = {
     enable = true;
-    package = pkgs.custom.topgrade-og;
 
     settings = {
       only = ["bin" "system" "micro"];
