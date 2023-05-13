@@ -123,3 +123,15 @@
 	follow = true
 [init]
 	defaultBranch = main
+[maintenance "gc"]
+	enable = true
+[maintenance "commit-graph"]
+	enable = true
+[maintenance "prefetch"]
+	enable = true
+[maintenance "loose-objects"]
+	enable = true
+[maintenance "incremental-repack"]
+	enable = true
+[maintenance "pack-refs"]
+	enable = true
