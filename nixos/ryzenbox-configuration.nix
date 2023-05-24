@@ -408,7 +408,6 @@
     ncdu_2
     neofetch
     nil
-    nix
     nix-init
     nix-update
     nixpkgs-review
