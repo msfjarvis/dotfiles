@@ -250,7 +250,6 @@
     mosh
     ncdu_2
     nil
-    nix
     nix-init
     nix-update
     nixpkgs-review
