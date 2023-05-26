@@ -293,6 +293,7 @@
     git-quickfix
     go
     hub
+    k6
     custom.katbin
     kubectl
     kubernetes-helm
