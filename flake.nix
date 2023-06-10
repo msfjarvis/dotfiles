@@ -78,9 +78,7 @@
         chmod +x $out/bin/$name
       '';
     };
-  in {
-    formatter.x86_64-linux = formatter;
-    homeConfigurations.ryzenbox = home-manager.lib.homeManagerConfiguration {
+    ryzenboxSystem = home-manager.lib.homeManagerConfiguration {
       pkgs = import nixpkgs {
         inherit config;
         system = "x86_64-linux";
@@ -90,7 +88,7 @@
         ./nixos/ryzenbox-configuration.nix
       ];
     };
-    homeConfigurations.server = home-manager.lib.homeManagerConfiguration {
+    serverSystem = home-manager.lib.homeManagerConfiguration {
       pkgs = import nixpkgs {
         inherit config;
         system = "aarch64-linux";
@@ -100,7 +98,7 @@
         ./nixos/server-configuration.nix
       ];
     };
-    darwinConfigurations."work-macbook" = darwin.lib.darwinSystem {
+    darwinSystem = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       pkgs = import nixpkgs {
         inherit config;
@@ -111,6 +109,13 @@
         ./nixos/darwin-configuration.nix
       ];
     };
+  in {
+    formatter.x86_64-linux = formatter;
+    homeConfigurations.ryzenbox = ryzenboxSystem;
+    homeConfigurations.server = serverSystem;
+    darwinConfigurations.work-macbook = darwinSystem;
+    packages.x86_64-linux.ryzenbox = ryzenboxSystem.activationPackage;
+    packages.aarch64-linux.server = serverSystem.activationPackage;
     devShells.x86_64-linux.default = pkgs.mkShell {
       nativeBuildInputs = with pkgs; [
         alejandra
