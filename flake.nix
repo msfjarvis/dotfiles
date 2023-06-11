@@ -116,6 +116,7 @@
     darwinConfigurations.work-macbook = darwinSystem;
     packages.x86_64-linux.ryzenbox = ryzenboxSystem.activationPackage;
     packages.aarch64-linux.server = serverSystem.activationPackage;
+    packages.aarch64-darwin.macbook = darwinSystem.system;
     devShells.x86_64-linux.default = pkgs.mkShell {
       nativeBuildInputs = with pkgs; [
         alejandra
