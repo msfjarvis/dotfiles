@@ -2,4 +2,5 @@ builds:
   include:
     - packages.x86_64-linux.*
     - packages.aarch64-linux.*
-    - packages.aarch64-darwin.*
+# TODO: Re-enable after https://github.com/NixOS/nix/issues/8485 is fixed
+#    - packages.aarch64-darwin.*
