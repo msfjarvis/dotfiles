@@ -4,7 +4,7 @@
   ...
 }: {
   users.users.msfjarvis = {
-    name = "Harsh Shandilya";
+    name = "msfjarvis";
     home = "/Users/msfjarvis";
   };
 
