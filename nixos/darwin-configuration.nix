@@ -199,6 +199,7 @@
           ahead = "";
           behind = "";
           diverged = "";
+          typechanged = "[⇢\($count\)](bold green)";
         };
         golang.disabled = true;
         guix_shell.disabled = true;
@@ -241,6 +242,7 @@
         shell.disabled = true;
         shlvl.disabled = true;
         singularity.disabled = true;
+        solidity.disabled = true;
         spack.disabled = true;
         status.disabled = true;
         sudo.disabled = true;
