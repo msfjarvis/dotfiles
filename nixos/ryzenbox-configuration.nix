@@ -417,7 +417,7 @@
     openssl
     custom.patreon-dl
     custom.pidcat
-    (python39.withPackages (ps: with ps; [virtualenv]))
+    (python311.withPackages (ps: with ps; [beautifulsoup4 requests virtualenv]))
     ripgrep
     scrcpy
     sd
