@@ -4,19 +4,18 @@
   inputs = {
     nixpkgs = {url = "github:NixOS/nixpkgs/nixpkgs-unstable";};
 
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
     flake-utils = {url = "github:numtide/flake-utils";};
 
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
-    };
-
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
     };
 
     crane = {
@@ -25,7 +24,6 @@
         flake-compat.follows = "flake-compat";
         flake-utils.follows = "flake-utils";
         nixpkgs.follows = "nixpkgs";
-        rust-overlay.follows = "rust-overlay";
       };
     };
 
@@ -38,20 +36,20 @@
   outputs = {
     self,
     nixpkgs,
+    fenix,
     crane,
     flake-utils,
     advisory-db,
-    rust-overlay,
     ...
   }:
     flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [(import rust-overlay)];
+      pkgs = import nixpkgs {inherit system;};
+
+      rustStable = (import fenix {inherit pkgs;}).fromToolchainFile {
+        file = ./rust-toolchain.toml;
+        sha256 = "sha256-eMJethw5ZLrJHmoN2/l0bIyQjoTX1NsvalWSscTixpI=";
       };
 
-      rustStable =
-        pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
       craneLib = (crane.mkLib pkgs).overrideToolchain rustStable;
       commonArgs = {
         src = craneLib.cleanCargoSource ./.;
