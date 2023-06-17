@@ -423,6 +423,7 @@
     sd
     shellcheck
     shfmt
+    spicetify-cli
     custom.twt
     unzip
     vivid
