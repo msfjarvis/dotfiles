@@ -3,9 +3,8 @@
 # Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
 # SPDX-License-Identifier: MIT
 
-# Import all the bot tokens and IDs
 # shellcheck disable=SC1090
-source ~/.secretcreds 2>/dev/null
+source ~/.env 2>/dev/null
 
 CL_BOLD="\033[1m"
 CL_INV="\033[7m"

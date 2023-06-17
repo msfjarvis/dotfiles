@@ -2,8 +2,6 @@
 
 # Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
 # SPDX-License-Identifier: MIT
-# shellcheck source=server
-source "${SCRIPT_DIR}"/server
 
 [ -z "${GPG_TTY}" ] && {
   GPG_TTY="$(tty)"

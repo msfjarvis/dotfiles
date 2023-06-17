@@ -88,8 +88,6 @@ source "${SCRIPT_DIR}"/files
 source "${SCRIPT_DIR}"/gitshit
 # shellcheck source=nix
 source "${SCRIPT_DIR}"/nix
-# shellcheck source=server
-source "${SCRIPT_DIR}"/server
 # shellcheck source=system
 source "${SCRIPT_DIR}"/system
 # shellcheck source=system_darwin

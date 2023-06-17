@@ -53,7 +53,6 @@
       "nix"
       "nixos/setup-channels.sh"
       "pre-push-hook"
-      "server"
       "setup/00-android_sdk.sh"
       "setup/01-adb_multi.sh"
       "setup/02-android_udev.sh"
