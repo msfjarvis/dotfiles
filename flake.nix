@@ -15,6 +15,9 @@
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-filter = {
+      url = "github:numtide/nix-filter";
+    };
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -26,6 +29,7 @@
     custom-nixpkgs,
     home-manager,
     darwin,
+    nix-filter,
     nix-index-database,
     ...
   }: let
@@ -35,6 +39,7 @@
         custom = import custom-nixpkgs {inherit pkgs;};
       };
     };
+    filter = nix-filter.lib;
     pkgs = import nixpkgs {
       inherit config;
       system = "x86_64-linux";
@@ -68,7 +73,10 @@
       doCheck = false;
       strictDeps = true;
       allowSubstitutes = false;
-      src = builtins.filterSource (p: t: builtins.elem (/. + p) fileList) ./.;
+      src = filter {
+        root = ./.;
+        include = fileList;
+      };
       nativeBuildInputs = with pkgs; [alejandra shfmt];
       buildPhase = ''
         mkdir -p $out/bin
