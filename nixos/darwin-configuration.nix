@@ -262,6 +262,10 @@
     };
 
     home.stateVersion = "21.05";
+
+    # home-manager uses nmd to build these which triggers a Nix bug
+    # https://github.com/NixOS/nix/issues/8485
+    manual.manpages.enable = false;
   };
 
   homebrew = {
