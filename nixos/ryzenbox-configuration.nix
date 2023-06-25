@@ -424,6 +424,7 @@
     shellcheck
     shfmt
     spicetify-cli
+    taplo
     custom.twt
     unzip
     vivid
