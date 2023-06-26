@@ -244,10 +244,10 @@
     diskus
     dos2unix
     fd
-    custom.healthchecks-monitor
+    healthchecks-monitor
     hub
     git-absorb
-    custom.katbin
+    katbin
     micro
     mosh
     ncdu_2

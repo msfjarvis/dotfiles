@@ -35,9 +35,6 @@
   }: let
     config = {
       allowUnfree = true;
-      packageOverrides = pkgs: {
-        custom = import custom-nixpkgs {inherit pkgs;};
-      };
     };
     filter = nix-filter.lib;
     pkgs = import nixpkgs {
@@ -89,6 +86,7 @@
       pkgs = import nixpkgs {
         inherit config;
         system = "x86_64-linux";
+        overlays = [custom-nixpkgs.overlays.default];
       };
       modules = [
         nix-index-database.hmModules.nix-index
@@ -99,6 +97,7 @@
       pkgs = import nixpkgs {
         inherit config;
         system = "aarch64-linux";
+        overlays = [custom-nixpkgs.overlays.default];
       };
       modules = [
         nix-index-database.hmModules.nix-index
@@ -110,6 +109,7 @@
       pkgs = import nixpkgs {
         inherit config;
         system = "aarch64-darwin";
+        overlays = [custom-nixpkgs.overlays.default];
       };
       modules = [
         home-manager.darwinModules.home-manager

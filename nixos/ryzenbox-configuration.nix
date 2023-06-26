@@ -297,7 +297,7 @@
     };
     Service = {
       Type = "simple";
-      ExecStart = "${pkgs.custom.file-collector}/bin/file-collector";
+      ExecStart = "${pkgs.file-collector}/bin/file-collector";
       Restart = "on-failure";
       RestartSec = 3;
       Environment = "PATH=${pkgs.watchman}/bin";
@@ -309,7 +309,7 @@
     Unit = {Description = "systemd service for clipboard-substitutor";};
     Service = {
       Type = "simple";
-      ExecStart = "${pkgs.custom.clipboard-substitutor}/bin/clipboard-substitutor";
+      ExecStart = "${pkgs.clipboard-substitutor}/bin/clipboard-substitutor";
       Restart = "on-failure";
       RestartSec = 3;
     };
@@ -354,17 +354,17 @@
   };
 
   home.packages = with pkgs; [
-    custom.adb-sync
-    custom.adbtuifm
-    custom.adx
+    adb-sync
+    adbtuifm
+    adx
     age
     alejandra
-    custom.bundletool-bin
+    bundletool-bin
     cachix
     comma
     curl
     delta
-    custom.diffuse-bin
+    diffuse-bin
     diskus
     dos2unix
     fclones
@@ -389,17 +389,17 @@
       withX265 = true;
     })
     fzf
-    custom.gdrive
+    gdrive
     git-absorb
     git-crypt
     git-quickfix
-    custom.hcctl
+    hcctl
     hub
     imwheel
     (nerdfonts.override {
       fonts = ["CascadiaCode" "FiraCode" "Inconsolata" "JetBrainsMono"];
     })
-    custom.katbin
+    katbin
     (maestro.overrideAttrs (self: super: {
       postFixup = "";
     }))
@@ -415,8 +415,8 @@
     nixpkgs-review
     nvd
     openssl
-    custom.patreon-dl
-    custom.pidcat
+    patreon-dl
+    pidcat
     (python311.withPackages (ps: with ps; [beautifulsoup4 requests virtualenv]))
     ripgrep
     scrcpy
@@ -425,10 +425,10 @@
     shfmt
     spicetify-cli
     taplo
-    custom.twt
+    twt
     unzip
     vivid
-    custom.when
+    when
     xclip
     yt-dlp
     zip

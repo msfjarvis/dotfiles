@@ -278,7 +278,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    custom.adx
+    adx
     alejandra
     cachix
     comma
@@ -286,21 +286,21 @@
     curl
     delta
     dasel
-    custom.diffuse-bin
+    diffuse-bin
     direnv
     diskus
     dos2unix
     fd
     flock
     fzf
-    custom.gdrive
+    gdrive
     gradle-completion
     git-absorb
     git-quickfix
     go
     hub
     k6
-    custom.katbin
+    katbin
     kubectl
     kubernetes-helm
     mosh
@@ -309,7 +309,7 @@
     nvd
     openssh
     openssl
-    custom.pidcat
+    pidcat
     ripgrep
     sd
     shellcheck

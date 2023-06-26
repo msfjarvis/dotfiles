@@ -6,14 +6,15 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "rust-manifest": "rust-manifest"
+        "rust-manifest": "rust-manifest",
+        "systems": "systems"
       },
       "locked": {
-        "lastModified": 1687673185,
-        "narHash": "sha256-i0ysEHpEt68i6vxnIolGEXIHRxRgwa/JeATP5qQajF0=",
+        "lastModified": 1687759466,
+        "narHash": "sha256-g1emoJei2KrTjquP2yWWPf7eq0q4ZftXyEXUJ58dO3M=",
         "owner": "msfjarvis",
         "repo": "custom-nixpkgs",
-        "rev": "4f53403389c20370b0766976fe98850aee010b6a",
+        "rev": "4c7652ab85a28f416fc34bcbfb430145aa2e2c74",
         "type": "github"
       },
       "original": {
@@ -175,6 +176,21 @@
       "original": {
         "type": "file",
         "url": "https://static.rust-lang.org/dist/2023-06-10/channel-rust-nightly.toml"
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1687694171,
+        "narHash": "sha256-m4E0xN69qKj/oKOj8OtiZcSFpFlO8paI6E3Wo5oXDJc=",
+        "owner": "msfjarvis",
+        "repo": "flake-systems",
+        "rev": "7876462a5f60841e8b2712ad20dc18470f448e8d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "msfjarvis",
+        "repo": "flake-systems",
+        "type": "github"
       }
     }
   },
