@@ -1,28 +1,24 @@
 {
   description = "Home Manager configurations of Harsh Shandilya";
 
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    custom-nixpkgs = {
-      url = "github:msfjarvis/custom-nixpkgs/main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    home-manager = {
-      url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    darwin = {
-      url = "github:lnl7/nix-darwin/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-filter = {
-      url = "github:numtide/nix-filter";
-    };
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-  };
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
+  inputs.systems.url = "github:msfjarvis/flake-systems";
+
+  inputs.custom-nixpkgs.url = "github:msfjarvis/custom-nixpkgs/main";
+  inputs.custom-nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.custom-nixpkgs.inputs.systems.follows = "systems";
+
+  inputs.darwin.url = "github:LnL7/nix-darwin/master";
+  inputs.darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+  inputs.home-manager.url = "github:nix-community/home-manager/master";
+  inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+  inputs.nix-filter.url = "github:numtide/nix-filter";
+
+  inputs.nix-index-database.url = "github:nix-community/nix-index-database";
+  inputs.nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
   outputs = {
     nixpkgs,
