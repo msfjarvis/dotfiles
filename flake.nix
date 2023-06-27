@@ -22,22 +22,21 @@
 
   outputs = {
     nixpkgs,
-    custom-nixpkgs,
     home-manager,
     darwin,
-    nix-filter,
-    nix-index-database,
+    systems,
     ...
-  }: let
-    config = {
-      allowUnfree = true;
-    };
-    filter = nix-filter.lib;
-    pkgs = import nixpkgs {
-      inherit config;
-      system = "x86_64-linux";
-    };
-    fileList = [
+  } @ inputs: let
+    eachSystem = nixpkgs.lib.genAttrs (import systems);
+    packagesFn = system:
+      import nixpkgs {
+        inherit system;
+        config = {
+          allowUnfree = true;
+        };
+        overlays = [inputs.custom-nixpkgs.overlays.default];
+      };
+    fmtTargets = [
       "aliases"
       "apps"
       "bash_completions.bash"
@@ -60,78 +59,61 @@
       "system_linux"
       "x"
     ];
-    files = pkgs.lib.concatStringsSep " " fileList;
-    formatter = pkgs.stdenvNoCC.mkDerivation {
-      name = "formatter";
-      doCheck = false;
-      strictDeps = true;
-      allowSubstitutes = false;
-      src = filter {
-        root = ./.;
-        include = fileList;
+    ryzenboxSystem = system:
+      home-manager.lib.homeManagerConfiguration {
+        pkgs = packagesFn system;
+        modules = [
+          inputs.nix-index-database.hmModules.nix-index
+          ./nixos/ryzenbox-configuration.nix
+        ];
       };
-      nativeBuildInputs = with pkgs; [alejandra shfmt];
-      buildPhase = ''
-        mkdir -p $out/bin
-        echo "shfmt -w -s -i 2 -ci ${files}" > $out/bin/$name
-        echo "alejandra --quiet ." >> $out/bin/$name
-        chmod +x $out/bin/$name
-      '';
-    };
-    ryzenboxSystem = home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs {
-        inherit config;
-        system = "x86_64-linux";
-        overlays = [custom-nixpkgs.overlays.default];
+    serverSystem = system:
+      home-manager.lib.homeManagerConfiguration {
+        pkgs = packagesFn system;
+        modules = [
+          inputs.nix-index-database.hmModules.nix-index
+          ./nixos/server-configuration.nix
+        ];
       };
-      modules = [
-        nix-index-database.hmModules.nix-index
-        ./nixos/ryzenbox-configuration.nix
-      ];
-    };
-    serverSystem = home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs {
-        inherit config;
-        system = "aarch64-linux";
-        overlays = [custom-nixpkgs.overlays.default];
+    darwinSystem = system:
+      darwin.lib.darwinSystem {
+        inherit system;
+        pkgs = packagesFn system;
+        modules = [
+          home-manager.darwinModules.home-manager
+          ./nixos/darwin-configuration.nix
+        ];
       };
-      modules = [
-        nix-index-database.hmModules.nix-index
-        ./nixos/server-configuration.nix
-      ];
-    };
-    darwinSystem = darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      pkgs = import nixpkgs {
-        inherit config;
-        system = "aarch64-darwin";
-        overlays = [custom-nixpkgs.overlays.default];
-      };
-      modules = [
-        home-manager.darwinModules.home-manager
-        ./nixos/darwin-configuration.nix
-      ];
-    };
-  in {
-    formatter.x86_64-linux = formatter;
-    homeConfigurations.ryzenbox = ryzenboxSystem;
-    homeConfigurations.server = serverSystem;
-    darwinConfigurations.work-macbook = darwinSystem;
-    packages.x86_64-linux.ryzenbox = ryzenboxSystem.activationPackage;
-    packages.aarch64-linux.server = serverSystem.activationPackage;
-    packages.aarch64-darwin.macbook = darwinSystem.system;
-    devShells.x86_64-linux.default = pkgs.mkShell {
-      nativeBuildInputs = with pkgs; [
-        alejandra
-        bash
-        delta
-        git
-        micro
-        nil
-        shellcheck
-        shfmt
-      ];
-    };
+  in rec {
+    homeConfigurations.ryzenbox = ryzenboxSystem "x86_64-linux";
+    homeConfigurations.server = serverSystem "aarch64-linux";
+    darwinConfigurations.work-macbook = darwinSystem "aarch64-darwin";
+
+    packages.x86_64-linux.ryzenbox = homeConfigurations.ryzenbox.activationPackage;
+    packages.aarch64-linux.server = homeConfigurations.server.activationPackage;
+    packages.aarch64-darwin.macbook = darwinConfigurations.work-macbook.system;
+
+    formatter = eachSystem (system: let
+      pkgs = packagesFn system;
+      fmtTargetsStr = pkgs.lib.concatStringsSep " " fmtTargets;
+    in
+      pkgs.stdenvNoCC.mkDerivation {
+        name = "formatter";
+        doCheck = false;
+        strictDeps = true;
+        allowSubstitutes = false;
+        src = inputs.nix-filter.lib {
+          root = ./.;
+          include = fmtTargets;
+        };
+        nativeBuildInputs = with pkgs; [alejandra shfmt];
+        buildPhase = ''
+          mkdir -p $out/bin
+          echo "shfmt -w -s -i 2 -ci ${fmtTargetsStr}" > $out/bin/$name
+          echo "alejandra --quiet ." >> $out/bin/$name
+          chmod +x $out/bin/$name
+        '';
+      });
   };
   nixConfig = {
     extra-substituters = [
