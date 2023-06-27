@@ -43,32 +43,6 @@
     ];
   };
 
-  programs.bat = {
-    enable = true;
-    config = {theme = "zenburn";};
-  };
-
-  programs.direnv = {
-    enable = true;
-    enableBashIntegration = true;
-    nix-direnv.enable = true;
-  };
-
-  programs.exa = {
-    enable = true;
-    enableAliases = true;
-  };
-
-  programs.fzf = {
-    enable = true;
-    defaultCommand = "fd -tf";
-    defaultOptions = ["--height 40%"];
-    enableBashIntegration = true;
-    fileWidgetCommand = "fd -H";
-    changeDirWidgetCommand = "fd -Htd";
-    historyWidgetOptions = ["--sort" "--exact"];
-  };
-
   programs.git = {
     enable = true;
     ignores = [".envrc" "key.properties" "keystore.properties" "*.jks"];
@@ -83,19 +57,6 @@
       prompt = "enabled";
       aliases = {co = "pr checkout";};
     };
-  };
-
-  programs.gpg = {enable = true;};
-
-  programs.home-manager = {enable = true;};
-
-  programs.htop = {enable = true;};
-
-  programs.jq = {enable = true;};
-
-  programs.nix-index = {
-    enable = true;
-    enableBashIntegration = true;
   };
 
   programs.starship = {
@@ -208,31 +169,6 @@
       cleanup = true;
       commands = {"Cargo" = "cargo install-update --all";};
     };
-  };
-
-  programs.zoxide = {
-    enable = true;
-    enableBashIntegration = true;
-  };
-
-  systemd.user.services.optimise-nix-store = {
-    Unit = {Description = "nix store maintenance";};
-
-    Service = {
-      CPUSchedulingPolicy = "idle";
-      IOSchedulingClass = "idle";
-      ExecStart = toString (pkgs.writeShellScript "nix-optimise-store" ''
-        ${pkgs.nix}/bin/nix-collect-garbage -d
-        ${pkgs.nix}/bin/nix store gc
-        ${pkgs.nix}/bin/nix store optimise
-      '');
-    };
-  };
-
-  systemd.user.timers.optimise-nix-store = {
-    Unit = {Description = "nix store maintenance";};
-    Timer = {OnCalendar = "weekly";};
-    Install = {WantedBy = ["timers.target"];};
   };
 
   home.packages = with pkgs; [

@@ -64,6 +64,7 @@
         pkgs = packagesFn system;
         modules = [
           inputs.nix-index-database.hmModules.nix-index
+          ./nixos/home-manager-common.nix
           ./nixos/ryzenbox-configuration.nix
         ];
       };
@@ -72,6 +73,7 @@
         pkgs = packagesFn system;
         modules = [
           inputs.nix-index-database.hmModules.nix-index
+          ./nixos/home-manager-common.nix
           ./nixos/server-configuration.nix
         ];
       };

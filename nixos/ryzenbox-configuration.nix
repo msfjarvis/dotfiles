@@ -60,37 +60,9 @@
     ];
   };
 
-  programs.bat = {
-    enable = true;
-    config = {theme = "zenburn";};
-  };
-
-  programs.bottom = {enable = true;};
-
   programs.browserpass = {
     enable = true;
     browsers = ["chrome"];
-  };
-
-  programs.exa = {
-    enable = true;
-    enableAliases = true;
-  };
-
-  programs.direnv = {
-    enable = true;
-    enableBashIntegration = true;
-    nix-direnv.enable = true;
-  };
-
-  programs.fzf = {
-    enable = true;
-    defaultCommand = "fd -tf";
-    defaultOptions = ["--height 40%"];
-    enableBashIntegration = true;
-    fileWidgetCommand = "fd -H";
-    changeDirWidgetCommand = "fd -Htd";
-    historyWidgetOptions = ["--sort" "--exact"];
   };
 
   programs.gh = {
@@ -122,10 +94,6 @@
     ];
   };
 
-  programs.home-manager = {enable = true;};
-
-  programs.jq = {enable = true;};
-
   programs.micro = {
     enable = true;
     settings = {
@@ -134,11 +102,6 @@
       softwrap = true;
       wordwrap = true;
     };
-  };
-
-  programs.nix-index = {
-    enable = true;
-    enableBashIntegration = true;
   };
 
   programs.password-store = {
@@ -273,11 +236,6 @@
     enable = true;
   };
 
-  programs.zoxide = {
-    enable = true;
-    enableBashIntegration = true;
-  };
-
   services.gpg-agent = {
     enable = true;
     defaultCacheTtl = 600;
@@ -331,26 +289,6 @@
       RestartSec = 3;
     };
     Install = {WantedBy = ["default.target"];};
-  };
-
-  systemd.user.services.optimise-nix-store = {
-    Unit = {Description = "nix store maintenance";};
-
-    Service = {
-      CPUSchedulingPolicy = "idle";
-      IOSchedulingClass = "idle";
-      ExecStart = toString (pkgs.writeShellScript "nix-optimise-store" ''
-        ${pkgs.nix}/bin/nix-collect-garbage -d
-        ${pkgs.nix}/bin/nix store gc
-        ${pkgs.nix}/bin/nix store optimise
-      '');
-    };
-  };
-
-  systemd.user.timers.optimise-nix-store = {
-    Unit = {Description = "nix store maintenance";};
-    Timer = {OnCalendar = "daily";};
-    Install = {WantedBy = ["timers.target"];};
   };
 
   home.packages = with pkgs; [
