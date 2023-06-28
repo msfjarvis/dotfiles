@@ -59,37 +59,33 @@
       "system_linux"
       "x"
     ];
-    ryzenboxSystem = system:
+    mkHomeManagerConfig = options:
       home-manager.lib.homeManagerConfiguration {
-        pkgs = packagesFn system;
-        modules = [
-          inputs.nix-index-database.hmModules.nix-index
-          ./nixos/home-manager-common.nix
-          ./nixos/ryzenbox-configuration.nix
-        ];
-      };
-    serverSystem = system:
-      home-manager.lib.homeManagerConfiguration {
-        pkgs = packagesFn system;
-        modules = [
-          inputs.nix-index-database.hmModules.nix-index
-          ./nixos/home-manager-common.nix
-          ./nixos/server-configuration.nix
-        ];
-      };
-    darwinSystem = system:
-      darwin.lib.darwinSystem {
-        inherit system;
-        pkgs = packagesFn system;
-        modules = [
-          home-manager.darwinModules.home-manager
-          ./nixos/darwin-configuration.nix
-        ];
+        pkgs = packagesFn options.system;
+        modules =
+          options.modules
+          ++ [
+            inputs.nix-index-database.hmModules.nix-index
+            ./nixos/home-manager-common.nix
+          ];
       };
   in rec {
-    homeConfigurations.ryzenbox = ryzenboxSystem "x86_64-linux";
-    homeConfigurations.server = serverSystem "aarch64-linux";
-    darwinConfigurations.work-macbook = darwinSystem "aarch64-darwin";
+    homeConfigurations.ryzenbox = mkHomeManagerConfig {
+      system = "x86_64-linux";
+      modules = [./nixos/ryzenbox-configuration.nix];
+    };
+    homeConfigurations.server = mkHomeManagerConfig {
+      system = "aarch64-linux";
+      modules = [./nixos/server-configuration.nix];
+    };
+    darwinConfigurations.work-macbook = darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
+      pkgs = packagesFn "aarch64-darwin";
+      modules = [
+        home-manager.darwinModules.home-manager
+        ./nixos/darwin-configuration.nix
+      ];
+    };
 
     packages.x86_64-linux.ryzenbox = homeConfigurations.ryzenbox.activationPackage;
     packages.aarch64-linux.server = homeConfigurations.server.activationPackage;
