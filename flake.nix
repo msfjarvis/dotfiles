@@ -12,6 +12,9 @@
   inputs.darwin.url = "github:LnL7/nix-darwin/master";
   inputs.darwin.inputs.nixpkgs.follows = "nixpkgs";
 
+  inputs.dracula-micro.url = "https://raw.githubusercontent.com/dracula/micro/master/dracula.micro";
+  inputs.dracula-micro.flake = false;
+
   inputs.home-manager.url = "github:nix-community/home-manager/master";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -67,6 +70,9 @@
           ++ [
             inputs.nix-index-database.hmModules.nix-index
             ./nixos/home-manager-common.nix
+            ({...}: {
+              home.file.".config/micro/colorschemes/dracula.micro".source = inputs.dracula-micro;
+            })
           ];
       };
   in rec {

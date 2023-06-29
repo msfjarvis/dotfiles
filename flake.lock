@@ -47,6 +47,18 @@
         "type": "github"
       }
     },
+    "dracula-micro": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-tLuJbEh9QPC456ykElxu1EiX7/NA4BBIzHA0Nn1icbU=",
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/dracula/micro/master/dracula.micro"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/dracula/micro/master/dracula.micro"
+      }
+    },
     "fenix": {
       "inputs": {
         "nixpkgs": [
@@ -145,6 +157,7 @@
       "inputs": {
         "custom-nixpkgs": "custom-nixpkgs",
         "darwin": "darwin",
+        "dracula-micro": "dracula-micro",
         "home-manager": "home-manager",
         "nix-filter": "nix-filter",
         "nix-index-database": "nix-index-database",
