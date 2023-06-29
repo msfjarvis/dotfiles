@@ -26,10 +26,10 @@ case "${ARG}" in
   install)
     ./install.sh
     ;;
-  oracle-check)
+  server-check)
     home-manager build --print-build-logs --flake .#server
     ;;
-  oracle-switch)
+  server-switch)
     home-manager switch --print-build-logs --flake .#server
     ;;
   *)
