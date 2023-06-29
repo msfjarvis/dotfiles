@@ -1,11 +1,15 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   programs.bat = {
-    enable = true;
+    enable = lib.mkDefault true;
     config = {theme = "zenburn";};
   };
 
   programs.bash = {
-    enable = true;
+    enable = lib.mkDefault true;
     historySize = 1000;
     historyFileSize = 10000;
     historyControl = ["ignorespace" "erasedups"];
@@ -26,36 +30,36 @@
     ];
   };
 
-  programs.bottom = {enable = true;};
+  programs.bottom = {enable = lib.mkDefault true;};
 
   programs.browserpass = {
-    enable = true;
+    enable = lib.mkDefault true;
     browsers = ["chrome"];
   };
 
   programs.direnv = {
-    enable = true;
-    enableBashIntegration = true;
-    nix-direnv.enable = true;
+    enable = lib.mkDefault true;
+    enableBashIntegration = lib.mkDefault true;
+    nix-direnv.enable = lib.mkDefault true;
   };
 
   programs.exa = {
-    enable = true;
-    enableAliases = true;
+    enable = lib.mkDefault true;
+    enableAliases = lib.mkDefault true;
   };
 
   programs.fzf = {
-    enable = true;
+    enable = lib.mkDefault true;
     defaultCommand = "fd -tf";
     defaultOptions = ["--height 40%"];
-    enableBashIntegration = true;
+    enableBashIntegration = lib.mkDefault true;
     fileWidgetCommand = "fd -H";
     changeDirWidgetCommand = "fd -Htd";
     historyWidgetOptions = ["--sort" "--exact"];
   };
 
   programs.gh = {
-    enable = true;
+    enable = lib.mkDefault true;
     settings = {
       git_protocol = "https";
       editor = "micro";
@@ -65,7 +69,7 @@
   };
 
   programs.git = {
-    enable = true;
+    enable = lib.mkDefault true;
     ignores = [
       ".envrc"
       "key.properties"
@@ -77,30 +81,30 @@
     ];
   };
 
-  programs.gpg = {enable = true;};
+  programs.gpg = {enable = lib.mkDefault true;};
 
-  programs.home-manager = {enable = true;};
+  programs.home-manager = {enable = lib.mkDefault true;};
 
-  programs.jq = {enable = true;};
+  programs.jq = {enable = lib.mkDefault true;};
 
   programs.nix-index = {
-    enable = true;
-    enableBashIntegration = true;
+    enable = lib.mkDefault true;
+    enableBashIntegration = lib.mkDefault true;
   };
 
   programs.starship = {
-    enable = true;
-    enableBashIntegration = true;
+    enable = lib.mkDefault true;
+    enableBashIntegration = lib.mkDefault true;
     settings = {
-      add_newline = false;
-      aws.disabled = true;
-      azure.disabled = true;
-      battery.disabled = true;
-      buf.disabled = true;
-      bun.disabled = true;
-      c.disabled = true;
+      add_newline = lib.mkDefault false;
+      aws.disabled = lib.mkDefault true;
+      azure.disabled = lib.mkDefault true;
+      battery.disabled = lib.mkDefault true;
+      buf.disabled = lib.mkDefault true;
+      bun.disabled = lib.mkDefault true;
+      c.disabled = lib.mkDefault true;
       character = {
-        disabled = false;
+        disabled = lib.mkDefault false;
         error_symbol = ''
 
           [➜](bold red)'';
@@ -108,97 +112,97 @@
 
           [➜](bold green)'';
       };
-      cmake.disabled = true;
-      cmd_duration.disabled = true;
-      cobol.disabled = true;
-      conda.disabled = true;
-      container.disabled = true;
-      crystal.disabled = true;
-      daml.disabled = true;
-      dart.disabled = true;
-      deno.disabled = true;
-      docker_context.disabled = true;
-      dotnet.disabled = true;
-      elixir.disabled = true;
-      elm.disabled = true;
-      env_var.disabled = true;
-      erlang.disabled = true;
-      fennel.disabled = true;
-      fill.disabled = true;
-      fossil_branch.disabled = true;
-      gcloud.disabled = true;
+      cmake.disabled = lib.mkDefault true;
+      cmd_duration.disabled = lib.mkDefault true;
+      cobol.disabled = lib.mkDefault true;
+      conda.disabled = lib.mkDefault true;
+      container.disabled = lib.mkDefault true;
+      crystal.disabled = lib.mkDefault true;
+      daml.disabled = lib.mkDefault true;
+      dart.disabled = lib.mkDefault true;
+      deno.disabled = lib.mkDefault true;
+      docker_context.disabled = lib.mkDefault true;
+      dotnet.disabled = lib.mkDefault true;
+      elixir.disabled = lib.mkDefault true;
+      elm.disabled = lib.mkDefault true;
+      env_var.disabled = lib.mkDefault true;
+      erlang.disabled = lib.mkDefault true;
+      fennel.disabled = lib.mkDefault true;
+      fill.disabled = lib.mkDefault true;
+      fossil_branch.disabled = lib.mkDefault true;
+      gcloud.disabled = lib.mkDefault true;
       git_branch = {
-        disabled = false;
+        disabled = lib.mkDefault false;
         symbol = " ";
       };
-      git_commit.disabled = false;
-      git_state.disabled = false;
-      git_metrics.disabled = false;
+      git_commit.disabled = lib.mkDefault false;
+      git_state.disabled = lib.mkDefault false;
+      git_metrics.disabled = lib.mkDefault false;
       git_status = {
-        disabled = false;
+        disabled = lib.mkDefault false;
         ahead = "";
         behind = "";
         diverged = "";
         typechanged = "[⇢\($count\)](bold green)";
       };
-      golang.disabled = true;
-      guix_shell.disabled = true;
-      gradle.disabled = false;
-      haskell.disabled = true;
-      haxe.disabled = true;
-      helm.disabled = true;
-      hg_branch.disabled = true;
-      hostname.disabled = true;
-      java.disabled = false;
-      jobs.disabled = true;
-      julia.disabled = true;
-      kotlin.disabled = true;
-      kubernetes.disabled = true;
-      line_break.disabled = true;
-      localip.disabled = true;
-      lua.disabled = true;
-      memory_usage.disabled = true;
-      meson.disabled = true;
-      nim.disabled = true;
-      nix_shell.disabled = false;
-      nodejs.disabled = true;
-      ocaml.disabled = true;
-      opa.disabled = true;
-      openstack.disabled = true;
-      os.disabled = true;
-      package.disabled = false;
-      perl.disabled = true;
-      php.disabled = true;
-      pijul_channel.disabled = true;
-      pulumi.disabled = true;
-      purescript.disabled = true;
-      python.disabled = false;
-      rlang.disabled = true;
-      raku.disabled = true;
-      red.disabled = true;
-      ruby.disabled = true;
-      rust.disabled = false;
-      scala.disabled = true;
-      shell.disabled = true;
-      shlvl.disabled = true;
-      singularity.disabled = true;
-      solidity.disabled = true;
-      spack.disabled = true;
-      status.disabled = true;
-      sudo.disabled = true;
-      swift.disabled = true;
-      terraform.disabled = true;
-      time.disabled = true;
-      vagrant.disabled = true;
-      vlang.disabled = true;
-      vcsh.disabled = true;
-      zig.disabled = true;
+      golang.disabled = lib.mkDefault true;
+      guix_shell.disabled = lib.mkDefault true;
+      gradle.disabled = lib.mkDefault false;
+      haskell.disabled = lib.mkDefault true;
+      haxe.disabled = lib.mkDefault true;
+      helm.disabled = lib.mkDefault true;
+      hg_branch.disabled = lib.mkDefault true;
+      hostname.disabled = lib.mkDefault true;
+      java.disabled = lib.mkDefault false;
+      jobs.disabled = lib.mkDefault true;
+      julia.disabled = lib.mkDefault true;
+      kotlin.disabled = lib.mkDefault true;
+      kubernetes.disabled = lib.mkDefault true;
+      line_break.disabled = lib.mkDefault true;
+      localip.disabled = lib.mkDefault true;
+      lua.disabled = lib.mkDefault true;
+      memory_usage.disabled = lib.mkDefault true;
+      meson.disabled = lib.mkDefault true;
+      nim.disabled = lib.mkDefault true;
+      nix_shell.disabled = lib.mkDefault false;
+      nodejs.disabled = lib.mkDefault true;
+      ocaml.disabled = lib.mkDefault true;
+      opa.disabled = lib.mkDefault true;
+      openstack.disabled = lib.mkDefault true;
+      os.disabled = lib.mkDefault true;
+      package.disabled = lib.mkDefault false;
+      perl.disabled = lib.mkDefault true;
+      php.disabled = lib.mkDefault true;
+      pijul_channel.disabled = lib.mkDefault true;
+      pulumi.disabled = lib.mkDefault true;
+      purescript.disabled = lib.mkDefault true;
+      python.disabled = lib.mkDefault false;
+      rlang.disabled = lib.mkDefault true;
+      raku.disabled = lib.mkDefault true;
+      red.disabled = lib.mkDefault true;
+      ruby.disabled = lib.mkDefault true;
+      rust.disabled = lib.mkDefault false;
+      scala.disabled = lib.mkDefault true;
+      shell.disabled = lib.mkDefault true;
+      shlvl.disabled = lib.mkDefault true;
+      singularity.disabled = lib.mkDefault true;
+      solidity.disabled = lib.mkDefault true;
+      spack.disabled = lib.mkDefault true;
+      status.disabled = lib.mkDefault true;
+      sudo.disabled = lib.mkDefault true;
+      swift.disabled = lib.mkDefault true;
+      terraform.disabled = lib.mkDefault true;
+      time.disabled = lib.mkDefault true;
+      vagrant.disabled = lib.mkDefault true;
+      vlang.disabled = lib.mkDefault true;
+      vcsh.disabled = lib.mkDefault true;
+      zig.disabled = lib.mkDefault true;
     };
   };
 
   programs.zoxide = {
-    enable = true;
-    enableBashIntegration = true;
+    enable = lib.mkDefault true;
+    enableBashIntegration = lib.mkDefault true;
   };
 
   systemd.user.services.optimise-nix-store = {
