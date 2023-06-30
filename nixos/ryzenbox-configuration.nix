@@ -75,14 +75,15 @@
     enable = true;
 
     settings = {
-      disable = ["gnome_shell_extensions" "home_manager" "nix" "node" "sdkman"];
-      display_preamble = false;
+      misc = {
+        disable = ["gnome_shell_extensions" "home_manager" "nix" "node" "sdkman"];
 
-      remote_topgrades = ["boatymcboatface"];
-      remote_topgrade_path = ".nix-profile/bin/topgrade";
+        remote_topgrades = ["boatymcboatface"];
+        remote_topgrade_path = ".nix-profile/bin/topgrade";
 
-      set_title = false;
-      cleanup = true;
+        set_title = false;
+        cleanup = true;
+      };
     };
   };
 

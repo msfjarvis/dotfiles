@@ -41,10 +41,12 @@
     enable = true;
 
     settings = {
-      only = ["bin" "system" "micro"];
-      set_title = false;
-      cleanup = true;
-      commands = {"Cargo" = "cargo install-update --all";};
+      misc = {
+        only = ["bin" "system" "micro"];
+        set_title = false;
+        cleanup = true;
+        commands = {"Cargo" = "cargo install-update --all";};
+      };
     };
   };
 
