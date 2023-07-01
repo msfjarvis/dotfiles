@@ -5,15 +5,15 @@
 }: {
   programs.bat = {
     enable = lib.mkDefault true;
-    config = {theme = "zenburn";};
+    config = lib.mkDefault {theme = "zenburn";};
   };
 
   programs.bash = {
     enable = lib.mkDefault true;
-    historySize = 1000;
-    historyFileSize = 10000;
-    historyControl = ["ignorespace" "erasedups"];
-    shellOptions = [
+    historySize = lib.mkDefault 1000;
+    historyFileSize = lib.mkDefault 10000;
+    historyControl = lib.mkDefault ["ignorespace" "erasedups"];
+    shellOptions = lib.mkDefault [
       # Append to history file rather than replacing it.
       "histappend"
 
@@ -34,7 +34,7 @@
 
   programs.browserpass = {
     enable = lib.mkDefault true;
-    browsers = ["chrome"];
+    browsers = lib.mkDefault ["chrome"];
   };
 
   programs.direnv = {
@@ -50,27 +50,27 @@
 
   programs.fzf = {
     enable = lib.mkDefault true;
-    defaultCommand = "fd -tf";
-    defaultOptions = ["--height 40%"];
+    defaultCommand = lib.mkDefault "fd -tf";
+    defaultOptions = lib.mkDefault ["--height 40%"];
     enableBashIntegration = lib.mkDefault true;
-    fileWidgetCommand = "fd -H";
-    changeDirWidgetCommand = "fd -Htd";
-    historyWidgetOptions = ["--sort" "--exact"];
+    fileWidgetCommand = lib.mkDefault "fd -H";
+    changeDirWidgetCommand = lib.mkDefault "fd -Htd";
+    historyWidgetOptions = lib.mkDefault ["--sort" "--exact"];
   };
 
   programs.gh = {
     enable = lib.mkDefault true;
     settings = {
-      git_protocol = "https";
-      editor = "micro";
-      prompt = "enabled";
-      aliases = {co = "pr checkout";};
+      git_protocol = lib.mkDefault "https";
+      editor = lib.mkDefault "micro";
+      prompt = lib.mkDefault "enabled";
+      aliases = lib.mkDefault {co = "pr checkout";};
     };
   };
 
   programs.git = {
     enable = lib.mkDefault true;
-    ignores = [
+    ignores = lib.mkDefault [
       ".envrc"
       "key.properties"
       "keystore.properties"
@@ -105,10 +105,10 @@
       c.disabled = lib.mkDefault true;
       character = {
         disabled = lib.mkDefault false;
-        error_symbol = ''
+        error_symbol = lib.mkDefault ''
 
           [➜](bold red)'';
-        success_symbol = ''
+        success_symbol = lib.mkDefault ''
 
           [➜](bold green)'';
       };
@@ -133,17 +133,17 @@
       gcloud.disabled = lib.mkDefault true;
       git_branch = {
         disabled = lib.mkDefault false;
-        symbol = " ";
+        symbol = lib.mkDefault " ";
       };
       git_commit.disabled = lib.mkDefault false;
       git_state.disabled = lib.mkDefault false;
       git_metrics.disabled = lib.mkDefault false;
       git_status = {
         disabled = lib.mkDefault false;
-        ahead = "";
-        behind = "";
-        diverged = "";
-        typechanged = "[⇢\($count\)](bold green)";
+        ahead = lib.mkDefault "";
+        behind = lib.mkDefault "";
+        diverged = lib.mkDefault "";
+        typechanged = lib.mkDefault "[⇢\($count\)](bold green)";
       };
       golang.disabled = lib.mkDefault true;
       guix_shell.disabled = lib.mkDefault true;
