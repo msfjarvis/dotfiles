@@ -28,7 +28,3 @@ if [[ -n ${RUN_SETUP} ]]; then
 fi
 
 cd "${SCRIPT_DIR}" || exit 1
-
-echoText "Setting up gitconfig"
-cp "${SCRIPT_DIR}/.gitconfig" ~/.gitconfig
-cp "${SCRIPT_DIR}/.global-gitignore" ~/.gitignore
