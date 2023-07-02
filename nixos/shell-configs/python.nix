@@ -37,8 +37,7 @@
         ];
 
         packages = with pkgs; [
-          python310
-          python310Packages.poetry
+          python312
         ];
       };
     });
