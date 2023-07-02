@@ -20,18 +20,17 @@ function nixdiff() {
 function nixshell() {
   [[ -z ${1} ]] && return
   BASE_DIR="${SCRIPT_DIR}/nixos/shell-configs"
-  declare -a EXTRA_FILES=()
-  [[ ! -f "${BASE_DIR}/${1}.nix" ]] && {
+  declare -a FILES_TO_COPY=()
+  [[ ! -d "${BASE_DIR}/${1}" ]] && {
     reportWarning "No shell config exists for ${1}"
     return
   }
-  EXTRA_FILES+=("default.nix" "shell.nix")
-  [[ ${1} == "rust" ]] && EXTRA_FILES+=("rust-toolchain.toml")
-  cp -v "${BASE_DIR}/${1}.nix" flake.nix
-  for FILE in "${EXTRA_FILES[@]}"; do
-    cp "${BASE_DIR}/${FILE}" "${FILE}"
+  FILES_TO_COPY+=("default.nix" "shell.nix" "${1}/flake.nix")
+  [[ ${1} == "rust" ]] && FILES_TO_COPY+=("rust-toolchain.toml")
+  for FILE in "${FILES_TO_COPY[@]}"; do
+    cp "${BASE_DIR}/${FILE}" "$(basename "${FILE}")"
   done
-  git add flake.nix "${EXTRA_FILES[@]}"
+  git add .
   nix flake update
   git add flake.lock
   nix develop
