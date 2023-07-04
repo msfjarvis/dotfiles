@@ -7,8 +7,6 @@
   home.homeDirectory = "/home/msfjarvis";
   targets.genericLinux.enable = true;
 
-  programs.aria2 = {enable = true;};
-
   programs.bash = {
     historyFile = "${config.home.homeDirectory}/.bash_history";
     initExtra = ''
@@ -52,6 +50,9 @@
 
   home.packages = with pkgs; [
     alejandra
+    (aria2.overrideAttrs (self: super: {
+      buildInputs = (lib.remove pkgs.openssl super.buildInputs) ++ [pkgs.gnutls];
+    }))
     cachix
     comma
     curl

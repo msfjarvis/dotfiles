@@ -25,8 +25,6 @@
     Shift_L,   Down, Shift_L|Button5
   '';
 
-  programs.aria2 = {enable = true;};
-
   programs.bash = {
     historyFile = "${config.home.homeDirectory}/.bash_history";
     initExtra = ''
@@ -152,6 +150,9 @@
     adx
     age
     alejandra
+    (aria2.overrideAttrs (self: super: {
+      buildInputs = (lib.remove pkgs.openssl super.buildInputs) ++ [pkgs.gnutls];
+    }))
     bundletool-bin
     cachix
     comma
