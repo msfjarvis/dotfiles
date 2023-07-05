@@ -150,9 +150,7 @@
     adx
     age
     alejandra
-    (aria2.overrideAttrs (self: super: {
-      buildInputs = (lib.remove pkgs.openssl super.buildInputs) ++ [pkgs.gnutls];
-    }))
+    aria2gtls
     bundletool-bin
     cachix
     comma

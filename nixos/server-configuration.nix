@@ -50,9 +50,7 @@
 
   home.packages = with pkgs; [
     alejandra
-    (aria2.overrideAttrs (self: super: {
-      buildInputs = (lib.remove pkgs.openssl super.buildInputs) ++ [pkgs.gnutls];
-    }))
+    aria2gtls
     cachix
     comma
     curl
