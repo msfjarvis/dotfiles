@@ -74,13 +74,13 @@
 
     settings = {
       misc = {
-        disable = ["gnome_shell_extensions" "home_manager" "nix" "node" "sdkman"];
-
+        assume_yes = true;
+        pre_sudo = true;
         remote_topgrades = ["boatymcboatface"];
         remote_topgrade_path = ".nix-profile/bin/topgrade";
-
-        set_title = false;
-        cleanup = true;
+        set_title = true;
+        skip_notify = true;
+        disable = ["gnome_shell_extensions" "home_manager" "nix" "node" "sdkman"];
       };
     };
   };
