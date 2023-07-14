@@ -15,6 +15,8 @@
 
   home-manager.useGlobalPkgs = true;
   home-manager.users.msfjarvis = {pkgs, ...}: {
+    imports = [./modules/vscode/home-manager.nix];
+
     programs.bash = {
       enable = true;
       historySize = 1000;
