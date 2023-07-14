@@ -173,7 +173,7 @@
         container.disabled = true;
         crystal.disabled = true;
         daml.disabled = true;
-        dart.disabled = true;
+        dart.disabled = false;
         deno.disabled = true;
         docker_context.disabled = true;
         dotnet.disabled = true;
@@ -290,6 +290,7 @@
     dos2unix
     fd
     flock
+    flutter37
     fzf
     gdrive
     gradle-completion
