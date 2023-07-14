@@ -3,6 +3,7 @@
   pkgs,
   ...
 }: {
+  imports = [./modules/vscode/home-manager.nix];
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
 
@@ -83,10 +84,6 @@
         disable = ["gnome_shell_extensions" "home_manager" "nix" "node" "sdkman"];
       };
     };
-  };
-
-  programs.vscode = {
-    enable = true;
   };
 
   services.gpg-agent = {
