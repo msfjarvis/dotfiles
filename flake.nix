@@ -8,26 +8,12 @@
   inputs.custom-nixpkgs.url = "github:msfjarvis/custom-nixpkgs/main";
   inputs.custom-nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
   inputs.custom-nixpkgs.inputs.systems.follows = "systems";
-  inputs.custom-nixpkgs.inputs.fenix.follows = "fenix";
 
   inputs.darwin.url = "github:LnL7/nix-darwin/master";
   inputs.darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-  inputs.devshell.url = "github:numtide/devshell";
-  inputs.devshell.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.devshell.inputs.systems.follows = "systems";
-
   inputs.dracula-micro.url = "https://raw.githubusercontent.com/dracula/micro/master/dracula.micro";
   inputs.dracula-micro.flake = false;
-
-  inputs.fenix.url = "github:nix-community/fenix";
-  inputs.fenix.inputs.nixpkgs.follows = "nixpkgs";
-
-  inputs.flake-compat.url = "github:nix-community/flake-compat";
-  inputs.flake-compat.flake = false;
-
-  inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.flake-utils.inputs.systems.follows = "systems";
 
   inputs.home-manager.url = "github:nix-community/home-manager/master";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -36,42 +22,6 @@
 
   inputs.nix-index-database.url = "github:nix-community/nix-index-database";
   inputs.nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
-
-  inputs.devshell-cpp.url = "path:./nixos/shell-configs/cpp";
-  inputs.devshell-cpp.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.devshell-cpp.inputs.systems.follows = "systems";
-  inputs.devshell-cpp.inputs.devshell.follows = "devshell";
-  inputs.devshell-cpp.inputs.flake-compat.follows = "flake-compat";
-  inputs.devshell-cpp.inputs.flake-utils.follows = "flake-utils";
-
-  inputs.devshell-go.url = "path:./nixos/shell-configs/go";
-  inputs.devshell-go.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.devshell-go.inputs.systems.follows = "systems";
-  inputs.devshell-go.inputs.devshell.follows = "devshell";
-  inputs.devshell-go.inputs.flake-compat.follows = "flake-compat";
-  inputs.devshell-go.inputs.flake-utils.follows = "flake-utils";
-
-  inputs.devshell-node.url = "path:./nixos/shell-configs/node";
-  inputs.devshell-node.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.devshell-node.inputs.systems.follows = "systems";
-  inputs.devshell-node.inputs.devshell.follows = "devshell";
-  inputs.devshell-node.inputs.flake-compat.follows = "flake-compat";
-  inputs.devshell-node.inputs.flake-utils.follows = "flake-utils";
-
-  inputs.devshell-python.url = "path:./nixos/shell-configs/python";
-  inputs.devshell-python.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.devshell-python.inputs.systems.follows = "systems";
-  inputs.devshell-python.inputs.devshell.follows = "devshell";
-  inputs.devshell-python.inputs.flake-compat.follows = "flake-compat";
-  inputs.devshell-python.inputs.flake-utils.follows = "flake-utils";
-
-  inputs.devshell-rust.url = "path:./nixos/shell-configs/rust";
-  inputs.devshell-rust.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.devshell-rust.inputs.systems.follows = "systems";
-  inputs.devshell-rust.inputs.devshell.follows = "devshell";
-  inputs.devshell-rust.inputs.fenix.follows = "fenix";
-  inputs.devshell-rust.inputs.flake-compat.follows = "flake-compat";
-  inputs.devshell-rust.inputs.flake-utils.follows = "flake-utils";
 
   outputs = {
     nixpkgs,
@@ -168,13 +118,6 @@
           chmod +x $out/bin/$name
         '';
       });
-    devShells = eachSystem (system: {
-      cpp = inputs.devshell-cpp.devShells.${system}.default;
-      go = inputs.devshell-go.devShells.${system}.default;
-      node = inputs.devshell-node.devShells.${system}.default;
-      python = inputs.devshell-python.devShells.${system}.default;
-      rust = inputs.devshell-rust.devShells.${system}.default;
-    });
   };
   nixConfig = {
     extra-substituters = [

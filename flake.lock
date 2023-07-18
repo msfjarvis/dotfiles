@@ -1,56 +1,8 @@
 {
   "nodes": {
-    "advisory-db": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1689433633,
-        "narHash": "sha256-AJCY/geor0Gcy+OdcbS1JpYL/cb9SxwFXoShG4soLyI=",
-        "owner": "rustsec",
-        "repo": "advisory-db",
-        "rev": "1d12a1c2e3ca4109d64c3ac684159f891f846141",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rustsec",
-        "repo": "advisory-db",
-        "type": "github"
-      }
-    },
-    "crane": {
-      "inputs": {
-        "flake-compat": [
-          "devshell-rust",
-          "flake-compat"
-        ],
-        "flake-utils": [
-          "devshell-rust",
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "devshell-rust",
-          "nixpkgs"
-        ],
-        "rust-overlay": "rust-overlay"
-      },
-      "locked": {
-        "lastModified": 1688772518,
-        "narHash": "sha256-ol7gZxwvgLnxNSZwFTDJJ49xVY5teaSvF7lzlo3YQfM=",
-        "owner": "ipetkov",
-        "repo": "crane",
-        "rev": "8b08e96c9af8c6e3a2b69af5a7fa168750fcf88e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ipetkov",
-        "repo": "crane",
-        "type": "github"
-      }
-    },
     "custom-nixpkgs": {
       "inputs": {
-        "fenix": [
-          "fenix"
-        ],
+        "fenix": "fenix",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -95,179 +47,6 @@
         "type": "github"
       }
     },
-    "devshell": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": [
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1688380630,
-        "narHash": "sha256-8ilApWVb1mAi4439zS3iFeIT0ODlbrifm/fegWwgHjA=",
-        "owner": "numtide",
-        "repo": "devshell",
-        "rev": "f9238ec3d75cefbb2b42a44948c4e8fb1ae9a205",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "devshell",
-        "type": "github"
-      }
-    },
-    "devshell-cpp": {
-      "inputs": {
-        "devshell": [
-          "devshell"
-        ],
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": [
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-SksBT57NTINkvGzRhEBn1a0UY+SezgTkx96pc2OFgmw=",
-        "path": "./nixos/shell-configs/cpp",
-        "type": "path"
-      },
-      "original": {
-        "path": "./nixos/shell-configs/cpp",
-        "type": "path"
-      }
-    },
-    "devshell-go": {
-      "inputs": {
-        "devshell": [
-          "devshell"
-        ],
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": [
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-Mzb4+/ksqgUuTVUCEDnplUKehqVtd90KU10WQPHZFgI=",
-        "path": "./nixos/shell-configs/go",
-        "type": "path"
-      },
-      "original": {
-        "path": "./nixos/shell-configs/go",
-        "type": "path"
-      }
-    },
-    "devshell-node": {
-      "inputs": {
-        "devshell": [
-          "devshell"
-        ],
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": [
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-0rbak2RejJJZhPU0MGa0pXKGfPUbfuaOdq0lxQufgfg=",
-        "path": "./nixos/shell-configs/node",
-        "type": "path"
-      },
-      "original": {
-        "path": "./nixos/shell-configs/node",
-        "type": "path"
-      }
-    },
-    "devshell-python": {
-      "inputs": {
-        "devshell": [
-          "devshell"
-        ],
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": [
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-Hrao6ZYxBr0YdXbxWefDnvXJQ3VHMc/Cl0RaHp84aNg=",
-        "path": "./nixos/shell-configs/python",
-        "type": "path"
-      },
-      "original": {
-        "path": "./nixos/shell-configs/python",
-        "type": "path"
-      }
-    },
-    "devshell-rust": {
-      "inputs": {
-        "advisory-db": "advisory-db",
-        "crane": "crane",
-        "devshell": [
-          "devshell"
-        ],
-        "fenix": [
-          "fenix"
-        ],
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": [
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-E2I63t6c14otQoXbxALufDfaZDpctK8usRyjYuxbCjg=",
-        "path": "./nixos/shell-configs/rust",
-        "type": "path"
-      },
-      "original": {
-        "path": "./nixos/shell-configs/rust",
-        "type": "path"
-      }
-    },
     "dracula-micro": {
       "flake": false,
       "locked": {
@@ -283,57 +62,22 @@
     "fenix": {
       "inputs": {
         "nixpkgs": [
+          "custom-nixpkgs",
           "nixpkgs"
         ],
         "rust-analyzer-src": "rust-analyzer-src"
       },
       "locked": {
-        "lastModified": 1689402181,
-        "narHash": "sha256-QJkxjHF11UyH+qZ8W+0xH52A0vyvl8svSn8cQ/paioc=",
+        "lastModified": 1689661376,
+        "narHash": "sha256-jK8m0FKjlI99iOOdor87yOjDHt8QsL/J/eMeCOzHJMM=",
         "owner": "nix-community",
         "repo": "fenix",
-        "rev": "f8b538725b6622407884bb0b5bc906410e1de842",
+        "rev": "cb4ed6a92123dd8e3befdf0fbed27c9ebb8e7176",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
         "repo": "fenix",
-        "type": "github"
-      }
-    },
-    "flake-compat": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1688025799,
-        "narHash": "sha256-ktpB4dRtnksm9F5WawoIkEneh1nrEvuxb5lJFt1iOyw=",
-        "owner": "nix-community",
-        "repo": "flake-compat",
-        "rev": "8bf105319d44f6b9f0d764efa4fdef9f1cc9ba1c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "flake-compat",
-        "type": "github"
-      }
-    },
-    "flake-utils": {
-      "inputs": {
-        "systems": [
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1689068808,
-        "narHash": "sha256-6ixXo3wt24N/melDWjq70UuHQLxGV8jZvooRanIHXw0=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "919d646de7be200f3bf08cb76ae1f09402b6f9b4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
         "type": "github"
       }
     },
@@ -413,16 +157,7 @@
       "inputs": {
         "custom-nixpkgs": "custom-nixpkgs",
         "darwin": "darwin",
-        "devshell": "devshell",
-        "devshell-cpp": "devshell-cpp",
-        "devshell-go": "devshell-go",
-        "devshell-node": "devshell-node",
-        "devshell-python": "devshell-python",
-        "devshell-rust": "devshell-rust",
         "dracula-micro": "dracula-micro",
-        "fenix": "fenix",
-        "flake-compat": "flake-compat",
-        "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "nix-filter": "nix-filter",
         "nix-index-database": "nix-index-database",
@@ -433,11 +168,11 @@
     "rust-analyzer-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1689363035,
-        "narHash": "sha256-6DFgaWcuoHd81uer/jyJxQTAn3tclcNlHQpLJP7y7Vk=",
+        "lastModified": 1689616267,
+        "narHash": "sha256-1F1PWMb6zs0h7JdZTuxDP77f7eXNXzqnabilwm5dByw=",
         "owner": "rust-lang",
         "repo": "rust-analyzer",
-        "rev": "789dfd2a256e2725d2bcf50cca3e73f0397b91f8",
+        "rev": "cc2f0ec32cdd86c33e8a5c41dfbc842ad43f5a97",
         "type": "github"
       },
       "original": {
@@ -457,33 +192,6 @@
       "original": {
         "type": "file",
         "url": "https://static.rust-lang.org/dist/2023-06-10/channel-rust-nightly.toml"
-      }
-    },
-    "rust-overlay": {
-      "inputs": {
-        "flake-utils": [
-          "devshell-rust",
-          "crane",
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "devshell-rust",
-          "crane",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1688351637,
-        "narHash": "sha256-CLTufJ29VxNOIZ8UTg0lepsn3X03AmopmaLTTeHDCL4=",
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "rev": "f9b92316727af9e6c7fee4a761242f7f46880329",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "type": "github"
       }
     },
     "systems": {
