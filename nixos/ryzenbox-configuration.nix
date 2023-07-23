@@ -150,7 +150,6 @@
     aria2gtls
     bundletool-bin
     cachix
-    comma
     curl
     delta
     diffuse-bin

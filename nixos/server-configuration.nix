@@ -51,7 +51,6 @@
     alejandra
     aria2gtls
     cachix
-    comma
     curl
     delta
     diskus
