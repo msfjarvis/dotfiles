@@ -188,6 +188,7 @@
       fonts = ["CascadiaCode" "FiraCode" "Inconsolata" "JetBrainsMono"];
     })
     katbin
+    kondo
     (maestro.overrideAttrs (self: super: {
       postFixup = "";
     }))
