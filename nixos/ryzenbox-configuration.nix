@@ -143,12 +143,10 @@
 
   home.packages = with pkgs; [
     adb-sync
-    adbtuifm
     adx
     age
     alejandra
     aria2gtls
-    bundletool-bin
     cachix
     curl
     delta
@@ -194,7 +192,6 @@
     }))
     mcfly
     megatools
-    mmv-go
     mosh
     ncdu_2
     neofetch
@@ -203,7 +200,6 @@
     nix-update
     nixpkgs-review
     nvd
-    openssl
     patreon-dl
     pidcat
     (python311.withPackages (ps: with ps; [beautifulsoup4 requests virtualenv]))
@@ -213,7 +209,6 @@
     shellcheck
     shfmt
     spicetify-cli
-    taplo
     twt
     unzip
     vivid
