@@ -43,11 +43,6 @@
     nix-direnv.enable = lib.mkDefault true;
   };
 
-  programs.exa = {
-    enable = lib.mkDefault true;
-    enableAliases = lib.mkDefault true;
-  };
-
   programs.fzf = {
     enable = lib.mkDefault true;
     defaultCommand = lib.mkDefault "fd -tf";
@@ -86,6 +81,11 @@
   programs.home-manager = {enable = lib.mkDefault true;};
 
   programs.jq = {enable = lib.mkDefault true;};
+
+  programs.lsd = {
+    enable = lib.mkDefault true;
+    enableAliases = lib.mkDefault true;
+  };
 
   programs.nix-index = {
     enable = lib.mkDefault true;
