@@ -34,7 +34,7 @@
 
   programs.browserpass = {
     enable = lib.mkDefault true;
-    browsers = lib.mkDefault ["chrome"];
+    browsers = lib.mkDefault ["firefox"];
   };
 
   programs.direnv = {

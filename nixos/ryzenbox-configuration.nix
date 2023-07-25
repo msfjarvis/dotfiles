@@ -61,12 +61,6 @@ in {
     '';
   };
 
-  programs.gh = {
-    settings = {
-      browser = "google-chrome-stable";
-    };
-  };
-
   programs.git = {
     includes = [
       {path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig";}
