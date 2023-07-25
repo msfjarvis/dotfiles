@@ -18,10 +18,10 @@ case "${ARG}" in
     ln -sf "$(pwd)"/pre-push-hook .git/hooks/pre-push
     ;;
   home-check)
-    home-manager build --print-build-logs --flake .#ryzenbox
+    home-manager build --print-build-logs --impure --flake .#ryzenbox
     ;;
   home-switch)
-    home-manager switch --print-build-logs --flake .#ryzenbox
+    home-manager switch --print-build-logs --impure --flake .#ryzenbox
     ;;
   install)
     ./install.sh

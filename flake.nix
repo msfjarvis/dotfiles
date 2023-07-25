@@ -23,6 +23,9 @@
   inputs.nix-index-database.url = "github:nix-community/nix-index-database";
   inputs.nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
+  inputs.nixgl.url = "github:guibou/nixGL";
+  inputs.nixgl.inputs.nixpkgs.follows = "nixpkgs";
+
   outputs = {
     nixpkgs,
     home-manager,
@@ -37,7 +40,7 @@
         config = {
           allowUnfree = true;
         };
-        overlays = [inputs.custom-nixpkgs.overlays.default];
+        overlays = [inputs.custom-nixpkgs.overlays.default inputs.nixgl.overlays.default];
       };
     fmtTargets = [
       "aliases"
