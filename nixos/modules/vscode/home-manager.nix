@@ -7,11 +7,13 @@
     enable = true;
     enableUpdateCheck = false;
     enableExtensionUpdateCheck = false;
+    mutableExtensionsDir = false;
     extensions =
       (with pkgs.vscode-extensions; [
         arrterian.nix-env-selector
         eamodio.gitlens
         jnoortheen.nix-ide
+        ms-python.python
         ms-vscode-remote.remote-ssh
         oderwat.indent-rainbow
         rust-lang.rust-analyzer
