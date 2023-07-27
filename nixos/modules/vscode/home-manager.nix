@@ -73,6 +73,9 @@
       "gitlens.codeLens.enabled" = false;
       "rust-analyzer.checkOnSave" = true;
       "rust-analyzer.completion.privateEditable.enable" = true;
+      "python.linting.enabled" = false;
+      "python.formatting.provider" = "black";
+      "python.formatting.blackPath" = "${pkgs.python311Packages.black}/bin/black";
     };
   };
 }

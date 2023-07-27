@@ -219,6 +219,7 @@ in {
     pidcat
     (python311.withPackages (ps: with ps; [beautifulsoup4 requests virtualenv]))
     ripgrep
+    ruff
     (nixGLWrap "scrcpy" (scrcpy.overrideAttrs (self: super: {postPatch = "";})))
     sd
     shellcheck
