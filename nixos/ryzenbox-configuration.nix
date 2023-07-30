@@ -228,6 +228,7 @@ in {
     twt
     unzip
     vivid
+    vscext
     when
     xclip
     yt-dlp
