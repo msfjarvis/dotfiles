@@ -161,7 +161,7 @@ in {
     adx
     age
     alejandra
-    aria2gtls
+    aria2
     cachix
     curl
     delta

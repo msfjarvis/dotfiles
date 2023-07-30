@@ -49,7 +49,7 @@
 
   home.packages = with pkgs; [
     alejandra
-    aria2gtls
+    aria2
     cachix
     curl
     delta
