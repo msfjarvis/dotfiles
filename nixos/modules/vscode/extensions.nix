@@ -22,7 +22,7 @@
       name = "ruff";
       publisher = "charliermarsh";
       version = "2023.32.0";
-      sha256 = "sha256-phyPQqDgsYunF5FLqPevw8ZZG4Tw9qxjTOU4/kNGKU8=";
+      sha256 = "113irzc213z7hcwzhc8cg2fgl7wm2jws1imv2n9fphwig6ayivj2";
     }
     {
       name = "vscode-typescript-next";
