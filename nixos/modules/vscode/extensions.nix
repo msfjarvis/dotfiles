@@ -24,5 +24,11 @@
       version = "2023.32.0";
       sha256 = "sha256-phyPQqDgsYunF5FLqPevw8ZZG4Tw9qxjTOU4/kNGKU8=";
     }
+    {
+      name = "vscode-typescript-next";
+      publisher = "ms-vscode";
+      version = "5.2.20230729";
+      sha256 = "0hl57wqds2f6ij9fpzg10p43qnbnb26rrmc8il850r5rm9iz924q";
+    }
   ];
 }
