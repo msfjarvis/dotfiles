@@ -12,11 +12,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1690697163,
-        "narHash": "sha256-fwLAx9G4ZuEWFrJbfMs2Fm5HZ3M4Goqd3a1ACBVFWAw=",
+        "lastModified": 1690742753,
+        "narHash": "sha256-QXRrQYm6704NksAKQhU4PWZStd/Znw7lqqtwA1NaU1I=",
         "owner": "msfjarvis",
         "repo": "custom-nixpkgs",
-        "rev": "76b829f63a4df66742efcb8ca4df1322988b053d",
+        "rev": "9e8d9a122839532d239160330b960d1d8f28790f",
         "type": "github"
       },
       "original": {
