@@ -73,9 +73,10 @@
           ++ [
             inputs.nix-index-database.hmModules.nix-index
             ./nixos/home-manager-common.nix
-            ({...}: {
-              home.file.".config/micro/colorschemes/dracula.micro".source = inputs.dracula-micro;
-            })
+            ({...}:
+              import ./nixos/modules/draculatheme/micro.nix {
+                themesrc = inputs.dracula-micro;
+              })
           ];
       };
   in rec {
