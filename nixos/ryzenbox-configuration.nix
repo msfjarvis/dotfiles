@@ -190,7 +190,7 @@ in {
     nvd
     patreon-dl
     pidcat
-    (python311.withPackages (ps: with ps; [beautifulsoup4 requests virtualenv]))
+    (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
     ripgrep
     ruff
     (nixGLWrap "scrcpy" (scrcpy.overrideAttrs (self: super: {postPatch = "";})))
