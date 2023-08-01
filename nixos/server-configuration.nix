@@ -28,6 +28,16 @@
     includes = [{path = "${config.home.homeDirectory}/dotfiles/.gitconfig";}];
   };
 
+  programs.micro = {
+    enable = true;
+    settings = {
+      colorscheme = "dracula";
+      mkparents = true;
+      softwrap = true;
+      wordwrap = true;
+    };
+  };
+
   programs.starship = {
     settings = {
       format = "$directory$git_branch$git_state$git_status➜ ";
@@ -60,7 +70,6 @@
     hub
     git-absorb
     katbin
-    micro
     mosh
     ncdu_2
     nil
