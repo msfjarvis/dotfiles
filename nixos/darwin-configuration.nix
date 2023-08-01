@@ -272,6 +272,10 @@
       "cocoapods"
       "carthage"
       "ruby"
+      "JakeWharton/repo/dependency-watch"
+    ];
+    taps = [
+      "JakeWharton/repo"
     ];
   };
 
