@@ -74,7 +74,7 @@
             inputs.nix-index-database.hmModules.nix-index
             ./nixos/home-manager-common.nix
             ({...}:
-              import ./nixos/modules/draculatheme/micro.nix {
+              import ./nixos/modules/micro.nix {
                 themesrc = inputs.dracula-micro;
               })
           ];
