@@ -13,6 +13,74 @@
     ];
   };
 
+  homebrew = {
+    enable = true;
+    brews = [
+      "cocoapods"
+      "carthage"
+      "ruby"
+      "JakeWharton/repo/dependency-watch"
+    ];
+    taps = [
+      "JakeWharton/repo"
+    ];
+  };
+
+  environment.systemPackages = with pkgs; [
+    adx
+    alejandra
+    cachix
+    comma
+    coreutils
+    curl
+    delta
+    dasel
+    diffuse-bin
+    direnv
+    diskus
+    dos2unix
+    fd
+    flock
+    flutter37
+    fzf
+    gdrive
+    gradle-completion
+    git-absorb
+    git-quickfix
+    go
+    hub
+    k6
+    katbin
+    kubectl
+    kubernetes-helm
+    mosh
+    nodejs
+    nil
+    nvd
+    openssh
+    openssl
+    pidcat
+    ripgrep
+    sd
+    shellcheck
+    shfmt
+    skaffold
+    unzip
+    vivid
+    yarn
+    zip
+  ];
+
+  programs.gnupg.agent.enable = true;
+  programs.man.enable = true;
+  programs.nix-index.enable = true;
+
+  services.nix-daemon.enable = true;
+
+  # Used for backwards compatibility, please read the changelog before changing.
+  # $ darwin-rebuild changelog
+  system.stateVersion = 4;
+
   home-manager.useGlobalPkgs = true;
   home-manager.users.msfjarvis = {pkgs, ...}: {
     imports = [./modules/vscode/home-manager.nix];
@@ -265,72 +333,4 @@
     # https://github.com/NixOS/nix/issues/8485
     manual.manpages.enable = false;
   };
-
-  homebrew = {
-    enable = true;
-    brews = [
-      "cocoapods"
-      "carthage"
-      "ruby"
-      "JakeWharton/repo/dependency-watch"
-    ];
-    taps = [
-      "JakeWharton/repo"
-    ];
-  };
-
-  environment.systemPackages = with pkgs; [
-    adx
-    alejandra
-    cachix
-    comma
-    coreutils
-    curl
-    delta
-    dasel
-    diffuse-bin
-    direnv
-    diskus
-    dos2unix
-    fd
-    flock
-    flutter37
-    fzf
-    gdrive
-    gradle-completion
-    git-absorb
-    git-quickfix
-    go
-    hub
-    k6
-    katbin
-    kubectl
-    kubernetes-helm
-    mosh
-    nodejs
-    nil
-    nvd
-    openssh
-    openssl
-    pidcat
-    ripgrep
-    sd
-    shellcheck
-    shfmt
-    skaffold
-    unzip
-    vivid
-    yarn
-    zip
-  ];
-
-  programs.gnupg.agent.enable = true;
-  programs.man.enable = true;
-  programs.nix-index.enable = true;
-
-  services.nix-daemon.enable = true;
-
-  # Used for backwards compatibility, please read the changelog before changing.
-  # $ darwin-rebuild changelog
-  system.stateVersion = 4;
 }
