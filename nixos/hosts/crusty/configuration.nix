@@ -27,6 +27,8 @@
     extraGroups = ["wheel"];
   };
 
+  programs.command-not-found.enable = false;
+
   networking = {
     nameservers = ["100.100.100.100" "8.8.8.8" "1.1.1.1"];
     search = ["tiger-shark.ts.net"];

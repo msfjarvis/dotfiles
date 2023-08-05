@@ -105,9 +105,15 @@
       modules = [
         inputs.nixos-vscode-server.nixosModules.default
         inputs.nixos-hardware.nixosModules.raspberry-pi-4
+        inputs.nix-index-database.nixosModules.nix-index
+        home-manager.nixosModules.home-manager
         ./nixos/hosts/crusty/configuration.nix
         {
+          programs.nix-index-database.comma.enable = true;
           services.vscode-server.enable = true;
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.msfjarvis = import ./nixos/home-manager-common.nix;
         }
       ];
     };
