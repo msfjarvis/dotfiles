@@ -2,6 +2,7 @@
   description = "Home Manager configurations of Harsh Shandilya";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
   inputs.systems.url = "github:msfjarvis/flake-systems";
 
@@ -95,6 +96,10 @@
         home-manager.darwinModules.home-manager
         ./nixos/darwin-configuration.nix
       ];
+    };
+    nixosConfigurations.crusty = nixpkgs.lib.nixosSystem {
+      system = "aarch64-darwin";
+      modules = [inputs.nixos-hardware.nixosModules.raspberry-pi-4 ./nixos/hosts/crusty/configuration.nix];
     };
 
     packages.x86_64-linux.ryzenbox = homeConfigurations.ryzenbox.activationPackage;
