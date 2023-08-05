@@ -19,6 +19,9 @@
   inputs.home-manager.url = "github:nix-community/home-manager/master";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+  inputs.nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
+  inputs.nixos-vscode-server.inputs.nixpkgs.follows = "nixpkgs";
+
   inputs.nix-filter.url = "github:numtide/nix-filter";
 
   inputs.nix-index-database.url = "github:nix-community/nix-index-database";
@@ -99,7 +102,14 @@
     };
     nixosConfigurations.crusty = nixpkgs.lib.nixosSystem {
       system = "aarch64-darwin";
-      modules = [inputs.nixos-hardware.nixosModules.raspberry-pi-4 ./nixos/hosts/crusty/configuration.nix];
+      modules = [
+        inputs.nixos-vscode-server.nixosModules.default
+        inputs.nixos-hardware.nixosModules.raspberry-pi-4
+        ./nixos/hosts/crusty/configuration.nix
+        {
+          services.vscode-server.enable = true;
+        }
+      ];
     };
 
     packages.x86_64-linux.ryzenbox = homeConfigurations.ryzenbox.activationPackage;
