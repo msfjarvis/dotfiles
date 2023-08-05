@@ -58,6 +58,8 @@ in {
     ];
   };
 
+  programs.nix-index-database.comma.enable = true;
+
   programs.password-store = {
     enable = true;
     package = pkgs.pass.withExtensions (exts: [exts.pass-audit exts.pass-genphrase exts.pass-otp exts.pass-update]);
@@ -212,14 +214,4 @@ in {
     yt-dlp
     zip
   ];
-
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
-  home.stateVersion = "21.05";
 }

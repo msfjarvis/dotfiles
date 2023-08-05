@@ -87,10 +87,6 @@
     enableBashIntegration = lib.mkDefault true;
   };
 
-  programs.nix-index-database = {
-    comma.enable = true;
-  };
-
   programs.starship = {
     enable = lib.mkDefault true;
     enableBashIntegration = lib.mkDefault true;
@@ -223,4 +219,6 @@
     Timer = {OnCalendar = "weekly";};
     Install = {WantedBy = ["timers.target"];};
   };
+
+  home.stateVersion = "21.05";
 }
