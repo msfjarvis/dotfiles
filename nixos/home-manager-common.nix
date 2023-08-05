@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   ...
@@ -11,6 +12,7 @@
   programs.bash = {
     enable = lib.mkDefault true;
     historySize = lib.mkDefault 1000;
+    historyFile = lib.mkDefault "${config.home.homeDirectory}/.bash_history";
     historyFileSize = lib.mkDefault 10000;
     historyControl = lib.mkDefault ["ignorespace" "erasedups"];
     shellOptions = lib.mkDefault [
