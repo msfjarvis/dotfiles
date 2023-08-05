@@ -22,8 +22,6 @@
     '';
   };
 
-  programs.browserpass = {enable = false;};
-
   programs.git = {
     includes = [{path = "${config.home.homeDirectory}/dotfiles/.gitconfig";}];
   };

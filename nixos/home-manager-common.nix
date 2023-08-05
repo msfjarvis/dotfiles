@@ -32,11 +32,6 @@
 
   programs.bottom = {enable = lib.mkDefault true;};
 
-  programs.browserpass = {
-    enable = lib.mkDefault true;
-    browsers = lib.mkDefault ["firefox"];
-  };
-
   programs.direnv = {
     enable = lib.mkDefault true;
     enableBashIntegration = lib.mkDefault true;

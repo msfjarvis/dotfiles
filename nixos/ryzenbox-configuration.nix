@@ -44,6 +44,11 @@ in {
     '';
   };
 
+  programs.browserpass = {
+    enable = true;
+    browsers = ["firefox"];
+  };
+
   programs.git = {
     includes = [
       {path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig";}
