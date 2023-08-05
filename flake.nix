@@ -113,7 +113,7 @@
           services.vscode-server.enable = true;
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.msfjarvis = import ./nixos/home-manager-common.nix;
+          home-manager.users.msfjarvis = import ./nixos/hosts/crusty/home-manager.nix;
         }
       ];
     };
