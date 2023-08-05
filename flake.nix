@@ -67,16 +67,16 @@
     ];
     mkHomeManagerConfig = options:
       home-manager.lib.homeManagerConfiguration {
+        extraSpecialArgs = {
+          inherit (inputs) dracula-micro;
+        };
         pkgs = packagesFn options.system;
         modules =
           options.modules
           ++ [
             inputs.nix-index-database.hmModules.nix-index
             ./nixos/home-manager-common.nix
-            ({...}:
-              import ./nixos/modules/micro.nix {
-                themesrc = inputs.dracula-micro;
-              })
+            ./nixos/modules/micro.nix
           ];
       };
   in rec {

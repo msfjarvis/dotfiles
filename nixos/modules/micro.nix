@@ -1,4 +1,4 @@
-{themesrc, ...}: {
+{dracula-micro, ...}: {
   programs.micro = {
     enable = true;
     settings = {
@@ -8,5 +8,5 @@
       wordwrap = true;
     };
   };
-  xdg.configFile."micro/colorschemes/dracula.micro".source = themesrc;
+  xdg.configFile."micro/colorschemes/dracula.micro".source = dracula-micro;
 }
