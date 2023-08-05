@@ -3,7 +3,9 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  defaultPkgs = import ../../packages.nix;
+in {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -58,15 +60,17 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    alejandra
-    aria2
-    git
-    libraspberrypi
-    raspberrypi-eeprom
-    micro
-    wirelesstools
-  ];
+  environment.systemPackages = with pkgs;
+    [
+      alejandra
+      aria2
+      git
+      libraspberrypi
+      raspberrypi-eeprom
+      micro
+      wirelesstools
+    ]
+    ++ (defaultPkgs pkgs);
 
   services.openssh.enable = true;
   services.tailscale.enable = true;

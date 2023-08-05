@@ -6,6 +6,7 @@
   nixGLWrap = import ./modules/nixGL.nix {
     inherit pkgs;
   };
+  defaultPkgs = import ./packages.nix;
 in {
   imports = [./modules/vscode/home-manager.nix];
   home.username = "msfjarvis";
@@ -140,16 +141,8 @@ in {
     adb-sync
     adx
     age
-    alejandra
-    aria2
-    cachix
-    curl
-    delta
     diffuse-bin
-    diskus
-    dos2unix
     fclones
-    fd
     ferium
     (ffmpeg.override {
       buildFfplay = false;
@@ -171,11 +164,9 @@ in {
     })
     fzf
     gdrive
-    git-absorb
     git-crypt
     git-quickfix
     hcctl
-    hub
     imwheel
     (nerdfonts.override {
       fonts = ["CascadiaCode" "FiraCode" "Inconsolata" "JetBrainsMono"];
@@ -187,31 +178,17 @@ in {
     }))
     mcfly
     megatools
-    mosh
-    ncdu_2
-    neofetch
-    nil
-    nix-init
-    nix-update
-    nixpkgs-review
     nvd
     patreon-dl
     pidcat
     (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
-    ripgrep
     ruff
     (nixGLWrap "scrcpy" (scrcpy.overrideAttrs (self: super: {postPatch = "";})))
-    sd
-    shellcheck
-    shfmt
     spicetify-cli
     twt
-    unzip
-    vivid
     vscext
     when
     xclip
     yt-dlp
-    zip
-  ];
+  ] ++ (defaultPkgs pkgs);
 }

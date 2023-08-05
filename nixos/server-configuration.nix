@@ -2,7 +2,9 @@
   config,
   pkgs,
   ...
-}: {
+}: let
+  defaultPkgs = import ./packages.nix;
+in {
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
   targets.genericLinux.enable = true;
@@ -47,33 +49,11 @@
     };
   };
 
-  home.packages = with pkgs; [
-    alejandra
-    aria2
-    cachix
-    curl
-    delta
-    diskus
-    dos2unix
-    fd
-    healthchecks-monitor
-    hub
-    git-absorb
-    katbin
-    mosh
-    ncdu_2
-    nil
-    nix-init
-    nix-update
-    nixpkgs-review
-    neofetch
-    nvd
-    ripgrep
-    sd
-    shellcheck
-    shfmt
-    unzip
-    vivid
-    zip
-  ];
+  home.packages = with pkgs;
+    [
+      katbin
+      healthchecks-monitor
+      nvd
+    ]
+    ++ (defaultPkgs pkgs);
 }
