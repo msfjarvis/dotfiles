@@ -59,6 +59,7 @@
   environment.systemPackages = with pkgs; [
     alejandra
     aria2
+    git
     libraspberrypi
     raspberrypi-eeprom
     micro
