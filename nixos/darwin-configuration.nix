@@ -51,23 +51,16 @@ in {
       dasel
       diffuse-bin
       flock
-      flutter37
       gdrive
       gradle-completion
       git-absorb
       go
       hub
-      k6
       katbin
-      kubectl
-      kubernetes-helm
-      nodejs
       nvd
       openssh
       openssl
       pidcat
-      skaffold
-      yarn
     ]
     ++ (defaultPkgs pkgs);
 
