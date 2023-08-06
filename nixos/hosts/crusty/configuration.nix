@@ -12,8 +12,6 @@ in {
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
 
-  networking.hostName = "crusty";
-  networking.networkmanager.enable = true;
   time.timeZone = "Asia/Kolkata";
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -31,6 +29,8 @@ in {
   programs.command-not-found.enable = false;
 
   networking = {
+    hostName = "crusty";
+    networkmanager.enable = true;
     nameservers = ["100.100.100.100" "8.8.8.8" "1.1.1.1"];
     search = ["tiger-shark.ts.net"];
     firewall = {
@@ -71,8 +71,12 @@ in {
     ]
     ++ (defaultPkgs pkgs);
 
+  services.getty.autologinUser = "msfjarvis";
+
   services.openssh.enable = true;
+
   services.tailscale.enable = true;
+
   services.transmission = {
     enable = true;
     settings.watch-dir-enabled = true;
@@ -85,7 +89,6 @@ in {
     user = "msfjarvis";
     downloadDirPermissions = "770";
   };
-  services.getty.autologinUser = "msfjarvis";
 
   system.stateVersion = "23.11";
 }
