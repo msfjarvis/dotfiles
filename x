@@ -8,6 +8,12 @@ set -o pipefail
 ARG="${1:-nothing}"
 
 case "${ARG}" in
+  crusty-check)
+    sudo nixos-rebuild build --flake .#crusty
+    ;;
+  crusty-switch)
+    sudo nixos-rebuild switch --flake .#crusty
+    ;;
   darwin-check)
     darwin-rebuild build --print-build-logs --flake .#work-macbook
     ;;
