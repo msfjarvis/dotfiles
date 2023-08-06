@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  defaultPkgs = import ../../packages.nix;
+  defaultPkgs = import ../../modules/default-packages.nix;
 in {
   imports = [
     ./hardware-configuration.nix

@@ -3,12 +3,12 @@
   pkgs,
   ...
 }: let
-  nixGLWrap = import ./modules/nixGL.nix {
+  nixGLWrap = import ../../modules/nixGL.nix {
     inherit pkgs;
   };
-  defaultPkgs = import ./packages.nix;
+  defaultPkgs = import ../../modules/default-packages.nix;
 in {
-  imports = [./modules/vscode/home-manager.nix];
+  imports = [../../modules/vscode/home-manager.nix];
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
 
@@ -137,58 +137,60 @@ in {
     Install = {WantedBy = ["default.target"];};
   };
 
-  home.packages = with pkgs; [
-    adb-sync
-    adx
-    age
-    diffuse-bin
-    fclones
-    ferium
-    (ffmpeg.override {
-      buildFfplay = false;
-      buildFfprobe = true;
-      buildQtFaststart = false;
-      withDav1d = true;
-      withMp3lame = true;
-      withAss = true;
-      withDrm = true;
-      withVaapi = true;
-      withVdpau = true;
-      withVorbis = true;
-      withVpx = true;
-      withWebp = true;
-      withNvdec = true;
-      withNvenc = true;
-      withX264 = true;
-      withX265 = true;
-    })
-    fzf
-    gdrive
-    git-crypt
-    git-quickfix
-    hcctl
-    imwheel
-    (nerdfonts.override {
-      fonts = ["CascadiaCode" "FiraCode" "Inconsolata" "JetBrainsMono"];
-    })
-    katbin
-    kondo
-    (maestro.overrideAttrs (self: super: {
-      postFixup = "";
-    }))
-    mcfly
-    megatools
-    nvd
-    patreon-dl
-    pidcat
-    (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
-    ruff
-    (nixGLWrap "scrcpy" (scrcpy.overrideAttrs (self: super: {postPatch = "";})))
-    spicetify-cli
-    twt
-    vscext
-    when
-    xclip
-    yt-dlp
-  ] ++ (defaultPkgs pkgs);
+  home.packages = with pkgs;
+    [
+      adb-sync
+      adx
+      age
+      diffuse-bin
+      fclones
+      ferium
+      (ffmpeg.override {
+        buildFfplay = false;
+        buildFfprobe = true;
+        buildQtFaststart = false;
+        withDav1d = true;
+        withMp3lame = true;
+        withAss = true;
+        withDrm = true;
+        withVaapi = true;
+        withVdpau = true;
+        withVorbis = true;
+        withVpx = true;
+        withWebp = true;
+        withNvdec = true;
+        withNvenc = true;
+        withX264 = true;
+        withX265 = true;
+      })
+      fzf
+      gdrive
+      git-crypt
+      git-quickfix
+      hcctl
+      imwheel
+      (nerdfonts.override {
+        fonts = ["CascadiaCode" "FiraCode" "Inconsolata" "JetBrainsMono"];
+      })
+      katbin
+      kondo
+      (maestro.overrideAttrs (self: super: {
+        postFixup = "";
+      }))
+      mcfly
+      megatools
+      nvd
+      patreon-dl
+      pidcat
+      (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
+      ruff
+      (nixGLWrap "scrcpy" (scrcpy.overrideAttrs (self: super: {postPatch = "";})))
+      spicetify-cli
+      twt
+      vscext
+      when
+      xclip
+      yt-dlp
+    ]
+    ++ (defaultPkgs pkgs);
 }

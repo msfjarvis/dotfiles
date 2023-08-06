@@ -79,18 +79,18 @@
           options.modules
           ++ [
             inputs.nix-index-database.hmModules.nix-index
-            ./nixos/home-manager-common.nix
+            ./nixos/modules/home-manager-common.nix
             ./nixos/modules/micro.nix
           ];
       };
   in rec {
     homeConfigurations.ryzenbox = mkHomeManagerConfig {
       system = "x86_64-linux";
-      modules = [./nixos/ryzenbox-configuration.nix];
+      modules = [./nixos/hosts/ryzenbox/configuration.nix];
     };
     homeConfigurations.server = mkHomeManagerConfig {
       system = "aarch64-linux";
-      modules = [./nixos/server-configuration.nix];
+      modules = [./nixos/hosts/boatymcboatface/configuration.nix];
     };
     darwinConfigurations.work-macbook = darwin.lib.darwinSystem {
       system = "aarch64-darwin";

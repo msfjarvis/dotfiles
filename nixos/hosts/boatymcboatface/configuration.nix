@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  defaultPkgs = import ./packages.nix;
+  defaultPkgs = import ../../modules/default-packages.nix;
 in {
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
