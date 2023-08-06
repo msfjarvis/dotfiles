@@ -177,7 +177,6 @@ in {
       (maestro.overrideAttrs (self: super: {
         postFixup = "";
       }))
-      mcfly
       megatools
       nvd
       patreon-dl

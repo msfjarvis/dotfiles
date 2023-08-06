@@ -77,11 +77,6 @@ if type zoxide &>/dev/null; then
   alias cd=z
 fi
 
-# Setup mcfly
-if type mcfly &>/dev/null; then
-  eval "$(mcfly init bash)"
-fi
-
 # Spicetify
 if [ -d "${HOME}/.spicetify" ]; then
   export PATH="${PATH}:${HOME}/.spicetify"
