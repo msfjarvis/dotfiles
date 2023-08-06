@@ -4,9 +4,19 @@
   lib,
   ...
 }: {
-  programs.bat = {
-    enable = lib.mkDefault true;
-    config = lib.mkDefault {theme = "zenburn";};
+
+  programs.atuin = {
+    enable = true;
+    enableBashIntegration = true;
+    flags = ["--disable-up-arrow"];
+    settings = {
+      auto_sync = true;
+      sync_frequency = "5m";
+      sync_address = "http://crusty:8888";
+      style = "compact";
+      show_preview = true;
+      max_preview_height = 2;
+    };
   };
 
   programs.bash = {
@@ -30,6 +40,11 @@
       # Warn if closing shell with running jobs.
       "checkjobs"
     ];
+  };
+
+  programs.bat = {
+    enable = lib.mkDefault true;
+    config = lib.mkDefault {theme = "zenburn";};
   };
 
   programs.bottom = {enable = lib.mkDefault true;};
