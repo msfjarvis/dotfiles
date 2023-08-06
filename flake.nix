@@ -97,7 +97,7 @@
       pkgs = packagesFn "aarch64-darwin";
       modules = [
         home-manager.darwinModules.home-manager
-        ./nixos/darwin-configuration.nix
+        ./nixos/hosts/work-macbook/configuration.nix
       ];
     };
     nixosConfigurations.crusty = nixpkgs.lib.nixosSystem {

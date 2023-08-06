@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  defaultPkgs = import ./modules/default-packages.nix;
+  defaultPkgs = import ../../modules/default-packages.nix;
 in {
   users.users.msfjarvis = {
     name = "msfjarvis";
@@ -77,8 +77,8 @@ in {
   home-manager.useGlobalPkgs = true;
   home-manager.users.msfjarvis = {pkgs, ...}: {
     imports = [
-      ./modules/vscode/home-manager.nix
-      ./home-manager-common.nix
+      ../../modules/vscode/home-manager.nix
+      ../../modules/home-manager-common.nix
     ];
 
     programs.bash = {
