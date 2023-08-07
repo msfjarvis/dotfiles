@@ -67,6 +67,7 @@ in {
       libraspberrypi
       raspberrypi-eeprom
       micro
+      usbutils
       wirelesstools
     ]
     ++ (defaultPkgs pkgs);
