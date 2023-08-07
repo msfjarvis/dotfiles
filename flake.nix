@@ -11,6 +11,11 @@
   inputs.agenix.inputs.darwin.follows = "darwin";
   inputs.agenix.inputs.home-manager.follows = "home-manager";
 
+  inputs.cachix-deploy.url = "github:cachix/cachix-deploy-flake/main";
+  inputs.cachix-deploy.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.cachix-deploy.inputs.darwin.follows = "darwin";
+  inputs.cachix-deploy.inputs.home-manager.follows = "home-manager";
+
   inputs.custom-nixpkgs.url = "github:msfjarvis/custom-nixpkgs/main";
   inputs.custom-nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
   inputs.custom-nixpkgs.inputs.systems.follows = "systems";
@@ -36,6 +41,7 @@
   inputs.nixgl.inputs.nixpkgs.follows = "nixpkgs";
 
   outputs = {
+    self,
     nixpkgs,
     home-manager,
     darwin,
@@ -51,6 +57,7 @@
         };
         overlays = [inputs.custom-nixpkgs.overlays.default inputs.nixgl.overlays.default];
       };
+
     fmtTargets = [
       "aliases"
       "apps"
@@ -88,6 +95,7 @@
             ./nixos/modules/micro.nix
           ];
       };
+    cachix-deploy-lib = inputs.cachix-deploy.lib (packagesFn "aarch64-linux");
   in rec {
     homeConfigurations.ryzenbox = mkHomeManagerConfig {
       system = "x86_64-linux";
@@ -106,7 +114,7 @@
       ];
     };
     nixosConfigurations.crusty = nixpkgs.lib.nixosSystem {
-      system = "aarch64-darwin";
+      system = "aarch64-linux";
       modules = [
         inputs.agenix.nixosModules.default
         inputs.nixos-hardware.nixosModules.raspberry-pi-4
@@ -114,14 +122,21 @@
         inputs.nixos-vscode-server.nixosModules.default
         home-manager.nixosModules.home-manager
         ./nixos/hosts/crusty/configuration.nix
-        {
+        ({config, ...}: {
+          age.secrets."crusty-cachix-deploy".file = ./secrets/crusty-cachix-deploy.age;
+          environment.etc."cachix-agent.token".source = config.age.secrets."crusty-cachix-deploy".path;
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.msfjarvis = import ./nixos/hosts/crusty/home-manager.nix;
           programs.nix-index-database.comma.enable = true;
           services.vscode-server.enable = true;
-        }
+        })
       ];
+    };
+    packages.aarch64-linux = {
+      cachix-deploy-spec = cachix-deploy-lib.spec {
+        agents.crusty = self.nixosConfigurations.crusty.config.system.build.toplevel;
+      };
     };
 
     packages.x86_64-linux.ryzenbox = homeConfigurations.ryzenbox.activationPackage;

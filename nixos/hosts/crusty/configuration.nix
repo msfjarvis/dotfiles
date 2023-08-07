@@ -82,6 +82,8 @@ in {
     database.createLocally = true;
   };
 
+  services.cachix-agent.enable = true;
+
   services.getty.autologinUser = "msfjarvis";
 
   services.openssh.enable = true;

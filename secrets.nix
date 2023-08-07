@@ -5,4 +5,6 @@ let
   crusty = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIZy/fNcgmVrkzMuB/yAb6OMGnlF3BoBFzvYWZLy6OK+";
   ryzenbox = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM4wCylRGCmNivW6tlPn0tyNSyFN8WJa3CHFn7xsGDfV";
   systems = [crusty ryzenbox];
-in {}
+in {
+  "crusty-cachix-deploy.age".publicKeys = [crusty];
+}
