@@ -6,6 +6,11 @@
 
   inputs.systems.url = "github:msfjarvis/flake-systems";
 
+  inputs.agenix.url = "github:ryantm/agenix";
+  inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.agenix.inputs.darwin.follows = "darwin";
+  inputs.agenix.inputs.home-manager.follows = "home-manager";
+
   inputs.custom-nixpkgs.url = "github:msfjarvis/custom-nixpkgs/main";
   inputs.custom-nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
   inputs.custom-nixpkgs.inputs.systems.follows = "systems";
@@ -103,17 +108,18 @@
     nixosConfigurations.crusty = nixpkgs.lib.nixosSystem {
       system = "aarch64-darwin";
       modules = [
-        inputs.nixos-vscode-server.nixosModules.default
+        inputs.agenix.nixosModules.default
         inputs.nixos-hardware.nixosModules.raspberry-pi-4
         inputs.nix-index-database.nixosModules.nix-index
+        inputs.nixos-vscode-server.nixosModules.default
         home-manager.nixosModules.home-manager
         ./nixos/hosts/crusty/configuration.nix
         {
-          programs.nix-index-database.comma.enable = true;
-          services.vscode-server.enable = true;
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.msfjarvis = import ./nixos/hosts/crusty/home-manager.nix;
+          programs.nix-index-database.comma.enable = true;
+          services.vscode-server.enable = true;
         }
       ];
     };
