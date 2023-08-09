@@ -33,8 +33,8 @@
     {
       name = "vscode-typescript-next";
       publisher = "ms-vscode";
-      version = "5.2.20230731";
-      sha256 = "1rad91yrnccq1niyc5ybk92lqa6shp15sfw9n9qpddz6d1ng1x9d";
+      version = "5.3.20230808";
+      sha256 = "0bdidvnl46j62hzr1sx6qlic2q1wmy52pp07w9grrgjqdx2fmpdl";
     }
   ];
 }
