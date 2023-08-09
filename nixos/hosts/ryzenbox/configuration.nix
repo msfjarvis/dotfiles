@@ -166,7 +166,6 @@ in {
       fzf
       gdrive
       git-crypt
-      git-quickfix
       hcctl
       imwheel
       (nerdfonts.override {

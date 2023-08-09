@@ -10,6 +10,7 @@ with pkgs; [
   dos2unix
   fd
   git-absorb
+  git-quickfix
   hub
   mosh
   ncdu_2
