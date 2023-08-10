@@ -47,6 +47,7 @@ in {
   environment.systemPackages = with pkgs;
     [
       adx
+      awscli2
       coreutils
       dasel
       diffuse-bin
