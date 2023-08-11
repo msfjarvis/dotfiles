@@ -48,7 +48,7 @@
     systems,
     ...
   } @ inputs: let
-    eachSystem = nixpkgs.lib.genAttrs (import systems);
+    forAllSystems = nixpkgs.lib.genAttrs (import systems);
     packagesFn = system:
       import nixpkgs {
         inherit system;
@@ -57,36 +57,14 @@
         };
         overlays = [inputs.custom-nixpkgs.overlays.default inputs.nixgl.overlays.default];
       };
+    pkgs = forAllSystems (system: packagesFn system);
 
-    fmtTargets = [
-      "aliases"
-      "apps"
-      "bash_completions.bash"
-      "common"
-      "darwin-init"
-      "devtools"
-      "files"
-      "gitshit"
-      "install.sh"
-      "minecraft"
-      "nix"
-      "nixos/setup-channels.sh"
-      "pre-push-hook"
-      "setup/00-android_sdk.sh"
-      "setup/01-adb_multi.sh"
-      "setup/02-android_udev.sh"
-      "shell-init"
-      "system"
-      "system_darwin"
-      "system_linux"
-      "x"
-    ];
     mkHomeManagerConfig = options:
       home-manager.lib.homeManagerConfiguration {
         extraSpecialArgs = {
           inherit (inputs) dracula-micro;
         };
-        pkgs = packagesFn options.system;
+        pkgs = pkgs.${options.system};
         modules =
           options.modules
           ++ [
@@ -107,7 +85,7 @@
     };
     darwinConfigurations.work-macbook = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
-      pkgs = packagesFn "aarch64-darwin";
+      pkgs = pkgs."aarch64-darwin";
       modules = [
         home-manager.darwinModules.home-manager
         ./nixos/hosts/work-macbook/configuration.nix
@@ -143,27 +121,47 @@
     packages.aarch64-linux.server = homeConfigurations.server.activationPackage;
     packages.aarch64-darwin.macbook = darwinConfigurations.work-macbook.system;
 
-    formatter = eachSystem (system: let
-      pkgs = packagesFn system;
-      fmtTargetsStr = pkgs.lib.concatStringsSep " " fmtTargets;
-    in
-      pkgs.stdenvNoCC.mkDerivation {
-        name = "formatter";
-        doCheck = false;
-        strictDeps = true;
-        allowSubstitutes = false;
-        src = inputs.nix-filter.lib {
-          root = ./.;
-          include = fmtTargets;
-        };
-        nativeBuildInputs = with pkgs; [alejandra shfmt];
-        buildPhase = ''
-          mkdir -p $out/bin
-          echo "shfmt -w -s -i 2 -ci ${fmtTargetsStr}" > $out/bin/$name
-          echo "alejandra --quiet ." >> $out/bin/$name
-          chmod +x $out/bin/$name
-        '';
-      });
+    apps = forAllSystems (system: {
+      format = {
+        type = "app";
+        program = let
+          fmtTargetsStr = pkgs.${system}.lib.concatStringsSep " " [
+            "aliases"
+            "apps"
+            "bash_completions.bash"
+            "common"
+            "darwin-init"
+            "devtools"
+            "files"
+            "gitshit"
+            "install.sh"
+            "minecraft"
+            "nix"
+            "pre-push-hook"
+            "setup/00-android_sdk.sh"
+            "setup/01-adb_multi.sh"
+            "setup/02-android_udev.sh"
+            "shell-init"
+            "system"
+            "system_darwin"
+            "system_linux"
+            "x"
+          ];
+
+          script = pkgs.${system}.writeShellApplication {
+            name = "format";
+            runtimeInputs = with pkgs.${system}; [
+              alejandra
+              shfmt
+            ];
+            text = ''
+              shfmt -w -s -i 2 -ci ${fmtTargetsStr};
+              alejandra --quiet .
+            '';
+          };
+        in "${script}/bin/format";
+      };
+    });
   };
   nixConfig = {
     extra-substituters = [
