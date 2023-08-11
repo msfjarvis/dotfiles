@@ -35,6 +35,8 @@ in {
     search = ["tiger-shark.ts.net"];
     firewall = {
       allowedTCPPorts = [
+        80
+        443
         9091
       ];
     };
@@ -85,11 +87,27 @@ in {
 
   services.cachix-agent.enable = true;
 
+  services.caddy = {
+    enable = true;
+    virtualHosts = {
+      "crusty.tiger-shark.ts.net" = {
+        extraConfig = ''
+          encode gzip
+          root * /srv/healthchecks-dashboard
+          file_server
+        '';
+      };
+    };
+  };
+
   services.getty.autologinUser = "msfjarvis";
 
   services.openssh.enable = true;
 
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    permitCertUid = "caddy";
+  };
 
   services.transmission = {
     enable = true;
