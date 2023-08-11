@@ -63,6 +63,7 @@ in {
     [
       alejandra
       aria2
+      byobu
       git
       libraspberrypi
       raspberrypi-eeprom
