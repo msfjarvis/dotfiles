@@ -184,6 +184,7 @@ in {
       ruff
       (nixGLWrap "scrcpy" (scrcpy.overrideAttrs (self: super: {postPatch = "";})))
       spicetify-cli
+      transmission
       twt
       vscext
       when
