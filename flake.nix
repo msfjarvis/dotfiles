@@ -102,7 +102,9 @@
         ./nixos/hosts/crusty/configuration.nix
         ({config, ...}: {
           age.secrets."crusty-cachix-deploy".file = ./secrets/crusty-cachix-deploy.age;
+          age.secrets."crusty-transmission-settings".file = ./secrets/crusty-transmission-settings.age;
           environment.etc."cachix-agent.token".source = config.age.secrets."crusty-cachix-deploy".path;
+          environment.etc."extra-transmission-settings".source = config.age.secrets."crusty-transmission-settings".path;
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.msfjarvis = import ./nixos/hosts/crusty/home-manager.nix;

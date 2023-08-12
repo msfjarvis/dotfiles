@@ -23,7 +23,7 @@ in {
 
   users.users.msfjarvis = {
     isNormalUser = true;
-    extraGroups = ["wheel"];
+    extraGroups = ["transmission" "wheel"];
   };
 
   programs.command-not-found.enable = false;
@@ -111,15 +111,37 @@ in {
 
   services.transmission = {
     enable = true;
-    settings.watch-dir-enabled = true;
-    settings.start-added-torrents = true;
-    settings.trash-original-torrent-files = true;
-    settings.rpc-bind-address = "0.0.0.0";
-    settings.rpc-whitelist = "100.*";
-    settings.rpc-host-whitelist = "100.*";
-    settings.rpc-host-whitelist-enabled = true;
-    user = "msfjarvis";
+    credentialsFile = "/etc/extra-transmission-settings";
     downloadDirPermissions = "770";
+    settings = {
+      idle-seeding-limit = 5;
+      idle-seeding-limit-enabled = true;
+      ratio-limit = 0;
+      ratio-limit-enabled = true;
+      script-torrent-done-seeding-enabled = true;
+      script-torrent-done-seeding-filename = let
+        script = pkgs.writeShellApplication {
+          name = "relocate";
+          runtimeInputs = with pkgs; [rsync];
+          text = ''
+            DIRNAME=$(basename "$TR_TORRENT_DIR")
+            rsync -av --no-o --no-g "$DIRNAME/$DIRNAME.mp4" /media/.omg
+            rm -rfv "$DIRNAME"
+          '';
+        };
+      in "${script}/bin/relocate";
+      rpc-bind-address = "0.0.0.0";
+      rpc-username = "msfjarvis";
+      rpc-whitelist = "127.0.0.1,100.*.*.*";
+      rpc-host-whitelist = "crusty,crusty.tiger-shark.ts.net";
+      rpc-host-whitelist-enabled = true;
+      rpc-whitelist-enabled = true;
+      start-added-torrents = true;
+      trash-original-torrent-files = true;
+      upload-limit-enabled = true;
+      watch-dir-enabled = false;
+    };
+    user = "msfjarvis";
   };
 
   system.stateVersion = "23.11";
