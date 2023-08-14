@@ -133,18 +133,6 @@ in {
       idle-seeding-limit-enabled = true;
       ratio-limit = 0;
       ratio-limit-enabled = true;
-      script-torrent-done-seeding-enabled = true;
-      script-torrent-done-seeding-filename = let
-        script = pkgs.writeShellApplication {
-          name = "relocate";
-          runtimeInputs = with pkgs; [rsync];
-          text = ''
-            DIRNAME=$(basename "$TR_TORRENT_DIR")
-            rsync -av --no-o --no-g "$DIRNAME/$DIRNAME.mp4" /media/.omg
-            rm -rfv "$DIRNAME"
-          '';
-        };
-      in "${script}/bin/relocate";
       rpc-bind-address = "0.0.0.0";
       rpc-username = "msfjarvis";
       rpc-whitelist = "127.0.0.1,100.*.*.*";
