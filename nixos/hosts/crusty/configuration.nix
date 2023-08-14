@@ -100,6 +100,21 @@ in {
     };
   };
 
+  services.file-collector = {
+    enable = true;
+    user = "msfjarvis";
+    group = "users";
+    settings = {
+      bucket = {
+        name = "Torrents";
+        sources = [
+          "/var/lib/transmission/Downloads"
+        ];
+        target = "/media/.omg";
+      };
+    };
+  };
+
   services.getty.autologinUser = "msfjarvis";
 
   services.openssh.enable = true;
