@@ -111,6 +111,7 @@ in {
           "/var/lib/transmission/Downloads"
         ];
         target = "/media/.omg";
+        file_filter = "*.mp4";
       };
     };
   };
