@@ -99,6 +99,7 @@
         inputs.nix-index-database.nixosModules.nix-index
         inputs.nixos-vscode-server.nixosModules.default
         home-manager.nixosModules.home-manager
+        ./nixos/modules/file-collector.nix
         ./nixos/hosts/crusty/configuration.nix
         ({config, ...}: {
           age.secrets."crusty-cachix-deploy".file = ./secrets/crusty-cachix-deploy.age;
@@ -108,6 +109,7 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.msfjarvis = import ./nixos/hosts/crusty/home-manager.nix;
+          nixpkgs.overlays = [inputs.custom-nixpkgs.overlays.default];
           programs.nix-index-database.comma.enable = true;
           services.vscode-server.enable = true;
         })
