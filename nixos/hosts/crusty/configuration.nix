@@ -104,16 +104,11 @@ in {
     enable = true;
     user = "msfjarvis";
     group = "users";
-    settings = {
-      bucket = {
-        name = "Torrents";
-        sources = [
-          "/var/lib/transmission/Downloads"
-        ];
-        target = "/media/.omg";
-        file_filter = "*.mp4";
-      };
-    };
+    sources = [
+      "/var/lib/transmission/Downloads"
+    ];
+    target = "/media/.omg";
+    file_filter = "*.mp4";
   };
 
   services.getty.autologinUser = "msfjarvis";
