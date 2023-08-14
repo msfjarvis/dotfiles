@@ -79,8 +79,6 @@
     database.createLocally = true;
   };
 
-  services.cachix-agent.enable = true;
-
   services.caddy = {
     enable = true;
     virtualHosts = {

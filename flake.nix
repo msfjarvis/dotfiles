@@ -11,11 +11,6 @@
   inputs.agenix.inputs.darwin.follows = "darwin";
   inputs.agenix.inputs.home-manager.follows = "home-manager";
 
-  inputs.cachix-deploy.url = "github:cachix/cachix-deploy-flake/main";
-  inputs.cachix-deploy.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.cachix-deploy.inputs.darwin.follows = "darwin";
-  inputs.cachix-deploy.inputs.home-manager.follows = "home-manager";
-
   inputs.custom-nixpkgs.url = "github:msfjarvis/custom-nixpkgs/main";
   inputs.custom-nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
   inputs.custom-nixpkgs.inputs.systems.follows = "systems";
@@ -76,7 +71,6 @@
             ./nixos/modules/micro
           ];
       };
-    cachix-deploy-lib = inputs.cachix-deploy.lib (packagesFn "aarch64-linux");
   in rec {
     homeConfigurations.ryzenbox = mkHomeManagerConfig {
       system = "x86_64-linux";
@@ -105,9 +99,7 @@
         ./nixos/modules/file-collector
         ./nixos/hosts/crusty
         ({config, ...}: {
-          age.secrets."crusty-cachix-deploy".file = ./secrets/crusty-cachix-deploy.age;
           age.secrets."crusty-transmission-settings".file = ./secrets/crusty-transmission-settings.age;
-          environment.etc."cachix-agent.token".source = config.age.secrets."crusty-cachix-deploy".path;
           environment.etc."extra-transmission-settings".source = config.age.secrets."crusty-transmission-settings".path;
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
@@ -120,11 +112,6 @@
           services.vscode-server.enable = true;
         })
       ];
-    };
-    packages.aarch64-linux = {
-      cachix-deploy-spec = cachix-deploy-lib.spec {
-        agents.crusty = self.nixosConfigurations.crusty.config.system.build.toplevel;
-      };
     };
 
     packages.x86_64-linux.ryzenbox = homeConfigurations.ryzenbox.activationPackage;
