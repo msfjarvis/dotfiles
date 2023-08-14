@@ -59,39 +59,42 @@
       };
     pkgs = forAllSystems (system: packagesFn system);
 
-    mkHomeManagerConfig = options:
+    mkHomeManagerConfig = options: let
+      nixGLWrap = (import ./nixos/modules/nixGL) pkgs.${options.system};
+    in
       home-manager.lib.homeManagerConfiguration {
         extraSpecialArgs = {
           inherit (inputs) dracula-micro;
+          inherit nixGLWrap;
         };
         pkgs = pkgs.${options.system};
         modules =
           options.modules
           ++ [
             inputs.nix-index-database.hmModules.nix-index
-            ./nixos/modules/home-manager-common.nix
-            ./nixos/modules/micro.nix
+            ./nixos/modules/home-manager
+            ./nixos/modules/micro
           ];
       };
     cachix-deploy-lib = inputs.cachix-deploy.lib (packagesFn "aarch64-linux");
   in rec {
     homeConfigurations.ryzenbox = mkHomeManagerConfig {
       system = "x86_64-linux";
-      modules = [./nixos/hosts/ryzenbox/configuration.nix];
+      modules = [./nixos/modules/vscode ./nixos/hosts/ryzenbox];
     };
     homeConfigurations.server = mkHomeManagerConfig {
       system = "aarch64-linux";
-      modules = [./nixos/hosts/boatymcboatface/configuration.nix];
+      modules = [./nixos/hosts/boatymcboatface];
     };
     darwinConfigurations.work-macbook = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       pkgs = pkgs."aarch64-darwin";
       modules = [
         home-manager.darwinModules.home-manager
-        ./nixos/hosts/work-macbook/configuration.nix
+        ./nixos/hosts/work-macbook
       ];
     };
-    nixosConfigurations.crusty = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.crusty = nixpkgs.lib.nixosSystem rec {
       system = "aarch64-linux";
       modules = [
         inputs.agenix.nixosModules.default
@@ -99,8 +102,8 @@
         inputs.nix-index-database.nixosModules.nix-index
         inputs.nixos-vscode-server.nixosModules.default
         home-manager.nixosModules.home-manager
-        ./nixos/modules/file-collector.nix
-        ./nixos/hosts/crusty/configuration.nix
+        ./nixos/modules/file-collector
+        ./nixos/hosts/crusty
         ({config, ...}: {
           age.secrets."crusty-cachix-deploy".file = ./secrets/crusty-cachix-deploy.age;
           age.secrets."crusty-transmission-settings".file = ./secrets/crusty-transmission-settings.age;
@@ -108,7 +111,10 @@
           environment.etc."extra-transmission-settings".source = config.age.secrets."crusty-transmission-settings".path;
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.msfjarvis = import ./nixos/hosts/crusty/home-manager.nix;
+          home-manager.users.msfjarvis = pkgs.${system}.lib.mkMerge [
+            {imports = [./nixos/modules/home-manager];}
+            (import ./nixos/hosts/crusty/home-manager.nix)
+          ];
           nixpkgs.overlays = [inputs.custom-nixpkgs.overlays.default];
           programs.nix-index-database.comma.enable = true;
           services.vscode-server.enable = true;

@@ -2,9 +2,7 @@
   config,
   pkgs,
   ...
-}: let
-  defaultPkgs = import ../../modules/default-packages.nix;
-in {
+}: {
   home.username = "msfjarvis";
   home.homeDirectory = "/home/msfjarvis";
   targets.genericLinux.enable = true;
@@ -49,11 +47,9 @@ in {
     };
   };
 
-  home.packages = with pkgs;
-    [
-      katbin
-      healthchecks-monitor
-      nvd
-    ]
-    ++ (defaultPkgs pkgs);
+  home.packages = with pkgs; [
+    katbin
+    healthchecks-monitor
+    nvd
+  ];
 }

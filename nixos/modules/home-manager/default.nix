@@ -4,6 +4,7 @@
   lib,
   ...
 }: {
+  home.packages = (import ./packages.nix) pkgs;
   programs.atuin = {
     enable = true;
     enableBashIntegration = true;

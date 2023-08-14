@@ -2,9 +2,7 @@
   lib,
   pkgs,
   ...
-}: let
-  defaultPkgs = import ../../modules/default-packages.nix;
-in {
+}: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -61,19 +59,15 @@ in {
     };
   };
 
-  environment.systemPackages = with pkgs;
-    [
-      alejandra
-      aria2
-      byobu
-      git
-      libraspberrypi
-      raspberrypi-eeprom
-      micro
-      usbutils
-      wirelesstools
-    ]
-    ++ (defaultPkgs pkgs);
+  environment.systemPackages = with pkgs; [
+    byobu
+    git
+    libraspberrypi
+    raspberrypi-eeprom
+    micro
+    usbutils
+    wirelesstools
+  ];
 
   services.atuin = {
     enable = true;

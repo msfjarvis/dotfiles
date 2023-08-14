@@ -1,6 +1,4 @@
-{pkgs, ...}: let
-  defaultPkgs = import ../../modules/default-packages.nix;
-in {
+{pkgs, ...}: {
   users.users.msfjarvis = {
     name = "msfjarvis";
     home = "/Users/msfjarvis";
@@ -44,26 +42,24 @@ in {
     };
   };
 
-  environment.systemPackages = with pkgs;
-    [
-      adx
-      awscli2
-      coreutils
-      dasel
-      diffuse-bin
-      flock
-      gdrive
-      gradle-completion
-      git-absorb
-      go
-      hub
-      katbin
-      nvd
-      openssh
-      openssl
-      pidcat
-    ]
-    ++ (defaultPkgs pkgs);
+  environment.systemPackages = with pkgs; [
+    adx
+    awscli2
+    coreutils
+    dasel
+    diffuse-bin
+    flock
+    gdrive
+    gradle-completion
+    git-absorb
+    go
+    hub
+    katbin
+    nvd
+    openssh
+    openssl
+    pidcat
+  ];
 
   programs.gnupg.agent.enable = true;
   programs.man.enable = true;
@@ -78,8 +74,8 @@ in {
   home-manager.useGlobalPkgs = true;
   home-manager.users.msfjarvis = {pkgs, ...}: {
     imports = [
-      ../../modules/vscode/home-manager.nix
-      ../../modules/home-manager-common.nix
+      ../../modules/vscode
+      ../../modules/home-manager
     ];
 
     programs.bash = {

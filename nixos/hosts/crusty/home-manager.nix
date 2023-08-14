@@ -1,6 +1,4 @@
 {config, ...}: {
-  imports = [../../modules/home-manager-common.nix];
-
   programs.bash = {
     historyFile = "${config.home.homeDirectory}/.bash_history";
     initExtra = ''
