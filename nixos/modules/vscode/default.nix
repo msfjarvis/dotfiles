@@ -13,6 +13,7 @@
         ms-vscode-remote.remote-ssh
         oderwat.indent-rainbow
         rust-lang.rust-analyzer
+        tamasfe.even-better-toml
       ])
       ++ (map
         (extension:
