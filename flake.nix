@@ -88,7 +88,7 @@
         ./nixos/hosts/work-macbook
       ];
     };
-    nixosConfigurations.crusty = nixpkgs.lib.nixosSystem rec {
+    nixosConfigurations.crusty = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
       modules = [
         inputs.agenix.nixosModules.default
@@ -98,12 +98,16 @@
         home-manager.nixosModules.home-manager
         ./nixos/modules/file-collector
         ./nixos/hosts/crusty
-        ({config, ...}: {
+        ({
+          config,
+          lib,
+          ...
+        }: {
           age.secrets."crusty-transmission-settings".file = ./secrets/crusty-transmission-settings.age;
           environment.etc."extra-transmission-settings".source = config.age.secrets."crusty-transmission-settings".path;
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.msfjarvis = pkgs.${system}.lib.mkMerge [
+          home-manager.users.msfjarvis = lib.mkMerge [
             {imports = [./nixos/modules/home-manager];}
             (import ./nixos/hosts/crusty/home-manager.nix)
           ];
