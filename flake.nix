@@ -67,18 +67,22 @@
           options.modules
           ++ [
             inputs.nix-index-database.hmModules.nix-index
-            ./nixos/modules/home-manager
-            ./nixos/modules/micro
           ];
       };
+    hmModules = [
+      ./nixos/modules/home-manager
+      ./nixos/modules/micro
+      ./nixos/modules/password-store
+      ./nixos/modules/vscode
+    ];
   in rec {
     homeConfigurations.ryzenbox = mkHomeManagerConfig {
       system = "x86_64-linux";
-      modules = [./nixos/modules/password-store ./nixos/modules/vscode ./nixos/hosts/ryzenbox];
+      modules = [./nixos/hosts/ryzenbox] ++ hmModules;
     };
-    homeConfigurations.server = mkHomeManagerConfig {
+    homeConfigurations.server = mkHomeManagerConfig rec {
       system = "aarch64-linux";
-      modules = [./nixos/hosts/boatymcboatface];
+      modules = [./nixos/hosts/boatymcboatface] ++ (pkgs.${system}.lib.lists.remove ./nixos/modules/vscode hmModules);
     };
     darwinConfigurations.work-macbook = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
@@ -90,7 +94,7 @@
           home-manager.useGlobalPkgs = true;
           home-manager.extraSpecialArgs = {inherit (inputs) dracula-micro;};
           home-manager.users.msfjarvis = lib.mkMerge [
-            {imports = [./nixos/modules/home-manager ./nixos/modules/vscode ./nixos/modules/micro ./nixos/modules/password-store];}
+            {imports = hmModules;}
             (import ./nixos/hosts/work-macbook/home-manager.nix)
           ];
         })
@@ -115,6 +119,7 @@
           environment.etc."extra-transmission-settings".source = config.age.secrets."crusty-transmission-settings".path;
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = {inherit (inputs) dracula-micro;};
           home-manager.users.msfjarvis = lib.mkMerge [
             {imports = [./nixos/modules/home-manager];}
             (import ./nixos/hosts/crusty/home-manager.nix)
