@@ -5,24 +5,15 @@
     enableExtensionUpdateCheck = false;
     mutableExtensionsDir = false;
     extensions =
-      (with pkgs.vscode-extensions; [
-        arrterian.nix-env-selector
-        eamodio.gitlens
-        jnoortheen.nix-ide
-        ms-python.python
-        ms-vscode-remote.remote-ssh
-        oderwat.indent-rainbow
-        rust-lang.rust-analyzer
-        tamasfe.even-better-toml
-      ])
-      ++ (map
-        (extension:
-          pkgs.vscode-utils.buildVscodeMarketplaceExtension {
-            mktplcRef = {
-              inherit (extension) name publisher version sha256;
-            };
-          })
-        (import ./extensions.nix).extensions);
+      [pkgs.vscode-extensions.rust-lang.rust-analyzer]
+      ++ map
+      (extension:
+        pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+          mktplcRef = {
+            inherit (extension) name publisher version sha256;
+          };
+        })
+      (import ./extensions.nix).extensions;
     userSettings = {
       "files.exclude" = {
         "**/.classpath" = true;
