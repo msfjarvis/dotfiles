@@ -119,6 +119,7 @@
     };
 
     packages.x86_64-linux.ryzenbox = homeConfigurations.ryzenbox.activationPackage;
+    packages.aarch64-linux.crusty = nixosConfigurations.crusty.config.system.build.toplevel;
     packages.aarch64-linux.server = homeConfigurations.server.activationPackage;
     packages.aarch64-darwin.macbook = darwinConfigurations.work-macbook.system;
 
