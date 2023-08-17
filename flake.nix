@@ -74,7 +74,7 @@
   in rec {
     homeConfigurations.ryzenbox = mkHomeManagerConfig {
       system = "x86_64-linux";
-      modules = [./nixos/modules/vscode ./nixos/hosts/ryzenbox];
+      modules = [./nixos/modules/password-store ./nixos/modules/vscode ./nixos/hosts/ryzenbox];
     };
     homeConfigurations.server = mkHomeManagerConfig {
       system = "aarch64-linux";
@@ -90,7 +90,7 @@
           home-manager.useGlobalPkgs = true;
           home-manager.extraSpecialArgs = {inherit (inputs) dracula-micro;};
           home-manager.users.msfjarvis = lib.mkMerge [
-            {imports = [./nixos/modules/home-manager ./nixos/modules/vscode ./nixos/modules/micro];}
+            {imports = [./nixos/modules/home-manager ./nixos/modules/vscode ./nixos/modules/micro ./nixos/modules/password-store];}
             (import ./nixos/hosts/work-macbook/home-manager.nix)
           ];
         })

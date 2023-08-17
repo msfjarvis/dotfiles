@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{...}: {
   programs.bash = {
     initExtra = ''
       # Load completions from system
@@ -25,11 +25,6 @@
         path = "/Users/msfjarvis/git-repos/dotfiles/.gitconfig-work";
       }
     ];
-  };
-
-  programs.password-store = {
-    enable = true;
-    package = pkgs.pass.withExtensions (exts: [exts.pass-audit exts.pass-genphrase exts.pass-otp exts.pass-update]);
   };
 
   # home-manager uses nmd to build these which triggers a Nix bug
