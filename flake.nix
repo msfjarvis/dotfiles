@@ -86,6 +86,14 @@
       modules = [
         home-manager.darwinModules.home-manager
         ./nixos/hosts/work-macbook
+        ({lib, ...}: {
+          home-manager.useGlobalPkgs = true;
+          home-manager.extraSpecialArgs = {inherit (inputs) dracula-micro;};
+          home-manager.users.msfjarvis = lib.mkMerge [
+            {imports = [./nixos/modules/home-manager ./nixos/modules/vscode ./nixos/modules/micro];}
+            (import ./nixos/hosts/work-macbook/home-manager.nix)
+          ];
+        })
       ];
     };
     nixosConfigurations.crusty = nixpkgs.lib.nixosSystem {
