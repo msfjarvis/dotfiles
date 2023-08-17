@@ -75,6 +75,10 @@
       ./nixos/modules/password-store
       ./nixos/modules/vscode
     ];
+    serverHmModules = [
+      ./nixos/modules/home-manager
+      ./nixos/modules/micro
+    ];
   in rec {
     homeConfigurations.ryzenbox = mkHomeManagerConfig {
       system = "x86_64-linux";
@@ -82,7 +86,7 @@
     };
     homeConfigurations.server = mkHomeManagerConfig rec {
       system = "aarch64-linux";
-      modules = [./nixos/hosts/boatymcboatface] ++ (pkgs.${system}.lib.lists.remove ./nixos/modules/vscode hmModules);
+      modules = [./nixos/hosts/boatymcboatface] ++ serverHmModules;
     };
     darwinConfigurations.work-macbook = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
@@ -121,7 +125,7 @@
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = {inherit (inputs) dracula-micro;};
           home-manager.users.msfjarvis = lib.mkMerge [
-            {imports = [./nixos/modules/home-manager];}
+            {imports = serverHmModules;}
             (import ./nixos/hosts/crusty/home-manager.nix)
           ];
           nixpkgs.overlays = [inputs.custom-nixpkgs.overlays.default];
