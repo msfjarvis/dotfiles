@@ -92,7 +92,7 @@
     };
   };
 
-  services.file-collector = {
+  services.rucksack = {
     enable = true;
     user = "msfjarvis";
     group = "users";

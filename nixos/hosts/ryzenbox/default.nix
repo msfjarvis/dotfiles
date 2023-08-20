@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   nixGLWrap,
   ...
@@ -84,14 +85,14 @@
     frequency = "*-*-* *:00:00";
   };
 
-  systemd.user.services.file-collector = {
+  systemd.user.services.rucksack = {
     Unit = {
-      Description = "systemd service for file-collector";
+      Description = "systemd service for rucksack";
       After = "local-fs.target";
     };
     Service = {
       Type = "simple";
-      ExecStart = "${pkgs.file-collector}/bin/file-collector";
+      ExecStart = "${lib.getExe pkgs.rucksack}";
       Restart = "on-failure";
       RestartSec = 3;
       Environment = "PATH=${pkgs.watchman}/bin";

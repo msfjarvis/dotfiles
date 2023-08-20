@@ -112,7 +112,7 @@
         inputs.nix-index-database.nixosModules.nix-index
         inputs.nixos-vscode-server.nixosModules.default
         home-manager.nixosModules.home-manager
-        ./nixos/modules/file-collector
+        ./nixos/modules/rucksack
         ./nixos/hosts/crusty
         ({
           config,

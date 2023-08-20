@@ -5,13 +5,13 @@
   ...
 }:
 with lib; let
-  cfg = config.services.file-collector;
+  cfg = config.services.rucksack;
   settingsFormat = pkgs.formats.toml {};
-  settingsFile = settingsFormat.generate "file-collector.toml" {bucket = {inherit (cfg) sources target file_filter;};};
+  settingsFile = settingsFormat.generate "rucksack.toml" {inherit (cfg) sources target file_filter;};
 in {
-  options.services.file-collector = {
+  options.services.rucksack = {
     enable = mkEnableOption {
-      description = mdDoc "Whether to enable the file-collector daemon.";
+      description = mdDoc "Whether to enable the rucksack daemon.";
     };
 
     sources = mkOption {
@@ -32,23 +32,23 @@ in {
       description = mdDoc "Shell glob to filter files against to be eligible for moving";
     };
 
-    package = mkPackageOptionMD pkgs "file-collector" {};
+    package = mkPackageOptionMD pkgs "rucksack" {};
 
     user = mkOption {
       type = types.str;
-      default = "file-collector";
-      description = mdDoc "User account under which file-collector runs.";
+      default = "rucksack";
+      description = mdDoc "User account under which rucksack runs.";
     };
 
     group = mkOption {
       type = types.str;
-      default = "file-collector";
-      description = mdDoc "Group account under which file-collector runs.";
+      default = "rucksack";
+      description = mdDoc "Group account under which rucksack runs.";
     };
   };
 
   config = mkIf cfg.enable {
-    systemd.services.file-collector = {
+    systemd.services.rucksack = {
       wantedBy = ["default.target"];
       after = ["fs.service"];
       wants = ["fs.service"];
@@ -62,7 +62,7 @@ in {
         Environment = "PATH=${pkgs.coreutils}/bin:${pkgs.watchman}/bin";
       };
       script = ''
-        exec env FILE_COLLECTOR_CONFIG=${settingsFile} ${pkgs.file-collector}/bin/file-collector
+        exec env RUCKSACK_CONFIG=${settingsFile} ${pkgs.rucksack}/bin/rucksack
       '';
     };
   };
