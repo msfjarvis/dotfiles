@@ -13,7 +13,7 @@ with pkgs; [
   git-quickfix
   hub
   mosh
-  ncdu_2
+  ncdu_1
   neofetch
   nil
   nix-init
