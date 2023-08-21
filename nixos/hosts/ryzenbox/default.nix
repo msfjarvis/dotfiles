@@ -166,7 +166,9 @@
     (maestro.overrideAttrs (self: super: {
       postFixup = "";
     }))
-    megatools
+    (megatools.overrideAttrs (self: super: {
+      patches = [./megatools.patch];
+    }))
     nvd
     patreon-dl
     pidcat

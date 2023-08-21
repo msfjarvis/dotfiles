@@ -1,0 +1,13 @@
+diff --git a/tools/dl.c b/tools/dl.c
+index c319e8596efc..a584374fbba2 100644
+--- a/tools/dl.c
++++ b/tools/dl.c
+@@ -67,7 +67,7 @@ static gboolean dl_sync_file(struct mega_node *node, GFile *file)
+ 	gc_free gchar *parent_path = g_file_get_path(parent);
+ 
+ 	if (g_file_query_exists(file, NULL)) {
+-		g_printerr("ERROR: File already exists at %s\n", local_path);
++		// g_printerr("ERROR: File already exists at %s\n", local_path);
+ 		return FALSE;
+ 	}
+ 
