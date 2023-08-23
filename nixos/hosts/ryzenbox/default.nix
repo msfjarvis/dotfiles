@@ -64,8 +64,8 @@
       misc = {
         assume_yes = true;
         pre_sudo = true;
-        remote_topgrades = ["boatymcboatface"];
-        remote_topgrade_path = ".nix-profile/bin/topgrade";
+        remote_topgrades = ["backup"];
+        remote_topgrade_path = "bin/topgrade";
         set_title = true;
         skip_notify = true;
         disable = ["gnome_shell_extensions" "home_manager" "nix" "node" "sdkman"];

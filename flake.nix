@@ -84,10 +84,6 @@
       system = "x86_64-linux";
       modules = [./nixos/hosts/ryzenbox] ++ hmModules;
     };
-    homeConfigurations.server = mkHomeManagerConfig rec {
-      system = "aarch64-linux";
-      modules = [./nixos/hosts/boatymcboatface] ++ serverHmModules;
-    };
     darwinConfigurations.work-macbook = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       pkgs = pkgs."aarch64-darwin";
@@ -137,7 +133,6 @@
 
     packages.x86_64-linux.ryzenbox = homeConfigurations.ryzenbox.activationPackage;
     packages.aarch64-linux.crusty = nixosConfigurations.crusty.config.system.build.toplevel;
-    packages.aarch64-linux.server = homeConfigurations.server.activationPackage;
     packages.aarch64-darwin.macbook = darwinConfigurations.work-macbook.system;
 
     apps = forAllSystems (system: {
