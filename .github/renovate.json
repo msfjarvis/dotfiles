@@ -4,16 +4,5 @@
     "config:base",
     "helpers:pinGitHubActionDigests",
     "github>msfjarvis/shared-workflows//renovate/automerge"
-  ],
-  "nix": {
-    "enabled": true,
-  },
-  "lockFileMaintenance": {
-    "automerge": true,
-    "automergeType": "branch",
-    "enabled": true,
-    "schedule": [
-      "before 4am every day"
-    ]
-  },
+  ]
 }
