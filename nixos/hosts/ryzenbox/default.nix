@@ -75,8 +75,8 @@
 
   services.gpg-agent = {
     enable = true;
-    defaultCacheTtl = 600;
-    pinentryFlavor = "gtk2";
+    defaultCacheTtl = 3600;
+    pinentryFlavor = "gnome3";
     enableBashIntegration = true;
   };
 
