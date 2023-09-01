@@ -15,8 +15,8 @@
     {
       name = "ruff";
       publisher = "charliermarsh";
-      version = "2023.32.0";
-      sha256 = "113irzc213z7hcwzhc8cg2fgl7wm2jws1imv2n9fphwig6ayivj2";
+      version = "2023.34.0";
+      sha256 = "18cixjsii19z4s1grcnkbjrd947vrn50fscv4sd9r70qq79b5yww";
     }
     {
       name = "remote-ssh-edit";
@@ -33,8 +33,8 @@
     {
       name = "vscode-typescript-next";
       publisher = "ms-vscode";
-      version = "5.3.20230816";
-      sha256 = "1a60vpfq54n49aicw4c64d1vpm339cv526y8y24bjgrn0qcvgbgs";
+      version = "5.3.20230831";
+      sha256 = "1863wsn19kmdarzyqjalb09ww3ck33n1y1b20f1c8skpci71xnzr";
     }
     {
       name = "nix-env-selector";
@@ -45,8 +45,8 @@
     {
       name = "gitlens";
       publisher = "eamodio";
-      version = "2023.8.1505";
-      sha256 = "14aixsavackxdjari8xgk72cl1z8r126fl4l45spc249l528yx4r";
+      version = "2023.9.105";
+      sha256 = "1qvs4nqsl5i46kqp6ygjy1rgbpchpj665jm4b30ljrc9as9rcdan";
     }
     {
       name = "nix-ide";
@@ -57,14 +57,14 @@
     {
       name = "python";
       publisher = "ms-python";
-      version = "2023.15.12271008";
-      sha256 = "1j063ns79kq2kc9r5zi0wgbkjvvx9m167fjmaighcwfph7sd0qgf";
+      version = "2023.15.12441006";
+      sha256 = "0yqf9zsdfz6z095xksn82a9hr201q78d2gab55w28ngn4xmf016h";
     }
     {
       name = "remote-ssh";
       publisher = "ms-vscode-remote";
-      version = "0.106.2023081615";
-      sha256 = "0kjrw96hrcqs6gm2q4dkp5hz8bdw1im0kfmkl2nic3f14k1hh9q1";
+      version = "0.106.2023090115";
+      sha256 = "0ldrgb3472yaj404mky040ylnnl1p6sfcblw29w1zpfg720qdic0";
     }
     {
       name = "indent-rainbow";
