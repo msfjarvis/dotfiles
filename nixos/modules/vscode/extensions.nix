@@ -13,12 +13,6 @@
       sha256 = "1zyl9kri2pna9jsvcjvf0vqz6xiq3v3j4p64glvnn0cgbaqsmmy3";
     }
     {
-      name = "ruff";
-      publisher = "charliermarsh";
-      version = "2023.34.0";
-      sha256 = "18cixjsii19z4s1grcnkbjrd947vrn50fscv4sd9r70qq79b5yww";
-    }
-    {
       name = "remote-ssh-edit";
       publisher = "ms-vscode-remote";
       version = "0.86.0";
@@ -53,12 +47,6 @@
       publisher = "jnoortheen";
       version = "0.2.2";
       sha256 = "1264027sjh9a112si0y0p3pk3y36shj5b4qkpsj207z7lbxqq0wg";
-    }
-    {
-      name = "python";
-      publisher = "ms-python";
-      version = "2023.15.12441006";
-      sha256 = "0yqf9zsdfz6z095xksn82a9hr201q78d2gab55w28ngn4xmf016h";
     }
     {
       name = "remote-ssh";
