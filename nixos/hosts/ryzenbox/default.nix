@@ -139,6 +139,7 @@
     fzf
     gdrive
     git-crypt
+    gitui
     hcctl
     imwheel
     (nerdfonts.override {
