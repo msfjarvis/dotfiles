@@ -135,24 +135,7 @@
     diffuse-bin
     fclones
     ferium
-    (ffmpeg.override {
-      buildFfplay = false;
-      buildFfprobe = true;
-      buildQtFaststart = false;
-      withDav1d = true;
-      withMp3lame = true;
-      withAss = true;
-      withDrm = true;
-      withVaapi = true;
-      withVdpau = true;
-      withVorbis = true;
-      withVpx = true;
-      withWebp = true;
-      withNvdec = true;
-      withNvenc = true;
-      withX264 = true;
-      withX265 = true;
-    })
+    ffmpeg
     fzf
     gdrive
     git-crypt
