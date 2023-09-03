@@ -173,7 +173,6 @@
     patreon-dl
     pidcat
     (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
-    ruff
     (nixGLWrap "scrcpy" (scrcpy.overrideAttrs (self: super: {postPatch = "";})))
     spicetify-cli
     transmission
