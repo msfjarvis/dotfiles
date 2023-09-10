@@ -153,7 +153,6 @@
     (megatools.overrideAttrs (self: super: {
       patches = [./megatools.patch];
     }))
-    nvd
     patreon-dl
     pidcat
     (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))

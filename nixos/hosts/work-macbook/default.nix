@@ -55,7 +55,6 @@
     go
     hub
     katbin
-    nvd
     openssh
     openssl
     pidcat

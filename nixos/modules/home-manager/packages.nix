@@ -20,6 +20,7 @@ with pkgs; [
   nix-update
   nixpkgs-review
   neofetch
+  nvd
   ripgrep
   sd
   shellcheck
