@@ -93,7 +93,7 @@
   };
 
   services.rucksack = {
-    enable = false;
+    enable = true;
     user = "msfjarvis";
     group = "users";
     sources = [
