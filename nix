@@ -39,12 +39,3 @@ function nixshell() {
 function nixb() {
   nix flake update --commit-lock-file
 }
-
-function update_vsc_exts() {
-  local EXT_SRC TEMP
-  EXT_SRC="${1}"
-  TEMP="$(mktemp)"
-  nix eval --json -f "${EXT_SRC:?}" | jq -r '(.extensions[] | "\(.publisher).\(.name)")' | xargs vscext | alejandra --quiet >"${TEMP}"
-  cp "${TEMP}" "${EXT_SRC}"
-  git cam 'chore(nix/vscode): update extensions'
-}

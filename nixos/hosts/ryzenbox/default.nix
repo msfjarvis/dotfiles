@@ -160,7 +160,6 @@
     spicetify-cli
     transmission
     twt
-    vscext
     when
     xclip
     yt-dlp

@@ -36,6 +36,11 @@
   inputs.nix-index-database.url = "github:nix-community/nix-index-database";
   inputs.nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
+  inputs.nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+  inputs.nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.nix-vscode-extensions.inputs.flake-utils.follows = "flake-utils";
+  inputs.nix-vscode-extensions.inputs.flake-compat.follows = "";
+
   inputs.nixgl.url = "github:guibou/nixGL";
   inputs.nixgl.inputs.nixpkgs.follows = "nixpkgs";
   inputs.nixgl.inputs.flake-utils.follows = "flake-utils";
@@ -55,7 +60,11 @@
         config = {
           allowUnfree = true;
         };
-        overlays = [inputs.custom-nixpkgs.overlays.default inputs.nixgl.overlays.default];
+        overlays = [
+          inputs.custom-nixpkgs.overlays.default
+          inputs.nix-vscode-extensions.overlays.default
+          inputs.nixgl.overlays.default
+        ];
       };
     pkgs = forAllSystems (system: packagesFn system);
 
