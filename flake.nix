@@ -21,11 +21,15 @@
   inputs.dracula-micro.url = "https://raw.githubusercontent.com/dracula/micro/master/dracula.micro";
   inputs.dracula-micro.flake = false;
 
+  inputs.flake-utils.url = "github:numtide/flake-utils";
+  inputs.flake-utils.inputs.systems.follows = "systems";
+
   inputs.home-manager.url = "github:nix-community/home-manager/master";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
   inputs.nixos-vscode-server.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.nixos-vscode-server.inputs.flake-utils.follows = "flake-utils";
 
   inputs.nix-filter.url = "github:numtide/nix-filter";
 
@@ -34,6 +38,7 @@
 
   inputs.nixgl.url = "github:guibou/nixGL";
   inputs.nixgl.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.nixgl.inputs.flake-utils.follows = "flake-utils";
 
   outputs = {
     self,
