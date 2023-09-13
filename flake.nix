@@ -27,9 +27,9 @@
   inputs.home-manager.url = "github:nix-community/home-manager/master";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-  inputs.nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
-  inputs.nixos-vscode-server.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.nixos-vscode-server.inputs.flake-utils.follows = "flake-utils";
+  inputs.nixgl.url = "github:guibou/nixGL";
+  inputs.nixgl.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.nixgl.inputs.flake-utils.follows = "flake-utils";
 
   inputs.nix-filter.url = "github:numtide/nix-filter";
 
@@ -41,9 +41,9 @@
   inputs.nix-vscode-extensions.inputs.flake-utils.follows = "flake-utils";
   inputs.nix-vscode-extensions.inputs.flake-compat.follows = "";
 
-  inputs.nixgl.url = "github:guibou/nixGL";
-  inputs.nixgl.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.nixgl.inputs.flake-utils.follows = "flake-utils";
+  inputs.nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
+  inputs.nixos-vscode-server.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.nixos-vscode-server.inputs.flake-utils.follows = "flake-utils";
 
   outputs = {
     self,
@@ -62,8 +62,8 @@
         };
         overlays = [
           inputs.custom-nixpkgs.overlays.default
-          inputs.nix-vscode-extensions.overlays.default
           inputs.nixgl.overlays.default
+          inputs.nix-vscode-extensions.overlays.default
         ];
       };
     pkgs = forAllSystems (system: packagesFn system);
@@ -117,11 +117,11 @@
     nixosConfigurations.crusty = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
       modules = [
-        inputs.agenix.nixosModules.default
-        inputs.nixos-hardware.nixosModules.raspberry-pi-4
-        inputs.nix-index-database.nixosModules.nix-index
-        inputs.nixos-vscode-server.nixosModules.default
         home-manager.nixosModules.home-manager
+        inputs.agenix.nixosModules.default
+        inputs.nix-index-database.nixosModules.nix-index
+        inputs.nixos-hardware.nixosModules.raspberry-pi-4
+        inputs.nixos-vscode-server.nixosModules.default
         ./nixos/modules/rucksack
         ./nixos/hosts/crusty
         ({
