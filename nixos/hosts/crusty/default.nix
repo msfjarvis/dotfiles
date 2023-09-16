@@ -107,6 +107,25 @@
 
   services.openssh.enable = true;
 
+  services.samba = {
+    enable = true;
+    openFirewall = true;
+    extraConfig = ''
+      map to guest = bad user
+    '';
+    shares = {
+      public = {
+        path = "/media/.omg";
+        "read only" = "no";
+        "guest ok" = "yes";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force user" = "msfjarvis";
+        "force group" = "transmission";
+      };
+    };
+  };
+
   services.tailscale = {
     enable = true;
     permitCertUid = "caddy";
