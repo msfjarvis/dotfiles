@@ -1,4 +1,4 @@
 builds:
   include:
-    - packages.aarch64-linux.*
+    - nixosConfigurations.crusty
     - packages.aarch64-darwin.*
