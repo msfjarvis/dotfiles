@@ -31,8 +31,6 @@
   inputs.nixgl.inputs.nixpkgs.follows = "nixpkgs";
   inputs.nixgl.inputs.flake-utils.follows = "flake-utils";
 
-  inputs.nix-filter.url = "github:numtide/nix-filter";
-
   inputs.nix-index-database.url = "github:nix-community/nix-index-database";
   inputs.nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
