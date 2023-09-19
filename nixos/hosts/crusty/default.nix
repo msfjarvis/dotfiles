@@ -65,6 +65,7 @@
     libraspberrypi
     raspberrypi-eeprom
     micro
+    tmux
     usbutils
     wirelesstools
   ];
