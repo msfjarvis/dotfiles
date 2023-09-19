@@ -145,16 +145,12 @@
     })
     katbin
     kondo
-    (maestro.overrideAttrs (self: super: {
-      postFixup = "";
-    }))
-    (megatools.overrideAttrs (self: super: {
-      patches = [./megatools.patch];
-    }))
+    maestro
+    megatools
     patreon-dl
     pidcat
     (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
-    (nixGLWrap "scrcpy" (scrcpy.overrideAttrs (self: super: {postPatch = "";})))
+    (nixGLWrap "scrcpy" scrcpy)
     spicetify-cli
     transmission
     twt

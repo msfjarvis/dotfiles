@@ -62,6 +62,15 @@
           inputs.custom-nixpkgs.overlays.default
           inputs.nixgl.overlays.default
           inputs.nix-vscode-extensions.overlays.default
+          (final: prev: {
+            maestro = prev.maestro.overrideAttrs (old: {
+              postFixup = "";
+            });
+            megatools = prev.megatools.overrideAttrs (old: {
+              patches = [./nixos/overlays/megatools.patch];
+            });
+            scrcpy = prev.scrcpy.overrideAttrs (old: {postPatch = "";});
+          })
         ];
       };
     pkgs = forAllSystems (system: packagesFn system);

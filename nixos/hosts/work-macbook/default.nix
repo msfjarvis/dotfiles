@@ -55,9 +55,11 @@
     go
     hub
     katbin
+    maestro
     openssh
     openssl
     pidcat
+    scrcpy
   ];
 
   programs.gnupg.agent.enable = true;
