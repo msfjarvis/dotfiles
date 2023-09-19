@@ -62,7 +62,6 @@
 
   programs.gnupg.agent.enable = true;
   programs.man.enable = true;
-  programs.nix-index.enable = true;
 
   services.nix-daemon.enable = true;
 

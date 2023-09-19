@@ -75,21 +75,19 @@
           inherit nixGLWrap;
         };
         pkgs = pkgs.${options.system};
-        modules =
-          options.modules
-          ++ [
-            inputs.nix-index-database.hmModules.nix-index
-          ];
+        modules = options.modules;
       };
     hmModules = [
       ./nixos/modules/home-manager
       ./nixos/modules/micro
       ./nixos/modules/password-store
       ./nixos/modules/vscode
+      inputs.nix-index-database.hmModules.nix-index
     ];
     serverHmModules = [
       ./nixos/modules/home-manager
       ./nixos/modules/micro
+      inputs.nix-index-database.hmModules.nix-index
     ];
   in rec {
     homeConfigurations.ryzenbox = mkHomeManagerConfig {
@@ -117,7 +115,6 @@
       modules = [
         home-manager.nixosModules.home-manager
         inputs.agenix.nixosModules.default
-        inputs.nix-index-database.nixosModules.nix-index
         inputs.nixos-hardware.nixosModules.raspberry-pi-4
         inputs.nixos-vscode-server.nixosModules.default
         ./nixos/modules/rucksack
@@ -137,7 +134,6 @@
             (import ./nixos/hosts/crusty/home-manager.nix)
           ];
           nixpkgs.overlays = [inputs.custom-nixpkgs.overlays.default];
-          programs.nix-index-database.comma.enable = true;
           services.vscode-server.enable = true;
         })
       ];
