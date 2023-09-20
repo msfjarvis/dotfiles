@@ -176,10 +176,12 @@
             runtimeInputs = with pkgs.${system}; [
               alejandra
               shfmt
+              statix
             ];
             text = ''
               shfmt -w -s -i 2 -ci ${fmtTargetsStr};
               alejandra --quiet .
+              statix check .
             '';
           };
         in "${script}/bin/format";
