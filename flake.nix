@@ -62,18 +62,7 @@
           inputs.custom-nixpkgs.overlays.default
           inputs.nixgl.overlays.default
           inputs.nix-vscode-extensions.overlays.default
-          (final: prev: {
-            maestro = prev.maestro.overrideAttrs (old: {
-              postFixup = "";
-            });
-            megatools = prev.megatools.overrideAttrs (old: {
-              patches = [./nixos/overlays/megatools.patch];
-            });
-            nerdfonts = prev.nerdfonts.override {
-              fonts = ["CascadiaCode" "FiraCode" "Inconsolata" "JetBrainsMono"];
-            };
-            scrcpy = prev.scrcpy.overrideAttrs (old: {postPatch = "";});
-          })
+          (import ./nixos/overlays)
         ];
       };
     pkgs = forAllSystems (system: packagesFn system);
