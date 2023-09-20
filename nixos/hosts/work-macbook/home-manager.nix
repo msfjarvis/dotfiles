@@ -9,6 +9,8 @@
       fi
       # Source shell-init from my dotfiles
       source /Users/msfjarvis/git-repos/dotfiles/darwin-init
+      # Load gcloud init scripts
+      source /Users/msfjarvis/.bash_profile_gcloud
       export BASH_SILENCE_DEPRECATION_WARNING=1
     '';
   };
