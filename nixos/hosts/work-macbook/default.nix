@@ -6,11 +6,7 @@
 
   fonts = {
     fontDir.enable = true;
-    fonts = with pkgs; [
-      (nerdfonts.override {
-        fonts = ["CascadiaCode" "FiraCode" "Inconsolata" "JetBrainsMono"];
-      })
-    ];
+    fonts = [pkgs.nerdfonts];
   };
 
   homebrew = {

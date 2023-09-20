@@ -140,9 +140,7 @@
     gitui
     hcctl
     imwheel
-    (nerdfonts.override {
-      fonts = ["CascadiaCode" "FiraCode" "Inconsolata" "JetBrainsMono"];
-    })
+    nerdfonts
     katbin
     kondo
     maestro

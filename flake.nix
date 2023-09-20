@@ -69,6 +69,9 @@
             megatools = prev.megatools.overrideAttrs (old: {
               patches = [./nixos/overlays/megatools.patch];
             });
+            nerdfonts = prev.nerdfonts.override {
+              fonts = ["CascadiaCode" "FiraCode" "Inconsolata" "JetBrainsMono"];
+            };
             scrcpy = prev.scrcpy.overrideAttrs (old: {postPatch = "";});
           })
         ];
