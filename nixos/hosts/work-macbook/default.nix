@@ -18,6 +18,7 @@
     brews = [
       "cocoapods"
       "carthage"
+      "gnu-sed"
       "ruby"
       "JakeWharton/repo/dependency-watch"
     ];
