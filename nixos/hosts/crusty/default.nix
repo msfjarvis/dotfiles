@@ -68,6 +68,7 @@
     tmux
     usbutils
     wirelesstools
+    yt-dlp
   ];
 
   services.atuin = {
