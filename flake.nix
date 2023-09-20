@@ -65,18 +65,18 @@
           (import ./nixos/overlays)
         ];
       };
-    pkgs = forAllSystems (system: packagesFn system);
+    pkgs = forAllSystems packagesFn;
 
     mkHomeManagerConfig = options: let
       nixGLWrap = (import ./nixos/modules/nixGL) pkgs.${options.system};
     in
       home-manager.lib.homeManagerConfiguration {
+        inherit (options) modules;
         extraSpecialArgs = {
           inherit (inputs) dracula-micro;
           inherit nixGLWrap;
         };
         pkgs = pkgs.${options.system};
-        modules = options.modules;
       };
     hmModules = [
       ./nixos/modules/home-manager

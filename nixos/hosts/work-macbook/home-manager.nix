@@ -1,4 +1,4 @@
-{...}: {
+_: {
   programs.bash = {
     initExtra = ''
       # Load completions from system
