@@ -49,7 +49,7 @@
     gdrive
     gradle-completion
     git-absorb
-    go
+    go_1_21
     hub
     katbin
     maestro

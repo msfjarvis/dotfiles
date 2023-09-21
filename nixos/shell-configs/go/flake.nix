@@ -39,7 +39,7 @@
         packages = with pkgs; [
           git
           go-outline
-          go_1_19
+          go_1_21
           gopls
           gotools
         ];
