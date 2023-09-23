@@ -94,6 +94,7 @@
       home-manager.nixosModules.home-manager
       inputs.agenix.nixosModules.default
       inputs.nixos-vscode-server.nixosModules.default
+      ./nixos/modules/nix
       (_: {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
