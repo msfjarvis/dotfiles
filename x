@@ -32,6 +32,12 @@ case "${ARG}" in
   install)
     ./install.sh
     ;;
+  server-check)
+    sudo nixos-rebuild build --flake .#wailord
+    ;;
+  server-switch)
+    sudo nixos-rebuild switch --flake .#wailord
+    ;;
   *)
     echo "Invalid command: ${ARG}"
     exit 1

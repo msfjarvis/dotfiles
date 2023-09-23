@@ -90,6 +90,16 @@
       ./nixos/modules/micro
       inputs.nix-index-database.hmModules.nix-index
     ];
+    nixosModules = [
+      home-manager.nixosModules.home-manager
+      inputs.agenix.nixosModules.default
+      inputs.nixos-vscode-server.nixosModules.default
+      (_: {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.extraSpecialArgs = {inherit (inputs) dracula-micro;};
+      })
+    ];
   in rec {
     homeConfigurations.ryzenbox = mkHomeManagerConfig {
       system = "x86_64-linux";
@@ -113,33 +123,49 @@
     };
     nixosConfigurations.crusty = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
-      modules = [
-        home-manager.nixosModules.home-manager
-        inputs.agenix.nixosModules.default
-        inputs.nixos-hardware.nixosModules.raspberry-pi-4
-        inputs.nixos-vscode-server.nixosModules.default
-        ./nixos/modules/rucksack
-        ./nixos/hosts/crusty
-        ({
-          config,
-          lib,
-          ...
-        }: {
-          age.secrets."crusty-transmission-settings".file = ./secrets/crusty-transmission-settings.age;
-          environment.etc."extra-transmission-settings".source = config.age.secrets."crusty-transmission-settings".path;
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = {inherit (inputs) dracula-micro;};
-          home-manager.users.msfjarvis = lib.mkMerge [
-            {imports = serverHmModules;}
-            (import ./nixos/hosts/crusty/home-manager.nix)
-          ];
-          nixpkgs.overlays = [inputs.custom-nixpkgs.overlays.default];
-          services.vscode-server.enable = true;
-        })
-      ];
+      modules =
+        nixosModules
+        ++ [
+          inputs.nixos-hardware.nixosModules.raspberry-pi-4
+          ./nixos/modules/rucksack
+          ./nixos/hosts/crusty
+          ({
+            config,
+            lib,
+            ...
+          }: {
+            age.secrets."crusty-transmission-settings".file = ./secrets/crusty-transmission-settings.age;
+            environment.etc."extra-transmission-settings".source = config.age.secrets."crusty-transmission-settings".path;
+            home-manager.users.msfjarvis = lib.mkMerge [
+              {imports = serverHmModules;}
+              (import ./nixos/hosts/crusty/home-manager.nix)
+            ];
+            nixpkgs.overlays = [inputs.custom-nixpkgs.overlays.default];
+            services.vscode-server.enable = true;
+          })
+        ];
+    };
+    nixosConfigurations.wailord = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules =
+        nixosModules
+        ++ [
+          ./nixos/hosts/wailord
+          ({
+            config,
+            lib,
+            ...
+          }: {
+            home-manager.users.msfjarvis = lib.mkMerge [
+              {imports = serverHmModules;}
+              (import ./nixos/hosts/wailord/home-manager.nix)
+            ];
+            nixpkgs.overlays = [inputs.custom-nixpkgs.overlays.default];
+          })
+        ];
     };
 
+    packages.x86_64-linux.wailord = nixosConfigurations.wailord.config.system.build.toplevel;
     packages.x86_64-linux.ryzenbox = homeConfigurations.ryzenbox.activationPackage;
     packages.aarch64-linux.crusty = nixosConfigurations.crusty.config.system.build.toplevel;
     packages.aarch64-darwin.macbook = darwinConfigurations.work-macbook.system;
