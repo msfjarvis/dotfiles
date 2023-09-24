@@ -65,5 +65,18 @@ in {
         exec env RUCKSACK_CONFIG=${settingsFile} ${pkgs.rucksack}/bin/rucksack
       '';
     };
+
+    users.users = mkIf (cfg.user == "rucksack") {
+      rucksack = {
+        group = cfg.group;
+        home = cfg.dataDir;
+        createHome = false;
+        description = "rucksack daemon user";
+        isNormalUser = true;
+      };
+    };
+
+    users.groups =
+      mkIf (cfg.group == "rucksack") {rucksack = {gid = null;};};
   };
 }
