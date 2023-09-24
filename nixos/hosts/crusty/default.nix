@@ -21,7 +21,7 @@
 
   users.users.msfjarvis = {
     isNormalUser = true;
-    extraGroups = ["transmission" "wheel"];
+    extraGroups = ["wheel"];
   };
 
   programs.command-not-found.enable = false;
@@ -36,7 +36,6 @@
       allowedTCPPorts = [
         80
         443
-        9091
       ];
     };
   };
@@ -78,10 +77,10 @@
 
   services.rucksack = {
     enable = true;
-    user = "msfjarvis";
-    group = "users";
+    user = "root";
+    group = "root";
     sources = [
-      "/var/lib/transmission/Downloads"
+      "/var/lib/qbittorrent/downloads"
     ];
     target = "/media/.omg";
     file_filter = "*.mp4";
@@ -115,27 +114,10 @@
     permitCertUid = "caddy";
   };
 
-  services.transmission = {
+  services.qbittorrent = {
     enable = true;
-    credentialsFile = "/etc/extra-transmission-settings";
-    downloadDirPermissions = "770";
-    settings = {
-      idle-seeding-limit = 5;
-      idle-seeding-limit-enabled = true;
-      ratio-limit = 0;
-      ratio-limit-enabled = true;
-      rpc-bind-address = "0.0.0.0";
-      rpc-username = "msfjarvis";
-      rpc-whitelist = "127.0.0.1,100.*.*.*";
-      rpc-host-whitelist = "crusty,crusty.tiger-shark.ts.net";
-      rpc-host-whitelist-enabled = true;
-      rpc-whitelist-enabled = true;
-      start-added-torrents = true;
-      trash-original-torrent-files = true;
-      upload-limit-enabled = true;
-      watch-dir-enabled = false;
-    };
-    user = "msfjarvis";
+    port = 9091;
+    openFirewall = true;
   };
 
   system.stateVersion = "23.11";

@@ -129,6 +129,7 @@
         nixosModules
         ++ [
           inputs.nixos-hardware.nixosModules.raspberry-pi-4
+          ./nixos/modules/qbittorrent
           ./nixos/modules/rucksack
           ./nixos/hosts/crusty
           ({
@@ -136,8 +137,6 @@
             lib,
             ...
           }: {
-            age.secrets."crusty-transmission-settings".file = ./secrets/crusty-transmission-settings.age;
-            environment.etc."extra-transmission-settings".source = config.age.secrets."crusty-transmission-settings".path;
             home-manager.users.msfjarvis = lib.mkMerge [
               {imports = serverHmModules;}
             ];
