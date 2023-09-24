@@ -87,6 +87,7 @@
     ];
     serverHmModules = [
       ./nixos/modules/home-manager
+      ./nixos/modules/home-manager-server
       ./nixos/modules/micro
       inputs.nix-index-database.hmModules.nix-index
     ];
@@ -139,7 +140,6 @@
             environment.etc."extra-transmission-settings".source = config.age.secrets."crusty-transmission-settings".path;
             home-manager.users.msfjarvis = lib.mkMerge [
               {imports = serverHmModules;}
-              (import ./nixos/hosts/crusty/home-manager.nix)
             ];
             nixpkgs.overlays = [inputs.custom-nixpkgs.overlays.default];
             services.vscode-server.enable = true;
@@ -159,7 +159,6 @@
           }: {
             home-manager.users.msfjarvis = lib.mkMerge [
               {imports = serverHmModules;}
-              (import ./nixos/hosts/wailord/home-manager.nix)
             ];
             nixpkgs.overlays = [inputs.custom-nixpkgs.overlays.default];
           })
