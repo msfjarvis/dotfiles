@@ -48,6 +48,25 @@
     micro
   ];
 
+  services.caddy = {
+    enable = true;
+    virtualHosts = {
+      "https://git.msfjarvis.dev" = {
+        extraConfig = ''
+          reverse_proxy :${toString config.services.gitea.settings.server.HTTP_PORT}
+        '';
+      };
+    };
+  };
+
+  services.gitea = {
+    enable = true;
+    settings = {
+      server.DOMAIN = "git.msfjarvis.dev";
+      service.COOKIE_SECURE = true;
+    };
+  };
+
   services.openssh.enable = true;
 
   services.tailscale = {
