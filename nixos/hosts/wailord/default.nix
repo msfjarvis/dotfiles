@@ -40,6 +40,7 @@
   ];
 
   programs.command-not-found.enable = false;
+  programs.mosh.enable = true;
 
   environment.systemPackages = with pkgs; [
     byobu

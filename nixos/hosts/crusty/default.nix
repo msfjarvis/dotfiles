@@ -25,6 +25,7 @@
   };
 
   programs.command-not-found.enable = false;
+  programs.mosh.enable = true;
 
   networking = {
     hostName = "crusty";
