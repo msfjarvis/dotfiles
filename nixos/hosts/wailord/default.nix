@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -71,6 +72,12 @@
 
   services.tailscale = {
     enable = true;
+  };
+
+  services.tailscale-autoconnect = {
+    enable = true;
+    authkeyFile = config.age.secrets.wailord-tsauthkey.path;
+    extraOptions = ["--accept-risk=lose-ssh" "--ssh"];
   };
 
   system.stateVersion = "23.11";

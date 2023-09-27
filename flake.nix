@@ -157,12 +157,14 @@
       modules =
         nixosModules
         ++ [
+          ./nixos/modules/tailscale-autoconnect
           ./nixos/hosts/wailord
           ({
             config,
             lib,
             ...
           }: {
+            age.secrets."wailord-tsauthkey".file = ./secrets/wailord-tsauthkey.age;
             home-manager.users.msfjarvis = lib.mkMerge [
               {imports = serverHmModules;}
             ];
