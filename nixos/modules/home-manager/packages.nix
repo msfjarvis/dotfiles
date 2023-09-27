@@ -25,7 +25,7 @@ with pkgs; [
   sd
   shellcheck
   shfmt
-  tea
+  tea-dev
   unzip
   vivid
   zip
