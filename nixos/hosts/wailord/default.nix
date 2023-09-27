@@ -64,7 +64,9 @@
     enable = true;
     settings = {
       server.DOMAIN = "git.msfjarvis.dev";
+      server.ROOT_URL = "https://git.msfjarvis.dev/";
       service.COOKIE_SECURE = true;
+      service.DISABLE_REGISTRATION = true;
     };
   };
 
