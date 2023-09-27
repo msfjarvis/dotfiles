@@ -25,6 +25,7 @@ with pkgs; [
   sd
   shellcheck
   shfmt
+  tea
   unzip
   vivid
   zip
