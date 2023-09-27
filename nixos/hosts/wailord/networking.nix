@@ -12,7 +12,7 @@
         443
       ];
     };
-    defaultGateway = "167.71.224.1";
+    defaultGateway = "143.244.128.1";
     defaultGateway6 = {
       address = "2400:6180:100:d0::1";
       interface = "eth0";
@@ -23,7 +23,7 @@
       eth0 = {
         ipv4.addresses = [
           {
-            address = "167.71.234.64";
+            address = "143.244.142.121";
             prefixLength = 20;
           }
           {
@@ -33,17 +33,17 @@
         ];
         ipv6.addresses = [
           {
-            address = "2400:6180:100:d0::983:c001";
+            address = "2400:6180:100:d0::125:2001";
             prefixLength = 64;
           }
           {
-            address = "fe80::b091:29ff:fec6:1637";
+            address = "fe80::b84e:8eff:fe90:2489";
             prefixLength = 64;
           }
         ];
         ipv4.routes = [
           {
-            address = "167.71.224.1";
+            address = "143.244.128.1";
             prefixLength = 32;
           }
         ];
@@ -63,7 +63,7 @@
         ];
         ipv6.addresses = [
           {
-            address = "fe80::a071:83ff:fed6:5af6";
+            address = "fe80::449:7bff:fe34:4a6a";
             prefixLength = 64;
           }
         ];
@@ -71,7 +71,7 @@
     };
   };
   services.udev.extraRules = ''
-    ATTR{address}=="b2:91:29:c6:16:37", NAME="eth0"
-    ATTR{address}=="a2:71:83:d6:5a:f6", NAME="eth1"
+    ATTR{address}=="ba:4e:8e:90:24:89", NAME="eth0"
+    ATTR{address}=="06:49:7b:34:4a:6a", NAME="eth1"
   '';
 }
