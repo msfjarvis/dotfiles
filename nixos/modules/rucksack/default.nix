@@ -68,7 +68,7 @@ in {
 
     users.users = mkIf (cfg.user == "rucksack") {
       rucksack = {
-        group = cfg.group;
+        inherit (cfg) group;
         home = cfg.dataDir;
         createHome = false;
         description = "rucksack daemon user";
