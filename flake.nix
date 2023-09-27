@@ -105,7 +105,14 @@
   in rec {
     homeConfigurations.ryzenbox = mkHomeManagerConfig {
       system = "x86_64-linux";
-      modules = [./nixos/hosts/ryzenbox] ++ hmModules;
+      modules =
+        [
+          ./nixos/hosts/ryzenbox
+          (_: {
+            home.packages = [inputs.agenix.packages."x86_64-linux".default];
+          })
+        ]
+        ++ hmModules;
     };
     darwinConfigurations.work-macbook = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
