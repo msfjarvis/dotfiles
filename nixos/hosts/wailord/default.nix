@@ -62,7 +62,9 @@
 
   services.gitea = {
     enable = true;
+    appName = "Harsh Shandilya's Git hosting";
     settings = {
+      mailer.ENABLED = false;
       server.DOMAIN = "git.msfjarvis.dev";
       server.ROOT_URL = "https://git.msfjarvis.dev/";
       service.COOKIE_SECURE = true;
