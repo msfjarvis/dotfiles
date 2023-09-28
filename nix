@@ -11,10 +11,23 @@ function nixpatch() {
 }
 
 function nixdiff() {
-  local current_gen previous_gen
-  current_gen="$(home-manager generations | head -n1 | cut -d '>' -f 2 | tr -d '[:space:]')"
-  previous_gen="$(home-manager generations | tail -n1 | cut -d '>' -f 2 | tr -d '[:space:]')"
-  nvd diff "${previous_gen}" "${current_gen}"
+  local CUR_GEN OLD_GEN
+  case "$(uname)" in
+    "Darwin")
+      CUR_GEN="$(fd -j1 --max-depth 1 -tl system- /nix/var/nix/profiles/ | head -n1)"
+      OLD_GEN="$(fd -j1 --max-depth 1 -tl system- /nix/var/nix/profiles/ | head -n2 | tail -n1)"
+      ;;
+    "Linux")
+      if [[ -n "$(command -v home-manager)" ]]; then
+        CUR_GEN="$(fd -j1 --max-depth 1 -tl home-manager- ~/.local/state/nix/profiles/ | head -n1)"
+        OLD_GEN="$(fd -j1 --max-depth 1 -tl home-manager- ~/.local/state/nix/profiles/ | head -n2 | tail -n1)"
+      else
+        CUR_GEN="$(fd -j1 --max-depth 1 -tl system- /nix/var/nix/profiles/ | head -n1)"
+        OLD_GEN="$(fd -j1 --max-depth 1 -tl system- /nix/var/nix/profiles/ | head -n2 | tail -n1)"
+      fi
+      ;;
+  esac
+  nvd diff "${OLD_GEN}" "${CUR_GEN}"
 }
 
 function nixshell() {
