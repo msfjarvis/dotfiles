@@ -41,15 +41,12 @@
   };
 
   environment.systemPackages = with pkgs; [
-    byobu
     git
     libraspberrypi
     raspberrypi-eeprom
     micro
-    tmux
     usbutils
     wirelesstools
-    yt-dlp
   ];
 
   services.atuin = {

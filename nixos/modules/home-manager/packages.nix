@@ -3,6 +3,7 @@
 with pkgs; [
   alejandra
   aria2
+  byobu
   cachix
   curl
   delta
@@ -26,6 +27,7 @@ with pkgs; [
   shellcheck
   shfmt
   tea-dev
+  tmux
   unzip
   vivid
   zip
