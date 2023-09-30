@@ -57,6 +57,11 @@
           reverse_proxy :${toString config.services.gitea.settings.server.HTTP_PORT}
         '';
       };
+      "https://wailord.tiger-shark.ts.net" = {
+        extraConfig = ''
+          reverse_proxy :${toString config.services.shiori.port}
+        '';
+      };
     };
   };
 
@@ -74,8 +79,14 @@
 
   services.openssh.enable = true;
 
+  services.shiori = {
+    enable = true;
+    port = 9999;
+  };
+
   services.tailscale = {
     enable = true;
+    permitCertUid = "caddy";
   };
 
   services.tailscale-autoconnect = {
