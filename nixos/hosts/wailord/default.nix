@@ -56,7 +56,7 @@
           reverse_proxy :${toString config.services.gitea.settings.server.HTTP_PORT}
         '';
       };
-      "https://wailord.tiger-shark.ts.net" = {
+      "https://til.msfjarvis.dev" = {
         extraConfig = ''
           reverse_proxy :${toString config.services.shiori.port}
         '';
