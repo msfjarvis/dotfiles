@@ -12,66 +12,47 @@
         443
       ];
     };
-    defaultGateway = "143.244.128.1";
+    defaultGateway = "10.201.154.36";
     defaultGateway6 = {
-      address = "2400:6180:100:d0::1";
-      interface = "eth0";
+      address = "2001:bc8:5080:7512::";
+      interface = "ens2";
     };
     dhcpcd.enable = false;
-    usePredictableInterfaceNames = lib.mkForce false;
+    usePredictableInterfaceNames = lib.mkForce true;
     interfaces = {
-      eth0 = {
+      ens2 = {
         ipv4.addresses = [
           {
-            address = "143.244.142.121";
-            prefixLength = 20;
-          }
-          {
-            address = "10.47.0.5";
-            prefixLength = 16;
+            address = "10.201.154.37";
+            prefixLength = 31;
           }
         ];
         ipv6.addresses = [
           {
-            address = "2400:6180:100:d0::125:2001";
+            address = "2001:bc8:5080:7512::1";
             prefixLength = 64;
           }
           {
-            address = "fe80::b84e:8eff:fe90:2489";
+            address = "fe80::dc30:14ff:fe13:13";
             prefixLength = 64;
           }
         ];
         ipv4.routes = [
           {
-            address = "143.244.128.1";
+            address = "10.201.154.36";
             prefixLength = 32;
           }
         ];
         ipv6.routes = [
           {
-            address = "2400:6180:100:d0::1";
+            address = "2001:bc8:5080:7512::";
             prefixLength = 128;
-          }
-        ];
-      };
-      eth1 = {
-        ipv4.addresses = [
-          {
-            address = "10.122.0.2";
-            prefixLength = 20;
-          }
-        ];
-        ipv6.addresses = [
-          {
-            address = "fe80::449:7bff:fe34:4a6a";
-            prefixLength = 64;
           }
         ];
       };
     };
   };
   services.udev.extraRules = ''
-    ATTR{address}=="ba:4e:8e:90:24:89", NAME="eth0"
-    ATTR{address}=="06:49:7b:34:4a:6a", NAME="eth1"
+    ATTR{address}=="de:30:14:13:00:13", NAME="ens2"
   '';
 }
