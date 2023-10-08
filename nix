@@ -29,7 +29,7 @@ function nixdiff() {
       fi
       ;;
   esac
-  nvd diff "${CUR_GEN}" "${OLD_GEN}"
+  nvd diff "${OLD_GEN}" "${CUR_GEN}"
 }
 
 function nixshell() {
