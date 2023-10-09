@@ -19,8 +19,8 @@ function nixdiff() {
       ;;
     "Linux")
       if [[ -n "$(command -v home-manager)" ]]; then
-        CUR_GEN="$(fd -j1 --max-depth 1 -tl home-manager- ~/.local/state/nix/profiles/ | head -n1)"
-        OLD_GEN="$(fd -j1 --max-depth 1 -tl home-manager- ~/.local/state/nix/profiles/ | head -n2 | tail -n1)"
+        CUR_GEN="$(fd -j1 --max-depth 1 -tl home-manager- ~/.local/state/nix/profiles/ | head -n2 | tail -n1)"
+        OLD_GEN="$(fd -j1 --max-depth 1 -tl home-manager- ~/.local/state/nix/profiles/ | head -n1)"
       else
         CUR_GEN_NUM="$(nixos-rebuild --fast list-generations | tail -n +2 | awk '{print $1}' | head -n1)"
         OLD_GEN_NUM="$(nixos-rebuild --fast list-generations | tail -n +2 | awk '{print $1}' | head -n2 | tail -n1)"
