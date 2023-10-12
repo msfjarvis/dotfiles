@@ -176,7 +176,8 @@
     # packages.x86_64-linux.wailord = nixosConfigurations.wailord.config.system.build.toplevel;
     packages.x86_64-linux.ryzenbox = homeConfigurations.ryzenbox.activationPackage;
     packages.aarch64-linux.crusty = nixosConfigurations.crusty.config.system.build.toplevel;
-    packages.aarch64-darwin.macbook = darwinConfigurations.work-macbook.system;
+    # Does not build in garnix
+    # packages.aarch64-darwin.macbook = darwinConfigurations.work-macbook.system;
 
     apps = forAllSystems (system: {
       format = {
