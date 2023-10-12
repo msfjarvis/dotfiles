@@ -44,6 +44,7 @@
     git
     libraspberrypi
     raspberrypi-eeprom
+    megatools
     micro
     usbutils
     wirelesstools
