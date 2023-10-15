@@ -78,9 +78,13 @@
     enableBashIntegration = true;
   };
 
-  services.password-store-sync = {
+  services.git-sync = {
     enable = true;
-    frequency = "*-*-* *:00:00";
+    repositories.password-store = {
+      path = config.programs.password-store.settings.PASSWORD_STORE_DIR;
+      uri = "git+ssh://msfjarvis@github.com:msfjarvis/pass-store.git";
+      interval = 600;
+    };
   };
 
   systemd.user.services.rucksack = {
