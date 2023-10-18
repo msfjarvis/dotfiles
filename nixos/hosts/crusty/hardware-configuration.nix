@@ -18,10 +18,9 @@
     fsType = "ext4";
   };
   fileSystems."/media" = {
-    device = "/dev/disk/by-uuid/7EC439F83DA97A5E";
-    fsType = "ntfs";
+    device = "/dev/disk/by-uuid/1d9cbc92-8ea9-4ae7-8c8f-5f72c3d75626";
+    fsType = "ext4";
     options = [
-      "allow_other"
       "nofail"
     ];
   };
