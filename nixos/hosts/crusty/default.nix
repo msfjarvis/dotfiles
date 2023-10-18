@@ -19,9 +19,13 @@
     useXkbConfig = true;
   };
 
-  users.users.msfjarvis = {
-    isNormalUser = true;
-    extraGroups = ["wheel"];
+  users = {
+    mutableUsers = false;
+    users.msfjarvis = {
+      isNormalUser = true;
+      extraGroups = ["wheel"];
+      hashedPassword = ''$y$j9T$MQNdrYiBEX4.vkTzuXc4Q.$FKzWf0o.527za6LfMU1f96Cf2iZPZRVmOwmOw7yx5.A'';
+    };
   };
 
   programs.command-not-found.enable = false;
