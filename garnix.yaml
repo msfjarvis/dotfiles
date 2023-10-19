@@ -1,5 +1,5 @@
 builds:
   include:
     - nixosConfigurations.crusty
-    # - nixosConfigurations.wailord
+    - nixosConfigurations.wailord
     - packages.aarch64-darwin.*
