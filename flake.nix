@@ -197,6 +197,7 @@
     packages.aarch64-darwin.macbook = darwinConfigurations.work-macbook.system;
 
     apps = forAllSystems (system: {
+      deploy = deploy-rs.apps.${system}.default;
       format = {
         type = "app";
         program = let
