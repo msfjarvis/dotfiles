@@ -194,9 +194,6 @@
     # This is highly advised, and will prevent many possible mistakes
     checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
-    packages.x86_64-linux.wailord = nixosConfigurations.wailord.config.system.build.toplevel;
-    packages.x86_64-linux.ryzenbox = homeConfigurations.ryzenbox.activationPackage;
-    packages.aarch64-linux.crusty = nixosConfigurations.crusty.config.system.build.toplevel;
     packages.aarch64-darwin.macbook = darwinConfigurations.work-macbook.system;
 
     apps = forAllSystems (system: {
