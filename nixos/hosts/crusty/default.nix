@@ -64,19 +64,6 @@
     database.createLocally = true;
   };
 
-  services.caddy = {
-    enable = true;
-    virtualHosts = {
-      "crusty.tiger-shark.ts.net" = {
-        extraConfig = ''
-          encode gzip
-          root * /srv/healthchecks-dashboard
-          file_server
-        '';
-      };
-    };
-  };
-
   services.rucksack = {
     enable = true;
     user = "root";
