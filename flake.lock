@@ -73,6 +73,30 @@
         "type": "github"
       }
     },
+    "deploy-rs": {
+      "inputs": {
+        "flake-compat": [],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": [
+          "flake-utils"
+        ]
+      },
+      "locked": {
+        "lastModified": 1695052866,
+        "narHash": "sha256-agn7F9Oww4oU6nPiw+YiYI9Xb4vOOE73w8PAoBRP4AA=",
+        "owner": "serokell",
+        "repo": "deploy-rs",
+        "rev": "e3f41832680801d0ee9e2ed33eb63af398b090e9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "serokell",
+        "repo": "deploy-rs",
+        "type": "github"
+      }
+    },
     "dracula-micro": {
       "flake": false,
       "locked": {
@@ -275,6 +299,7 @@
         "agenix": "agenix",
         "custom-nixpkgs": "custom-nixpkgs",
         "darwin": "darwin",
+        "deploy-rs": "deploy-rs",
         "dracula-micro": "dracula-micro",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",

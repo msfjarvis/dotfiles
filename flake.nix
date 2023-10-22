@@ -18,6 +18,11 @@
   inputs.darwin.url = "github:LnL7/nix-darwin/master";
   inputs.darwin.inputs.nixpkgs.follows = "nixpkgs";
 
+  inputs.deploy-rs.url = "github:serokell/deploy-rs";
+  inputs.deploy-rs.inputs.flake-compat.follows = "";
+  inputs.deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.deploy-rs.inputs.utils.follows = "flake-utils";
+
   inputs.dracula-micro.url = "https://raw.githubusercontent.com/dracula/micro/master/dracula.micro";
   inputs.dracula-micro.flake = false;
 
@@ -48,6 +53,7 @@
     nixpkgs,
     home-manager,
     darwin,
+    deploy-rs,
     systems,
     ...
   } @ inputs: let
@@ -172,6 +178,21 @@
           })
         ];
     };
+
+    deploy.nodes.wailord = {
+      hostname = "wailord";
+      fastConnection = true;
+      profiles.system = {
+        # This has definite security implications but I would rather connect as root
+        # over Tailscale than enable password-less sudo on an account
+        sshUser = "root";
+        path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.wailord;
+        user = "root";
+      };
+    };
+
+    # This is highly advised, and will prevent many possible mistakes
+    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
     packages.x86_64-linux.wailord = nixosConfigurations.wailord.config.system.build.toplevel;
     packages.x86_64-linux.ryzenbox = homeConfigurations.ryzenbox.activationPackage;
