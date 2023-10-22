@@ -179,20 +179,31 @@
         ];
     };
 
-    deploy.nodes.wailord = {
-      hostname = "wailord";
-      fastConnection = true;
-      profiles.system = {
-        # This has definite security implications but I would rather connect as root
-        # over Tailscale than enable password-less sudo on an account
-        sshUser = "root";
-        path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.wailord;
-        user = "root";
+    deploy.nodes = {
+      crusty = {
+        hostname = "crusty";
+        fastConnection = true;
+        remoteBuild = true;
+        profiles.system = {
+          # This has definite security implications but I would rather connect as root
+          # over Tailscale than enable password-less sudo on an account
+          sshUser = "root";
+          path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.crusty;
+          user = "root";
+        };
+      };
+      wailord = {
+        hostname = "wailord";
+        fastConnection = true;
+        profiles.system = {
+          # This has definite security implications but I would rather connect as root
+          # over Tailscale than enable password-less sudo on an account
+          sshUser = "root";
+          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.wailord;
+          user = "root";
+        };
       };
     };
-
-    # This is highly advised, and will prevent many possible mistakes
-    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
     packages.aarch64-darwin.macbook = darwinConfigurations.work-macbook.system;
 
