@@ -66,7 +66,14 @@
         remote_topgrade_path = "bin/topgrade";
         set_title = true;
         skip_notify = true;
-        disable = ["gnome_shell_extensions" "home_manager" "nix" "node" "sdkman"];
+        only = [
+          "firmware"
+          "github_cli_extensions"
+          "micro"
+          "remotes"
+          "spicetify"
+          "system"
+        ];
       };
     };
   };
