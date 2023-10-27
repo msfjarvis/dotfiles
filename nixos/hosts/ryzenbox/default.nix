@@ -94,6 +94,8 @@
     };
   };
 
+  systemd.user.systemctlPath = "/usr/bin/systemctl";
+
   systemd.user.services.rucksack = {
     Unit = {
       Description = "systemd service for rucksack";
@@ -107,6 +109,21 @@
       Environment = "PATH=${pkgs.watchman}/bin";
     };
     Install = {WantedBy = ["default.target"];};
+  };
+
+  systemd.user.services.rucksack-restart = {
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${config.systemd.user.systemctlPath} --user restart rucksack.service";
+    };
+    Install = {WantedBy = ["multi-user.target"];};
+  };
+
+  systemd.user.paths.rucksack-restart = {
+    Path = {
+      PathChanged = "${config.home.homeDirectory}/.config/rucksack.toml";
+    };
+    Install = {WantedBy = ["multi-user.target"];};
   };
 
   systemd.user.services.clipboard-substitutor = {
