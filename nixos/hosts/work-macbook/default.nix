@@ -18,6 +18,9 @@
       "ruby"
       "JakeWharton/repo/dependency-watch"
     ];
+    casks = [
+      "flutter"
+    ];
     taps = [
       "JakeWharton/repo"
     ];
