@@ -51,6 +51,7 @@
     micro
     usbutils
     wirelesstools
+    yt-dlp
   ];
 
   services.atuin = {
