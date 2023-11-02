@@ -1,0 +1,37 @@
+on:
+  push:
+    branches:
+      - main
+
+name: Deploy to wailord
+jobs:
+  deploy-wailord:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+    - name: Install Nix
+      uses: DeterminateSystems/nix-installer-action@bc7b19257469c8029b46f45ac99ecc11156c8b2d # v6
+
+    - name: Set up Magic Nix Cache
+      uses: DeterminateSystems/magic-nix-cache-action@8a218f9e264e9c3803c9a1ee1c30d8e4ab55be63 # v2
+
+    - name: Set up Cachix (msfjarvis)
+      uses: cachix/cachix-action@6a9a34cdd93d0ae4b4b59fd678660efb08109f2f # tag=v12
+      with:
+        name: msfjarvis
+        authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+        cachixArgs: -c9 --omit-deriver
+
+    - name: Tailscale
+      uses: tailscale/github-action@v2
+      with:
+        oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+        oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+        tags: tag:github-actions
+
+    - name: Deploy wailord
+      shell: bash
+      run: |
+        nix run .#deploy -- -s .#wailord
