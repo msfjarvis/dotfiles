@@ -109,5 +109,12 @@
     openFirewall = true;
   };
 
+  # Work around 'pq: permission denied for schema public' with postgres v15, until a
+  # solution for `services.postgresql.ensureUsers` is found.
+  # See https://github.com/NixOS/nixpkgs/issues/216989
+  systemd.services.postgresql.postStart = ''
+    $PSQL -tAc 'ALTER DATABASE atuin OWNER TO atuin;'
+  '';
+
   system.stateVersion = "23.11";
 }
