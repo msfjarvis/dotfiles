@@ -117,4 +117,12 @@
   '';
 
   system.stateVersion = "23.11";
+
+  virtualisation.oci-containers.containers = {
+    ytdl-server = {
+      image = "kmb32123/youtube-dl-server";
+      ports = ["9999:8080"];
+      volumes = ["/var/lib/youtube-dl-server:/youtube-dl"];
+    };
+  };
 }
