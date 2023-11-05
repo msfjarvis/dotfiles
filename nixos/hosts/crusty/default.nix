@@ -70,6 +70,7 @@
     group = "root";
     sources = [
       "/var/lib/qbittorrent/downloads"
+      "/var/lib/youtube-dl-server"
     ];
     target = "/media/.omg";
     file_filter = "*.mp4";
