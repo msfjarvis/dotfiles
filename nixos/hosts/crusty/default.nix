@@ -122,6 +122,7 @@
   virtualisation.oci-containers.containers = {
     ytdl-server = {
       image = "kmb32123/youtube-dl-server";
+      # Keep in sync with files:yt
       ports = ["9999:8080"];
       volumes = ["/var/lib/youtube-dl-server:/youtube-dl"];
     };
