@@ -135,3 +135,9 @@
 	enable = true
 [maintenance "pack-refs"]
 	enable = true
+[scalar]
+	repo = /home/msfjarvis/git-repos/nixpkgs/src
+[maintenance]
+	repo = /home/msfjarvis/git-repos/nixpkgs/src
+[fetch]
+	showForcedUpdates = true
