@@ -29,6 +29,10 @@ _: {
     ];
   };
 
+  home.sessionVariables = {
+    LANG = "en_US.UTF-8";
+  };
+
   # home-manager uses nmd to build these which triggers a Nix bug
   # https://github.com/NixOS/nix/issues/8485
   manual.manpages.enable = false;
