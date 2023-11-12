@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -98,8 +99,8 @@
         "guest ok" = "yes";
         "create mask" = "0644";
         "directory mask" = "0755";
-        "force user" = "msfjarvis";
-        "force group" = "qbittorrent";
+        "force user" = "${toString config.services.qbittorrent.user}";
+        "force group" = "${toString config.services.qbittorrent.group}";
       };
     };
   };
