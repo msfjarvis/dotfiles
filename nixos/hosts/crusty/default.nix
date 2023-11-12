@@ -39,6 +39,10 @@
       allowedTCPPorts = [
         80
         443
+        5357 # wsdd
+      ];
+      allowedUDPPorts = [
+        3702 # wsdd
       ];
     };
   };
@@ -80,6 +84,7 @@
 
   services.openssh.enable = true;
 
+  services.samba-wsdd.enable = true;
   services.samba = {
     enable = true;
     openFirewall = true;
@@ -94,7 +99,7 @@
         "create mask" = "0644";
         "directory mask" = "0755";
         "force user" = "msfjarvis";
-        "force group" = "transmission";
+        "force group" = "qbittorrent";
       };
     };
   };
