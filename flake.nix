@@ -103,6 +103,7 @@
       inputs.nixos-vscode-server.nixosModules.default
       ./nixos/modules/i18n
       ./nixos/modules/nix
+      ./nixos/modules/sudo
       (_: {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
