@@ -5,6 +5,7 @@ with pkgs; [
   aria2
   byobu
   cachix
+  chafa
   curl
   delta
   diskus
