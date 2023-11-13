@@ -69,6 +69,16 @@
     database.createLocally = true;
   };
 
+  services.getty.autologinUser = "msfjarvis";
+
+  services.openssh.enable = true;
+
+  services.qbittorrent = {
+    enable = true;
+    port = 9091;
+    openFirewall = true;
+  };
+
   services.rucksack = {
     enable = true;
     user = "root";
@@ -80,10 +90,6 @@
     target = "/media/.omg";
     file_filter = "*.mp4";
   };
-
-  services.getty.autologinUser = "msfjarvis";
-
-  services.openssh.enable = true;
 
   services.samba-wsdd.enable = true;
   services.samba = {
@@ -108,12 +114,6 @@
   services.tailscale = {
     enable = true;
     permitCertUid = "caddy";
-  };
-
-  services.qbittorrent = {
-    enable = true;
-    port = 9091;
-    openFirewall = true;
   };
 
   # Work around 'pq: permission denied for schema public' with postgres v15, until a
