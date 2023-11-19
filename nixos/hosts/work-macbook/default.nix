@@ -4,6 +4,10 @@
     home = "/Users/msfjarvis";
   };
 
+  environment.variables = {
+    LANG = "en_US.UTF-8";
+  };
+
   fonts = {
     fontDir.enable = true;
     fonts = [pkgs.nerdfonts];
