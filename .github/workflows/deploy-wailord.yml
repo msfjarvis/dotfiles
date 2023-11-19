@@ -31,6 +31,14 @@ jobs:
         oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
         tags: tag:github-actions
 
+    - name: Fix SSH connections
+      shell: bash
+      run: |
+        set -euxo pipefail
+        mkdir -p ~/.ssh/ && touch ~/.ssh/known_hosts
+        chmod 600 ~/.ssh/known_hosts
+        ssh-keyscan wailord >> ~/.ssh/known_hosts
+
     - name: Deploy wailord
       shell: bash
       run: |
