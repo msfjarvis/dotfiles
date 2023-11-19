@@ -42,4 +42,4 @@ jobs:
     - name: Deploy wailord
       shell: bash
       run: |
-        nix run .#deploy -- -s .#wailord
+        nix --accept-flake-config run .#deploy -- -s .#wailord
