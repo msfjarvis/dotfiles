@@ -1,87 +1,86 @@
 [advice]
 	skippedCherryPicks = false
-[core]
-	abbrev = 12
-[pretty]
-	fixes = Fixes: %h (\"%s\")
-[user]
-	name = Harsh Shandilya
-	email = me@msfjarvis.dev
-[pull]
-	rebase = true
-[push]
-	default = simple
-	autoSetupRemote = true
-[color]
-	ui = true
-[credential]
-	helper = cache --timeout=3000
-[rerere]
-	enabled = true
 [alias]
 	a = add
-    add-signoff = "!EDITOR='sed -i -re s/^pick/e/' sh -c 'git rebase -i $1 && while test -f .git/rebase-merge/interactive; do git commit --signoff --amend --no-edit && git rebase --continue; done' -"
 	amc = "!xclip -out -selection clipboard | git am $@"
 	branches = branch -r --sort='-authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)'
-	c = commit
 	ca = commit -a
 	cam = commit -am
-	cp = cherry-pick --signoff
+	c = commit
 	cpa = cherry-pick --abort
 	cpc = cherry-pick --continue
-	d = diff
+	cp = cherry-pick --signoff
 	dc = diff --cached
 	dcs = diff --stat --cached
-	ds = diff --stat
+	d = diff
 	dsc = diff --stat --cached
-	export = archive --format zip --output
+	ds = diff --stat
 	expire-reflog = "!git reflog expire --expire=\"$(date)\" --all"
+	export = archive --format zip --output
 	fix = ca --fixup
 	ignore = "!gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ >> .gitignore ;}; gi"
 	kang = commit --amend --reset-author
-	lo = log --oneline
 	loa = log --oneline --author='Harsh Shandilya'
 	loc = log --oneline --committer='Harsh Shandilya'
-	los = log --oneline --stat
 	lof = log --format=fixes
+	lo = log --oneline
+	los = log --oneline --stat
 	lst = ls-tree --full-tree -r HEAD
 	pf = push --force-with-lease
 	publish = "!git push origin --set-upstream $(git rev-parse --abbrev-ref HEAD)"
 	rc = rebase --continue
+	reword = "!EDITOR='sed -i -re s/^pick/e/' sh -c 'git rebase -i $1 && while test -f .git/rebase-merge/interactive; do git commit --amend && git rebase --continue;done' -"
 	ru = remote update --prune
 	rv = remote -v
-	reword = "!EDITOR='sed -i -re s/^pick/e/' sh -c 'git rebase -i $1 && while test -f .git/rebase-merge/interactive; do git commit --amend && git rebase --continue;done' -"
-	s = status
 	squash = rebase -i --autosquash
-	su = submodule update --init --recursive
 	ss = show --stat
+	s = status
 	suicide = reset --hard
+	su = submodule update --init --recursive
 	sw = "!git switch $(git branch | fzf | tr -d '*[:space:]')"
-[merge]
-	log = true
+[color]
+	ui = true
+[core]
+	abbrev = 12
+[credential]
+	helper = cache --timeout=3000
+[fetch]
+	showForcedUpdates = true
 [gc]
 	auto = 0
 [http]
 	postBuffer = 524288000
-[log]
-	follow = true
 [init]
 	defaultBranch = main
-[maintenance "gc"]
-	enable = true
+[log]
+	follow = true
+[maintenance]
+	repo = /home/msfjarvis/git-repos/nixpkgs/src
 [maintenance "commit-graph"]
 	enable = true
-[maintenance "prefetch"]
-	enable = true
-[maintenance "loose-objects"]
+[maintenance "gc"]
 	enable = true
 [maintenance "incremental-repack"]
 	enable = true
+[maintenance "loose-objects"]
+	enable = true
 [maintenance "pack-refs"]
 	enable = true
+[maintenance "prefetch"]
+	enable = true
+[merge]
+	log = true
+[pretty]
+	fixes = Fixes: %h (\"%s\")
+[pull]
+	rebase = true
+[push]
+	autoSetupRemote = true
+	default = simple
+[rerere]
+	enabled = true
 [scalar]
 	repo = /home/msfjarvis/git-repos/nixpkgs/src
-[maintenance]
-	repo = /home/msfjarvis/git-repos/nixpkgs/src
-[fetch]
-	showForcedUpdates = true
+[user]
+	email = me@msfjarvis.dev
+	name = Harsh Shandilya

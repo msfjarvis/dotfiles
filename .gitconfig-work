@@ -1,9 +1,9 @@
-[user]
-	email = harsh.shandilya@dyte.io
 [commit]
 	gpgsign = false
 [tag]
 	gpgsign = false
 [url "https://github.com/"]
-	insteadOf = git@github.com:
 	insteadOf = git://github.com/
+	insteadOf = git@github.com:
+[user]
+	email = harsh.shandilya@dyte.io
