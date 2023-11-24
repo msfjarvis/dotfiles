@@ -7,6 +7,7 @@ with pkgs; [
   cachix
   chafa
   curl
+  delta
   diskus
   dos2unix
   fd
