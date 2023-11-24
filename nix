@@ -14,8 +14,8 @@ function nixdiff() {
   local CUR_GEN OLD_GEN
   case "$(uname)" in
     "Darwin")
-      CUR_GEN="$(fd -j1 --max-depth 1 -tl system- /nix/var/nix/profiles/ | head -n1)"
-      OLD_GEN="$(fd -j1 --max-depth 1 -tl system- /nix/var/nix/profiles/ | head -n2 | tail -n1)"
+      CUR_GEN="$(fd -j1 --max-depth 1 -tl system- /nix/var/nix/profiles/ | tail -n1)"
+      OLD_GEN="$(fd -j1 --max-depth 1 -tl system- /nix/var/nix/profiles/ | tail -n2 | head -n1)"
       ;;
     "Linux")
       if [[ -n "$(command -v home-manager)" ]]; then
