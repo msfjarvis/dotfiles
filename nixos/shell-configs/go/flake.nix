@@ -19,7 +19,6 @@
   inputs.nix-vscode-extensions.inputs.flake-compat.follows = "flake-compat";
 
   outputs = {
-    self,
     nixpkgs,
     devshell,
     flake-utils,

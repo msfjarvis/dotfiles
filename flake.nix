@@ -146,11 +146,7 @@
           ./nixos/modules/qbittorrent
           ./nixos/modules/rucksack
           ./nixos/hosts/crusty
-          ({
-            config,
-            lib,
-            ...
-          }: {
+          ({lib, ...}: {
             home-manager.users.msfjarvis = lib.mkMerge [
               {imports = serverHmModules;}
             ];
@@ -166,11 +162,7 @@
         ++ [
           ./nixos/modules/tailscale-autoconnect
           ./nixos/hosts/wailord
-          ({
-            config,
-            lib,
-            ...
-          }: {
+          ({lib, ...}: {
             age.secrets."wailord-tsauthkey".file = ./secrets/wailord-tsauthkey.age;
             home-manager.users.msfjarvis = lib.mkMerge [
               {imports = serverHmModules;}

@@ -27,7 +27,6 @@
   inputs.flake-compat.flake = false;
 
   outputs = {
-    self,
     nixpkgs,
     advisory-db,
     crane,

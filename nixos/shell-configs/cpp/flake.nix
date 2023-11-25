@@ -14,7 +14,6 @@
   inputs.flake-compat.flake = false;
 
   outputs = {
-    self,
     nixpkgs,
     devshell,
     flake-utils,
