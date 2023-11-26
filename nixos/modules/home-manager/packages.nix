@@ -7,7 +7,6 @@ with pkgs; [
   cachix
   chafa
   curl
-  difftastic
   diskus
   dos2unix
   fd

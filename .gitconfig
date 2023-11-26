@@ -44,13 +44,6 @@
 	abbrev = 12
 [credential]
 	helper = cache --timeout=3000
-[diff]
-	tool = difftastic
-	external = difft --display inline
-[difftool]
-	prompt = false
-[difftool "difftastic"]
-	cmd = difft "$LOCAL" "$REMOTE"
 [fetch]
 	showForcedUpdates = true
 [gc]
@@ -61,8 +54,6 @@
 	defaultBranch = main
 [log]
 	follow = true
-[pager]
-	difftool = true
 [maintenance]
 	repo = /home/msfjarvis/git-repos/nixpkgs/src
 [maintenance "commit-graph"]
