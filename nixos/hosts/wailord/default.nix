@@ -95,7 +95,7 @@
 
   services.tailscale-autoconnect = {
     enable = true;
-    authkeyFile = config.age.secrets.wailord-tsauthkey.path;
+    authkeyFile = config.age.secrets.tsauthkey.path;
     extraOptions = ["--accept-risk=lose-ssh" "--ssh"];
   };
 
