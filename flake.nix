@@ -73,17 +73,6 @@
       };
     pkgs = forAllSystems packagesFn;
 
-    mkHomeManagerConfig = options: let
-      nixGLWrap = (import ./nixos/modules/nixGL) pkgs.${options.system};
-    in
-      home-manager.lib.homeManagerConfiguration {
-        inherit (options) modules;
-        extraSpecialArgs = {
-          inherit (inputs) dracula-micro;
-          inherit nixGLWrap;
-        };
-        pkgs = pkgs.${options.system};
-      };
     hmModules = [
       ./nixos/modules/home-manager
       ./nixos/modules/micro
@@ -103,24 +92,40 @@
       inputs.nixos-vscode-server.nixosModules.default
       ./nixos/modules/i18n
       ./nixos/modules/nix
-      (_: {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = {inherit (inputs) dracula-micro;};
+      ./nixos/modules/qbittorrent
+      ./nixos/modules/rucksack
+      ./nixos/modules/tailscale-autoconnect
+      ({lib, ...}: {
+        age.secrets."tsauthkey".file = ./secrets/tsauthkey.age;
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          extraSpecialArgs = {inherit (inputs) dracula-micro;};
+          users.msfjarvis = lib.mkMerge [
+            {imports = serverHmModules;}
+          ];
+        };
       })
     ];
+
+    mkHomeManagerConfig = options: let
+      nixGLWrap = (import ./nixos/modules/nixGL) pkgs.${options.system};
+    in
+      home-manager.lib.homeManagerConfiguration {
+        modules = hmModules ++ options.modules;
+        extraSpecialArgs = {
+          inherit (inputs) dracula-micro;
+          inherit nixGLWrap;
+        };
+        pkgs = pkgs.${options.system};
+      };
+    mkNixOSConfig = options:
+      nixpkgs.lib.nixosSystem {
+        inherit (options) system;
+        pkgs = pkgs.${options.system};
+        modules = nixosModules ++ options.modules;
+      };
   in rec {
-    homeConfigurations.ryzenbox = mkHomeManagerConfig {
-      system = "x86_64-linux";
-      modules =
-        [
-          ./nixos/hosts/ryzenbox
-          (_: {
-            home.packages = [inputs.agenix.packages."x86_64-linux".default];
-          })
-        ]
-        ++ hmModules;
-    };
     darwinConfigurations.work-macbook = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       pkgs = pkgs."aarch64-darwin";
@@ -137,39 +142,27 @@
         })
       ];
     };
-    nixosConfigurations.crusty = nixpkgs.lib.nixosSystem {
-      system = "aarch64-linux";
-      modules =
-        nixosModules
-        ++ [
-          inputs.nixos-hardware.nixosModules.raspberry-pi-4
-          ./nixos/modules/qbittorrent
-          ./nixos/modules/rucksack
-          ./nixos/hosts/crusty
-          ({lib, ...}: {
-            home-manager.users.msfjarvis = lib.mkMerge [
-              {imports = serverHmModules;}
-            ];
-            nixpkgs.overlays = [inputs.custom-nixpkgs.overlays.default];
-            services.vscode-server.enable = true;
-          })
-        ];
-    };
-    nixosConfigurations.wailord = nixpkgs.lib.nixosSystem {
+    homeConfigurations.ryzenbox = mkHomeManagerConfig rec {
       system = "x86_64-linux";
-      modules =
-        nixosModules
-        ++ [
-          ./nixos/modules/tailscale-autoconnect
-          ./nixos/hosts/wailord
-          ({lib, ...}: {
-            age.secrets."tsauthkey".file = ./secrets/tsauthkey.age;
-            home-manager.users.msfjarvis = lib.mkMerge [
-              {imports = serverHmModules;}
-            ];
-            nixpkgs.overlays = [inputs.custom-nixpkgs.overlays.default];
-          })
-        ];
+      modules = [
+        ./nixos/hosts/ryzenbox
+        (_: {
+          home.packages = [inputs.agenix.packages.${system}.default];
+        })
+      ];
+    };
+    nixosConfigurations.crusty = mkNixOSConfig {
+      system = "aarch64-linux";
+      modules = [
+        ./nixos/hosts/crusty
+        inputs.nixos-hardware.nixosModules.raspberry-pi-4
+      ];
+    };
+    nixosConfigurations.wailord = mkNixOSConfig {
+      system = "x86_64-linux";
+      modules = [
+        ./nixos/hosts/wailord
+      ];
     };
 
     deploy.nodes = {
