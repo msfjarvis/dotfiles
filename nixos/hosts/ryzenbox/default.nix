@@ -182,6 +182,7 @@
     twt
     when
     xclip
+    xdotool
     yt-dlp
   ];
 }
