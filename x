@@ -32,6 +32,12 @@ case "${ARG}" in
   install)
     ./install.sh
     ;;
+  samosa-check)
+    sudo nixos-rebuild build --flake .#samosa
+    ;;
+  samosa-switch)
+    sudo nixos-rebuild switch --flake .#samosa
+    ;;
   server-check)
     sudo nixos-rebuild build --flake .#wailord
     ;;

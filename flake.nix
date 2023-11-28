@@ -158,6 +158,12 @@
         inputs.nixos-hardware.nixosModules.raspberry-pi-4
       ];
     };
+    nixosConfigurations.samosa = mkNixOSConfig {
+      system = "x86_64-linux";
+      modules = [
+        ./nixos/hosts/samosa
+      ];
+    };
     nixosConfigurations.wailord = mkNixOSConfig {
       system = "x86_64-linux";
       modules = [
@@ -171,10 +177,17 @@
         fastConnection = true;
         remoteBuild = true;
         profiles.system = {
-          # This has definite security implications but I would rather connect as root
-          # over Tailscale than enable password-less sudo on an account
           sshUser = "root";
           path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.crusty;
+          user = "root";
+        };
+      };
+      samosa = {
+        hostname = "samosa";
+        fastConnection = true;
+        profiles.system = {
+          sshUser = "root";
+          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.wailord;
           user = "root";
         };
       };
@@ -182,8 +195,6 @@
         hostname = "wailord";
         fastConnection = true;
         profiles.system = {
-          # This has definite security implications but I would rather connect as root
-          # over Tailscale than enable password-less sudo on an account
           sshUser = "root";
           path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.wailord;
           user = "root";
