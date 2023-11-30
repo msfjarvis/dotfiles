@@ -16,7 +16,7 @@ jobs:
       uses: DeterminateSystems/magic-nix-cache-action@8a218f9e264e9c3803c9a1ee1c30d8e4ab55be63 # v2
 
     - name: Set up Cachix (msfjarvis)
-      uses: cachix/cachix-action@6a9a34cdd93d0ae4b4b59fd678660efb08109f2f # tag=v12
+      uses: cachix/cachix-action@6a2e08b5ebf7a9f285ff57b1870a4262b06e0bee # v13
       with:
         name: msfjarvis
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
