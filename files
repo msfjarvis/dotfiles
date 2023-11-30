@@ -159,13 +159,6 @@ function tmpshare() {
   curl -F"file=@${FILE:?}" https://0x0.st
 }
 
-function yt() {
-  local URL
-  URL="${1}"
-  # Keep in sync with nixos/hosts/crusty/default.nix
-  curl -X POST --data-urlencode "url=${URL:?}" http://crusty:9999/youtube-dl/q
-}
-
 # Upload a file to imgur and copy the link
 function imgur() {
   local FILE LINK USE_CLIPBOARD

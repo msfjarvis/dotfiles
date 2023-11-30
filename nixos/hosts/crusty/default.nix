@@ -85,7 +85,6 @@
     group = "root";
     sources = [
       "/var/lib/qbittorrent/downloads"
-      "/var/lib/youtube-dl-server"
     ];
     target = "/media/.omg";
     file_filter = "*.mp4";
@@ -117,13 +116,4 @@
   };
 
   system.stateVersion = "23.11";
-
-  virtualisation.oci-containers.containers = {
-    ytdl-server = {
-      image = "kmb32123/youtube-dl-server";
-      # Keep in sync with files:yt
-      ports = ["9999:8080"];
-      volumes = ["/var/lib/youtube-dl-server:/youtube-dl"];
-    };
-  };
 }
