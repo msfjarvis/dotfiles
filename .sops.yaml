@@ -1,0 +1,11 @@
+keys:
+  - &msfjarvis age1jf86m4pchtd288km97ewswd3xy6kmsdnumhnhks40akg94zad3vqqyq9ks
+  - &wailord age1rjn7h6m3dtr02st8u2ccq3u6xwzmk6ap3v26yhvc39pqj9c47u0sf2skvj
+  - &crusty age1svp8anwr7s5j5404836f0x388yzdqkh3w3zuksr4rcakg3qahglsu2fg9p
+creation_rules:
+  - path_regex: secrets/*
+    key_groups:
+      - age:
+        - *msfjarvis
+        - *wailord
+        - *crusty

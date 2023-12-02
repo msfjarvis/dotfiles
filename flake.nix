@@ -6,11 +6,6 @@
 
   inputs.systems.url = "github:msfjarvis/flake-systems";
 
-  inputs.agenix.url = "github:ryantm/agenix";
-  inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.agenix.inputs.darwin.follows = "darwin";
-  inputs.agenix.inputs.home-manager.follows = "home-manager";
-
   inputs.custom-nixpkgs.url = "github:msfjarvis/custom-nixpkgs/main";
   inputs.custom-nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
   inputs.custom-nixpkgs.inputs.systems.follows = "systems";
@@ -47,6 +42,10 @@
   inputs.nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
   inputs.nixos-vscode-server.inputs.nixpkgs.follows = "nixpkgs";
   inputs.nixos-vscode-server.inputs.flake-utils.follows = "flake-utils";
+
+  inputs.sops-nix.url = "github:Mic92/sops-nix";
+  inputs.sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.sops-nix.inputs.nixpkgs-stable.follows = "";
 
   outputs = {
     self,
@@ -88,15 +87,17 @@
     ];
     nixosModules = [
       home-manager.nixosModules.home-manager
-      inputs.agenix.nixosModules.default
       inputs.nixos-vscode-server.nixosModules.default
+      inputs.sops-nix.nixosModules.sops
       ./nixos/modules/i18n
       ./nixos/modules/nix
       ./nixos/modules/qbittorrent
       ./nixos/modules/rucksack
       ./nixos/modules/tailscale-autoconnect
       ({lib, ...}: {
-        age.secrets."tsauthkey".file = ./secrets/tsauthkey.age;
+        sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+        sops.defaultSopsFile = ./secrets/tailscale.yaml;
+        sops.secrets.tsauthkey = {};
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
@@ -146,9 +147,6 @@
       system = "x86_64-linux";
       modules = [
         ./nixos/hosts/ryzenbox
-        (_: {
-          home.packages = [inputs.agenix.packages.${system}.default];
-        })
       ];
     };
     nixosConfigurations.crusty = mkNixOSConfig {

@@ -115,5 +115,11 @@
     permitCertUid = "caddy";
   };
 
+  services.tailscale-autoconnect = {
+    enable = true;
+    authkeyFile = "/run/secrets/tsauthkey";
+    extraOptions = ["--accept-risk=lose-ssh" "--ssh"];
+  };
+
   system.stateVersion = "23.11";
 }

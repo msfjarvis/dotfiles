@@ -1,31 +1,5 @@
 {
   "nodes": {
-    "agenix": {
-      "inputs": {
-        "darwin": [
-          "darwin"
-        ],
-        "home-manager": [
-          "home-manager"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1696775529,
-        "narHash": "sha256-TYlE4B0ktPtlJJF9IFxTWrEeq+XKG8Ny0gc2FGEAdj0=",
-        "owner": "ryantm",
-        "repo": "agenix",
-        "rev": "daf42cb35b2dc614d1551e37f96406e4c4a2d3e4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ryantm",
-        "repo": "agenix",
-        "type": "github"
-      }
-    },
     "custom-nixpkgs": {
       "inputs": {
         "fenix": "fenix",
@@ -296,7 +270,6 @@
     },
     "root": {
       "inputs": {
-        "agenix": "agenix",
         "custom-nixpkgs": "custom-nixpkgs",
         "darwin": "darwin",
         "deploy-rs": "deploy-rs",
@@ -309,6 +282,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixos-vscode-server": "nixos-vscode-server",
         "nixpkgs": "nixpkgs",
+        "sops-nix": "sops-nix",
         "systems": "systems"
       }
     },
@@ -339,6 +313,27 @@
       "original": {
         "type": "file",
         "url": "https://static.rust-lang.org/dist/2023-10-22/channel-rust-nightly.toml"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-stable": []
+      },
+      "locked": {
+        "lastModified": 1701127353,
+        "narHash": "sha256-qVNX0wOl0b7+I35aRu78xUphOyELh+mtUp1KBx89K1Q=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "b1edbf5c0464b4cced90a3ba6f999e671f0af631",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "type": "github"
       }
     },
     "systems": {
