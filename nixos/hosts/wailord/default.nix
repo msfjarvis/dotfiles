@@ -61,11 +61,6 @@
           reverse_proxy :${toString config.services.gitea.settings.server.HTTP_PORT}
         '';
       };
-      "https://til.msfjarvis.dev" = {
-        extraConfig = ''
-          reverse_proxy :${toString config.services.shiori.port}
-        '';
-      };
     };
   };
 
@@ -82,11 +77,6 @@
   };
 
   services.openssh.enable = true;
-
-  services.shiori = {
-    enable = true;
-    port = 9999;
-  };
 
   services.tailscale = {
     enable = true;
