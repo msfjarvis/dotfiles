@@ -46,15 +46,10 @@
 
   environment.systemPackages = with pkgs; [
     adx
-    awscli2
     coreutils
-    dasel
     diffuse-bin
-    flock
     gdrive
-    gradle-completion
     git-absorb
-    go_1_21
     hub
     katbin
     maestro
