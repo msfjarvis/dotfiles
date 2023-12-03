@@ -143,7 +143,7 @@
         })
       ];
     };
-    homeConfigurations.ryzenbox = mkHomeManagerConfig rec {
+    homeConfigurations.ryzenbox = mkHomeManagerConfig {
       system = "x86_64-linux";
       modules = [
         ./nixos/hosts/ryzenbox
@@ -234,12 +234,14 @@
             name = "format";
             runtimeInputs = with pkgs.${system}; [
               alejandra
+              deadnix
               shfmt
               statix
             ];
             text = ''
               shfmt -w -s -i 2 -ci ${fmtTargetsStr};
               alejandra --quiet .
+              deadnix --edit
               statix check .
             '';
           };
