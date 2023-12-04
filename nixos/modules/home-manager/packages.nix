@@ -27,6 +27,7 @@ with pkgs; [
   sd
   shellcheck
   shfmt
+  sops
   tea-dev
   tmux
   unzip
