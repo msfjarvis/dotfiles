@@ -61,6 +61,11 @@
           reverse_proxy :${toString config.services.gitea.settings.server.HTTP_PORT}
         '';
       };
+      "https://til.msfjarvis.dev" = {
+        extraConfig = ''
+          reverse_proxy :9090
+        '';
+      };
     };
   };
 
@@ -93,4 +98,12 @@
 
   # Workaround for https://github.com/NixOS/nixpkgs/issues/180175
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
+
+  virtualisation.oci-containers.containers = {
+    linkding = {
+      image = "sissbruecker/linkding:latest-alpine";
+      ports = ["9090:9090"];
+      volumes = ["/var/lib/linkding:/etc/linkding/data"];
+    };
+  };
 }
