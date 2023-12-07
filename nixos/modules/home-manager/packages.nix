@@ -32,5 +32,6 @@ with pkgs; [
   tmux
   unzip
   vivid
+  zellij
   zip
 ]
