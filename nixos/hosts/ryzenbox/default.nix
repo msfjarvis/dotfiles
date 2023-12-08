@@ -179,7 +179,6 @@
     (nixGLWrap "scrcpy" scrcpy)
     spicetify-cli
     transmission
-    twt
     when
     xclip
     xdotool
