@@ -69,6 +69,17 @@
     database.createLocally = true;
   };
 
+  services.caddy = {
+    enable = true;
+    virtualHosts = {
+      "https://crusty.tiger-shark.ts.net" = {
+        extraConfig = ''
+          reverse_proxy :${toString config.services.qbittorrent.port}
+        '';
+      };
+    };
+  };
+
   services.getty.autologinUser = "msfjarvis";
 
   services.openssh.enable = true;
