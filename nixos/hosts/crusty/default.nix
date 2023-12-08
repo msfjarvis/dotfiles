@@ -40,10 +40,6 @@
       allowedTCPPorts = [
         80
         443
-        5357 # wsdd
-      ];
-      allowedUDPPorts = [
-        3702 # wsdd
       ];
     };
   };
@@ -99,26 +95,6 @@
     ];
     target = "/media/.omg";
     file_filter = "*.mp4";
-  };
-
-  services.samba-wsdd.enable = true;
-  services.samba = {
-    enable = true;
-    openFirewall = true;
-    extraConfig = ''
-      map to guest = bad user
-    '';
-    shares = {
-      public = {
-        path = "/media/.omg";
-        "read only" = "no";
-        "guest ok" = "yes";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force user" = "${toString config.services.qbittorrent.user}";
-        "force group" = "${toString config.services.qbittorrent.group}";
-      };
-    };
   };
 
   services.tailscale = {
