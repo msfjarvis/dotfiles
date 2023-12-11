@@ -68,17 +68,7 @@
 
   programs.gh = {
     enable = lib.mkDefault true;
-    package = pkgs.gh.overrideAttrs (_: rec {
-      version = "2.40.0";
-      src = pkgs.fetchFromGitHub {
-        owner = "cli";
-        repo = "cli";
-        rev = "v${version}";
-        hash = "sha256-ffmOyifoJPrrC9J4lZ7HWq+fww5/EOCYhYIfx6Been0=";
-      };
-    });
     settings = {
-      version = lib.mkDefault 1;
       git_protocol = lib.mkDefault "https";
       editor = lib.mkDefault "micro";
       prompt = lib.mkDefault "enabled";
