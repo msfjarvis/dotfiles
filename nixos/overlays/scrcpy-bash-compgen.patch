@@ -1,0 +1,30 @@
+From 604dfd7c6b07f583521c92f8391d3fdb6b1576e8 Mon Sep 17 00:00:00 2001
+From: Harsh Shandilya <me@msfjarvis.dev>
+Date: Thu, 14 Dec 2023 21:25:32 +0530
+Subject: [PATCH] Fix incorrect compgen usage
+
+PR #4532 <https://github.com/Genymobile/scrcpy/pull/4532>
+
+Signed-off-by: Romain Vimont <rom@rom1v.com>
+---
+ app/data/bash-completion/scrcpy | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/app/data/bash-completion/scrcpy b/app/data/bash-completion/scrcpy
+index a04901575..78aa539df 100644
+--- a/app/data/bash-completion/scrcpy
++++ b/app/data/bash-completion/scrcpy
+@@ -116,11 +116,11 @@ _scrcpy() {
+             return
+             ;;
+         --orientation|--display-orientation)
+-            COMPREPLY=($(compgen -> '0 90 180 270 flip0 flip90 flip180 flip270' -- "$cur"))
++            COMPREPLY=($(compgen -W '0 90 180 270 flip0 flip90 flip180 flip270' -- "$cur"))
+             return
+             ;;
+         --record-orientation)
+-            COMPREPLY=($(compgen -> '0 90 180 270' -- "$cur"))
++            COMPREPLY=($(compgen -W '0 90 180 270' -- "$cur"))
+             return
+             ;;
+         --lock-video-orientation)
