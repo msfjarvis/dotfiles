@@ -102,7 +102,7 @@
   virtualisation.oci-containers.containers = {
     linkding = {
       image = "sissbruecker/linkding:latest-alpine";
-      ports = ["9090:9090"];
+      ports = ["127.0.0.1:9090:9090"];
       volumes = ["/var/lib/linkding:/etc/linkding/data"];
     };
   };
