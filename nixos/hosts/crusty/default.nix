@@ -115,17 +115,5 @@
     extraOptions = ["--accept-risk=lose-ssh" "--ssh"];
   };
 
-  services.vsftpd = {
-    enable = true;
-    localRoot = "/media/.omg";
-    userlistDeny = false;
-    localUsers = true;
-    userlist = ["msfjarvis"];
-    extraConfig = ''
-      listen_ipv6=NO
-      listen=YES
-    '';
-  };
-
   system.stateVersion = "23.11";
 }
