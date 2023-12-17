@@ -24,10 +24,10 @@ case "${ARG}" in
     ln -sf "$(pwd)"/pre-push-hook .git/hooks/pre-push
     ;;
   home-check)
-    home-manager build --print-build-logs --impure --flake .#ryzenbox
+    sudo nixos-rebuild build --flake .#ryzenbox
     ;;
   home-switch)
-    home-manager switch --print-build-logs --impure --flake .#ryzenbox
+    sudo nixos-rebuild switch --flake .#ryzenbox
     ;;
   install)
     ./install.sh

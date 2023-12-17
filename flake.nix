@@ -94,7 +94,7 @@
       ./nixos/modules/qbittorrent
       ./nixos/modules/rucksack
       ./nixos/modules/tailscale-autoconnect
-      ({lib, ...}: {
+      (_: {
         sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
         sops.defaultSopsFile = ./secrets/tailscale.yaml;
         sops.secrets.tsauthkey = {};
@@ -102,29 +102,38 @@
           useGlobalPkgs = true;
           useUserPackages = true;
           extraSpecialArgs = {inherit (inputs) dracula-micro;};
-          users.msfjarvis = lib.mkMerge [
-            {imports = serverHmModules;}
-          ];
         };
       })
     ];
-
-    mkHomeManagerConfig = options: let
-      nixGLWrap = (import ./nixos/modules/nixGL) pkgs.${options.system};
-    in
-      home-manager.lib.homeManagerConfiguration {
-        modules = hmModules ++ options.modules;
-        extraSpecialArgs = {
-          inherit (inputs) dracula-micro;
-          inherit nixGLWrap;
-        };
+    mkDesktopConfig = options:
+      nixpkgs.lib.nixosSystem {
+        inherit (options) system;
         pkgs = pkgs.${options.system};
+        modules =
+          nixosModules
+          ++ options.modules
+          ++ [
+            ({lib, ...}: {
+              home-manager.users.msfjarvis = lib.mkMerge [
+                {imports = hmModules;}
+              ];
+            })
+          ];
       };
     mkNixOSConfig = options:
       nixpkgs.lib.nixosSystem {
         inherit (options) system;
         pkgs = pkgs.${options.system};
-        modules = nixosModules ++ options.modules;
+        modules =
+          nixosModules
+          ++ options.modules
+          ++ [
+            ({lib, ...}: {
+              home-manager.users.msfjarvis = lib.mkMerge [
+                {imports = serverHmModules;}
+              ];
+            })
+          ];
       };
   in rec {
     darwinConfigurations.work-macbook = darwin.lib.darwinSystem {
@@ -143,7 +152,7 @@
         })
       ];
     };
-    homeConfigurations.ryzenbox = mkHomeManagerConfig {
+    nixosConfigurations.ryzenbox = mkDesktopConfig {
       system = "x86_64-linux";
       modules = [
         ./nixos/hosts/ryzenbox

@@ -28,6 +28,7 @@ with pkgs; [
   shellcheck
   shfmt
   sops
+  tailscale
   tea-dev
   tmux
   unzip

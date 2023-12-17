@@ -1,7 +1,7 @@
-_: {
-  i18n.defaultLocale = "en_IN";
-  i18n.supportedLocales = ["en_IN/UTF-8" "en_US.UTF-8/UTF-8"];
-  i18n.extraLocaleSettings = {
+{lib, ...}: {
+  i18n.defaultLocale = lib.mkDefault "en_IN";
+  i18n.supportedLocales = lib.mkDefault ["en_IN/UTF-8" "en_US.UTF-8/UTF-8"];
+  i18n.extraLocaleSettings = lib.mkDefault {
     LANGUAGE = "en_IN";
     LC_ADDRESS = "en_IN";
     LC_ALL = "en_IN";

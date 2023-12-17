@@ -1,149 +1,137 @@
 {
   config,
-  lib,
   pkgs,
-  nixGLWrap,
+  lib,
   ...
 }: {
-  home.username = "msfjarvis";
-  home.homeDirectory = "/home/msfjarvis";
+  imports = [
+    ./hardware-configuration.nix
+  ];
 
-  fonts.fontconfig.enable = true;
+  # Bootloader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
-  xdg = {
+  # Enable networking
+  networking = {
+    hostName = "ryzenbox";
+    networkmanager.enable = true;
+    nameservers = ["100.100.100.100" "8.8.8.8" "1.1.1.1"];
+    search = ["tiger-shark.ts.net"];
+  };
+
+  # Set your time zone.
+  time.timeZone = "Asia/Kolkata";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_IN";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_IN";
+    LC_IDENTIFICATION = "en_IN";
+    LC_MEASUREMENT = "en_IN";
+    LC_MONETARY = "en_IN";
+    LC_NAME = "en_IN";
+    LC_NUMERIC = "en_IN";
+    LC_PAPER = "en_IN";
+    LC_TELEPHONE = "en_IN";
+    LC_TIME = "en_IN";
+  };
+
+  # Enable the X11 windowing system.
+  services.xserver.enable = true;
+
+  # Enable the GNOME Desktop Environment.
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+
+  # Configure keymap in X11
+  services.xserver = {
+    layout = "us";
+    xkbVariant = "";
+  };
+
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+
+  # Enable sound with pipewire.
+  sound.enable = true;
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
     enable = true;
-    mime.enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
   };
 
-  targets.genericLinux.enable = true;
-
-  home.file.".imwheelrc".text = ''
-    ".*"
-    None,      Up,   Button4, 3
-    None,      Down, Button5, 3
-    Control_L, Up,   Control_L|Button4
-    Control_L, Down, Control_L|Button5
-    Shift_L,   Up,   Shift_L|Button4
-    Shift_L,   Down, Shift_L|Button5
-  '';
-
-  programs.bash = {
-    historyFile = "${config.home.homeDirectory}/.bash_history";
-    initExtra = ''
-      # Load completions from system
-      if [ -f /usr/share/bash-completion/bash_completion ]; then
-        . /usr/share/bash-completion/bash_completion
-      elif [ -f /etc/bash_completion ]; then
-        . /etc/bash_completion
-      fi
-      # Source shell-init from my dotfiles
-      source ${config.home.homeDirectory}/git-repos/dotfiles/shell-init
-    '';
-  };
-
-  programs.browserpass = {
-    enable = true;
-    browsers = ["firefox"];
-  };
-
-  programs.git = {
-    includes = [
-      {path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig";}
-      {
-        path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig-auth";
-      }
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.msfjarvis = {
+    isNormalUser = true;
+    description = "Harsh Shandilya";
+    extraGroups = ["networkmanager" "wheel"];
+    packages = with pkgs; [
+      firefox
     ];
   };
 
-  programs.topgrade = {
+  services.tailscale = {
     enable = true;
-
-    settings = {
-      misc = {
-        assume_yes = true;
-        pre_sudo = true;
-        remote_topgrades = ["backup"];
-        remote_topgrade_path = "bin/topgrade";
-        set_title = true;
-        skip_notify = true;
-        only = [
-          "firmware"
-          "github_cli_extensions"
-          "micro"
-          "remotes"
-          "spicetify"
-          "system"
-        ];
-      };
-    };
   };
 
-  services.gpg-agent = {
+  services.tailscale-autoconnect = {
     enable = true;
-    defaultCacheTtl = 3600;
-    pinentryFlavor = "gnome3";
-    enableBashIntegration = true;
+    authkeyFile = "/run/secrets/tsauthkey";
   };
-
-  services.git-sync = {
-    enable = true;
-    repositories.password-store = {
-      path = config.programs.password-store.settings.PASSWORD_STORE_DIR;
-      uri = "git+ssh://msfjarvis@github.com:msfjarvis/pass-store.git";
-      interval = 600;
-    };
-  };
-
-  systemd.user.systemctlPath = "/usr/bin/systemctl";
 
   systemd.user.services.rucksack = {
-    Unit = {
+    unitConfig = {
       Description = "systemd service for rucksack";
       After = "local-fs.target";
     };
-    Service = {
+    serviceConfig = {
       Type = "simple";
       ExecStart = "${lib.getExe pkgs.rucksack}";
       Restart = "on-failure";
       RestartSec = 3;
       Environment = "PATH=${pkgs.watchman}/bin";
     };
-    Install = {WantedBy = ["default.target"];};
+    wantedBy = ["default.target"];
   };
 
   systemd.user.services.rucksack-restart = {
-    Service = {
+    serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${config.systemd.user.systemctlPath} --user restart rucksack.service";
+      ExecStart = "systemctl --user restart rucksack.service";
     };
-    Install = {WantedBy = ["multi-user.target"];};
+    wantedBy = ["multi-user.target"];
   };
 
   systemd.user.paths.rucksack-restart = {
-    Path = {
-      PathChanged = "${config.home.homeDirectory}/.config/rucksack.toml";
+    pathConfig = {
+      PathChanged = "${config.users.users."msfjarvis".home}/.config/rucksack.toml";
     };
-    Install = {WantedBy = ["multi-user.target"];};
+    wantedBy = ["multi-user.target"];
   };
 
   systemd.user.services.clipboard-substitutor = {
-    Unit = {Description = "systemd service for clipboard-substitutor";};
-    Service = {
+    unitConfig = {Description = "systemd service for clipboard-substitutor";};
+    serviceConfig = {
       Type = "simple";
       ExecStart = "${pkgs.clipboard-substitutor}/bin/clipboard-substitutor";
       Restart = "on-failure";
       RestartSec = 3;
     };
-    Install = {WantedBy = ["default.target"];};
+    wantedBy = ["default.target"];
   };
 
   systemd.user.services.imwheel = {
-    Unit = {
+    unitConfig = {
       Description = "systemd service for imwheel";
       Wants = "display-manager.service";
       After = "display-manager.service";
     };
-    Service = {
+    serviceConfig = {
       Type = "simple";
       ExecStart = "${pkgs.imwheel}/bin/imwheel -d";
       ExecStop = "/usr/bin/pkill imwheel";
@@ -151,37 +139,19 @@
       Restart = "on-failure";
       RestartSec = 3;
     };
-    Install = {WantedBy = ["default.target"];};
+    wantedBy = ["default.target"];
   };
 
-  home.packages = with pkgs; [
-    adb-sync
-    adx
-    age
-    diffuse-bin
-    fclones
-    ferium
-    ffmpeg
-    fzf
-    gdrive
-    git-crypt
-    gitui
-    hcctl
-    imwheel
-    nerdfonts
-    katbin
-    kondo
-    maestro
-    megatools
-    patreon-dl
-    pidcat
-    (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
-    (nixGLWrap "scrcpy" scrcpy)
-    spicetify-cli
-    transmission
-    when
-    xclip
-    xdotool
-    yt-dlp
-  ];
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
+
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "23.11"; # Did you read the comment?
 }

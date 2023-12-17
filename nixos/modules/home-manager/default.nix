@@ -4,7 +4,59 @@
   lib,
   ...
 }: {
-  home.packages = (import ./packages.nix) pkgs;
+  home.username = lib.mkDefault "msfjarvis";
+  home.homeDirectory = lib.mkDefault "/home/msfjarvis";
+
+  fonts.fontconfig.enable = lib.mkDefault true;
+
+  targets.genericLinux.enable = true;
+
+  xdg = lib.mkDefault {
+    enable = true;
+    mime.enable = true;
+  };
+
+  home.file.".imwheelrc".text = ''
+    ".*"
+    None,      Up,   Button4, 3
+    None,      Down, Button5, 3
+    Control_L, Up,   Control_L|Button4
+    Control_L, Down, Control_L|Button5
+    Shift_L,   Up,   Shift_L|Button4
+    Shift_L,   Down, Shift_L|Button5
+  '';
+
+  home.packages = with pkgs;
+    [
+      adb-sync
+      adx
+      age
+      diffuse-bin
+      fclones
+      ferium
+      ffmpeg
+      fzf
+      gdrive
+      git-crypt
+      gitui
+      hcctl
+      imwheel
+      nerdfonts
+      katbin
+      kondo
+      maestro
+      megatools
+      patreon-dl
+      pidcat
+      (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
+      #    (nixGLWrap "scrcpy" scrcpy)
+      spicetify-cli
+      xclip
+      xdotool
+      yt-dlp
+    ]
+    ++ (import ./packages.nix) pkgs;
+
   programs.atuin = {
     enable = true;
     enableBashIntegration = true;
@@ -41,6 +93,16 @@
       # Warn if closing shell with running jobs.
       "checkjobs"
     ];
+    initExtra = lib.mkDefault ''
+      # Load completions from system
+      if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+      elif [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+      fi
+      # Source shell-init from my dotfiles
+      source ${config.home.homeDirectory}/git-repos/dotfiles/shell-init
+    '';
   };
 
   programs.bat = {
@@ -49,6 +111,11 @@
   };
 
   programs.bottom = {enable = lib.mkDefault true;};
+
+  programs.browserpass = lib.mkDefault {
+    enable = true;
+    browsers = ["firefox"];
+  };
 
   programs.direnv = {
     enable = lib.mkDefault true;
@@ -87,6 +154,9 @@
       "fleet.toml"
       ".DS_Store"
     ];
+    includes = lib.mkDefault [
+      {path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig";}
+    ];
   };
 
   programs.gpg = {enable = lib.mkDefault true;};
@@ -94,6 +164,45 @@
   programs.home-manager = {enable = lib.mkDefault true;};
 
   programs.jq = {enable = lib.mkDefault true;};
+
+  programs.topgrade = {
+    enable = true;
+
+    settings = {
+      misc = {
+        assume_yes = true;
+        pre_sudo = true;
+        remote_topgrades = ["backup"];
+        remote_topgrade_path = "bin/topgrade";
+        set_title = true;
+        skip_notify = true;
+        only = [
+          "firmware"
+          "github_cli_extensions"
+          "micro"
+          "remotes"
+          "spicetify"
+          "system"
+        ];
+      };
+    };
+  };
+
+  services.gpg-agent = {
+    enable = true;
+    defaultCacheTtl = 3600;
+    pinentryFlavor = "gnome3";
+    enableBashIntegration = true;
+  };
+
+  services.git-sync = {
+    enable = true;
+    repositories.password-store = {
+      path = config.programs.password-store.settings.PASSWORD_STORE_DIR;
+      uri = "git+ssh://msfjarvis@github.com:msfjarvis/pass-store.git";
+      interval = 600;
+    };
+  };
 
   programs.lsd = {
     enable = lib.mkDefault true;
