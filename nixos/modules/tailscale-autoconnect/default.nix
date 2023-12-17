@@ -20,6 +20,7 @@ in {
     extraOptions = mkOption {
       type = types.listOf types.str;
       description = mdDoc "List of extra flags passed to the `tailscale` invocation";
+      default = [];
       example = ["--ssh"];
     };
   };
