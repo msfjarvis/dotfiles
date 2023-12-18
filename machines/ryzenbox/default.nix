@@ -7,35 +7,38 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  home-manager.users.msfjarvis.home.packages = with pkgs; [
-    adb-sync
-    adx
-    age
-    diffuse-bin
-    fclones
-    ferium
-    ffmpeg
-    fzf
-    gdrive
-    git-crypt
-    gitui
-    hcctl
-    imwheel
-    nerdfonts
-    katbin
-    kondo
-    maestro
-    megatools
-    patreon-dl
-    pidcat
-    (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
-    scrcpy
-    spicetify-cli
-    sshfs
-    xclip
-    xdotool
-    yt-dlp
-  ];
+  home-manager.users.msfjarvis = {
+    home.packages = with pkgs; [
+      adb-sync
+      adx
+      age
+      diffuse-bin
+      fclones
+      ferium
+      ffmpeg
+      fzf
+      gdrive
+      git-crypt
+      gitui
+      hcctl
+      imwheel
+      nerdfonts
+      katbin
+      kondo
+      maestro
+      megatools
+      patreon-dl
+      pidcat
+      (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
+      scrcpy
+      spicetify-cli
+      sshfs
+      xclip
+      xdotool
+      yt-dlp
+    ];
+    programs.mpv.enable = true;
+  };
 
   # Enable networking
   networking = {
