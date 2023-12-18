@@ -83,7 +83,6 @@
       };
     forAllSystems = inputs.nixpkgs.lib.genAttrs (import inputs.systems);
   in {
-    inherit (deploy-rs) defaultApp;
     overlay = import ./overlays;
     nixosModules = builtins.listToAttrs (findModules ./modules);
     nixosConfigurations = with nixpkgs.lib; let
@@ -128,14 +127,18 @@
       nodes =
         builtins.mapAttrs (_: machine: {
           hostname = machine.config.networking.hostName;
+          fastConnection = true;
+          remoteBuild = false;
           profiles.system = {
             user = "root";
+            sshUser = "root";
             path = deploy-rs.lib.${machine.pkgs.system}.activate.nixos machine;
           };
         })
         self.nixosConfigurations;
     };
     apps = forAllSystems (system: {
+      default = deploy-rs.apps.${system}.default;
       format = {
         type = "app";
         program = let
