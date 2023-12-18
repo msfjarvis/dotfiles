@@ -126,7 +126,7 @@
     deploy = {
       user = "root";
       nodes =
-        builtins.mapAttrs (machine: {
+        builtins.mapAttrs (_: machine: {
           hostname = machine.config.networking.hostName;
           profiles.system = {
             user = "root";
