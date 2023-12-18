@@ -27,10 +27,6 @@
   inputs.home-manager.url = "github:nix-community/home-manager/master";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-  inputs.nixgl.url = "github:guibou/nixGL";
-  inputs.nixgl.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.nixgl.inputs.flake-utils.follows = "flake-utils";
-
   inputs.nix-index-database.url = "github:nix-community/nix-index-database";
   inputs.nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 

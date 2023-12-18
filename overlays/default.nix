@@ -22,9 +22,7 @@ _: prev: {
   nerdfonts = prev.nerdfonts.override {
     fonts = ["CascadiaCode" "FiraCode" "Inconsolata" "JetBrainsMono"];
   };
-  # Drop patch that enforces software rendering
   scrcpy = prev.scrcpy.overrideAttrs (_: {
-    postPatch = "";
     # Fixes bash completion, drop after next release.
     patches = [./scrcpy-bash-comp.patch ./scrcpy-bash-compgen.patch];
   });

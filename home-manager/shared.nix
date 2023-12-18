@@ -49,7 +49,7 @@
       patreon-dl
       pidcat
       (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
-      #    (nixGLWrap "scrcpy" scrcpy)
+      scrcpy
       spicetify-cli
       xclip
       xdotool
