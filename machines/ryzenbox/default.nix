@@ -93,8 +93,10 @@
       pidcat
       (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
       scrcpy
+      spotify
       spicetify-cli
       sshfs
+      telegram-desktop
       xclip
       xdotool
       yt-dlp
