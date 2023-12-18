@@ -1,4 +1,9 @@
 _: {
+  targets.genericLinux.enable = false;
+  xdg.enable = false;
+  xdg.mime.enable = false;
+  services.gpg-agent.enable = false;
+  services.git-sync.enable = false;
   programs.bash = {
     initExtra = ''
       # Load completions from system

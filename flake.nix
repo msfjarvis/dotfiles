@@ -48,215 +48,120 @@
   inputs.sops-nix.inputs.nixpkgs-stable.follows = "";
 
   outputs = {
-    self,
     nixpkgs,
-    home-manager,
-    darwin,
+    self,
     deploy-rs,
-    systems,
     ...
   } @ inputs: let
-    forAllSystems = nixpkgs.lib.genAttrs (import systems);
-    packagesFn = system:
-      import nixpkgs {
-        inherit system;
+    findModules = dir:
+      builtins.concatLists (builtins.attrValues (builtins.mapAttrs
+        (name: type:
+          if type == "regular"
+          then [
+            {
+              name = builtins.elemAt (builtins.match "(.*)\\.nix" name) 0;
+              value = dir + "/${name}";
+            }
+          ]
+          else if
+            (builtins.readDir (dir + "/${name}"))
+            ? "default.nix"
+          then [
+            {
+              inherit name;
+              value = dir + "/${name}";
+            }
+          ]
+          else findModules (dir + "/${name}")) (builtins.readDir dir)));
+    pkgsFor = system:
+      import inputs.nixpkgs {
         config = {
           allowUnfree = true;
         };
         overlays = [
+          self.overlay
           inputs.custom-nixpkgs.overlays.default
           inputs.nixgl.overlays.default
           inputs.nix-vscode-extensions.overlays.default
-          (import ./nixos/overlays)
         ];
+        localSystem = {inherit system;};
       };
-    pkgs = forAllSystems packagesFn;
-
-    hmModules = [
-      ./nixos/modules/home-manager
-      ./nixos/modules/micro
-      ./nixos/modules/password-store
-      ./nixos/modules/vscode
-      inputs.nix-index-database.hmModules.nix-index
-    ];
-    serverHmModules = [
-      ./nixos/modules/home-manager
-      ./nixos/modules/home-manager-server
-      ./nixos/modules/micro
-      inputs.nix-index-database.hmModules.nix-index
-    ];
-    nixosModules = [
-      home-manager.nixosModules.home-manager
-      inputs.nixos-vscode-server.nixosModules.default
-      inputs.sops-nix.nixosModules.sops
-      ./nixos/modules/i18n
-      ./nixos/modules/nix
-      ./nixos/modules/qbittorrent
-      ./nixos/modules/rucksack
-      ./nixos/modules/tailscale-autoconnect
-      (_: {
-        sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
-        sops.defaultSopsFile = ./secrets/tailscale.yaml;
-        sops.secrets.tsauthkey = {};
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          extraSpecialArgs = {inherit (inputs) dracula-micro;};
+  in {
+    overlay = import ./overlays;
+    defaultApp = deploy-rs.defaultApp;
+    nixosModules = builtins.listToAttrs (findModules ./modules);
+    nixosConfigurations = with nixpkgs.lib; let
+      hosts = builtins.attrNames (builtins.readDir ./machines);
+      mkHost = name: let
+        system = builtins.readFile (./machines + "/${name}/system");
+        pkgs = pkgsFor system;
+      in
+        nixosSystem {
+          inherit system;
+          modules =
+            __attrValues self.nixosModules
+            ++ [
+              inputs.home-manager.nixosModules.home-manager
+              inputs.sops-nix.nixosModules.sops
+              {
+                sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+                sops.defaultSopsFile = ./secrets/tailscale.yaml;
+                sops.secrets.tsauthkey = {};
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  extraSpecialArgs = {inherit (inputs) dracula-micro;};
+                  users.msfjarvis = {
+                    imports =
+                      (import ./home-manager)
+                      ++ [
+                        inputs.nix-index-database.hmModules.nix-index
+                      ];
+                  };
+                };
+              }
+              (import (./machines + "/${name}"))
+              {nixpkgs.pkgs = pkgs;}
+            ];
+          specialArgs = {inherit inputs;};
         };
-      })
-    ];
-    mkDesktopConfig = options:
-      nixpkgs.lib.nixosSystem {
-        inherit (options) system;
-        pkgs = pkgs.${options.system};
-        modules =
-          nixosModules
-          ++ options.modules
-          ++ [
-            ({lib, ...}: {
-              home-manager.users.msfjarvis = lib.mkMerge [
-                {imports = hmModules;}
-              ];
-            })
-          ];
-      };
-    mkNixOSConfig = options:
-      nixpkgs.lib.nixosSystem {
-        inherit (options) system;
-        pkgs = pkgs.${options.system};
-        modules =
-          nixosModules
-          ++ options.modules
-          ++ [
-            ({lib, ...}: {
-              home-manager.users.msfjarvis = lib.mkMerge [
-                {imports = serverHmModules;}
-              ];
-            })
-          ];
-      };
-  in rec {
-    darwinConfigurations.work-macbook = darwin.lib.darwinSystem {
+    in
+      genAttrs hosts mkHost;
+    deploy = {
+      user = "root";
+      nodes =
+        builtins.mapAttrs (name: machine: {
+          hostname = machine.config.networking.hostName;
+          profiles.system = {
+            user = "root";
+            path = deploy-rs.lib.${machine.pkgs.system}.activate.nixos machine;
+          };
+        })
+        self.nixosConfigurations;
+    };
+    darwinConfigurations.Harshs-MacBook-Pro = inputs.darwin.lib.darwinSystem rec {
       system = "aarch64-darwin";
-      pkgs = pkgs."aarch64-darwin";
+      pkgs = pkgsFor system;
       modules = [
-        home-manager.darwinModules.home-manager
-        ./nixos/hosts/work-macbook
+        inputs.home-manager.darwinModules.home-manager
+        ./darwin
         ({lib, ...}: {
           home-manager.useGlobalPkgs = true;
           home-manager.extraSpecialArgs = {inherit (inputs) dracula-micro;};
           home-manager.users.msfjarvis = lib.mkMerge [
-            {imports = hmModules;}
-            (import ./nixos/hosts/work-macbook/home-manager.nix)
+            {
+              imports =
+                (import ./home-manager)
+                ++ [
+                  inputs.nix-index-database.hmModules.nix-index
+                ];
+            }
+            (import ./darwin/home-manager.nix)
           ];
         })
       ];
     };
-    nixosConfigurations.ryzenbox = mkDesktopConfig {
-      system = "x86_64-linux";
-      modules = [
-        ./nixos/hosts/ryzenbox
-      ];
-    };
-    nixosConfigurations.crusty = mkNixOSConfig {
-      system = "aarch64-linux";
-      modules = [
-        ./nixos/hosts/crusty
-        inputs.nixos-hardware.nixosModules.raspberry-pi-4
-      ];
-    };
-    nixosConfigurations.samosa = mkNixOSConfig {
-      system = "x86_64-linux";
-      modules = [
-        ./nixos/hosts/samosa
-      ];
-    };
-    nixosConfigurations.wailord = mkNixOSConfig {
-      system = "x86_64-linux";
-      modules = [
-        ./nixos/hosts/wailord
-      ];
-    };
-
-    deploy.nodes = {
-      crusty = {
-        hostname = "crusty";
-        fastConnection = true;
-        remoteBuild = true;
-        profiles.system = {
-          sshUser = "root";
-          path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.crusty;
-          user = "root";
-        };
-      };
-      samosa = {
-        hostname = "samosa";
-        fastConnection = true;
-        profiles.system = {
-          sshUser = "root";
-          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.wailord;
-          user = "root";
-        };
-      };
-      wailord = {
-        hostname = "wailord";
-        fastConnection = true;
-        profiles.system = {
-          sshUser = "root";
-          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.wailord;
-          user = "root";
-        };
-      };
-    };
-
-    packages.aarch64-darwin.macbook = darwinConfigurations.work-macbook.system;
-
-    apps = forAllSystems (system: {
-      deploy = deploy-rs.apps.${system}.default;
-      format = {
-        type = "app";
-        program = let
-          fmtTargetsStr = pkgs.${system}.lib.concatStringsSep " " [
-            "aliases"
-            "apps"
-            "bash_completions.bash"
-            "common"
-            "darwin-init"
-            "devtools"
-            "files"
-            "gitshit"
-            "install.sh"
-            "minecraft"
-            "nix"
-            "pre-push-hook"
-            "setup/00-android_sdk.sh"
-            "setup/01-adb_multi.sh"
-            "setup/02-android_udev.sh"
-            "shell-init"
-            "system"
-            "system_darwin"
-            "system_linux"
-            "x"
-          ];
-
-          script = pkgs.${system}.writeShellApplication {
-            name = "format";
-            runtimeInputs = with pkgs.${system}; [
-              alejandra
-              deadnix
-              shfmt
-              statix
-            ];
-            text = ''
-              shfmt -w -s -i 2 -ci ${fmtTargetsStr};
-              alejandra --quiet .
-              deadnix --edit
-              statix check .
-            '';
-          };
-        in "${script}/bin/format";
-      };
-    });
+    packages.aarch64-darwin.macbook = self.darwinConfigurations.Harshs-MacBook-Pro.system;
   };
   nixConfig = {
     extra-substituters = [

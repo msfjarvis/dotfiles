@@ -9,11 +9,11 @@
 
   fonts.fontconfig.enable = lib.mkDefault true;
 
-  targets.genericLinux.enable = true;
+  targets.genericLinux.enable = lib.mkDefault true;
 
-  xdg = lib.mkDefault {
-    enable = true;
-    mime.enable = true;
+  xdg = {
+    enable = lib.mkDefault true;
+    mime.enable = lib.mkDefault true;
   };
 
   home.file.".imwheelrc".text = ''
@@ -58,10 +58,10 @@
     ++ (import ./packages.nix) pkgs;
 
   programs.atuin = {
-    enable = true;
-    enableBashIntegration = true;
-    flags = ["--disable-up-arrow"];
-    settings = {
+    enable = lib.mkDefault true;
+    enableBashIntegration = lib.mkDefault true;
+    flags = lib.mkDefault ["--disable-up-arrow"];
+    settings = lib.mkDefault {
       auto_sync = true;
       max_preview_height = 2;
       search_mode = "skim";
@@ -112,9 +112,9 @@
 
   programs.bottom = {enable = lib.mkDefault true;};
 
-  programs.browserpass = lib.mkDefault {
-    enable = true;
-    browsers = ["firefox"];
+  programs.browserpass = {
+    enable = lib.mkDefault true;
+    browsers = lib.mkDefault ["firefox"];
   };
 
   programs.direnv = {
@@ -166,9 +166,9 @@
   programs.jq = {enable = lib.mkDefault true;};
 
   programs.topgrade = {
-    enable = true;
+    enable = lib.mkDefault true;
 
-    settings = {
+    settings = lib.mkDefault {
       misc = {
         assume_yes = true;
         pre_sudo = true;
@@ -189,18 +189,20 @@
   };
 
   services.gpg-agent = {
-    enable = true;
-    defaultCacheTtl = 3600;
-    pinentryFlavor = "gnome3";
-    enableBashIntegration = true;
+    enable = lib.mkDefault true;
+    defaultCacheTtl = lib.mkDefault 3600;
+    pinentryFlavor = lib.mkDefault "gnome3";
+    enableBashIntegration = lib.mkDefault true;
   };
 
   services.git-sync = {
-    enable = true;
-    repositories.password-store = {
-      path = config.programs.password-store.settings.PASSWORD_STORE_DIR;
-      uri = "git+ssh://msfjarvis@github.com:msfjarvis/pass-store.git";
-      interval = 600;
+    enable = lib.mkDefault true;
+    repositories = lib.mkDefault {
+      password-store = {
+        path = config.programs.password-store.settings.PASSWORD_STORE_DIR;
+        uri = "git+ssh://msfjarvis@github.com:msfjarvis/pass-store.git";
+        interval = 600;
+      };
     };
   };
 
@@ -327,26 +329,6 @@
   programs.zoxide = {
     enable = lib.mkDefault true;
     enableBashIntegration = lib.mkDefault true;
-  };
-
-  systemd.user.services.optimise-nix-store = {
-    Unit = {Description = "nix store maintenance";};
-
-    Service = {
-      CPUSchedulingPolicy = "idle";
-      IOSchedulingClass = "idle";
-      ExecStart = toString (pkgs.writeShellScript "nix-optimise-store" ''
-        ${pkgs.nix}/bin/nix-collect-garbage -d
-        ${pkgs.nix}/bin/nix store gc
-        ${pkgs.nix}/bin/nix store optimise
-      '');
-    };
-  };
-
-  systemd.user.timers.optimise-nix-store = {
-    Unit = {Description = "nix store maintenance";};
-    Timer = {OnCalendar = "weekly";};
-    Install = {WantedBy = ["timers.target"];};
   };
 
   home.stateVersion = "21.05";
