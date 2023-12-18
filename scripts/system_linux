@@ -5,19 +5,16 @@
 
 function clip() {
   [ "$(display_exists)" ] || return
-  if [ "${1}" ]; then
-    xclip -rmlastnl -selection clipboard -i "${1}"
+  if [ -f "${1}" ]; then
+    wl-copy <"${1}"
   else
-    xclip -rmlastnl -selection clipboard
+    wl-copy
   fi
 }
 
 function clrclip() {
   [ "$(display_exists)" ] || return
-  xclip -i /dev/null
-  touch blank
-  xclip -selection clipboard blank
-  rm blank
+  wl-copy -c
 }
 
 function display_exists() {

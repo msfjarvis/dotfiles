@@ -98,7 +98,7 @@
       sshfs
       telegram-desktop
       thunderbird
-      xclip
+      wl-clipboard
       xdotool
       yt-dlp
 
