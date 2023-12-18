@@ -26,36 +26,7 @@
     Shift_L,   Down, Shift_L|Button5
   '';
 
-  home.packages = with pkgs;
-    [
-      adb-sync
-      adx
-      age
-      diffuse-bin
-      fclones
-      ferium
-      ffmpeg
-      fzf
-      gdrive
-      git-crypt
-      gitui
-      hcctl
-      imwheel
-      nerdfonts
-      katbin
-      kondo
-      maestro
-      megatools
-      patreon-dl
-      pidcat
-      (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
-      scrcpy
-      spicetify-cli
-      xclip
-      xdotool
-      yt-dlp
-    ]
-    ++ (import ./packages.nix) pkgs;
+  home.packages = (import ./packages.nix) pkgs;
 
   programs.atuin = {
     enable = lib.mkDefault true;
