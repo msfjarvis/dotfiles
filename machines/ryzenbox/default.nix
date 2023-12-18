@@ -84,36 +84,6 @@
     authkeyFile = "/run/secrets/tsauthkey";
   };
 
-  systemd.user.services.rucksack = {
-    unitConfig = {
-      Description = "systemd service for rucksack";
-      After = "local-fs.target";
-    };
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = "${lib.getExe pkgs.rucksack}";
-      Restart = "on-failure";
-      RestartSec = 3;
-      Environment = "PATH=${pkgs.watchman}/bin";
-    };
-    wantedBy = ["default.target"];
-  };
-
-  systemd.user.services.rucksack-restart = {
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "systemctl --user restart rucksack.service";
-    };
-    wantedBy = ["multi-user.target"];
-  };
-
-  systemd.user.paths.rucksack-restart = {
-    pathConfig = {
-      PathChanged = "${config.users.users."msfjarvis".home}/.config/rucksack.toml";
-    };
-    wantedBy = ["multi-user.target"];
-  };
-
   systemd.user.services.clipboard-substitutor = {
     unitConfig = {Description = "systemd service for clipboard-substitutor";};
     serviceConfig = {
