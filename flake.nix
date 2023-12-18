@@ -81,14 +81,14 @@
         overlays = [
           self.overlay
           inputs.custom-nixpkgs.overlays.default
-          inputs.nixgl.overlays.default
           inputs.nix-vscode-extensions.overlays.default
         ];
         localSystem = {inherit system;};
       };
+    forAllSystems = inputs.nixpkgs.lib.genAttrs (import inputs.systems);
   in {
+    inherit (deploy-rs) defaultApp;
     overlay = import ./overlays;
-    defaultApp = deploy-rs.defaultApp;
     nixosModules = builtins.listToAttrs (findModules ./modules);
     nixosConfigurations = with nixpkgs.lib; let
       hosts = builtins.attrNames (builtins.readDir ./machines);
@@ -130,7 +130,7 @@
     deploy = {
       user = "root";
       nodes =
-        builtins.mapAttrs (name: machine: {
+        builtins.mapAttrs (machine: {
           hostname = machine.config.networking.hostName;
           profiles.system = {
             user = "root";
@@ -139,6 +139,41 @@
         })
         self.nixosConfigurations;
     };
+    apps = forAllSystems (system: {
+      format = {
+        type = "app";
+        program = let
+          pkgs = pkgsFor system;
+          inherit (pkgs) lib;
+          getDirFiles = dir:
+            builtins.map (x: "${dir}/" + x) (builtins.attrNames (builtins.readDir dir));
+          fmtTargetsStr = lib.concatStringsSep " " ([
+              "darwin-init"
+              "shell-init"
+              "x"
+            ]
+            ++ getDirFiles ./scripts);
+
+          script = pkgs.writeShellApplication {
+            name = "format";
+            runtimeInputs = with pkgs; [
+              alejandra
+              deadnix
+              shfmt
+              statix
+            ];
+            text = ''
+              set -euo pipefail
+              shfmt -w -s -i 2 -ci ${fmtTargetsStr};
+              alejandra --quiet .
+              deadnix --edit
+              statix check .
+            '';
+          };
+        in "${script}/bin/format";
+      };
+    });
+
     darwinConfigurations.Harshs-MacBook-Pro = inputs.darwin.lib.darwinSystem rec {
       system = "aarch64-darwin";
       pkgs = pkgsFor system;
