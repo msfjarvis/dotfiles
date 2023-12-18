@@ -48,7 +48,6 @@
       "terminal.integrated.fontFamily" = "'JetBrainsMono Nerd Font'";
       "terminal.integrated.fontSize" = 16;
       "editor.inlineSuggest.enabled" = true;
-      "workbench.editor.untitled.hint" = "hidden";
       "editor.unicodeHighlight.invisibleCharacters" = false;
       "git.confirmSync" = false;
       "[json]"."editor.defaultFormatter" = "vscode.json-language-features";
@@ -65,9 +64,8 @@
       "gitlens.codeLens.enabled" = false;
       "rust-analyzer.checkOnSave" = true;
       "rust-analyzer.completion.privateEditable.enable" = true;
-      "python.linting.enabled" = false;
-      "python.formatting.provider" = "black";
-      "python.formatting.blackPath" = "${pkgs.python311Packages.black}/bin/black";
+      "window.titleBarStyle" = "custom";
+      "disable-hardware-acceleration" = true;
     };
   };
 }
