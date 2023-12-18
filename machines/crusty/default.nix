@@ -6,6 +6,7 @@
 }: {
   imports = [
     ./hardware-configuration.nix
+    ./../servers.nix
   ];
 
   boot.loader.grub.enable = false;

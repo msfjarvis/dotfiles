@@ -1,7 +1,11 @@
-{dracula-micro, ...}: {
+{
+  dracula-micro,
+  lib,
+  ...
+}: {
   programs.micro = {
-    enable = true;
-    settings = {
+    enable = lib.mkDefault true;
+    settings = lib.mkDefault {
       colorscheme = "dracula";
       mkparents = true;
       softwrap = true;

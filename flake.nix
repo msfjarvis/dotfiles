@@ -138,7 +138,7 @@
         self.nixosConfigurations;
     };
     apps = forAllSystems (system: {
-      default = deploy-rs.apps.${system}.default;
+      inherit (deploy-rs.apps.${system}) default;
       format = {
         type = "app";
         program = let

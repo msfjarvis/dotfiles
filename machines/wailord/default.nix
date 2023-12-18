@@ -7,6 +7,7 @@
   imports = [
     ./hardware-configuration.nix
     ./networking.nix
+    ./../servers.nix
   ];
 
   boot = {

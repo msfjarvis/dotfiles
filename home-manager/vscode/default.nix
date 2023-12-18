@@ -1,24 +1,29 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   programs.vscode = {
-    enable = true;
-    enableUpdateCheck = false;
-    enableExtensionUpdateCheck = false;
-    mutableExtensionsDir = false;
+    enable = lib.mkDefault true;
+    enableUpdateCheck = lib.mkDefault false;
+    enableExtensionUpdateCheck = lib.mkDefault false;
+    mutableExtensionsDir = lib.mkDefault false;
     extensions =
-      [pkgs.vscode-extensions.rust-lang.rust-analyzer]
-      ++ (with pkgs.vscode-marketplace; [
-        arrterian.nix-env-selector
-        eamodio.gitlens
-        github.vscode-github-actions
-        jnoortheen.nix-ide
-        k--kato.intellij-idea-keybindings
-        ms-vscode-remote.remote-ssh
-        ms-vscode-remote.remote-ssh-edit
-        mtdmali.daybreak-theme
-        oderwat.indent-rainbow
-        tamasfe.even-better-toml
-      ]);
-    userSettings = {
+      lib.mkDefault
+      ([pkgs.vscode-extensions.rust-lang.rust-analyzer]
+        ++ (with pkgs.vscode-marketplace; [
+          arrterian.nix-env-selector
+          eamodio.gitlens
+          github.vscode-github-actions
+          jnoortheen.nix-ide
+          k--kato.intellij-idea-keybindings
+          ms-vscode-remote.remote-ssh
+          ms-vscode-remote.remote-ssh-edit
+          mtdmali.daybreak-theme
+          oderwat.indent-rainbow
+          tamasfe.even-better-toml
+        ]));
+    userSettings = lib.mkDefault {
       "files.exclude" = {
         "**/.classpath" = true;
         "**/.project" = true;
