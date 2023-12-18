@@ -98,6 +98,17 @@
       xclip
       xdotool
       yt-dlp
+
+      # Android Development
+      android-studio
+      temurin-bin-20
+      androidStudioPackages.canary
+
+      # Minecraft
+      (prismlauncher.override {
+        glfw = glfw-wayland-minecraft;
+        jdks = [temurin-bin-20];
+      })
     ];
   };
 
