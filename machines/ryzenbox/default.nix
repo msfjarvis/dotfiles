@@ -97,6 +97,7 @@
       spicetify-cli
       sshfs
       telegram-desktop
+      thunderbird
       xclip
       xdotool
       yt-dlp
