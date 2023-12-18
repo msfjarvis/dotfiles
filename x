@@ -15,10 +15,10 @@ case "${ARG}" in
     sudo nixos-rebuild switch --flake .#crusty
     ;;
   darwin-check)
-    darwin-rebuild build --print-build-logs --flake .#work-macbook
+    darwin-rebuild build --print-build-logs --flake .
     ;;
   darwin-switch)
-    darwin-rebuild switch --print-build-logs --flake .#work-macbook
+    darwin-rebuild switch --print-build-logs --flake .
     ;;
   githook)
     ln -sf "$(pwd)"/pre-push-hook .git/hooks/pre-push
