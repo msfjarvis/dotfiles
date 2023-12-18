@@ -93,7 +93,7 @@
       # Warn if closing shell with running jobs.
       "checkjobs"
     ];
-    initExtra = lib.mkDefault ''
+    bashrcExtra = lib.mkDefault ''
       # Load completions from system
       if [ -f /usr/share/bash-completion/bash_completion ]; then
         . /usr/share/bash-completion/bash_completion

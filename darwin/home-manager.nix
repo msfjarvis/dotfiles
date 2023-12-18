@@ -5,7 +5,7 @@ _: {
   services.gpg-agent.enable = false;
   services.git-sync.enable = false;
   programs.bash = {
-    initExtra = ''
+    bashrcExtra = ''
       # Load completions from system
       if [ -f /usr/share/bash-completion/bash_completion ]; then
         . /usr/share/bash-completion/bash_completion
