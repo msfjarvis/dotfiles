@@ -3,12 +3,59 @@
     ./hardware-configuration.nix
   ];
 
+  # Theming
+  stylix = {
+    autoEnable = false;
+    image = pkgs.fetchurl {
+      url = "https://msfjarvis.dev/images/wallpaper.png";
+      sha256 = "sha256-S3GbyhdySaiPOHQyYxANC3jM19rD+6OKh7Q+DojqdOk=";
+    };
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
+
+    cursor = {
+      package = pkgs.numix-cursor-theme;
+      name = "Numix-Cursor";
+    };
+    fonts = {
+      emoji = {
+        name = "Noto Color Emoji";
+        package = pkgs.noto-fonts-color-emoji;
+      };
+      monospace = {
+        name = "JetBrainsMonoNL Nerd Font";
+        package = pkgs.nerdfonts;
+      };
+    };
+    opacity = {
+      terminal = 0.6;
+    };
+    polarity = "dark";
+    targets = {
+      console.enable = true;
+      gnome.enable = true;
+      gtk.enable = true;
+    };
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   home-manager.users.msfjarvis = {
     programs.mpv.enable = true;
+    stylix = {
+      targets = {
+        bat.enable = true;
+        firefox = {
+          enable = true;
+          profileNames = [
+            "Primary"
+            "Secondary"
+          ];
+        };
+        fzf.enable = true;
+      };
+    };
   };
 
   # Enable networking
