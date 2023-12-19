@@ -103,7 +103,6 @@
             ++ [
               inputs.home-manager.nixosModules.home-manager
               inputs.sops-nix.nixosModules.sops
-              inputs.stylix.nixosModules.stylix
               {
                 sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
                 sops.defaultSopsFile = ./secrets/tailscale.yaml;
@@ -123,7 +122,12 @@
               }
               (import (./machines + "/${name}"))
               {nixpkgs.pkgs = pkgs;}
-            ];
+            ]
+            ++ (
+              if name == "ryzenbox"
+              then [inputs.stylix.nixosModules.stylix]
+              else []
+            );
           specialArgs = {inherit inputs;};
         };
     in
