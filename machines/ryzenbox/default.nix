@@ -151,12 +151,12 @@
 
       # Android Development
       android-studio
-      temurin-bin-20
       androidStudioPackages.canary
       (gradle_8.override {
         java = temurin-bin-20;
         javaToolchains = [temurin-bin-17 temurin-bin-20];
       })
+      temurin-bin-20
 
       # Minecraft
       (prismlauncher.override {
@@ -203,10 +203,19 @@
     wantedBy = ["default.target"];
   };
 
+  programs.adb.enable = true;
+  services.udev.packages = [
+    pkgs.android-udev-rules
+  ];
+
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
   };
+
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
