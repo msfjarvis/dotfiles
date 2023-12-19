@@ -153,6 +153,10 @@
       android-studio
       temurin-bin-20
       androidStudioPackages.canary
+      (gradle_8.override {
+        java = temurin-bin-20;
+        javaToolchains = [temurin-bin-17 temurin-bin-20];
+      })
 
       # Minecraft
       (prismlauncher.override {
