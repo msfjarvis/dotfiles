@@ -22,8 +22,20 @@
         package = pkgs.noto-fonts-color-emoji;
       };
       monospace = {
-        name = "JetBrainsMonoNL Nerd Font";
+        name = "JetBrainsMonoNL Nerd Font Mono";
         package = pkgs.nerdfonts;
+      };
+      sansSerif = {
+        name = "Roboto Serif 14pt";
+        package = pkgs.roboto-serif;
+      };
+      serif = {
+        name = "Roboto Serif 14pt";
+        package = pkgs.roboto-serif;
+      };
+      sizes = {
+        applications = 10.0;
+        terminal = 10.0;
       };
     };
     opacity = {
