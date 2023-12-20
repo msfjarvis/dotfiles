@@ -245,6 +245,7 @@
       golang.disabled = lib.mkDefault true;
       guix_shell.disabled = lib.mkDefault true;
       gradle.disabled = lib.mkDefault false;
+      gradle.symbol = lib.mkDefault " ";
       haskell.disabled = lib.mkDefault true;
       haxe.disabled = lib.mkDefault true;
       helm.disabled = lib.mkDefault true;
