@@ -13,8 +13,8 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
 
     cursor = {
-      package = pkgs.numix-cursor-theme;
-      name = "Numix-Cursor";
+      package = pkgs.dracula-theme;
+      name = "Dracula-cursors";
     };
     fonts = {
       emoji = {
@@ -22,15 +22,15 @@
         package = pkgs.noto-fonts-color-emoji;
       };
       monospace = {
-        name = "JetBrainsMonoNL Nerd Font Mono";
+        name = "JetBrainsMonoNL Nerd Font Mono Regular";
         package = pkgs.nerdfonts;
       };
       sansSerif = {
-        name = "Roboto Serif 14pt";
-        package = pkgs.roboto-serif;
+        name = "Roboto Regular";
+        package = pkgs.roboto;
       };
       serif = {
-        name = "Roboto Serif 14pt";
+        name = "Roboto Serif 20pt Regular";
         package = pkgs.roboto-serif;
       };
       sizes = {
@@ -55,6 +55,49 @@
 
   home-manager.users.msfjarvis = {
     programs.mpv.enable = true;
+    gtk = {
+      enable = true;
+      theme = {
+        name = "Dracula";
+        package = pkgs.dracula-theme;
+      };
+      cursorTheme = {
+        name = "Dracula-cursors";
+        package = pkgs.dracula-theme;
+      };
+      gtk3.extraConfig = {
+        Settings = ''
+          gtk-application-prefer-dark-theme=1
+        '';
+      };
+
+      gtk4.extraConfig = {
+        Settings = ''
+          gtk-application-prefer-dark-theme=1
+        '';
+      };
+    };
+    dconf.settings = {
+      "org/gnome/shell/extensions/user-theme" = {
+        name = "Dracula";
+      };
+      "org/gnome/shell" = {
+        disable-user-extensions = false;
+        enabled-extensions = [
+          "arcmenu@arcmenu.com"
+          "pop-shell@system76.com"
+          "sound-output-device-chooser@kgshank.net"
+          "System_Monitor@bghome.gmail.com"
+          "user-theme@gnome-shell-extensions.gcampax.github.com"
+        ];
+      };
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+        cursor-theme = "Dracula-cursors";
+        gtk-theme = "Dracula";
+      };
+    };
+    home.sessionVariables.GTK_THEME = "Dracula";
     stylix = {
       targets = {
         bat.enable = true;
@@ -136,7 +179,7 @@
       fclones
       ferium
       ffmpeg
-      firefox
+      firefox-wayland
       fzf
       gdrive
       git-crypt
@@ -175,6 +218,20 @@
         glfw = glfw-wayland-minecraft;
         jdks = [temurin-bin-20];
       })
+
+      # GNOME
+      gnome3.gnome-tweaks
+      # a nicer application menu for gnome
+      gnomeExtensions.arcmenu
+      # POP!_OS shell tiling extensions for Gnome 3
+      gnomeExtensions.pop-shell
+      # allows selecting the sound output device in the sound menu
+      gnomeExtensions.sound-output-device-chooser
+      # displays system status in the gnome-shell status bar
+      gnomeExtensions.system-monitor
+      gnomeExtensions.user-themes
+      arc-icon-theme
+      dracula-theme
     ];
   };
 
