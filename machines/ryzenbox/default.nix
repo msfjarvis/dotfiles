@@ -13,7 +13,7 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
 
     cursor = {
-      package = pkgs.dracula-theme;
+      package = pkgs.dracula-gtk-theme-unstable;
       name = "Dracula-cursors";
     };
     fonts = {
@@ -59,11 +59,11 @@
       enable = true;
       theme = {
         name = "Dracula";
-        package = pkgs.dracula-theme;
+        package = pkgs.dracula-gtk-theme-unstable;
       };
       cursorTheme = {
         name = "Dracula-cursors";
-        package = pkgs.dracula-theme;
+        package = pkgs.dracula-gtk-theme-unstable;
       };
       gtk3.extraConfig = {
         Settings = ''
@@ -230,8 +230,6 @@
       # displays system status in the gnome-shell status bar
       gnomeExtensions.system-monitor
       gnomeExtensions.user-themes
-      arc-icon-theme
-      dracula-theme
     ];
   };
 
