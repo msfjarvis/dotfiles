@@ -112,6 +112,9 @@
         document-font-name = "${serif.name} ${toString (sizes.applications - 1)}";
         monospace-font-name = "${monospace.name} ${toString sizes.terminal}";
       };
+      "org/gnome/desktop/notifications/application/org-gnome-console" = {
+        enable = false;
+      };
     };
     home.sessionVariables.GTK_THEME = "Dracula";
     stylix = {
