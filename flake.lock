@@ -201,6 +201,26 @@
         "type": "github"
       }
     },
+    "disko": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1703162528,
+        "narHash": "sha256-pQ41wN6JlStkZOhRTIHEpuwVywLdh+xzZQW1+FzdjVs=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "a050895e4eb06e0738680021a701ea05dc8dbfc9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
     "dracula-micro": {
       "flake": false,
       "locked": {
@@ -396,6 +416,7 @@
         "custom-nixpkgs": "custom-nixpkgs",
         "darwin": "darwin",
         "deploy-rs": "deploy-rs",
+        "disko": "disko",
         "dracula-micro": "dracula-micro",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",

@@ -18,6 +18,9 @@
   inputs.deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
   inputs.deploy-rs.inputs.utils.follows = "flake-utils";
 
+  inputs.disko.url = "github:nix-community/disko";
+  inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
+
   inputs.dracula-micro.url = "https://raw.githubusercontent.com/dracula/micro/master/dracula.micro";
   inputs.dracula-micro.flake = false;
 
@@ -126,6 +129,11 @@
             ++ (
               if name == "ryzenbox"
               then [inputs.stylix.nixosModules.stylix]
+              else []
+            )
+            ++ (
+              if name == "wailord"
+              then [inputs.disko.nixosModules.disko]
               else []
             );
           specialArgs = {inherit inputs;};

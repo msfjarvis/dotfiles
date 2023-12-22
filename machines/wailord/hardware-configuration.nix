@@ -7,12 +7,34 @@
   };
   boot.initrd.availableKernelModules = ["ata_piix" "uhci_hcd" "xen_blkfront"];
   boot.initrd.kernelModules = ["nvme"];
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/CA1A-B46F";
-    fsType = "vfat";
-  };
-  fileSystems."/" = {
-    device = "/dev/vda4";
-    fsType = "ext4";
+  disko.devices = {
+    disk = {
+      vda = {
+        device = "/dev/vda";
+        type = "disk";
+        content = {
+          type = "gpt";
+          partitions = {
+            ESP = {
+              type = "EF00";
+              size = "500M";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+              };
+            };
+            root = {
+              size = "100%";
+              content = {
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/";
+              };
+            };
+          };
+        };
+      };
+    };
   };
 }
