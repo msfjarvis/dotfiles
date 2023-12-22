@@ -46,6 +46,7 @@
 
   environment.systemPackages = with pkgs; [
     adx
+    awscli2
     coreutils
     diffuse-bin
     gdrive
