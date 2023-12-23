@@ -29,6 +29,9 @@ case "${ARG}" in
   home-switch)
     sudo nixos-rebuild switch --flake .#ryzenbox
     ;;
+  home-test)
+    sudo nixos-rebuild test --flake .#ryzenbox
+    ;;
   install)
     ./install.sh
     ;;
