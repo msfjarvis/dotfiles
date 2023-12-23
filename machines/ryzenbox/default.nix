@@ -185,7 +185,6 @@
     pulse.enable = true;
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.msfjarvis = {
     isNormalUser = true;
     description = "Harsh Shandilya";
@@ -234,7 +233,19 @@
 
       # Minecraft
       (prismlauncher.override {
-        glfw = glfw-wayland-minecraft;
+        glfw = glfw-wayland-minecraft.overrideAttrs (prev: {
+          postPatch = lib.concatStrings [
+            prev.postPatch
+            ''
+              substituteInPlace src/wl_init.c \
+                --replace "libwayland-client.so.0" "${lib.getLib pkgs.wayland}/lib/libwayland-client.so.0"
+              substituteInPlace src/wl_init.c \
+                --replace "libwayland-cursor.so.0" "${lib.getLib pkgs.wayland}/lib/libwayland-cursor.so.0"
+              substituteInPlace src/wl_init.c \
+                --replace "libwayland-egl.so.1" "${lib.getLib pkgs.wayland}/lib/libwayland-egl.so.1"
+            ''
+          ];
+        });
         jdks = [temurin-bin-20];
       })
 
