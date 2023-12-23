@@ -218,6 +218,7 @@
       sshfs
       telegram-desktop
       thunderbird
+      webcord
       wl-clipboard
       xdotool
       yt-dlp
