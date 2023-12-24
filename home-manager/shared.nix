@@ -107,6 +107,7 @@
   programs.gh = {
     enable = lib.mkDefault true;
     settings = {
+      version = lib.mkDefault 1;
       git_protocol = lib.mkDefault "https";
       editor = lib.mkDefault "micro";
       prompt = lib.mkDefault "enabled";
