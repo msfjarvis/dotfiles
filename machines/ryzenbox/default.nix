@@ -90,7 +90,7 @@
           "arcmenu@arcmenu.com"
           "pop-shell@system76.com"
           "sound-output-device-chooser@kgshank.net"
-          "System_Monitor@bghome.gmail.com"
+          "system-monitor-next@paradoxxx.zero.gmail.com"
           "user-theme@gnome-shell-extensions.gcampax.github.com"
         ];
       };
@@ -259,7 +259,7 @@
       # allows selecting the sound output device in the sound menu
       gnomeExtensions.sound-output-device-chooser
       # displays system status in the gnome-shell status bar
-      gnomeExtensions.system-monitor
+      gnomeExtensions.system-monitor-next
       gnomeExtensions.user-themes
     ];
   };
