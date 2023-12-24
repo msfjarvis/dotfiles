@@ -78,7 +78,7 @@ function gcp() {
 }
 
 function gitsync() {
-  fd -Htd \\.git$ -x echo '{//}' | while read -r dir; do
+  fd --no-ignore-vcs -Htd \\.git$ -x echo '{//}' | while read -r dir; do
     echoText "$dir"
     hub -C "$dir" sync
   done
