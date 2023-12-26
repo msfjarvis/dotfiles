@@ -56,6 +56,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  programs.seahorse.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+
   home-manager.users.msfjarvis = {
     programs.mpv.enable = true;
     gtk = {
