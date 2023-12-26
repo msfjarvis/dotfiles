@@ -23,7 +23,7 @@ function nixdiff() {
         OLD_GEN="$(fd -j1 --max-depth 1 -tl home-manager- ~/.local/state/nix/profiles/ | head -n1)"
       else
         GEN_COUNT="$(($(nixos-rebuild --fast list-generations --json | jq length)))"
-        if [ $GEN_COUNT -ge 2 ]; then
+        if [[ $GEN_COUNT -ge 2 || -d ./result ]]; then
           CUR_GEN_NUM="$(nixos-rebuild --fast list-generations --json | jq .[0].generation)"
           OLD_GEN_NUM="$(nixos-rebuild --fast list-generations --json | jq .[1].generation)"
           CUR_GEN="/nix/var/nix/profiles/system-${CUR_GEN_NUM}-link"
