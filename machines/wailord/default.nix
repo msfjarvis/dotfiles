@@ -10,8 +10,8 @@
 
   boot = {
     loader = {
-      grub.enable = false;
-      generic-extlinux-compatible.enable = true;
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
     };
     tmp.cleanOnBoot = true;
   };
