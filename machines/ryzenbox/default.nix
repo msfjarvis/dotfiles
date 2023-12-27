@@ -319,7 +319,7 @@
   services.rucksack = {
     enable = true;
     sources = [
-      "/mediahell/PrismLauncher/instances/Fabulously.Optimized.1.20.2/.minecraft/screenshots/"
+      "${config.users.users.msfjarvis.home}/Games/PrismLauncher/instances/Fabulously.Optimized.1.20.2/.minecraft/screenshots/"
     ];
     target = "/mediahell/screenshots/";
     file_filter = "*.png";
