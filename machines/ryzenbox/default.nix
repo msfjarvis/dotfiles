@@ -226,7 +226,8 @@
       yt-dlp
 
       # Android Development
-      android-studio
+      androidStudioPackages.stable
+      androidStudioPackages.beta
       androidStudioPackages.canary
       (gradle_8.override {
         java = temurin-bin-20;

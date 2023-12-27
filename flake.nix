@@ -1,7 +1,7 @@
 {
   description = "Home Manager configurations of Harsh Shandilya";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs.nixpkgs.url = "github:msfjarvis/nixpkgs?rev=64955da5ee37efd59fd6d759a0994d20e90bb5a8";
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
   inputs.systems.url = "github:msfjarvis/flake-systems";
