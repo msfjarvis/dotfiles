@@ -17,6 +17,14 @@
   };
   zramSwap.enable = true;
 
+  # Enable networking
+  networking = {
+    hostName = "wailord";
+    networkmanager.enable = true;
+    nameservers = ["100.100.100.100" "8.8.8.8" "1.1.1.1"];
+    search = ["tiger-shark.ts.net"];
+  };
+
   time.timeZone = "Asia/Kolkata";
 
   console = {
