@@ -107,9 +107,6 @@
               inputs.home-manager.nixosModules.home-manager
               inputs.sops-nix.nixosModules.sops
               {
-                sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
-                sops.defaultSopsFile = ./secrets/tailscale.yaml;
-                sops.secrets.tsauthkey = {};
                 home-manager = {
                   useGlobalPkgs = true;
                   useUserPackages = true;

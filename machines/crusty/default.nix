@@ -31,25 +31,8 @@
   programs.command-not-found.enable = false;
   programs.mosh.enable = true;
 
-  networking = {
-    hostName = "crusty";
-    networkmanager.enable = true;
-    nftables.enable = true;
-    nameservers = ["100.100.100.100" "8.8.8.8" "1.1.1.1"];
-    search = ["tiger-shark.ts.net"];
-    firewall = {
-      allowedTCPPorts = [
-        80
-        443
-      ];
-      allowedTCPPortRanges = [
-        {
-          from = 6881;
-          to = 6889;
-        }
-      ];
-    };
-  };
+  profiles.server.enable = true;
+  networking.hostName = "crusty";
 
   environment.systemPackages = with pkgs; [
     git
