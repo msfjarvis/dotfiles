@@ -1,5 +1,23 @@
-_: {
+{
+  lib,
+  inputs,
+  ...
+}: let
+  inherit (lib) filterAttrs;
+  flakes = filterAttrs (name: value: value ? outputs) inputs;
+
+  nixRegistry =
+    builtins.mapAttrs
+    (name: v: {flake = v;})
+    flakes;
+in {
   nix = {
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      persistent = true;
+    };
+    registry = nixRegistry;
     settings = {
       trusted-substituters = [
         "https://cache.nixos.org/"
