@@ -254,6 +254,7 @@
       })
 
       # GNOME
+      gnome.eog
       gnome3.gnome-tweaks
       # a nicer application menu for gnome
       gnomeExtensions.arcmenu
@@ -264,6 +265,8 @@
       gnomeExtensions.user-themes
     ];
   };
+
+  environment.gnome.excludePackages = with pkgs; [loupe];
 
   services.tailscale = {
     enable = true;
