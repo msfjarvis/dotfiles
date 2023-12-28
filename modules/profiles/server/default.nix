@@ -10,12 +10,13 @@ in {
     enable = mkEnableOption "server profile";
   };
   config = lib.mkIf cfg.enable {
-    # Open HTTP(S) ports, setup Tailscale-aware networking
+    # Enable Tailscale
+    profiles.tailscale.enable = true;
+
+    # Open HTTP(S) ports
     networking = {
       networkmanager.enable = true;
       nftables.enable = true;
-      nameservers = ["100.100.100.100" "8.8.8.8" "1.1.1.1"];
-      search = ["tiger-shark.ts.net"];
       firewall = {
         allowedTCPPorts = [
           80
@@ -42,9 +43,8 @@ in {
     # Enable SSH
     services.openssh.enable = true;
 
-    # Enable Tailscale and allow it to provision certificates to caddy
+    # Allow Tailscale to provision certs to caddy
     services.tailscale = {
-      enable = true;
       permitCertUid = "caddy";
     };
     services.tailscale-autoconnect = {

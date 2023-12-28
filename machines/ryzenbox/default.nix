@@ -7,6 +7,8 @@
     ./hardware-configuration.nix
   ];
 
+  profiles.tailscale.enable = true;
+
   # Theming
   stylix = {
     autoEnable = false;
@@ -138,8 +140,6 @@
   networking = {
     hostName = "ryzenbox";
     networkmanager.enable = true;
-    nameservers = ["100.100.100.100" "8.8.8.8" "1.1.1.1"];
-    search = ["tiger-shark.ts.net"];
   };
 
   # Set your time zone.
@@ -267,15 +267,6 @@
   };
 
   environment.gnome.excludePackages = with pkgs; [loupe];
-
-  services.tailscale = {
-    enable = true;
-  };
-
-  services.tailscale-autoconnect = {
-    enable = true;
-    authkeyFile = "/run/secrets/tsauthkey";
-  };
 
   systemd.user.services.clipboard-substitutor = {
     unitConfig = {Description = "systemd service for clipboard-substitutor";};
