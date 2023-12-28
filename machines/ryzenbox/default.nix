@@ -311,7 +311,7 @@
   ];
 
   services.rucksack = let
-    home = config.users.users.msfjarvis.home;
+    inherit (config.users.users.msfjarvis) home;
     minecraft = name: "${home}/Games/PrismLauncher/instances/${name}/.minecraft/screenshots/";
   in {
     enable = true;
