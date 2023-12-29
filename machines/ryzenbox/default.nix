@@ -93,6 +93,7 @@
         disable-user-extensions = false;
         enabled-extensions = [
           "arcmenu@arcmenu.com"
+          "mullvadindicator@pobega.github.com"
           "pop-shell@system76.com"
           "system-monitor-next@paradoxxx.zero.gmail.com"
           "user-theme@gnome-shell-extensions.gcampax.github.com"
@@ -211,6 +212,8 @@
       kondo
       maestro
       megatools
+      mullvad
+      mullvad-vpn
       patreon-dl
       pidcat
       (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
@@ -260,6 +263,8 @@
       gnomeExtensions.arcmenu
       # POP!_OS shell tiling extensions for Gnome 3
       gnomeExtensions.pop-shell
+      # display Mullvad state
+      gnomeExtensions.mullvad-indicator
       # displays system status in the gnome-shell status bar
       gnomeExtensions.system-monitor-next
       gnomeExtensions.user-themes
@@ -267,6 +272,13 @@
   };
 
   environment.gnome.excludePackages = with pkgs; [loupe];
+
+  services.mullvad-vpn = {
+    enable = true;
+  };
+  # Required for Mullvad
+  # https://discourse.nixos.org/t/connected-to-mullvadvpn-but-no-internet-connection/35803/11
+  services.resolved.enable = true;
 
   systemd.user.services.clipboard-substitutor = {
     unitConfig = {Description = "systemd service for clipboard-substitutor";};
