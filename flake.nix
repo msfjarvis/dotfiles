@@ -27,7 +27,7 @@
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.flake-utils.inputs.systems.follows = "systems";
 
-  inputs.home-manager.url = "github:nix-community/home-manager/master";
+  inputs.home-manager.url = "github:msfjarvis/home-manager?rev=2ebc37a33a74f71f676def6faa2e60a1d7293119";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.nix-index-database.url = "github:nix-community/nix-index-database";
