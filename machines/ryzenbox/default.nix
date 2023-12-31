@@ -19,7 +19,7 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
 
     cursor = {
-      package = pkgs.dracula-gtk-theme-unstable;
+      package = pkgs.dracula-theme;
       name = "Dracula-cursors";
     };
     fonts = {
@@ -67,11 +67,11 @@
       enable = true;
       theme = {
         name = "Dracula";
-        package = pkgs.dracula-gtk-theme-unstable;
+        package = pkgs.dracula-theme;
       };
       cursorTheme = {
         name = "Dracula-cursors";
-        package = pkgs.dracula-gtk-theme-unstable;
+        package = pkgs.dracula-theme;
       };
       gtk3.extraConfig = {
         Settings = ''
