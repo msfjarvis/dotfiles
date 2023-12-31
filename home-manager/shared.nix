@@ -39,7 +39,7 @@
       show_preview = true;
       style = "compact";
       sync_frequency = "5m";
-      sync_address = "http://crusty:8888";
+      sync_address = "http://wailord:8888";
     };
   };
 

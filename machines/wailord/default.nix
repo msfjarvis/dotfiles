@@ -55,6 +55,16 @@
     micro
   ];
 
+  services.atuin = {
+    enable = true;
+    openRegistration = true;
+    path = "";
+    host = "0.0.0.0";
+    port = 8888;
+    openFirewall = true;
+    database.createLocally = true;
+  };
+
   services.caddy = {
     enable = true;
     virtualHosts = {
