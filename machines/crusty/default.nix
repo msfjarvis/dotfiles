@@ -87,34 +87,7 @@
     file_filter = "*.mp4";
   };
 
-  services.tailscale = {
-    enable = true;
-    permitCertUid = "caddy";
-  };
-
-  services.tailscale-autoconnect = {
-    enable = true;
-    authkeyFile = "/run/secrets/tsauthkey";
-    extraOptions = ["--accept-risk=lose-ssh" "--ssh"];
-  };
+  services.tailscale.enable = true;
 
   system.stateVersion = "23.11";
-
-  # Disable some home-manager goodies that are pointless on servers.
-  home-manager.users.msfjarvis = {
-    home.file.".imwheelrc".enable = false;
-    programs.browserpass.enable = false;
-    programs.password-store.enable = false;
-    programs.topgrade.enable = false;
-    programs.vscode.enable = false;
-    services.git-sync.enable = false;
-
-    # Use a simpler prompt.
-    programs.starship = {
-      settings = {
-        format = "$directory$git_branch$git_state$git_status➜ ";
-        character.disabled = true;
-      };
-    };
-  };
 }
