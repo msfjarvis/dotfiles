@@ -50,7 +50,7 @@
     polarity = "dark";
     targets = {
       console.enable = true;
-      gnome.enable = true;
+      gnome.enable = false;
     };
   };
 
@@ -58,69 +58,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  programs.seahorse.enable = true;
+  programs.seahorse.enable = false;
   services.gnome.gnome-keyring.enable = true;
 
   home-manager.users.msfjarvis = {
     programs.mpv.enable = true;
-    gtk = {
-      enable = true;
-      theme = {
-        name = "Dracula";
-        package = pkgs.dracula-theme;
-      };
-      cursorTheme = {
-        name = "Dracula-cursors";
-        package = pkgs.dracula-theme;
-      };
-      gtk3.extraConfig = {
-        Settings = ''
-          gtk-application-prefer-dark-theme=1
-        '';
-      };
-
-      gtk4.extraConfig = {
-        Settings = ''
-          gtk-application-prefer-dark-theme=1
-        '';
-      };
-    };
-    dconf.settings = {
-      "org/gnome/shell/extensions/user-theme" = {
-        name = "Dracula";
-      };
-      "org/gnome/shell" = {
-        disable-user-extensions = false;
-        enabled-extensions = [
-          "arcmenu@arcmenu.com"
-          "mullvadindicator@pobega.github.com"
-          "pop-shell@system76.com"
-          "system-monitor-next@paradoxxx.zero.gmail.com"
-          "user-theme@gnome-shell-extensions.gcampax.github.com"
-        ];
-      };
-      "org/gnome/desktop/background" = {
-        color-shading-type = "solid";
-        picture-options = "zoom";
-        picture-uri = "file://${config.stylix.image}";
-        picture-uri-dark = "file://${config.stylix.image}";
-      };
-      "org/gnome/desktop/interface" = with config.stylix.fonts; {
-        cursor-theme = "Dracula-cursors";
-        gtk-theme = "Dracula";
-        # Taken from Stylix
-        color-scheme =
-          if config.stylix.polarity == "dark"
-          then "prefer-dark"
-          else "default";
-        font-name = "${sansSerif.name} ${toString sizes.applications}";
-        document-font-name = "${serif.name} ${toString (sizes.applications - 1)}";
-        monospace-font-name = "${monospace.name} ${toString sizes.terminal}";
-      };
-      "org/gnome/desktop/notifications/application/org-gnome-console" = {
-        enable = false;
-      };
-    };
     home.sessionVariables.GTK_THEME = "Dracula";
     stylix = {
       targets = {
@@ -146,17 +88,15 @@
   # Set your time zone.
   time.timeZone = "Asia/Kolkata";
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # Configure keymap in X11
   services.xserver = {
     layout = "us";
     xkbVariant = "";
+    enable = true;
+    displayManager.lightdm.enable = true;
+    desktopManager = {
+      cinnamon.enable = true;
+    };
+    displayManager.defaultSession = "cinnamon";
   };
 
   # Enable CUPS to print documents.
@@ -235,23 +175,8 @@
         });
         jdks = [temurin-bin-20];
       })
-
-      # GNOME
-      gnome.eog
-      gnome3.gnome-tweaks
-      # a nicer application menu for gnome
-      gnomeExtensions.arcmenu
-      # POP!_OS shell tiling extensions for Gnome 3
-      gnomeExtensions.pop-shell
-      # display Mullvad state
-      gnomeExtensions.mullvad-indicator
-      # displays system status in the gnome-shell status bar
-      gnomeExtensions.system-monitor-next
-      gnomeExtensions.user-themes
     ];
   };
-
-  environment.gnome.excludePackages = with pkgs; [loupe];
 
   services.mullvad-vpn = {
     enable = true;
