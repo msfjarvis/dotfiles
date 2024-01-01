@@ -183,14 +183,11 @@
       age
       diffuse-bin
       fclones
-      ferium
       ffmpeg
-      firefox-wayland
+      firefox
       fzf
       gdrive
       git-crypt
-      gitui
-      hcctl
       imwheel
       nerdfonts
       katbin
@@ -204,8 +201,6 @@
       (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
       scrcpy
       spotify
-      spicetify-cli
-      sshfs
       telegram-desktop
       thunderbird
       webcord
