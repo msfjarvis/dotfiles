@@ -171,7 +171,7 @@
       telegram-desktop
       thunderbird
       webcord
-      wl-clipboard
+      xclip
       xdotool
       yt-dlp
 
