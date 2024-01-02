@@ -126,6 +126,10 @@
       defaultSession = "cinnamon";
       lightdm.enable = true;
     };
+    libinput = {
+      enable = true;
+      mouse.accelProfile = "flat";
+    };
   };
 
   # Enable CUPS to print documents.
