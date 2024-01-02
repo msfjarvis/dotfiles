@@ -14,7 +14,7 @@
     autoEnable = false;
     image = pkgs.fetchurl {
       url = "https://msfjarvis.dev/images/wallpaper.png";
-      sha256 = "sha256-S3GbyhdySaiPOHQyYxANC3jM19rD+6OKh7Q+DojqdOk=";
+      sha256 = "sha256-GoF4dZTt/+rDrp1Z7+lY/8doSzqiqyXikR1gXDyxkQg=";
     };
     base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
     cursor = {
