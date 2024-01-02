@@ -17,11 +17,11 @@
       sha256 = "sha256-S3GbyhdySaiPOHQyYxANC3jM19rD+6OKh7Q+DojqdOk=";
     };
     base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
-
     cursor = {
-      package = pkgs.dracula-theme;
-      name = "Dracula-cursors";
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Classic";
     };
+
     fonts = {
       emoji = {
         name = "Noto Color Emoji";
@@ -50,7 +50,6 @@
     polarity = "dark";
     targets = {
       console.enable = true;
-      gnome.enable = false;
     };
   };
 
@@ -63,6 +62,30 @@
 
   home-manager.users.msfjarvis = {
     programs.mpv.enable = true;
+    dconf.settings = {
+      "org/cinnamon/theme" = {
+        name = "Dracula";
+      };
+      "org/cinnamon/desktop/interface" = with config.stylix.fonts; {
+        cursor-theme = "Bibata-Modern-Classic";
+        font-name = "${sansSerif.name} ${toString sizes.applications}";
+        icon-theme = "Dracula";
+      };
+      "org/cinnamon/desktop/background" = {
+        color-shading-type = "solid";
+        picture-options = "zoom";
+        picture-uri = "file://${config.stylix.image}";
+        picture-uri-dark = "file://${config.stylix.image}";
+      };
+      "org/gnome/desktop/interface" = with config.stylix.fonts; {
+        theme = "Dracula";
+        cursor-theme = "Bibata-Modern-Classic";
+        icon-theme = "Dracula";
+        font-name = "${sansSerif.name} ${toString sizes.applications}";
+        document-font-name = "${serif.name} ${toString (sizes.applications - 1)}";
+        monospace-font-name = "${monospace.name} ${toString sizes.terminal}";
+      };
+    };
     home.sessionVariables.GTK_THEME = "Dracula";
     stylix = {
       targets = {
@@ -92,11 +115,13 @@
     layout = "us";
     xkbVariant = "";
     enable = true;
-    displayManager.lightdm.enable = true;
     desktopManager = {
       cinnamon.enable = true;
     };
-    displayManager.defaultSession = "cinnamon";
+    displayManager = {
+      defaultSession = "cinnamon";
+      lightdm.enable = true;
+    };
   };
 
   # Enable CUPS to print documents.
@@ -122,6 +147,8 @@
       adx
       age
       diffuse-bin
+      dracula-icon-theme
+      dracula-theme
       fclones
       ffmpeg
       firefox
