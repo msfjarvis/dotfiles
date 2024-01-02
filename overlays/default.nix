@@ -9,7 +9,7 @@ _: prev: {
   });
   # Set default fonts
   nerdfonts = prev.nerdfonts.override {
-    fonts = ["CascadiaCode" "FiraCode" "Inconsolata" "JetBrainsMono"];
+    fonts = ["JetBrainsMono"];
   };
   scrcpy = prev.scrcpy.overrideAttrs (_: {
     # Fixes bash completion, drop after next release.
