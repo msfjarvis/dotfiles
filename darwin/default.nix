@@ -54,6 +54,7 @@
     hub
     katbin
     maestro
+    ninja
     openssh
     openssl
     pidcat
