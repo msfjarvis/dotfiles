@@ -191,7 +191,6 @@
 
       # Minecraft
       (prismlauncher.override {
-        glfw = glfw-wayland-minecraft;
         jdks = [temurin-bin-20];
       })
     ];
