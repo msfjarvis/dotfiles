@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   config,
   ...
 }: {
@@ -107,6 +108,9 @@
     hostName = "ryzenbox";
     networkmanager.enable = true;
   };
+
+  # Workaround for https://github.com/NixOS/nixpkgs/issues/180175
+  systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
   # Set your time zone.
   time.timeZone = "Asia/Kolkata";
