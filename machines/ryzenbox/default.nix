@@ -208,14 +208,17 @@
   services.resolved.enable = true;
 
   systemd.user.services.clipboard-substitutor = {
-    unitConfig = {Description = "systemd service for clipboard-substitutor";};
+    unitConfig = {
+      Description = "systemd service for clipboard-substitutor";
+      Wants = "display-manager.service";
+      After = "display-manager.service";
+    };
     serviceConfig = {
       Type = "simple";
       ExecStart = "${pkgs.clipboard-substitutor}/bin/clipboard-substitutor";
       Restart = "on-failure";
-      RestartSec = 3;
+      RestartSec = 30;
     };
-    wantedBy = ["default.target"];
   };
 
   systemd.user.services.imwheel = {
@@ -230,9 +233,8 @@
       ExecStop = "/usr/bin/pkill imwheel";
       RemainAfterExit = "yes";
       Restart = "on-failure";
-      RestartSec = 3;
+      RestartSec = 30;
     };
-    wantedBy = ["default.target"];
   };
 
   programs.adb.enable = true;
