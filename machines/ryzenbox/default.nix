@@ -101,6 +101,42 @@
         fzf.enable = true;
       };
     };
+    programs.gnome-terminal = {
+      enable = true;
+      showMenubar = false;
+      themeVariant = "system";
+      profile = {
+        "b1dcc9dd-5262-4d8d-a863-c897e6d979b9" = {
+          default = true;
+          visibleName = "Dracula";
+          colors = with config.lib.stylix.colors.withHashtag; {
+            foregroundColor = base05;
+            backgroundColor = base00;
+            boldColor = base04;
+            palette = [
+              base00
+              base01
+              base02
+              base03
+              base04
+              base05
+              base06
+              base07
+              base08
+              base09
+              base0A
+              base0B
+              base0C
+              base0D
+              base0E
+              base0F
+            ];
+          };
+          boldIsBright = true;
+          audibleBell = false;
+        };
+      };
+    };
   };
 
   # Enable networking
