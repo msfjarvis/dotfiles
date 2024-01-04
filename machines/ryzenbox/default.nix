@@ -86,6 +86,19 @@
         document-font-name = "${serif.name} ${toString (sizes.applications - 1)}";
         monospace-font-name = "${monospace.name} ${toString sizes.terminal}";
       };
+      # Disable sounds
+      "org/cinnamon/sounds" = {
+        login-enabled = false;
+        logout-enabled = false;
+        switch-enabled = false;
+        notification-enabled = false;
+        unplug-enabled = false;
+        plug-enabled = false;
+        tile-enabled = false;
+      };
+      "org/cinnamon/desktop/sound" = {
+        volume-sound-enabled = false;
+      };
     };
     home.sessionVariables.GTK_THEME = "Dracula";
     stylix = {
