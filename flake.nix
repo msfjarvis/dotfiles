@@ -106,7 +106,12 @@
             ++ [
               inputs.home-manager.nixosModules.home-manager
               inputs.sops-nix.nixosModules.sops
-              {
+              inputs.stylix.nixosModules.stylix
+              inputs.disko.nixosModules.disko
+              ({lib, ...}: {
+                stylix.autoEnable = lib.mkDefault false;
+                stylix.image = lib.mkDefault ./nixos/stylix-fakes/wall.png;
+                stylix.base16Scheme = lib.mkDefault ./nixos/stylix-fakes/dracula.yml;
                 home-manager = {
                   useGlobalPkgs = true;
                   useUserPackages = true;
@@ -119,20 +124,10 @@
                       ];
                   };
                 };
-              }
+              })
               (import (./machines + "/${name}"))
               {nixpkgs.pkgs = pkgs;}
-            ]
-            ++ (
-              if name == "ryzenbox"
-              then [inputs.stylix.nixosModules.stylix]
-              else []
-            )
-            ++ (
-              if name == "wailord"
-              then [inputs.disko.nixosModules.disko]
-              else []
-            );
+            ];
           specialArgs = {inherit inputs;};
         };
     in
