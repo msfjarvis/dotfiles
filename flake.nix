@@ -1,7 +1,7 @@
 {
   description = "Home Manager configurations of Harsh Shandilya";
 
-  inputs.nixpkgs.url = "github:msfjarvis/nixpkgs?rev=6eee3473c1b66ca41b4ab650e01135280469ddba";
+  inputs.nixpkgs.url = "github:msfjarvis/nixpkgs/nixpkgs-unstable";
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
   inputs.systems.url = "github:msfjarvis/flake-systems";
@@ -27,7 +27,7 @@
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.flake-utils.inputs.systems.follows = "systems";
 
-  inputs.home-manager.url = "github:msfjarvis/home-manager?rev=2ebc37a33a74f71f676def6faa2e60a1d7293119";
+  inputs.home-manager.url = "github:msfjarvis/home-manager/prevent-gh-migrate-re-run";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.nix-index-database.url = "github:nix-community/nix-index-database";
