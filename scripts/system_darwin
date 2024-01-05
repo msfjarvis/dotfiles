@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 
 function clip() {
-  pbcopy <"${1:-/dev/stdin}"
+  pbcopy < "${1:-/dev/stdin}"
 }
 
 function clrclip() {

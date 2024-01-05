@@ -158,16 +158,6 @@
         type = "app";
         program = let
           pkgs = pkgsFor system;
-          inherit (pkgs) lib;
-          getDirFiles = dir:
-            builtins.map (x: "${dir}/" + x) (builtins.attrNames (builtins.readDir dir));
-          fmtTargetsStr = lib.concatStringsSep " " ([
-              "darwin-init"
-              "shell-init"
-              "x"
-            ]
-            ++ getDirFiles ./scripts);
-
           script = pkgs.writeShellApplication {
             name = "format";
             runtimeInputs = with pkgs; [
@@ -178,10 +168,10 @@
             ];
             text = ''
               set -euo pipefail
-              shfmt -w -s -i 2 -ci ${fmtTargetsStr};
-              alejandra --quiet .
+              shfmt --write --simplify --language-dialect bash --indent 2 --case-indent --space-redirects .;
               deadnix --edit
               statix check .
+              alejandra --quiet .
             '';
           };
         in "${script}/bin/format";

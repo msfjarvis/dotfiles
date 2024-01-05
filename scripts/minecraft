@@ -33,7 +33,7 @@ function buildmod() {
     else
       fd "$(basename "$(pwd)")" "${DEST_DIR}" -X rm -v
     fi
-  done <gradle.properties
+  done < gradle.properties
   findjars | rg -v '\-(sources|dev|api)\.jar' | xargs -I {} mv -v {} "${DEST_DIR}"
 }
 

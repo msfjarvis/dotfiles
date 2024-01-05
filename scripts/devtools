@@ -14,6 +14,6 @@ function mkexecjar() {
   if [ -z "${EXEC_FILE}" ]; then
     EXEC_FILE="${JAR_FILE%.*}"
   fi
-  printf "#!/bin/sh\n\nexec java \$JAVA_OPTS -jar \$0 \"\$@\"\n" >"${EXEC_FILE}"
-  cat "${JAR_FILE}" >>"${EXEC_FILE}"
+  printf "#!/bin/sh\n\nexec java \$JAVA_OPTS -jar \$0 \"\$@\"\n" > "${EXEC_FILE}"
+  cat "${JAR_FILE}" >> "${EXEC_FILE}"
 }

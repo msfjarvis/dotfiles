@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 
 # shellcheck disable=SC1090
-source ~/.env 2>/dev/null
+source ~/.env 2> /dev/null
 
 CL_BOLD="\033[1m"
 CL_INV="\033[7m"

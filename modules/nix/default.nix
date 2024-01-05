@@ -4,11 +4,11 @@
   ...
 }: let
   inherit (lib) filterAttrs;
-  flakes = filterAttrs (name: value: value ? outputs) inputs;
+  flakes = filterAttrs (_name: value: value ? outputs) inputs;
 
   nixRegistry =
     builtins.mapAttrs
-    (name: v: {flake = v;})
+    (_name: v: {flake = v;})
     flakes;
 in {
   nix = {
