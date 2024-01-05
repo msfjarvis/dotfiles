@@ -17,10 +17,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   home-manager.users.msfjarvis = {
-    programs.mpv.enable = true;
     stylix = {
       targets = {
-        bat.enable = true;
         firefox = {
           enable = true;
           profileNames = [
@@ -28,7 +26,6 @@
             "Secondary"
           ];
         };
-        fzf.enable = true;
       };
     };
   };

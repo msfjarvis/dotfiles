@@ -99,5 +99,15 @@ in {
       enable = true;
       enableSSHSupport = true;
     };
+
+    home-manager.users.msfjarvis = {
+      programs.mpv.enable = true;
+      stylix = {
+        targets = {
+          bat.enable = true;
+          fzf.enable = true;
+        };
+      };
+    };
   };
 }
