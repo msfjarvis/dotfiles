@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   cfg = config.profiles.desktop;
@@ -18,6 +19,20 @@ in {
         lightdm.enable = true;
       };
     };
+    programs.geary.enable = false;
+    environment.cinnamon.excludePackages = with pkgs;
+    with pkgs.cinnamon; [
+      sound-theme-freedesktop
+      nixos-artwork.wallpapers.simple-dark-gray
+      mint-artwork
+      mint-cursor-themes
+      mint-l-icons
+      mint-l-theme
+      mint-themes
+      mint-x-icons
+      mint-y-icons
+      hexchat
+    ];
 
     home-manager.users.msfjarvis = {
       dconf.settings = {
