@@ -9,98 +9,15 @@
   ];
 
   profiles.tailscale.enable = true;
-
-  # Theming
-  stylix = {
-    autoEnable = false;
-    image = pkgs.fetchurl {
-      url = "https://msfjarvis.dev/images/wallpaper.png";
-      sha256 = "sha256-GoF4dZTt/+rDrp1Z7+lY/8doSzqiqyXikR1gXDyxkQg=";
-    };
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
-    cursor = {
-      package = pkgs.bibata-cursors;
-      name = "Bibata-Modern-Classic";
-    };
-
-    fonts = {
-      emoji = {
-        name = "Noto Color Emoji";
-        package = pkgs.noto-fonts-color-emoji;
-      };
-      monospace = {
-        name = "JetBrainsMonoNL Nerd Font Mono Regular";
-        package = pkgs.nerdfonts;
-      };
-      sansSerif = {
-        name = "Roboto Regular";
-        package = pkgs.roboto;
-      };
-      serif = {
-        name = "Roboto Serif 20pt Regular";
-        package = pkgs.roboto-serif;
-      };
-      sizes = {
-        applications = 12;
-        terminal = 10;
-      };
-    };
-    opacity = {
-      terminal = 0.6;
-    };
-    polarity = "dark";
-    targets = {
-      console.enable = true;
-    };
-  };
+  profiles.desktop.enable = true;
+  profiles.desktop.cinnamon.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  programs.seahorse.enable = false;
-  services.gnome.gnome-keyring.enable = true;
-
   home-manager.users.msfjarvis = {
     programs.mpv.enable = true;
-    dconf.settings = {
-      "org/cinnamon/theme" = {
-        name = "Dracula";
-      };
-      "org/cinnamon/desktop/interface" = with config.stylix.fonts; {
-        cursor-theme = "Bibata-Modern-Classic";
-        font-name = "${sansSerif.name} ${toString sizes.applications}";
-        icon-theme = "Dracula";
-      };
-      "org/cinnamon/desktop/background" = {
-        color-shading-type = "solid";
-        picture-options = "zoom";
-        picture-uri = "file://${config.stylix.image}";
-        picture-uri-dark = "file://${config.stylix.image}";
-      };
-      "org/gnome/desktop/interface" = with config.stylix.fonts; {
-        theme = "Dracula";
-        cursor-theme = "Bibata-Modern-Classic";
-        icon-theme = "Dracula";
-        font-name = "${sansSerif.name} ${toString sizes.applications}";
-        document-font-name = "${serif.name} ${toString (sizes.applications - 1)}";
-        monospace-font-name = "${monospace.name} ${toString sizes.terminal}";
-      };
-      # Disable sounds
-      "org/cinnamon/sounds" = {
-        login-enabled = false;
-        logout-enabled = false;
-        switch-enabled = false;
-        notification-enabled = false;
-        unplug-enabled = false;
-        plug-enabled = false;
-        tile-enabled = false;
-      };
-      "org/cinnamon/desktop/sound" = {
-        volume-sound-enabled = false;
-      };
-    };
-    home.sessionVariables.GTK_THEME = "Dracula";
     stylix = {
       targets = {
         bat.enable = true;
@@ -114,48 +31,11 @@
         fzf.enable = true;
       };
     };
-    programs.gnome-terminal = {
-      enable = true;
-      showMenubar = false;
-      themeVariant = "system";
-      profile = {
-        "b1dcc9dd-5262-4d8d-a863-c897e6d979b9" = {
-          default = true;
-          visibleName = "Dracula";
-          colors = with config.lib.stylix.colors.withHashtag; {
-            foregroundColor = base05;
-            backgroundColor = base00;
-            boldColor = base04;
-            palette = [
-              base00
-              base01
-              base02
-              base03
-              base04
-              base05
-              base06
-              base07
-              base08
-              base09
-              base0A
-              base0B
-              base0C
-              base0D
-              base0E
-              base0F
-            ];
-          };
-          boldIsBright = true;
-          audibleBell = false;
-        };
-      };
-    };
   };
 
   # Enable networking
   networking = {
     hostName = "ryzenbox";
-    networkmanager.enable = true;
   };
 
   # Workaround for https://github.com/NixOS/nixpkgs/issues/180175
@@ -165,34 +45,10 @@
   time.timeZone = "Asia/Kolkata";
 
   services.xserver = {
-    layout = "us";
-    xkbVariant = "";
-    enable = true;
-    desktopManager = {
-      cinnamon.enable = true;
-    };
-    displayManager = {
-      defaultSession = "cinnamon";
-      lightdm.enable = true;
-    };
     libinput = {
       enable = true;
       mouse.accelProfile = "flat";
     };
-  };
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
   };
 
   users.users.msfjarvis = {
@@ -284,16 +140,6 @@
       Restart = "on-failure";
       RestartSec = 30;
     };
-  };
-
-  programs.adb.enable = true;
-  services.udev.packages = [
-    pkgs.android-udev-rules
-  ];
-
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
   };
 
   programs.nix-ld.enable = true;
