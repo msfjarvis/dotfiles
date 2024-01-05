@@ -68,7 +68,6 @@
       fzf
       gdrive
       git-crypt
-      imwheel
       nerdfonts
       katbin
       kondo
@@ -111,36 +110,6 @@
   # Required for Mullvad
   # https://discourse.nixos.org/t/connected-to-mullvadvpn-but-no-internet-connection/35803/11
   services.resolved.enable = true;
-
-  systemd.user.services.clipboard-substitutor = {
-    unitConfig = {
-      Description = "systemd service for clipboard-substitutor";
-      Wants = "display-manager.service";
-      After = "display-manager.service";
-    };
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = "${pkgs.clipboard-substitutor}/bin/clipboard-substitutor";
-      Restart = "on-failure";
-      RestartSec = 30;
-    };
-  };
-
-  systemd.user.services.imwheel = {
-    unitConfig = {
-      Description = "systemd service for imwheel";
-      Wants = "display-manager.service";
-      After = "display-manager.service";
-    };
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = "${pkgs.imwheel}/bin/imwheel -d";
-      ExecStop = "/usr/bin/pkill imwheel";
-      RemainAfterExit = "yes";
-      Restart = "on-failure";
-      RestartSec = 30;
-    };
-  };
 
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = [

@@ -54,7 +54,6 @@ in {
 
     # Disable some home-manager goodies that are pointless on servers.
     home-manager.users.msfjarvis = {
-      home.file.".imwheelrc".enable = false;
       programs.browserpass.enable = false;
       programs.password-store.enable = false;
       programs.topgrade.enable = false;
