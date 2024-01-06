@@ -34,6 +34,8 @@ in {
       hexchat
     ];
 
+    stylix.targets.lightdm.enable = true;
+
     home-manager.users.msfjarvis = {
       dconf.settings = {
         "org/cinnamon/theme" = {
