@@ -73,6 +73,12 @@
           reverse_proxy :${toString config.services.gitea.settings.server.HTTP_PORT}
         '';
       };
+      "https://til.msfjarvis.dev" = {
+        extraConfig = ''
+          root * /var/lib/file_share
+          file_server browse
+        '';
+      };
       # "https://til.msfjarvis.dev" = {
       #   extraConfig = ''
       #     reverse_proxy :9090
