@@ -1,5 +1,5 @@
 {
-  description = "Home Manager configurations of Harsh Shandilya";
+  description = "msfjarvis' NixOS configurations";
 
   inputs.nixpkgs.url = "github:msfjarvis/nixpkgs/nixpkgs-unstable";
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
