@@ -46,6 +46,10 @@
   inputs.sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   inputs.sops-nix.inputs.nixpkgs-stable.follows = "";
 
+  inputs.srvos.url = "github:nix-community/srvos";
+  inputs.srvos.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.srvos.inputs.nixos-stable.follows = "nixpkgs";
+
   inputs.stylix.url = "github:danth/stylix";
   inputs.stylix.inputs.flake-compat.follows = "";
   inputs.stylix.inputs.home-manager.follows = "home-manager";
@@ -108,6 +112,8 @@
               inputs.sops-nix.nixosModules.sops
               inputs.stylix.nixosModules.stylix
               inputs.disko.nixosModules.disko
+              inputs.srvos.nixosModules.common
+              inputs.srvos.nixosModules.mixins-systemd-boot
               ({lib, ...}: {
                 stylix.autoEnable = lib.mkDefault false;
                 stylix.image = lib.mkDefault ./nixos/stylix-fakes/wall.png;
@@ -127,7 +133,17 @@
               })
               (import (./machines + "/${name}"))
               {nixpkgs.pkgs = pkgs;}
-            ];
+            ]
+            ++ (
+              if name == "wailord" || name == "crusty"
+              then [inputs.srvos.nixosModules.server]
+              else []
+            )
+            ++ (
+              if name == "ryzenbox"
+              then [inputs.srvos.nixosModules.desktop]
+              else []
+            );
           specialArgs = {inherit inputs;};
         };
     in

@@ -8,6 +8,7 @@
     ./hardware-configuration.nix
   ];
 
+  boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
 

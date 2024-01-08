@@ -12,9 +12,8 @@
   profiles.desktop.enable = true;
   profiles.desktop.cinnamon.enable = true;
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # Only enable for first installation
+  # boot.loader.efi.canTouchEfiVariables = true;
 
   home-manager.users.msfjarvis = {
     stylix = {
@@ -34,9 +33,6 @@
   networking = {
     hostName = "ryzenbox";
   };
-
-  # Workaround for https://github.com/NixOS/nixpkgs/issues/180175
-  systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
   # Set your time zone.
   time.timeZone = "Asia/Kolkata";

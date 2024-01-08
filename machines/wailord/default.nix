@@ -9,10 +9,8 @@
   ];
 
   boot = {
-    loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
-    };
+    # Only enable for first installation
+    # loader.efi.canTouchEfiVariables = true;
     tmp.cleanOnBoot = true;
   };
   zramSwap.enable = true;
@@ -103,9 +101,6 @@
   services.tailscale.enable = true;
 
   system.stateVersion = "23.11";
-
-  # Workaround for https://github.com/NixOS/nixpkgs/issues/180175
-  systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
   # virtualisation.oci-containers.containers = {
   #   linkding = {
