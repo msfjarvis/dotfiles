@@ -69,9 +69,9 @@
       mullvad-vpn
       patreon-dl
       pidcat
+      psst
       (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
       scrcpy
-      spotify
       telegram-desktop
       thunderbird
       webcord
