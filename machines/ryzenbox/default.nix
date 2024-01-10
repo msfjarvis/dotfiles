@@ -10,7 +10,7 @@
 
   profiles.tailscale.enable = true;
   profiles.desktop.enable = true;
-  profiles.desktop.cinnamon.enable = true;
+  profiles.desktop.gnome3.enable = true;
 
   # Only enable for first installation
   # boot.loader.efi.canTouchEfiVariables = true;
