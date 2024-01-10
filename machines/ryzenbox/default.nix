@@ -91,6 +91,7 @@
       # Minecraft
       (prismlauncher.override {
         jdks = [temurin-bin-20];
+        withWaylandGLFW = config.profiles.desktop.gnome3.enable;
       })
     ];
   };
