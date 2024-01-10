@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib,
   config,
   ...
 }: {
@@ -76,7 +75,6 @@
       telegram-desktop
       thunderbird
       webcord
-      xclip
       xdotool
       yt-dlp
 

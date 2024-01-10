@@ -15,6 +15,9 @@ in {
     services.xserver.desktopManager.gnome.enable = true;
     programs.seahorse.enable = true;
     services.gnome.gnome-keyring.enable = true;
+
+    environment.systemPackages = with pkgs; [wl-clipboard];
+
     users.users.msfjarvis.packages = with pkgs; [
       # Old GNOME picture viewer, better than the current default
       gnome.eog

@@ -4,7 +4,22 @@
 # SPDX-License-Identifier: MIT
 
 function clip() {
-  [ "$(display_exists)" ] || return
+  if [ -n "$(command -v wl-copy)" ]; then
+    clip_wl "${@}"
+  elif [ -n "$(command -v xclip)" ]; then
+    clip_x "${@}"
+  fi
+}
+
+function clip_wl() {
+  if [ -f "${1}" ]; then
+    wl-copy < "${1}"
+  else
+    wl-copy
+  fi
+}
+
+function clip_x() {
   if [ "${1}" ]; then
     xclip -rmlastnl -selection clipboard -i "${1}"
   else
@@ -13,13 +28,20 @@ function clip() {
 }
 
 function clrclip() {
-  [ "$(display_exists)" ] || return
+  if [ -n "$(command -v wl-copy)" ]; then
+    clrclip_wl
+  elif [ -n "$(command -v xclip)" ]; then
+    clrclip_x
+  fi
+}
+
+function clrclip_wl() {
+  wl-copy -c
+}
+
+function clrclip_x() {
   xclip -i /dev/null
   touch blank
   xclip -selection clipboard blank
   rm blank
-}
-
-function display_exists() {
-  if [[ -n ${DISPLAY} ]]; then echo "1"; fi
 }

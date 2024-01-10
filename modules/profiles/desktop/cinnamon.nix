@@ -34,6 +34,8 @@ in {
       hexchat
     ];
 
+    environment.systemPackages = with pkgs; [xclip];
+
     stylix.targets.lightdm.enable = true;
 
     home-manager.users.msfjarvis = {
