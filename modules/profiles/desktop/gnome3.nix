@@ -17,21 +17,29 @@ in {
     services.gnome.gnome-keyring.enable = true;
 
     environment.systemPackages = with pkgs; [wl-clipboard];
+    # Required by the tophat extension
+    services.xserver.desktopManager.gnome.sessionPath = with pkgs; [ libgtop ];
 
-    users.users.msfjarvis.packages = with pkgs; [
-      # Old GNOME picture viewer, better than the current default
-      gnome.eog
-      gnome3.gnome-tweaks
-      # a nicer application menu for gnome
-      gnomeExtensions.arcmenu
-      # POP!_OS shell tiling extensions for Gnome 3
-      gnomeExtensions.pop-shell
-      # display Mullvad state
-      gnomeExtensions.mullvad-indicator
-      # displays system status in the gnome-shell status bar
-      gnomeExtensions.system-monitor-next
-      gnomeExtensions.user-themes
-    ];
+    users.users.msfjarvis.packages = with pkgs;
+      [
+        # Old GNOME picture viewer, better than the current default
+        gnome.eog
+        gnome3.gnome-tweaks
+      ]
+      ++ (with pkgs.gnomeExtensions; [
+        # A nicer application menu for gnome
+        arcmenu
+        # POP!_OS shell tiling extensions for Gnome 3
+        pop-shell
+        # Display Mullvad state
+        mullvad-indicator
+        # System activity indicator
+        tophat
+        # Allows binding apps to specific workspaces
+        unmess
+        # Allow controlling themes
+        user-themes
+      ]);
     environment.gnome.excludePackages = with pkgs; [loupe];
 
     stylix.targets = {
@@ -71,7 +79,8 @@ in {
             "arcmenu@arcmenu.com"
             "mullvadindicator@pobega.github.com"
             "pop-shell@system76.com"
-            "system-monitor-next@paradoxxx.zero.gmail.com"
+            "tophat@fflewddur.github.io"
+            "unmess@ezix.org"
             "user-theme@gnome-shell-extensions.gcampax.github.com"
           ];
         };
