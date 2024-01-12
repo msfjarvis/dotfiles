@@ -60,6 +60,7 @@
       fzf
       gdrive
       git-crypt
+      helix
       nerdfonts
       katbin
       kondo
