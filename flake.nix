@@ -48,7 +48,6 @@
 
   inputs.srvos.url = "github:nix-community/srvos";
   inputs.srvos.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.srvos.inputs.nixos-stable.follows = "nixpkgs";
 
   inputs.stylix.url = "github:danth/stylix";
   inputs.stylix.inputs.flake-compat.follows = "";
