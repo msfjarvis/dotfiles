@@ -1,7 +1,7 @@
 {
   description = "msfjarvis' NixOS configurations";
 
-  inputs.nixpkgs.url = "github:msfjarvis/nixpkgs/nixpkgs-unstable";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/master";
   inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
   inputs.systems.url = "github:msfjarvis/flake-systems";
