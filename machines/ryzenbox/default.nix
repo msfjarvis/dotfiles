@@ -105,7 +105,11 @@
   services.resolved.enable = true;
 
   programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = [
+  programs.nix-ld.libraries = with pkgs; [
+    icu
+    openssl
+    stdenv.cc.cc
+    zlib
   ];
 
   services.rucksack = let
