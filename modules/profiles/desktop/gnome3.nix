@@ -18,7 +18,7 @@ in {
 
     environment.systemPackages = with pkgs; [wl-clipboard];
     # Required by the tophat extension
-    services.xserver.desktopManager.gnome.sessionPath = with pkgs; [ libgtop ];
+    services.xserver.desktopManager.gnome.sessionPath = with pkgs; [libgtop];
 
     users.users.msfjarvis.packages = with pkgs;
       [
