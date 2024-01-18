@@ -142,7 +142,7 @@ function encode() {
   local INPUT OUTPUT
   INPUT="${1}"
   OUTPUT="${2:-output.mp4}"
-  LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu ffmpeg -i "${INPUT:?}" -c:v hevc_nvenc -c:a copy "${OUTPUT:?}"
+  ffmpeg -i "${INPUT:?}" -c:v hevc_nvenc -c:a copy "${OUTPUT:?}"
 }
 
 function encmasto() {
