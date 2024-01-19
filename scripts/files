@@ -142,8 +142,7 @@ function encode() {
   local INPUT OUTPUT
   INPUT="${1}"
   OUTPUT="${2:-output.mp4}"
-  # ffmpeg tries to process its own stdout when run in a loop, the redirect prevents that
-  < /dev/null ffmpeg -i "${INPUT:?}" -c:v hevc_nvenc -c:a copy "${OUTPUT:?}"
+  ffmpeg -nostdin -i "${INPUT:?}" -c:v hevc_nvenc -preset p3 -c:a aac -b:a 128k "${OUTPUT:?}"
 }
 
 function encmasto() {
