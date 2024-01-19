@@ -6,7 +6,7 @@
 }: let
   cfg = config.profiles.desktop;
 in {
-  imports = [./cinnamon.nix ./gnome3.nix];
+  imports = [./android-dev.nix ./cinnamon.nix ./gnome3.nix];
   options.profiles.desktop = with lib; {
     enable = mkEnableOption "Profile for desktop machines (i.e. not servers)";
   };

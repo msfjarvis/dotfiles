@@ -9,6 +9,7 @@
 
   profiles.tailscale.enable = true;
   profiles.desktop.enable = true;
+  profiles.desktop.android-dev.enable = true;
   profiles.desktop.gnome3.enable = true;
 
   # Only enable for first installation
@@ -95,16 +96,6 @@
       webcord
       xdotool
       yt-dlp
-
-      # Android Development
-      androidStudioPackages.stable
-      androidStudioPackages.beta
-      androidStudioPackages.canary
-      (gradle_8.override {
-        java = temurin-bin-20;
-        javaToolchains = [temurin-bin-17 temurin-bin-20];
-      })
-      temurin-bin-20
 
       # Minecraft
       (prismlauncher.override {
