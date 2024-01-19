@@ -34,7 +34,7 @@ in {
         settings = {
           "org.gradle.caching" = true;
           "org.gradle.parallel" = true;
-          "org.gradle.jvmargs" = "-XX:MaxMetaspaceSize=384m";
+          "org.gradle.jvmargs" = "-XX:MaxMetaspaceSize=1024m";
           "org.gradle.home" = defaultJdk;
           "org.gradle.java.installations.auto-detect" = false;
           "org.gradle.java.installations.auto-download" = false;
