@@ -90,9 +90,13 @@ in {
       };
     };
 
+    # Enable PCSC-Lite daemon for use with my Yubikey.
+    services.pcscd.enable = true;
+
     programs.adb.enable = true;
     services.udev.packages = [
       pkgs.android-udev-rules
+      pkgs.libu2f-host
     ];
 
     programs.gnupg.agent = {
