@@ -105,7 +105,6 @@ in {
     };
 
     home-manager.users.msfjarvis = {
-      programs.mpv.enable = true;
       stylix = {
         targets = {
           bat.enable = true;

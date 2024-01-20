@@ -52,6 +52,7 @@
       adb-sync
       adx
       age
+      celluloid
       diffuse-bin
       dracula-icon-theme
       dracula-theme

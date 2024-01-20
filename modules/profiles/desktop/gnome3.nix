@@ -40,7 +40,7 @@ in {
         # Allow controlling themes
         user-themes
       ]);
-    environment.gnome.excludePackages = with pkgs; [loupe];
+    environment.gnome.excludePackages = with pkgs; [loupe gnome.totem];
 
     stylix.targets = {
       gnome.enable = true;
