@@ -93,6 +93,8 @@
 	features = woolly-mammoth
 [diff]
 	colorMoved = default
+[diff "gpg"]
+	textconv = gpg --no-tty --decrypt -q
 [fetch]
 	showForcedUpdates = true
 [gc]
