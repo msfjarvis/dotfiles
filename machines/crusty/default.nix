@@ -6,11 +6,22 @@
 }: {
   imports = [
     ./hardware-configuration.nix
+    ./sd-image.nix
+  ];
+  # Pi kernel does not build all modules so this allows some to be missing.
+  nixpkgs.overlays = [
+    (_: super: {
+      makeModulesClosure = x:
+        super.makeModulesClosure (x // {allowMissing = true;});
+    })
   ];
 
+  hardware.raspberry-pi."4" = {
+    apply-overlays-dtmerge.enable = true;
+    pwm0.enable = true;
+  };
+
   boot.loader.systemd-boot.enable = lib.mkForce false;
-  boot.loader.grub.enable = false;
-  boot.loader.generic-extlinux-compatible.enable = true;
 
   time.timeZone = "Asia/Kolkata";
 
@@ -22,10 +33,16 @@
 
   users = {
     mutableUsers = false;
-    users.msfjarvis = {
-      isNormalUser = true;
-      extraGroups = ["wheel"];
-      hashedPassword = ''$y$j9T$MQNdrYiBEX4.vkTzuXc4Q.$FKzWf0o.527za6LfMU1f96Cf2iZPZRVmOwmOw7yx5.A'';
+    users = {
+      msfjarvis = {
+        isNormalUser = true;
+        extraGroups = ["wheel"];
+        hashedPassword = ''$y$j9T$g8JL/B98ogQF/ryvwHpWe.$jyKMeotGz/o8Pje.nejKzPMiYOxtn//33OzMu5bAHm2'';
+      };
+      root.openssh.authorizedKeys.keys = [
+        ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEoNv1E/D4IzNIJeJg7Rp49Jizw8aoCLSyFLcUmD1F6K''
+        ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP3WC4HKwbfVGnJzhtrWo2Ue0dnaZH1JaPu4X6VILQL6''
+      ];
     };
   };
 
@@ -57,10 +74,6 @@
     };
   };
 
-  services.getty.autologinUser = "msfjarvis";
-
-  services.openssh.enable = true;
-
   services.qbittorrent = {
     enable = true;
     port = 9091;
@@ -78,7 +91,16 @@
     file_filter = "*.mp4";
   };
 
-  services.tailscale.enable = true;
+  systemd.services.disable-wlan-powersave = {
+    description = "Disable WiFi power save";
+    after = ["sys-subsystem-net-devices-wlan0.device"];
+    wantedBy = ["sys-subsystem-net-devices-wlan0.device"];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = "yes";
+      ExecStart = "${pkgs.iw}/bin/iw dev wlan0 set power_save off";
+    };
+  };
 
   system.stateVersion = "23.11";
 }

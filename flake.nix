@@ -111,7 +111,6 @@
               inputs.home-manager.nixosModules.home-manager
               inputs.sops-nix.nixosModules.sops
               inputs.stylix.nixosModules.stylix
-              inputs.disko.nixosModules.disko
               inputs.srvos.nixosModules.common
               inputs.srvos.nixosModules.mixins-systemd-boot
               ({lib, ...}: {
@@ -135,8 +134,13 @@
               {nixpkgs.pkgs = pkgs;}
             ]
             ++ (
-              if name == "wailord" || name == "crusty"
-              then [inputs.srvos.nixosModules.server]
+              if name == "wailord"
+              then [inputs.disko.nixosModules.disko inputs.srvos.nixosModules.server]
+              else []
+            )
+            ++ (
+              if name == "crusty"
+              then [inputs.nixos-hardware.nixosModules.raspberry-pi-4 inputs.srvos.nixosModules.server]
               else []
             )
             ++ (
@@ -148,6 +152,7 @@
         };
     in
       genAttrs hosts mkHost;
+    packages.x86_64-linux.crusty = self.nixosConfigurations.crusty.config.system.build.sdImage;
     deploy = {
       user = "root";
       nodes =

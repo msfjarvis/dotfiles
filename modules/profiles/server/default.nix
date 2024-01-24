@@ -14,7 +14,7 @@ in {
 
     # Open HTTP(S) ports
     networking = {
-      networkmanager.enable = true;
+      networkmanager.enable = lib.mkDefault true;
       nftables.enable = true;
       firewall = {
         allowedTCPPorts = [
@@ -37,7 +37,7 @@ in {
     sops.secrets.tsauthkey = {};
 
     # Automatically log into my user account
-    services.getty.autologinUser = "msfjarvis";
+    services.getty.autologinUser = lib.mkForce "msfjarvis";
 
     # Enable SSH
     services.openssh.enable = true;
