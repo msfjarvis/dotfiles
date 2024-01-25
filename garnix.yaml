@@ -2,6 +2,5 @@ builds:
   include:
     - nixosConfigurations.crusty
     - nixosConfigurations.ryzenbox
-    - nixosConfigurations.samosa
     - nixosConfigurations.wailord
     - packages.aarch64-darwin.*
