@@ -27,10 +27,13 @@ in {
     home-manager.users.msfjarvis = {
       programs.gradle = {
         enable = true;
-        package = pkgs.gradle_8.override {
-          java = defaultJdk;
-          javaToolchains = toolchains;
-        };
+        package = pkgs.callPackage (pkgs.gradleGen
+          {
+            version = "8.6-rc-3";
+            nativeVersion = "0.22-milestone-25";
+            hash = "sha256-KBtHZWJnRyyfhT5+1UACv9Q1v9zSkihnCXBTJP2W9dw=";
+            defaultJava = defaultJdk;
+          }) {};
         settings = {
           "org.gradle.caching" = true;
           "org.gradle.parallel" = true;
