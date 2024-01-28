@@ -15,7 +15,7 @@
 
   inputs.devshell.url = "github:numtide/devshell";
   inputs.devshell.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.devshell.inputs.systems.follows = "systems";
+  inputs.devshell.inputs.flake-utils.follows = "flake-utils";
 
   inputs.fenix.url = "github:nix-community/fenix";
   inputs.fenix.inputs.nixpkgs.follows = "nixpkgs";
