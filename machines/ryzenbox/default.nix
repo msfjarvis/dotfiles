@@ -141,6 +141,7 @@
       sshfs
       telegram-desktop
       thunderbird
+      tuba
       webcord
       xdotool
       yt-dlp
