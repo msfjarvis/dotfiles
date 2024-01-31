@@ -95,6 +95,28 @@
       };
     forAllSystems = inputs.nixpkgs.lib.genAttrs (import inputs.systems);
   in {
+    apps = forAllSystems (system: {inherit (deploy-rs.apps.${system}) default;});
+
+    formatter = forAllSystems (system: let
+      pkgs = pkgsFor system;
+    in
+      pkgs.writeShellApplication {
+        name = "format";
+        runtimeInputs = with pkgs; [
+          alejandra
+          deadnix
+          shfmt
+          statix
+        ];
+        text = ''
+          set -euo pipefail
+          shfmt --write --simplify --language-dialect bash --indent 2 --case-indent --space-redirects .;
+          deadnix --edit
+          statix check . || statix fix .
+          alejandra --quiet .
+        '';
+      });
+
     overlay = import ./overlays;
     nixosModules = builtins.listToAttrs (findModules ./modules);
     nixosConfigurations = with nixpkgs.lib; let
@@ -168,31 +190,6 @@
         })
         self.nixosConfigurations;
     };
-    apps = forAllSystems (system: {
-      inherit (deploy-rs.apps.${system}) default;
-      format = {
-        type = "app";
-        program = let
-          pkgs = pkgsFor system;
-          script = pkgs.writeShellApplication {
-            name = "format";
-            runtimeInputs = with pkgs; [
-              alejandra
-              deadnix
-              shfmt
-              statix
-            ];
-            text = ''
-              set -euo pipefail
-              shfmt --write --simplify --language-dialect bash --indent 2 --case-indent --space-redirects .;
-              deadnix --edit
-              statix check .
-              alejandra --quiet .
-            '';
-          };
-        in "${script}/bin/format";
-      };
-    });
 
     darwinConfigurations.Harshs-MacBook-Pro = inputs.darwin.lib.darwinSystem rec {
       system = "aarch64-darwin";
