@@ -9,6 +9,7 @@
 
   inputs.custom-nixpkgs.url = "github:msfjarvis/custom-nixpkgs/main";
   inputs.custom-nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.custom-nixpkgs.inputs.fenix.follows = "fenix";
   inputs.custom-nixpkgs.inputs.systems.follows = "systems";
 
   inputs.darwin.url = "github:LnL7/nix-darwin/master";
@@ -24,6 +25,9 @@
 
   inputs.dracula-micro.url = "https://raw.githubusercontent.com/dracula/micro/master/dracula.micro";
   inputs.dracula-micro.flake = false;
+
+  inputs.fenix.url = "github:nix-community/fenix";
+  inputs.fenix.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.flake-utils.inputs.systems.follows = "systems";
@@ -89,6 +93,7 @@
         overlays = [
           self.overlay
           inputs.custom-nixpkgs.overlays.default
+          inputs.fenix.overlays.default
           inputs.nix-vscode-extensions.overlays.default
         ];
         localSystem = {inherit system;};

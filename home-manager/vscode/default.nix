@@ -10,7 +10,7 @@
     mutableExtensionsDir = lib.mkDefault false;
     extensions =
       lib.mkDefault
-      ([pkgs.vscode-extensions.rust-lang.rust-analyzer]
+      ([pkgs.vscode-extensions.rust-lang.rust-analyzer-nightly]
         ++ (with pkgs.vscode-marketplace; [
           arrterian.nix-env-selector
           eamodio.gitlens
