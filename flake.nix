@@ -91,7 +91,7 @@
           allowUnfree = true;
         };
         overlays = [
-          self.overlay
+          self.overlays.default
           inputs.custom-nixpkgs.overlays.default
           inputs.fenix.overlays.default
           inputs.nix-vscode-extensions.overlays.default
@@ -122,7 +122,7 @@
         '';
       });
 
-    overlay = import ./overlays;
+    overlays.default = import ./overlays;
     nixosModules = builtins.listToAttrs (findModules ./modules);
     nixosConfigurations = with nixpkgs.lib; let
       hosts = builtins.attrNames (builtins.readDir ./machines);
