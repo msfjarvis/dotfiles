@@ -9,7 +9,7 @@ ARG="${1:-nothing}"
 
 case "${ARG}" in
   crusty-check)
-    sudo nixos-rebuild build --flake .#crusty
+    nixos-rebuild build --flake .#crusty
     ;;
   crusty-switch)
     sudo nixos-rebuild switch --flake .#crusty
@@ -24,7 +24,7 @@ case "${ARG}" in
     ln -sf "$(pwd)"/pre-push-hook .git/hooks/pre-push
     ;;
   home-check)
-    sudo nixos-rebuild build --flake .#ryzenbox
+    nixos-rebuild build --flake .#ryzenbox
     ;;
   home-switch)
     sudo nixos-rebuild switch --flake .#ryzenbox
@@ -36,7 +36,7 @@ case "${ARG}" in
     ./install.sh
     ;;
   server-check)
-    sudo nixos-rebuild build --flake .#wailord
+    nixos-rebuild build --flake .#wailord
     ;;
   server-switch)
     sudo nixos-rebuild switch --flake .#wailord
