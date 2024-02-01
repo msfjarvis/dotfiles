@@ -36,8 +36,10 @@ in {
         enable = mkDefault true;
 
         # Configure keymap in X11
-        layout = mkDefault "us";
-        xkbVariant = mkDefault "";
+        xkb = {
+          layout = mkDefault "us";
+          variant = mkDefault "";
+        };
       };
 
       # Enable CUPS to print documents.
