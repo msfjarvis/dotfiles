@@ -28,6 +28,9 @@ case "${ARG}" in
     ;;
   home-switch)
     sudo nixos-rebuild switch --flake .#ryzenbox
+    sudo nix-env --delete-generations --profile /nix/var/nix/profiles/system old
+    nix-env --delete-generations --profile ~/.local/state/nix/profiles/home-manager old
+    sudo /nix/var/nix/profiles/system/bin/switch-to-configuration switch
     ;;
   home-test)
     sudo nixos-rebuild test --flake .#ryzenbox
