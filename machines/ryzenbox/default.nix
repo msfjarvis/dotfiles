@@ -59,8 +59,7 @@
           ];
         };
       config = {
-        geometry = "50%:50%";
-        autofit-larger = "100%:100%";
+        autofit = "100%x100%";
       };
     };
     stylix = {
