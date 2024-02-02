@@ -50,12 +50,11 @@ in {
 
     # Theming
     stylix = {
-      autoEnable = false;
+      autoEnable = true;
       image = pkgs.fetchurl {
         url = "https://msfjarvis.dev/images/wallpaper.png";
-        sha256 = "sha256-GoF4dZTt/+rDrp1Z7+lY/8doSzqiqyXikR1gXDyxkQg=";
+        sha256 = "sha256-KBfnEREq/iMz/NSSo8h3M1QvabQ41MZFwXeJ6GL/m1I=";
       };
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
       cursor = {
         package = pkgs.bibata-cursors;
         name = "Bibata-Modern-Classic";

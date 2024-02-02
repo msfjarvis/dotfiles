@@ -23,9 +23,6 @@
   inputs.disko.url = "github:nix-community/disko";
   inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
 
-  inputs.dracula-micro.url = "https://raw.githubusercontent.com/dracula/micro/master/dracula.micro";
-  inputs.dracula-micro.flake = false;
-
   inputs.fenix.url = "github:nix-community/fenix";
   inputs.fenix.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -143,11 +140,10 @@
               ({lib, ...}: {
                 stylix.autoEnable = lib.mkDefault false;
                 stylix.image = lib.mkDefault ./nixos/stylix-fakes/wall.png;
-                stylix.base16Scheme = lib.mkDefault ./nixos/stylix-fakes/dracula.yml;
                 home-manager = {
                   useGlobalPkgs = true;
                   useUserPackages = true;
-                  extraSpecialArgs = {inherit (inputs) dracula-micro;};
+                  extraSpecialArgs = {inherit inputs;};
                   users.msfjarvis = {
                     imports =
                       (import ./home-manager)
@@ -204,7 +200,7 @@
         ./darwin
         ({lib, ...}: {
           home-manager.useGlobalPkgs = true;
-          home-manager.extraSpecialArgs = {inherit (inputs) dracula-micro;};
+          home-manager.extraSpecialArgs = {inherit inputs;};
           home-manager.users.msfjarvis = lib.mkMerge [
             {
               imports =

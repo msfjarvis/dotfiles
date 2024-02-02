@@ -44,24 +44,17 @@ in {
 
     stylix.targets = {
       gnome.enable = true;
+      gtk.enable = true;
     };
 
     home-manager.users.msfjarvis = {
       gtk = {
         enable = true;
-        theme = {
-          name = "Dracula";
-          package = pkgs.dracula-theme;
-        };
         cursorTheme = {
-          name = "Dracula-cursors";
-          package = pkgs.dracula-theme;
+          name = "Bibata-Modern-Classic";
         };
       };
       dconf.settings = {
-        "org/gnome/shell/extensions/user-theme" = {
-          name = "Dracula";
-        };
         "org/gnome/shell" = {
           disable-user-extensions = false;
           enabled-extensions = [
@@ -80,16 +73,7 @@ in {
           picture-uri-dark = "file://${config.stylix.image}";
         };
         "org/gnome/desktop/interface" = with config.stylix.fonts; {
-          cursor-theme = "Dracula-cursors";
-          gtk-theme = "Dracula";
-          # Taken from Stylix
-          color-scheme =
-            if config.stylix.polarity == "dark"
-            then "prefer-dark"
-            else "default";
-          font-name = "${sansSerif.name} ${toString sizes.applications}";
-          document-font-name = "${serif.name} ${toString (sizes.applications - 1)}";
-          monospace-font-name = "${monospace.name} ${toString sizes.terminal}";
+          monospace-font-name = lib.mkForce "${monospace.name} ${toString sizes.terminal}";
         };
         "org/gnome/desktop/notifications/application/org-gnome-console" = {
           enable = false;

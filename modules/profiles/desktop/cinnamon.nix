@@ -34,7 +34,7 @@ in {
       hexchat
     ];
 
-    environment.systemPackages = with pkgs; [xclip];
+    environment.systemPackages = with pkgs; [xclip dracula-icon-theme dracula-theme];
 
     stylix.targets.lightdm.enable = true;
 
