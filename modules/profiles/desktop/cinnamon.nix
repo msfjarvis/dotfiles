@@ -36,8 +36,6 @@ in {
 
     environment.systemPackages = with pkgs; [xclip dracula-icon-theme dracula-theme];
 
-    stylix.targets.lightdm.enable = true;
-
     home-manager.users.msfjarvis = {
       dconf.settings = {
         "org/cinnamon/theme" = {

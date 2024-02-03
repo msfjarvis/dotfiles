@@ -86,9 +86,6 @@ in {
         terminal = 0.6;
       };
       polarity = "dark";
-      targets = {
-        console.enable = true;
-      };
     };
 
     # Enable PCSC-Lite daemon for use with my Yubikey.
@@ -106,12 +103,8 @@ in {
     };
 
     home-manager.users.msfjarvis = {
-      stylix = {
-        targets = {
-          bat.enable = true;
-          fzf.enable = true;
-        };
-      };
+      # Stylix overrides all VSCode extensions
+      stylix.targets.vscode.enable = false;
     };
   };
 }

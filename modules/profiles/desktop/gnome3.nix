@@ -42,11 +42,6 @@ in {
       ]);
     environment.gnome.excludePackages = with pkgs; [loupe gnome.totem];
 
-    stylix.targets = {
-      gnome.enable = true;
-      gtk.enable = true;
-    };
-
     home-manager.users.msfjarvis = {
       gtk = {
         enable = true;
