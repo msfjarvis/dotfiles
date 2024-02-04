@@ -14,6 +14,7 @@
 
   # Only enable for first installation
   # boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_lqx;
 
   home-manager.users.msfjarvis = {
     programs.mpv = {
