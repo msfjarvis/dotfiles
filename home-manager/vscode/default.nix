@@ -57,10 +57,10 @@
       "git.confirmSync" = false;
       "[json]"."editor.defaultFormatter" = "vscode.json-language-features";
       "nix.enableLanguageServer" = true;
-      "nix.serverPath" = "${pkgs.nil}/bin/nil";
-      "nix.formatterPath" = "${pkgs.alejandra}/bin/alejandra";
+      "nix.serverPath" = "${lib.getExe pkgs.nixd}";
+      "nix.formatterPath" = "${lib.getExe pkgs.alejandra}";
       "nix.serverSettings".nil.formatting.command = [
-        "${pkgs.alejandra}/bin/alejandra"
+        "${lib.getExe pkgs.alejandra}"
       ];
       "gitlens.currentLine.enabled" = false;
       "gitlens.statusBar.reduceFlicker" = false;
