@@ -1,7 +1,7 @@
 _: prev: {
   # Force the use of the JDK we're using everywhere else
   maestro = prev.maestro.override {
-    jre_headless = prev.temurin-bin-20;
+    jre_headless = prev.temurin-bin-21;
   };
   # Silence warnings about existing files
   megatools = prev.megatools.overrideAttrs (_: {

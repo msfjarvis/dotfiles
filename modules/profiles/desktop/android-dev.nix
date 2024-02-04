@@ -5,7 +5,7 @@
   ...
 }: let
   cfg = config.profiles.desktop;
-  defaultJdk = pkgs.temurin-bin-20;
+  defaultJdk = pkgs.temurin-bin-21;
   toolchains = [pkgs.temurin-bin-17 defaultJdk];
 in {
   options.profiles.desktop.android-dev = with lib; {
