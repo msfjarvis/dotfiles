@@ -197,8 +197,15 @@
       pkgs = pkgsFor system;
       modules = [
         inputs.home-manager.darwinModules.home-manager
+        inputs.stylix.darwinModules.stylix
         ./darwin
         ({lib, ...}: {
+          stylix = {
+            image = pkgs.fetchurl {
+              url = "https://msfjarvis.dev/images/wallpaper.png";
+              sha256 = "sha256-KBfnEREq/iMz/NSSo8h3M1QvabQ41MZFwXeJ6GL/m1I=";
+            };
+          };
           home-manager.useGlobalPkgs = true;
           home-manager.extraSpecialArgs = {inherit inputs;};
           home-manager.users.msfjarvis = lib.mkMerge [
@@ -209,6 +216,7 @@
                   inputs.nix-index-database.hmModules.nix-index
                 ];
             }
+            {stylix.targets.vscode.enable = false;}
             (import ./darwin/home-manager.nix)
           ];
         })
