@@ -121,6 +121,7 @@
       })
       firefox
       fzf
+      gallery-dl
       gdrive
       git-crypt
       helix
