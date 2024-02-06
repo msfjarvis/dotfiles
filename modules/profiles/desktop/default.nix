@@ -50,11 +50,12 @@ in {
 
     # Theming
     stylix = {
-      autoEnable = true;
+      autoEnable = false;
       image = pkgs.fetchurl {
         url = "https://msfjarvis.dev/images/wallpaper.png";
-        sha256 = "sha256-KBfnEREq/iMz/NSSo8h3M1QvabQ41MZFwXeJ6GL/m1I=";
+        sha256 = "sha256-GoF4dZTt/+rDrp1Z7+lY/8doSzqiqyXikR1gXDyxkQg=";
       };
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
       cursor = {
         package = pkgs.bibata-cursors;
         name = "Bibata-Modern-Classic";
@@ -86,6 +87,9 @@ in {
         terminal = 0.6;
       };
       polarity = "dark";
+      targets = {
+        console.enable = true;
+      };
     };
 
     # Enable PCSC-Lite daemon for use with my Yubikey.
@@ -103,8 +107,12 @@ in {
     };
 
     home-manager.users.msfjarvis = {
-      # Stylix overrides all VSCode extensions
-      stylix.targets.vscode.enable = false;
+      stylix = {
+        targets = {
+          bat.enable = true;
+          fzf.enable = true;
+        };
+      };
     };
   };
 }

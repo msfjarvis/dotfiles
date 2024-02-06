@@ -34,7 +34,9 @@ in {
       hexchat
     ];
 
-    environment.systemPackages = with pkgs; [xclip dracula-icon-theme dracula-theme];
+    environment.systemPackages = with pkgs; [xclip];
+
+    stylix.targets.lightdm.enable = true;
 
     home-manager.users.msfjarvis = {
       dconf.settings = {

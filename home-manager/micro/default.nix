@@ -1,21 +1,16 @@
 {
-  config,
+  dracula-micro,
   lib,
   ...
-}: let
-  finalTheme = config.lib.stylix.scheme {
-    template = ./theme.mustache;
-    extension = ".micro";
-  };
-in {
+}: {
   programs.micro = {
     enable = lib.mkDefault true;
     settings = lib.mkDefault {
-      colorscheme = "stylix";
+      colorscheme = "dracula";
       mkparents = true;
       softwrap = true;
       wordwrap = true;
     };
   };
-  xdg.configFile."micro/colorschemes/stylix.micro".source = finalTheme;
+  xdg.configFile."micro/colorschemes/dracula.micro".source = dracula-micro;
 }

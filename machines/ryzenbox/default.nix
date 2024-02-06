@@ -100,6 +100,8 @@
       adx
       age
       diffuse-bin
+      dracula-icon-theme
+      dracula-theme
       fclones
       (ffmpeg.override {
         buildFfplay = false;

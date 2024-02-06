@@ -23,6 +23,9 @@
   inputs.disko.url = "github:nix-community/disko";
   inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
 
+  inputs.dracula-micro.url = "https://raw.githubusercontent.com/dracula/micro/master/dracula.micro";
+  inputs.dracula-micro.flake = false;
+
   inputs.fenix.url = "github:nix-community/fenix";
   inputs.fenix.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -140,10 +143,11 @@
               ({lib, ...}: {
                 stylix.autoEnable = lib.mkDefault false;
                 stylix.image = lib.mkDefault ./nixos/stylix-fakes/wall.png;
+                stylix.base16Scheme = lib.mkDefault ./nixos/stylix-fakes/dracula.yml;
                 home-manager = {
                   useGlobalPkgs = true;
                   useUserPackages = true;
-                  extraSpecialArgs = {inherit inputs;};
+                  extraSpecialArgs = {inherit (inputs) dracula-micro;};
                   users.msfjarvis = {
                     imports =
                       (import ./home-manager)
@@ -197,17 +201,10 @@
       pkgs = pkgsFor system;
       modules = [
         inputs.home-manager.darwinModules.home-manager
-        inputs.stylix.darwinModules.stylix
         ./darwin
         ({lib, ...}: {
-          stylix = {
-            image = pkgs.fetchurl {
-              url = "https://msfjarvis.dev/images/wallpaper.png";
-              sha256 = "sha256-KBfnEREq/iMz/NSSo8h3M1QvabQ41MZFwXeJ6GL/m1I=";
-            };
-          };
           home-manager.useGlobalPkgs = true;
-          home-manager.extraSpecialArgs = {inherit inputs;};
+          home-manager.extraSpecialArgs = {inherit (inputs) dracula-micro;};
           home-manager.users.msfjarvis = lib.mkMerge [
             {
               imports =
@@ -216,7 +213,6 @@
                   inputs.nix-index-database.hmModules.nix-index
                 ];
             }
-            {stylix.targets.vscode.enable = false;}
             (import ./darwin/home-manager.nix)
           ];
         })
