@@ -16,6 +16,7 @@ in {
       androidStudioPackages.stable
       androidStudioPackages.beta
       androidStudioPackages.canary
+      (kotlin.override {jre = defaultJdk;})
     ];
 
     programs.java = {
