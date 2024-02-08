@@ -17,7 +17,10 @@
       automatic = true;
       dates = "daily";
       options = "--delete-older-than 3d";
+      persistent = true;
     };
+    optimise.automatic = true;
+
     package = pkgs.nixUnstable;
 
     registry = lib.mapAttrs (_: v: {flake = v;}) inputs;
@@ -31,16 +34,31 @@
       keep-derivations = true
     '';
     settings = {
-      flake-registry = "/etc/nix/registry.json";
+      accept-flake-config = true;
+      allowed-users = ["@wheel"];
       auto-optimise-store = true;
       builders-use-substitutes = true;
-      allowed-users = ["@wheel"];
-      trusted-users = ["@wheel" "msfjarvis"];
-      sandbox = true;
-      max-jobs = "auto";
+      experimental-features = [
+        "auto-allocate-uids"
+        "ca-derivations"
+        "cgroups"
+        "configurable-impure-env"
+        "flakes"
+        "git-hashing"
+        "nix-command"
+        "recursive-nix"
+        "repl-flake"
+        "verified-fetches"
+      ];
+      flake-registry = "/etc/nix/registry.json";
+      http-connections = 50;
       keep-going = true;
       log-lines = 20;
-      extra-experimental-features = ["flakes" "nix-command" "recursive-nix" "ca-derivations"];
+      max-jobs = "auto";
+      sandbox = true;
+      trusted-users = ["root" "@wheel"];
+      use-cgroups = true;
+      warn-dirty = false;
 
       trusted-substituters = [
         "https://cache.garnix.io"
