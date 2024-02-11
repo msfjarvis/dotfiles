@@ -71,7 +71,7 @@
           reverse_proxy :${toString config.services.gitea.settings.server.HTTP_PORT}
         '';
       };
-      "https://til.msfjarvis.dev" = {
+      "https://wailord.tiger-shark.ts.net" = {
         extraConfig = ''
           root * /var/lib/file_share
           file_server browse
