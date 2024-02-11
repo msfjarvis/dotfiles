@@ -32,6 +32,12 @@
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.flake-utils.inputs.systems.follows = "systems";
 
+  inputs.gphotos-cdp.url = "github:msfjarvis/gphotos-cdp";
+  inputs.gphotos-cdp.inputs.flake-compat.follows = "";
+  inputs.gphotos-cdp.inputs.flake-utils.follows = "flake-utils";
+  inputs.gphotos-cdp.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.gphotos-cdp.inputs.systems.follows = "systems";
+
   inputs.home-manager.url = "github:nix-community/home-manager/master";
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -94,6 +100,7 @@
           self.overlays.default
           inputs.custom-nixpkgs.overlays.default
           inputs.fenix.overlays.default
+          inputs.gphotos-cdp.overlays.${system}.default
           inputs.nix-vscode-extensions.overlays.default
         ];
         localSystem = {inherit system;};
