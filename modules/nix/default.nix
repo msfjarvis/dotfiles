@@ -41,7 +41,6 @@
         "auto-allocate-uids"
         "ca-derivations"
         "cgroups"
-        "configurable-impure-env"
         "flakes"
         "nix-command"
         "recursive-nix"
