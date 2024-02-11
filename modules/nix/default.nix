@@ -28,7 +28,6 @@
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
     extraOptions = ''
-      experimental-features = nix-command flakes recursive-nix
       keep-outputs = true
       warn-dirty = false
       keep-derivations = true
@@ -44,11 +43,9 @@
         "cgroups"
         "configurable-impure-env"
         "flakes"
-        "git-hashing"
         "nix-command"
         "recursive-nix"
         "repl-flake"
-        "verified-fetches"
       ];
       flake-registry = "/etc/nix/registry.json";
       http-connections = 50;
