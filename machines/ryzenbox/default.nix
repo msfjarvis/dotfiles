@@ -11,6 +11,7 @@
   profiles.desktop.enable = true;
   profiles.desktop.android-dev.enable = true;
   profiles.desktop.gnome3.enable = true;
+  profiles.desktop.noise-cancelation.enable = true;
 
   # Only enable for first installation
   # boot.loader.efi.canTouchEfiVariables = true;
