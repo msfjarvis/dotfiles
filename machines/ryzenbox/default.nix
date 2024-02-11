@@ -170,6 +170,14 @@
     zlib
   ];
 
+  services.gphotos-cdp = {
+    enable = true;
+    session-dir = "/home/msfjarvis/harsh-sess";
+    dldir = "/home/msfjarvis/harsh-photos";
+    user = "msfjarvis";
+    group = "users";
+  };
+
   services.rucksack = let
     inherit (config.users.users.msfjarvis) home;
     minecraft = name: "${home}/Games/PrismLauncher/instances/${name}/.minecraft/screenshots/";
