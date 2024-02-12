@@ -151,8 +151,9 @@
       yt-dlp
 
       # Minecraft
+      mcaselector
       (prismlauncher.override {
-        jdks = [temurin-bin-21];
+        jdks = [openjdk21];
         withWaylandGLFW = config.profiles.desktop.gnome3.enable;
       })
     ];

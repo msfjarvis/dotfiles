@@ -5,8 +5,8 @@
   ...
 }: let
   cfg = config.profiles.desktop;
-  defaultJdk = pkgs.temurin-bin-21;
-  toolchains = [pkgs.temurin-bin-17 defaultJdk];
+  defaultJdk = pkgs.openjdk21;
+  toolchains = [pkgs.openjdk17 defaultJdk];
 in {
   options.profiles.desktop.android-dev = with lib; {
     enable = mkEnableOption "Configure a development environment for Android apps";
@@ -42,7 +42,7 @@ in {
           "org.gradle.home" = defaultJdk;
           "org.gradle.java.installations.auto-detect" = false;
           "org.gradle.java.installations.auto-download" = false;
-          "org.gradle.java.installations.paths" = lib.concatStringsSep "," toolchains;
+          "org.gradle.java.installations.paths" = lib.concatMapStringsSep "," (x: "${x}/lib/openjdk") toolchains;
         };
       };
     };
