@@ -108,17 +108,19 @@
         buildFfplay = false;
         buildFfprobe = true;
         buildQtFaststart = false;
-        withDav1d = true;
-        withMp3lame = true;
+        withAom = true;
         withAss = true;
+        withDav1d = true;
         withDrm = true;
+        withMp3lame = true;
+        withNvdec = true;
+        withNvenc = true;
+        withRav1e = true;
         withVaapi = true;
         withVdpau = true;
         withVorbis = true;
         withVpx = true;
         withWebp = true;
-        withNvdec = true;
-        withNvenc = true;
         withX264 = true;
         withX265 = true;
       })
