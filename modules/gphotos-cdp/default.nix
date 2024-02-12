@@ -48,12 +48,19 @@ in {
         Group = cfg.group;
         Restart = "on-failure";
         RestartSec = "30s";
-        Type = "simple";
+        Type = "oneshot";
         Environment = "PATH=${makeBinPath [pkgs.coreutils pkgs.google-chrome]}";
       };
       script = ''
         exec env ${getExe cfg.package} -v -dev -headless -dldir ${cfg.dldir} -session-dir ${cfg.session-dir}
       '';
+    };
+
+    systemd.timers.gphotos-cdp = {
+      description = "Run gphotos-cdp every day";
+      timerConfig.OnCalendar = "daily";
+      wantedBy = ["timers.target"];
+      partOf = ["gphotos-cdp.service"];
     };
 
     users.users = mkIf (cfg.user == "gphotos-cdp") {
