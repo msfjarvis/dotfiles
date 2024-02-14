@@ -13,10 +13,13 @@ in {
   };
   config = lib.mkIf cfg.android-dev.enable {
     users.users.msfjarvis.packages = with pkgs; [
+      adb-sync
+      adx
       androidStudioPackages.stable
       androidStudioPackages.beta
       androidStudioPackages.canary
-      (kotlin.override {jre = defaultJdk;})
+      diffuse-bin
+      kotlin
     ];
 
     programs.java = {

@@ -97,10 +97,7 @@
     description = "Harsh Shandilya";
     extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
-      adb-sync
-      adx
       age
-      diffuse-bin
       dracula-icon-theme
       dracula-theme
       fclones
