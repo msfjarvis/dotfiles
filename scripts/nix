@@ -44,7 +44,7 @@ function nixdiff() {
 
 function nixshell() {
   [[ -z ${1} ]] && return
-  BASE_DIR="${SCRIPT_DIR}/shell-configs"
+  BASE_DIR="${SCRIPT_DIR}/../shell-configs"
   declare -a FILES_TO_COPY=()
   [[ ! -d "${BASE_DIR}/${1}" ]] && {
     reportWarning "No shell config exists for ${1}"
