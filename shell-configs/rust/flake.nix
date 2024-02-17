@@ -9,8 +9,6 @@
   inputs.advisory-db.flake = false;
 
   inputs.crane.url = "github:ipetkov/crane";
-  inputs.crane.inputs.flake-compat.follows = "flake-compat";
-  inputs.crane.inputs.flake-utils.follows = "flake-utils";
   inputs.crane.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.devshell.url = "github:numtide/devshell";
