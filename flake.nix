@@ -28,9 +28,10 @@
           ]
           else findModules (dir + "/${name}")) (builtins.readDir dir)));
     pkgsFor = system:
-      import inputs.nixpkgs {
+      import nixpkgs {
         config = {
           allowUnfree = true;
+          cudaSupport = true;
         };
         overlays = [
           self.overlays.default
