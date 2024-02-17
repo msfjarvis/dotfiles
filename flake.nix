@@ -1,70 +1,6 @@
 {
   description = "msfjarvis' NixOS configurations";
 
-  # inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-  inputs.nixpkgs.url = "github:msfjarvis/nixpkgs/nixpkgs-unstable";
-  inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
-  inputs.systems.url = "github:msfjarvis/flake-systems";
-
-  inputs.custom-nixpkgs.url = "github:msfjarvis/custom-nixpkgs/main";
-  inputs.custom-nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.custom-nixpkgs.inputs.fenix.follows = "fenix";
-  inputs.custom-nixpkgs.inputs.systems.follows = "systems";
-
-  inputs.darwin.url = "github:LnL7/nix-darwin/master";
-  inputs.darwin.inputs.nixpkgs.follows = "nixpkgs";
-
-  inputs.deploy-rs.url = "github:serokell/deploy-rs";
-  inputs.deploy-rs.inputs.flake-compat.follows = "";
-  inputs.deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.deploy-rs.inputs.utils.follows = "flake-utils";
-
-  inputs.disko.url = "github:nix-community/disko";
-  inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
-
-  inputs.dracula-micro.url = "https://raw.githubusercontent.com/dracula/micro/master/dracula.micro";
-  inputs.dracula-micro.flake = false;
-
-  inputs.fenix.url = "github:nix-community/fenix";
-  inputs.fenix.inputs.nixpkgs.follows = "nixpkgs";
-
-  inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.flake-utils.inputs.systems.follows = "systems";
-
-  inputs.gphotos-cdp.url = "github:msfjarvis/gphotos-cdp";
-  inputs.gphotos-cdp.inputs.flake-compat.follows = "";
-  inputs.gphotos-cdp.inputs.flake-utils.follows = "flake-utils";
-  inputs.gphotos-cdp.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.gphotos-cdp.inputs.systems.follows = "systems";
-
-  inputs.home-manager.url = "github:nix-community/home-manager/master";
-  inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-  inputs.nix-index-database.url = "github:nix-community/nix-index-database";
-  inputs.nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
-
-  inputs.nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
-  inputs.nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.nix-vscode-extensions.inputs.flake-utils.follows = "flake-utils";
-  inputs.nix-vscode-extensions.inputs.flake-compat.follows = "";
-
-  inputs.nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
-  inputs.nixos-vscode-server.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.nixos-vscode-server.inputs.flake-utils.follows = "flake-utils";
-
-  inputs.sops-nix.url = "github:Mic92/sops-nix";
-  inputs.sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.sops-nix.inputs.nixpkgs-stable.follows = "";
-
-  inputs.srvos.url = "github:nix-community/srvos";
-  inputs.srvos.inputs.nixpkgs.follows = "nixpkgs";
-
-  inputs.stylix.url = "github:danth/stylix";
-  inputs.stylix.inputs.flake-compat.follows = "";
-  inputs.stylix.inputs.home-manager.follows = "home-manager";
-  inputs.stylix.inputs.nixpkgs.follows = "nixpkgs";
-
   outputs = {
     nixpkgs,
     self,
@@ -236,5 +172,70 @@
       "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
       "msfjarvis.cachix.org-1:/sKPgZblk/LgoOKtDgMTwvRuethILGkr/maOvZ6W11U="
     ];
+  };
+  inputs = {
+    # nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:msfjarvis/nixpkgs/nixpkgs-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    systems.url = "github:msfjarvis/flake-systems";
+
+    custom-nixpkgs.url = "github:msfjarvis/custom-nixpkgs/main";
+    custom-nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
+    custom-nixpkgs.inputs.fenix.follows = "fenix";
+    custom-nixpkgs.inputs.systems.follows = "systems";
+
+    darwin.url = "github:LnL7/nix-darwin/master";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.inputs.flake-compat.follows = "";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+    deploy-rs.inputs.utils.follows = "flake-utils";
+
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+
+    dracula-micro.url = "https://raw.githubusercontent.com/dracula/micro/master/dracula.micro";
+    dracula-micro.flake = false;
+
+    fenix.url = "github:nix-community/fenix";
+    fenix.inputs.nixpkgs.follows = "nixpkgs";
+
+    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.inputs.systems.follows = "systems";
+
+    gphotos-cdp.url = "github:msfjarvis/gphotos-cdp";
+    gphotos-cdp.inputs.flake-compat.follows = "";
+    gphotos-cdp.inputs.flake-utils.follows = "flake-utils";
+    gphotos-cdp.inputs.nixpkgs.follows = "nixpkgs";
+    gphotos-cdp.inputs.systems.follows = "systems";
+
+    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+    nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
+    nix-vscode-extensions.inputs.flake-utils.follows = "flake-utils";
+    nix-vscode-extensions.inputs.flake-compat.follows = "";
+
+    nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
+    nixos-vscode-server.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-vscode-server.inputs.flake-utils.follows = "flake-utils";
+
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    sops-nix.inputs.nixpkgs-stable.follows = "";
+
+    srvos.url = "github:nix-community/srvos";
+    srvos.inputs.nixpkgs.follows = "nixpkgs";
+
+    stylix.url = "github:danth/stylix";
+    stylix.inputs.flake-compat.follows = "";
+    stylix.inputs.home-manager.follows = "home-manager";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
   };
 }
