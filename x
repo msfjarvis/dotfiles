@@ -5,6 +5,12 @@ set -e
 set -u
 set -o pipefail
 
+function cleanup_generations() {
+  sudo nix-env --delete-generations --profile /nix/var/nix/profiles/system old
+  nix-env --delete-generations --profile ~/.local/state/nix/profiles/home-manager old
+  sudo /nix/var/nix/profiles/system/bin/switch-to-configuration switch
+}
+
 ARG="${1:-nothing}"
 
 case "${ARG}" in
@@ -13,6 +19,7 @@ case "${ARG}" in
     ;;
   crusty-switch)
     sudo nixos-rebuild switch --flake .#crusty
+    cleanup_generations
     ;;
   darwin-check)
     darwin-rebuild build --print-build-logs --flake .
@@ -28,9 +35,7 @@ case "${ARG}" in
     ;;
   home-switch)
     sudo nixos-rebuild switch --flake .#ryzenbox
-    sudo nix-env --delete-generations --profile /nix/var/nix/profiles/system old
-    nix-env --delete-generations --profile ~/.local/state/nix/profiles/home-manager old
-    sudo /nix/var/nix/profiles/system/bin/switch-to-configuration switch
+    cleanup_generations
     ;;
   home-test)
     sudo nixos-rebuild test --flake .#ryzenbox
@@ -43,6 +48,7 @@ case "${ARG}" in
     ;;
   server-switch)
     sudo nixos-rebuild switch --flake .#wailord
+    cleanup_generations
     ;;
   *)
     echo "Invalid command: ${ARG}"
