@@ -130,7 +130,7 @@
         builtins.mapAttrs (_: machine: {
           hostname = machine.config.networking.hostName;
           fastConnection = true;
-          remoteBuild = true;
+          remoteBuild = false;
           profiles.system = {
             user = "root";
             sshUser = "root";
