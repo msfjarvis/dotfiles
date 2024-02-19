@@ -139,9 +139,11 @@
       psst
       (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
       scrcpy
+      smile
       sshfs
       telegram-desktop
       thunderbird
+      uv
       xdotool
       yt-dlp
 
