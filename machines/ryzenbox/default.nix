@@ -186,6 +186,7 @@
     enable = true;
     sources = [
       (minecraft "1.21")
+      (minecraft "ACLU SMP Modpack")
       (minecraft "Fabulously.Optimized.1.20.2")
       (minecraft "Fabulously.Optimized.MC.1.17.1")
       (minecraft "Fabulously.Optimized.MC.1.20.1")
