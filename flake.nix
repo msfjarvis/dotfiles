@@ -131,6 +131,7 @@
           hostname = machine.config.networking.hostName;
           fastConnection = true;
           remoteBuild = false;
+          autoRollback = false;
           profiles.system = {
             user = "root";
             sshUser = "root";
