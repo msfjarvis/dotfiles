@@ -28,3 +28,6 @@ fi
 if type nix &> /dev/null; then
   alias nix="nix --print-build-logs"
 fi
+if type xdg-open &> /dev/null; then
+  alias open="xdg-open"
+fi
