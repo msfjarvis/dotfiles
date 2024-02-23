@@ -1,170 +1,87 @@
 {
-  description = "msfjarvis' NixOS configurations";
-
-  outputs = {
-    nixpkgs,
-    self,
-    deploy-rs,
-    ...
-  } @ inputs: let
-    findModules = dir:
-      builtins.concatLists (builtins.attrValues (builtins.mapAttrs
-        (name: type:
-          if type == "regular"
-          then [
-            {
-              name = builtins.elemAt (builtins.match "(.*)\\.nix" name) 0;
-              value = dir + "/${name}";
-            }
-          ]
-          else if
-            (builtins.readDir (dir + "/${name}"))
-            ? "default.nix"
-          then [
-            {
-              inherit name;
-              value = dir + "/${name}";
-            }
-          ]
-          else findModules (dir + "/${name}")) (builtins.readDir dir)));
-    pkgsFor = system:
-      import nixpkgs {
-        config = {
-          allowUnfree = true;
-          cudaSupport = true;
+  outputs = inputs: let
+    stylix-stub = {lib, ...}: {
+      stylix.autoEnable = lib.mkDefault false;
+      stylix.image = lib.mkDefault ./nixos/stylix-fakes/wall.png;
+      stylix.base16Scheme = lib.mkDefault ./nixos/stylix-fakes/dracula.yml;
+    };
+    lib = inputs.snowfall-lib.mkLib {
+      inherit inputs;
+      src = ./.;
+      snowfall = {
+        meta = {
+          name = "msfjarvis-nix-configs";
+          title = "msfjarvis' Nix configurations";
         };
-        overlays = [
-          self.overlays.default
-          inputs.custom-nixpkgs.overlays.default
-          inputs.fenix.overlays.default
-          inputs.gphotos-cdp.overlays.default
-          inputs.nix-vscode-extensions.overlays.default
-        ];
-        localSystem = {inherit system;};
       };
-    forAllSystems = inputs.nixpkgs.lib.genAttrs (import inputs.systems);
-  in {
-    apps = forAllSystems (system: {inherit (deploy-rs.apps.${system}) default;});
-
-    formatter = forAllSystems (system: let
-      pkgs = pkgsFor system;
-    in
-      pkgs.writeShellApplication {
-        name = "format";
-        runtimeInputs = with pkgs; [
-          alejandra
-          deadnix
-          shfmt
-          statix
-        ];
-        text = ''
-          set -euo pipefail
-          shfmt --write --simplify --language-dialect bash --indent 2 --case-indent --space-redirects .;
-          deadnix --edit
-          statix check . || statix fix .
-          alejandra --quiet .
-        '';
-      });
-
-    overlays.default = import ./overlays;
-    nixosModules = builtins.listToAttrs (findModules ./modules);
-    nixosConfigurations = with nixpkgs.lib; let
-      hosts = builtins.attrNames (builtins.readDir ./machines);
-      mkHost = name: let
-        system = builtins.readFile (./machines + "/${name}/system");
-        pkgs = pkgsFor system;
-      in
-        nixosSystem {
-          inherit system;
-          modules =
-            __attrValues self.nixosModules
-            ++ [
-              inputs.home-manager.nixosModules.home-manager
-              inputs.sops-nix.nixosModules.sops
-              inputs.stylix.nixosModules.stylix
-              inputs.srvos.nixosModules.common
-              inputs.srvos.nixosModules.mixins-systemd-boot
-              ({lib, ...}: {
-                stylix.autoEnable = lib.mkDefault false;
-                stylix.image = lib.mkDefault ./nixos/stylix-fakes/wall.png;
-                stylix.base16Scheme = lib.mkDefault ./nixos/stylix-fakes/dracula.yml;
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  extraSpecialArgs = {inherit (inputs) dracula-micro;};
-                  users.msfjarvis = {
-                    imports =
-                      (import ./home-manager)
-                      ++ [
-                        inputs.nix-index-database.hmModules.nix-index
-                      ];
-                  };
-                };
-              })
-              (import (./machines + "/${name}"))
-              {nixpkgs.pkgs = pkgs;}
-            ]
-            ++ (
-              if name == "wailord"
-              then [inputs.disko.nixosModules.disko inputs.srvos.nixosModules.server]
-              else []
-            )
-            ++ (
-              if name == "crusty"
-              then [inputs.nixos-hardware.nixosModules.raspberry-pi-4 inputs.srvos.nixosModules.server]
-              else []
-            )
-            ++ (
-              if name == "ryzenbox"
-              then [inputs.srvos.nixosModules.desktop]
-              else []
-            );
-          specialArgs = {inherit inputs;};
-        };
-    in
-      genAttrs hosts mkHost;
-    packages.x86_64-linux.crusty = self.nixosConfigurations.crusty.config.system.build.sdImage;
-    deploy = {
-      user = "root";
-      nodes =
-        builtins.mapAttrs (_: machine: {
-          hostname = machine.config.networking.hostName;
-          fastConnection = true;
-          remoteBuild = false;
-          autoRollback = false;
-          profiles.system = {
-            user = "root";
-            sshUser = "root";
-            path = deploy-rs.lib.${machine.pkgs.system}.activate.nixos machine;
-          };
-        })
-        self.nixosConfigurations;
     };
-
-    darwinConfigurations.Harshs-MacBook-Pro = inputs.darwin.lib.darwinSystem rec {
-      system = "aarch64-darwin";
-      pkgs = pkgsFor system;
-      modules = [
-        inputs.home-manager.darwinModules.home-manager
-        ./darwin
-        ({lib, ...}: {
-          home-manager.useGlobalPkgs = true;
-          home-manager.extraSpecialArgs = {inherit (inputs) dracula-micro;};
-          home-manager.users.msfjarvis = lib.mkMerge [
-            {
-              imports =
-                (import ./home-manager)
-                ++ [
-                  inputs.nix-index-database.hmModules.nix-index
-                ];
-            }
-            (import ./darwin/home-manager.nix)
-          ];
-        })
+  in
+    lib.mkFlake {
+      inherit inputs;
+      src = ./.;
+      channels-config = {
+        allowUnfree = true;
+        cudaSupport = true;
+      };
+      homes.modules = with inputs; [
+        nix-index-database.hmModules.nix-index
       ];
+      systems.modules.nixos = with inputs; [
+        home-manager.nixosModules.home-manager
+        sops-nix.nixosModules.sops
+        stylix.nixosModules.stylix
+        srvos.nixosModules.common
+        srvos.nixosModules.mixins-systemd-boot
+      ];
+      systems.modules.darwin = with inputs; [
+        home-manager.darwinModules.home-manager
+      ];
+
+      systems.hosts.crusty.modules = with inputs; [
+        nixos-hardware.nixosModules.raspberry-pi-4
+        srvos.nixosModules.server
+        stylix-stub
+      ];
+      systems.hosts.ryzenbox.modules = with inputs; [
+        srvos.nixosModules.desktop
+      ];
+      systems.hosts.wailord.modules = with inputs; [
+        disko.nixosModules.disko
+        srvos.nixosModules.server
+        stylix-stub
+      ];
+
+      overlays = with inputs; [
+        custom-nixpkgs.overlays.default
+        fenix.overlays.default
+        gphotos-cdp.overlays.default
+        nix-vscode-extensions.overlays.default
+      ];
+      outputs-builder = channels: {
+        formatter = channels.nixpkgs.writeShellApplication {
+          name = "format";
+          runtimeInputs = with channels.nixpkgs; [
+            alejandra
+            deadnix
+            shfmt
+            statix
+          ];
+          text = ''
+            set -euo pipefail
+            shfmt --write --simplify --language-dialect bash --indent 2 --case-indent --space-redirects .;
+            deadnix --edit
+            statix check . || statix fix .
+            alejandra --quiet .
+          '';
+        };
+      };
+
+      deploy = lib.mkDeploy {inherit (inputs) self;};
+    }
+    // {
+      packages.aarch64-darwin.macbook = inputs.self.darwinConfigurations.Harshs-MacBook-Pro.system;
     };
-    packages.aarch64-darwin.macbook = self.darwinConfigurations.Harshs-MacBook-Pro.system;
-  };
+
   nixConfig = {
     extra-substituters = [
       "https://cache.garnix.io"
@@ -175,6 +92,7 @@
       "msfjarvis.cachix.org-1:/sKPgZblk/LgoOKtDgMTwvRuethILGkr/maOvZ6W11U="
     ];
   };
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     # nixpkgs.url = "github:msfjarvis/nixpkgs/nixpkgs-unstable";
@@ -207,6 +125,9 @@
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
 
+    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
+    flake-utils-plus.inputs.flake-utils.follows = "flake-utils";
+
     gphotos-cdp.url = "github:msfjarvis/gphotos-cdp";
     gphotos-cdp.inputs.flake-compat.follows = "";
     gphotos-cdp.inputs.flake-utils.follows = "flake-utils";
@@ -227,6 +148,10 @@
     nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
     nixos-vscode-server.inputs.nixpkgs.follows = "nixpkgs";
     nixos-vscode-server.inputs.flake-utils.follows = "flake-utils";
+
+    snowfall-lib.url = "github:snowfallorg/lib/dev";
+    snowfall-lib.inputs.flake-utils-plus.follows = "flake-utils-plus";
+    snowfall-lib.inputs.nixpkgs.follows = "nixpkgs";
 
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
