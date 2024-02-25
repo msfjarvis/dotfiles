@@ -37,7 +37,7 @@
           self.overlays.default
           inputs.custom-nixpkgs.overlays.default
           inputs.fenix.overlays.default
-          inputs.gphotos-cdp.overlays.${system}.default
+          inputs.gphotos-cdp.overlays.default
           inputs.nix-vscode-extensions.overlays.default
         ];
         localSystem = {inherit system;};
