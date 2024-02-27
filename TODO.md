@@ -2,4 +2,4 @@
 
 - [ ] Replace all `host == "foo"` checks with `profiles.*` options
 - [ ] `nix-darwin` appears to not pull in the overlays configuration
-- [ ] Restore `darwin-init` in programs.bash
+- [x] Restore `darwin-init` in programs.bash

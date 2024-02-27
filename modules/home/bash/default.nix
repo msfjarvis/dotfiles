@@ -1,4 +1,13 @@
-{config, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: let
+  initScript =
+    if pkgs.stdenv.isDarwin
+    then "darwin-init"
+    else "shell-init";
+in {
   programs.bash = {
     enable = true;
     historySize = 1000;
@@ -28,7 +37,7 @@
         . /etc/bash_completion
       fi
       # Source shell-init from my dotfiles
-      source ${config.home.homeDirectory}/git-repos/dotfiles/shell-init
+      source ${config.home.homeDirectory}/git-repos/dotfiles/${initScript}
     '';
   };
 }
