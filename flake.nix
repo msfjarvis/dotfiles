@@ -27,14 +27,10 @@
         nix-index-database.hmModules.nix-index
       ];
       systems.modules.nixos = with inputs; [
-        home-manager.nixosModules.home-manager
         sops-nix.nixosModules.sops
         stylix.nixosModules.stylix
         srvos.nixosModules.common
         srvos.nixosModules.mixins-systemd-boot
-      ];
-      systems.modules.darwin = with inputs; [
-        home-manager.darwinModules.home-manager
       ];
 
       systems.hosts.crusty.modules = with inputs; [
