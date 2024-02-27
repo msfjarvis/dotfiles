@@ -136,8 +136,6 @@
 	default = simple
 [rerere]
 	enabled = true
-[scalar]
-	repo = /home/msfjarvis/git-repos/nixpkgs/src
 [user]
 	email = me@msfjarvis.dev
 	name = Harsh Shandilya
