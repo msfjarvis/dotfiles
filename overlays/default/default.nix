@@ -13,8 +13,4 @@ _: _final: prev: {
     fonts = ["JetBrainsMono"];
   };
   qbittorrent = prev.qbittorrent.override {guiSupport = false;};
-  scrcpy = prev.scrcpy.overrideAttrs (_: {
-    # Fixes bash completion, drop after next release.
-    patches = [./scrcpy-bash-comp.patch ./scrcpy-bash-compgen.patch];
-  });
 }
