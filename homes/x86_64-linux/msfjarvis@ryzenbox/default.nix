@@ -4,5 +4,9 @@ _: {
     name = "msfjarvis";
   };
 
+  profiles.mpv.enable = true;
+  profiles.pass.enable = true;
+  profiles.vscode.enable = true;
+
   home.stateVersion = "21.05";
 }
