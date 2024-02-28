@@ -75,7 +75,12 @@
         withX264 = true;
         withX265 = true;
       })
-      firefox
+      (firefox.override {
+        cfg = {
+          smartcardSupport = true;
+          pipewireSupport = true;
+        };
+      })
       fzf
       gallery-dl
       gdrive
