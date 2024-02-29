@@ -33,9 +33,9 @@ in {
         enable = true;
         package = pkgs.callPackage (pkgs.gradleGen
           {
-            version = "8.7-rc-1";
+            version = "8.7-rc-2";
             nativeVersion = "0.22-milestone-25";
-            hash = "sha256-Q1S8bEbR8eHjfLNxt8MVVqRCfrP1fQPCPlquiqYGrts=";
+            hash = "sha256-M0gXCADDJPyX/yAf3BOa1GXAc6sZdgz+IqhytbhYVg8=";
             defaultJava = defaultJdk;
           }) {};
         settings = {
