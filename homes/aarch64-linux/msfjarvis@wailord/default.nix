@@ -4,5 +4,7 @@ _: {
     name = "msfjarvis";
   };
 
+  profiles.starship.server = true;
+
   home.stateVersion = "21.05";
 }

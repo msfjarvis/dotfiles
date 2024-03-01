@@ -3,4 +3,4 @@
 - [x] Replace all `host == "foo"` checks with `profiles.*` options
 - [x] `nix-darwin` appears to not pull in the overlays configuration (false-positive, I was fooled by OpenJDK on Darwin being aliased to Zulu)
 - [x] Restore `darwin-init` in programs.bash
-- [ ] Restore server-specific Starship prompt
+- [x] Restore server-specific Starship prompt
