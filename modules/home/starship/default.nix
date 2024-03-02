@@ -51,6 +51,7 @@ in {
         fennel.disabled = true;
         fill.disabled = true;
         fossil_branch.disabled = true;
+        fossil_metrics.disabled = true;
         gcloud.disabled = true;
         git_branch = {
           disabled = cfg.server;
@@ -68,8 +69,10 @@ in {
         };
         golang.disabled = true;
         guix_shell.disabled = true;
-        gradle.disabled = false;
-        gradle.symbol = " ";
+        gradle = {
+          disabled = false;
+          symbol = " ";
+        };
         haskell.disabled = true;
         haxe.disabled = true;
         helm.disabled = true;
@@ -86,7 +89,7 @@ in {
         memory_usage.disabled = true;
         meson.disabled = true;
         nim.disabled = true;
-        nix_shell.disabled = false;
+        nix_shell.disabled = true;
         nodejs.disabled = true;
         ocaml.disabled = true;
         opa.disabled = true;
@@ -115,6 +118,8 @@ in {
         swift.disabled = true;
         terraform.disabled = true;
         time.disabled = true;
+        typst.disabled = true;
+        username.disabled = false;
         vagrant.disabled = true;
         vlang.disabled = true;
         vcsh.disabled = true;
