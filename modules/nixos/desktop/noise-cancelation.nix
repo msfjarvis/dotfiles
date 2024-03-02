@@ -5,7 +5,6 @@
   ...
 }: let
   cfg = config.profiles.desktop;
-  json = pkgs.formats.json {};
   pw_rnnoise_config = {
     "context.modules" = [
       {
@@ -44,8 +43,6 @@ in {
     enable = mkEnableOption "Enable noise cancelation in PipeWire";
   };
   config = lib.mkIf cfg.noise-cancelation.enable {
-    environment.etc."pipewire/pipewire.conf.d/99-input-denoising.conf" = {
-      source = json.generate "99-input-denoising.conf" pw_rnnoise_config;
-    };
+    services.pipewire.extraConfig.pipewire = pw_rnnoise_config;
   };
 }
