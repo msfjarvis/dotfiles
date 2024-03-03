@@ -20,10 +20,9 @@ NixOS packages for personal use.
 - [pidcat] : Fork of [JakeWharton's pidcat] with Python3 support and some other fixes
 - [tea] : Gitea CLI built from latest sources
 - [twt] : Multipurpose tool to extract metadata from a user's tweets
-- [when] : A CLI tool to deal with timezones 
+- [when] : A CLI tool to deal with timezones
 
 [adb-sync]: https://msfjarvis.dev/g/adb-sync
-[Google's adb-sync]: https://github.com/google/adb-sync
 [adbtuifm]: https://github.com/darkhz/adbtuifm
 [adx]: https://msfjarvis.dev/g/androidx-release-watcher
 [clipboard-substitutor]: https://msfjarvis.dev/g/clipboard-substitutor
@@ -31,16 +30,17 @@ NixOS packages for personal use.
 [file-collector]: https://msfjarvis.dev/g/file-collector
 [gdrive]: https://msfjarvis.dev/g/gdrive
 [gitice]: https://msfjarvis.dev/g/gitice
+[google's adb-sync]: https://github.com/google/adb-sync
 [gphotos-cdp]: https://msfjarvis.dev/g/gphotos-cdp
 [hcctl]: https://msfjarvis.dev/g/healthchecks-rs
 [healthchecks-monitor]: https://msfjarvis.dev/g/healthchecks-rs
-[katbin]: https://github.com/SphericalKat/katbin-cli
+[jakewharton's pidcat]: https://github.com/JakeWharton/pidcat
 [katb.in]: https://katb.in
+[katbin]: https://github.com/SphericalKat/katbin-cli
 [linkleaner]: https://msfjarvis.dev/g/linkleaner
 [monocraft-nerdfonts]: https://github.com/IdreesInc/Monocraft
 [patreon-dl]: https://github.com/PrivateGER/patreon-dl
 [pidcat]: https://msfjarvis.dev/g/pidcat
-[JakeWharton's pidcat]: https://github.com/JakeWharton/pidcat
 [tea]: https://gitea.com/gitea/tea
 [twt]: https://msfjarvis.dev/g/twt
 [when]: https://github.com/mitsuhiko/when
