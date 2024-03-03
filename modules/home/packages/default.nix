@@ -27,7 +27,7 @@
     shfmt
     sops
     tailscale
-    tea-dev
+    jarvis.tea-dev
     tmux
     unzip
     vivid

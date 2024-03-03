@@ -9,19 +9,19 @@
   };
 
   environment.systemPackages = with pkgs; [
-    adx
+    jarvis.adx
     awscli2
     coreutils
-    diffuse-bin
-    gdrive
+    jarvis.diffuse-bin
+    jarvis.gdrive
     git-absorb
     hub
-    katbin
+    jarvis.katbin
     maestro
     ninja
     openssh
     openssl
-    pidcat
+    jarvis.pidcat
     scrcpy
   ];
 

@@ -3,4 +3,4 @@ builds:
     - nixosConfigurations.crusty
     - nixosConfigurations.ryzenbox
     - nixosConfigurations.wailord
-    - packages.aarch64-darwin.*
+    - packages.x86_64-linux.*

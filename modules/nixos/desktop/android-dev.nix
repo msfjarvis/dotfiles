@@ -13,12 +13,12 @@ in {
   };
   config = lib.mkIf cfg.android-dev.enable {
     users.users.msfjarvis.packages = with pkgs; [
-      adb-sync
-      adx
+      jarvis.adb-sync
+      jarvis.adx
       androidStudioPackages.stable
       androidStudioPackages.beta
       androidStudioPackages.canary
-      diffuse-bin
+      jarvis.diffuse-bin
       kotlin
     ];
 

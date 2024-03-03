@@ -32,7 +32,7 @@ in {
       description = mdDoc "Shell glob to filter files against to be eligible for moving";
     };
 
-    package = mkPackageOptionMD pkgs "rucksack" {};
+    package = mkPackageOptionMD pkgs.jarvis "rucksack" {};
 
     user = mkOption {
       type = types.str;
@@ -62,7 +62,7 @@ in {
         Environment = "PATH=${pkgs.coreutils}/bin:${pkgs.watchman}/bin";
       };
       script = ''
-        exec env RUCKSACK_CONFIG=${settingsFile} ${pkgs.rucksack}/bin/rucksack
+        exec env RUCKSACK_CONFIG=${settingsFile} ${lib.getExe cfg.package}
       '';
     };
 

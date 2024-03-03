@@ -34,7 +34,7 @@ in {
       description = mdDoc "Group account under which gphotos-cdp runs.";
     };
 
-    package = mkPackageOptionMD pkgs "gphotos-cdp" {};
+    package = mkPackageOptionMD pkgs.jarvis "gphotos-cdp" {};
   };
 
   config = mkIf cfg.enable {

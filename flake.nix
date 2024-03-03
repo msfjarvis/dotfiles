@@ -9,6 +9,7 @@
       inherit inputs;
       src = ./.;
       snowfall = {
+        namespace = "jarvis";
         meta = {
           name = "msfjarvis-nix-configs";
           title = "msfjarvis' Nix configurations";
@@ -48,7 +49,6 @@
       ];
 
       overlays = with inputs; [
-        custom-nixpkgs.overlays.default
         fenix.overlays.default
         gphotos-cdp.overlays.default
         nix-vscode-extensions.overlays.default
@@ -75,7 +75,6 @@
       deploy = lib.mkDeploy {inherit (inputs) self;};
     }
     // {
-      packages.aarch64-darwin.macbook = inputs.self.darwinConfigurations.Harshs-MacBook-Pro.system;
       apps.x86_64-linux.default = inputs.deploy-rs.apps.x86_64-linux.default;
     };
 
@@ -96,11 +95,6 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     systems.url = "github:msfjarvis/flake-systems";
-
-    custom-nixpkgs.url = "github:msfjarvis/custom-nixpkgs/main";
-    custom-nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
-    custom-nixpkgs.inputs.fenix.follows = "fenix";
-    custom-nixpkgs.inputs.systems.follows = "systems";
 
     darwin.url = "github:LnL7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -145,6 +139,9 @@
     nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
     nixos-vscode-server.inputs.nixpkgs.follows = "nixpkgs";
     nixos-vscode-server.inputs.flake-utils.follows = "flake-utils";
+
+    rust-manifest.url = "https://static.rust-lang.org/dist/2023-10-22/channel-rust-nightly.toml";
+    rust-manifest.flake = false;
 
     snowfall-lib.url = "github:snowfallorg/lib/dev";
     snowfall-lib.inputs.flake-utils-plus.follows = "flake-utils-plus";

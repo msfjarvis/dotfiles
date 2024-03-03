@@ -83,18 +83,18 @@
       })
       fzf
       gallery-dl
-      gdrive
+      jarvis.gdrive
       git-crypt
       helix
       nerdfonts
-      katbin
+      jarvis.katbin
       kondo
       maestro
       megatools
       mullvad
       mullvad-vpn
-      patreon-dl
-      pidcat
+      jarvis.patreon-dl
+      jarvis.pidcat
       psst
       (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
       scrcpy
