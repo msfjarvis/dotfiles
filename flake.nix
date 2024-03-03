@@ -76,6 +76,7 @@
     }
     // {
       packages.aarch64-darwin.macbook = inputs.self.darwinConfigurations.Harshs-MacBook-Pro.system;
+      apps.x86_64-linux.default = inputs.deploy-rs.apps.x86_64-linux.default;
     };
 
   nixConfig = {
