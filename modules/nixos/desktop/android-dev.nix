@@ -46,8 +46,6 @@ in {
           "org.gradle.java.installations.auto-detect" = false;
           "org.gradle.java.installations.auto-download" = false;
           "org.gradle.java.installations.paths" = lib.concatMapStringsSep "," (x: "${x}/lib/openjdk") toolchains;
-          # Force rich console since for some reason auto detect is broken for me
-          "systemProp.org.gradle.console" = "rich";
         };
       };
     };
