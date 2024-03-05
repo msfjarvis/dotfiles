@@ -6,18 +6,20 @@
 in
   rustPlatform.buildRustPackage rec {
     pname = "adx";
-    version = "4.5.1";
+    version = "4.5.3";
 
     src = fetchFromGitHub {
       owner = "msfjarvis";
       repo = "adx";
       rev = "v${version}";
-      hash = "sha256-oDvi1bEARtki4pMRh99cgoEtGJ5S0e33yU9/lKZKRSs=";
+      hash = "sha256-u+vUt3ACfj+V1MPVb4whI2b7h4IFdEWHxLnuwiGMQ/8=";
     };
 
-    cargoHash = "sha256-Y8quDq4dz9m92g0xrjb2KZ3BIlJwrH3CtCgY78wpCiA=";
+    cargoHash = "sha256-4RHJqo9pNnLbaV6RvpGydmTb3EEvzsVh1ThZ1NM5V1E=";
 
     useNextest = true;
+    # Needed for tests to pass
+    RUSTFLAGS = "--cfg nix_check";
 
     buildInputs = lib.optionals stdenv.isDarwin [
       darwin.apple_sdk.frameworks.Security
