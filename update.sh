@@ -17,7 +17,6 @@ declare -a ALL_PACKAGES=(
   patreon-dl
   pidcat
   rucksack
-  tea-dev
   when
 )
 

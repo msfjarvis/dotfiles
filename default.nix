@@ -90,6 +90,5 @@ in
     patreon-dl = callPackage ./packages/patreon-dl {};
     pidcat = callPackage ./packages/pidcat {};
     rucksack = callPackage ./packages/rucksack {};
-    tea-dev = callPackage ./packages/tea-dev {};
     when = callPackage ./packages/when {};
   }
