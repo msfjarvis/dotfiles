@@ -1,0 +1,52 @@
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    inputs:
+      package:
+        description: 'Package to check updates for'
+        required: false
+      version:
+        description: 'Version to pin package to'
+        required: false
+
+name: Check for package updates
+jobs:
+  check-nix-update:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+    - name: Install Nix
+      uses: DeterminateSystems/nix-installer-action@cd46bde16ab981b0a7b2dce0574509104543276e # v9
+
+    - name: Set up Magic Nix Cache
+      uses: DeterminateSystems/magic-nix-cache-action@eeabdb06718ac63a7021c6132129679a8e22d0c7 # v3
+
+    - name: Set Git user and email
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email noreply@github.com
+
+    - name: Check pre-update Git ref
+      run: |
+        echo "OLD_REF=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+
+    - name: Check for updates of given package
+      if: "github.event.inputs.package != null"
+      run: nix-shell -p nix-update git --run './update.sh ${{ github.event.inputs.package }} ${{ github.event.inputs.version }}'
+
+    - name: Check for updates
+      if: "github.event.inputs.package == null"
+      run: nix-shell -p nix-update git --run ./update.sh
+
+    - name: Check post-update Git ref
+      run: |
+        echo "NEW_REF=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+
+    - name: Push to main branch
+      if: env.OLD_REF != env.NEW_REF
+      shell: bash
+      run: |
+        git push origin main
