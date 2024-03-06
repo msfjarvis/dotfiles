@@ -1,10 +1,5 @@
 {
   outputs = inputs: let
-    stylix-stub = {lib, ...}: {
-      stylix.autoEnable = lib.mkDefault false;
-      stylix.image = lib.mkDefault ./nixos/stylix-fakes/wall.png;
-      stylix.base16Scheme = lib.mkDefault ./nixos/stylix-fakes/dracula.yml;
-    };
     lib = inputs.snowfall-lib.mkLib {
       inherit inputs;
       src = ./.;
@@ -37,7 +32,6 @@
       systems.hosts.crusty.modules = with inputs; [
         nixos-hardware.nixosModules.raspberry-pi-4
         srvos.nixosModules.server
-        stylix-stub
       ];
       systems.hosts.ryzenbox.modules = with inputs; [
         srvos.nixosModules.desktop
@@ -45,7 +39,6 @@
       systems.hosts.wailord.modules = with inputs; [
         disko.nixosModules.disko
         srvos.nixosModules.server
-        stylix-stub
       ];
 
       overlays = with inputs; [
