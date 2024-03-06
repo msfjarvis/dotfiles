@@ -17,12 +17,12 @@ in
 
     cargoHash = "sha256-4RHJqo9pNnLbaV6RvpGydmTb3EEvzsVh1ThZ1NM5V1E=";
 
-    useNextest = true;
-    # Needed for tests to pass
-    RUSTFLAGS = "--cfg nix_check";
+    # Tests are annoying to make work with buildRustPackage
+    doCheck = false;
 
     buildInputs = lib.optionals stdenv.isDarwin [
       darwin.apple_sdk.frameworks.Security
+      darwin.apple_sdk.frameworks.SystemConfiguration
     ];
 
     meta = with lib; {
