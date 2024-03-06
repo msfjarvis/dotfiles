@@ -64,7 +64,6 @@ in
   {
     system ? currentSystem,
     pkgs ? import (getFlake "nixpkgs") {localSystem = {inherit system;};},
-    lib ? pkgs.lib,
     fenix ? getFlake "fenix",
     rust-manifest ? getRawFlake "rust-manifest",
   }: let
@@ -77,14 +76,14 @@ in
     diffuse-bin = callPackage ./packages/diffuse-bin {};
     gdrive = callPackage ./packages/gdrive {};
     gitice = callPackage ./packages/gitice {
-      inputs = { inherit fenix rust-manifest; };
+      inputs = {inherit fenix rust-manifest;};
     };
     gphotos-cdp = callPackage ./packages/gphotos-cdp {};
     hcctl = callPackage ./packages/hcctl {};
     healthchecks-monitor = callPackage ./packages/healthchecks-monitor {};
     katbin = callPackage ./packages/katbin {};
     linkleaner = callPackage ./packages/linkleaner {
-      inputs = { inherit fenix rust-manifest; };
+      inputs = {inherit fenix rust-manifest;};
     };
     monocraft-nerdfonts = callPackage ./packages/monocraft-nerdfonts {};
     patreon-dl = callPackage ./packages/patreon-dl {};
