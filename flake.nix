@@ -45,6 +45,7 @@
         fenix.overlays.default
         gphotos-cdp.overlays.default
         nix-vscode-extensions.overlays.default
+        snowfall-flake.overlays.default
       ];
       outputs-builder = channels: {
         formatter = channels.nixpkgs.writeShellApplication {
@@ -93,7 +94,7 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     deploy-rs.url = "github:serokell/deploy-rs";
-    deploy-rs.inputs.flake-compat.follows = "";
+    deploy-rs.inputs.flake-compat.follows = "flake-compat";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
     deploy-rs.inputs.utils.follows = "flake-utils";
 
@@ -106,6 +107,9 @@
     fenix.url = "github:nix-community/fenix";
     fenix.inputs.nixpkgs.follows = "nixpkgs";
 
+    flake-compat.url = "github:nix-community/flake-compat";
+    flake-compat.flake = false;
+
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
 
@@ -113,7 +117,7 @@
     flake-utils-plus.inputs.flake-utils.follows = "flake-utils";
 
     gphotos-cdp.url = "github:msfjarvis/gphotos-cdp";
-    gphotos-cdp.inputs.flake-compat.follows = "";
+    gphotos-cdp.inputs.flake-compat.follows = "flake-compat";
     gphotos-cdp.inputs.flake-utils.follows = "flake-utils";
     gphotos-cdp.inputs.nixpkgs.follows = "nixpkgs";
     gphotos-cdp.inputs.systems.follows = "systems";
@@ -127,7 +131,7 @@
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
     nix-vscode-extensions.inputs.flake-utils.follows = "flake-utils";
-    nix-vscode-extensions.inputs.flake-compat.follows = "";
+    nix-vscode-extensions.inputs.flake-compat.follows = "flake-compat";
 
     nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
     nixos-vscode-server.inputs.nixpkgs.follows = "nixpkgs";
@@ -136,7 +140,13 @@
     rust-manifest.url = "https://static.rust-lang.org/dist/2023-10-22/channel-rust-nightly.toml";
     rust-manifest.flake = false;
 
+    snowfall-flake.url = "github:snowfallorg/flake";
+    snowfall-flake.inputs.flake-compat.follows = "flake-compat";
+    snowfall-flake.inputs.snowfall-lib.follows = "snowfall-lib";
+    snowfall-flake.inputs.nixpkgs.follows = "nixpkgs";
+
     snowfall-lib.url = "github:snowfallorg/lib/dev";
+    snowfall-lib.inputs.flake-compat.follows = "flake-compat";
     snowfall-lib.inputs.flake-utils-plus.follows = "flake-utils-plus";
     snowfall-lib.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -148,7 +158,7 @@
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
     stylix.url = "github:danth/stylix";
-    stylix.inputs.flake-compat.follows = "";
+    stylix.inputs.flake-compat.follows = "flake-compat";
     stylix.inputs.home-manager.follows = "home-manager";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
   };
