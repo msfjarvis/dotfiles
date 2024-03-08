@@ -88,6 +88,7 @@ in
     monocraft-nerdfonts = callPackage ./packages/monocraft-nerdfonts {};
     patreon-dl = callPackage ./packages/patreon-dl {};
     pidcat = callPackage ./packages/pidcat {};
+    piv-agent = callPackage ./packages/piv-agent {};
     rucksack = callPackage ./packages/rucksack {};
     when = callPackage ./packages/when {};
   }

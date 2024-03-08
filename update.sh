@@ -16,6 +16,7 @@ declare -a ALL_PACKAGES=(
   monocraft-nerdfonts
   patreon-dl
   pidcat
+  piv-agent
   rucksack
   when
 )
