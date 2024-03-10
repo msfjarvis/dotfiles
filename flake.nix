@@ -18,7 +18,6 @@
       channels-config = {
         allowUnfree = true;
         cudaSupport = true;
-        permittedInsecurePackages = ["nix-2.16.2"];
       };
       homes.modules = with inputs; [
         nix-index-database.hmModules.nix-index
