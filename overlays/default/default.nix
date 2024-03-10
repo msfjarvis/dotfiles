@@ -12,5 +12,6 @@ _: _final: prev: {
   nerdfonts = prev.nerdfonts.override {
     fonts = ["JetBrainsMono"];
   };
+  nix = prev.nixUnstable;
   qbittorrent = prev.qbittorrent.override {guiSupport = false;};
 }
