@@ -31,7 +31,5 @@
     unzip
     vivid
     zip
-
-    snowfallorg.flake
   ];
 }

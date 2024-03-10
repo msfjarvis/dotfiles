@@ -170,9 +170,7 @@
     },
     "deploy-rs": {
       "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
+        "flake-compat": [],
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -275,15 +273,15 @@
     "flake-compat": {
       "flake": false,
       "locked": {
-        "lastModified": 1688025799,
-        "narHash": "sha256-ktpB4dRtnksm9F5WawoIkEneh1nrEvuxb5lJFt1iOyw=",
-        "owner": "nix-community",
+        "lastModified": 1650374568,
+        "narHash": "sha256-Z+s0J8/r907g149rllvwhb4pKi8Wam5ij0st8PwAh+E=",
+        "owner": "edolstra",
         "repo": "flake-compat",
-        "rev": "8bf105319d44f6b9f0d764efa4fdef9f1cc9ba1c",
+        "rev": "b4a34015c698c7793d592d66adbab377907a2be8",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
+        "owner": "edolstra",
         "repo": "flake-compat",
         "type": "github"
       }
@@ -390,9 +388,7 @@
     "gphotos-cdp": {
       "inputs": {
         "devshell": "devshell",
-        "flake-compat": [
-          "flake-compat"
-        ],
+        "flake-compat": [],
         "flake-utils": [
           "flake-utils"
         ],
@@ -461,9 +457,7 @@
     },
     "nix-vscode-extensions": {
       "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
+        "flake-compat": [],
         "flake-utils": [
           "flake-utils"
         ],
@@ -547,7 +541,6 @@
         "disko": "disko",
         "dracula-micro": "dracula-micro",
         "fenix": "fenix",
-        "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "flake-utils-plus": "flake-utils-plus",
         "gphotos-cdp": "gphotos-cdp",
@@ -558,7 +551,6 @@
         "nixos-vscode-server": "nixos-vscode-server",
         "nixpkgs": "nixpkgs",
         "rust-manifest": "rust-manifest",
-        "snowfall-flake": "snowfall-flake",
         "snowfall-lib": "snowfall-lib",
         "sops-nix": "sops-nix",
         "srvos": "srvos",
@@ -595,37 +587,9 @@
         "url": "https://static.rust-lang.org/dist/2023-10-22/channel-rust-nightly.toml"
       }
     },
-    "snowfall-flake": {
-      "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "snowfall-lib": [
-          "snowfall-lib"
-        ]
-      },
-      "locked": {
-        "lastModified": 1709228099,
-        "narHash": "sha256-5CCeUQbIPasl9WIiqZHucHCsf9uFl3VZ7Ay+eNA1GU0=",
-        "owner": "snowfallorg",
-        "repo": "flake",
-        "rev": "3dbad05e44aaee77342e386238c823733fffad20",
-        "type": "github"
-      },
-      "original": {
-        "owner": "snowfallorg",
-        "repo": "flake",
-        "type": "github"
-      }
-    },
     "snowfall-lib": {
       "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
+        "flake-compat": "flake-compat",
         "flake-utils-plus": [
           "flake-utils-plus"
         ],
@@ -700,9 +664,7 @@
         "base16-kitty": "base16-kitty",
         "base16-tmux": "base16-tmux",
         "base16-vim": "base16-vim",
-        "flake-compat": [
-          "flake-compat"
-        ],
+        "flake-compat": [],
         "gnome-shell": "gnome-shell",
         "home-manager": [
           "home-manager"
