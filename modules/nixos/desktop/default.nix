@@ -106,7 +106,7 @@ in {
       enableSSHSupport = true;
     };
 
-    snowfallorg.user.msfjarvis.home.config = {
+    snowfallorg.users.msfjarvis.home.config = {
       stylix = {
         targets = {
           bat.enable = true;

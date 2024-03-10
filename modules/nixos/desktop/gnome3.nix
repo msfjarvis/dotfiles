@@ -46,7 +46,7 @@ in {
       gnome.enable = true;
     };
 
-    snowfallorg.user.msfjarvis.home.config = {
+    snowfallorg.users.msfjarvis.home.config = {
       gtk = {
         enable = true;
         theme = {

@@ -17,7 +17,7 @@
   # boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_lqx;
 
-  snowfallorg.user.msfjarvis.home.config = {
+  snowfallorg.users.msfjarvis.home.config = {
     stylix = {
       targets = {
         firefox = {

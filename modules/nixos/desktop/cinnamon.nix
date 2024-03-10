@@ -38,7 +38,7 @@ in {
 
     stylix.targets.lightdm.enable = true;
 
-    snowfallorg.user.msfjarvis.home.config = {
+    snowfallorg.users.msfjarvis.home.config = {
       dconf.settings = {
         "org/cinnamon/theme" = {
           name = "Dracula";

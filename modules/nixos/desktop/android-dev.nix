@@ -28,7 +28,7 @@ in {
       binfmt = false;
     };
 
-    snowfallorg.user.msfjarvis.home.config = {
+    snowfallorg.users.msfjarvis.home.config = {
       programs.gradle = {
         enable = true;
         package = pkgs.callPackage (pkgs.gradleGen
