@@ -52,6 +52,7 @@
     extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
       age
+      discord
       dracula-icon-theme
       dracula-theme
       fclones
