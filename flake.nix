@@ -84,6 +84,11 @@
         _: deployLib: deployLib.deployChecks inputs.self.deploy
       ) inputs.deploy-rs.lib;
 
+      templates.cpp.description = "devshell for a C++ project";
+      templates.go.description = "devshell for a Golang project";
+      templates.node.description = "devshell for a NodeJS project";
+      templates.python.description = "devshell for a Python project";
+      templates.rust.description = "package definition and devshell for my-rust-package";
     };
 
   inputs = {
