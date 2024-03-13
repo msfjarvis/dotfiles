@@ -77,6 +77,27 @@
 
       deploy = lib.mkDeploy {inherit (inputs) self;};
       apps.x86_64-linux.default = inputs.deploy-rs.apps.x86_64-linux.default;
+
+      templates.cpp = {
+        description = "devshell for a C++ project";
+        path = ./templates/cpp;
+      };
+      templates.go = {
+        description = "devshell for a Golang project";
+        path = ./templates/go;
+      };
+      templates.node = {
+        description = "devshell for a NodeJS project";
+        path = ./templates/node;
+      };
+      templates.python = {
+        description = "devshell for a Python project";
+        path = ./templates/python;
+      };
+      templates.rust = {
+        description = "package definition and devshell for my-rust-package";
+        path = ./templates/rust;
+      };
     };
 
   nixConfig = {
