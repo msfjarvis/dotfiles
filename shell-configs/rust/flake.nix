@@ -41,7 +41,7 @@
 
       rustStable = (import fenix {inherit pkgs;}).fromToolchainFile {
         file = ./rust-toolchain.toml;
-        sha256 = "sha256-Q9UgzzvxLi4x9aWUJTn+/5EXekC98ODRU1TwhUs9RnY=";
+        sha256 = "sha256-e4mlaJehWBymYxJGgnbuCObVlqMlQSilZ8FljG9zPHY=";
       };
 
       craneLib = (crane.mkLib pkgs).overrideToolchain rustStable;
@@ -90,6 +90,7 @@
           cargo-nextest
           cargo-release
           rustStable
+          stdenv.cc
         ];
       };
     });
