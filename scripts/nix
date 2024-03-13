@@ -42,25 +42,6 @@ function nixdiff() {
   nvd diff "${OLD_GEN}" "${CUR_GEN}"
 }
 
-function nixshell() {
-  [[ -z ${1} ]] && return
-  BASE_DIR="${SCRIPT_DIR}/../shell-configs"
-  declare -a FILES_TO_COPY=()
-  [[ ! -d "${BASE_DIR}/${1}" ]] && {
-    reportWarning "No shell config exists for ${1}"
-    return
-  }
-  FILES_TO_COPY+=("default.nix" "shell.nix" "${1}/flake.nix")
-  [[ ${1} == "rust" ]] && FILES_TO_COPY+=("rust-toolchain.toml")
-  for FILE in "${FILES_TO_COPY[@]}"; do
-    cp "${BASE_DIR}/${FILE}" "$(basename "${FILE}")"
-  done
-  git add .
-  nix flake update
-  git add flake.lock
-  nix develop
-}
-
 function nixb() {
   nix flake update --commit-lock-file
 }

@@ -1,5 +1,5 @@
 {
-  description = "My Rust Project";
+  description = "package definition and devshell for my-rust-package";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 

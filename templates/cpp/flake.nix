@@ -1,4 +1,6 @@
 {
+  description = "devshell for a C++ project";
+
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
   inputs.systems.url = "github:msfjarvis/flake-systems";
@@ -36,7 +38,13 @@
         ];
 
         packages = with pkgs; [
-          nodejs_18
+          busybox
+          clang_13
+          cmake
+          lld_13
+          openssl
+          pkgconfig
+          zlib
         ];
       };
     });

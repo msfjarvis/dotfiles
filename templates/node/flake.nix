@@ -1,4 +1,6 @@
 {
+  description = "devshell for a NodeJS project";
+
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
   inputs.systems.url = "github:msfjarvis/flake-systems";
@@ -36,7 +38,7 @@
         ];
 
         packages = with pkgs; [
-          python312
+          nodejs_18
         ];
       };
     });
