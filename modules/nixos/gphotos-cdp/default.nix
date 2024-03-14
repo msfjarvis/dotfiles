@@ -58,7 +58,7 @@ in {
 
     systemd.timers.gphotos-cdp = {
       description = "Run gphotos-cdp every day";
-      timerConfig.OnCalendar = "daily";
+      timerConfig.OnBootSec = "15min";
       wantedBy = ["timers.target"];
       partOf = ["gphotos-cdp.service"];
     };
