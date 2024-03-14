@@ -9,7 +9,7 @@ in
     version = "0.2.0";
 
     src = fetchFromGitHub {
-      owner = "JakeWharton";
+      owner = "msfjarvis";
       repo = "gitout";
       rev = version;
       hash = "sha256-V9Rmwdd03NSgD21WcVf2qto1F7juX6IryM3NrERh37M=";
@@ -35,8 +35,8 @@ in
 
     meta = with lib; {
       description = "A command-line tool and Docker image to automatically backup Git repositories from GitHub or anywhere";
-      homepage = "https://github.com/JakeWharton/gitout";
-      changelog = "https://github.com/JakeWharton/gitout/blob/${src.rev}/CHANGELOG.md";
+      homepage = "https://github.com/msfjarvis/gitout";
+      changelog = "https://github.com/msfjarvis/gitout/blob/${src.rev}/CHANGELOG.md";
       license = licenses.mit;
       maintainers = with maintainers; [msfjarvis];
       mainProgram = "gitout";

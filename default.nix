@@ -78,6 +78,7 @@ in
     gitice = callPackage ./packages/gitice {
       inputs = {inherit fenix rust-manifest;};
     };
+    gitout = callPackage ./packages/gitout {};
     gphotos-cdp = callPackage ./packages/gphotos-cdp {};
     hcctl = callPackage ./packages/hcctl {};
     healthchecks-monitor = callPackage ./packages/healthchecks-monitor {};

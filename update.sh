@@ -9,6 +9,7 @@ declare -a ALL_PACKAGES=(
   clipboard-substitutor
   gdrive
   gitice
+  gitout
   hcctl
   healthchecks-monitor
   katbin
