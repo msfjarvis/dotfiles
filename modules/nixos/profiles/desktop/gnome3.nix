@@ -59,6 +59,10 @@ in {
         };
       };
       dconf.settings = {
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = lib.mkDefault {
+          binding = "<Control><Alt>t";
+          command = "${lib.getExe pkgs.gnome-console}";
+        };
         "org/gnome/shell/extensions/user-theme" = {
           name = "Dracula";
         };
