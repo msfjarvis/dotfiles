@@ -6,16 +6,16 @@
 in
   rustPlatform.buildRustPackage rec {
     pname = "gitout";
-    version = "0.2.0";
+    version = "0.2.1";
 
     src = fetchFromGitHub {
       owner = "msfjarvis";
       repo = "gitout";
-      rev = version;
-      hash = "sha256-V9Rmwdd03NSgD21WcVf2qto1F7juX6IryM3NrERh37M=";
+      rev = "v${version}";
+      hash = "sha256-XrHgnpYpUQd+oCRcY+Lt7ETRCfjz1KOaHOtQidut1bw=";
     };
 
-    cargoHash = "sha256-72bG12a+svq3b6lYu+ZRFtrWzZiv+JpR93BTPJOe3Hw=";
+    cargoHash = "sha256-fjsLqi/s6yco6jf2s/9g/4R2THdXZCDxp/5OR09zRL4=";
 
     PKG_CONFIG_PATH = "${openssl.dev}/lib/pkgconfig";
 
