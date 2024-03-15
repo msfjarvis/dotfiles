@@ -66,14 +66,9 @@
       };
 
       deploy = lib.mkDeploy {inherit (inputs) self;};
-
+    }
+    // {
       apps.x86_64-linux.default = inputs.deploy-rs.apps.x86_64-linux.default;
-
-      templates.cpp.description = "devshell for a C++ project";
-      templates.go.description = "devshell for a Golang project";
-      templates.node.description = "devshell for a NodeJS project";
-      templates.python.description = "devshell for a Python project";
-      templates.rust.description = "package definition and devshell for my-rust-package";
     };
 
   nixConfig = {
