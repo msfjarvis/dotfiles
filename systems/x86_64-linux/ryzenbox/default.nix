@@ -18,7 +18,6 @@
   boot.kernelPackages = pkgs.linuxPackages_lqx;
 
   snowfallorg.users.msfjarvis.home.config = {
-    profiles.wezterm.enable = true;
     stylix = {
       targets = {
         firefox = {
