@@ -16,8 +16,6 @@
     ncdu_1
     neofetch
     nil
-    nix-init
-    nix-update
     nixpkgs-review
     neofetch
     nvd

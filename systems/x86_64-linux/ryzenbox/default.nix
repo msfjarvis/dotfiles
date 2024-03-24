@@ -94,6 +94,8 @@
       megatools
       mullvad
       mullvad-vpn
+      nix-init
+      nix-update
       jarvis.patreon-dl
       jarvis.pidcat
       psst
