@@ -22,7 +22,7 @@ in {
           waylandSupport = true;
           dmenuSupport = false;
         })
-        .withExtensions (exts: [exts.pass-audit exts.pass-genphrase exts.pass-otp exts.pass-update]);
+        .withExtensions (exts: with exts;[pass-genphrase pass-otp pass-update]);
     };
     services.git-sync = {
       enable = true;
