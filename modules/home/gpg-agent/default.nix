@@ -1,8 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   services.gpg-agent = {
     enable = !pkgs.stdenv.isDarwin;
     defaultCacheTtl = 3600;
