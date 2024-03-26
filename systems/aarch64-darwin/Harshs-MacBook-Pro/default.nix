@@ -23,6 +23,7 @@
     openssl
     jarvis.pidcat
     scrcpy
+    jarvis.toml-cli
   ];
 
   programs.gnupg.agent.enable = true;
