@@ -30,6 +30,9 @@ case "${ARG}" in
   githook)
     ln -sf "$(pwd)"/pre-push-hook .git/hooks/pre-push
     ;;
+  home-boot)
+    sudo nixos-rebuild boot --flake .#ryzenbox
+    ;;
   home-check)
     nixos-rebuild build --flake .#ryzenbox
     ;;
