@@ -1,4 +1,5 @@
 on:
+  repository_dispatch:
   schedule:
     - cron: '0 0 * * *'
   workflow_dispatch:
@@ -34,8 +35,8 @@ jobs:
         echo "OLD_REF=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
 
     - name: Check for updates of given package
-      if: "github.event.inputs.package != null"
-      run: nix-shell -p nix-update git --run './update.sh ${{ github.event.inputs.package }} ${{ github.event.inputs.version }}'
+      if: "github.event.inputs.package != null || github.event.action == 'package-bump'"
+      run: nix-shell -p nix-update git --run './update.sh ${{ github.event.inputs.package || github.event.client_payload.package_name }} ${{ github.event.inputs.version }}'
 
     - name: Check for updates
       if: "github.event.inputs.package == null"
