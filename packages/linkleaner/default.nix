@@ -15,13 +15,13 @@ in
   })
   .buildRustPackage rec {
     pname = "linkleaner";
-    version = "1.9.0";
+    version = "1.9.1";
 
     src = fetchFromGitHub {
       owner = "msfjarvis";
       repo = "linkleaner";
       rev = "v${version}";
-      hash = "sha256-CagMcRpjyMq0/a7pKMCESa0NzuwskCTHWwtSvFtO1uM=";
+      hash = "sha256-jf8OelykdhKnREDf+B2z0KriHVSF0uih6huByvzm3+k=";
     };
 
     buildInputs = lib.optionals stdenv.isDarwin [
@@ -32,7 +32,7 @@ in
     cargoLock = {
       lockFile = ./Cargo.lock;
       outputHashes = {
-        "teloxide-0.12.2" = "sha256-4GRyFlDQIdm3EgjLgTh1oVZ8X5Vyes4tigvKIb7UO5c=";
+        "teloxide-0.12.2" = "sha256-QjkpEwqEPyisirX/8h5VtU8zFd6oCh1AuahE+lHnoT0=";
       };
     };
 
