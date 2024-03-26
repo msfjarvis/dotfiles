@@ -6,7 +6,7 @@
 in
   buildGoModule rec {
     pname = "gphotos-cdp";
-    version = "unstable-2024-01-28";
+    version = "1.0.0";
 
     src = fetchFromGitHub {
       owner = "msfjarvis";
