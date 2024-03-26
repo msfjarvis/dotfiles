@@ -29,6 +29,18 @@ in {
       ++ (with pkgs.gnomeExtensions; [
         # A nicer application menu for gnome
         arcmenu
+        # Bluetooth panel
+        bluetooth-quick-connect
+        # Blurrrrrrrrrrr
+        blur-my-shell
+        # Add a taskbar ala Windoze
+        dash-to-panel
+        # Clipboard manager (currently broken on NixOS GNOME version)
+        # gnome-clipboard
+        # Tweak GNOME settings
+        just-perfection
+        # Customize the top bar (Hates immutable systems)
+        # open-bar
         # POP!_OS shell tiling extensions for Gnome 3
         pop-shell
         # Display Mullvad state
@@ -70,6 +82,10 @@ in {
           disable-user-extensions = false;
           enabled-extensions = [
             "arcmenu@arcmenu.com"
+            "bluetooth-quick-connect@bjarosze.gmail.com"
+            "blur-my-shell@aunetx"
+            "dash-to-panel@jderose9.github.com"
+            "just-perfection-desktop@just-perfection"
             "mullvadindicator@pobega.github.com"
             "pop-shell@system76.com"
             "tophat@fflewddur.github.io"
