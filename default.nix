@@ -91,5 +91,6 @@ in
     pidcat = callPackage ./packages/pidcat {};
     piv-agent = callPackage ./packages/piv-agent {};
     rucksack = callPackage ./packages/rucksack {};
+    toml-cli = callPackage ./packages/toml-cli {};
     when = callPackage ./packages/when {};
   }
