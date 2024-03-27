@@ -53,7 +53,8 @@ in {
           ];
         };
       config = {
-        autofit = "100%x100%";
+        autofit = "100%";
+        window-maximized = "yes";
       };
     };
   };
