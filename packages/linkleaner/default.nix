@@ -15,13 +15,13 @@ in
   })
   .buildRustPackage rec {
     pname = "linkleaner";
-    version = "1.9.1";
+    version = "1.9.2";
 
     src = fetchFromGitHub {
       owner = "msfjarvis";
       repo = "linkleaner";
       rev = "v${version}";
-      hash = "sha256-jf8OelykdhKnREDf+B2z0KriHVSF0uih6huByvzm3+k=";
+      hash = "sha256-Ad0x/BGiK3JLqmHDgGP7pGExXZOoYorUQrQsvAlK9gA=";
     };
 
     buildInputs = lib.optionals stdenv.isDarwin [
