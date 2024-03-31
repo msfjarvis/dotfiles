@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }: let
   cfg = config.profiles.desktop;
@@ -51,10 +52,7 @@ in {
     # Theming
     stylix = {
       autoEnable = false;
-      image = pkgs.fetchurl {
-        url = "https://msfjarvis.dev/images/wallpaper.png";
-        sha256 = "sha256-GoF4dZTt/+rDrp1Z7+lY/8doSzqiqyXikR1gXDyxkQg=";
-      };
+      image = inputs.wallpaper;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
       cursor = {
         package = pkgs.bibata-cursors;

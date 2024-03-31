@@ -555,7 +555,8 @@
         "sops-nix": "sops-nix",
         "srvos": "srvos",
         "stylix": "stylix",
-        "systems": "systems"
+        "systems": "systems",
+        "wallpaper": "wallpaper"
       }
     },
     "rust-analyzer-src": {
@@ -700,6 +701,18 @@
         "owner": "msfjarvis",
         "repo": "flake-systems",
         "type": "github"
+      }
+    },
+    "wallpaper": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-nWZLiUy127bU3hlOR9z4nJaNSCHN8c7a7woLosFvsVo=",
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/msfjarvis/msfjarvis.dev/main/static/images/wallpaper.jpg"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/msfjarvis/msfjarvis.dev/main/static/images/wallpaper.jpg"
       }
     }
   },
