@@ -31,10 +31,6 @@ in {
         arcmenu
         # Bluetooth panel
         bluetooth-quick-connect
-        # Blurrrrrrrrrrr
-        blur-my-shell
-        # Add a taskbar ala Windoze
-        dash-to-panel
         # Clipboard manager (currently broken on NixOS GNOME version)
         # gnome-clipboard
         # Tweak GNOME settings
@@ -83,8 +79,6 @@ in {
           enabled-extensions = [
             "arcmenu@arcmenu.com"
             "bluetooth-quick-connect@bjarosze.gmail.com"
-            "blur-my-shell@aunetx"
-            "dash-to-panel@jderose9.github.com"
             "just-perfection-desktop@just-perfection"
             "mullvadindicator@pobega.github.com"
             "pop-shell@system76.com"
