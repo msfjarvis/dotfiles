@@ -152,7 +152,7 @@
     stylix.inputs.home-manager.follows = "home-manager";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
 
-    wallpaper.url = "https://raw.githubusercontent.com/msfjarvis/msfjarvis.dev/main/static/images/wallpaper.jpg";
+    wallpaper.url = "https://til.msfjarvis.dev/wallpaper.jpg";
     wallpaper.flake = false;
   };
 }

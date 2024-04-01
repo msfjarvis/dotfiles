@@ -708,11 +708,11 @@
       "locked": {
         "narHash": "sha256-nWZLiUy127bU3hlOR9z4nJaNSCHN8c7a7woLosFvsVo=",
         "type": "file",
-        "url": "https://raw.githubusercontent.com/msfjarvis/msfjarvis.dev/main/static/images/wallpaper.jpg"
+        "url": "https://til.msfjarvis.dev/wallpaper.jpg"
       },
       "original": {
         "type": "file",
-        "url": "https://raw.githubusercontent.com/msfjarvis/msfjarvis.dev/main/static/images/wallpaper.jpg"
+        "url": "https://til.msfjarvis.dev/wallpaper.jpg"
       }
     }
   },
