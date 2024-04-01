@@ -2,24 +2,25 @@
   pkgs,
   lib,
 }: let
-  inherit (pkgs) rustPlatform fetchFromGitHub pkg-config libgit2 openssl zlib stdenv darwin;
+  inherit (pkgs) rustPlatform fetchFromGitHub perl pkg-config libgit2 openssl zlib stdenv darwin;
 in
   rustPlatform.buildRustPackage rec {
     pname = "gitout";
-    version = "0.2.1";
+    version = "0.2.2";
 
     src = fetchFromGitHub {
       owner = "msfjarvis";
       repo = "gitout";
       rev = "v${version}";
-      hash = "sha256-XrHgnpYpUQd+oCRcY+Lt7ETRCfjz1KOaHOtQidut1bw=";
+      hash = "sha256-lUai0pqLsRxAB+aH0dO6d66f4ccHGPRsRPWUWPA0i3w=";
     };
 
-    cargoHash = "sha256-fjsLqi/s6yco6jf2s/9g/4R2THdXZCDxp/5OR09zRL4=";
+    cargoHash = "sha256-ZTmf98OUdlIwPFPFVrgJa+VV7BIxZuwekuFiF8vOQKo=";
 
     PKG_CONFIG_PATH = "${openssl.dev}/lib/pkgconfig";
 
     nativeBuildInputs = [
+      perl
       pkg-config
     ];
 
