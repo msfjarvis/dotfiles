@@ -73,15 +73,16 @@
       };
       "https://wailord.tiger-shark.ts.net" = {
         extraConfig = ''
+          root * /var/lib/file_share_internal
+          file_server browse
+        '';
+      };
+      "https://til.msfjarvis.dev" = {
+        extraConfig = ''
           root * /var/lib/file_share
           file_server browse
         '';
       };
-      # "https://til.msfjarvis.dev" = {
-      #   extraConfig = ''
-      #     reverse_proxy :9090
-      #   '';
-      # };
     };
   };
 
