@@ -102,7 +102,7 @@
       jarvis.patreon-dl
       jarvis.pidcat
       psst
-      (python311.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
+      (python312.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
       scrcpy
       smile
       sshfs
