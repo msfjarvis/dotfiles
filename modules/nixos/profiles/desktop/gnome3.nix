@@ -78,10 +78,14 @@ in {
           disable-user-extensions = false;
           enabled-extensions = [
             "arcmenu@arcmenu.com"
+            "auto-move-windows@gnome-shell-extensions.gcampax.github.com"
             "bluetooth-quick-connect@bjarosze.gmail.com"
             "just-perfection-desktop@just-perfection"
             "mullvadindicator@pobega.github.com"
+            "native-window-placement@gnome-shell-extensions.gcampax.github.com"
+            "places-menu@gnome-shell-extensions.gcampax.github.com"
             "pop-shell@system76.com"
+            "screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com"
             "tophat@fflewddur.github.io"
             "unmess@ezix.org"
             "user-theme@gnome-shell-extensions.gcampax.github.com"
