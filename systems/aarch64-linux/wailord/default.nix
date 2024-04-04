@@ -108,6 +108,7 @@
     addr = "127.0.0.1:8889";
     auth-file = config.sops.secrets.yarr-auth.path;
     db = "/var/lib/yarr/database.sqlite";
+    package = pkgs.jarvis.yarr-dev;
   };
 
   services.openssh.enable = true;
