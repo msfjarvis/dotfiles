@@ -35,6 +35,10 @@ in {
     sops.gnupg.sshKeyPaths = lib.mkForce [];
     sops.defaultSopsFile = ./../../../../secrets/tailscale.yaml;
     sops.secrets.tsauthkey = {};
+    sops.secrets.yarr-auth = {
+      owner = config.services.yarr.user;
+      group = config.services.yarr.group;
+    };
 
     # Automatically log into my user account
     services.getty.autologinUser = lib.mkForce "msfjarvis";

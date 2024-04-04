@@ -77,6 +77,11 @@
           file_server browse
         '';
       };
+      "https://read.msfjarvis.dev" = {
+        extraConfig = ''
+          reverse_proxy ${toString config.services.yarr.addr}
+        '';
+      };
       "https://til.msfjarvis.dev" = {
         extraConfig = ''
           root * /var/lib/file_share
@@ -96,6 +101,13 @@
       service.COOKIE_SECURE = true;
       service.DISABLE_REGISTRATION = true;
     };
+  };
+
+  services.yarr = {
+    enable = true;
+    addr = "127.0.0.1:8889";
+    auth-file = config.sops.secrets.yarr-auth.path;
+    db = "/var/lib/yarr/database.sqlite";
   };
 
   services.openssh.enable = true;
