@@ -93,4 +93,5 @@ in
     rucksack = callPackage ./packages/rucksack {};
     toml-cli = callPackage ./packages/toml-cli {};
     when = callPackage ./packages/when {};
+    yarr-dev = callPackage ./packages/yarr-dev {};
   }
