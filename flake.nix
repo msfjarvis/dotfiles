@@ -67,8 +67,6 @@
       };
 
       deploy = lib.mkDeploy {inherit (inputs) self;};
-    }
-    // {
       apps.x86_64-linux.default = inputs.deploy-rs.apps.x86_64-linux.default;
     };
 
