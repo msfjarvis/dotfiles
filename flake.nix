@@ -21,6 +21,7 @@
       };
       homes.modules = with inputs; [
         nix-index-database.hmModules.nix-index
+        spicetify-nix.homeManagerModules.default
       ];
       systems.modules.nixos = with inputs; [
         sops-nix.nixosModules.sops
@@ -143,6 +144,10 @@
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.inputs.nixpkgs-stable.follows = "";
+
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+    spicetify-nix.inputs.nixpkgs.follows = "nixpkgs";
+    spicetify-nix.inputs.flake-compat.follows = "";
 
     srvos.url = "github:nix-community/srvos";
     srvos.inputs.nixpkgs.follows = "nixpkgs";

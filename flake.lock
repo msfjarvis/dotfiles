@@ -553,6 +553,7 @@
         "rust-manifest": "rust-manifest",
         "snowfall-lib": "snowfall-lib",
         "sops-nix": "sops-nix",
+        "spicetify-nix": "spicetify-nix",
         "srvos": "srvos",
         "stylix": "stylix",
         "systems": "systems",
@@ -631,6 +632,27 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "spicetify-nix": {
+      "inputs": {
+        "flake-compat": [],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1712463134,
+        "narHash": "sha256-tAOHJkn8pOo5Pd+FgveR3MTyJ4R77do3cqypzxMtFzk=",
+        "owner": "Gerg-L",
+        "repo": "spicetify-nix",
+        "rev": "6ac7e56e365d9d95b29b2ca0547017d559424ca1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Gerg-L",
+        "repo": "spicetify-nix",
         "type": "github"
       }
     },
