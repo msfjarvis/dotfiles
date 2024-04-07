@@ -37,7 +37,7 @@ in {
     sops.secrets.tsauthkey = {};
     sops.secrets.yarr-auth = {
       owner = config.services.yarr.user;
-      group = config.services.yarr.group;
+      inherit (config.services.yarr) group;
     };
 
     # Automatically log into my user account
