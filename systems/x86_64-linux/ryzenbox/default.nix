@@ -17,9 +17,6 @@
   # boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
-  # Electron balks at Wayland, this seems to make it behave.
-  environment.variables.ELECTRON_OZONE_PLATFORM_HINT = "x11";
-
   snowfallorg.users.msfjarvis.home.config = {
     stylix = {
       targets = {
@@ -101,7 +98,6 @@
       nix-update
       jarvis.patreon-dl
       jarvis.pidcat
-      psst
       (python312.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
       scrcpy
       smile

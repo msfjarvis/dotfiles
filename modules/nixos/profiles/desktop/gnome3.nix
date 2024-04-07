@@ -16,6 +16,10 @@ in {
     programs.seahorse.enable = true;
     services.gnome.gnome-keyring.enable = true;
 
+    # Enable Wayland compatibility workarounds within Nixpkgs
+    environment.variables.ELECTRON_OZONE_PLATFORM_HINT = "x11";
+    environment.variables.NIXOS_OZONE_WL = "1";
+
     environment.systemPackages = with pkgs; [wl-clipboard];
     # Required by the tophat extension
     services.xserver.desktopManager.gnome.sessionPath = with pkgs; [libgtop];
