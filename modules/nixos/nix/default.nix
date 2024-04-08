@@ -12,6 +12,11 @@
     dev.enable = false;
   };
 
+  users.users.msfjarvis.packages = with pkgs; [
+    expect
+    nix-output-monitor
+  ];
+
   nix = {
     gc = {
       automatic = true;
