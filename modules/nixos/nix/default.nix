@@ -55,7 +55,8 @@
       http-connections = 50;
       keep-going = true;
       log-lines = 20;
-      max-jobs = "auto";
+      cores = 6;
+      max-jobs = 12;
       sandbox = true;
       trusted-users = ["root" "@wheel"];
       use-cgroups = true;
