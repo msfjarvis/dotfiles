@@ -5,11 +5,9 @@
   fetchFromGitHub,
   freetype,
   gtk3-x11,
-  mount,
   pcre,
   pkg-config,
   xorg,
-  darwin,
 }:
 stdenv.mkDerivation rec {
   pname = "rnnoise-plugin-slim";
@@ -33,28 +31,19 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [cmake pkg-config];
 
-  patches = lib.optionals stdenv.isDarwin [
-    # Ubsan seems to be broken on aarch64-darwin, it produces linker errors similar to https://github.com/NixOS/nixpkgs/issues/140751
-    ./disable-ubsan.patch
+  buildInputs = [
+    freetype
+    gtk3-x11
+    pcre
+    xorg.libX11
+    xorg.libXrandr
   ];
-
-  buildInputs =
-    [
-      freetype
-      gtk3-x11
-      pcre
-      xorg.libX11
-      xorg.libXrandr
-    ]
-    ++ lib.optionals stdenv.isDarwin [
-      darwin.apple_sdk_11_0.libs.simd
-    ];
 
   meta = with lib; {
     description = "A real-time noise suppression plugin for voice based on Xiph's RNNoise";
     homepage = "https://github.com/werman/noise-suppression-for-voice";
     license = licenses.gpl3;
-    platforms = platforms.all;
+    platforms = platforms.linux;
     maintainers = with maintainers; [msfjarvis];
   };
 }
