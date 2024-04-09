@@ -24,6 +24,7 @@
         spicetify-nix.homeManagerModules.default
       ];
       systems.modules.nixos = with inputs; [
+        nix-topology.nixosModules.default
         sops-nix.nixosModules.sops
         stylix.nixosModules.stylix
         srvos.nixosModules.common
@@ -45,9 +46,17 @@
       overlays = with inputs; [
         fenix.overlays.default
         gphotos-cdp.overlays.default
+        nix-topology.overlays.default
         nix-vscode-extensions.overlays.default
       ];
       outputs-builder = channels: {
+        topology = import inputs.nix-topology {
+          pkgs = channels.nixpkgs;
+          modules = [
+            {inherit (inputs.self) nixosConfigurations;}
+          ];
+        };
+
         formatter = channels.nixpkgs.writeShellApplication {
           name = "format";
           runtimeInputs = with channels.nixpkgs; [
@@ -93,9 +102,13 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     deploy-rs.url = "github:serokell/deploy-rs";
-    deploy-rs.inputs.flake-compat.follows = "";
+    deploy-rs.inputs.flake-compat.follows = "flake-compat";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
     deploy-rs.inputs.utils.follows = "flake-utils";
+
+    devshell.url = "github:numtide/devshell";
+    devshell.inputs.nixpkgs.follows = "nixpkgs";
+    devshell.inputs.flake-utils.follows = "flake-utils";
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
@@ -106,6 +119,9 @@
     fenix.url = "github:nix-community/fenix";
     fenix.inputs.nixpkgs.follows = "nixpkgs";
 
+    flake-compat.url = "github:nix-community/flake-compat";
+    flake-compat.flake = false;
+
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
 
@@ -113,7 +129,8 @@
     flake-utils-plus.inputs.flake-utils.follows = "flake-utils";
 
     gphotos-cdp.url = "github:msfjarvis/gphotos-cdp";
-    gphotos-cdp.inputs.flake-compat.follows = "";
+    gphotos-cdp.inputs.devshell.follows = "devshell";
+    gphotos-cdp.inputs.flake-compat.follows = "flake-compat";
     gphotos-cdp.inputs.flake-utils.follows = "flake-utils";
     gphotos-cdp.inputs.nixpkgs.follows = "nixpkgs";
     gphotos-cdp.inputs.systems.follows = "systems";
@@ -124,10 +141,16 @@
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
+    nix-topology.url = "github:oddlama/nix-topology";
+    nix-topology.inputs.nixpkgs.follows = "nixpkgs";
+    nix-topology.inputs.devshell.follows = "devshell";
+    nix-topology.inputs.flake-utils.follows = "flake-utils";
+    nix-topology.inputs.pre-commit-hooks.follows = "";
+
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
     nix-vscode-extensions.inputs.flake-utils.follows = "flake-utils";
-    nix-vscode-extensions.inputs.flake-compat.follows = "";
+    nix-vscode-extensions.inputs.flake-compat.follows = "flake-compat";
 
     nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
     nixos-vscode-server.inputs.nixpkgs.follows = "nixpkgs";
@@ -137,6 +160,7 @@
     rust-manifest.flake = false;
 
     snowfall-lib.url = "github:snowfallorg/lib/dev";
+    snowfall-lib.inputs.flake-compat.follows = "flake-compat";
     snowfall-lib.inputs.flake-utils-plus.follows = "flake-utils-plus";
     snowfall-lib.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -146,13 +170,13 @@
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     spicetify-nix.inputs.nixpkgs.follows = "nixpkgs";
-    spicetify-nix.inputs.flake-compat.follows = "";
+    spicetify-nix.inputs.flake-compat.follows = "flake-compat";
 
     srvos.url = "github:nix-community/srvos";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
     stylix.url = "github:danth/stylix";
-    stylix.inputs.flake-compat.follows = "";
+    stylix.inputs.flake-compat.follows = "flake-compat";
     stylix.inputs.home-manager.follows = "home-manager";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
 
