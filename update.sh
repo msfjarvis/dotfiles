@@ -18,6 +18,7 @@ declare -a ALL_PACKAGES=(
   patreon-dl
   pidcat
   piv-agent
+  rnnoise-plugin-slim
   rucksack
   when
 )

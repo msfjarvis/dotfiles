@@ -17,7 +17,7 @@
               {
                 "type" = "ladspa";
                 "name" = "rnnoise";
-                "plugin" = "${pkgs.rnnoise-plugin}/lib/ladspa/librnnoise_ladspa.so";
+                "plugin" = "${pkgs.jarvis.rnnoise-plugin-slim}/lib/ladspa/librnnoise_ladspa.so";
                 "label" = "noise_suppressor_stereo";
                 "control" = {
                   "VAD Threshold (%)" = 50.0;

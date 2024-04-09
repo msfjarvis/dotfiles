@@ -90,6 +90,7 @@ in
     patreon-dl = callPackage ./packages/patreon-dl {};
     pidcat = callPackage ./packages/pidcat {};
     piv-agent = callPackage ./packages/piv-agent {};
+    rnnoise-plugin-slim = callPackage ./packages/rnnoise-plugin-slim {};
     rucksack = callPackage ./packages/rucksack {};
     toml-cli = callPackage ./packages/toml-cli {};
     when = callPackage ./packages/when {};
