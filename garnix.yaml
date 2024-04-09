@@ -1,5 +1,6 @@
 builds:
   include:
-    - nixosConfigurations.crusty
-    - nixosConfigurations.ryzenbox
-    - nixosConfigurations.wailord
+    - packages.x86_64-linux.*
+    # - nixosConfigurations.crusty
+    # - nixosConfigurations.ryzenbox
+    # - nixosConfigurations.wailord
