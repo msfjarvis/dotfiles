@@ -52,10 +52,20 @@ in {
         # Allow controlling themes
         user-themes
       ]);
-    environment.gnome.excludePackages = with pkgs; [
-      gnome.geary
-      gnome.totem
-      loupe
+    environment.gnome.excludePackages = with pkgs.gnome; [
+      epiphany
+      geary
+      gnome-calendar
+      gnome-characters
+      gnome-clocks
+      gnome-contacts
+      gnome-maps
+      gnome-music
+      gnome-weather
+      pkgs.loupe
+      simple-scan
+      pkgs.snapshot
+      totem
     ];
 
     stylix.targets = {
