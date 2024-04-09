@@ -91,9 +91,8 @@
   };
 
   inputs = {
-    # nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     # nixpkgs.url = "github:msfjarvis/nixpkgs/nixpkgs-unstable";
-    nixpkgs.url = "github:msfjarvis/nixpkgs/hs/gnome-46";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     systems.url = "github:msfjarvis/flake-systems";
