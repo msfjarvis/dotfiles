@@ -7,6 +7,7 @@
 in {
   options.profiles.server = with lib; {
     enable = mkEnableOption "server profile";
+    tailscaleExitNode = mkEnableOption "Run this machine as a Tailscale exit node";
   };
   config = lib.mkIf cfg.enable {
     # Enable Tailscale
@@ -46,14 +47,18 @@ in {
     # Enable SSH
     services.openssh.enable = true;
 
-    # Allow Tailscale to provision certs to caddy
-    services.tailscale = {
-      permitCertUid = "caddy";
-    };
     services.tailscale-autoconnect = {
       enable = true;
       authkeyFile = "/run/secrets/tsauthkey";
-      extraOptions = ["--accept-risk=lose-ssh" "--ssh"];
+      extraOptions = ["--accept-risk=lose-ssh" "--ssh"] ++ lib.optionals cfg.tailscaleExitNode ["--advertise-exit-node"];
     };
+
+    boot.kernel.sysctl =
+      if cfg.tailscaleExitNode
+      then {
+        "net.ipv4.ip_forward" = 1;
+        "net.ipv6.conf.all.forwarding" = 1;
+      }
+      else {};
   };
 }

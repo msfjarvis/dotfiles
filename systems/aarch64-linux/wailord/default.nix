@@ -16,6 +16,7 @@
   zramSwap.enable = true;
 
   profiles.server.enable = true;
+  profiles.server.tailscaleExitNode = true;
   networking.hostName = "wailord";
 
   time.timeZone = "Asia/Kolkata";
