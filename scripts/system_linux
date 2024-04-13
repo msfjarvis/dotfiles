@@ -45,3 +45,13 @@ function clrclip_x() {
   xclip -selection clipboard blank
   rm blank
 }
+
+function vpnup() {
+  local TAILSCALE_IP
+  TAILSCALE_IP=$(tailscale status --json | jq -r '.Peer[] | select(.HostName == "wailord") | .TailscaleIPs[0]')
+  tailscale up --reset --operator="$USER" --exit-node="${TAILSCALE_IP:?}"
+}
+
+function vpndown() {
+  tailscale up --reset --operator="$USER"
+}
