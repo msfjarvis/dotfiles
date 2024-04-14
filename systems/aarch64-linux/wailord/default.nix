@@ -15,6 +15,8 @@
   };
   zramSwap.enable = true;
 
+  topology.self.name = "netcup server";
+
   profiles.server.enable = true;
   profiles.server.tailscaleExitNode = true;
   networking.hostName = "wailord";

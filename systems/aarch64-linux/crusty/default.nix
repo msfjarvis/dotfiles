@@ -16,6 +16,8 @@
     })
   ];
 
+  topology.self.name = "Raspberry Pi";
+
   hardware.raspberry-pi."4" = {
     apply-overlays-dtmerge.enable = true;
     pwm0.enable = true;

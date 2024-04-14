@@ -7,6 +7,8 @@
     ./hardware-configuration.nix
   ];
 
+  topology.self.name = "Desktop";
+
   profiles.tailscale.enable = true;
   profiles.desktop.enable = true;
   profiles.desktop.android-dev.enable = true;
