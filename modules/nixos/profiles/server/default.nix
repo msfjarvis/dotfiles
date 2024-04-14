@@ -16,6 +16,7 @@ in {
     # Open HTTP(S) ports
     networking = {
       networkmanager.enable = lib.mkDefault true;
+      networkmanager.plugins = lib.mkForce [];
       nftables.enable = true;
       firewall = {
         allowedTCPPorts = [
