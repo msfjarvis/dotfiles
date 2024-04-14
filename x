@@ -46,6 +46,9 @@ case "${ARG}" in
   install)
     ./install.sh
     ;;
+  server-boot)
+    sudo nixos-rebuild boot --flake .#wailord
+    ;;
   server-check)
     nixos-rebuild build --flake .#wailord
     ;;
