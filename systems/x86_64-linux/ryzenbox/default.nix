@@ -54,6 +54,7 @@
     extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
       age
+      jarvis.boop-gtk
       discord
       dracula-icon-theme
       dracula-theme
