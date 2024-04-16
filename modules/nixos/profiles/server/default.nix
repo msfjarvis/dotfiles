@@ -46,6 +46,7 @@ in {
     services.getty.autologinUser = lib.mkForce "msfjarvis";
 
     # Enable SSH
+    programs.mosh.enable = true;
     services.openssh.enable = true;
 
     services.tailscale-autoconnect = {

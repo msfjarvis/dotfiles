@@ -49,7 +49,6 @@
   };
 
   programs.command-not-found.enable = false;
-  programs.mosh.enable = true;
 
   environment.systemPackages = with pkgs; [
     git
@@ -113,9 +112,6 @@
     db = "/var/lib/yarr/database.sqlite";
     package = pkgs.jarvis.yarr-dev;
   };
-
-  services.openssh.enable = true;
-  services.tailscale.enable = true;
 
   system.stateVersion = "23.11";
 
