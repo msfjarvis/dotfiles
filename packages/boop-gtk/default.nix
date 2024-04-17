@@ -1,22 +1,20 @@
-{ lib
-, rustPlatform
-, callPackage
-, fetchFromGitHub
-, pkg-config
-, wrapGAppsHook
-, atk
-, cairo
-, gdk-pixbuf
-, glib
-, gtk3
-, gtksourceview3
-, harfbuzz
-, pango
-, zlib
-, stdenv
-, darwin
+{
+  lib,
+  rustPlatform,
+  callPackage,
+  fetchFromGitHub,
+  pkg-config,
+  wrapGAppsHook,
+  atk,
+  cairo,
+  gdk-pixbuf,
+  glib,
+  gtk3,
+  gtksourceview3,
+  harfbuzz,
+  pango,
+  zlib,
 }:
-
 rustPlatform.buildRustPackage rec {
   pname = "boop-gtk";
   version = "1.8.0";
