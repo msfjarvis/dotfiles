@@ -6,16 +6,16 @@
 in
   rustPlatform.buildRustPackage rec {
     pname = "adx";
-    version = "4.5.3";
+    version = "4.5.4";
 
     src = fetchFromGitHub {
       owner = "msfjarvis";
       repo = "adx";
       rev = "v${version}";
-      hash = "sha256-u+vUt3ACfj+V1MPVb4whI2b7h4IFdEWHxLnuwiGMQ/8=";
+      hash = "sha256-/T3Kd11nHiBVTPyk9C7GztO/+xUK2xfrZLGSJ8E101k=";
     };
 
-    cargoHash = "sha256-4RHJqo9pNnLbaV6RvpGydmTb3EEvzsVh1ThZ1NM5V1E=";
+    cargoHash = "sha256-D8LFtU0xxsY4m58PTvKVJKvsxB8OfA4fDqpNEZG3aEI=";
 
     # Tests are annoying to make work with buildRustPackage
     doCheck = false;
