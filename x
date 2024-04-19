@@ -5,20 +5,24 @@ set -e
 set -u
 set -o pipefail
 
+function nom_build() {
+  local FLAKE
+  FLAKE="${1}"
+  nom build .#nixosConfigurations."${FLAKE}".config.system.build.toplevel
+}
+
 function cleanup_generations() {
-  sudo nix-env --delete-generations --profile /nix/var/nix/profiles/system old
-  nix-env --delete-generations --profile ~/.local/state/nix/profiles/home-manager old
-  sudo /nix/var/nix/profiles/system/bin/switch-to-configuration switch
+  sudo nh clean all
 }
 
 ARG="${1:-nothing}"
 
 case "${ARG}" in
   crusty-check)
-    nixos-rebuild build --flake .#crusty
+    nom_build crusty
     ;;
   crusty-switch)
-    sudo nixos-rebuild switch --flake .#crusty
+    nh os switch .
     cleanup_generations
     ;;
   darwin-check)
@@ -27,33 +31,27 @@ case "${ARG}" in
   darwin-switch)
     darwin-rebuild switch --print-build-logs --flake .
     ;;
-  githook)
-    ln -sf "$(pwd)"/pre-push-hook .git/hooks/pre-push
-    ;;
   home-boot)
-    sudo nixos-rebuild boot --flake .#ryzenbox
+    nh os boot .
     ;;
   home-check)
-    nixos-rebuild build --flake .#ryzenbox
+    nom_build ryzenbox
     ;;
   home-switch)
-    sudo nixos-rebuild switch --flake .#ryzenbox
+    nh os switch .
     cleanup_generations
     ;;
   home-test)
-    sudo nixos-rebuild test --flake .#ryzenbox
-    ;;
-  install)
-    ./install.sh
+    nh os test .
     ;;
   server-boot)
-    sudo nixos-rebuild boot --flake .#wailord
+    nh os boot .
     ;;
   server-check)
-    nixos-rebuild build --flake .#wailord
+    nom_build wailord
     ;;
   server-switch)
-    sudo nixos-rebuild switch --flake .#wailord
+    nh os switch .
     cleanup_generations
     ;;
   *)
