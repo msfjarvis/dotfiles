@@ -17,13 +17,13 @@
     nix-output-monitor
   ];
 
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    flake = "/home/msfjarvis/git-repos/dotfiles";
+  };
+
   nix = {
-    gc = {
-      automatic = true;
-      dates = "daily";
-      options = "--delete-older-than 3d";
-      persistent = true;
-    };
     optimise.automatic = true;
 
     package = pkgs.nixUnstable;
