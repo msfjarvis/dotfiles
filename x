@@ -26,10 +26,11 @@ case "${ARG}" in
     cleanup_generations
     ;;
   darwin-check)
-    darwin-rebuild build --print-build-logs --flake .
+    nom build .#darwinConfigurations.Harshs-MacBook-Pro.system
     ;;
   darwin-switch)
-    darwin-rebuild switch --print-build-logs --flake .
+    nom build .#darwinConfigurations.Harshs-MacBook-Pro.system
+    sudo nix-env -p /nix/var/nix/profiles/system --set ./result
     ;;
   home-boot)
     nh os boot .
