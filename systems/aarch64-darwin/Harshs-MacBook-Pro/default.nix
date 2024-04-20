@@ -18,7 +18,9 @@
     hub
     jarvis.katbin
     maestro
+    nh
     ninja
+    nix-output-monitor
     openssh
     openssl
     jarvis.pidcat
