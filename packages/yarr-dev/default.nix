@@ -5,13 +5,13 @@
 }:
 buildGoModule rec {
   pname = "yarr-dev";
-  version = "unstable-2024-04-05";
+  version = "unstable-2024-04-21";
 
   src = fetchFromGitHub {
     owner = "nkanaev";
     repo = "yarr";
-    rev = "5f606b1c406c6b0d25cb4a6df7955fbb0059f59d";
-    hash = "sha256-1ls6rTr19QnrxsOfLc6e7Q3RNNSSaU11KyFn/6U5ZQI=";
+    rev = "4983e18e23b34126e778c2e56e684f9f8d801f2b";
+    hash = "sha256-98rtTvDV/gmlbdBw94pVekqdMNILnCwcKwblFSWDbC8=";
   };
 
   vendorHash = null;
