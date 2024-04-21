@@ -20,6 +20,7 @@
 
   programs.nh = {
     enable = true;
+    package = pkgs.jarvis.nh;
     clean.enable = true;
     flake = "/home/msfjarvis/git-repos/dotfiles";
   };
