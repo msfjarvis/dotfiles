@@ -13,6 +13,7 @@ function nom_build() {
 
 function cleanup_generations() {
   sudo nh clean all
+  sudo /nix/var/nix/profiles/system/bin/switch-to-configuration switch
 }
 
 ARG="${1:-nothing}"
