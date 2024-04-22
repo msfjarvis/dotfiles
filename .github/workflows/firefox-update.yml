@@ -1,0 +1,16 @@
+name: Update Firefox Nightly
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  update-firefox-nightly:
+    uses: msfjarvis/shared-workflows/.github/workflows/update-flake-lock.yml@main
+    with:
+      inputs: firefox
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
