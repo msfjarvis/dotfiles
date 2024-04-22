@@ -6,17 +6,17 @@
 in
   rustPlatform.buildRustPackage rec {
     pname = "rucksack";
-    version = "1.0.8";
+    version = "1.1.1";
 
     src = fetchFromGitHub {
       owner = "msfjarvis";
       repo = "rucksack";
       rev = "v${version}";
-      hash = "sha256-MpDfvNdD/tdOZ3sIoGRAC8hOFimylvWy/MuxZgZqU7M=";
+      hash = "sha256-oZJGXR33SxvysrKTEz2ds0CwI3cjDYHJC7UWwOiq3g4=";
     };
 
     buildFeatures = lib.optionals stdenv.isLinux ["journald"];
-    cargoHash = "sha256-lv2KcEQqERa+brQXVWwjaeLdqPDTa4ZLVwQZo+jqv0Y=";
+    cargoHash = "sha256-Aijv7Zs/wbksRJsF2uMcLjdFjnxzhFcTAvy9kJi5cVI=";
 
     useNextest = true;
 
