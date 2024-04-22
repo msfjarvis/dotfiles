@@ -149,6 +149,11 @@
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
     flake-utils-plus.inputs.flake-utils.follows = "flake-utils";
 
+    firefox.url = "github:nix-community/flake-firefox-nightly";
+    firefox.inputs.nixpkgs.follows = "nixpkgs";
+    firefox.inputs.cachix.follows = "nixpkgs";
+    firefox.inputs.flake-compat.follows = "flake-compat";
+
     gphotos-cdp.url = "github:msfjarvis/gphotos-cdp";
     gphotos-cdp.inputs.devshell.follows = "devshell";
     gphotos-cdp.inputs.flake-compat.follows = "flake-compat";

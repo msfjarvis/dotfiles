@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  inputs,
   ...
 }: {
   imports = [
@@ -77,7 +78,7 @@
         withX264 = true;
         withX265 = true;
       })
-      (firefox.override {
+      (inputs.firefox.packages.${pkgs.system}.firefox-nightly-bin.override {
         cfg = {
           smartcardSupport = true;
           pipewireSupport = true;
