@@ -21,6 +21,8 @@ in {
           ++ (with pkgs.vscode-marketplace; [
             arrterian.nix-env-selector
             eamodio.gitlens
+            github.copilot
+            github.copilot-chat
             github.vscode-github-actions
             jnoortheen.nix-ide
             k--kato.intellij-idea-keybindings
