@@ -56,8 +56,6 @@
       age
       jarvis.boop-gtk
       discord
-      dracula-icon-theme
-      dracula-theme
       fclones
       (ffmpeg.override {
         buildFfplay = false;
