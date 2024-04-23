@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }: {
   imports = [
@@ -88,6 +89,12 @@
         extraConfig = ''
           root * /var/lib/file_share
           file_server browse
+        '';
+      };
+      "https://toot.msfjarvis.dev" = {
+        extraConfig = ''
+          root * ${inputs.nixpkgs-news.packages.${pkgs.system}.nixpkgs-news}
+          file_server
         '';
       };
     };
