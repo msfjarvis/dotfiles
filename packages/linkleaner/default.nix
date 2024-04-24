@@ -1,11 +1,14 @@
 {
   pkgs,
+  fetchFromGitHub,
+  makeRustPlatform,
+  stdenv,
+  darwin,
   lib,
   inputs,
 }: let
-  inherit (pkgs) fetchFromGitHub makeRustPlatform stdenv darwin;
-  inherit (inputs) rust-manifest;
-  inherit ((import inputs.fenix {inherit pkgs;})) fromManifestFile;
+  inherit (inputs) fenix rust-manifest;
+  inherit ((import fenix {inherit pkgs;})) fromManifestFile;
 
   toolchain = (fromManifestFile rust-manifest).minimalToolchain;
 in
