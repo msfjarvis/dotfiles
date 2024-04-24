@@ -9,14 +9,14 @@
   pkg-config,
   xorg,
 }:
-stdenv.mkDerivation rec {
+stdenv.mkDerivation (finalAttrs: {
   pname = "rnnoise-plugin-slim";
   version = "1.03";
 
   src = fetchFromGitHub {
     owner = "werman";
     repo = "noise-suppression-for-voice";
-    rev = "v${version}";
+    rev = "v${finalAttrs.version}";
     sha256 = "sha256-1DgrpGYF7G5Zr9vbgtKm/Yv0HSdI7LrFYPSGKYNnNDQ=";
   };
 
@@ -46,4 +46,4 @@ stdenv.mkDerivation rec {
     platforms = platforms.linux;
     maintainers = with maintainers; [msfjarvis];
   };
-}
+})

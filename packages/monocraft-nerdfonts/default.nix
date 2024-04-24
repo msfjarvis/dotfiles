@@ -3,11 +3,11 @@
   fetchurl,
   lib,
 }:
-stdenvNoCC.mkDerivation rec {
+stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "monocraft-nerdfonts";
   version = "3.0";
   src = fetchurl {
-    url = "https://github.com/IdreesInc/Monocraft/releases/download/v${version}/Monocraft-nerd-fonts-patched.ttf";
+    url = "https://github.com/IdreesInc/Monocraft/releases/download/v${finalAttrs.version}/Monocraft-nerd-fonts-patched.ttf";
     hash = "sha256-QxMp8UwcRjWySNHWoNeX2sX9teZ4+tCFj+DG41azsXw=";
   };
 
@@ -27,4 +27,4 @@ stdenvNoCC.mkDerivation rec {
     platforms = platforms.all;
     maintainers = with maintainers; [msfjarvis];
   };
-}
+})

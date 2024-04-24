@@ -3,11 +3,11 @@
   fetchurl,
   lib,
 }:
-stdenvNoCC.mkDerivation rec {
+stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "diffuse-bin";
   version = "0.1.0";
   src = fetchurl {
-    url = "https://github.com/JakeWharton/diffuse/releases/download/${version}/diffuse-${version}-binary.jar";
+    url = "https://github.com/JakeWharton/diffuse/releases/download/${finalAttrs.version}/diffuse-${finalAttrs.version}-binary.jar";
     hash = "sha256-YNYZNzxGpdBrgSbB1h4K3Bi3Lyy7kkXvkg0zh+RLhs8=";
   };
 
@@ -30,4 +30,4 @@ stdenvNoCC.mkDerivation rec {
     maintainers = with maintainers; [msfjarvis];
     mainProgram = "diffuse";
   };
-}
+})

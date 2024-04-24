@@ -3,14 +3,14 @@
   fetchFromGitHub,
   lib,
 }:
-stdenvNoCC.mkDerivation rec {
+stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "adb-sync";
   version = "1.0.0";
 
   src = fetchFromGitHub {
     owner = "msfjarvis";
     repo = "adb-sync";
-    rev = "v${version}";
+    rev = "v${finalAttrs.version}";
     hash = "sha256-uoIueSbhml6lHgpI6OH1Y4cNeZzzTBS+PAPHf62xJzY=";
   };
 
@@ -32,4 +32,4 @@ stdenvNoCC.mkDerivation rec {
     maintainers = with maintainers; [msfjarvis];
     mainProgram = "adb-sync";
   };
-}
+})

@@ -4,16 +4,14 @@
   stdenvNoCC,
   lib,
 }:
-stdenvNoCC.mkDerivation rec {
+stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "pidcat";
   version = "2.2.0";
-  # I already fixed it in the source
-  dontPatchShebangs = 1;
 
   src = fetchFromGitHub {
     owner = "msfjarvis";
     repo = "pidcat";
-    rev = "v${version}";
+    rev = "v${finalAttrs.version}";
     hash = "sha256-VOIND2CzWo+LV84C+FbTC0r3FqY7VpBaWn95IKTYFT8=";
   };
 
@@ -35,4 +33,4 @@ stdenvNoCC.mkDerivation rec {
     maintainers = with maintainers; [msfjarvis];
     mainProgram = "pidcat";
   };
-}
+})
