@@ -37,13 +37,6 @@ in {
     sops.gnupg.sshKeyPaths = lib.mkForce [];
     sops.defaultSopsFile = ./../../../../secrets/tailscale.yaml;
     sops.secrets.tsauthkey = {};
-    sops.secrets.yarr-auth = {
-      owner = config.services.yarr.user;
-      inherit (config.services.yarr) group;
-    };
-    sops.secrets.atticd = {
-      sopsFile = ./../../../../secrets/atticd.yaml;
-    };
 
     # Automatically log into my user account
     services.getty.autologinUser = lib.mkForce "msfjarvis";

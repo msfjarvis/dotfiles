@@ -56,6 +56,9 @@
     micro
   ];
 
+  sops.secrets.atticd = {
+    sopsFile = ./../../../secrets/atticd.yaml;
+  };
   services.atticd = {
     enable = true;
     credentialsFile = config.sops.secrets.atticd.path;
@@ -127,6 +130,10 @@
     };
   };
 
+  sops.secrets.yarr-auth = {
+    owner = config.services.yarr.user;
+    inherit (config.services.yarr) group;
+  };
   services.yarr = {
     enable = true;
     addr = "127.0.0.1:8889";
