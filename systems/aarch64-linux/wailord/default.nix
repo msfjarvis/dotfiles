@@ -108,6 +108,12 @@
           reverse_proxy ${toString config.services.yarr.addr}
         '';
       };
+      "https://til.msfjarvis.dev" = {
+        extraConfig = ''
+          root * /var/lib/file_share
+          file_server browse
+        '';
+      };
       "https://wailord.tiger-shark.ts.net" = {
         extraConfig = ''
           root * /var/lib/file_share_internal
