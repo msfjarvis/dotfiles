@@ -39,6 +39,7 @@
         srvos.nixosModules.desktop
       ];
       systems.hosts.wailord.modules = with inputs; [
+        attic.nixosModules.atticd
         disko.nixosModules.disko
         srvos.nixosModules.server
       ];
@@ -118,6 +119,12 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     systems.url = "github:msfjarvis/flake-systems";
+
+    attic.url = "github:zhaofengli/attic";
+    attic.inputs.nixpkgs.follows = "nixpkgs";
+    attic.inputs.nixpkgs-stable.follows = "nixpkgs";
+    attic.inputs.flake-utils.follows = "flake-utils";
+    attic.inputs.flake-compat.follows = "flake-compat";
 
     darwin.url = "github:LnL7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";

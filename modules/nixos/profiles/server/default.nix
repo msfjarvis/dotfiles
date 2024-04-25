@@ -41,6 +41,9 @@ in {
       owner = config.services.yarr.user;
       inherit (config.services.yarr) group;
     };
+    sops.secrets.atticd = {
+      sopsFile = ./../../../../secrets/atticd.yaml;
+    };
 
     # Automatically log into my user account
     services.getty.autologinUser = lib.mkForce "msfjarvis";
