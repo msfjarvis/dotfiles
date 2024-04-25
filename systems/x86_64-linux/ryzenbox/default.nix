@@ -55,6 +55,7 @@
     extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
       age
+      attic
       jarvis.boop-gtk
       discord
       fclones
