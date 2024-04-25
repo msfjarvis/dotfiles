@@ -45,3 +45,11 @@ function nixdiff() {
 function nixb() {
   nix flake update --commit-lock-file
 }
+
+function cache() {
+  local CACHE_PATHS ARCH KERNEL
+  CACHE_PATHS="${1}"
+  ARCH="$(uname -m)"
+  KERNEL="$(uname --kernel-name | tr '[:upper:]' '[:lower:]')"
+  attic push "${ARCH}-${KERNEL}" "${CACHE_PATHS:?}"
+}
