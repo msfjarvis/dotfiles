@@ -87,15 +87,20 @@
   services.caddy = {
     enable = true;
     virtualHosts = {
+      "https://cache.msfjarvis.dev" = {
+        extraConfig = ''
+          reverse_proxy ${config.services.atticd.settings.listen}
+        '';
+      };
       "https://git.msfjarvis.dev" = {
         extraConfig = ''
           reverse_proxy :${toString config.services.gitea.settings.server.HTTP_PORT}
         '';
       };
-      "https://wailord.tiger-shark.ts.net" = {
+      "https://news.msfjarvis.dev" = {
         extraConfig = ''
-          root * /var/lib/file_share_internal
-          file_server browse
+          root * ${inputs.nixpkgs-news.packages.${pkgs.system}.nixpkgs-news}
+          file_server
         '';
       };
       "https://read.msfjarvis.dev" = {
@@ -103,16 +108,10 @@
           reverse_proxy ${toString config.services.yarr.addr}
         '';
       };
-      "https://til.msfjarvis.dev" = {
+      "https://wailord.tiger-shark.ts.net" = {
         extraConfig = ''
-          root * /var/lib/file_share
+          root * /var/lib/file_share_internal
           file_server browse
-        '';
-      };
-      "https://toot.msfjarvis.dev" = {
-        extraConfig = ''
-          root * ${inputs.nixpkgs-news.packages.${pkgs.system}.nixpkgs-news}
-          file_server
         '';
       };
     };
