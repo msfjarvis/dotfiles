@@ -15,6 +15,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     hash = "sha256-VOIND2CzWo+LV84C+FbTC0r3FqY7VpBaWn95IKTYFT8=";
   };
 
+  # Nixpkgs breaks the `env -S` part somehow
+  dontPatchShebangs = true;
+
   nativeBuildInputs = [installShellFiles];
 
   postInstall = ''
