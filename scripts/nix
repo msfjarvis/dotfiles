@@ -47,9 +47,10 @@ function nixb() {
 }
 
 function cache() {
-  local CACHE_PATHS ARCH KERNEL
-  CACHE_PATHS="${1}"
+  declare -a CACHE_PATHS
+  local ARCH KERNEL
+  CACHE_PATHS=("$@")
   ARCH="$(uname -m)"
   KERNEL="$(uname --kernel-name | tr '[:upper:]' '[:lower:]')"
-  attic push "${ARCH}-${KERNEL}" "${CACHE_PATHS:?}"
+  attic push "${ARCH}-${KERNEL}" "${CACHE_PATHS[@]:?}"
 }
