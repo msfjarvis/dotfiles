@@ -114,7 +114,7 @@
       # Minecraft
       mcaselector
       (prismlauncher.override {
-        jdks = [openjdk21];
+        jdks = [openjdk22];
         withWaylandGLFW = config.profiles.desktop.gnome3.enable;
       })
     ];

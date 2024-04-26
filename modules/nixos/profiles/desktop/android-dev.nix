@@ -5,7 +5,7 @@
   ...
 }: let
   cfg = config.profiles.desktop;
-  defaultJdk = pkgs.openjdk21;
+  defaultJdk = pkgs.openjdk22;
   toolchains = [pkgs.openjdk17 defaultJdk];
 in {
   options.profiles.desktop.android-dev = with lib; {
