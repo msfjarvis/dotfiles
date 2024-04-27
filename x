@@ -12,7 +12,8 @@ function nom_build() {
 }
 
 function cleanup_generations() {
-  sudo nh clean all
+  sudo nix-env --delete-generations --profile /nix/var/nix/profiles/system old
+  nix-env --delete-generations --profile ~/.local/state/nix/profiles/home-manager old
   sudo /nix/var/nix/profiles/system/bin/switch-to-configuration switch
 }
 
