@@ -44,14 +44,13 @@
       allowed-users = ["@wheel"];
       auto-optimise-store = true;
       builders-use-substitutes = true;
-      experimental-features = [
+      experimental-features = lib.mkForce [
         "auto-allocate-uids"
         "ca-derivations"
         "cgroups"
         "flakes"
         "nix-command"
         "recursive-nix"
-        "repl-flake"
       ];
       flake-registry = "/etc/nix/registry.json";
       http-connections = 50;
