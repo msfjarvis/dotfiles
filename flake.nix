@@ -215,11 +215,5 @@
 
     wallpaper.url = "https://til.msfjarvis.dev/wallpaper.jpg";
     wallpaper.flake = false;
-    nixpkgs-news = {
-      url = "github:jakehamilton/nixpkgs.news";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.snowfall-lib.follows = "snowfall-lib";
-      inputs.unstable.follows = "nixpkgs";
-    };
   };
 }

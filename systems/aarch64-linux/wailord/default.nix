@@ -97,12 +97,6 @@
           reverse_proxy :${toString config.services.gitea.settings.server.HTTP_PORT}
         '';
       };
-      "https://news.msfjarvis.dev" = {
-        extraConfig = ''
-          root * ${inputs.nixpkgs-news.packages.${pkgs.system}.nixpkgs-news}
-          file_server
-        '';
-      };
       "https://read.msfjarvis.dev" = {
         extraConfig = ''
           reverse_proxy ${toString config.services.yarr.addr}

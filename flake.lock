@@ -714,32 +714,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-news": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "snowfall-lib": [
-          "snowfall-lib"
-        ],
-        "unstable": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1713813574,
-        "narHash": "sha256-/+DqeVTxbbv0jWVZ0mtk5Xnaghb9x80ryc/M/cx5S3k=",
-        "owner": "jakehamilton",
-        "repo": "nixpkgs.news",
-        "rev": "10640d97163a6c472d36396bb187d253d69f3ff1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "jakehamilton",
-        "repo": "nixpkgs.news",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "attic": "attic",
@@ -761,7 +735,6 @@
         "nixos-hardware": "nixos-hardware",
         "nixos-vscode-server": "nixos-vscode-server",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-news": "nixpkgs-news",
         "rust-manifest": "rust-manifest",
         "snowfall-lib": "snowfall-lib",
         "sops-nix": "sops-nix",
