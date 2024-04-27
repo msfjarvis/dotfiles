@@ -15,6 +15,7 @@ in {
     users.users.msfjarvis.packages = with pkgs; [
       jarvis.adb-sync
       jarvis.adx
+      android-tools
       androidStudioPackages.stable
       androidStudioPackages.beta
       androidStudioPackages.canary
