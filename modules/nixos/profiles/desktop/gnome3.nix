@@ -19,8 +19,6 @@ in {
     # Enable Wayland compatibility workarounds within Nixpkgs
     environment.variables.ELECTRON_OZONE_PLATFORM_HINT = "x11";
     environment.variables.NIXOS_OZONE_WL = "1";
-    # Force Qt apps to use x11 due to https://bugreports.qt.io/browse/QTBUG-124450
-    environment.variables.QT_QPA_PLATFORM = "xcb";
 
     environment.systemPackages = with pkgs; [wl-clipboard];
     # Required by the tophat extension
