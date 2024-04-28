@@ -79,6 +79,7 @@
 
       deploy = lib.mkDeploy {inherit (inputs) self;};
       apps.x86_64-linux.default = inputs.deploy-rs.apps.x86_64-linux.default;
+      apps.aarch64-linux.default = inputs.deploy-rs.apps.aarch64-linux.default;
 
       templates.cpp = {
         description = "devshell for a C++ project";
