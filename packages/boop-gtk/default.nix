@@ -69,11 +69,9 @@ rustPlatform.buildRustPackage rec {
     })
   ];
 
-  installPhase = let
-    arch = rust.toRustTarget stdenv.hostPlatform;
-  in ''
+  installPhase = ''
     runHook preInstall
-    install -Dm755 target/${arch}/release/boop-gtk $out/bin/boop-gtk
+    install -Dm755 target/${stdenv.hostPlatform.rust.cargoShortTarget}/release/boop-gtk $out/bin/boop-gtk
     install -Dm644 data/fyi.zoey.Boop-GTK.png $out/share/icons/hicolor/64x64/${pname}.png
     runHook postInstall
   '';
