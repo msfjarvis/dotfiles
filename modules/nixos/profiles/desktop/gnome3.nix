@@ -35,20 +35,16 @@ in {
       ++ (with pkgs.gnomeExtensions; [
         # A nicer application menu for gnome
         arcmenu
-        # Bluetooth panel
-        bluetooth-quick-connect
-        # Clipboard manager (currently broken on NixOS GNOME version)
-        # gnome-clipboard
         # Tweak GNOME settings
         just-perfection
-        # Customize the top bar (Hates immutable systems)
-        # open-bar
+        # Top bar media control widget
+        media-controls
         # POP!_OS shell tiling extensions for Gnome 3
         pop-shell
-        # Display Mullvad state
-        mullvad-indicator
         # System activity indicator
         tophat
+        # Make top bar transparent when nothing is docked to it
+        transparent-top-bar
         # Allows binding apps to specific workspaces
         unmess
         # Allow controlling themes
@@ -88,14 +84,14 @@ in {
           enabled-extensions = [
             "arcmenu@arcmenu.com"
             "auto-move-windows@gnome-shell-extensions.gcampax.github.com"
-            "bluetooth-quick-connect@bjarosze.gmail.com"
             "just-perfection-desktop@just-perfection"
-            "mullvadindicator@pobega.github.com"
+            "mediacontrols@cliffniff.github.com"
             "native-window-placement@gnome-shell-extensions.gcampax.github.com"
             "places-menu@gnome-shell-extensions.gcampax.github.com"
             "pop-shell@system76.com"
             "screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com"
             "tophat@fflewddur.github.io"
+            "transparent-top-bar@zhanghai.me"
             "unmess@ezix.org"
             "user-theme@gnome-shell-extensions.gcampax.github.com"
           ];
