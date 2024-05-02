@@ -13,6 +13,6 @@
   nerdfonts = prev.nerdfonts.override {
     fonts = ["JetBrainsMono"];
   };
-  nix = prev.nixUnstable;
+  nix = prev.nixVersions.git;
   qbittorrent = prev.qbittorrent.override {guiSupport = false;};
 }

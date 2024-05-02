@@ -11,7 +11,7 @@
       options = "--delete-older-than 3d";
     };
 
-    package = pkgs.nixUnstable;
+    package = pkgs.nixVersions.git;
 
     registry = lib.mapAttrs (_: v: {flake = v;}) inputs;
 
