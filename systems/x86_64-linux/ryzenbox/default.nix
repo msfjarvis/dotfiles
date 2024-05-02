@@ -42,11 +42,9 @@
   # Set your time zone.
   time.timeZone = "Asia/Kolkata";
 
-  services.xserver = {
-    libinput = {
-      enable = true;
-      mouse.accelProfile = "flat";
-    };
+  services.libinput = {
+    enable = true;
+    mouse.accelProfile = "flat";
   };
 
   users.users.msfjarvis = {
