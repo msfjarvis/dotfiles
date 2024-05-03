@@ -32,6 +32,7 @@
 
   users = {
     mutableUsers = false;
+    groups.miniflux = {};
     users = {
       msfjarvis = {
         isNormalUser = true;
@@ -41,6 +42,10 @@
           ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEoNv1E/D4IzNIJeJg7Rp49Jizw8aoCLSyFLcUmD1F6K''
           ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP3WC4HKwbfVGnJzhtrWo2Ue0dnaZH1JaPu4X6VILQL6''
         ];
+      };
+      miniflux = {
+        isSystemUser = true;
+        group = config.users.groups.miniflux.name;
       };
       root.openssh.authorizedKeys.keys = [
         ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEoNv1E/D4IzNIJeJg7Rp49Jizw8aoCLSyFLcUmD1F6K''
@@ -99,7 +104,7 @@
       };
       "https://read.msfjarvis.dev" = {
         extraConfig = ''
-          reverse_proxy ${toString config.services.yarr.addr}
+          reverse_proxy ${toString config.services.miniflux.config.LISTEN_ADDR}
         '';
       };
       "https://til.msfjarvis.dev" = {
@@ -129,16 +134,29 @@
     };
   };
 
-  sops.secrets.yarr-auth = {
-    owner = config.services.yarr.user;
-    inherit (config.services.yarr) group;
+  sops.secrets.feed-auth = {
+    owner = config.users.users.miniflux.name;
+    sopsFile = ../../../secrets/feed-auth.env;
+    format = "dotenv";
   };
-  services.yarr = {
+
+  services.miniflux = {
     enable = true;
-    addr = "127.0.0.1:8889";
-    auth-file = config.sops.secrets.yarr-auth.path;
-    db = "/var/lib/yarr/database.sqlite";
-    package = pkgs.jarvis.yarr-dev;
+    createDatabaseLocally = true;
+    config = {
+      LISTEN_ADDR = "127.0.0.1:8889";
+
+      FETCH_ODYSEE_WATCH_TIME = 1;
+      FETCH_YOUTUBE_WATCH_TIME = 1;
+      LOG_DATE_TIME = 1;
+      LOG_FORMAT = "json";
+      WORKER_POOL_SIZE = 2;
+      BASE_URL = "https://read.msfjarvis.dev/";
+      HTTPS = 1;
+      METRICS_COLLECTOR = 1;
+      WEBAUTHN = 1;
+    };
+    adminCredentialsFile = config.sops.secrets.feed-auth.path;
   };
 
   system.stateVersion = "23.11";
