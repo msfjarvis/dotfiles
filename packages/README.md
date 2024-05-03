@@ -28,7 +28,6 @@ NixOS packages for personal use.
 - [toml-cli] : Simple CLI for editing and querying TOML files
 - [twt] : Multipurpose tool to extract metadata from a user's tweets
 - [when] : A CLI tool to deal with timezones
-- [yarr] : yet another rss reader
 
 [adb-sync]: https://msfjarvis.dev/g/adb-sync
 [adbtuifm]: https://github.com/darkhz/adbtuifm
@@ -59,4 +58,3 @@ NixOS packages for personal use.
 [toml-cli]: https://github.com/gnprice/toml-cli
 [twt]: https://msfjarvis.dev/g/twt
 [when]: https://github.com/mitsuhiko/when
-[yarr]: https://github.com/nkanaev/yarr
