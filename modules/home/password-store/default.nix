@@ -26,7 +26,7 @@ in {
     };
     services.git-sync = {
       enable = true;
-      repositories = lib.mkDefault {
+      repositories = {
         password-store = {
           path = config.programs.password-store.settings.PASSWORD_STORE_DIR;
           uri = "git+ssh://msfjarvis@github.com:msfjarvis/pass-store.git";
