@@ -91,6 +91,11 @@
 
   services.caddy = {
     enable = true;
+    globalConfig = ''
+      servers {
+        metrics
+      }
+    '';
     virtualHosts = {
       "https://cache.msfjarvis.dev" = {
         extraConfig = ''
@@ -100,6 +105,11 @@
       "https://git.msfjarvis.dev" = {
         extraConfig = ''
           reverse_proxy :${toString config.services.gitea.settings.server.HTTP_PORT}
+        '';
+      };
+      "https://${config.services.grafana.domain}" = {
+        extraConfig = ''
+          reverse_proxy ${config.services.grafana.addr}:${toString config.services.grafana.port}
         '';
       };
       "https://read.msfjarvis.dev" = {
@@ -134,6 +144,13 @@
     };
   };
 
+  services.grafana = {
+    enable = true;
+    domain = "news.msfjarvis.dev";
+    port = 2342;
+    addr = "127.0.0.1";
+  };
+
   sops.secrets.feed-auth = {
     owner = config.users.users.miniflux.name;
     sopsFile = ../../../secrets/feed-auth.env;
@@ -157,6 +174,44 @@
       WEBAUTHN = 1;
     };
     adminCredentialsFile = config.sops.secrets.feed-auth.path;
+  };
+
+  services.prometheus = {
+    enable = true;
+    port = 9001;
+    exporters = {
+      node = {
+        enable = true;
+        enabledCollectors = ["systemd"];
+        port = 9002;
+      };
+    };
+    scrapeConfigs = [
+      {
+        job_name = "wailord";
+        static_configs = [
+          {
+            targets = ["127.0.0.1:${toString config.services.prometheus.exporters.node.port}"];
+          }
+        ];
+      }
+      {
+        job_name = "caddy";
+        static_configs = [
+          {
+            targets = ["127.0.0.1:2019"];
+          }
+        ];
+      }
+      {
+        job_name = "miniflux";
+        static_configs = [
+          {
+            targets = [config.services.miniflux.config.LISTEN_ADDR];
+          }
+        ];
+      }
+    ];
   };
 
   system.stateVersion = "23.11";
