@@ -1,6 +1,6 @@
-{
+{lib, ...}: {
   programs.bat = {
     enable = true;
-    config = {theme = "zenburn";};
+    config = {theme = lib.mkDefault "zenburn";};
   };
 }
