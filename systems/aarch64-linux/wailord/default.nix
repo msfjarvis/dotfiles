@@ -146,7 +146,7 @@
 
   services.grafana = {
     enable = true;
-    domain = "news.msfjarvis.dev";
+    domain = "grafana.msfjarvis.dev";
     port = 2342;
     addr = "127.0.0.1";
   };
