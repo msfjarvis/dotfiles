@@ -67,9 +67,9 @@ in {
         "[json]"."editor.defaultFormatter" = "vscode.json-language-features";
         "nix.enableLanguageServer" = true;
         "nix.serverPath" = "${lib.getExe pkgs.nil}";
-        "nix.formatterPath" = "${lib.getExe pkgs.alejandra}";
+        "nix.formatterPath" = "${lib.getExe pkgs.nixfmt-rfc-style}";
         "nix.serverSettings".nil.formatting.command = [
-          "${lib.getExe pkgs.alejandra}"
+          "${lib.getExe pkgs.nixfmt-rfc-style}"
         ];
         "gitlens.currentLine.enabled" = false;
         "gitlens.statusBar.reduceFlicker" = false;

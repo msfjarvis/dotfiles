@@ -62,7 +62,7 @@
         formatter = channels.nixpkgs.writeShellApplication {
           name = "format";
           runtimeInputs = with channels.nixpkgs; [
-            alejandra
+            nixfmt-rfc-style
             deadnix
             shfmt
             statix
@@ -72,7 +72,7 @@
             shfmt --write --simplify --language-dialect bash --indent 2 --case-indent --space-redirects .;
             deadnix --edit
             statix check . || statix fix .
-            alejandra --quiet .
+            nixfmt .
           '';
         };
       };

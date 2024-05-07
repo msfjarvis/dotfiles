@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    alejandra
+    nixfmt-rfc-style
     aria2
     byobu
     cachix
