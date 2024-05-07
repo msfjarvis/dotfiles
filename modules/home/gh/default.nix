@@ -6,7 +6,9 @@
       git_protocol = "https";
       editor = "micro";
       prompt = "enabled";
-      aliases = {co = "pr checkout";};
+      aliases = {
+        co = "pr checkout";
+      };
     };
   };
 }

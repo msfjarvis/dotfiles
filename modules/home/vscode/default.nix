@@ -3,9 +3,11 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.profiles.vscode;
-in {
+in
+{
   options.profiles.vscode = with lib; {
     enable = mkEnableOption "Enable VSCode editor";
   };
@@ -15,23 +17,23 @@ in {
       enableUpdateCheck = false;
       enableExtensionUpdateCheck = false;
       mutableExtensionsDir = false;
-      extensions =
-        lib.mkDefault
-        ((lib.optionals pkgs.stdenv.isLinux [pkgs.vscode-extensions.rust-lang.rust-analyzer-nightly])
-          ++ (with pkgs.vscode-marketplace; [
-            arrterian.nix-env-selector
-            eamodio.gitlens
-            github.copilot
-            github.copilot-chat
-            github.vscode-github-actions
-            jnoortheen.nix-ide
-            k--kato.intellij-idea-keybindings
-            ms-vscode-remote.remote-ssh
-            ms-vscode-remote.remote-ssh-edit
-            mtdmali.daybreak-theme
-            oderwat.indent-rainbow
-            tamasfe.even-better-toml
-          ]));
+      extensions = lib.mkDefault (
+        (lib.optionals pkgs.stdenv.isLinux [ pkgs.vscode-extensions.rust-lang.rust-analyzer-nightly ])
+        ++ (with pkgs.vscode-marketplace; [
+          arrterian.nix-env-selector
+          eamodio.gitlens
+          github.copilot
+          github.copilot-chat
+          github.vscode-github-actions
+          jnoortheen.nix-ide
+          k--kato.intellij-idea-keybindings
+          ms-vscode-remote.remote-ssh
+          ms-vscode-remote.remote-ssh-edit
+          mtdmali.daybreak-theme
+          oderwat.indent-rainbow
+          tamasfe.even-better-toml
+        ])
+      );
       userSettings = {
         "files.exclude" = {
           "**/.classpath" = true;
@@ -68,9 +70,7 @@ in {
         "nix.enableLanguageServer" = true;
         "nix.serverPath" = "${lib.getExe pkgs.nil}";
         "nix.formatterPath" = "${lib.getExe pkgs.nixfmt-rfc-style}";
-        "nix.serverSettings".nil.formatting.command = [
-          "${lib.getExe pkgs.nixfmt-rfc-style}"
-        ];
+        "nix.serverSettings".nil.formatting.command = [ "${lib.getExe pkgs.nixfmt-rfc-style}" ];
         "gitlens.currentLine.enabled" = false;
         "gitlens.statusBar.reduceFlicker" = false;
         "gitlens.advanced.fileHistoryFollowsRenames" = true;

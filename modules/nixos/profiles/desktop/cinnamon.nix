@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.profiles.desktop;
-in {
+in
+{
   options.profiles.desktop.cinnamon = with lib; {
     enable = mkEnableOption "Setup desktop with Cinnamon DE";
   };
@@ -20,21 +22,23 @@ in {
       };
     };
     programs.geary.enable = false;
-    environment.cinnamon.excludePackages = with pkgs;
-    with pkgs.cinnamon; [
-      sound-theme-freedesktop
-      nixos-artwork.wallpapers.simple-dark-gray
-      mint-artwork
-      mint-cursor-themes
-      mint-l-icons
-      mint-l-theme
-      mint-themes
-      mint-x-icons
-      mint-y-icons
-      hexchat
-    ];
+    environment.cinnamon.excludePackages =
+      with pkgs;
+      with pkgs.cinnamon;
+      [
+        sound-theme-freedesktop
+        nixos-artwork.wallpapers.simple-dark-gray
+        mint-artwork
+        mint-cursor-themes
+        mint-l-icons
+        mint-l-theme
+        mint-themes
+        mint-x-icons
+        mint-y-icons
+        hexchat
+      ];
 
-    environment.systemPackages = with pkgs; [xclip];
+    environment.systemPackages = with pkgs; [ xclip ];
 
     stylix.targets.lightdm.enable = true;
 

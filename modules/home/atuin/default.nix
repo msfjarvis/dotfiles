@@ -2,7 +2,7 @@
   programs.atuin = {
     enable = true;
     enableBashIntegration = true;
-    flags = ["--disable-up-arrow"];
+    flags = [ "--disable-up-arrow" ];
     settings = {
       auto_sync = true;
       max_preview_height = 2;

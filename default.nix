@@ -1,16 +1,9 @@
 let
-  inherit
-    (builtins)
-    currentSystem
-    fromJSON
-    readFile
-    ;
+  inherit (builtins) currentSystem fromJSON readFile;
 
   # Copied from https://github.com/edolstra/flake-compat/pull/44/files
-  fetchurl = {
-    url,
-    sha256,
-  }:
+  fetchurl =
+    { url, sha256 }:
     derivation {
       builder = "builtin:fetchurl";
 
@@ -41,19 +34,19 @@ let
       ];
 
       # To make "nix-prefetch-url" work.
-      urls = [url];
+      urls = [ url ];
     };
 
-  getFlake = name:
-    with (fromJSON (readFile ./flake.lock)).nodes.${name}.locked; {
+  getFlake =
+    name: with (fromJSON (readFile ./flake.lock)).nodes.${name}.locked; {
       inherit rev;
       outPath = fetchTarball {
         url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
         sha256 = narHash;
       };
     };
-  getRawFlake = name:
-    with (fromJSON (readFile ./flake.lock)).nodes.${name}.locked; {
+  getRawFlake =
+    name: with (fromJSON (readFile ./flake.lock)).nodes.${name}.locked; {
       inherit rev;
       outPath = fetchurl {
         inherit url;
@@ -61,37 +54,47 @@ let
       };
     };
 in
-  {
-    system ? currentSystem,
-    pkgs ? import (getFlake "nixpkgs") {localSystem = {inherit system;};},
-    fenix ? getFlake "fenix",
-    rust-manifest ? getRawFlake "rust-manifest",
-  }: let
-    callPackage = pkg: pkgs.callPackage pkg;
-  in {
-    adb-sync = callPackage ./packages/adb-sync {};
-    adbtuifm = callPackage ./packages/adbtuifm {};
-    adx = callPackage ./packages/adx {};
-    clipboard-substitutor = callPackage ./packages/clipboard-substitutor {};
-    diffuse-bin = callPackage ./packages/diffuse-bin {};
-    gdrive = callPackage ./packages/gdrive {};
-    gitice = callPackage ./packages/gitice {
-      inputs = {inherit fenix rust-manifest;};
+{
+  system ? currentSystem,
+  pkgs ? import (getFlake "nixpkgs") {
+    localSystem = {
+      inherit system;
     };
-    gitout = callPackage ./packages/gitout {};
-    gphotos-cdp = callPackage ./packages/gphotos-cdp {};
-    hcctl = callPackage ./packages/hcctl {};
-    healthchecks-monitor = callPackage ./packages/healthchecks-monitor {};
-    katbin = callPackage ./packages/katbin {};
-    linkleaner = callPackage ./packages/linkleaner {
-      inputs = {inherit fenix rust-manifest;};
+  },
+  fenix ? getFlake "fenix",
+  rust-manifest ? getRawFlake "rust-manifest",
+}:
+let
+  callPackage = pkg: pkgs.callPackage pkg;
+in
+{
+  adb-sync = callPackage ./packages/adb-sync { };
+  adbtuifm = callPackage ./packages/adbtuifm { };
+  adx = callPackage ./packages/adx { };
+  clipboard-substitutor = callPackage ./packages/clipboard-substitutor { };
+  diffuse-bin = callPackage ./packages/diffuse-bin { };
+  gdrive = callPackage ./packages/gdrive { };
+  gitice = callPackage ./packages/gitice {
+    inputs = {
+      inherit fenix rust-manifest;
     };
-    monocraft-nerdfonts = callPackage ./packages/monocraft-nerdfonts {};
-    patreon-dl = callPackage ./packages/patreon-dl {};
-    pidcat = callPackage ./packages/pidcat {};
-    piv-agent = callPackage ./packages/piv-agent {};
-    rnnoise-plugin-slim = callPackage ./packages/rnnoise-plugin-slim {};
-    rucksack = callPackage ./packages/rucksack {};
-    toml-cli = callPackage ./packages/toml-cli {};
-    when = callPackage ./packages/when {};
-  }
+  };
+  gitout = callPackage ./packages/gitout { };
+  gphotos-cdp = callPackage ./packages/gphotos-cdp { };
+  hcctl = callPackage ./packages/hcctl { };
+  healthchecks-monitor = callPackage ./packages/healthchecks-monitor { };
+  katbin = callPackage ./packages/katbin { };
+  linkleaner = callPackage ./packages/linkleaner {
+    inputs = {
+      inherit fenix rust-manifest;
+    };
+  };
+  monocraft-nerdfonts = callPackage ./packages/monocraft-nerdfonts { };
+  patreon-dl = callPackage ./packages/patreon-dl { };
+  pidcat = callPackage ./packages/pidcat { };
+  piv-agent = callPackage ./packages/piv-agent { };
+  rnnoise-plugin-slim = callPackage ./packages/rnnoise-plugin-slim { };
+  rucksack = callPackage ./packages/rucksack { };
+  toml-cli = callPackage ./packages/toml-cli { };
+  when = callPackage ./packages/when { };
+}

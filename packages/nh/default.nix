@@ -18,15 +18,13 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-cGrrv0fDD0H2tvUNyNK9u5Qyd6JUXCztDIPmcmtZ7w4=";
 
-  buildInputs = lib.optionals stdenv.isDarwin [
-    darwin.apple_sdk.frameworks.Security
-  ];
+  buildInputs = lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.Security ];
 
   meta = with lib; {
     description = "Yet another nix cli helper";
     homepage = "https://github.com/viperML/nh";
     license = licenses.eupl12;
-    maintainers = with maintainers; [msfjarvis];
+    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "nh";
   };
 }

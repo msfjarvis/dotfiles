@@ -4,7 +4,8 @@
   config,
   inputs,
   ...
-}: {
+}:
+{
   documentation = {
     enable = true;
     doc.enable = false;
@@ -30,7 +31,7 @@
 
     package = pkgs.nixVersions.git;
 
-    registry = lib.mapAttrs (_: v: {flake = v;}) inputs;
+    registry = lib.mapAttrs (_: v: { flake = v; }) inputs;
 
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
@@ -41,7 +42,7 @@
     '';
     settings = {
       accept-flake-config = true;
-      allowed-users = ["@wheel"];
+      allowed-users = [ "@wheel" ];
       auto-optimise-store = true;
       builders-use-substitutes = true;
       experimental-features = lib.mkForce [
@@ -59,7 +60,10 @@
       cores = 6;
       max-jobs = 12;
       sandbox = true;
-      trusted-users = ["root" "@wheel"];
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
       use-cgroups = true;
       warn-dirty = false;
 

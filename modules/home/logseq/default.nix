@@ -3,14 +3,16 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.profiles.logseq;
-in {
+in
+{
   options.profiles.logseq = with lib; {
     enable = mkEnableOption "Install logseq and configure git synchronization";
   };
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [logseq];
+    home.packages = with pkgs; [ logseq ];
     services.git-sync = {
       enable = true;
       repositories = {

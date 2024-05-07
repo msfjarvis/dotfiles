@@ -4,17 +4,18 @@
   makeRustPlatform,
   lib,
   inputs,
-}: let
+}:
+let
   inherit (inputs) fenix rust-manifest;
-  inherit ((import fenix {inherit pkgs;})) fromManifestFile;
+  inherit ((import fenix { inherit pkgs; })) fromManifestFile;
 
   toolchain = (fromManifestFile rust-manifest).minimalToolchain;
 in
-  (makeRustPlatform {
-    cargo = toolchain;
-    rustc = toolchain;
-  })
-  .buildRustPackage rec {
+(makeRustPlatform {
+  cargo = toolchain;
+  rustc = toolchain;
+}).buildRustPackage
+  rec {
     pname = "gitice";
     version = "2.0.4";
 
@@ -32,8 +33,11 @@ in
     meta = with lib; {
       description = "Snapshot your local git repositories for easy restoration";
       homepage = "https://github.com/msfjarvis/gitice";
-      license = with licenses; [asl20 mit];
-      maintainers = with maintainers; [msfjarvis];
+      license = with licenses; [
+        asl20
+        mit
+      ];
+      maintainers = with maintainers; [ msfjarvis ];
       mainProgram = "gitice";
     };
   }

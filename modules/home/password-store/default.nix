@@ -3,16 +3,18 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.profiles.pass;
-in {
+in
+{
   options.profiles.pass = with lib; {
     enable = mkEnableOption "Enable password-store and related stuff";
   };
   config = lib.mkIf cfg.enable {
     programs.browserpass = {
       enable = true;
-      browsers = ["firefox"];
+      browsers = [ "firefox" ];
     };
     programs.password-store = {
       enable = true;
@@ -21,8 +23,14 @@ in {
           x11Support = false;
           waylandSupport = true;
           dmenuSupport = false;
-        })
-        .withExtensions (exts: with exts; [pass-genphrase pass-otp pass-update]);
+        }).withExtensions
+          (
+            exts: with exts; [
+              pass-genphrase
+              pass-otp
+              pass-update
+            ]
+          );
     };
     services.git-sync = {
       enable = true;

@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.profiles.wezterm;
-in {
+in
+{
   options.profiles.wezterm = with lib; {
     enable = mkEnableOption "Enable wezterm, a GPU-accelerated terminal emulator";
   };

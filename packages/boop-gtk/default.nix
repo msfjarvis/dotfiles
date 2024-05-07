@@ -33,7 +33,7 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-RVuXuNg+wlI1dS2sJ2X11fk9K1IAiVPNFHZM+/lS1+U=";
 
-  RUSTY_V8_ARCHIVE = callPackage ./librusty_v8.nix {};
+  RUSTY_V8_ARCHIVE = callPackage ./librusty_v8.nix { };
 
   nativeBuildInputs = [
     copyDesktopItems
@@ -42,7 +42,16 @@ rustPlatform.buildRustPackage rec {
     wrapGAppsHook
   ];
 
-  buildInputs = [atk cairo gdk-pixbuf gtk3 gtksourceview3 harfbuzz pango zlib];
+  buildInputs = [
+    atk
+    cairo
+    gdk-pixbuf
+    gtk3
+    gtksourceview3
+    harfbuzz
+    pango
+    zlib
+  ];
 
   doCheck = false;
 
@@ -64,8 +73,7 @@ rustPlatform.buildRustPackage rec {
       ];
       terminal = false;
       type = "Application";
-      mimeTypes = [
-      ];
+      mimeTypes = [ ];
     })
   ];
 
@@ -80,7 +88,7 @@ rustPlatform.buildRustPackage rec {
     description = "Port of @IvanMathy's Boop to GTK, a scriptable scratchpad for developers";
     homepage = "https://github.com/msfjarvis/boop-gtk";
     license = licenses.mit;
-    maintainers = with maintainers; [msfjarvis];
+    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "boop-gtk";
     platforms = platforms.linux;
   };

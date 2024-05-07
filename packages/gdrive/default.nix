@@ -16,13 +16,16 @@ buildGoModule rec {
 
   vendorHash = "sha256-WibiLYMeWR63Q8lu287jeczT0n0/lh6T8PfOH7eJh8Q=";
 
-  ldflags = ["-s" "-w"];
+  ldflags = [
+    "-s"
+    "-w"
+  ];
 
   meta = with lib; {
     description = "Google Drive CLI Client";
     homepage = "https://github.com/msfjarvis/gdrive";
     license = licenses.mit;
-    maintainers = with maintainers; [msfjarvis];
+    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "gdrive";
   };
 }

@@ -16,19 +16,22 @@ buildGoModule rec {
     hash = "sha256-aukcnubhB8kbAl22eeFKzLPvVcYdgcEQ1gy3n6KWG00=";
   };
 
-  buildInputs = [pcsclite];
+  buildInputs = [ pcsclite ];
 
-  nativeBuildInputs = [pkg-config];
+  nativeBuildInputs = [ pkg-config ];
 
   vendorHash = "sha256-1d6EKEvo4XNDXRtbdnKkqyF9y0LPPHWKu9X/wYnbmas=";
 
-  ldflags = ["-s" "-w"];
+  ldflags = [
+    "-s"
+    "-w"
+  ];
 
   meta = with lib; {
     description = "An SSH and GPG agent which you can use with your PIV hardware security device (e.g. a Yubikey";
     homepage = "https://github.com/smlx/piv-agent";
     license = licenses.asl20;
-    maintainers = with maintainers; [msfjarvis];
+    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "piv-agent";
   };
 }

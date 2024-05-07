@@ -4,9 +4,11 @@
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.services.gphotos-cdp;
-in {
+in
+{
   options.services.gphotos-cdp = {
     enable = mkEnableOption {
       description = mdDoc "Whether to enable the gphotos-cdp backup service.";
@@ -34,14 +36,20 @@ in {
       description = mdDoc "Group account under which gphotos-cdp runs.";
     };
 
-    package = mkPackageOptionMD pkgs.jarvis "gphotos-cdp" {};
+    package = mkPackageOptionMD pkgs.jarvis "gphotos-cdp" { };
   };
 
   config = mkIf cfg.enable {
     systemd.services.gphotos-cdp = {
-      wantedBy = ["default.target"];
-      after = ["fs.service" "networking.target"];
-      wants = ["fs.service" "networking.target"];
+      wantedBy = [ "default.target" ];
+      after = [
+        "fs.service"
+        "networking.target"
+      ];
+      wants = [
+        "fs.service"
+        "networking.target"
+      ];
 
       serviceConfig = {
         User = cfg.user;
@@ -49,7 +57,12 @@ in {
         Restart = "on-failure";
         RestartSec = "30s";
         Type = "oneshot";
-        Environment = "PATH=${makeBinPath [pkgs.coreutils pkgs.google-chrome]}";
+        Environment = "PATH=${
+          makeBinPath [
+            pkgs.coreutils
+            pkgs.google-chrome
+          ]
+        }";
       };
       script = ''
         exec env ${getExe cfg.package} -v -dev -headless -dldir ${cfg.dldir} -session-dir ${cfg.session-dir}
@@ -59,8 +72,8 @@ in {
     systemd.timers.gphotos-cdp = {
       description = "Run gphotos-cdp every day";
       timerConfig.OnBootSec = "15min";
-      wantedBy = ["timers.target"];
-      partOf = ["gphotos-cdp.service"];
+      wantedBy = [ "timers.target" ];
+      partOf = [ "gphotos-cdp.service" ];
     };
 
     users.users = mkIf (cfg.user == "gphotos-cdp") {
@@ -73,7 +86,10 @@ in {
       };
     };
 
-    users.groups =
-      mkIf (cfg.group == "gphotos-cdp") {gphotos-cdp = {gid = null;};};
+    users.groups = mkIf (cfg.group == "gphotos-cdp") {
+      gphotos-cdp = {
+        gid = null;
+      };
+    };
   };
 }

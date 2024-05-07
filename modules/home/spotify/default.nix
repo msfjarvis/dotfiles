@@ -4,10 +4,12 @@
   system,
   inputs,
   ...
-}: let
+}:
+let
   spicePkgs = inputs.spicetify-nix.legacyPackages.${system};
   cfg = config.profiles.spotify;
-in {
+in
+{
   options.profiles.spotify = with lib; {
     enable = mkEnableOption "Enable Spotify";
   };
@@ -16,9 +18,7 @@ in {
       enable = true;
       theme = spicePkgs.themes.dracula;
 
-      enabledCustomApps = with spicePkgs.apps; [
-        lyrics-plus
-      ];
+      enabledCustomApps = with spicePkgs.apps; [ lyrics-plus ];
 
       enabledExtensions = with spicePkgs.extensions; [
         fullAppDisplay

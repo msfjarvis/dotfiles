@@ -16,9 +16,7 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-A83pzY+c4kz59tHEc6hRd0Zp8Uj96KdrenD9RDWwavQ=";
   };
 
-  buildInputs =
-    lib.optionals stdenv.isDarwin
-    [darwin.apple_sdk.frameworks.Security];
+  buildInputs = lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.Security ];
 
   buildAndTestSubdir = "monitor";
 
@@ -29,8 +27,11 @@ rustPlatform.buildRustPackage rec {
   meta = with lib; {
     description = "CLI tool to run shell jobs and report status to https://healthchecks.io";
     homepage = "https://msfjarvis.dev/g/healthchecks-rs";
-    license = with licenses; [asl20 mit];
-    maintainers = with maintainers; [msfjarvis];
+    license = with licenses; [
+      asl20
+      mit
+    ];
+    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "healthchecks-monitor";
   };
 }

@@ -4,19 +4,21 @@
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.services.rucksack;
-  settingsFormat = pkgs.formats.toml {};
-  settingsFile = settingsFormat.generate "rucksack.toml" {inherit (cfg) sources target file_filter;};
-in {
+  settingsFormat = pkgs.formats.toml { };
+  settingsFile = settingsFormat.generate "rucksack.toml" {
+    inherit (cfg) sources target file_filter;
+  };
+in
+{
   options.services.rucksack = {
-    enable = mkEnableOption {
-      description = mdDoc "Whether to enable the rucksack daemon.";
-    };
+    enable = mkEnableOption { description = mdDoc "Whether to enable the rucksack daemon."; };
 
     sources = mkOption {
       type = types.listOf types.str;
-      default = [];
+      default = [ ];
       description = mdDoc "Directories to watch and pull files from";
     };
 
@@ -32,7 +34,7 @@ in {
       description = mdDoc "Shell glob to filter files against to be eligible for moving";
     };
 
-    package = mkPackageOptionMD pkgs.jarvis "rucksack" {};
+    package = mkPackageOptionMD pkgs.jarvis "rucksack" { };
 
     user = mkOption {
       type = types.str;
@@ -49,9 +51,9 @@ in {
 
   config = mkIf cfg.enable {
     systemd.services.rucksack = {
-      wantedBy = ["default.target"];
-      after = ["fs.service"];
-      wants = ["fs.service"];
+      wantedBy = [ "default.target" ];
+      after = [ "fs.service" ];
+      wants = [ "fs.service" ];
 
       serviceConfig = {
         User = cfg.user;
@@ -76,7 +78,10 @@ in {
       };
     };
 
-    users.groups =
-      mkIf (cfg.group == "rucksack") {rucksack = {gid = null;};};
+    users.groups = mkIf (cfg.group == "rucksack") {
+      rucksack = {
+        gid = null;
+      };
+    };
   };
 }

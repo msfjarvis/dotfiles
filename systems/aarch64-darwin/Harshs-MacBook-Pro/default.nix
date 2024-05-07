@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   users.users.msfjarvis = {
     name = "msfjarvis";
     home = "/Users/msfjarvis";

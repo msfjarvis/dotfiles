@@ -3,17 +3,15 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ./sd-image.nix
   ];
   # Pi kernel does not build all modules so this allows some to be missing.
   nixpkgs.overlays = [
-    (_: super: {
-      makeModulesClosure = x:
-        super.makeModulesClosure (x // {allowMissing = true;});
-    })
+    (_: super: { makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; }); })
   ];
 
   topology.self.name = "Raspberry Pi";
@@ -38,7 +36,7 @@
     users = {
       msfjarvis = {
         isNormalUser = true;
-        extraGroups = ["wheel"];
+        extraGroups = [ "wheel" ];
         hashedPassword = ''$y$j9T$g8JL/B98ogQF/ryvwHpWe.$jyKMeotGz/o8Pje.nejKzPMiYOxtn//33OzMu5bAHm2'';
       };
       root.openssh.authorizedKeys.keys = [
@@ -85,17 +83,15 @@
     enable = true;
     user = "root";
     group = "root";
-    sources = [
-      "/var/lib/qbittorrent/downloads"
-    ];
+    sources = [ "/var/lib/qbittorrent/downloads" ];
     target = "/media/.omg";
     file_filter = "*.mp4";
   };
 
   systemd.services.disable-wlan-powersave = {
     description = "Disable WiFi power save";
-    after = ["sys-subsystem-net-devices-wlan0.device"];
-    wantedBy = ["sys-subsystem-net-devices-wlan0.device"];
+    after = [ "sys-subsystem-net-devices-wlan0.device" ];
+    wantedBy = [ "sys-subsystem-net-devices-wlan0.device" ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = "yes";

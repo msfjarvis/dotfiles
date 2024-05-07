@@ -4,14 +4,14 @@
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.services.piv-agent;
-in {
+in
+{
   options.services.piv-agent = {
-    enable = mkEnableOption {
-      description = mdDoc "Whether to configure the piv-agent service";
-    };
-    package = mkPackageOptionMD pkgs.jarvis "piv-agent" {};
+    enable = mkEnableOption { description = mdDoc "Whether to configure the piv-agent service"; };
+    package = mkPackageOptionMD pkgs.jarvis "piv-agent" { };
   };
 
   config = mkIf cfg.enable {
@@ -32,18 +32,22 @@ in {
         PrivateDevices = true;
         PrivateUsers = true;
         IPAddressDeny = "any";
-        RestrictAddressFamilies = ["AF_UNIX"];
+        RestrictAddressFamilies = [ "AF_UNIX" ];
         RestrictNamespaces = true;
         RestrictRealtime = true;
         RestrictSUIDSGID = true;
         LockPersonality = true;
-        CapabilityBoundingSet = [""];
-        SystemCallFilter = ["@system-service" "~@privileged" "@resources"];
+        CapabilityBoundingSet = [ "" ];
+        SystemCallFilter = [
+          "@system-service"
+          "~@privileged"
+          "@resources"
+        ];
         SystemCallErrorNumber = "EPERM";
         SystemCallArchitectures = "native";
         NoNewPrivileges = true;
         KeyringMode = "private";
-        UMask = 0177;
+        UMask = 177;
         RuntimeDirectory = "piv-agent";
       };
     };

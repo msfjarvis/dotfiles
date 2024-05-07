@@ -2,12 +2,10 @@
   config,
   lib,
   pkgs,
-  inputs,
   ...
-}: {
-  imports = [
-    ./hardware-configuration.nix
-  ];
+}:
+{
+  imports = [ ./hardware-configuration.nix ];
 
   boot = {
     # Only enable for first installation
@@ -32,11 +30,11 @@
 
   users = {
     mutableUsers = false;
-    groups.miniflux = {};
+    groups.miniflux = { };
     users = {
       msfjarvis = {
         isNormalUser = true;
-        extraGroups = ["wheel"];
+        extraGroups = [ "wheel" ];
         hashedPassword = ''$y$j9T$g8JL/B98ogQF/ryvwHpWe.$jyKMeotGz/o8Pje.nejKzPMiYOxtn//33OzMu5bAHm2'';
         openssh.authorizedKeys.keys = [
           ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEoNv1E/D4IzNIJeJg7Rp49Jizw8aoCLSyFLcUmD1F6K''
@@ -182,7 +180,7 @@
     exporters = {
       node = {
         enable = true;
-        enabledCollectors = ["systemd"];
+        enabledCollectors = [ "systemd" ];
         port = 9002;
       };
     };
@@ -190,26 +188,16 @@
       {
         job_name = "wailord";
         static_configs = [
-          {
-            targets = ["127.0.0.1:${toString config.services.prometheus.exporters.node.port}"];
-          }
+          { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ]; }
         ];
       }
       {
         job_name = "caddy";
-        static_configs = [
-          {
-            targets = ["127.0.0.1:2019"];
-          }
-        ];
+        static_configs = [ { targets = [ "127.0.0.1:2019" ]; } ];
       }
       {
         job_name = "miniflux";
-        static_configs = [
-          {
-            targets = [config.services.miniflux.config.LISTEN_ADDR];
-          }
-        ];
+        static_configs = [ { targets = [ config.services.miniflux.config.LISTEN_ADDR ]; } ];
       }
     ];
   };

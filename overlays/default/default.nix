@@ -1,4 +1,5 @@
-{inputs, ...}: _final: prev: {
+{ inputs, ... }:
+_final: prev: {
   attic = inputs.attic.packages.${prev.system}.attic-client;
   # Force the use of the JDK we're using everywhere else
   jdk = prev.openjdk22;
@@ -15,12 +16,10 @@
   });
   # Silence warnings about existing files
   megatools = prev.megatools.overrideAttrs (_: {
-    patches = [./megatools.patch];
+    patches = [ ./megatools.patch ];
   });
   # Set default fonts
-  nerdfonts = prev.nerdfonts.override {
-    fonts = ["JetBrainsMono"];
-  };
+  nerdfonts = prev.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
   nix = prev.nixVersions.git;
-  qbittorrent = prev.qbittorrent.override {guiSupport = false;};
+  qbittorrent = prev.qbittorrent.override { guiSupport = false; };
 }

@@ -3,9 +3,11 @@
   lib,
   host,
   ...
-}: let
+}:
+let
   isWorkMachine = host == "Harshs-MacBook-Pro";
-in {
+in
+{
   programs.git = {
     enable = true;
     ignores = [
@@ -18,11 +20,9 @@ in {
       ".DS_Store"
     ];
     includes =
-      [
-        {path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig";}
-      ]
+      [ { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig"; } ]
       ++ lib.optionals isWorkMachine [
-        {path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig-work";}
+        { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig-work"; }
       ];
   };
 }

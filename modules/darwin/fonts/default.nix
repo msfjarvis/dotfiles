@@ -1,6 +1,7 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   fonts = {
     fontDir.enable = true;
-    fonts = [pkgs.nerdfonts];
+    fonts = [ pkgs.nerdfonts ];
   };
 }

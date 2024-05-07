@@ -4,13 +4,13 @@
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.services.gitout;
-in {
+in
+{
   options.services.gitout = {
-    enable = mkEnableOption {
-      description = mdDoc "Whether to enable the gitout backup service.";
-    };
+    enable = mkEnableOption { description = mdDoc "Whether to enable the gitout backup service."; };
 
     config-file = mkOption {
       type = types.path;
@@ -34,14 +34,20 @@ in {
       description = mdDoc "Group account under which gitout runs.";
     };
 
-    package = mkPackageOptionMD pkgs.jarvis "gitout" {};
+    package = mkPackageOptionMD pkgs.jarvis "gitout" { };
   };
 
   config = mkIf cfg.enable {
     systemd.services.gitout = {
-      wantedBy = ["default.target"];
-      after = ["fs.service" "networking.target"];
-      wants = ["fs.service" "networking.target"];
+      wantedBy = [ "default.target" ];
+      after = [
+        "fs.service"
+        "networking.target"
+      ];
+      wants = [
+        "fs.service"
+        "networking.target"
+      ];
 
       serviceConfig = {
         User = cfg.user;
@@ -58,8 +64,8 @@ in {
     systemd.timers.gitout = {
       description = "Run gitout every hour";
       timerConfig.OnCalendar = "hourly";
-      wantedBy = ["timers.target"];
-      partOf = ["gitout.service"];
+      wantedBy = [ "timers.target" ];
+      partOf = [ "gitout.service" ];
     };
 
     users.users = mkIf (cfg.user == "gitout") {
@@ -72,7 +78,10 @@ in {
       };
     };
 
-    users.groups =
-      mkIf (cfg.group == "gitout") {gitout = {gid = null;};};
+    users.groups = mkIf (cfg.group == "gitout") {
+      gitout = {
+        gid = null;
+      };
+    };
   };
 }

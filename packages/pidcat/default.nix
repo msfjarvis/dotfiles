@@ -18,7 +18,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   # Nixpkgs breaks the `env -S` part somehow
   dontPatchShebangs = true;
 
-  nativeBuildInputs = [installShellFiles];
+  nativeBuildInputs = [ installShellFiles ];
 
   postInstall = ''
     installShellCompletion --bash bash_completion.d/pidcat
@@ -33,7 +33,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     description = "pidcat - colored logcat script";
     license = licenses.asl20;
     platforms = platforms.all;
-    maintainers = with maintainers; [msfjarvis];
+    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "pidcat";
   };
 })

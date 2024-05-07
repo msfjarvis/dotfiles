@@ -20,16 +20,17 @@ rustPlatform.buildRustPackage rec {
 
   doCheck = false;
 
-  buildInputs = lib.optionals stdenv.isDarwin [
-    darwin.apple_sdk.frameworks.Security
-  ];
+  buildInputs = lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.Security ];
 
   meta = with lib; {
     description = "A CLI for katbin";
     homepage = "https://github.com/SphericalKat/katbin-cli";
     changelog = "https://github.com/SphericalKat/katbin-cli/blob/${src.rev}/CHANGELOG.md";
-    license = with licenses; [asl20 mit];
-    maintainers = with maintainers; [msfjarvis];
+    license = with licenses; [
+      asl20
+      mit
+    ];
+    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "katbin";
   };
 }

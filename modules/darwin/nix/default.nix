@@ -4,7 +4,8 @@
   config,
   inputs,
   ...
-}: {
+}:
+{
   nix = {
     gc = {
       automatic = true;
@@ -13,7 +14,7 @@
 
     package = pkgs.nixVersions.git;
 
-    registry = lib.mapAttrs (_: v: {flake = v;}) inputs;
+    registry = lib.mapAttrs (_: v: { flake = v; }) inputs;
 
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
@@ -24,7 +25,7 @@
     '';
     settings = {
       accept-flake-config = true;
-      allowed-users = ["msfjarvis"];
+      allowed-users = [ "msfjarvis" ];
       auto-optimise-store = true;
       builders-use-substitutes = true;
       experimental-features = lib.mkForce [
@@ -41,7 +42,10 @@
       log-lines = 20;
       max-jobs = "auto";
       sandbox = true;
-      trusted-users = ["root" "msfjarvis"];
+      trusted-users = [
+        "root"
+        "msfjarvis"
+      ];
       warn-dirty = false;
 
       trusted-substituters = [

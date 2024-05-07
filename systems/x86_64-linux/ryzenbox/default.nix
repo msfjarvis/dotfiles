@@ -3,10 +3,9 @@
   config,
   inputs,
   ...
-}: {
-  imports = [
-    ./hardware-configuration.nix
-  ];
+}:
+{
+  imports = [ ./hardware-configuration.nix ];
 
   topology.self.name = "Desktop";
 
@@ -50,7 +49,10 @@
   users.users.msfjarvis = {
     isNormalUser = true;
     description = "Harsh Shandilya";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
       age
       attic
@@ -99,7 +101,14 @@
       nix-update
       jarvis.patreon-dl
       jarvis.pidcat
-      (python312.withPackages (ps: with ps; [beautifulsoup4 black requests virtualenv]))
+      (python312.withPackages (
+        ps: with ps; [
+          beautifulsoup4
+          black
+          requests
+          virtualenv
+        ]
+      ))
       scrcpy
       smile
       sshfs
@@ -112,7 +121,7 @@
       # Minecraft
       mcaselector
       (prismlauncher.override {
-        jdks = [openjdk22];
+        jdks = [ openjdk22 ];
         withWaylandGLFW = config.profiles.desktop.gnome3.enable;
       })
     ];
@@ -141,25 +150,27 @@
     group = "users";
   };
 
-  services.rucksack = let
-    inherit (config.users.users.msfjarvis) home;
-    minecraft = name: "${home}/Games/PrismLauncher/instances/${name}/.minecraft/screenshots/";
-  in {
-    enable = true;
-    sources = [
-      (minecraft "1.21")
-      (minecraft "ACLU SMP Modpack")
-      (minecraft "Fabulously.Optimized.1.20.2")
-      (minecraft "Fabulously.Optimized.MC.1.17.1")
-      (minecraft "Fabulously.Optimized.MC.1.20.1")
-      (minecraft "Pokemon Elysium")
-      "${home}/Games/PrismLauncher/instances/Vault Hunters 3/minecraft/screenshots/"
-    ];
-    target = "/mediahell/screenshots/";
-    file_filter = "*.png";
-    user = "msfjarvis";
-    group = "users";
-  };
+  services.rucksack =
+    let
+      inherit (config.users.users.msfjarvis) home;
+      minecraft = name: "${home}/Games/PrismLauncher/instances/${name}/.minecraft/screenshots/";
+    in
+    {
+      enable = true;
+      sources = [
+        (minecraft "1.21")
+        (minecraft "ACLU SMP Modpack")
+        (minecraft "Fabulously.Optimized.1.20.2")
+        (minecraft "Fabulously.Optimized.MC.1.17.1")
+        (minecraft "Fabulously.Optimized.MC.1.20.1")
+        (minecraft "Pokemon Elysium")
+        "${home}/Games/PrismLauncher/instances/Vault Hunters 3/minecraft/screenshots/"
+      ];
+      target = "/mediahell/screenshots/";
+      file_filter = "*.png";
+      user = "msfjarvis";
+      group = "users";
+    };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

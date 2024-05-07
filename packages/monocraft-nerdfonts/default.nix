@@ -25,6 +25,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     homepage = "https://github.com/IdreesInc/Monocraft";
     license = licenses.ofl;
     platforms = platforms.all;
-    maintainers = with maintainers; [msfjarvis];
+    maintainers = with maintainers; [ msfjarvis ];
   };
 })

@@ -1,17 +1,19 @@
 {
-  outputs = inputs: let
-    lib = inputs.snowfall-lib.mkLib {
-      inherit inputs;
-      src = ./.;
-      snowfall = {
-        namespace = "jarvis";
-        meta = {
-          name = "msfjarvis-nix-configs";
-          title = "msfjarvis' Nix configurations";
+  outputs =
+    inputs:
+    let
+      lib = inputs.snowfall-lib.mkLib {
+        inherit inputs;
+        src = ./.;
+        snowfall = {
+          namespace = "jarvis";
+          meta = {
+            name = "msfjarvis-nix-configs";
+            title = "msfjarvis' Nix configurations";
+          };
         };
       };
-    };
-  in
+    in
     lib.mkFlake {
       inherit inputs;
       src = ./.;
@@ -35,9 +37,7 @@
         nixos-hardware.nixosModules.raspberry-pi-4
         srvos.nixosModules.server
       ];
-      systems.hosts.ryzenbox.modules = with inputs; [
-        srvos.nixosModules.desktop
-      ];
+      systems.hosts.ryzenbox.modules = with inputs; [ srvos.nixosModules.desktop ];
       systems.hosts.wailord.modules = with inputs; [
         attic.nixosModules.atticd
         disko.nixosModules.disko
@@ -54,7 +54,7 @@
         topology = import inputs.nix-topology {
           pkgs = channels.nixpkgs;
           modules = [
-            {inherit (inputs.self) nixosConfigurations;}
+            { inherit (inputs.self) nixosConfigurations; }
             ./topology.nix
           ];
         };
@@ -77,7 +77,7 @@
         };
       };
 
-      deploy = lib.mkDeploy {inherit (inputs) self;};
+      deploy = lib.mkDeploy { inherit (inputs) self; };
       apps.x86_64-linux.default = inputs.deploy-rs.apps.x86_64-linux.default;
       apps.aarch64-linux.default = inputs.deploy-rs.apps.aarch64-linux.default;
 

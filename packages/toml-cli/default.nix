@@ -24,7 +24,7 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/gnprice/toml-cli";
     changelog = "https://github.com/gnprice/toml-cli/blob/${src.rev}/CHANGELOG.md";
     license = licenses.mit;
-    maintainers = with maintainers; [msfjarvis];
+    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "toml-cli";
   };
 }

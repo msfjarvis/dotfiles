@@ -16,13 +16,16 @@ buildGoModule {
 
   vendorHash = "sha256-6Y8SmgH5SFvkw3YQh8SlSktJsctped8as1FCdIc4FQc=";
 
-  ldflags = ["-s" "-w"];
+  ldflags = [
+    "-s"
+    "-w"
+  ];
 
   meta = with lib; {
     description = "A Patreon Image Downloader";
     homepage = "https://github.com/PrivateGER/patreon-dl";
     license = licenses.unlicense;
-    maintainers = with maintainers; [msfjarvis];
+    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "patreon-dl";
   };
 }

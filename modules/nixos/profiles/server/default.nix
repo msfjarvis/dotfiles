@@ -1,10 +1,8 @@
-{
-  config,
-  lib,
-  ...
-}: let
+{ config, lib, ... }:
+let
   cfg = config.profiles.server;
-in {
+in
+{
   options.profiles.server = with lib; {
     enable = mkEnableOption "server profile";
     tailscaleExitNode = mkEnableOption "Run this machine as a Tailscale exit node";
@@ -16,7 +14,7 @@ in {
     # Open HTTP(S) ports
     networking = {
       networkmanager.enable = lib.mkDefault true;
-      networkmanager.plugins = lib.mkForce [];
+      networkmanager.plugins = lib.mkForce [ ];
       nftables.enable = true;
       firewall = {
         allowedTCPPorts = [
@@ -33,10 +31,10 @@ in {
     };
 
     # Enable SOPS, force it to be age-only
-    sops.age.sshKeyPaths = lib.mkForce ["/etc/ssh/ssh_host_ed25519_key"];
-    sops.gnupg.sshKeyPaths = lib.mkForce [];
+    sops.age.sshKeyPaths = lib.mkForce [ "/etc/ssh/ssh_host_ed25519_key" ];
+    sops.gnupg.sshKeyPaths = lib.mkForce [ ];
     sops.defaultSopsFile = ./../../../../secrets/tailscale.yaml;
-    sops.secrets.tsauthkey = {};
+    sops.secrets.tsauthkey = { };
 
     # Automatically log into my user account
     services.getty.autologinUser = lib.mkForce "msfjarvis";
@@ -48,15 +46,19 @@ in {
     services.tailscale-autoconnect = {
       enable = true;
       authkeyFile = "/run/secrets/tsauthkey";
-      extraOptions = ["--accept-risk=lose-ssh" "--ssh"] ++ lib.optionals cfg.tailscaleExitNode ["--advertise-exit-node"];
+      extraOptions = [
+        "--accept-risk=lose-ssh"
+        "--ssh"
+      ] ++ lib.optionals cfg.tailscaleExitNode [ "--advertise-exit-node" ];
     };
 
     boot.kernel.sysctl =
-      if cfg.tailscaleExitNode
-      then {
-        "net.ipv4.ip_forward" = 1;
-        "net.ipv6.conf.all.forwarding" = 1;
-      }
-      else {};
+      if cfg.tailscaleExitNode then
+        {
+          "net.ipv4.ip_forward" = 1;
+          "net.ipv6.conf.all.forwarding" = 1;
+        }
+      else
+        { };
   };
 }

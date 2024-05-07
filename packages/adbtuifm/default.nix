@@ -16,13 +16,16 @@ buildGoModule rec {
 
   vendorHash = "sha256-voVoowjM90OGWXF4REEevO8XEzT7azRYiDay4bnGBks=";
 
-  ldflags = ["-s" "-w"];
+  ldflags = [
+    "-s"
+    "-w"
+  ];
 
   meta = with lib; {
     description = "A TUI File Manager for ADB";
     homepage = "https://github.com/darkhz/adbtuifm";
     license = licenses.mit;
-    maintainers = with maintainers; [msfjarvis];
+    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "adbtuifm";
   };
 }

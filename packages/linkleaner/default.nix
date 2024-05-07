@@ -6,17 +6,18 @@
   darwin,
   lib,
   inputs,
-}: let
+}:
+let
   inherit (inputs) fenix rust-manifest;
-  inherit ((import fenix {inherit pkgs;})) fromManifestFile;
+  inherit ((import fenix { inherit pkgs; })) fromManifestFile;
 
   toolchain = (fromManifestFile rust-manifest).minimalToolchain;
 in
-  (makeRustPlatform {
-    cargo = toolchain;
-    rustc = toolchain;
-  })
-  .buildRustPackage rec {
+(makeRustPlatform {
+  cargo = toolchain;
+  rustc = toolchain;
+}).buildRustPackage
+  rec {
     pname = "linkleaner";
     version = "2.0.0";
 
@@ -48,7 +49,7 @@ in
       homepage = "https://msfjarvis.dev/g/linkleaner/";
       license = licenses.mit;
       platforms = platforms.all;
-      maintainers = with maintainers; [msfjarvis];
+      maintainers = with maintainers; [ msfjarvis ];
       mainProgram = "linkleaner";
     };
   }

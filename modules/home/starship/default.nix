@@ -1,10 +1,8 @@
-{
-  config,
-  lib,
-  ...
-}: let
+{ config, lib, ... }:
+let
   cfg = config.profiles.starship;
-in {
+in
+{
   options.profiles.starship = with lib; {
     server = mkEnableOption "Customize starship for servers";
   };
@@ -13,10 +11,7 @@ in {
       enable = true;
       enableBashIntegration = true;
       settings = {
-        format =
-          if cfg.server
-          then "$directory$git_branch$git_state$git_status➜ "
-          else "$all";
+        format = if cfg.server then "$directory$git_branch$git_state$git_status➜ " else "$all";
         add_newline = false;
         aws.disabled = true;
         azure.disabled = true;

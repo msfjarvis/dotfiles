@@ -4,10 +4,17 @@
   pkgs,
   inputs,
   ...
-}: let
+}:
+let
   cfg = config.profiles.desktop;
-in {
-  imports = [./android-dev.nix ./cinnamon.nix ./gnome3.nix ./noise-cancelation.nix];
+in
+{
+  imports = [
+    ./android-dev.nix
+    ./cinnamon.nix
+    ./gnome3.nix
+    ./noise-cancelation.nix
+  ];
   options.profiles.desktop = with lib; {
     enable = mkEnableOption "Profile for desktop machines (i.e. not servers)";
   };
@@ -47,7 +54,9 @@ in {
       printing.enable = lib.mkDefault true;
     };
 
-    hardware = {bluetooth.enable = lib.mkDefault true;};
+    hardware = {
+      bluetooth.enable = lib.mkDefault true;
+    };
 
     # Theming
     stylix = {

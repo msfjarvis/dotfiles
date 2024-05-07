@@ -1,19 +1,17 @@
+{ config, pkgs, ... }:
+let
+  initScript = if pkgs.stdenv.isDarwin then "darwin-init" else "shell-init";
+in
 {
-  config,
-  pkgs,
-  ...
-}: let
-  initScript =
-    if pkgs.stdenv.isDarwin
-    then "darwin-init"
-    else "shell-init";
-in {
   programs.bash = {
     enable = true;
     historySize = 1000;
     historyFile = "${config.home.homeDirectory}/.bash_history";
     historyFileSize = 10000;
-    historyControl = ["ignorespace" "erasedups"];
+    historyControl = [
+      "ignorespace"
+      "erasedups"
+    ];
     shellOptions = [
       # Append to history file rather than replacing it.
       "histappend"

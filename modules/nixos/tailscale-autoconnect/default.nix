@@ -4,9 +4,11 @@
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.services.tailscale-autoconnect;
-in {
+in
+{
   options.services.tailscale-autoconnect = {
     enable = mkEnableOption {
       description = mdDoc "Whether to configure the Tailscale autoconnect service";
@@ -20,8 +22,8 @@ in {
     extraOptions = mkOption {
       type = types.listOf types.str;
       description = mdDoc "List of extra flags passed to the `tailscale` invocation";
-      default = [];
-      example = ["--ssh"];
+      default = [ ];
+      example = [ "--ssh" ];
     };
   };
 
@@ -30,9 +32,15 @@ in {
       description = "Automatic connection to Tailscale";
 
       # make sure tailscale is running before trying to connect to tailscale
-      after = ["network-pre.target" "tailscale.service"];
-      wants = ["network-pre.target" "tailscale.service"];
-      wantedBy = ["multi-user.target"];
+      after = [
+        "network-pre.target"
+        "tailscale.service"
+      ];
+      wants = [
+        "network-pre.target"
+        "tailscale.service"
+      ];
+      wantedBy = [ "multi-user.target" ];
 
       # set this service as a oneshot job
       serviceConfig.Type = "oneshot";

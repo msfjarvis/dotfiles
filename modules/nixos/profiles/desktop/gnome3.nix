@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.profiles.desktop;
-in {
+in
+{
   options.profiles.desktop.gnome3 = with lib; {
     enable = mkEnableOption "Setup desktop with Gnome DE";
   };
@@ -20,11 +22,12 @@ in {
     environment.variables.ELECTRON_OZONE_PLATFORM_HINT = "x11";
     environment.variables.NIXOS_OZONE_WL = "1";
 
-    environment.systemPackages = with pkgs; [wl-clipboard];
+    environment.systemPackages = with pkgs; [ wl-clipboard ];
     # Required by the tophat extension
-    services.xserver.desktopManager.gnome.sessionPath = with pkgs; [libgtop];
+    services.xserver.desktopManager.gnome.sessionPath = with pkgs; [ libgtop ];
 
-    users.users.msfjarvis.packages = with pkgs;
+    users.users.msfjarvis.packages =
+      with pkgs;
       [
         # Old GNOME picture viewer, better than the current default
         gnome.eog
@@ -102,10 +105,7 @@ in {
         };
         "org/gnome/desktop/interface" = with config.stylix.fonts; {
           # Taken from Stylix
-          color-scheme =
-            if config.stylix.polarity == "dark"
-            then "prefer-dark"
-            else "default";
+          color-scheme = if config.stylix.polarity == "dark" then "prefer-dark" else "default";
           font-name = "${sansSerif.name} ${toString sizes.applications}";
           document-font-name = "${serif.name} ${toString (sizes.applications - 1)}";
           monospace-font-name = "${monospace.name} ${toString sizes.terminal}";
