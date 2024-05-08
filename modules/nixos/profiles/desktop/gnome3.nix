@@ -69,9 +69,13 @@ in
 
     stylix.targets = {
       gnome.enable = true;
+      gtk.enable = true;
     };
 
     snowfallorg.users.msfjarvis.home.config = {
+      stylix.targets = {
+        gtk.enable = true;
+      };
       gtk = {
         enable = true;
       };
