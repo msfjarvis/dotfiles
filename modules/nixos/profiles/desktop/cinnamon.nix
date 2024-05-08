@@ -45,12 +45,11 @@ in
     snowfallorg.users.msfjarvis.home.config = {
       dconf.settings = {
         "org/cinnamon/theme" = {
-          name = "Dracula";
+          name = "Catppuccin Mocha";
         };
         "org/cinnamon/desktop/interface" = with config.stylix.fonts; {
           cursor-theme = "Bibata-Modern-Classic";
           font-name = "${sansSerif.name} ${toString sizes.applications}";
-          icon-theme = "Dracula";
         };
         "org/cinnamon/desktop/background" = {
           color-shading-type = "solid";
@@ -59,9 +58,8 @@ in
           picture-uri-dark = "file://${config.stylix.image}";
         };
         "org/gnome/desktop/interface" = with config.stylix.fonts; {
-          theme = "Dracula";
+          theme = "Catppuccin Mocha";
           cursor-theme = "Bibata-Modern-Classic";
-          icon-theme = "Dracula";
           font-name = "${sansSerif.name} ${toString sizes.applications}";
           document-font-name = "${serif.name} ${toString (sizes.applications - 1)}";
           monospace-font-name = "${monospace.name} ${toString sizes.terminal}";
@@ -80,7 +78,7 @@ in
           volume-sound-enabled = false;
         };
       };
-      home.sessionVariables.GTK_THEME = "Dracula";
+      home.sessionVariables.GTK_THEME = "Catppuccin Mocha";
       programs.gnome-terminal = {
         enable = true;
         showMenubar = false;
@@ -88,7 +86,7 @@ in
         profile = {
           "b1dcc9dd-5262-4d8d-a863-c897e6d979b9" = {
             default = true;
-            visibleName = "Dracula";
+            visibleName = "Catppuccin Mocha";
             colors = with config.lib.stylix.colors.withHashtag; {
               foregroundColor = base05;
               backgroundColor = base00;

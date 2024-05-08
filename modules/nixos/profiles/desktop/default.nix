@@ -62,7 +62,7 @@ in
     stylix = {
       autoEnable = false;
       image = inputs.wallpaper;
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
       cursor = {
         package = pkgs.bibata-cursors;
         name = "Bibata-Modern-Classic";

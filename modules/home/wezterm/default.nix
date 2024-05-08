@@ -20,8 +20,8 @@ in
         local wezterm = require 'wezterm'
         local config = wezterm.config_builder()
 
-        -- Use the in-built Darcula theme
-        config.color_scheme = 'Dracula (Official)'
+        -- Use the in-built 'Catppuccin Mocha' theme
+        config.color_scheme = 'catppuccin-mocha'
 
         -- Disable Wayland since it causes the program to not launch
         config.enable_wayland = false
