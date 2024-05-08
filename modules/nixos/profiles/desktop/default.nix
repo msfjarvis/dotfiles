@@ -96,6 +96,7 @@ in
       polarity = "dark";
       targets = {
         console.enable = true;
+        nixos-icons.enable = true;
       };
     };
 
