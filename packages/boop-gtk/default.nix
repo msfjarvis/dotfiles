@@ -88,7 +88,6 @@ rustPlatform.buildRustPackage rec {
     description = "Port of @IvanMathy's Boop to GTK, a scriptable scratchpad for developers";
     homepage = "https://github.com/msfjarvis/boop-gtk";
     license = licenses.mit;
-    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "boop-gtk";
     platforms = platforms.linux;
   };

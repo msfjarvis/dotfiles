@@ -41,7 +41,6 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/msfjarvis/gitout";
     changelog = "https://github.com/msfjarvis/gitout/blob/${src.rev}/CHANGELOG.md";
     license = licenses.mit;
-    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "gitout";
   };
 }

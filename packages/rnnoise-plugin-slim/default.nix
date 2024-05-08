@@ -47,6 +47,5 @@ stdenv.mkDerivation (finalAttrs: {
     homepage = "https://github.com/werman/noise-suppression-for-voice";
     license = licenses.gpl3;
     platforms = platforms.linux;
-    maintainers = with maintainers; [ msfjarvis ];
   };
 })

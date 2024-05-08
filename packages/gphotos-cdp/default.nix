@@ -25,7 +25,6 @@ buildGoModule rec {
     description = "This program uses the Chrome DevTools Protocol to drive a Chrome session that downloads your photos stored in Google Photos";
     homepage = "https://github.com/msfjarvis/gphotos-cdp";
     license = licenses.asl20;
-    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "gphotos-cdp";
   };
 }

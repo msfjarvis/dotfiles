@@ -24,7 +24,6 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/mitsuhiko/when";
     changelog = "https://github.com/mitsuhiko/when/blob/${src.rev}/CHANGELOG.md";
     license = licenses.asl20;
-    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "when";
   };
 }

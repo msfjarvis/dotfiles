@@ -25,7 +25,6 @@ buildGoModule {
     description = "A Patreon Image Downloader";
     homepage = "https://github.com/PrivateGER/patreon-dl";
     license = licenses.unlicense;
-    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "patreon-dl";
   };
 }

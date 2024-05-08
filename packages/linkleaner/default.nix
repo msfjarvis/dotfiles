@@ -49,7 +49,6 @@ in
       homepage = "https://msfjarvis.dev/g/linkleaner/";
       license = licenses.mit;
       platforms = platforms.all;
-      maintainers = with maintainers; [ msfjarvis ];
       mainProgram = "linkleaner";
     };
   }

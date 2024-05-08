@@ -31,7 +31,6 @@ rustPlatform.buildRustPackage rec {
       asl20
       mit
     ];
-    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "healthchecks-monitor";
   };
 }

@@ -29,7 +29,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     description = "adb-sync is a tool to synchronize files between a PC and an Android device using the ADB (Android Debug Bridge)";
     license = licenses.asl20;
     platforms = platforms.all;
-    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "adb-sync";
   };
 })

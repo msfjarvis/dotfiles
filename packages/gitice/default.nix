@@ -37,7 +37,6 @@ in
         asl20
         mit
       ];
-      maintainers = with maintainers; [ msfjarvis ];
       mainProgram = "gitice";
     };
   }

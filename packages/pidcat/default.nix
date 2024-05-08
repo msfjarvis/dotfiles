@@ -33,7 +33,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     description = "pidcat - colored logcat script";
     license = licenses.asl20;
     platforms = platforms.all;
-    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "pidcat";
   };
 })

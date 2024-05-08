@@ -24,7 +24,6 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/bluskript/nix-inspect";
     changelog = "https://github.com/bluskript/nix-inspect/blob/${src.rev}/CHANGELOG.md";
     license = licenses.mit;
-    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "nix-inspect";
   };
 }

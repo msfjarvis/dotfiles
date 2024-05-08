@@ -24,7 +24,6 @@ rustPlatform.buildRustPackage rec {
     description = "Yet another nix cli helper";
     homepage = "https://github.com/viperML/nh";
     license = licenses.eupl12;
-    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "nh";
   };
 }

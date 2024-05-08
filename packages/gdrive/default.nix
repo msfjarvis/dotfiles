@@ -25,7 +25,6 @@ buildGoModule rec {
     description = "Google Drive CLI Client";
     homepage = "https://github.com/msfjarvis/gdrive";
     license = licenses.mit;
-    maintainers = with maintainers; [ msfjarvis ];
     mainProgram = "gdrive";
   };
 }
