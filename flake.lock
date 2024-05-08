@@ -144,6 +144,26 @@
         "type": "github"
       }
     },
+    "catppuccin-vscode": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1715012932,
+        "narHash": "sha256-7k52tSu8Y8U3Dlt7og4bdMBtE41looy8uxBxHvpvEWs=",
+        "owner": "catppuccin",
+        "repo": "vscode",
+        "rev": "454290d104a3ea7f2cfceae114e9716b36e9b490",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "vscode",
+        "type": "github"
+      }
+    },
     "crane": {
       "inputs": {
         "nixpkgs": [
@@ -684,6 +704,7 @@
     "root": {
       "inputs": {
         "attic": "attic",
+        "catppuccin-vscode": "catppuccin-vscode",
         "darwin": "darwin",
         "deploy-rs": "deploy-rs",
         "devshell": "devshell",

@@ -21,6 +21,7 @@ in
         (lib.optionals pkgs.stdenv.isLinux [ pkgs.vscode-extensions.rust-lang.rust-analyzer-nightly ])
         ++ (with pkgs.vscode-marketplace; [
           arrterian.nix-env-selector
+          catppuccin.catppuccin-vsc-icons
           eamodio.gitlens
           github.copilot
           github.copilot-chat
@@ -29,9 +30,19 @@ in
           k--kato.intellij-idea-keybindings
           ms-vscode-remote.remote-ssh
           ms-vscode-remote.remote-ssh-edit
-          mtdmali.daybreak-theme
           oderwat.indent-rainbow
           tamasfe.even-better-toml
+          (pkgs.catppuccin-vsc.override {
+            accent = "mauve";
+            boldKeywords = true;
+            italicComments = true;
+            italicKeywords = true;
+            extraBordersEnabled = false;
+            workbenchMode = "default";
+            bracketMode = "rainbow";
+            colorOverrides = { };
+            customUIColors = { };
+          })
         ])
       );
       userSettings = {
@@ -79,7 +90,8 @@ in
         "terminal.integrated.fontSize" = 16;
         "terminal.integrated.minimumContrastRatio" = 1;
         "window.titleBarStyle" = "custom";
-        "workbench.colorTheme" = "Daybreak";
+        "workbench.colorTheme" = "Catppuccin Mocha";
+        "workbench.iconTheme" = "catppuccin-mocha";
         "workbench.startupEditor" = "newUntitledFile";
         "workbench.statusBar.visible" = true;
       };

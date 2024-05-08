@@ -45,6 +45,7 @@
       ];
 
       overlays = with inputs; [
+        catppuccin-vscode.overlays.default
         fenix.overlays.default
         gphotos-cdp.overlays.default
         nix-topology.overlays.default
@@ -126,6 +127,9 @@
     attic.inputs.nixpkgs-stable.follows = "nixpkgs";
     attic.inputs.flake-utils.follows = "flake-utils";
     attic.inputs.flake-compat.follows = "flake-compat";
+
+    catppuccin-vscode.url = "github:catppuccin/vscode";
+    catppuccin-vscode.inputs.nixpkgs.follows = "nixpkgs";
 
     darwin.url = "github:LnL7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
