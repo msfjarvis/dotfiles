@@ -6,12 +6,13 @@
 }:
 let
   cfg = config.profiles.wezterm;
+  inherit (lib) mkEnableOption mkIf;
 in
 {
-  options.profiles.wezterm = with lib; {
+  options.profiles.wezterm = {
     enable = mkEnableOption "Enable wezterm, a GPU-accelerated terminal emulator";
   };
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     programs.wezterm = {
       enable = true;
       package = pkgs.wezterm;

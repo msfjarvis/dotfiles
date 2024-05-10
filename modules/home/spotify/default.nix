@@ -8,12 +8,13 @@
 let
   spicePkgs = inputs.spicetify-nix.legacyPackages.${system};
   cfg = config.profiles.spotify;
+  inherit (lib) mkEnableOption mkIf;
 in
 {
-  options.profiles.spotify = with lib; {
+  options.profiles.spotify = {
     enable = mkEnableOption "Enable Spotify";
   };
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     programs.spicetify = {
       enable = true;
       theme = spicePkgs.themes.dracula;

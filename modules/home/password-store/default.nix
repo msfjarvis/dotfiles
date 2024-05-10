@@ -6,12 +6,13 @@
 }:
 let
   cfg = config.profiles.pass;
+  inherit (lib) mkEnableOption mkIf;
 in
 {
-  options.profiles.pass = with lib; {
+  options.profiles.pass = {
     enable = mkEnableOption "Enable password-store and related stuff";
   };
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     programs.browserpass = {
       enable = true;
       browsers = [ "firefox" ];

@@ -4,24 +4,27 @@
   pkgs,
   ...
 }:
-with lib;
 let
   cfg = config.services.tailscale-autoconnect;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    ;
 in
 {
   options.services.tailscale-autoconnect = {
-    enable = mkEnableOption {
-      description = mdDoc "Whether to configure the Tailscale autoconnect service";
-    };
+    enable = mkEnableOption { description = "Whether to configure the Tailscale autoconnect service"; };
 
     authkeyFile = mkOption {
       type = types.path;
-      description = mdDoc "Path to a file containing a Tailscale authkey that this device can use to authenticate itself";
+      description = "Path to a file containing a Tailscale authkey that this device can use to authenticate itself";
     };
 
     extraOptions = mkOption {
       type = types.listOf types.str;
-      description = mdDoc "List of extra flags passed to the `tailscale` invocation";
+      description = "List of extra flags passed to the `tailscale` invocation";
       default = [ ];
       example = [ "--ssh" ];
     };

@@ -4,34 +4,40 @@
   pkgs,
   ...
 }:
-with lib;
 let
   cfg = config.services.gitout;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    mkPackageOptionMD
+    types
+    ;
 in
 {
   options.services.gitout = {
-    enable = mkEnableOption { description = mdDoc "Whether to enable the gitout backup service."; };
+    enable = mkEnableOption { description = "Whether to enable the gitout backup service."; };
 
     config-file = mkOption {
       type = types.path;
-      description = mdDoc "Path to the gitout configuration file";
+      description = "Path to the gitout configuration file";
     };
 
     destination-dir = mkOption {
       type = types.str;
-      description = mdDoc "Path to the directory where the repositories are cloned to";
+      description = "Path to the directory where the repositories are cloned to";
     };
 
     user = mkOption {
       type = types.str;
       default = "gitout";
-      description = mdDoc "User account under which gitout runs.";
+      description = "User account under which gitout runs.";
     };
 
     group = mkOption {
       type = types.str;
       default = "gitout";
-      description = mdDoc "Group account under which gitout runs.";
+      description = "Group account under which gitout runs.";
     };
 
     package = mkPackageOptionMD pkgs.jarvis "gitout" { };
@@ -57,7 +63,7 @@ in
         Type = "oneshot";
       };
       script = ''
-        exec env ${getExe cfg.package} ${cfg.config-file} ${cfg.destination-dir}
+        exec env ${lib.getExe cfg.package} ${cfg.config-file} ${cfg.destination-dir}
       '';
     };
 

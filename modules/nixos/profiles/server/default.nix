@@ -1,13 +1,14 @@
 { config, lib, ... }:
 let
   cfg = config.profiles.server;
+  inherit (lib) mkEnableOption mkIf;
 in
 {
-  options.profiles.server = with lib; {
+  options.profiles.server = {
     enable = mkEnableOption "server profile";
     tailscaleExitNode = mkEnableOption "Run this machine as a Tailscale exit node";
   };
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     # Enable Tailscale
     profiles.tailscale.enable = true;
 

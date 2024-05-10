@@ -6,12 +6,13 @@
 }:
 let
   cfg = config.profiles.desktop;
+  inherit (lib) mkEnableOption mkIf;
 in
 {
-  options.profiles.desktop.cinnamon = with lib; {
+  options.profiles.desktop.cinnamon = {
     enable = mkEnableOption "Setup desktop with Cinnamon DE";
   };
-  config = lib.mkIf cfg.cinnamon.enable {
+  config = mkIf cfg.cinnamon.enable {
     services.xserver = {
       desktopManager = {
         cinnamon.enable = true;

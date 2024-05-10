@@ -4,36 +4,40 @@
   pkgs,
   ...
 }:
-with lib;
 let
   cfg = config.services.gphotos-cdp;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    mkPackageOptionMD
+    types
+    ;
 in
 {
   options.services.gphotos-cdp = {
-    enable = mkEnableOption {
-      description = mdDoc "Whether to enable the gphotos-cdp backup service.";
-    };
+    enable = mkEnableOption { description = "Whether to enable the gphotos-cdp backup service."; };
 
     session-dir = mkOption {
       type = types.str;
-      description = mdDoc "Path to the Google Chrome user session directory";
+      description = "Path to the Google Chrome user session directory";
     };
 
     dldir = mkOption {
       type = types.str;
-      description = mdDoc "Path to the directory where the files are downloaded";
+      description = "Path to the directory where the files are downloaded";
     };
 
     user = mkOption {
       type = types.str;
       default = "gphotos-cdp";
-      description = mdDoc "User account under which gphotos-cdp runs.";
+      description = "User account under which gphotos-cdp runs.";
     };
 
     group = mkOption {
       type = types.str;
       default = "gphotos-cdp";
-      description = mdDoc "Group account under which gphotos-cdp runs.";
+      description = "Group account under which gphotos-cdp runs.";
     };
 
     package = mkPackageOptionMD pkgs.jarvis "gphotos-cdp" { };
@@ -58,14 +62,14 @@ in
         RestartSec = "30s";
         Type = "oneshot";
         Environment = "PATH=${
-          makeBinPath [
+          lib.makeBinPath [
             pkgs.coreutils
             pkgs.google-chrome
           ]
         }";
       };
       script = ''
-        exec env ${getExe cfg.package} -v -dev -headless -dldir ${cfg.dldir} -session-dir ${cfg.session-dir}
+        exec env ${lib.getExe cfg.package} -v -dev -headless -dldir ${cfg.dldir} -session-dir ${cfg.session-dir}
       '';
     };
 

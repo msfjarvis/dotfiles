@@ -6,12 +6,13 @@
 }:
 let
   cfg = config.profiles.mpv;
+  inherit (lib) mkEnableOption mkIf;
 in
 {
-  options.profiles.mpv = with lib; {
+  options.profiles.mpv = {
     enable = mkEnableOption "Enable MPV player";
   };
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     programs.mpv = {
       enable = true;
       package =

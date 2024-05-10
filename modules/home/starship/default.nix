@@ -1,9 +1,10 @@
 { config, lib, ... }:
 let
   cfg = config.profiles.starship;
+  inherit (lib) mkEnableOption;
 in
 {
-  options.profiles.starship = with lib; {
+  options.profiles.starship = {
     server = mkEnableOption "Customize starship for servers";
   };
   config = {

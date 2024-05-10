@@ -6,12 +6,13 @@
 }:
 let
   cfg = config.profiles.vscode;
+  inherit (lib) mkEnableOption mkIf;
 in
 {
-  options.profiles.vscode = with lib; {
+  options.profiles.vscode = {
     enable = mkEnableOption "Enable VSCode editor";
   };
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     programs.vscode = {
       enable = true;
       enableUpdateCheck = false;

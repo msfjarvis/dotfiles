@@ -4,21 +4,20 @@
   pkgs,
   ...
 }:
-with lib;
 let
   cfg = config.services.qbittorrent;
   configDir = "${cfg.dataDir}/.config";
   openFilesLimit = 4096;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    ;
 in
 {
   options.services.qbittorrent = {
-    enable = mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Run qBittorrent headlessly as systemwide daemon
-      '';
-    };
+    enable = mkEnableOption "Run qBittorrent headlessly as systemwide daemon";
 
     dataDir = mkOption {
       type = types.path;

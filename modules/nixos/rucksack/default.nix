@@ -4,34 +4,40 @@
   pkgs,
   ...
 }:
-with lib;
 let
   cfg = config.services.rucksack;
   settingsFormat = pkgs.formats.toml { };
   settingsFile = settingsFormat.generate "rucksack.toml" {
     inherit (cfg) sources target file_filter;
   };
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    mkPackageOptionMD
+    types
+    ;
 in
 {
   options.services.rucksack = {
-    enable = mkEnableOption { description = mdDoc "Whether to enable the rucksack daemon."; };
+    enable = mkEnableOption { description = "Whether to enable the rucksack daemon."; };
 
     sources = mkOption {
       type = types.listOf types.str;
       default = [ ];
-      description = mdDoc "Directories to watch and pull files from";
+      description = "Directories to watch and pull files from";
     };
 
     target = mkOption {
       type = types.str;
       default = "";
-      description = mdDoc "Directory to move files from source directories";
+      description = "Directory to move files from source directories";
     };
 
     file_filter = mkOption {
       type = types.str;
       default = "";
-      description = mdDoc "Shell glob to filter files against to be eligible for moving";
+      description = "Shell glob to filter files against to be eligible for moving";
     };
 
     package = mkPackageOptionMD pkgs.jarvis "rucksack" { };
@@ -39,13 +45,13 @@ in
     user = mkOption {
       type = types.str;
       default = "rucksack";
-      description = mdDoc "User account under which rucksack runs.";
+      description = "User account under which rucksack runs.";
     };
 
     group = mkOption {
       type = types.str;
       default = "rucksack";
-      description = mdDoc "Group account under which rucksack runs.";
+      description = "Group account under which rucksack runs.";
     };
   };
 

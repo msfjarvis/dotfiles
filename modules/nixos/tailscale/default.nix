@@ -1,12 +1,13 @@
 { config, lib, ... }:
 let
   cfg = config.profiles.tailscale;
+  inherit (lib) mkEnableOption mkIf;
 in
 {
-  options.profiles.tailscale = with lib; {
+  options.profiles.tailscale = {
     enable = mkEnableOption "Tailscale profile";
   };
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     networking = {
       nameservers = [
         "100.100.100.100"

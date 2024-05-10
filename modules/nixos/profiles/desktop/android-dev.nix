@@ -11,12 +11,13 @@ let
     pkgs.openjdk17
     defaultJdk
   ];
+  inherit (lib) mkEnableOption mkIf;
 in
 {
-  options.profiles.desktop.android-dev = with lib; {
+  options.profiles.desktop.android-dev = {
     enable = mkEnableOption "Configure a development environment for Android apps";
   };
-  config = lib.mkIf cfg.android-dev.enable {
+  config = mkIf cfg.android-dev.enable {
     users.users.msfjarvis.packages = with pkgs; [
       jarvis.adb-sync
       jarvis.adx

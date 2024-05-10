@@ -6,12 +6,13 @@
 }:
 let
   cfg = config.profiles.desktop;
+  inherit (lib) mkEnableOption mkIf;
 in
 {
-  options.profiles.desktop.gnome3 = with lib; {
+  options.profiles.desktop.gnome3 = {
     enable = mkEnableOption "Setup desktop with Gnome DE";
   };
-  config = lib.mkIf cfg.gnome3.enable {
+  config = mkIf cfg.gnome3.enable {
     # Enable the GNOME Desktop Environment.
     services.xserver.displayManager.gdm.enable = true;
     services.xserver.desktopManager.gnome.enable = true;

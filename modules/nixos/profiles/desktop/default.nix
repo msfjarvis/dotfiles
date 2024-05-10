@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.profiles.desktop;
+  inherit (lib) mkDefault mkEnableOption mkIf;
 in
 {
   imports = [
@@ -15,12 +16,12 @@ in
     ./gnome3.nix
     ./noise-cancelation.nix
   ];
-  options.profiles.desktop = with lib; {
+  options.profiles.desktop = {
     enable = mkEnableOption "Profile for desktop machines (i.e. not servers)";
   };
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     # Use latest kernel by default.
-    boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
+    boot.kernelPackages = mkDefault pkgs.linuxPackages_latest;
 
     networking.networkmanager.enable = true;
 
@@ -40,7 +41,7 @@ in
 
     services = {
       # Enable the X11 windowing system.
-      xserver = with lib; {
+      xserver = {
         enable = mkDefault true;
 
         # Configure keymap in X11
@@ -51,11 +52,11 @@ in
       };
 
       # Enable CUPS to print documents.
-      printing.enable = lib.mkDefault true;
+      printing.enable = mkDefault true;
     };
 
     hardware = {
-      bluetooth.enable = lib.mkDefault true;
+      bluetooth.enable = mkDefault true;
     };
 
     # Theming
