@@ -81,9 +81,25 @@ in
         "gitlens.statusBar.reduceFlicker" = false;
         "[json]"."editor.defaultFormatter" = "vscode.json-language-features";
         "nix.enableLanguageServer" = true;
-        "nix.formatterPath" = "${lib.getExe pkgs.nixfmt-rfc-style}";
-        "nix.serverPath" = "${lib.getExe pkgs.nil}";
-        "nix.serverSettings".nil.formatting.command = [ "${lib.getExe pkgs.nixfmt-rfc-style}" ];
+        "nix" = {
+          "enableLanguageServer" = true;
+          "formatterPath" = "${lib.getExe pkgs.nixfmt-rfc-style}";
+          "serverPath" = "${lib.getExe pkgs.nixd}";
+          "serverSettings".nil.formatting.command = [ "${lib.getExe pkgs.nixfmt-rfc-style}" ];
+          "serverSettings" = {
+            nixd = {
+              formatting.command = [ "${lib.getExe pkgs.nixfmt-rfc-style}" ];
+              options = {
+                "nixos" = {
+                  "expr" = "(builtins.getFlake ./.).nixosConfigurations.ryzenbox.options";
+                };
+                "home-manager" = {
+                  "expr" = "(builtins.getFlake ./.).homeConfigurations.msfjarvis@ryzenbox.options";
+                };
+              };
+            };
+          };
+        };
         "[rust]"."editor.defaultFormatter" = "rust-lang.rust-analyzer";
         "rust-analyzer.checkOnSave" = true;
         "rust-analyzer.completion.privateEditable.enable" = true;
