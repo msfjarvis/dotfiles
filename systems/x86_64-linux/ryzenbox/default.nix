@@ -142,6 +142,13 @@
     zlib
   ];
 
+  services.glance = {
+    enable = true;
+    configFile = "~/glance.yml";
+    user = "msfjarvis";
+    group = "users";
+  };
+
   services.gphotos-cdp = {
     enable = true;
     session-dir = "/home/msfjarvis/harsh-sess";
