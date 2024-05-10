@@ -11,6 +11,7 @@ NixOS packages for personal use.
 - [gdrive] : Golang CLI to interact with Google Drive
 - [gitice] : Simple Rust CLI that snapshots the state of Git repositories to allow re-cloning in a separate location
 - [gitout] : Command line tool to automatically backup Git repositories from GitHub or anywhere
+- [glance] :  A self-hosted dashboard that puts all your feeds in one place
 - [gphotos-cdp] : Use the Chrome DevTools Protocol to drive a Chrome session that downloads your photos stored in Google Photos.
 - [hcctl]: CLI to look up the status of checks on https://healthchecks.io
 - [healthchecks-monitor]: CLI tool to run commands and report its result to https://healthchecks.io
@@ -38,6 +39,7 @@ NixOS packages for personal use.
 [gdrive]: https://msfjarvis.dev/g/gdrive
 [gitice]: https://msfjarvis.dev/g/gitice
 [gitout]: https://msfjarvis.dev/g/gitout
+[glance]: https://github.com/glanceapp/glance
 [google's adb-sync]: https://github.com/google/adb-sync
 [gphotos-cdp]: https://msfjarvis.dev/g/gphotos-cdp
 [hcctl]: https://msfjarvis.dev/g/healthchecks-rs

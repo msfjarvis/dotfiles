@@ -80,6 +80,7 @@ in
     };
   };
   gitout = callPackage ./packages/gitout { };
+  glance = callPackage ./packages/glance { };
   gphotos-cdp = callPackage ./packages/gphotos-cdp { };
   hcctl = callPackage ./packages/hcctl { };
   healthchecks-monitor = callPackage ./packages/healthchecks-monitor { };

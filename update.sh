@@ -10,6 +10,7 @@ declare -a ALL_PACKAGES=(
   gdrive
   gitice
   gitout
+  glance
   hcctl
   healthchecks-monitor
   katbin
