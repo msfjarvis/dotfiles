@@ -97,6 +97,7 @@
       megatools
       mullvad
       mullvad-vpn
+      newsflash
       nix-init
       nix-update
       jarvis.patreon-dl
@@ -114,6 +115,7 @@
       sshfs
       telegram-desktop
       thunderbird
+      tuba
       uv
       xdotool
       yt-dlp
