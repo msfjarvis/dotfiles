@@ -37,6 +37,8 @@ in
       ++ (with pkgs.gnomeExtensions; [
         # A nicer application menu for gnome
         arcmenu
+        # Allows binding apps to specific workspaces
+        auto-move-windows
         # Tweak GNOME settings
         just-perfection
         # Top bar media control widget
@@ -48,7 +50,7 @@ in
         # Make top bar transparent when nothing is docked to it
         transparent-top-bar
         # Allows binding apps to specific workspaces
-        unmess
+        # unmess
         # Allow controlling themes
         user-themes
       ]);
@@ -98,7 +100,6 @@ in
             "screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com"
             "tophat@fflewddur.github.io"
             "transparent-top-bar@zhanghai.me"
-            "unmess@ezix.org"
             "user-theme@gnome-shell-extensions.gcampax.github.com"
           ];
         };
