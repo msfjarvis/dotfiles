@@ -35,10 +35,10 @@ in
         gnome3.gnome-tweaks
       ]
       ++ (with pkgs.gnomeExtensions; [
+        # Save and restore window positions
+        another-window-session-manager
         # A nicer application menu for gnome
         arcmenu
-        # Allows binding apps to specific workspaces
-        auto-move-windows
         # Tweak GNOME settings
         just-perfection
         # Top bar media control widget
@@ -49,8 +49,6 @@ in
         tophat
         # Make top bar transparent when nothing is docked to it
         transparent-top-bar
-        # Allows binding apps to specific workspaces
-        # unmess
         # Allow controlling themes
         user-themes
       ]);
@@ -90,8 +88,8 @@ in
         "org/gnome/shell" = {
           disable-user-extensions = false;
           enabled-extensions = [
+            "another-window-session-manager@gmail.com"
             "arcmenu@arcmenu.com"
-            "auto-move-windows@gnome-shell-extensions.gcampax.github.com"
             "just-perfection-desktop@just-perfection"
             "mediacontrols@cliffniff.github.com"
             "native-window-placement@gnome-shell-extensions.gcampax.github.com"
