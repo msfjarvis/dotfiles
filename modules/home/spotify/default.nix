@@ -17,7 +17,7 @@ in
   config = mkIf cfg.enable {
     programs.spicetify = {
       enable = true;
-      theme = spicePkgs.themes.dracula;
+      theme = spicePkgs.themes.catppuccin;
 
       enabledCustomApps = with spicePkgs.apps; [ lyricsPlus ];
 

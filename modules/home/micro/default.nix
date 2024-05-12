@@ -3,11 +3,11 @@
   programs.micro = {
     enable = true;
     settings = {
-      colorscheme = "dracula";
+      colorscheme = "custom";
       mkparents = true;
       softwrap = true;
       wordwrap = true;
     };
   };
-  xdg.configFile."micro/colorschemes/dracula.micro".source = inputs.dracula-micro;
+  xdg.configFile."micro/colorschemes/custom.micro".source = inputs.micro-theme;
 }

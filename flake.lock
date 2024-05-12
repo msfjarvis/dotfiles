@@ -275,18 +275,6 @@
         "type": "github"
       }
     },
-    "dracula-micro": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-tLuJbEh9QPC456ykElxu1EiX7/NA4BBIzHA0Nn1icbU=",
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/dracula/micro/master/dracula.micro"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/dracula/micro/master/dracula.micro"
-      }
-    },
     "fenix": {
       "inputs": {
         "nixpkgs": [
@@ -542,6 +530,18 @@
         "type": "github"
       }
     },
+    "micro-theme": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-5uwaRTsY+/kAyZBHMBK/HrxMKZ7H2rZm5/gdGpDUEBE=",
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/catppuccin/micro/main/src/catppuccin-mocha.micro"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/catppuccin/micro/main/src/catppuccin-mocha.micro"
+      }
+    },
     "mozilla": {
       "flake": false,
       "locked": {
@@ -709,7 +709,6 @@
         "deploy-rs": "deploy-rs",
         "devshell": "devshell",
         "disko": "disko",
-        "dracula-micro": "dracula-micro",
         "fenix": "fenix",
         "firefox": "firefox",
         "flake-compat": "flake-compat",
@@ -717,6 +716,7 @@
         "flake-utils-plus": "flake-utils-plus",
         "gphotos-cdp": "gphotos-cdp",
         "home-manager": "home-manager",
+        "micro-theme": "micro-theme",
         "nix-index-database": "nix-index-database",
         "nix-topology": "nix-topology",
         "nix-vscode-extensions": "nix-vscode-extensions",
