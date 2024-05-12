@@ -19,7 +19,7 @@ in
       enable = true;
       theme = spicePkgs.themes.dracula;
 
-      enabledCustomApps = with spicePkgs.apps; [ lyrics-plus ];
+      enabledCustomApps = with spicePkgs.apps; [ lyricsPlus ];
 
       enabledExtensions = with spicePkgs.extensions; [
         fullAppDisplay
