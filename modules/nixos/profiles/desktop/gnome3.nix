@@ -81,10 +81,14 @@ in
         enable = true;
       };
       dconf.settings = {
-        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = lib.mkDefault {
-          binding = "<Control><Alt>t";
-          command = "${lib.getExe pkgs.gnome-console}";
-        };
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" =
+          let
+            terminal-package = if config.profiles.wezterm.enable then pkgs.wezterm else pkgs.gnome-console;
+          in
+          lib.mkDefault {
+            binding = "<Control><Alt>t";
+            command = "${lib.getExe terminal-package}";
+          };
         "org/gnome/shell" = {
           disable-user-extensions = false;
           enabled-extensions = [
