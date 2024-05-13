@@ -162,6 +162,7 @@
     firefox.inputs.nixpkgs.follows = "nixpkgs";
     firefox.inputs.cachix.follows = "nixpkgs";
     firefox.inputs.flake-compat.follows = "flake-compat";
+    firefox.inputs.lib-aggregate.follows = "lib-aggregate";
 
     gphotos-cdp.url = "github:msfjarvis/gphotos-cdp";
     gphotos-cdp.inputs.devshell.follows = "devshell";
@@ -172,6 +173,10 @@
 
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    lib-aggregate.url = "github:nix-community/lib-aggregate";
+    lib-aggregate.inputs.nixpkgs-lib.follows = "nixpkgs";
+    lib-aggregate.inputs.flake-utils.follows = "flake-utils";
 
     micro-theme.url = "https://raw.githubusercontent.com/catppuccin/micro/main/src/catppuccin-mocha.micro";
     micro-theme.flake = false;
