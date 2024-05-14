@@ -104,7 +104,7 @@
       };
       "https://${config.services.grafana.domain}" = {
         extraConfig = ''
-          reverse_proxy ${config.services.grafana.addr}:${toString config.services.grafana.port}
+          reverse_proxy ${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}
         '';
       };
       "https://read.msfjarvis.dev" = {
@@ -141,9 +141,13 @@
 
   services.grafana = {
     enable = true;
-    domain = "grafana.msfjarvis.dev";
-    port = 2342;
-    addr = "127.0.0.1";
+    settings = {
+      server = {
+        domain = "grafana.msfjarvis.dev";
+        http_addr = "127.0.0.1";
+        http_port = 2342;
+      };
+    };
   };
 
   sops.secrets.feed-auth = {
