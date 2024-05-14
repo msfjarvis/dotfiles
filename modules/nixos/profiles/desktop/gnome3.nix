@@ -83,7 +83,8 @@ in
       dconf.settings = {
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" =
           let
-            terminal-package = if config.profiles.wezterm.enable then pkgs.wezterm else pkgs.gnome-console;
+            terminal-package =
+              if (config.profiles.wezterm.enable or false) then pkgs.wezterm else pkgs.gnome-console;
           in
           lib.mkDefault {
             binding = "<Control><Alt>t";
