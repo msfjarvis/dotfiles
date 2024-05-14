@@ -105,17 +105,6 @@
       };
     };
 
-  nixConfig = {
-    extra-substituters = [
-      "https://cache.garnix.io"
-      "https://msfjarvis.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
-      "msfjarvis.cachix.org-1:/sKPgZblk/LgoOKtDgMTwvRuethILGkr/maOvZ6W11U="
-    ];
-  };
-
   inputs = {
     # nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs.url = "github:msfjarvis/nixpkgs/nixpkgs-unstable";
