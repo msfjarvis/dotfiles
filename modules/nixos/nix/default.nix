@@ -29,7 +29,7 @@
   nix = {
     optimise.automatic = true;
 
-    package = pkgs.nixVersions.git;
+    package = pkgs.nixVersions.stable;
 
     registry = lib.mapAttrs (_: v: { flake = v; }) inputs;
 

@@ -20,6 +20,5 @@ _final: prev: {
   });
   # Set default fonts
   nerdfonts = prev.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
-  nix = prev.nixVersions.git;
   qbittorrent = prev.qbittorrent.override { guiSupport = false; };
 }
