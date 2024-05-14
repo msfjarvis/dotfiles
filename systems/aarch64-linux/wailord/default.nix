@@ -54,7 +54,10 @@
 
   programs.command-not-found.enable = false;
 
-  environment.systemPackages = with pkgs; [ megatools ];
+  environment.systemPackages = with pkgs; [
+    attic
+    megatools
+  ];
 
   sops.secrets.atticd = {
     sopsFile = ./../../../secrets/atticd.yaml;
