@@ -89,7 +89,6 @@
       gallery-dl
       jarvis.gdrive
       git-crypt
-      helix
       nerdfonts
       jarvis.katbin
       kondo
