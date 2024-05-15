@@ -7,7 +7,7 @@
 }:
 rustPlatform.buildRustPackage rec {
   pname = "nh";
-  version = "unstable-2024-04-20";
+  version = "3.5.15";
 
   src = fetchFromGitHub {
     owner = "viperML";
@@ -16,7 +16,7 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-lLftlafVmv9RPzCO7gTsswiD+Q0MoAP0FVXVoK3iGmE=";
   };
 
-  cargoHash = "sha256-cGrrv0fDD0H2tvUNyNK9u5Qyd6JUXCztDIPmcmtZ7w4=";
+  cargoHash = "sha256-IW+fzWvLv1/5Z/73EZreVLMw/JElvs+HOnuU8RV7w8w=";
 
   buildInputs = lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.Security ];
 
