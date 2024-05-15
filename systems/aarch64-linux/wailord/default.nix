@@ -105,7 +105,7 @@
           reverse_proxy :${toString config.services.gitea.settings.server.HTTP_PORT}
         '';
       };
-      "https://${config.services.grafana.domain}" = {
+      "https://${config.services.grafana.settings.server.domain}" = {
         extraConfig = ''
           reverse_proxy ${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}
         '';
