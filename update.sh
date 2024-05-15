@@ -6,21 +6,25 @@ declare -a ALL_PACKAGES=(
   adb-sync
   adbtuifm
   adx
+  boop-gtk
   clipboard-substitutor
   gdrive
   gitice
   gitout
   glance
+  gphotos-cdp
   hcctl
   healthchecks-monitor
   katbin
   linkleaner
   monocraft-nerdfonts
+  nh
   patreon-dl
   pidcat
   piv-agent
   rnnoise-plugin-slim
   rucksack
+  toml-cli
   when
 )
 

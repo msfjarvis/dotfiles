@@ -71,6 +71,7 @@ in
   adb-sync = callPackage ./packages/adb-sync { };
   adbtuifm = callPackage ./packages/adbtuifm { };
   adx = callPackage ./packages/adx { };
+  boop-gtk = callPackage ./packages/boop-gtk { };
   clipboard-substitutor = callPackage ./packages/clipboard-substitutor { };
   diffuse-bin = callPackage ./packages/diffuse-bin { };
   gdrive = callPackage ./packages/gdrive { };
@@ -91,6 +92,7 @@ in
     };
   };
   monocraft-nerdfonts = callPackage ./packages/monocraft-nerdfonts { };
+  nh = callPackage ./packages/nh { };
   patreon-dl = callPackage ./packages/patreon-dl { };
   pidcat = callPackage ./packages/pidcat { };
   piv-agent = callPackage ./packages/piv-agent { };
