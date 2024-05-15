@@ -7,7 +7,7 @@
       inputs,
     }:
     {
-      package = pkgs.nixVersions.stable;
+      package = pkgs.nixVersions.git;
 
       registry = lib.mapAttrs (_: v: { flake = v; }) inputs;
 

@@ -48,7 +48,6 @@
         catppuccin-vscode.overlays.default
         fenix.overlays.default
         gphotos-cdp.overlays.default
-        lix-module.overlays.default
         nix-topology.overlays.default
         nix-vscode-extensions.overlays.default
       ];
@@ -167,14 +166,6 @@
     lib-aggregate.url = "github:nix-community/lib-aggregate";
     lib-aggregate.inputs.nixpkgs-lib.follows = "nixpkgs";
     lib-aggregate.inputs.flake-utils.follows = "flake-utils";
-
-    lix.url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
-    lix.flake = false;
-
-    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
-    lix-module.inputs.flake-utils.follows = "flake-utils";
-    lix-module.inputs.nixpkgs.follows = "nixpkgs";
-    lix-module.inputs.lix.follows = "lix";
 
     micro-theme.url = "https://raw.githubusercontent.com/catppuccin/micro/main/src/catppuccin-mocha.micro";
     micro-theme.flake = false;
