@@ -92,7 +92,6 @@ in
     };
   };
   monocraft-nerdfonts = callPackage ./packages/monocraft-nerdfonts { };
-  nh = callPackage ./packages/nh { };
   patreon-dl = callPackage ./packages/patreon-dl { };
   pidcat = callPackage ./packages/pidcat { };
   piv-agent = callPackage ./packages/piv-agent { };

@@ -18,7 +18,6 @@ declare -a ALL_PACKAGES=(
   katbin
   linkleaner
   monocraft-nerdfonts
-  nh
   patreon-dl
   pidcat
   piv-agent

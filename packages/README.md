@@ -18,7 +18,6 @@ NixOS packages for personal use.
 - [katbin] : A CLI for [katb.in]
 - [linkleaner] : Telegram bot to fix social media link previews
 - [monocraft-nerdfonts] : A monospaced programming font inspired by the Minecraft typeface
-- [nh] : Temporary fork to pull in unreleased features
 - [nix-inspect] : Interactive tui for inspecting nix configs
 - [patreon-dl] : Download content from creators you're subscribed to on Patreon
 - [pidcat] : Fork of [JakeWharton's pidcat] with Python3 support and some other fixes
@@ -49,7 +48,6 @@ NixOS packages for personal use.
 [katbin]: https://github.com/SphericalKat/katbin-cli
 [linkleaner]: https://msfjarvis.dev/g/linkleaner
 [monocraft-nerdfonts]: https://github.com/IdreesInc/Monocraft
-[nh]: https://github.com/viperml/nh
 [nix-inspect]: https://github.com/bluskript/nix-inspect
 [patreon-dl]: https://github.com/PrivateGER/patreon-dl
 [pidcat]: https://msfjarvis.dev/g/pidcat
