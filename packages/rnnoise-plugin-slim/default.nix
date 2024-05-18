@@ -27,6 +27,7 @@ stdenv.mkDerivation (finalAttrs: {
     (lib.cmakeBool "BUILD_LV2_PLUGIN" false)
     (lib.cmakeBool "BUILD_AU_PLUGIN" false)
     (lib.cmakeBool "BUILD_AUV3_PLUGIN" false)
+    (lib.cmakeBool "BUILD_RTCD" stdenv.isx86_64)
   ];
 
   nativeBuildInputs = [
