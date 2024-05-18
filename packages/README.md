@@ -22,7 +22,7 @@ NixOS packages for personal use.
 - [patreon-dl] : Download content from creators you're subscribed to on Patreon
 - [pidcat] : Fork of [JakeWharton's pidcat] with Python3 support and some other fixes
 - [piv-agent] : An SSH and GPG agent which you can use with your PIV hardware security device (e.g. a Yubikey).
-- [runnoise-plugin-slim] : Noise suppression plugin based on Xiph's RNNoise, forked to slim down its closure size
+- [rnnoise-plugin-slim] : Noise suppression plugin based on Xiph's RNNoise, forked to slim down its closure size
 - [rucksack] : Simple CLI tool to watch directories and move their files to a single dumping ground
 - [tea] : Gitea CLI built from latest sources
 - [toml-cli] : Simple CLI for editing and querying TOML files
