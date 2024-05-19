@@ -11,6 +11,7 @@ let
     pkgs.openjdk17
     defaultJdk
   ];
+  mapOpenJdk = pkg: "${pkg}/lib/openjdk";
   inherit (lib) mkEnableOption mkIf;
 in
 {
@@ -48,12 +49,10 @@ in
           "org.gradle.caching" = true;
           "org.gradle.parallel" = true;
           "org.gradle.jvmargs" = "-XX:MaxMetaspaceSize=1024m -XX:+UseG1GC";
-          "org.gradle.home" = defaultJdk;
+          "org.gradle.java.home" = mapOpenJdk defaultJdk;
           "org.gradle.java.installations.auto-detect" = false;
           "org.gradle.java.installations.auto-download" = false;
-          "org.gradle.java.installations.paths" = lib.concatMapStringsSep "," (
-            x: "${x}/lib/openjdk"
-          ) toolchains;
+          "org.gradle.java.installations.paths" = lib.concatMapStringsSep "," mapOpenJdk toolchains;
         };
       };
     };
