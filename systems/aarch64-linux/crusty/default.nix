@@ -67,10 +67,35 @@
     virtualHosts = {
       "https://crusty.tiger-shark.ts.net" = {
         extraConfig = ''
-          reverse_proxy :${toString config.services.qbittorrent.port}
+          handle_path /prometheus/* {
+            reverse_proxy :${toString config.services.prometheus.port}
+          }
+          handle {
+            reverse_proxy :${toString config.services.qbittorrent.port}
+          }
         '';
       };
     };
+  };
+
+  services.prometheus = {
+    enable = true;
+    port = 9001;
+    exporters = {
+      node = {
+        enable = true;
+        enabledCollectors = [ "systemd" ];
+        port = 9002;
+      };
+    };
+    scrapeConfigs = [
+      {
+        job_name = "crusty";
+        static_configs = [
+          { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ]; }
+        ];
+      }
+    ];
   };
 
   services.qbittorrent = {
