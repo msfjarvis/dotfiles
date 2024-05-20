@@ -28,6 +28,7 @@
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
   # Load nvidia driver for Xorg and Wayland
