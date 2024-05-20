@@ -80,7 +80,9 @@
 
       deploy = lib.mkDeploy { inherit (inputs) self; };
 
-      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks inputs.self.deploy) inputs.deploy-rs.lib;
+      checks = builtins.mapAttrs (
+        _: deployLib: deployLib.deployChecks inputs.self.deploy
+      ) inputs.deploy-rs.lib;
 
       templates.cpp = {
         description = "devshell for a C++ project";

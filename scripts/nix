@@ -47,7 +47,7 @@ function nixb() {
 }
 
 function cache() {
-  set -- "${1:-$(</dev/stdin)}" "${@:2}"
+  set -- "${1:-$(< /dev/stdin)}" "${@:2}"
   declare -a CACHE_PATHS
   local ARCH KERNEL
   CACHE_PATHS=("$@")
