@@ -148,6 +148,40 @@
     configFile = "~/glance.yml";
     user = "msfjarvis";
     group = "users";
+    # settings = {
+    #   server.port = 8080;
+    #   theme = {
+    #     background-color = "240 21 15";
+    #     contrast-multiplier = 1.2;
+    #     primary-color = "217 92 83";
+    #     positive-color = "115 54 76";
+    #     negative-color = "347 70 65";
+    #   };
+    #   pages = [
+    #     {
+    #       name = "Home";
+    #       columns = [
+    #         {
+    #           size = "full";
+    #           widgets = [
+    #             {
+    #               type = "calendar";
+    #             }
+    #             {
+    #               type = "videos";
+    #               cache = "15m";
+    #               channels = [
+    #                 "UClu2e7S8atp6tG2galK9hgg"
+    #                 "UC9lJXqw4QZw-HWaZH6sN-xw"
+    #                 "UC4O9HKe9Jt5yAhKuNv3LXpQ"
+    #               ];
+    #             }
+    #           ];
+    #         }
+    #       ];
+    #     }
+    #   ];
+    # };
   };
 
   services.gphotos-cdp = {
