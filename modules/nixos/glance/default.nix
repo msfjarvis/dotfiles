@@ -77,8 +77,139 @@ let
         description = "Size of the column.";
       };
       widgets = mkOption {
-        type = types.list types.str;
+        type = types.list types.enum (
+          map types.attrsOf [
+            rssWidgetType
+            videosWidgetType
+            hackerNewsWidgetType
+          ]
+        );
         description = "List of widgets to display in the column.";
+      };
+    };
+  };
+
+  commonWidgetType = types.submodule {
+    options = {
+      type = mkOption {
+        # Sorted based on how they appear in the documentation, preserve this order
+        # https://github.com/glanceapp/glance/blob/6de0f73ec1c8c02e97393714749d75d8823cb776/docs/configuration.md
+        type = types.enum [
+          "rss"
+          "videos"
+          "hacker-news"
+          "reddit"
+          "weather"
+          "monitor"
+          "repository"
+          "bookmarks"
+          "calendar"
+          "stocks"
+          "twitch-channels"
+          "twitch-top-games"
+          "iframe"
+        ];
+        description = "Type of widget.";
+      };
+      title = mkOption {
+        type = types.nullOr types.str;
+        description = "Title of widget.";
+      };
+      cache = mkOption {
+        type = types.nullOr types.str;
+        description = "Cache timeout for the widget's data source.";
+      };
+    };
+  };
+
+  rssWidgetType = types.submodule {
+    options = {
+      style = mkOption {
+        type = types.nullOr types.enum [
+          "horizontal-cards"
+          "horizontal-cards-2"
+          "vertical-list"
+        ];
+        description = "Layout type for the RSS widget.";
+      };
+      thumbnail-height = mkOption {
+        type = types.nullOr types.float;
+        description = "Height of thumbnails in `rem` units.";
+      };
+      card-height = mkOption {
+        type = types.nullOr types.float;
+        description = "Used to modify the height of cards when using the `horizontal-cards-2` style, in `rem` units.";
+      };
+      feeds = types.list types.submodule {
+        options = {
+          url = mkOption {
+            type = types.str;
+            description = "URL of the RSS feed.";
+          };
+          title = mkOption {
+            type = types.nullOr types.str;
+            description = "Defaults to the title provided by the feed.";
+          };
+        };
+      };
+      limit = mkOption {
+        type = types.nullOr types.int;
+        description = "The maximum number of articles to show.";
+      };
+      collapse-after = mkOption {
+        type = types.nullOr types.int;
+        description = "How many articles are visible before the `SHOW MORE` button appears. Set to -1 to never collapse.";
+      };
+    };
+  };
+
+  videosWidgetType = types.submodule {
+    channels = mkOption {
+      type = types.list types.str;
+      description = "A list of channel IDs.";
+    };
+    limit = mkOption {
+      type = types.nullOr types.int;
+      description = "The maximum number of videos to show.";
+    };
+    style = mkOption {
+      type = types.nullOr types.enum [
+        "horizontal-cards"
+        "grid-cards"
+      ];
+      description = "Layout type for the videos widget.";
+    };
+    video-url-template = mkOption {
+      type = types.nullOr types.str;
+      description = "URL template for the video link.";
+    };
+  };
+
+  hackerNewsWidgetType = types.submodule {
+    options = {
+      limit = mkOption {
+        type = types.nullOr types.int;
+        description = "The maximum number of articles to show.";
+      };
+      collapse-after = mkOption {
+        type = types.nullOr types.int;
+        description = "How many articles are visible before the `SHOW MORE` button appears. Set to -1 to never collapse.";
+      };
+      comment-url-template = mkOption {
+        type = types.nullOr types.str;
+        description = "URL template for the comment link.";
+      };
+      sort-by = mkOption {
+        type = types.nullOr types.enum [
+          "top"
+          "new"
+          "best"
+        ];
+        description = "Sort order for the articles.";
+      };
+      extra-sort-by = mkOption {
+        type = types.nullOr types.enum [ "engagement" ];
+        description = "Can be used to specify an additional sort which will be applied on top of the already sorted posts";
       };
     };
   };
