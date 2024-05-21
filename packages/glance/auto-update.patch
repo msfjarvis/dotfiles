@@ -1,0 +1,12 @@
+diff --git a/internal/assets/templates/document.html b/internal/assets/templates/document.html
+index 04984f8760ee..f9e434966689 100644
+--- a/internal/assets/templates/document.html
++++ b/internal/assets/templates/document.html
+@@ -8,6 +8,7 @@
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="icon" type="image/png" href="/static/favicon.png" />
+     <link rel="stylesheet" href="/static/main.css?v={{ .App.Config.Server.StartedAt.Unix }}">
++    <meta http-equiv="refresh" content="30" />
+     <script async src="/static/main.js?v={{ .App.Config.Server.StartedAt.Unix }}"></script>
+     {{ block "document-head-after" . }}{{ end }}
+ </head>
