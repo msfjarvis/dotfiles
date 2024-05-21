@@ -158,3 +158,23 @@ function tmpshare() {
   FILE="${1}"
   curl -F"file=@${FILE:?}" https://0x0.st
 }
+
+function reencode_dir() {
+  INPUT_FILE="${1}"
+  if [ -z "${INPUT_FILE}" ]; then
+    INPUT_FILE="/dev/stdin"
+  elif [ ! -f "${INPUT_FILE}" ]; then
+    reportWarning "'${INPUT_FILE}' doesn't exist"
+    return 1
+  fi
+  while read -r f; do
+    encode "${f}.mp4" "${f}_x265.mp4"
+    du -sh "${f}.mp4" | tee -a ~/stats
+    du -sh "${f}_x265.mp4" | tee -a ~/stats
+    if [[ $(stat -c %s "${f}_x265.mp4") -le $(stat -c %s "${f}.mp4") ]]; then
+      touch -r "${f}.mp4" "${f}_x265.mp4"
+      rm -v "${f}.mp4"
+    else rm -v "${f}_x265.mp4"; fi
+    sleep 5
+  done < <(cat "${INPUT_FILE}")
+}
