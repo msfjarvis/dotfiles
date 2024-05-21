@@ -6,6 +6,8 @@
 }:
 let
   cfg = config.services.glance;
+  settingsFormat = pkgs.formats.yaml { };
+  settingsFile = settingsFormat.generate "glance.yaml" cfg.settings;
   inherit (lib)
     mkEnableOption
     mkIf
@@ -88,12 +90,11 @@ let
         default = "small";
         description = "Size of the column.";
       };
+      # Ideally this would be a sum type of all possible widgets
+      # but I cannot seem to make that work, so this is currently typed
+      # as a list of attributes.
       widgets = mkOption {
-        type = types.enum [
-          rssWidgetType
-          videosWidgetType
-          hackerNewsWidgetType
-        ];
+        type = types.listOf types.attrs;
         default = [ ];
         description = "List of widgets to display in the column.";
       };
@@ -135,6 +136,7 @@ let
     };
   };
 
+  # deadnix: skip
   rssWidgetType =
     commonWidgetType
     // types.submodule {
@@ -157,19 +159,21 @@ let
           type = types.nullOr types.float;
           description = "Used to modify the height of cards when using the `horizontal-cards-2` style, in `rem` units.";
         };
-        feeds = types.listOf types.submodule {
-          options = {
-            url = mkOption {
-              type = types.str;
-              description = "URL of the RSS feed.";
+        feeds = types.listOf (
+          types.submodule {
+            options = {
+              url = mkOption {
+                type = types.str;
+                description = "URL of the RSS feed.";
+              };
+              title = mkOption {
+                type = types.nullOr types.str;
+                default = null;
+                description = "Defaults to the title provided by the feed.";
+              };
             };
-            title = mkOption {
-              type = types.nullOr types.str;
-              default = null;
-              description = "Defaults to the title provided by the feed.";
-            };
-          };
-        };
+          }
+        );
         limit = mkOption {
           type = types.nullOr types.int;
           default = null;
@@ -183,6 +187,7 @@ let
       };
     };
 
+  # deadnix: skip
   videosWidgetType =
     commonWidgetType
     // types.submodule {
@@ -210,6 +215,7 @@ let
       };
     };
 
+  # deadnix: skip
   hackerNewsWidgetType =
     commonWidgetType
     // types.submodule {
@@ -250,12 +256,14 @@ let
       };
 
       slug = mkOption {
-        type = types.str;
+        type = types.nullOr types.str;
+        default = null;
         description = "Slug of the page.";
       };
 
       show-mobile-header = mkOption {
         type = types.nullOr types.bool;
+        default = null;
         description = "Whether to show the mobile header.";
       };
 
@@ -269,12 +277,6 @@ in
 {
   options.services.glance = {
     enable = mkEnableOption { description = "Whether to enable the Glance dashboard"; };
-
-    configFile = mkOption {
-      type = types.str;
-      example = "/etc/glance/glance.yaml";
-      description = "Path to the Glance configuration file.";
-    };
 
     settings = mkOption {
       type = types.submodule {
@@ -331,7 +333,7 @@ in
         Type = "simple";
       };
       script = ''
-        ${lib.getExe cfg.package} -config ${cfg.configFile}
+        ${lib.getExe cfg.package} -config ${settingsFile}
       '';
     };
 
