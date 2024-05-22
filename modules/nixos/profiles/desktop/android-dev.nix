@@ -8,6 +8,7 @@ let
   cfg = config.profiles.desktop;
   defaultJdk = pkgs.openjdk22;
   toolchains = [
+    pkgs.openjdk11
     pkgs.openjdk17
     defaultJdk
   ];
