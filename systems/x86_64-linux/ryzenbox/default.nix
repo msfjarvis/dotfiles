@@ -260,10 +260,12 @@
                   channels = [
                     "camila"
                     "couriway"
+                    "geminitay"
                     "laynalazar"
                     "matarakan"
                     "michimochievee"
                     "mush"
+                    "pearlescentmoon"
                     "piratesoftware"
                     "squchan"
                     "thinkingmansvalo"
