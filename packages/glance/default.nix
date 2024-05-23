@@ -15,7 +15,7 @@ buildGoModule rec {
     hash = "sha256-vcK8AW+B/YK4Jor86SRvJ8XFWvzeAUX5mVbXwrgxGlA=";
   };
 
-  patches = [./auto-update.patch];
+  patches = [ ./auto-update.patch ];
 
   vendorHash = "sha256-Okme73vLc3Pe9+rNlmG8Bj1msKaVb5PaIBsAAeTer6s=";
 
