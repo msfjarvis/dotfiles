@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  namespace,
   ...
 }:
 let
@@ -18,7 +19,9 @@ let
                     {
                         type = ladspa
                         name = rnnoise
-                        plugin = ${pkgs.jarvis.rnnoise-plugin-slim}/lib/ladspa/librnnoise_ladspa.so
+                        plugin = ${
+                          pkgs.${namespace}.rnnoise-plugin-slim
+                        }/lib/ladspa/librnnoise_ladspa.so
                         label = noise_suppressor_mono
                         control = {
                             "VAD Threshold (%)" = 50.0

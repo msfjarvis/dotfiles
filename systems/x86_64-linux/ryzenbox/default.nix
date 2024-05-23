@@ -2,6 +2,7 @@
   pkgs,
   config,
   inputs,
+  namespace,
   ...
 }:
 {
@@ -56,7 +57,7 @@
     packages = with pkgs; [
       age
       attic
-      jarvis.boop-gtk
+      pkgs.${namespace}.boop-gtk
       discord
       fclones
       (ffmpeg.override {
@@ -87,10 +88,10 @@
       })
       fzf
       gallery-dl
-      jarvis.gdrive
+      pkgs.${namespace}.gdrive
       git-crypt
       nerdfonts
-      jarvis.katbin
+      pkgs.${namespace}.katbin
       kondo
       maestro
       megatools
@@ -99,8 +100,8 @@
       newsflash
       nix-init
       nix-update
-      jarvis.patreon-dl
-      jarvis.pidcat
+      pkgs.${namespace}.patreon-dl
+      pkgs.${namespace}.pidcat
       (python312.withPackages (
         ps: with ps; [
           beautifulsoup4

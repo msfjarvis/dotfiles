@@ -3,11 +3,12 @@
   pkgs,
   config,
   inputs,
+  namespace,
   ...
 }:
 {
   nix =
-    lib.jarvis.mkNixConfig {
+    lib.${namespace}.mkNixConfig {
       inherit
         lib
         pkgs

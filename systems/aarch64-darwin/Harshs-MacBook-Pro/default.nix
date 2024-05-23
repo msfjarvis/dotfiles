@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, namespace, ... }:
 {
   users.users.msfjarvis = {
     name = "msfjarvis";
@@ -10,23 +10,23 @@
   };
 
   environment.systemPackages = with pkgs; [
-    jarvis.adx
+    pkgs.${namespace}.adx
     awscli2
     coreutils
-    jarvis.diffuse-bin
-    jarvis.gdrive
+    pkgs.${namespace}.diffuse-bin
+    pkgs.${namespace}.gdrive
     git-absorb
     hub
-    jarvis.katbin
+    pkgs.${namespace}.katbin
     maestro
     nh
     ninja
     nix-output-monitor
     openssh
     openssl
-    jarvis.pidcat
+    pkgs.${namespace}.pidcat
     scrcpy
-    jarvis.toml-cli
+    pkgs.${namespace}.toml-cli
   ];
 
   programs.gnupg.agent.enable = true;

@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  namespace,
   ...
 }:
 let
@@ -21,13 +22,13 @@ in
   };
   config = mkIf cfg.android-dev.enable {
     users.users.msfjarvis.packages = with pkgs; [
-      jarvis.adb-sync
-      jarvis.adx
+      pkgs.${namespace}.adb-sync
+      pkgs.${namespace}.adx
       android-tools
       androidStudioPackages.stable
       androidStudioPackages.beta
       androidStudioPackages.canary
-      jarvis.diffuse-bin
+      pkgs.${namespace}.diffuse-bin
       kotlin
     ];
 
