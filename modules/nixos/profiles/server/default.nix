@@ -34,7 +34,7 @@ in
     # Enable SOPS, force it to be age-only
     sops.age.sshKeyPaths = lib.mkForce [ "/etc/ssh/ssh_host_ed25519_key" ];
     sops.gnupg.sshKeyPaths = lib.mkForce [ ];
-    sops.defaultSopsFile = ./../../../../secrets/tailscale.yaml;
+    sops.defaultSopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
     sops.secrets.tsauthkey = { };
 
     # Automatically log into my user account

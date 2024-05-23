@@ -60,7 +60,7 @@
   ];
 
   sops.secrets.atticd = {
-    sopsFile = ./../../../secrets/atticd.yaml;
+    sopsFile = lib.snowfall.fs.get-file "secrets/atticd.yaml";
   };
   services.atticd = {
     enable = true;
@@ -155,7 +155,7 @@
 
   sops.secrets.feed-auth = {
     owner = config.users.users.miniflux.name;
-    sopsFile = ../../../secrets/feed-auth.env;
+    sopsFile = lib.snowfall.fs.get-file "secrets/feed-auth.env";
     format = "dotenv";
   };
 
