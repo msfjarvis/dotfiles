@@ -84,26 +84,6 @@
         _: deployLib: deployLib.deployChecks inputs.self.deploy
       ) inputs.deploy-rs.lib;
 
-      templates.cpp = {
-        description = "devshell for a C++ project";
-        path = ./templates/cpp;
-      };
-      templates.go = {
-        description = "devshell for a Golang project";
-        path = ./templates/go;
-      };
-      templates.node = {
-        description = "devshell for a NodeJS project";
-        path = ./templates/node;
-      };
-      templates.python = {
-        description = "devshell for a Python project";
-        path = ./templates/python;
-      };
-      templates.rust = {
-        description = "package definition and devshell for my-rust-package";
-        path = ./templates/rust;
-      };
     };
 
   inputs = {
