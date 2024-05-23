@@ -80,10 +80,6 @@
 
       deploy = lib.mkDeploy { inherit (inputs) self; };
 
-      checks = builtins.mapAttrs (
-        _: deployLib: deployLib.deployChecks inputs.self.deploy
-      ) inputs.deploy-rs.lib;
-
       templates.cpp.description = "devshell for a C++ project";
       templates.go.description = "devshell for a Golang project";
       templates.node.description = "devshell for a NodeJS project";
