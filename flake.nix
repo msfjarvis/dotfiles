@@ -146,7 +146,7 @@
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
 
-    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
+    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus?rev=3542fe9126dc492e53ddd252bb0260fe035f2c0f";
     flake-utils-plus.inputs.flake-utils.follows = "flake-utils";
 
     firefox.url = "github:nix-community/flake-firefox-nightly";
