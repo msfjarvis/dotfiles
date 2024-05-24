@@ -193,7 +193,7 @@
     rust-manifest.url = "https://static.rust-lang.org/dist/2024-01-09/channel-rust-nightly.toml";
     rust-manifest.flake = false;
 
-    snowfall-lib.url = "github:snowfallorg/lib/dev";
+    snowfall-lib.url = "github:snowfallorg/lib";
     snowfall-lib.inputs.flake-compat.follows = "flake-compat";
     snowfall-lib.inputs.flake-utils-plus.follows = "flake-utils-plus";
     snowfall-lib.inputs.nixpkgs.follows = "nixpkgs";
