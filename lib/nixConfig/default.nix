@@ -9,9 +9,9 @@
     {
       package = pkgs.nixVersions.git;
 
-      registry = lib.mapAttrs (_: v: { flake = v; }) inputs;
-
-      nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+      generateNixPathFromInputs = true;
+      generateRegistryFromInputs = true;
+      linkInputs = true;
 
       extraOptions = ''
         keep-outputs = true
