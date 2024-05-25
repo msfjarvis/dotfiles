@@ -1,8 +1,7 @@
 {
   lib,
   pkgs,
-  config,
-  inputs,
+  namespace,
   ...
 }:
 {
@@ -25,21 +24,12 @@
     flake = "/home/msfjarvis/git-repos/dotfiles";
   };
 
-  nix =
-    lib.jarvis.mkNixConfig {
-      inherit
-        lib
-        pkgs
-        config
-        inputs
-        ;
-    }
-    // {
-      optimise.automatic = true;
-      settings.allowed-users = [ "@wheel" ];
-      settings.trusted-users = [
-        "root"
-        "@wheel"
-      ];
-    };
+  nix = lib.${namespace}.mkNixConfig { inherit lib pkgs; } // {
+    optimise.automatic = true;
+    settings.allowed-users = [ "@wheel" ];
+    settings.trusted-users = [
+      "root"
+      "@wheel"
+    ];
+  };
 }

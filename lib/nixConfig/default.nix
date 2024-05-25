@@ -1,11 +1,6 @@
 {
   mkNixConfig =
-    {
-      pkgs,
-      lib,
-      config,
-      inputs,
-    }:
+    { pkgs, lib }:
     {
       package = pkgs.nixVersions.git;
 
