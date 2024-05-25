@@ -728,13 +728,13 @@
     "rust-manifest": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-IfCtGLS910H/gG7xxoboDxpZgEm8l+c38hAe2Aq1exA=",
+        "narHash": "sha256-zgM09XvDjHocYEg8W2SfAzSdp0S72Lpz0ckRaTfgx5E=",
         "type": "file",
-        "url": "https://static.rust-lang.org/dist/2024-01-09/channel-rust-nightly.toml"
+        "url": "https://static.rust-lang.org/dist/2024-05-25/channel-rust-nightly.toml"
       },
       "original": {
         "type": "file",
-        "url": "https://static.rust-lang.org/dist/2024-01-09/channel-rust-nightly.toml"
+        "url": "https://static.rust-lang.org/dist/2024-05-25/channel-rust-nightly.toml"
       }
     },
     "snowfall-lib": {
