@@ -7,16 +7,16 @@
 }:
 rustPlatform.buildRustPackage rec {
   pname = "adx";
-  version = "4.5.4";
+  version = "5.0.0";
 
   src = fetchFromGitHub {
     owner = "msfjarvis";
     repo = "adx";
     rev = "v${version}";
-    hash = "sha256-/T3Kd11nHiBVTPyk9C7GztO/+xUK2xfrZLGSJ8E101k=";
+    hash = "sha256-oE7LHZdIoDPRzhbJoiMPwQvIwKmNm4mZa7X19j5qybg=";
   };
 
-  cargoHash = "sha256-D8LFtU0xxsY4m58PTvKVJKvsxB8OfA4fDqpNEZG3aEI=";
+  cargoHash = "sha256-N4w6iWgTc6Q+QnuWtz4Y/qmBNZ9GqxrdwMWNgbuAEgY=";
 
   # Tests are annoying to make work with buildRustPackage
   doCheck = false;
