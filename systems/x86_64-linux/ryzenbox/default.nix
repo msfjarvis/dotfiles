@@ -193,6 +193,20 @@
                     "UCjI5qxhtyv3srhWr60HemRw"
                   ];
                 }
+                {
+                  type = "reddit";
+                  subreddit = "hermitcraft";
+                  style = "horizontal-cards";
+                  sort-by = "top";
+                  top-period = "day";
+                }
+                {
+                  type = "reddit";
+                  subreddit = "hermitcraftmemes";
+                  style = "horizontal-cards";
+                  sort-by = "top";
+                  top-period = "day";
+                }
               ];
             }
             {
