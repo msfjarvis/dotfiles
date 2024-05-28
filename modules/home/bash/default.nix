@@ -9,8 +9,8 @@ in
     historyFile = "${config.home.homeDirectory}/.bash_history";
     historyFileSize = 10000;
     historyControl = [
-      "ignorespace"
       "erasedups"
+      "ignoreboth"
     ];
     shellOptions = [
       # Append to history file rather than replacing it.
