@@ -58,7 +58,7 @@ in
       serviceConfig = {
         User = cfg.user;
         Group = cfg.group;
-        Restart = "on-failure";
+        Restart = "no";
         RestartSec = "30s";
         Type = "oneshot";
         Environment = "PATH=${
@@ -75,7 +75,10 @@ in
 
     systemd.timers.gphotos-cdp = {
       description = "Run gphotos-cdp every day";
-      timerConfig.OnBootSec = "15min";
+      timerConfig = {
+        OnCalendar = "24hours";
+        Persistent = true;
+      };
       wantedBy = [ "timers.target" ];
       partOf = [ "gphotos-cdp.service" ];
     };
