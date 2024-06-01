@@ -21,7 +21,7 @@ declare -a ALL_PACKAGES=(
   patreon-dl
   pidcat
   piv-agent
-  prometheus-qbittorrent-exporter
+  # prometheus-qbittorrent-exporter
   rnnoise-plugin-slim
   rucksack
   toml-cli
