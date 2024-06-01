@@ -19,11 +19,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4
 
-    - name: Install Nix
-      uses: DeterminateSystems/nix-installer-action@8cdf194da984e4f12b2f8c36d1fa107c1dd67f5c # v11
-
-    - name: Set up Magic Nix Cache
-      uses: DeterminateSystems/magic-nix-cache-action@87e8236f46702ab0ce5a058b605a173ec88d618e # v6
+    - uses: cachix/install-nix-action@ba0dd844c9180cbf77aa72a116d6fbc515d0e87b # v27
 
     - name: Set Git user and email
       run: |
