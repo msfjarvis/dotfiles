@@ -42,9 +42,9 @@ in
       programs.gradle = {
         enable = true;
         package = pkgs.callPackage (pkgs.gradleGen {
-          version = "8.8-rc-2";
+          version = "8.8";
           nativeVersion = "0.22-milestone-26";
-          hash = "sha256-tQJQcC0bI495fAd4JZ+LWHFNXRb7/sQfsZE1v4bGT+g=";
+          hash = "sha256-pLQVhgH4Y2ze6rCb12r7ZAAwu1sUSq/iYaXorwJ9xhI=";
           defaultJava = defaultJdk;
         }) { };
         settings = {
