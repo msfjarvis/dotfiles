@@ -14,6 +14,16 @@ let
     mkOption
     types
     ;
+  prometheusType = types.submodule {
+    options = {
+      enable = mkEnableOption "Attach a Prometheus exporter to the QBittorrent server.";
+      port = mkOption {
+        type = types.port;
+        default = 9999;
+        description = "Port on which the Prometheus exporter runs.";
+      };
+    };
+  };
 in
 {
   options.services.qbittorrent = {
@@ -65,6 +75,12 @@ in
         Number of files to allow qBittorrent to open.
       '';
     };
+
+    prometheus = mkOption {
+      type = prometheusType;
+      default = { };
+      description = "Prometheus settings.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -93,6 +109,19 @@ in
         Group = cfg.group;
         UMask = "0002";
         LimitNOFILE = cfg.openFilesLimit;
+      };
+    };
+
+    systemd.services.prometheus-qbittorrent-exporter = mkIf cfg.prometheus.enable {
+      after = [ "qbittorrent.service" ];
+      description = "qBittorrent Prometheus exporter";
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        ExecStart = ''
+          exec env QBITTORRENT_HOST=localhost QBITTORRENT_PORT=${toString cfg.port} EXPORTER_PORT=${toString cfg.prometheus.port} ${lib.getExe pkgs.jarvis.prometheus-qbittorrent-exporter}
+        '';
+        User = cfg.user;
+        Group = cfg.group;
       };
     };
 
