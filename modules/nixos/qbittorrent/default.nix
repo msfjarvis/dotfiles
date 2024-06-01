@@ -117,12 +117,15 @@ in
       description = "qBittorrent Prometheus exporter";
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        ExecStart = ''
-          exec env QBITTORRENT_HOST=localhost QBITTORRENT_PORT=${toString cfg.port} EXPORTER_PORT=${toString cfg.prometheus.port} ${lib.getExe pkgs.jarvis.prometheus-qbittorrent-exporter}
-        '';
         User = cfg.user;
         Group = cfg.group;
       };
+      script = ''
+        export QBITTORRENT_HOST=localhost
+        export QBITTORRENT_PORT=${toString cfg.port}
+        export EXPORTER_PORT=${toString cfg.prometheus.port}
+        ${lib.getExe pkgs.jarvis.prometheus-qbittorrent-exporter}
+      '';
     };
 
     users.users = mkIf (cfg.user == "qbittorrent") {
