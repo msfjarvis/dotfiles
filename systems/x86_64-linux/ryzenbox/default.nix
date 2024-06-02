@@ -292,6 +292,24 @@
             }
           ];
         }
+        {
+          name = "Internet";
+          columns = [
+            {
+              size = "full";
+              widgets = [
+                {
+                  type = "search";
+                  search-engine = "https://search.nixos.org/options?channel=unstable&from=0&size=50&sort=relevance&type=packages&query={QUERY}";
+                }
+                {
+                  type = "lobsters";
+                  sort-by = "hot";
+                }
+              ];
+            }
+          ];
+        }
       ];
     };
   };
