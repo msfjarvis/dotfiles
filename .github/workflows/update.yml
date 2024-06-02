@@ -20,27 +20,36 @@ jobs:
       uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4
 
     - uses: cachix/install-nix-action@ba0dd844c9180cbf77aa72a116d6fbc515d0e87b # v27
-      with:
-        nix_path: nixpkgs=channel:nixpkgs-unstable
+
+    - name: Add nixpkgs-unstable channel
+      shell: bash
+      run: |
+        nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
+        nix-channel --update
 
     - name: Set Git user and email
+      shell: bash
       run: |
         git config user.name "GitHub Actions"
         git config user.email noreply@github.com
 
     - name: Check pre-update Git ref
+      shell: bash
       run: |
         echo "OLD_REF=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
 
     - name: Check for updates of given package
+      shell: bash
       if: "github.event.inputs.package != null || github.event.action == 'package-bump'"
       run: nix-shell -p nix-update git --run './update.sh ${{ github.event.inputs.package || github.event.client_payload.package_name }} ${{ github.event.inputs.version }}'
 
     - name: Check for updates
+      shell: bash
       if: "github.event.inputs.package == null"
       run: nix-shell -p nix-update git --run ./update.sh
 
     - name: Check post-update Git ref
+      shell: bash
       run: |
         echo "NEW_REF=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
 
