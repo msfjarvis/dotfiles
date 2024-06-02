@@ -1,10 +1,7 @@
 { modulesPath, ... }:
 {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
-  boot.binfmt.emulatedSystems = [
-    "i686-linux"
-    "x86_64-linux"
-  ];
+  boot.binfmt.emulatedSystems = [ ];
   boot.initrd.availableKernelModules = [
     "ata_piix"
     "uhci_hcd"
