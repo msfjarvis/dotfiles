@@ -13,6 +13,7 @@ let
     mkIf
     mkOption
     mkPackageOptionMD
+    optionalString
     types
     ;
   serverType = types.submodule {
@@ -164,6 +165,12 @@ in
       default = "glance";
       description = "Group account under which Glance runs.";
     };
+
+    checkConfig = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Whether to check the configuration file at build time.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -185,9 +192,19 @@ in
         RestartSec = "30s";
         Type = "simple";
       };
-      script = ''
-        ${lib.getExe cfg.package} -config ${settingsFile}
-      '';
+      script =
+        let
+          configFile = pkgs.writeTextFile {
+            name = "glance.yaml";
+            text = builtins.readFile settingsFile;
+            checkPhase = optionalString cfg.checkConfig ''
+              ${lib.getExe cfg.package} -check-config -config ${settingsFile}
+            '';
+          };
+        in
+        ''
+          ${lib.getExe cfg.package} -config ${configFile}
+        '';
     };
 
     users.users = mkIf (cfg.user == "glance") {
