@@ -49,7 +49,7 @@
             cmake
             lld_13
             openssl
-            pkgconfig
+            pkg-config
             zlib
           ];
         };
