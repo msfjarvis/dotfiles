@@ -1,20 +1,18 @@
 { pkgs, lib, ... }:
-pkgs.stdenvNoCC.mkDerivation {
-  name = "check-fmt";
-  src = lib.snowfall.fs.get-file "/";
-  dontBuild = true;
-  doCheck = true;
-  nativeBuildInputs = with pkgs; [
-    nixfmt-rfc-style
-    deadnix
-    shfmt
-    statix
-  ];
-  checkPhase = ''
+pkgs.runCommandLocal "check-formatting"
+  {
+    nativeBuildInputs = with pkgs; [
+      nixfmt-rfc-style
+      deadnix
+      shfmt
+      statix
+    ];
+    src = lib.snowfall.fs.get-file "/";
+  }
+  ''
     shfmt --diff --simplify --language-dialect bash --indent 2 --case-indent --space-redirects .
     deadnix
     statix check .
     nixfmt --check .
-  '';
-  installPhase = ''mkdir "$out"'';
-}
+    mkdir $out
+  ''
