@@ -61,6 +61,7 @@ in
         Restart = "no";
         RestartSec = "30s";
         Type = "oneshot";
+        TimeoutSec = "600s";
         Environment = "PATH=${
           lib.makeBinPath [
             pkgs.coreutils
