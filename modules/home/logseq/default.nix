@@ -14,15 +14,5 @@ in
   };
   config = mkIf cfg.enable {
     home.packages = with pkgs; [ logseq ];
-    services.git-sync = {
-      enable = true;
-      repositories = {
-        logseq = {
-          path = "${config.home.homeDirectory}/logseq";
-          uri = "git+ssh://msfjarvis@github.com:msfjarvis/logseq-backup.git";
-          interval = 600;
-        };
-      };
-    };
   };
 }
