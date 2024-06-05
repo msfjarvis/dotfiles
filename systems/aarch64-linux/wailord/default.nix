@@ -191,6 +191,11 @@
         enable = true;
         port = 9003;
       };
+      postgres = {
+        enable = true;
+        port = 9004;
+        runAsLocalSuperUser = true;
+      };
     };
     scrapeConfigs = [
       {
@@ -198,6 +203,7 @@
         static_configs = [
           { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ]; }
           { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.systemd.port}" ]; }
+          { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.postgres.port}" ]; }
         ];
       }
       {
