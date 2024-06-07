@@ -61,6 +61,7 @@ in
         gnome-calendar
         gnome-characters
         gnome-clocks
+        gnome-console
         gnome-contacts
         gnome-maps
         gnome-music
@@ -86,8 +87,7 @@ in
       dconf.settings = {
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" =
           let
-            terminal-package =
-              if (config.profiles.wezterm.enable or false) then pkgs.wezterm else pkgs.gnome-console;
+            terminal-package = if (config.profiles.wezterm.enable or false) then pkgs.wezterm else pkgs.ptyxis;
           in
           lib.mkDefault {
             binding = "<Control><Alt>t";
