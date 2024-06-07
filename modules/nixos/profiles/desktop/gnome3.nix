@@ -52,21 +52,24 @@ in
         # Allow controlling themes
         user-themes
       ]);
-    environment.gnome.excludePackages = with pkgs.gnome; [
-      epiphany
-      geary
-      gnome-calendar
-      gnome-characters
-      gnome-clocks
-      gnome-contacts
-      gnome-maps
-      gnome-music
-      gnome-weather
-      pkgs.loupe
-      simple-scan
-      pkgs.snapshot
-      totem
-    ];
+    environment.gnome.excludePackages =
+      with pkgs;
+      with pkgs.gnome;
+      [
+        epiphany
+        geary
+        gnome-calendar
+        gnome-characters
+        gnome-clocks
+        gnome-contacts
+        gnome-maps
+        gnome-music
+        gnome-weather
+        loupe
+        simple-scan
+        snapshot
+        totem
+      ];
 
     stylix.targets = {
       gnome.enable = true;
