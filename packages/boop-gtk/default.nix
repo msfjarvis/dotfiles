@@ -21,17 +21,17 @@
 }:
 rustPlatform.buildRustPackage rec {
   pname = "boop-gtk";
-  version = "1.8.0";
+  version = "1.9.0";
 
   src = fetchFromGitHub {
     owner = "msfjarvis";
     repo = "boop-gtk";
     rev = "v${version}";
-    hash = "sha256-IiZ3u/rV7lCu8TbEYMJZId2qJnkMmfYFKUf/OuGCqD4=";
+    hash = "sha256-SbCe7CrVsgHqyK3d9aRyubaO9jB4KKsG1X2T0r51NzQ=";
     fetchSubmodules = true;
   };
 
-  cargoHash = "sha256-RVuXuNg+wlI1dS2sJ2X11fk9K1IAiVPNFHZM+/lS1+U=";
+  cargoHash = "sha256-0lt3juqiXoOSQhCY/f7Gjqt1UjUKH64Xx7PWPR7pWzk=";
 
   RUSTY_V8_ARCHIVE = callPackage ./librusty_v8.nix { };
 
