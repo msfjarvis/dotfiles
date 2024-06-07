@@ -12,7 +12,5 @@ in
   options.profiles.logseq = {
     enable = mkEnableOption "Install logseq and configure git synchronization";
   };
-  config = mkIf cfg.enable {
-    home.packages = with pkgs; [ logseq ];
-  };
+  config = mkIf cfg.enable { home.packages = with pkgs; [ logseq ]; };
 }
