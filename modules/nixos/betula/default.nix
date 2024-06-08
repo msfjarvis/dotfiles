@@ -55,8 +55,7 @@ in
         User = cfg.user;
         Group = cfg.group;
         Restart = "on-failure";
-        RestartSec = "30s";
-        Type = "oneshot";
+        Type = "simple";
       };
       script = ''
         ${lib.getExe cfg.package} ${cfg.dataDir}/sqlite.db
