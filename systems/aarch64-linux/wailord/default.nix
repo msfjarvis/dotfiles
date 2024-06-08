@@ -87,6 +87,10 @@
     database.createLocally = true;
   };
 
+  services.betula = {
+    enable = true;
+  };
+
   services.caddy = {
     enable = true;
     globalConfig = ''
@@ -108,6 +112,11 @@
       "https://${config.services.grafana.settings.server.domain}" = {
         extraConfig = ''
           reverse_proxy ${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}
+        '';
+      };
+      "https://links.msfjarvis.dev" = {
+        extraConfig = ''
+          reverse_proxy :1738 # Hardcoded by betula
         '';
       };
       "https://read.msfjarvis.dev" = {
