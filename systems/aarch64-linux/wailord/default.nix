@@ -132,8 +132,13 @@
       };
       "https://wailord.tiger-shark.ts.net" = {
         extraConfig = ''
-          root * /var/lib/file_share_internal
-          file_server browse
+          handle_path /yt/* {
+            reverse_proxy :9090
+          }
+          handle {
+            root * /var/lib/file_share_internal
+            file_server browse
+          }
         '';
       };
     };
@@ -228,11 +233,11 @@
 
   system.stateVersion = "23.11";
 
-  # virtualisation.oci-containers.containers = {
-  #   linkding = {
-  #     image = "sissbruecker/linkding:latest-alpine";
-  #     ports = ["127.0.0.1:9090:9090"];
-  #     volumes = ["/var/lib/linkding:/etc/linkding/data"];
-  #   };
-  # };
+  virtualisation.oci-containers.containers = {
+    metube = {
+      image = "ghcr.io/alexta69/metube";
+      ports = ["127.0.0.1:9090:8081"];
+      volumes = ["/var/lib/metube:/downloads"];
+    };
+  };
 }
