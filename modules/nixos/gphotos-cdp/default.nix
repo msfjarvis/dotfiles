@@ -60,7 +60,7 @@ in
         Group = cfg.group;
         Restart = "no";
         RestartSec = "30s";
-        Type = "oneshot";
+        Type = "simple";
         TimeoutSec = "600s";
         Environment = "PATH=${
           lib.makeBinPath [

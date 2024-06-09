@@ -60,7 +60,7 @@ in
         Group = cfg.group;
         Restart = "on-failure";
         RestartSec = "30s";
-        Type = "oneshot";
+        Type = "simple";
       };
       script = ''
         exec env ${lib.getExe cfg.package} ${cfg.config-file} ${cfg.destination-dir}
