@@ -522,7 +522,7 @@
     "micro-theme": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-5uwaRTsY+/kAyZBHMBK/HrxMKZ7H2rZm5/gdGpDUEBE=",
+        "narHash": "sha256-l8OQ4U5VrusiqF3j113g+ZqDvE2DeHvrMRCS4JhyvZ0=",
         "type": "file",
         "url": "https://raw.githubusercontent.com/catppuccin/micro/main/src/catppuccin-mocha.micro"
       },
