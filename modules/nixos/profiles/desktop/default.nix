@@ -62,6 +62,7 @@ in
     # Theming
     stylix = {
       autoEnable = false;
+      enable = true;
       image = inputs.wallpaper;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
       cursor = {
