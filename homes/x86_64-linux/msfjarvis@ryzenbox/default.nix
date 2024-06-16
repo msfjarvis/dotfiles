@@ -4,7 +4,7 @@ _: {
     name = "msfjarvis";
   };
 
-  profiles.logseq.enable = true;
+  # profiles.logseq.enable = true;
   profiles.mpv.enable = true;
   profiles.pass.enable = true;
   profiles.spotify.enable = true;
