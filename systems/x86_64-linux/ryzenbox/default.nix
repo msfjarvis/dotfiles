@@ -60,26 +60,7 @@
       pkgs.${namespace}.boop-gtk
       discord
       fclones
-      (ffmpeg.override {
-        buildFfplay = false;
-        buildFfprobe = true;
-        buildQtFaststart = false;
-        withAom = true;
-        withAss = true;
-        withDav1d = true;
-        withDrm = true;
-        withMp3lame = true;
-        withNvdec = true;
-        withNvenc = true;
-        withRav1e = true;
-        withVaapi = true;
-        withVdpau = true;
-        withVorbis = true;
-        withVpx = true;
-        withWebp = true;
-        withX264 = true;
-        withX265 = true;
-      })
+      ffmpeg
       (inputs.firefox.packages.${pkgs.system}.firefox-nightly-bin.override {
         cfg = {
           smartcardSupport = true;
