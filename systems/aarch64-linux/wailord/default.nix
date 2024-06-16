@@ -236,8 +236,8 @@
   virtualisation.oci-containers.containers = {
     metube = {
       image = "ghcr.io/alexta69/metube";
-      ports = ["127.0.0.1:9090:8081"];
-      volumes = ["/var/lib/metube:/downloads"];
+      ports = [ "127.0.0.1:9090:8081" ];
+      volumes = [ "/var/lib/metube:/downloads" ];
     };
   };
 }
