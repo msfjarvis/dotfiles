@@ -72,6 +72,7 @@ in
   adbtuifm = callPackage ./packages/adbtuifm { };
   adx = callPackage ./packages/adx { };
   boop-gtk = callPackage ./packages/boop-gtk { };
+  caddy-tailscale = callPackage ./packages/caddy-tailscale { };
   clipboard-substitutor = callPackage ./packages/clipboard-substitutor { };
   diffuse-bin = callPackage ./packages/diffuse-bin { };
   gdrive = callPackage ./packages/gdrive { };
