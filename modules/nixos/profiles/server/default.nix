@@ -46,7 +46,7 @@ in
 
     services.tailscale-autoconnect = {
       enable = true;
-      authkeyFile = "/run/secrets/tsauthkey";
+      authkeyFile = config.sops.secrets.tsauthkey.path;
       extraOptions = [
         "--accept-risk=lose-ssh"
         "--ssh"
