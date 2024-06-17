@@ -92,8 +92,13 @@
     domain = "links.msfjarvis.dev";
   };
 
+  sops.secrets.tsauthkey-env = {
+    sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
+    owner = config.services.caddy.user;
+  };
   services.caddy = {
     enable = true;
+    environmentFile = config.sops.secrets.tsauthkey-env.path;
     globalConfig = ''
       servers {
         metrics
