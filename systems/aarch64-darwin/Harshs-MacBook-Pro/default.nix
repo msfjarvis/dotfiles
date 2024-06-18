@@ -11,6 +11,7 @@
 
   environment.systemPackages = with pkgs; [
     pkgs.${namespace}.adx
+    attic
     awscli2
     coreutils
     pkgs.${namespace}.diffuse-bin
