@@ -148,11 +148,29 @@
     enable = true;
     appName = "Harsh Shandilya's Git hosting";
     settings = {
-      mailer.ENABLED = false;
-      server.DOMAIN = "git.msfjarvis.dev";
-      server.ROOT_URL = "https://git.msfjarvis.dev/";
-      service.COOKIE_SECURE = true;
-      service.DISABLE_REGISTRATION = true;
+      mailer = {
+        ENABLED = false;
+      };
+      other = {
+        SHOW_FOOTER_POWERED_BY = false;
+      };
+      repository = {
+        DISABLE_STARS = false;
+      };
+      server = {
+        DISABLE_SSH = true;
+        DOMAIN = "git.msfjarvis.dev";
+        ENABLE_GZIP = true;
+        LANDING_PAGE = "explore";
+        ROOT_URL = "https://git.msfjarvis.dev/";
+      };
+      service = {
+        COOKIE_SECURE = true;
+        DISABLE_REGISTRATION = true;
+      };
+      ui = {
+        DEFAULT_THEME = "catppuccin-mocha-mauve";
+      };
     };
   };
 
