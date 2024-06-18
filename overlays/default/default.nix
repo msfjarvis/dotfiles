@@ -1,26 +1,6 @@
 { inputs, ... }:
 _final: prev: {
   attic = inputs.attic.packages.${prev.system}.attic-client;
-  ffmpeg = prev.ffmpeg.override {
-    buildFfplay = false;
-    buildFfprobe = true;
-    buildQtFaststart = false;
-    withAom = true;
-    withAss = true;
-    withDav1d = true;
-    withDrm = true;
-    withMp3lame = true;
-    withNvdec = true;
-    withNvenc = true;
-    withRav1e = true;
-    withVaapi = true;
-    withVdpau = true;
-    withVorbis = true;
-    withVpx = true;
-    withWebp = true;
-    withX264 = true;
-    withX265 = true;
-  };
   # Force the use of the JDK we're using everywhere else
   jdk = prev.openjdk22;
   jdk_headless = prev.openjdk22_headless;
