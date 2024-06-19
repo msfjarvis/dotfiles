@@ -4,7 +4,7 @@
   stdenv,
   fetchFromGitHub,
 }:
-stdenv.mkDerivation {
+stdenv.mkDerivation(finalAttrs: {
   pname = "nix-inspect";
   version = "unstable-2024-04-19";
 
@@ -38,8 +38,8 @@ stdenv.mkDerivation {
   meta = with lib; {
     description = "Interactive tui for inspecting nix configs (Nix worker)";
     homepage = "https://github.com/bluskript/nix-inspect";
-    changelog = "https://github.com/bluskript/nix-inspect/blob/${src.rev}/CHANGELOG.md";
+    changelog = "https://github.com/bluskript/nix-inspect/blob/${finalAttrs.src.rev}/CHANGELOG.md";
     license = licenses.mit;
     mainProgram = "nix-inspect";
   };
-}
+})
