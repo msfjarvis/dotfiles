@@ -89,6 +89,7 @@
 
   services.betula = {
     enable = true;
+    domain = "links.msfjarvis.dev";
   };
 
   services.caddy = {
@@ -112,11 +113,6 @@
       "https://${config.services.grafana.settings.server.domain}" = {
         extraConfig = ''
           reverse_proxy ${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}
-        '';
-      };
-      "https://links.msfjarvis.dev" = {
-        extraConfig = ''
-          reverse_proxy :1738 # Hardcoded by betula
         '';
       };
       "https://read.msfjarvis.dev" = {

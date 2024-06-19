@@ -18,6 +18,12 @@ in
   options.services.betula = {
     enable = mkEnableOption { description = "Whether to enable the betula bookmarking service."; };
 
+    domain = mkOption {
+      type = types.nullOr types.str;
+      example = "betula.example.com";
+      description = "Domain name under which betula will be accessible. When set, will configure Caddy to serve betula under this domain.";
+    };
+
     dataDir = mkOption {
       type = types.str;
       default = "/var/lib/betula/";
@@ -60,6 +66,14 @@ in
       script = ''
         ${lib.getExe cfg.package} ${cfg.dataDir}/sqlite.db
       '';
+    };
+
+    services.caddy.virtualHosts = mkIf cfg.domain != null {
+      "https://${cfg.domain}" = {
+        extraConfig = ''
+          reverse_proxy :1738 # Hardcoded by betula
+        '';
+      };
     };
 
     systemd.tmpfiles.rules = [ "d ${cfg.dataDir} 0755 ${cfg.user} ${cfg.group} - -" ];
