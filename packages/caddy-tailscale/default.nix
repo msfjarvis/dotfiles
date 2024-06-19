@@ -6,16 +6,16 @@
 
 buildGoModule rec {
   pname = "caddy-tailscale";
-  version = "unstable-2024-06-07";
+  version = "0-unstable-2024-06-18";
 
   src = fetchFromGitHub {
     owner = "tailscale";
     repo = "caddy-tailscale";
-    rev = "5cc2140a0eb3b884de161e26d37cc4098de91d57";
-    hash = "sha256-2dakUsmwVNTDcMKohSp+5G/C5rDpls5FYXUWvF46chs=";
+    rev = "4e8fde6df984ff16921cbd9ce68263b4e99889c7";
+    hash = "sha256-lq/PU3R6FRigazo34OiW3vx22RkXCYPHdj0D614MGxY=";
   };
 
-  vendorHash = "sha256-m0R8DwI83Pr0cMV6DWK7QTgwKjrEd7Wsf00DOYmczbs=";
+  vendorHash = "sha256-8TFJn9VMoQhvxmPzsTI1RXyxUvj2kfiYEdkv5aflhjw=";
 
   ldflags = [
     "-s"
