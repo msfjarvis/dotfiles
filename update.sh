@@ -21,7 +21,7 @@ declare -a ALL_PACKAGES=(
   patreon-dl
   pidcat
   piv-agent
-  # prometheus-qbittorrent-exporter
+  prometheus-qbittorrent-exporter
   rnnoise-plugin-slim
   rucksack
   toml-cli
@@ -31,6 +31,10 @@ declare -a ALL_PACKAGES=(
 declare -A VERSION_REGEX=(
   ["hcctl"]="hcctl-v(.*)"
   ["healthchecks-monitor"]="healthchecks-monitor-v(.*)"
+)
+
+declare -A UNSTABLE_PACKAGES=(
+  ["prometheus-qbittorrent-exporter"]=1
 )
 
 PKG="${1-}"
@@ -53,6 +57,9 @@ for PACKAGE in "${PACKAGES_TO_BUILD[@]}"; do
   if [[ -v VERSION_REGEX["${PACKAGE}"] ]]; then
     PARAMS+=("--version-regex")
     PARAMS+=("${VERSION_REGEX["${PACKAGE}"]}")
+  fi
+  if [[ -v UNSTABLE_PACKAGES["${PACKAGE}"] ]]; then
+    PARAMS+=("--version=branch")
   fi
   if [ -n "${VERSION}" ]; then
     PARAMS+=("--version")
