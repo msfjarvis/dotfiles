@@ -68,7 +68,7 @@ in
       '';
     };
 
-    services.caddy.virtualHosts = mkIf cfg.domain != null {
+    services.caddy.virtualHosts = mkIf (cfg.domain != null) {
       "https://${cfg.domain}" = {
         extraConfig = ''
           reverse_proxy :1738 # Hardcoded by betula
