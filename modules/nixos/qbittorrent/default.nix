@@ -116,6 +116,9 @@ in
       after = [ "qbittorrent.service" ];
       description = "qBittorrent Prometheus exporter";
       wantedBy = [ "multi-user.target" ];
+      environment = {
+        EXPORT_METRICS_BY_TORRENT = "True";
+      };
       serviceConfig = {
         User = cfg.user;
         Group = cfg.group;
