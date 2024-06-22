@@ -58,7 +58,6 @@
       age
       attic
       pkgs.${namespace}.boop-gtk
-      discord
       fclones
       (ffmpeg.override {
         buildFfplay = false;
@@ -117,6 +116,7 @@
       thunderbird
       tuba
       uv
+      vesktop
       xdotool
       yt-dlp
 
