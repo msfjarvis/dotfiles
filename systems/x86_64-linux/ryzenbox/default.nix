@@ -89,6 +89,7 @@
       gallery-dl
       pkgs.${namespace}.gdrive
       git-crypt
+      forge-sparks
       nerdfonts
       pkgs.${namespace}.katbin
       kondo
