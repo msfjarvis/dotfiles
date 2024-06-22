@@ -4,9 +4,12 @@
   stdenv,
   lib,
 }:
-rustPlatform.buildRustPackage rec {
-  pname = "rucksack";
+let
   version = "1.1.1";
+in
+rustPlatform.buildRustPackage {
+  pname = "rucksack";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "msfjarvis";

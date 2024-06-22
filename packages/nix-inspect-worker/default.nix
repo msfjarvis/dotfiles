@@ -4,7 +4,7 @@
   stdenv,
   fetchFromGitHub,
 }:
-stdenv.mkDerivation(finalAttrs: {
+stdenv.mkDerivation (finalAttrs: {
   pname = "nix-inspect";
   version = "unstable-2024-04-19";
 

@@ -3,9 +3,12 @@
   fetchFromGitHub,
   lib,
 }:
-buildGoModule rec {
-  pname = "adbtuifm";
+let
   version = "0.5.8";
+in
+buildGoModule {
+  pname = "adbtuifm";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "darkhz";

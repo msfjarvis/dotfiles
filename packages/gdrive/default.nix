@@ -3,9 +3,12 @@
   fetchFromGitHub,
   lib,
 }:
-buildGoModule rec {
-  pname = "gdrive";
+let
   version = "3.0.13";
+in
+buildGoModule {
+  pname = "gdrive";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "msfjarvis";

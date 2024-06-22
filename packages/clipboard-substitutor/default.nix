@@ -6,9 +6,12 @@
   xorg,
   lib,
 }:
-rustPlatform.buildRustPackage rec {
-  pname = "clipboard-substitutor";
+let
   version = "0.7.7";
+in
+rustPlatform.buildRustPackage {
+  pname = "clipboard-substitutor";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "msfjarvis";

@@ -5,9 +5,12 @@
   stdenv,
   lib,
 }:
-rustPlatform.buildRustPackage rec {
-  pname = "adx";
+let
   version = "5.0.0";
+in
+rustPlatform.buildRustPackage {
+  pname = "adx";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "msfjarvis";

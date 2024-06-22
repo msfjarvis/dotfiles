@@ -5,9 +5,12 @@
   stdenv,
   lib,
 }:
-rustPlatform.buildRustPackage rec {
-  pname = "katbin-cli";
+let
   version = "1.3.15";
+in
+rustPlatform.buildRustPackage {
+  pname = "katbin-cli";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "SphericalKat";

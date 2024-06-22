@@ -8,16 +8,17 @@
 let
   inherit (inputs) fenix rust-manifest;
   inherit ((import fenix { inherit pkgs; })) fromManifestFile;
-
   toolchain = (fromManifestFile rust-manifest).minimalToolchain;
+
+  version = "2.0.6";
 in
 (makeRustPlatform {
   cargo = toolchain;
   rustc = toolchain;
 }).buildRustPackage
-  rec {
+  {
     pname = "gitice";
-    version = "2.0.6";
+    inherit version;
 
     src = fetchFromGitHub {
       owner = "msfjarvis";

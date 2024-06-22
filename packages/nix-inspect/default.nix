@@ -4,7 +4,7 @@
   rustPlatform,
   fetchFromGitHub,
 }:
-rustPlatform.buildRustPackage rec {
+rustPlatform.buildRustPackage {
   pname = "nix-inspect";
   version = "unstable-2024-04-19";
 

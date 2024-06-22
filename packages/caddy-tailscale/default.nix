@@ -4,7 +4,7 @@
   fetchFromGitHub,
 }:
 
-buildGoModule rec {
+buildGoModule {
   pname = "caddy-tailscale";
   version = "0-unstable-2024-06-18";
 

@@ -19,9 +19,13 @@
   pango,
   zlib,
 }:
-rustPlatform.buildRustPackage rec {
+let
   pname = "boop-gtk";
   version = "1.9.0";
+  description = "Port of @IvanMathy's Boop to GTK, a scriptable scratchpad for developers";
+in
+rustPlatform.buildRustPackage {
+  inherit pname version;
 
   src = fetchFromGitHub {
     owner = "msfjarvis";
@@ -60,7 +64,7 @@ rustPlatform.buildRustPackage rec {
       name = "fyi.zoey.Boop-GTK";
       exec = "boop-gtk";
       icon = pname;
-      comment = meta.description;
+      comment = description;
       desktopName = "Boop";
       genericName = "Scriptable scratchpad";
       categories = [
@@ -84,11 +88,11 @@ rustPlatform.buildRustPackage rec {
     runHook postInstall
   '';
 
-  meta = with lib; {
-    description = "Port of @IvanMathy's Boop to GTK, a scriptable scratchpad for developers";
+  meta = {
+    inherit description;
     homepage = "https://github.com/msfjarvis/boop-gtk";
-    license = licenses.mit;
+    license = lib.licenses.mit;
     mainProgram = "boop-gtk";
-    platforms = platforms.linux;
+    platforms = lib.platforms.linux;
   };
 }

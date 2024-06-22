@@ -5,9 +5,12 @@
   stdenv,
   lib,
 }:
-rustPlatform.buildRustPackage rec {
-  pname = "hcctl";
+let
   version = "2.0.8";
+in
+rustPlatform.buildRustPackage {
+  pname = "hcctl";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "msfjarvis";

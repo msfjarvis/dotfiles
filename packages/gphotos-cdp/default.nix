@@ -3,9 +3,12 @@
   fetchFromGitHub,
   lib,
 }:
-buildGoModule rec {
-  pname = "gphotos-cdp";
+let
   version = "1.0.0";
+in
+buildGoModule {
+  pname = "gphotos-cdp";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "msfjarvis";

@@ -3,9 +3,12 @@
   rustPlatform,
   lib,
 }:
-rustPlatform.buildRustPackage rec {
-  pname = "when";
+let
   version = "0.4.0";
+in
+rustPlatform.buildRustPackage {
+  pname = "when";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "mitsuhiko";

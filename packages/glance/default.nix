@@ -3,10 +3,12 @@
   buildGoModule,
   fetchFromGitHub,
 }:
-
-buildGoModule rec {
-  pname = "glance";
+let
   version = "0.5.0";
+in
+buildGoModule {
+  pname = "glance";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "glanceapp";

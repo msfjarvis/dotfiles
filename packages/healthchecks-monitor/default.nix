@@ -5,9 +5,12 @@
   stdenv,
   darwin,
 }:
-rustPlatform.buildRustPackage rec {
-  pname = "healthchecks-monitor";
+let
   version = "3.0.6";
+in
+rustPlatform.buildRustPackage {
+  pname = "healthchecks-monitor";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "msfjarvis";

@@ -10,9 +10,12 @@
   darwin,
   lib,
 }:
-rustPlatform.buildRustPackage rec {
-  pname = "gitout";
+let
   version = "0.2.2";
+in
+rustPlatform.buildRustPackage {
+  pname = "gitout";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "msfjarvis";

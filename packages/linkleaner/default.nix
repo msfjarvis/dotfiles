@@ -10,16 +10,17 @@
 let
   inherit (inputs) fenix rust-manifest;
   inherit ((import fenix { inherit pkgs; })) fromManifestFile;
-
   toolchain = (fromManifestFile rust-manifest).minimalToolchain;
+
+  version = "2.3.2";
 in
 (makeRustPlatform {
   cargo = toolchain;
   rustc = toolchain;
 }).buildRustPackage
-  rec {
+  {
     pname = "linkleaner";
-    version = "2.3.2";
+    inherit version;
 
     src = fetchFromGitHub {
       owner = "msfjarvis";

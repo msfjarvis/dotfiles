@@ -3,9 +3,12 @@
   rustPlatform,
   fetchFromGitHub,
 }:
-rustPlatform.buildRustPackage rec {
-  pname = "toml-cli";
+let
   version = "0.2.3";
+in
+rustPlatform.buildRustPackage {
+  pname = "toml-cli";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "gnprice";

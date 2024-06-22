@@ -5,9 +5,12 @@
   pkg-config,
   lib,
 }:
-buildGoModule rec {
-  pname = "piv-agent";
+let
   version = "0.21.0";
+in
+buildGoModule {
+  pname = "piv-agent";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "smlx";
