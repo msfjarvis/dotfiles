@@ -99,6 +99,7 @@
       newsflash
       nix-init
       nix-update
+      pipeline
       pkgs.${namespace}.patreon-dl
       pkgs.${namespace}.pidcat
       (python312.withPackages (

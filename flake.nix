@@ -171,6 +171,10 @@
     nixos-vscode-server.inputs.nixpkgs.follows = "nixpkgs";
     nixos-vscode-server.inputs.flake-utils.follows = "flake-utils";
 
+    pipeline-app.url = "gitlab:schmiddi-on-mobile/pipeline";
+    pipeline-app.inputs.nixpkgs.follows = "nixpkgs";
+    pipeline-app.inputs.flake-utils.follows = "flake-utils";
+
     rust-manifest.url = "https://static.rust-lang.org/dist/2024-05-25/channel-rust-nightly.toml";
     rust-manifest.flake = false;
 

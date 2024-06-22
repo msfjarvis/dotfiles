@@ -675,6 +675,29 @@
         "type": "github"
       }
     },
+    "pipeline-app": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1718954601,
+        "narHash": "sha256-xrJijDxbaocZI7l4KZG9lzknnX/V9dTMk1dvCW354AM=",
+        "owner": "schmiddi-on-mobile",
+        "repo": "pipeline",
+        "rev": "cf83f983cbdda72cd55bd2c4960e0a5706b26659",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "schmiddi-on-mobile",
+        "repo": "pipeline",
+        "type": "gitlab"
+      }
+    },
     "root": {
       "inputs": {
         "attic": "attic",
@@ -698,6 +721,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixos-vscode-server": "nixos-vscode-server",
         "nixpkgs": "nixpkgs",
+        "pipeline-app": "pipeline-app",
         "rust-manifest": "rust-manifest",
         "snowfall-lib": "snowfall-lib",
         "sops-nix": "sops-nix",

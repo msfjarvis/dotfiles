@@ -12,5 +12,6 @@ _final: prev: {
   });
   # Set default fonts
   nerdfonts = prev.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+  pipeline = inputs.pipeline-app.packages.${prev.system}.default;
   qbittorrent = prev.qbittorrent.override { guiSupport = false; };
 }
