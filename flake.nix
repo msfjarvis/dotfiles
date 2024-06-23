@@ -20,6 +20,8 @@
       channels-config = {
         allowUnfree = true;
         cudaSupport = true;
+        # Allow all packages even if insecure, r/iamverysmart.
+        allowInsecurePredicate = x: true;
       };
       homes.modules = with inputs; [
         nix-index-database.hmModules.nix-index
