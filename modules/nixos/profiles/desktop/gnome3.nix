@@ -43,8 +43,8 @@ in
         just-perfection
         # Top bar media control widget
         media-controls
-        # POP!_OS shell tiling extensions for Gnome 3
-        pop-shell
+        # Better tiling controls
+        tiling-shell
         # System activity indicator
         tophat
         # Make top bar transparent when nothing is docked to it
@@ -102,8 +102,8 @@ in
             "mediacontrols@cliffniff.github.com"
             "native-window-placement@gnome-shell-extensions.gcampax.github.com"
             "places-menu@gnome-shell-extensions.gcampax.github.com"
-            "pop-shell@system76.com"
             "screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com"
+            "tilingshell@ferrarodomenico.com"
             "tophat@fflewddur.github.io"
             "transparent-top-bar@zhanghai.me"
             "user-theme@gnome-shell-extensions.gcampax.github.com"
