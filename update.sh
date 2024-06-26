@@ -34,6 +34,7 @@ declare -A VERSION_REGEX=(
 )
 
 declare -A UNSTABLE_PACKAGES=(
+  ["caddy-tailscale"]=1
   ["prometheus-qbittorrent-exporter"]=1
 )
 
