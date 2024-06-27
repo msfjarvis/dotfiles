@@ -98,6 +98,7 @@
   };
   services.caddy = {
     enable = true;
+    package = pkgs.jarvis.caddy-tailscale;
     environmentFile = config.sops.secrets.tsauthkey-env.path;
     globalConfig = ''
       servers {
