@@ -39,6 +39,8 @@ in
         another-window-session-manager
         # A nicer application menu for gnome
         arcmenu
+        # KDEConnect port
+        gsconnect
         # Tweak GNOME settings
         just-perfection
         # Top bar media control widget
@@ -98,6 +100,7 @@ in
           enabled-extensions = [
             "another-window-session-manager@gmail.com"
             "arcmenu@arcmenu.com"
+            "gsconnect@andyholmes.github.io"
             "just-perfection-desktop@just-perfection"
             "mediacontrols@cliffniff.github.com"
             "native-window-placement@gnome-shell-extensions.gcampax.github.com"

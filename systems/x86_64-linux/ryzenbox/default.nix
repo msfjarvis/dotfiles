@@ -37,6 +37,21 @@
   # Enable networking
   networking = {
     hostName = "ryzenbox";
+    nftables.enable = true;
+    firewall = {
+      allowedTCPPortRanges = [
+        {
+          from = 1714;
+          to = 1764;
+        }
+      ];
+      allowedUDPPortRanges = [
+        {
+          from = 1714;
+          to = 1764;
+        }
+      ];
+    };
   };
 
   # Set your time zone.
