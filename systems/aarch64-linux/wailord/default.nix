@@ -132,15 +132,16 @@
           file_server browse
         '';
       };
+      "https://metube.tiger-shark.ts.net" = {
+        extraConfig = ''
+            bind tailscale/metube
+            reverse_proxy :9090
+        '';
+      };
       "https://wailord.tiger-shark.ts.net" = {
         extraConfig = ''
-          handle_path /yt/* {
-            reverse_proxy :9090
-          }
-          handle {
-            root * /var/lib/file_share_internal
-            file_server browse
-          }
+          root * /var/lib/file_share_internal
+          file_server browse
         '';
       };
     };
