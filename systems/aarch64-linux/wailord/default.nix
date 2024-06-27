@@ -109,7 +109,7 @@
       }
     '';
     virtualHosts = {
-      "https://cache.msfjarvis.dev" = {
+      "https://nix-cache.tiger-shark.ts.net" = {
         extraConfig = ''
           reverse_proxy ${config.services.atticd.settings.listen}
         '';
@@ -196,7 +196,7 @@
     enable = true;
     settings = {
       server = {
-        domain = "grafana.msfjarvis.dev";
+        domain = "grafana.tiger-shark.ts.net";
         http_addr = "127.0.0.1";
         http_port = 2342;
       };

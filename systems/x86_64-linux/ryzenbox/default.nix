@@ -265,7 +265,7 @@
                   sites = [
                     {
                       title = "Attic cache";
-                      url = "https://cache.msfjarvis.dev";
+                      url = "https://nix-cache.tiger-shark.ts.net";
                     }
                     {
                       title = "Git mirror";
@@ -273,7 +273,7 @@
                     }
                     {
                       title = "Grafana";
-                      url = "https://grafana.msfjarvis.dev";
+                      url = "https://grafana.tiger-shark.ts.net";
                     }
                     {
                       title = "Private file share";
