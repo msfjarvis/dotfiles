@@ -104,6 +104,9 @@
       servers {
         metrics
       }
+      tailscale {
+        ephemeral true
+      }
     '';
     virtualHosts = {
       "https://cache.msfjarvis.dev" = {
