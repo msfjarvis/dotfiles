@@ -89,11 +89,15 @@ in
       dconf.settings = {
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" =
           let
-            terminal-package = if (config.profiles.wezterm.enable or false) then pkgs.wezterm else pkgs.ptyxis;
+            terminal-cmd =
+              if (config.profiles.wezterm.enable or false) then
+                "${lib.getExe pkgs.wezterm}"
+              else
+                "${lib.getExe pkgs.ptyxis} -s";
           in
           lib.mkDefault {
             binding = "<Control><Alt>t";
-            command = "${lib.getExe terminal-package}";
+            command = terminal-cmd;
           };
         "org/gnome/shell" = {
           disable-user-extensions = false;
