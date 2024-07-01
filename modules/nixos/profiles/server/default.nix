@@ -51,6 +51,9 @@ in
       enable = true;
       package = pkgs.openssh_hpn;
     };
+    users.users.root.openssh.authorizedKeys.keys = [
+      ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOZFw0Dgs0z29Brvj+CejlgBG5t0AtoFvNIjd3DPvL7N''
+    ];
 
     services.tailscale-autoconnect = {
       enable = true;
