@@ -111,6 +111,7 @@
     virtualHosts = {
       "https://nix-cache.tiger-shark.ts.net" = {
         extraConfig = ''
+          bind tailscale/nix-cache
           reverse_proxy ${config.services.atticd.settings.listen}
         '';
       };
@@ -121,6 +122,7 @@
       };
       "https://${config.services.grafana.settings.server.domain}" = {
         extraConfig = ''
+          bind tailscale/grafana
           reverse_proxy ${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}
         '';
       };
