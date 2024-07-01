@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profiles.server;
   inherit (lib) mkEnableOption mkIf;
@@ -42,7 +47,10 @@ in
 
     # Enable SSH
     programs.mosh.enable = true;
-    services.openssh.enable = true;
+    services.openssh = {
+      enable = true;
+      package = pkgs.openssh_hpn;
+    };
 
     services.tailscale-autoconnect = {
       enable = true;
