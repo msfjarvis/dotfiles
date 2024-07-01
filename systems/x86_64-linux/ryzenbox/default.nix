@@ -13,6 +13,7 @@
   profiles.tailscale.enable = true;
   profiles.desktop.enable = true;
   profiles.desktop.android-dev.enable = true;
+  profiles.desktop.gaming.enable = true;
   profiles.desktop.gnome3.enable = true;
   profiles.desktop.noise-cancelation.enable = true;
 
@@ -136,13 +137,6 @@
       vesktop
       xdotool
       yt-dlp
-
-      # Minecraft
-      mcaselector
-      (prismlauncher.override {
-        jdks = [ openjdk22 ];
-        withWaylandGLFW = config.profiles.desktop.gnome3.enable;
-      })
     ];
   };
 
@@ -160,22 +154,6 @@
     stdenv.cc.cc
     zlib
   ];
-
-  programs.steam = {
-    enable = true;
-    package = pkgs.steam.override {
-      extraLibraries =
-        p: with p; [
-          cairo
-          gccForLibs.lib
-          gdk-pixbuf
-          gtk3
-          pango
-        ];
-    };
-  };
-  # Required to avoid some logspew
-  environment.sessionVariables.VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
 
   services.glance = {
     enable = true;
