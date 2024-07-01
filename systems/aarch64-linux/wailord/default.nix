@@ -230,6 +230,12 @@
     adminCredentialsFile = config.sops.secrets.feed-auth.path;
   };
 
+  services.postgresqlBackup = {
+    enable = true;
+    backupAll = true;
+    compression = "zstd";
+  };
+
   services.prometheus = {
     enable = true;
     port = 9001;
