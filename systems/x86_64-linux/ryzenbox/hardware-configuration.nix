@@ -8,7 +8,7 @@
   ...
 }:
 let
-  nvidiaDriver = config.boot.kernelPackages.nvidiaPackages.latest.bin;
+  nvidiaDriver = config.boot.kernelPackages.nvidiaPackages.production.bin;
 in
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
