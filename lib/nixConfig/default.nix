@@ -1,8 +1,12 @@
 {
   mkNixConfig =
-    { pkgs, lib }:
     {
-      package = pkgs.nixVersions.git;
+      pkgs,
+      lib,
+      inputs,
+    }:
+    {
+      package = inputs.lix-module.packages.${pkgs.system}.default;
 
       generateNixPathFromInputs = true;
       generateRegistryFromInputs = true;

@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  inputs,
   namespace,
   ...
 }:
@@ -24,7 +25,7 @@
     flake = "/home/msfjarvis/git-repos/dotfiles";
   };
 
-  nix = lib.${namespace}.mkNixConfig { inherit lib pkgs; } // {
+  nix = lib.${namespace}.mkNixConfig { inherit lib pkgs inputs; } // {
     optimise.automatic = true;
     settings.allowed-users = [ "@wheel" ];
     settings.trusted-users = [
