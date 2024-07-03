@@ -29,6 +29,7 @@
         nix-index-database.hmModules.nix-index
         spicetify-nix.homeManagerModules.default
       ];
+      systems.modules.darwin = with inputs; [ srvos.darwinModules.desktop ];
       systems.modules.nixos = with inputs; [
         nix-topology.nixosModules.default
         sops-nix.nixosModules.sops
@@ -39,12 +40,16 @@
 
       systems.hosts.crusty.modules = with inputs; [
         nixos-hardware.nixosModules.raspberry-pi-4
+        srvos.nixosModules.mixins-mdns
         srvos.nixosModules.server
       ];
       systems.hosts.ryzenbox.modules = with inputs; [ srvos.nixosModules.desktop ];
       systems.hosts.wailord.modules = with inputs; [
         attic.nixosModules.atticd
         disko.nixosModules.disko
+        srvos.nixosModules.mixins-telegraf
+        srvos.nixosModules.mixins-terminfo
+        srvos.nixosModules.roles-prometheus
         srvos.nixosModules.server
       ];
 
