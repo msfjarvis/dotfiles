@@ -6,7 +6,7 @@
       inputs,
     }:
     {
-      package = inputs.lix-module.packages.${pkgs.system}.default;
+      package = inputs.lix.packages.${pkgs.system}.default;
 
       generateNixPathFromInputs = true;
       generateRegistryFromInputs = true;

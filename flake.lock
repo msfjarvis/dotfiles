@@ -383,21 +383,6 @@
         "type": "github"
       }
     },
-    "flakey-profile": {
-      "locked": {
-        "lastModified": 1712898590,
-        "narHash": "sha256-FhGIEU93VHAChKEXx905TSiPZKga69bWl1VB37FK//I=",
-        "owner": "lf-",
-        "repo": "flakey-profile",
-        "rev": "243c903fd8eadc0f63d205665a92d4df91d42d9d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "lf-",
-        "repo": "flakey-profile",
-        "type": "github"
-      }
-    },
     "fromYaml": {
       "flake": false,
       "locked": {
@@ -535,40 +520,31 @@
       }
     },
     "lix": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1718419213,
-        "narHash": "sha256-WY7BGnu5PnbK4O8cKKv9kvxwzZIGbIQUQLGPHFXitI0=",
-        "rev": "253546d5fbf8a5aa60ac8164c1b4f5794dc4e9d1",
-        "type": "tarball",
-        "url": "https://git.lix.systems/api/v1/repos/lix-project/lix/archive/253546d5fbf8a5aa60ac8164c1b4f5794dc4e9d1.tar.gz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://git.lix.systems/lix-project/lix/archive/2.90.0-rc1.tar.gz"
-      }
-    },
-    "lix-module": {
       "inputs": {
-        "flake-utils": [
-          "flake-utils"
+        "flake-compat": [
+          "flake-compat"
         ],
-        "flakey-profile": "flakey-profile",
-        "lix": "lix",
+        "nix2container": [],
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "nixpkgs-regression": [
+          "nixpkgs"
+        ],
+        "pre-commit-hooks": []
       },
       "locked": {
-        "lastModified": 1718778548,
-        "narHash": "sha256-64lB/NO6AQ6z6EDCemPSYZWX/Qc6Rt04cPia5T5v01g=",
-        "rev": "29ed1bb67751e5b107d08df35d18dda6d45324e9",
-        "type": "tarball",
-        "url": "https://git.lix.systems/api/v1/repos/lix-project/nixos-module/archive/29ed1bb67751e5b107d08df35d18dda6d45324e9.tar.gz"
+        "lastModified": 1719959194,
+        "narHash": "sha256-iFIP240ZElHfAhv9xjSeYuHV0+PmL0yac6AaE80/Fdk=",
+        "ref": "refs/heads/main",
+        "rev": "45ac449d3970bc6abc4c04e0b3a3b6768a9cb753",
+        "revCount": 15912,
+        "type": "git",
+        "url": "https://git.lix.systems/lix-project/lix"
       },
       "original": {
-        "type": "tarball",
-        "url": "https://git.lix.systems/lix-project/nixos-module/archive/2.90.0-rc1.tar.gz"
+        "type": "git",
+        "url": "https://git.lix.systems/lix-project/lix"
       }
     },
     "micro-theme": {
@@ -766,7 +742,7 @@
         "gphotos-cdp": "gphotos-cdp",
         "home-manager": "home-manager",
         "lib-aggregate": "lib-aggregate",
-        "lix-module": "lix-module",
+        "lix": "lix",
         "micro-theme": "micro-theme",
         "nix-index-database": "nix-index-database",
         "nix-topology": "nix-topology",

@@ -154,9 +154,12 @@
     lib-aggregate.inputs.nixpkgs-lib.follows = "nixpkgs";
     lib-aggregate.inputs.flake-utils.follows = "flake-utils";
 
-    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.90.0-rc1.tar.gz";
-    lix-module.inputs.flake-utils.follows = "flake-utils";
-    lix-module.inputs.nixpkgs.follows = "nixpkgs";
+    lix.url = "git+https://git.lix.systems/lix-project/lix";
+    lix.inputs.nixpkgs.follows = "nixpkgs";
+    lix.inputs.nixpkgs-regression.follows = "nixpkgs";
+    lix.inputs.nix2container.follows = "";
+    lix.inputs.pre-commit-hooks.follows = "";
+    lix.inputs.flake-compat.follows = "flake-compat";
 
     micro-theme.url = "https://raw.githubusercontent.com/catppuccin/micro/main/src/catppuccin-mocha.micro";
     micro-theme.flake = false;
