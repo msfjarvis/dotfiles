@@ -92,6 +92,7 @@ in
       inherit fenix rust-manifest;
     };
   };
+  miniflux = callPackage ./packages/miniflux { };
   monocraft-nerdfonts = callPackage ./packages/monocraft-nerdfonts { };
   patreon-dl = callPackage ./packages/patreon-dl { };
   pidcat = callPackage ./packages/pidcat { };
