@@ -205,6 +205,7 @@
 
   services.miniflux = {
     enable = true;
+    package = pkgs.jarvis.miniflux;
     createDatabaseLocally = true;
     config = {
       LISTEN_ADDR = "127.0.0.1:8889";
