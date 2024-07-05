@@ -18,6 +18,7 @@ in
       package = pkgs.steam.override {
         extraLibraries =
           p: with p; [
+            # Tiny Glade
             cairo
             gccForLibs.lib
             gdk-pixbuf
@@ -28,6 +29,8 @@ in
     };
 
     users.users.msfjarvis.packages = with pkgs; [
+      # Steam
+      gamescope
       # Minecraft
       mcaselector
       (prismlauncher.override {
