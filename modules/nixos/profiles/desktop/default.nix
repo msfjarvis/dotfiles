@@ -51,13 +51,6 @@ in
           variant = mkDefault "";
         };
       };
-
-      # Enable CUPS to print documents.
-      printing.enable = mkDefault true;
-    };
-
-    hardware = {
-      bluetooth.enable = mkDefault true;
     };
 
     # Theming
