@@ -13,6 +13,7 @@ in
   imports = [
     ./android-dev.nix
     ./cinnamon.nix
+    ./earlyoom.nix
     ./gaming.nix
     ./gnome3.nix
     ./noise-cancelation.nix
