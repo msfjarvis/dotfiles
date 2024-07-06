@@ -71,7 +71,8 @@ in
     services.caddy.virtualHosts = mkIf (cfg.domain != null) {
       "https://${cfg.domain}" = {
         extraConfig = ''
-          reverse_proxy :1738 # Hardcoded by betula
+          # Port hardcoded by betula
+          reverse_proxy :1738
         '';
       };
     };
