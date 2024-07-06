@@ -31,6 +31,7 @@ in
             pango
           ];
       };
+      extraCompatPackages = with pkgs; [ proton-ge-bin ];
     };
 
     users.users.msfjarvis.packages = with pkgs; [
