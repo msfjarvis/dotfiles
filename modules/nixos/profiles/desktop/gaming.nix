@@ -13,8 +13,13 @@ in
     enable = mkEnableOption "set up epic gamer stuff";
   };
   config = mkIf cfg.gaming.enable {
+    programs.gamescope = {
+      enable = true;
+      capSysNice = true;
+    };
     programs.steam = {
       enable = true;
+      gamescopeSession.enable = true;
       package = pkgs.steam.override {
         extraLibraries =
           p: with p; [
@@ -29,8 +34,6 @@ in
     };
 
     users.users.msfjarvis.packages = with pkgs; [
-      # Steam
-      gamescope
       # Minecraft
       mcaselector
       (prismlauncher.override {
