@@ -3,11 +3,10 @@
   home.packages = with pkgs; [
     aria2
     byobu
-    cachix
     curl
     delta
     diskus
-    dos2unix
+    fastfetch
     fd
     git-absorb
     git-quickfix
@@ -15,18 +14,14 @@
     mosh
     ncdu_1
     neofetch
-    nil
     nixfmt-rfc-style
     nixpkgs-review
-    neofetch
-    nvd
     ripgrep
     sd
     shellcheck
     shfmt
     sops
     tailscale
-    tmux
     unzip
     vivid
     zip
