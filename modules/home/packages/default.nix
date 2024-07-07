@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    nixfmt-rfc-style
     aria2
     byobu
     cachix
@@ -17,6 +16,7 @@
     ncdu_1
     neofetch
     nil
+    nixfmt-rfc-style
     nixpkgs-review
     neofetch
     nvd

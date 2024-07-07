@@ -39,6 +39,7 @@
   networking = {
     hostName = "ryzenbox";
     nftables.enable = true;
+    # KDEConnect needs these ports
     firewall = {
       allowedTCPPortRanges = [
         {
@@ -116,7 +117,6 @@
       newsflash
       nix-init
       nix-update
-      pipeline
       pkgs.${namespace}.patreon-dl
       pkgs.${namespace}.pidcat
       (python312.withPackages (
@@ -135,25 +135,16 @@
       tuba
       uv
       vesktop
-      xdotool
       yt-dlp
     ];
   };
 
-  services.mullvad-vpn = {
-    enable = true;
-  };
-  # Required for Mullvad
-  # https://discourse.nixos.org/t/connected-to-mullvadvpn-but-no-internet-connection/35803/11
-  services.resolved.enable = true;
-
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-    icu
-    openssl
-    stdenv.cc.cc
-    zlib
-  ];
+  # services.mullvad-vpn = {
+  #   enable = true;
+  # };
+  # # Required for Mullvad
+  # # https://discourse.nixos.org/t/connected-to-mullvadvpn-but-no-internet-connection/35803/11
+  # services.resolved.enable = true;
 
   services.glance = {
     enable = true;
