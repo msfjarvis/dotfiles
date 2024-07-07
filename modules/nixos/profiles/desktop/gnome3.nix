@@ -31,8 +31,8 @@ in
       with pkgs;
       [
         # Old GNOME picture viewer, better than the current default
-        gnome.eog
-        gnome3.gnome-tweaks
+        eog
+        gnome-tweaks
       ]
       ++ (with pkgs.gnomeExtensions; [
         # Save and restore window positions
