@@ -48,7 +48,6 @@ in
             pango
           ];
       };
-      extraCompatPackages = with pkgs; [ proton-ge-bin ];
     };
 
     # Pipewire LowLatency configuration from nix-gaming
