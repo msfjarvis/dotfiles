@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 let
@@ -14,8 +15,10 @@ in
   };
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      # So the Zed Nix extension can find it
+      # Nix
       nixd
+      # Rust
+      inputs.fenix.packages.${system}.rust-analyzer
       zed-editor
     ];
   };
