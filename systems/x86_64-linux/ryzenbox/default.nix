@@ -253,10 +253,6 @@
                       url = "https://til.msfjarvis.dev";
                     }
                     {
-                      title = "QBittorrent";
-                      url = "https://crusty.tiger-shark.ts.net";
-                    }
-                    {
                       title = "RSS reader";
                       url = "https://read.msfjarvis.dev";
                     }
