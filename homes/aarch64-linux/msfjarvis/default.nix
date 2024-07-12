@@ -1,10 +1,11 @@
-_: {
+{ namespace, ... }:
+{
   snowfallorg.user = {
     enable = true;
     name = "msfjarvis";
   };
 
-  profiles.starship.server = true;
+  profiles.${namespace}.starship.server = true;
 
   home.stateVersion = "21.05";
 }

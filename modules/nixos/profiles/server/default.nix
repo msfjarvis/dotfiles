@@ -2,20 +2,21 @@
   config,
   lib,
   pkgs,
+  namespace,
   ...
 }:
 let
-  cfg = config.profiles.server;
+  cfg = config.profiles.${namespace}.server;
   inherit (lib) mkEnableOption mkIf;
 in
 {
-  options.profiles.server = {
+  options.profiles.${namespace}.server = {
     enable = mkEnableOption "server profile";
     tailscaleExitNode = mkEnableOption "Run this machine as a Tailscale exit node";
   };
   config = mkIf cfg.enable {
     # Enable Tailscale
-    profiles.tailscale.enable = true;
+    profiles.${namespace}.tailscale.enable = true;
 
     # Open HTTP(S) ports
     networking = {
@@ -55,7 +56,7 @@ in
       ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOZFw0Dgs0z29Brvj+CejlgBG5t0AtoFvNIjd3DPvL7N''
     ];
 
-    services.tailscale-autoconnect = {
+    services.${namespace}.tailscale-autoconnect = {
       enable = true;
       authkeyFile = config.sops.secrets.tsauthkey.path;
       extraOptions = [

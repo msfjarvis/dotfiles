@@ -2,14 +2,15 @@
   config,
   pkgs,
   lib,
+  namespace,
   ...
 }:
 let
-  cfg = config.profiles.mpv;
+  cfg = config.profiles.${namespace}.mpv;
   inherit (lib) mkEnableOption mkIf;
 in
 {
-  options.profiles.mpv = {
+  options.profiles.${namespace}.mpv = {
     enable = mkEnableOption "Enable MPV player";
   };
   config = mkIf cfg.enable {

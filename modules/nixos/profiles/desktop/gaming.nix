@@ -2,18 +2,19 @@
   config,
   lib,
   pkgs,
+  namespace,
   ...
 }:
 let
   quantum = 64;
   rate = 48000;
   qr = "${toString quantum}/${toString rate}";
-  cfg = config.profiles.desktop;
+  cfg = config.profiles.${namespace}.desktop;
   inherit (lib) mkEnableOption mkIf;
   inherit (lib.generators) toLua;
 in
 {
-  options.profiles.desktop.gaming = {
+  options.profiles.${namespace}.desktop.gaming = {
     enable = mkEnableOption "set up epic gamer stuff";
   };
   config = mkIf cfg.gaming.enable {
@@ -141,7 +142,7 @@ in
       mcaselector
       (prismlauncher.override {
         jdks = [ openjdk22 ];
-        withWaylandGLFW = config.profiles.desktop.gnome3.enable;
+        withWaylandGLFW = config.profiles.${namespace}.desktop.gnome3.enable;
       })
     ];
     # Required to avoid some logspew

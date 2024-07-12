@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  namespace,
   ...
 }:
 {
@@ -44,7 +45,9 @@
 
   programs.command-not-found.enable = false;
 
-  profiles.server.enable = true;
+  profiles.${namespace} = {
+    server.enable = true;
+  };
   networking.hostName = "crusty";
 
   environment.systemPackages = with pkgs; [
@@ -67,7 +70,7 @@
             reverse_proxy :${toString config.services.prometheus.port}
           }
           handle {
-            reverse_proxy :${toString config.services.qbittorrent.port}
+            reverse_proxy :${toString config.services.${namespace}.qbittorrent.port}
           }
         '';
       };
@@ -89,26 +92,28 @@
         job_name = "crusty";
         static_configs = [
           { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ]; }
-          { targets = [ "127.0.0.1:${toString config.services.qbittorrent.prometheus.port}" ]; }
+          { targets = [ "127.0.0.1:${toString config.services.${namespace}.qbittorrent.prometheus.port}" ]; }
         ];
       }
     ];
   };
 
-  services.qbittorrent = {
-    enable = true;
-    port = 9091;
-    openFirewall = true;
-    prometheus.enable = true;
-  };
+  services.${namespace} = {
+    qbittorrent = {
+      enable = true;
+      port = 9091;
+      openFirewall = true;
+      prometheus.enable = true;
+    };
+    rucksack = {
+      enable = true;
+      user = "root";
+      group = "root";
+      sources = [ "/var/lib/qbittorrent/downloads" ];
+      target = "/media/.omg";
+      file_filter = "*.mp4";
+    };
 
-  services.rucksack = {
-    enable = true;
-    user = "root";
-    group = "root";
-    sources = [ "/var/lib/qbittorrent/downloads" ];
-    target = "/media/.omg";
-    file_filter = "*.mp4";
   };
 
   systemd.services.disable-wlan-powersave = {

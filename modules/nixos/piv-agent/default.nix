@@ -2,14 +2,15 @@
   config,
   lib,
   pkgs,
+  namespace,
   ...
 }:
 let
-  cfg = config.services.piv-agent;
+  cfg = config.services.${namespace}.piv-agent;
   inherit (lib) mkEnableOption mkIf mkPackageOptionMD;
 in
 {
-  options.services.piv-agent = {
+  options.services.${namespace}.piv-agent = {
     enable = mkEnableOption { description = "Whether to configure the piv-agent service"; };
     package = mkPackageOptionMD pkgs.jarvis "piv-agent" { };
   };

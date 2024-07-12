@@ -1,10 +1,15 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
-  cfg = config.profiles.starship;
+  cfg = config.profiles.${namespace}.starship;
   inherit (lib) mkEnableOption;
 in
 {
-  options.profiles.starship = {
+  options.profiles.${namespace}.starship = {
     server = mkEnableOption "Customize starship for servers";
   };
   config = {

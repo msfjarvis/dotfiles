@@ -2,14 +2,15 @@
   config,
   lib,
   pkgs,
+  namespace,
   ...
 }:
 let
-  cfg = config.profiles.desktop;
+  cfg = config.profiles.${namespace}.desktop;
   inherit (lib) mkEnableOption mkIf;
 in
 {
-  options.profiles.desktop.cinnamon = {
+  options.profiles.${namespace}.desktop.cinnamon = {
     enable = mkEnableOption "Setup desktop with Cinnamon DE";
   };
   config = mkIf cfg.cinnamon.enable {

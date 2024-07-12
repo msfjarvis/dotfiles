@@ -2,10 +2,11 @@
   config,
   lib,
   pkgs,
+  namespace,
   ...
 }:
 let
-  cfg = config.services.betula;
+  cfg = config.services.${namespace}.betula;
   inherit (lib)
     mkEnableOption
     mkIf
@@ -15,7 +16,7 @@ let
     ;
 in
 {
-  options.services.betula = {
+  options.services.${namespace}.betula = {
     enable = mkEnableOption { description = "Whether to enable the betula bookmarking service."; };
 
     domain = mkOption {

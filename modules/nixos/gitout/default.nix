@@ -2,10 +2,11 @@
   config,
   lib,
   pkgs,
+  namespace,
   ...
 }:
 let
-  cfg = config.services.gitout;
+  cfg = config.services.${namespace}.gitout;
   inherit (lib)
     mkEnableOption
     mkIf
@@ -15,7 +16,7 @@ let
     ;
 in
 {
-  options.services.gitout = {
+  options.services.${namespace}.gitout = {
     enable = mkEnableOption { description = "Whether to enable the gitout backup service."; };
 
     config-file = mkOption {

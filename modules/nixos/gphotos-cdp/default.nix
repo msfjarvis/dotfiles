@@ -2,10 +2,11 @@
   config,
   lib,
   pkgs,
+  namespace,
   ...
 }:
 let
-  cfg = config.services.gphotos-cdp;
+  cfg = config.services.${namespace}.gphotos-cdp;
   inherit (lib)
     mkEnableOption
     mkIf
@@ -15,7 +16,7 @@ let
     ;
 in
 {
-  options.services.gphotos-cdp = {
+  options.services.${namespace}.gphotos-cdp = {
     enable = mkEnableOption { description = "Whether to enable the gphotos-cdp backup service."; };
 
     session-dir = mkOption {

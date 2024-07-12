@@ -2,14 +2,15 @@
   config,
   pkgs,
   lib,
+  namespace,
   ...
 }:
 let
-  cfg = config.profiles.pass;
+  cfg = config.profiles.${namespace}.pass;
   inherit (lib) mkEnableOption mkIf;
 in
 {
-  options.profiles.pass = {
+  options.profiles.${namespace}.pass = {
     enable = mkEnableOption "Enable password-store and related stuff";
   };
   config = mkIf cfg.enable {

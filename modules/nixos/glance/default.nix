@@ -2,10 +2,11 @@
   config,
   lib,
   pkgs,
+  namespace,
   ...
 }:
 let
-  cfg = config.services.glance;
+  cfg = config.services.${namespace}.glance;
   settingsFormat = pkgs.formats.yaml { };
   settingsFile = settingsFormat.generate "glance.yaml" cfg.settings;
   inherit (lib)
@@ -129,7 +130,7 @@ let
   };
 in
 {
-  options.services.glance = {
+  options.services.${namespace}.glance = {
     enable = mkEnableOption { description = "Whether to enable the Glance dashboard"; };
 
     settings = mkOption {

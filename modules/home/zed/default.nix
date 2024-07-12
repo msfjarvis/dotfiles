@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  namespace,
   ...
 }:
 let
@@ -12,7 +13,7 @@ let
     mkPackageOption
     types
     ;
-  cfg = config.profiles.zed;
+  cfg = config.profiles.${namespace}.zed;
   jsonFormat = pkgs.formats.json { };
 
   mergedSettings = cfg.userSettings // {
@@ -21,7 +22,7 @@ let
   };
 in
 {
-  options.profiles.zed = {
+  options.profiles.${namespace}.zed = {
     enable = mkEnableOption "Zed, the high performance, multiplayer code editor from the creators of Atom and Tree-sitter";
     package = mkPackageOption pkgs "zed-editor" { };
 

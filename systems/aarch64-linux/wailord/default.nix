@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  namespace,
   ...
 }:
 {
@@ -16,8 +17,12 @@
 
   topology.self.name = "netcup server";
 
-  profiles.server.enable = true;
-  profiles.server.tailscaleExitNode = true;
+  profiles.${namespace} = {
+    server = {
+      enable = true;
+      tailscaleExitNode = true;
+    };
+  };
   networking.hostName = "wailord";
 
   time.timeZone = "Asia/Kolkata";
@@ -77,11 +82,6 @@
     port = 8888;
     openFirewall = true;
     database.createLocally = true;
-  };
-
-  services.betula = {
-    enable = true;
-    domain = "links.msfjarvis.dev";
   };
 
   sops.secrets.tsauthkey-env = {
@@ -178,12 +178,19 @@
     sopsFile = lib.snowfall.fs.get-file "secrets/gitout.yaml";
     owner = "msfjarvis";
   };
-  services.gitout = {
-    enable = true;
-    config-file = config.sops.secrets.gitout-config.path;
-    destination-dir = "/home/msfjarvis/gitout";
-    user = "msfjarvis";
-    group = "users";
+  services.${namespace} = {
+    betula = {
+      enable = true;
+      domain = "links.msfjarvis.dev";
+    };
+
+    gitout = {
+      enable = true;
+      config-file = config.sops.secrets.gitout-config.path;
+      destination-dir = "/home/msfjarvis/gitout";
+      user = "msfjarvis";
+      group = "users";
+    };
   };
 
   services.grafana = {

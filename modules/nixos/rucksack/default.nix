@@ -2,10 +2,11 @@
   config,
   lib,
   pkgs,
+  namespace,
   ...
 }:
 let
-  cfg = config.services.rucksack;
+  cfg = config.services.${namespace}.rucksack;
   settingsFormat = pkgs.formats.toml { };
   settingsFile = settingsFormat.generate "rucksack.toml" {
     inherit (cfg) sources target file_filter;
@@ -19,7 +20,7 @@ let
     ;
 in
 {
-  options.services.rucksack = {
+  options.services.${namespace}.rucksack = {
     enable = mkEnableOption { description = "Whether to enable the rucksack daemon."; };
 
     sources = mkOption {

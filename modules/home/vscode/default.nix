@@ -2,14 +2,15 @@
   config,
   pkgs,
   lib,
+  namespace,
   ...
 }:
 let
-  cfg = config.profiles.vscode;
+  cfg = config.profiles.${namespace}.vscode;
   inherit (lib) mkEnableOption mkIf;
 in
 {
-  options.profiles.vscode = {
+  options.profiles.${namespace}.vscode = {
     enable = mkEnableOption "Enable VSCode editor";
   };
   config = mkIf cfg.enable {

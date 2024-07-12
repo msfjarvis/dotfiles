@@ -2,10 +2,11 @@
   config,
   lib,
   pkgs,
+  namespace,
   ...
 }:
 let
-  cfg = config.services.qbittorrent;
+  cfg = config.services.${namespace}.qbittorrent;
   configDir = "${cfg.dataDir}/.config";
   openFilesLimit = 4096;
   inherit (lib)
@@ -26,7 +27,7 @@ let
   };
 in
 {
-  options.services.qbittorrent = {
+  options.services.${namespace}.qbittorrent = {
     enable = mkEnableOption "Run qBittorrent headlessly as systemwide daemon";
 
     dataDir = mkOption {

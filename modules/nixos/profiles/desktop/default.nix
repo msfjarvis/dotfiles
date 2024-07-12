@@ -3,10 +3,11 @@
   lib,
   pkgs,
   inputs,
+  namespace,
   ...
 }:
 let
-  cfg = config.profiles.desktop;
+  cfg = config.profiles.${namespace}.desktop;
   inherit (lib) mkDefault mkEnableOption mkIf;
 in
 {
@@ -19,7 +20,7 @@ in
     ./gnome3.nix
     ./noise-cancelation.nix
   ];
-  options.profiles.desktop = {
+  options.profiles.${namespace}.desktop = {
     enable = mkEnableOption "Profile for desktop machines (i.e. not servers)";
   };
   config = mkIf cfg.enable {
