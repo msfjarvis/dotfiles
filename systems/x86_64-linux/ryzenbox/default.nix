@@ -274,7 +274,6 @@
                     type = "twitch-channels";
                     cache = "1m";
                     channels = [
-                      "camila"
                       "couriway"
                       "geminitay"
                       "laynalazar"
@@ -282,11 +281,7 @@
                       "michimochievee"
                       "mush"
                       "pearlescentmoon"
-                      "piratesoftware"
-                      "squchan"
-                      "thinkingmansvalo"
-                      "trickywi"
-                      "zentreya"
+                      "sliggytv"
                     ];
                   }
                 ];
