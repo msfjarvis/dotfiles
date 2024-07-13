@@ -64,7 +64,6 @@ in
         gnome-calendar
         gnome-characters
         gnome-clocks
-        gnome-console
         gnome-contacts
         gnome-maps
         gnome-music
@@ -94,7 +93,7 @@ in
               if (config.profiles.wezterm.enable or false) then
                 "${lib.getExe pkgs.wezterm}"
               else
-                "${lib.getExe pkgs.ptyxis} -s";
+                "${lib.getExe pkgs.gnome-console}";
           in
           lib.mkDefault {
             binding = "<Control><Alt>t";
