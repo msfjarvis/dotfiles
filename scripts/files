@@ -171,7 +171,7 @@ function reencode_dir() {
     encode "${f}.mp4" "${f}_x265.mp4"
     du -sh "${f}.mp4" | tee -a ~/stats
     du -sh "${f}_x265.mp4" | tee -a ~/stats
-    if [[ $(stat -c %s "${f}_x265.mp4") -le $(stat -c %s "${f}.mp4") ]]; then
+    if [[ $(stat -c %s "${f}_x265.mp4") -ne 0 && $(stat -c %s "${f}_x265.mp4") -le $(stat -c %s "${f}.mp4") ]]; then
       touch -r "${f}.mp4" "${f}_x265.mp4"
       rm -v "${f}.mp4"
     else rm -v "${f}_x265.mp4"; fi
