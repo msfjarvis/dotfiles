@@ -55,3 +55,9 @@ function cache() {
   KERNEL="$(uname --kernel-name | tr '[:upper:]' '[:lower:]')"
   attic push "${ARCH}-${KERNEL}" "${CACHE_PATHS[@]:?}"
 }
+
+function flakerev() {
+  local INPUT
+  INPUT="${1:-nixpkgs}"
+  jq -r ".flakes[] | select(.from.id == \"${INPUT}\") | .to.rev" /etc/nix/registry.json
+}
