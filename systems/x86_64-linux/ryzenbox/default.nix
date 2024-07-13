@@ -141,12 +141,12 @@
     ];
   };
 
-  # services.mullvad-vpn = {
-  #   enable = true;
-  # };
-  # # Required for Mullvad
-  # # https://discourse.nixos.org/t/connected-to-mullvadvpn-but-no-internet-connection/35803/11
-  # services.resolved.enable = true;
+  services.mullvad-vpn = {
+    enable = true;
+  };
+  # Required for Mullvad
+  # https://discourse.nixos.org/t/connected-to-mullvadvpn-but-no-internet-connection/35803/11
+  services.resolved.enable = true;
 
   services.${namespace} = {
     glance = {
