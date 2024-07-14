@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   inputs,
   namespace,
   ...
@@ -20,8 +21,6 @@
       extraPackages = with pkgs; [
         # Nix
         nixd
-        # Rust
-        inputs.fenix.packages.${system}.rust-analyzer
       ];
       extensions = [
         "catppuccin"
@@ -48,6 +47,11 @@
           };
           closureReturnTypeHints = {
             enable = true;
+          };
+        };
+        lsp = {
+          rust-analyzer = {
+            binary.path = "${lib.getExe inputs.fenix.packages.${pkgs.stdenv.system}.rust-analyzer}";
           };
         };
       };
