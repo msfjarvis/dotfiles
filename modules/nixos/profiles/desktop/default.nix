@@ -29,7 +29,6 @@ in
 
     networking.networkmanager.enable = true;
 
-    sound.enable = false;
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {
