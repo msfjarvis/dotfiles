@@ -108,6 +108,7 @@
       gallery-dl
       pkgs.${namespace}.gdrive
       git-crypt
+      git-lfs
       forge-sparks
       nerdfonts
       pkgs.${namespace}.katbin
