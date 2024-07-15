@@ -101,6 +101,12 @@
       }
     '';
     virtualHosts = {
+      "https://cockpit.tiger-shark.ts.net" = {
+        extraConfig = ''
+          bind tailscale/cockpit
+          reverse_proxy :${toString config.services.cockpit.port}
+        '';
+      };
       "https://nix-cache.tiger-shark.ts.net" = {
         extraConfig = ''
           bind tailscale/nix-cache
@@ -140,6 +146,16 @@
           root * /var/lib/file_share_internal
           file_server browse
         '';
+      };
+    };
+  };
+
+  services.cockpit = {
+    enable = true;
+    port = 9091;
+    settings = {
+      WebService = {
+        Origins = "https://cockpit.tiger-shark.ts.net";
       };
     };
   };
