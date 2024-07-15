@@ -107,12 +107,6 @@
           reverse_proxy :${toString config.services.cockpit.port}
         '';
       };
-      "https://nix-cache.tiger-shark.ts.net" = {
-        extraConfig = ''
-          bind tailscale/nix-cache
-          reverse_proxy ${config.services.atticd.settings.listen}
-        '';
-      };
       "https://git.msfjarvis.dev" = {
         extraConfig = ''
           reverse_proxy :${toString config.services.gitea.settings.server.HTTP_PORT}
@@ -124,6 +118,18 @@
           reverse_proxy ${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}
         '';
       };
+      "https://metube.tiger-shark.ts.net" = {
+        extraConfig = ''
+          bind tailscale/metube
+          reverse_proxy :9090
+        '';
+      };
+      "https://nix-cache.tiger-shark.ts.net" = {
+        extraConfig = ''
+          bind tailscale/nix-cache
+          reverse_proxy ${config.services.atticd.settings.listen}
+        '';
+      };
       "https://read.msfjarvis.dev" = {
         extraConfig = ''
           reverse_proxy ${toString config.services.miniflux.config.LISTEN_ADDR}
@@ -133,12 +139,6 @@
         extraConfig = ''
           root * /var/lib/file_share
           file_server browse
-        '';
-      };
-      "https://metube.tiger-shark.ts.net" = {
-        extraConfig = ''
-          bind tailscale/metube
-          reverse_proxy :9090
         '';
       };
       "https://wailord.tiger-shark.ts.net" = {
