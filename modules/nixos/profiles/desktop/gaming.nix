@@ -50,6 +50,10 @@ in
           ];
       };
     };
+    programs.nix-ld = {
+      enable = true;
+      libraries = pkgs.steam-run.fhsenv.args.multiPkgs pkgs;
+    };
 
     # Pipewire LowLatency configuration from nix-gaming
     # ref: https://github.com/fufexan/nix-gaming/blob/6caa391790442baea22260296041429fb365e0ce/modules/pipewireLowLatency.nix
