@@ -26,7 +26,6 @@
     shellcheck
     shfmt
     sops
-    tailscale
     unzip
     vivid
     zip

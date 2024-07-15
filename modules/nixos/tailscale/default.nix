@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   lib,
   namespace,
   ...
@@ -27,5 +28,7 @@ in
       enable = true;
       permitCertUid = "caddy";
     };
+
+    users.users.msfjarvis.packages = with pkgs; [ tailscale ];
   };
 }
