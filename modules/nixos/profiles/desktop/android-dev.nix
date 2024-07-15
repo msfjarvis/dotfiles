@@ -39,13 +39,15 @@ in
     };
 
     # Required by the binaries in the Android SDK
-    programs.nix-ld.enable = true;
-    programs.nix-ld.libraries = with pkgs; [
-      icu
-      openssl
-      stdenv.cc.cc
-      zlib
-    ];
+    programs.nix-ld = {
+      enable = true;
+      libraries = with pkgs; [
+        icu
+        openssl
+        stdenv.cc.cc
+        zlib
+      ];
+    };
 
     snowfallorg.users.msfjarvis.home.config = {
       programs.gradle = {
