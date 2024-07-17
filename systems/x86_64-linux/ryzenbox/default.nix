@@ -104,12 +104,13 @@
           pipewireSupport = true;
         };
       })
+      forge-sparks
       fzf
       gallery-dl
       pkgs.${namespace}.gdrive
       git-crypt
       git-lfs
-      forge-sparks
+      handbrake
       nerdfonts
       pkgs.${namespace}.katbin
       kondo
