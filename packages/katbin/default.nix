@@ -28,7 +28,7 @@ rustPlatform.buildRustPackage {
   meta = with lib; {
     description = "A CLI for katbin";
     homepage = "https://github.com/SphericalKat/katbin-cli";
-    changelog = "https://github.com/SphericalKat/katbin-cli/blob/${src.rev}/CHANGELOG.md";
+    changelog = "https://github.com/SphericalKat/katbin-cli/blob/${version}/CHANGELOG.md";
     license = with licenses; [
       asl20
       mit

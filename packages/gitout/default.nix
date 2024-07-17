@@ -42,7 +42,7 @@ rustPlatform.buildRustPackage {
   meta = with lib; {
     description = "A command-line tool and Docker image to automatically backup Git repositories from GitHub or anywhere";
     homepage = "https://github.com/msfjarvis/gitout";
-    changelog = "https://github.com/msfjarvis/gitout/blob/${src.rev}/CHANGELOG.md";
+    changelog = "https://github.com/msfjarvis/gitout/blob/${version}/CHANGELOG.md";
     license = licenses.mit;
     mainProgram = "gitout";
   };

@@ -25,7 +25,7 @@ rustPlatform.buildRustPackage {
   meta = with lib; {
     description = "Simple CLI for editing and querying TOML files.";
     homepage = "https://github.com/gnprice/toml-cli";
-    changelog = "https://github.com/gnprice/toml-cli/blob/${src.rev}/CHANGELOG.md";
+    changelog = "https://github.com/gnprice/toml-cli/blob/${version}/CHANGELOG.md";
     license = licenses.mit;
     mainProgram = "toml-cli";
   };

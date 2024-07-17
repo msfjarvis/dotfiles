@@ -22,7 +22,7 @@ rustPlatform.buildRustPackage {
   meta = with lib; {
     description = "Interactive tui for inspecting nix configs";
     homepage = "https://github.com/bluskript/nix-inspect";
-    changelog = "https://github.com/bluskript/nix-inspect/blob/${src.rev}/CHANGELOG.md";
+    changelog = "https://github.com/bluskript/nix-inspect/blob/${version}/CHANGELOG.md";
     license = licenses.mit;
     mainProgram = "nix-inspect";
   };

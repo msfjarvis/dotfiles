@@ -25,7 +25,7 @@ rustPlatform.buildRustPackage {
   meta = with lib; {
     description = "Timezones from the command line";
     homepage = "https://github.com/mitsuhiko/when";
-    changelog = "https://github.com/mitsuhiko/when/blob/${src.rev}/CHANGELOG.md";
+    changelog = "https://github.com/mitsuhiko/when/blob/${version}/CHANGELOG.md";
     license = licenses.asl20;
     mainProgram = "when";
   };
