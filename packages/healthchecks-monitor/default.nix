@@ -6,7 +6,7 @@
   darwin,
 }:
 let
-  version = "3.0.6";
+  version = "3.0.7";
 in
 rustPlatform.buildRustPackage {
   pname = "healthchecks-monitor";
@@ -16,14 +16,14 @@ rustPlatform.buildRustPackage {
     owner = "msfjarvis";
     repo = "healthchecks-rs";
     rev = "healthchecks-monitor-v${version}";
-    hash = "sha256-A83pzY+c4kz59tHEc6hRd0Zp8Uj96KdrenD9RDWwavQ=";
+    hash = "sha256-oUbGeEKEUAKtgOqB+LL/LYNjjDi6VKsGtu0KwQQKXzo=";
   };
 
   buildInputs = lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.Security ];
 
   buildAndTestSubdir = "monitor";
 
-  cargoHash = "sha256-2+dV0mIvbDqXqRfNCBhqUVRYhpcPB2oxD67GBkEDW48=";
+  cargoHash = "sha256-9sZfCna4jSEJ2z4xtlk+YHN2MHC2IGf0Zzyw96MMhnI=";
 
   useNextest = true;
 
