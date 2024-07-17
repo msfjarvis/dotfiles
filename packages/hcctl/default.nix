@@ -6,7 +6,7 @@
   lib,
 }:
 let
-  version = "2.0.8";
+  version = "2.0.9";
 in
 rustPlatform.buildRustPackage {
   pname = "hcctl";
@@ -16,14 +16,14 @@ rustPlatform.buildRustPackage {
     owner = "msfjarvis";
     repo = "healthchecks-rs";
     rev = "hcctl-v${version}";
-    hash = "sha256-A83pzY+c4kz59tHEc6hRd0Zp8Uj96KdrenD9RDWwavQ=";
+    hash = "sha256-oUbGeEKEUAKtgOqB+LL/LYNjjDi6VKsGtu0KwQQKXzo=";
   };
 
   buildInputs = lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.Security ];
 
   buildAndTestSubdir = "hcctl";
 
-  cargoHash = "sha256-v8mpH1akao35P8ePFTFLBidkPW+vzsaMg4h51TudYMM=";
+  cargoHash = "sha256-nJodtnAbgSmVaBkGoOuaiNtyt3zBgwP3LsPPvEQjKsg=";
 
   useNextest = true;
 
