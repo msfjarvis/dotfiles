@@ -6,7 +6,7 @@
   lib,
 }:
 let
-  version = "0.21.0";
+  version = "0.21.2";
 in
 buildGoModule {
   pname = "piv-agent";
@@ -16,14 +16,14 @@ buildGoModule {
     owner = "smlx";
     repo = "piv-agent";
     rev = "v${version}";
-    hash = "sha256-aukcnubhB8kbAl22eeFKzLPvVcYdgcEQ1gy3n6KWG00=";
+    hash = "sha256-nHxtQaQ5Lc0QAJrWU6fUWViDwOKkxVyj9/B6XZ+Y0zw=";
   };
 
   buildInputs = [ pcsclite ];
 
   nativeBuildInputs = [ pkg-config ];
 
-  vendorHash = "sha256-1d6EKEvo4XNDXRtbdnKkqyF9y0LPPHWKu9X/wYnbmas=";
+  vendorHash = "sha256-L5HuTYA01w3LUtSy7OVxG6QN5uQZ8LVYyrBcJQTkIUA=";
 
   ldflags = [
     "-s"
