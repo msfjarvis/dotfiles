@@ -7,6 +7,7 @@ declare -a ALL_PACKAGES=(
   adbtuifm
   adx
   boop-gtk
+  caddy-tailscale
   clipboard-substitutor
   gdrive
   gitice
