@@ -9,5 +9,5 @@
       wordwrap = true;
     };
   };
-  xdg.configFile."micro/colorschemes/custom.micro".source = inputs.micro-theme;
+  xdg.configFile."micro/colorschemes/custom.micro".source = "${inputs.micro-theme}/src/catppuccin-mocha.micro";
 }

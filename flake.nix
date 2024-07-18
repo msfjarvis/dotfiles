@@ -167,7 +167,7 @@
     lix.inputs.pre-commit-hooks.follows = "";
     lix.inputs.flake-compat.follows = "flake-compat";
 
-    micro-theme.url = "https://raw.githubusercontent.com/catppuccin/micro/main/src/catppuccin-mocha.micro";
+    micro-theme.url = "git+https://github.com/catppuccin/micro";
     micro-theme.flake = false;
 
     nix-index-database.url = "github:nix-community/nix-index-database";

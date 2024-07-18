@@ -550,13 +550,17 @@
     "micro-theme": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-l8OQ4U5VrusiqF3j113g+ZqDvE2DeHvrMRCS4JhyvZ0=",
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/catppuccin/micro/main/src/catppuccin-mocha.micro"
+        "lastModified": 1718057063,
+        "narHash": "sha256-HFzcp3u9U3JrPqJdOYvjOTRDJA5bSE9lH6C5EmUmyrw=",
+        "ref": "refs/heads/main",
+        "rev": "a67be21b9d2cf9f57911bb2cd9a6d8fb2c8d8e5a",
+        "revCount": 23,
+        "type": "git",
+        "url": "https://github.com/catppuccin/micro"
       },
       "original": {
-        "type": "file",
-        "url": "https://raw.githubusercontent.com/catppuccin/micro/main/src/catppuccin-mocha.micro"
+        "type": "git",
+        "url": "https://github.com/catppuccin/micro"
       }
     },
     "mozilla": {
