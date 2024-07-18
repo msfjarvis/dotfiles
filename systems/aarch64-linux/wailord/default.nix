@@ -115,7 +115,10 @@
       "https://${config.services.grafana.settings.server.domain}" = {
         extraConfig = ''
           bind tailscale/grafana
-          reverse_proxy ${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}
+          tailscale_auth
+          reverse_proxy ${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port} {
+            header_up X-Webauth-User {http.auth.user.tailscale_user}
+          }
         '';
       };
       "https://metube.tiger-shark.ts.net" = {
@@ -212,6 +215,11 @@
   services.grafana = {
     enable = true;
     settings = {
+      "auth.proxy" = {
+        enabled = true;
+        auto_sign_up = false;
+        enable_login_token = false;
+      };
       server = {
         domain = "grafana.tiger-shark.ts.net";
         http_addr = "127.0.0.1";
