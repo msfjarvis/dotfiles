@@ -1,0 +1,15 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index 4baa6e042130..c17f59417b84 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -20,8 +20,8 @@ certifi = "^2024.2.2"
+ browser-cookie3 = "^0.19.1"
+ beautifulsoup4 = "^4.12.2"
+ filedate = "^3.0"
+-aiosqlite = "0.17.0"
+-aiofiles = "0.8.0"
++aiosqlite = "^0.20.0"
++aiofiles = "^23.2.1"
+ asyncpraw = "^7.7.1"
+ myjdapi = "^1.1.7"
+ mediafire = "^0.6.1"

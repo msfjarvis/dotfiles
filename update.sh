@@ -9,6 +9,7 @@ declare -a ALL_PACKAGES=(
   boop-gtk
   caddy-tailscale
   clipboard-substitutor
+  cyberdrop-dl
   gdrive
   gitice
   gitout
@@ -36,6 +37,7 @@ declare -A VERSION_REGEX=(
 
 declare -A UNSTABLE_PACKAGES=(
   ["caddy-tailscale"]=1
+  ["cyberdrop-dl"]=1
   ["prometheus-qbittorrent-exporter"]=1
 )
 

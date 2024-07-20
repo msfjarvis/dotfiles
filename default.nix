@@ -74,6 +74,7 @@ in
   boop-gtk = callPackage ./packages/boop-gtk { };
   caddy-tailscale = callPackage ./packages/caddy-tailscale { };
   clipboard-substitutor = callPackage ./packages/clipboard-substitutor { };
+  cyberdrop-dl = callPackage ./packages/cyberdrop-dl { };
   diffuse-bin = callPackage ./packages/diffuse-bin { };
   gdrive = callPackage ./packages/gdrive { };
   gitice = callPackage ./packages/gitice {
