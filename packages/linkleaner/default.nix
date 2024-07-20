@@ -12,7 +12,7 @@ let
   inherit ((import fenix { inherit pkgs; })) fromManifestFile;
   toolchain = (fromManifestFile rust-manifest).minimalToolchain;
 
-  version = "2.3.9";
+  version = "2.3.10";
 in
 (makeRustPlatform {
   cargo = toolchain;
@@ -26,7 +26,7 @@ in
       owner = "msfjarvis";
       repo = "linkleaner";
       rev = "v${version}";
-      hash = "sha256-v8HUarFUvx/sHauYdRyVT/cYpiNbB9TRMN9dmYAFeTg=";
+      hash = "sha256-wMuIYyguk5x9z9mjeuIVBU2lf3mUfT5lZ0gpgfZugSg=";
     };
 
     buildInputs = lib.optionals stdenv.isDarwin [
@@ -37,7 +37,7 @@ in
     cargoLock = {
       lockFile = ./Cargo.lock;
       outputHashes = {
-        "teloxide-0.12.2" = "sha256-oSuKKD+kr2iCYOmLjZ1tNB7n48Q+TxpT/bZ8BA7MzZc=";
+        "teloxide-0.12.2" = "sha256-t2pXDKsDrKAhdaHsOcMQBZc3NalDod5UZz991vHShwE=";
       };
     };
 
