@@ -27,6 +27,20 @@ jobs:
         nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
         nix-channel --update
 
+    - name: Setup Tailscale
+      uses: tailscale/github-action@v2
+      with:
+        oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+        oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+        tags: "tag:github-actions"
+
+    - name: Setup Attic cache
+      uses: ryanccn/attic-action@v0
+      with:
+        endpoint: ${{ secrets.ATTIC_ENDPOINT }}
+        cache: ${{ secrets.ATTIC_CACHE }}
+        token: ${{ secrets.ATTIC_TOKEN }}
+
     - name: Set Git user and email
       shell: bash
       run: |
