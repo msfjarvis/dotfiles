@@ -6,7 +6,7 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
-  version = "5.3.40-unstable-2024-07-17";
+  version = "5.3.41-unstable-2024-07-17";
   pyproject = true;
 
   src = fetchFromGitHub {
