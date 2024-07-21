@@ -21,6 +21,7 @@
     neofetch
     nixfmt-rfc-style
     nixpkgs-review
+    nvd
     ripgrep
     sd
     shellcheck
