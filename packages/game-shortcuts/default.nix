@@ -17,7 +17,7 @@ stdenvNoCC.mkDerivation {
 
   nativeBuildInputs = [ copyDesktopItems ];
 
-  installPhase = "mkdir $out";
+  installPhase = "runHook preInstall; mkdir $out; runHook postInstall";
 
   desktopItems = lists.forEach games (
     game:
