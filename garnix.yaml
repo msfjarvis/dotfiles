@@ -6,3 +6,5 @@ builds:
     - packages.x86_64-linux.*
     - packages.aarch64-linux.*
     - checks.x86_64-linux.*
+  exclude:
+    - packages.*.game-shortcuts
