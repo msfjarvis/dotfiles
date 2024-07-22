@@ -148,6 +148,26 @@ in
         jdks = [ openjdk22 ];
         withWaylandGLFW = config.profiles.${namespace}.desktop.gnome3.enable;
       })
+      (pkgs.${namespace}.game-shortcuts.override {
+        games = [
+          {
+            name = "Hades";
+            id = 1145360;
+          }
+          {
+            name = "Helldivers 2";
+            id = 553850;
+          }
+          {
+            name = "Hollow Knight";
+            id = 367520;
+          }
+          {
+            name = "Marvel Snap";
+            id = 1997040;
+          }
+        ];
+      })
     ];
     # Required to avoid some logspew
     environment.sessionVariables.VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
