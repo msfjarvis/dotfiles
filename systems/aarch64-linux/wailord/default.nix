@@ -100,6 +100,14 @@
         ephemeral true
       }
     '';
+    extraConfig = ''
+      (blackholeCrawlers) {
+        @ban_crawler header_regexp User-Agent "(AdsBot-Google|Amazonbot|anthropic-ai|Applebot|Applebot-Extended|AwarioRssBot|AwarioSmartBot|Bytespider|CCBot|ChatGPT-User|ClaudeBot|Claude-Web|cohere-ai|DataForSeoBot|Diffbot|FacebookBot|FriendlyCrawler|Google-Extended|GoogleOther|GPTBot|img2dataset|ImagesiftBot|magpie-crawler|Meltwater|omgili|omgilibot|peer39_crawler|peer39_crawler/1.0|PerplexityBot|PiplBot|scoop.it|Seekr|YouBot)"
+        handle @ban_crawler {
+          redir https://ash-speed.hetzner.com/10GB.bin 307
+        }
+      }
+    '';
     virtualHosts = {
       "https://cockpit.tiger-shark.ts.net" = {
         extraConfig = ''
@@ -109,6 +117,7 @@
       };
       "https://git.msfjarvis.dev" = {
         extraConfig = ''
+          import blackholeCrawlers
           reverse_proxy :${toString config.services.gitea.settings.server.HTTP_PORT}
         '';
       };
@@ -135,11 +144,13 @@
       };
       "https://read.msfjarvis.dev" = {
         extraConfig = ''
+          import blackholeCrawlers
           reverse_proxy ${toString config.services.miniflux.config.LISTEN_ADDR}
         '';
       };
       "https://til.msfjarvis.dev" = {
         extraConfig = ''
+          import blackholeCrawlers
           root * /var/lib/file_share
           file_server browse
         '';
