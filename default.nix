@@ -94,6 +94,7 @@ in
     };
   };
   monocraft-nerdfonts = callPackage ./packages/monocraft-nerdfonts { };
+  nix-inspect = callPackage ./packages/nix-inspect { };
   patreon-dl = callPackage ./packages/patreon-dl { };
   pidcat = callPackage ./packages/pidcat { };
   piv-agent = callPackage ./packages/piv-agent { };

@@ -2,18 +2,12 @@
   pkgs,
   lib,
   stdenv,
-  fetchFromGitHub,
+  pname,
+  version,
+  src,
 }:
 stdenv.mkDerivation (finalAttrs: {
-  pname = "nix-inspect";
-  version = "unstable-2024-04-19";
-
-  src = fetchFromGitHub {
-    owner = "bluskript";
-    repo = "nix-inspect";
-    rev = "86f636b1e01579b3a63b2c778c21a818b00c3d1e";
-    hash = "sha256-G5Md4ghux4LBRkPE8vzLTUWxzlQ7s1xKxZ8i3ICWZU8=";
-  };
+  inherit pname version src;
 
   nativeBuildInputs = with pkgs; [
     meson

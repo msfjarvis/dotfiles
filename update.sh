@@ -20,6 +20,7 @@ declare -a ALL_PACKAGES=(
   katbin
   linkleaner
   monocraft-nerdfonts
+  nix-inspect
   patreon-dl
   pidcat
   piv-agent
@@ -38,6 +39,7 @@ declare -A VERSION_REGEX=(
 declare -A UNSTABLE_PACKAGES=(
   ["caddy-tailscale"]=1
   ["cyberdrop-dl"]=1
+  ["nix-inspect"]=1
   ["prometheus-qbittorrent-exporter"]=1
 )
 
