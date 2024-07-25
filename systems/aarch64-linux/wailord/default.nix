@@ -148,6 +148,12 @@
           reverse_proxy ${toString config.services.miniflux.config.LISTEN_ADDR}
         '';
       };
+      "https://restic.tiger-shark.ts.net" = {
+        extraConfig = ''
+          bind tailscale/restic
+          reverse_proxy ${config.services.restic.server.listenAddress}
+        '';
+      };
       "https://til.msfjarvis.dev" = {
         extraConfig = ''
           import blackholeCrawlers
@@ -202,6 +208,13 @@
         DEFAULT_THEME = "catppuccin-mocha-mauve";
       };
     };
+  };
+
+  services.restic.server = {
+    enable = true;
+    extraFlags = [ "--no-auth" ];
+    listenAddress = "127.0.0.1:8082";
+    prometheus = true;
   };
 
   sops.secrets.gitout-config = {
