@@ -132,6 +132,7 @@
           virtualenv
         ]
       ))
+      restic
       scrcpy
       smile
       sshfs
