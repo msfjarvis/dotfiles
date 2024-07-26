@@ -40,8 +40,6 @@ in
     # Enable SOPS, force it to be age-only
     sops.age.sshKeyPaths = lib.mkForce [ "/etc/ssh/ssh_host_ed25519_key" ];
     sops.gnupg.sshKeyPaths = lib.mkForce [ ];
-    sops.defaultSopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
-    sops.secrets.tsauthkey = { };
 
     # Automatically log into my user account
     services.getty.autologinUser = lib.mkForce "msfjarvis";
@@ -56,6 +54,9 @@ in
       ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOZFw0Dgs0z29Brvj+CejlgBG5t0AtoFvNIjd3DPvL7N''
     ];
 
+    sops.secrets.tsauthkey = {
+      sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
+    };
     services.${namespace}.tailscale-autoconnect = {
       enable = true;
       authkeyFile = config.sops.secrets.tsauthkey.path;
