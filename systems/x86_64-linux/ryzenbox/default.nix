@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   config,
   inputs,
@@ -22,6 +23,10 @@
   # Only enable for first installation
   # boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+
+  # Enable SOPS, force it to be age-only
+  sops.age.sshKeyPaths = lib.mkForce [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.gnupg.sshKeyPaths = lib.mkForce [ ];
 
   snowfallorg.users.msfjarvis.home.config = {
     stylix = {
@@ -151,6 +156,30 @@
   # Required for Mullvad
   # https://discourse.nixos.org/t/connected-to-mullvadvpn-but-no-internet-connection/35803/11
   services.resolved.enable = true;
+
+  sops.secrets.restic_repo_url = {
+    sopsFile = lib.snowfall.fs.get-file "secrets/restic/repo.yaml";
+    owner = config.services.restic.backups.minecraft.user;
+  };
+  sops.secrets.restic_repo_password = {
+    sopsFile = lib.snowfall.fs.get-file "secrets/restic/password.yaml";
+    owner = config.services.restic.backups.minecraft.user;
+  };
+  services.restic.backups = {
+    minecraft = {
+      initialize = true;
+      repositoryFile = config.sops.secrets.restic_repo_url.path;
+      passwordFile = config.sops.secrets.restic_repo_password.path;
+
+      paths = [ "${config.users.users.msfjarvis.home}/Games/PrismLauncher/instances" ];
+
+      pruneOpts = [
+        "--keep-daily 7"
+        "--keep-weekly 2"
+        "--keep-monthly 10"
+      ];
+    };
+  };
 
   services.${namespace} = {
     glance = {
