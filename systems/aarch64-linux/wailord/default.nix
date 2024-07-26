@@ -319,6 +319,10 @@
         job_name = "miniflux";
         static_configs = [ { targets = [ config.services.miniflux.config.LISTEN_ADDR ]; } ];
       }
+      {
+        job_name = "restic";
+        static_configs = [ { targets = [ config.services.restic.server.listenAddress ]; } ];
+      }
     ];
   };
 
