@@ -329,14 +329,8 @@
       {
         enable = true;
         sources = [
-          (minecraft "ACLU SMP Modpack")
-          (minecraft "Fabulously.Optimized.1.20.2")
           (minecraft "Fabulously.Optimized.1.20.6")
           (minecraft "Fabulously.Optimized.1.21")
-          (minecraft "Fabulously.Optimized.MC.1.17.1")
-          (minecraft "Fabulously.Optimized.MC.1.20.1")
-          (minecraft "Pokemon Elysium")
-          "${home}/Games/PrismLauncher/instances/Vault Hunters 3/minecraft/screenshots/"
         ];
         target = "/mediahell/screenshots/";
         file_filter = "*.png";
