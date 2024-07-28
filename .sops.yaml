@@ -7,7 +7,6 @@ creation_rules:
     key_groups:
       - age:
         - *msfjarvis
-        - *wailord
 
   - key_groups:
       - age:
