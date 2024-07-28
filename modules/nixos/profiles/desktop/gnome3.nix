@@ -70,7 +70,6 @@ in
         gnome-weather
         loupe
         simple-scan
-        snapshot
         totem
       ];
 
