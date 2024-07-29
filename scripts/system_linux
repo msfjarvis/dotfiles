@@ -4,10 +4,10 @@
 # SPDX-License-Identifier: MIT
 
 function clip() {
-  if [ -n "$(command -v wl-copy)" ]; then
-    clip_wl "${@}"
-  elif [ -n "$(command -v xclip)" ]; then
+  if [ "${XDG_SESSION_TYPE}" == "x11" ]; then
     clip_x "${@}"
+  else
+    clip_wl "${@}"
   fi
 }
 
@@ -28,10 +28,10 @@ function clip_x() {
 }
 
 function clrclip() {
-  if [ -n "$(command -v wl-copy)" ]; then
-    clrclip_wl
-  elif [ -n "$(command -v xclip)" ]; then
+  if [ "${XDG_SESSION_TYPE}" == "x11" ]; then
     clrclip_x
+  else
+    clrclip_wl
   fi
 }
 
