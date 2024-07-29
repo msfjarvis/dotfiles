@@ -46,7 +46,7 @@ in
         # KDEConnect port
         gsconnect
         # Tweak GNOME settings
-        just-perfection
+        # just-perfection
         # Top bar media control widget
         media-controls
         # Better tiling controls
@@ -107,7 +107,7 @@ in
             "another-window-session-manager@gmail.com"
             "arcmenu@arcmenu.com"
             "gsconnect@andyholmes.github.io"
-            "just-perfection-desktop@just-perfection"
+            # "just-perfection-desktop@just-perfection"
             "mediacontrols@cliffniff.github.com"
             "native-window-placement@gnome-shell-extensions.gcampax.github.com"
             "places-menu@gnome-shell-extensions.gcampax.github.com"
