@@ -24,7 +24,10 @@ in
     environment.variables.ELECTRON_OZONE_PLATFORM_HINT = "x11";
     environment.variables.NIXOS_OZONE_WL = "1";
 
-    environment.systemPackages = with pkgs; [ wl-clipboard ];
+    environment.systemPackages = with pkgs; [
+      wl-clipboard
+      xclip
+    ];
     # Required by the tophat extension
     services.xserver.desktopManager.gnome.sessionPath = with pkgs; [ libgtop ];
 
