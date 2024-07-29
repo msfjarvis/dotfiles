@@ -8,6 +8,60 @@
 let
   cfg = config.profiles.${namespace}.desktop;
   inherit (lib) mkEnableOption mkIf;
+  extensionsMap = with pkgs.gnomeExtensions; [
+    # Save and restore window positions
+    {
+      package = another-window-session-manager;
+      uuid = "another-window-session-manager@gmail.com";
+    }
+    # A nicer application menu for gnome
+    {
+      package = arcmenu;
+      uuid = "arcmenu@arcmenu.com";
+    }
+    # KDEConnect port
+    {
+      package = gsconnect;
+      uuid = "gsconnect@andyholmes.github.io";
+    }
+    # Top bar media control widget
+    {
+      package = media-controls;
+      uuid = "mediacontrols@cliffniff.github.com";
+    }
+    # Better tiling controls
+    {
+      package = tiling-shell;
+      uuid = "tilingshell@ferrarodomenico.com";
+    }
+    # System activity indicator
+    {
+      package = tophat;
+      uuid = "tophat@fflewddur.github.io";
+    }
+    # Make top bar transparent when nothing is docked to it
+    {
+      package = transparent-top-bar;
+      uuid = "transparent-top-bar@zhanghai.me";
+    }
+    # Allow controlling themes
+    {
+      package = user-themes;
+      uuid = "user-theme@gnome-shell-extensions.gcampax.github.com";
+    }
+    {
+      package = null;
+      uuid = "native-window-placement@gnome-shell-extensions.gcampax.github.com";
+    }
+    {
+      package = null;
+      uuid = "places-menu@gnome-shell-extensions.gcampax.github.com";
+    }
+    {
+      package = null;
+      uuid = "screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com";
+    }
+  ];
 in
 {
   options.profiles.${namespace}.desktop.gnome3 = {
@@ -38,26 +92,7 @@ in
         eog
         gnome-tweaks
       ]
-      ++ (with pkgs.gnomeExtensions; [
-        # Save and restore window positions
-        another-window-session-manager
-        # A nicer application menu for gnome
-        arcmenu
-        # KDEConnect port
-        gsconnect
-        # Tweak GNOME settings
-        # just-perfection
-        # Top bar media control widget
-        media-controls
-        # Better tiling controls
-        tiling-shell
-        # System activity indicator
-        tophat
-        # Make top bar transparent when nothing is docked to it
-        transparent-top-bar
-        # Allow controlling themes
-        user-themes
-      ]);
+      ++ (builtins.filter (pkg: pkg != null) (builtins.map (ext: ext.package) extensionsMap));
     environment.gnome.excludePackages =
       with pkgs;
       with pkgs.gnome;
@@ -103,20 +138,7 @@ in
           };
         "org/gnome/shell" = {
           disable-user-extensions = false;
-          enabled-extensions = [
-            "another-window-session-manager@gmail.com"
-            "arcmenu@arcmenu.com"
-            "gsconnect@andyholmes.github.io"
-            # "just-perfection-desktop@just-perfection"
-            "mediacontrols@cliffniff.github.com"
-            "native-window-placement@gnome-shell-extensions.gcampax.github.com"
-            "places-menu@gnome-shell-extensions.gcampax.github.com"
-            "screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com"
-            "tilingshell@ferrarodomenico.com"
-            "tophat@fflewddur.github.io"
-            "transparent-top-bar@zhanghai.me"
-            "user-theme@gnome-shell-extensions.gcampax.github.com"
-          ];
+          enabled-extensions = builtins.map (ext: ext.uuid) extensionsMap;
         };
         "org/gnome/desktop/background" = {
           color-shading-type = "solid";
