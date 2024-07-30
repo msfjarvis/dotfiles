@@ -36,8 +36,8 @@ let
     }
     # System activity indicator
     {
-      package = tophat;
-      uuid = "tophat@fflewddur.github.io";
+      package = astra-monitor;
+      uuid = "monitor@astraext.github.io";
     }
     # Make top bar transparent when nothing is docked to it
     {
@@ -82,8 +82,6 @@ in
       wl-clipboard
       xclip
     ];
-    # Required by the tophat extension
-    services.xserver.desktopManager.gnome.sessionPath = with pkgs; [ libgtop.dev ];
 
     users.users.msfjarvis.packages =
       with pkgs;
