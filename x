@@ -20,10 +20,10 @@ function cleanup_generations() {
 ARG="${1:-nothing}"
 
 case "${ARG}" in
-  crusty-check)
-    nom_build crusty
+  matara-check)
+    nom_build matara
     ;;
-  crusty-switch)
+  matara-switch)
     nh os switch .
     cleanup_generations
     ;;

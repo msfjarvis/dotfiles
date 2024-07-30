@@ -39,8 +39,7 @@
         srvos.nixosModules.mixins-systemd-boot
       ];
 
-      systems.hosts.crusty.modules = with inputs; [
-        nixos-hardware.nixosModules.raspberry-pi-4
+      systems.hosts.matara.modules = with inputs; [
         srvos.nixosModules.mixins-mdns
         srvos.nixosModules.server
       ];

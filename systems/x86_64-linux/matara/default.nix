@@ -8,21 +8,9 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./sd-image.nix
-  ];
-  # Pi kernel does not build all modules so this allows some to be missing.
-  nixpkgs.overlays = [
-    (_: super: { makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; }); })
   ];
 
-  topology.self.name = "Raspberry Pi";
-
-  hardware.raspberry-pi."4" = {
-    apply-overlays-dtmerge.enable = true;
-    pwm0.enable = true;
-  };
-
-  boot.loader.systemd-boot.enable = lib.mkForce false;
+  topology.self.name = "HomeLab PC";
 
   time.timeZone = "Asia/Kolkata";
 
@@ -43,28 +31,23 @@
     };
   };
 
-  programs.command-not-found.enable = false;
-
   profiles.${namespace} = {
     server.enable = true;
   };
-  networking.hostName = "crusty";
+  networking.hostName = "matara";
 
   environment.systemPackages = with pkgs; [
     git
-    libraspberrypi
-    raspberrypi-eeprom
     megatools
     micro
     usbutils
-    wirelesstools
     yt-dlp
   ];
 
   services.caddy = {
     enable = true;
     virtualHosts = {
-      "https://crusty.tiger-shark.ts.net" = {
+      "https://matara.tiger-shark.ts.net" = {
         extraConfig = ''
           handle_path /prometheus/* {
             reverse_proxy :${toString config.services.prometheus.port}
@@ -89,7 +72,7 @@
     };
     scrapeConfigs = [
       {
-        job_name = "crusty";
+        job_name = "matara";
         static_configs = [
           { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ]; }
           { targets = [ "127.0.0.1:${toString config.services.${namespace}.qbittorrent.prometheus.port}" ]; }
@@ -99,6 +82,13 @@
   };
 
   services.${namespace} = {
+    gphotos-cdp = {
+      enable = true;
+      session-dir = "/home/msfjarvis/harsh-sess";
+      dldir = "/home/msfjarvis/harsh-photos";
+      user = "msfjarvis";
+      group = "users";
+    };
     qbittorrent = {
       enable = true;
       port = 9091;
@@ -112,18 +102,6 @@
       sources = [ "/var/lib/qbittorrent/downloads" ];
       target = "/media/.omg";
       file_filter = "*.mp4";
-    };
-
-  };
-
-  systemd.services.disable-wlan-powersave = {
-    description = "Disable WiFi power save";
-    after = [ "sys-subsystem-net-devices-wlan0.device" ];
-    wantedBy = [ "sys-subsystem-net-devices-wlan0.device" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = "yes";
-      ExecStart = "${pkgs.iw}/bin/iw dev wlan0 set power_save off";
     };
   };
 
