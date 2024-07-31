@@ -15,7 +15,7 @@
 
   users.users.msfjarvis.packages = with pkgs; [
     expect
-    jarvis.nix-inspect
+    nix-inspect
     nix-output-monitor
   ];
 
