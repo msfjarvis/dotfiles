@@ -6,9 +6,7 @@
   ...
 }:
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
+  imports = [ ./hardware-configuration.nix ];
 
   topology.self.name = "HomeLab PC";
 
