@@ -36,6 +36,7 @@ declare -A VERSION_REGEX=(
 )
 
 declare -A UNSTABLE_PACKAGES=(
+  ["boop-gtk"]=1
   ["caddy-tailscale"]=1
   ["cyberdrop-dl"]=1
   ["prometheus-qbittorrent-exporter"]=1
