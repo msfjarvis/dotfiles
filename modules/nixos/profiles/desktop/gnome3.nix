@@ -7,7 +7,12 @@
 }:
 let
   cfg = config.profiles.${namespace}.desktop;
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib)
+    catAttrs
+    filter
+    mkEnableOption
+    mkIf
+    ;
   extensionsMap = with pkgs.gnomeExtensions; [
     # Save and restore window positions
     {
@@ -91,7 +96,7 @@ in
         eog
         gnome-tweaks
       ]
-      ++ (builtins.filter (pkg: pkg != null) (builtins.map (ext: ext.package) extensionsMap));
+      ++ (filter (pkg: pkg != null) (catAttrs "package" extensionsMap));
     environment.gnome.excludePackages =
       with pkgs;
       with pkgs.gnome;
@@ -137,7 +142,7 @@ in
           };
         "org/gnome/shell" = {
           disable-user-extensions = false;
-          enabled-extensions = builtins.map (ext: ext.uuid) extensionsMap;
+          enabled-extensions = catAttrs "uuid" extensionsMap;
         };
         "org/gnome/desktop/background" = {
           color-shading-type = "solid";
