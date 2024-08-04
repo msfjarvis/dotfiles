@@ -5,6 +5,7 @@ builds:
     - nixosConfigurations.wailord
     - packages.x86_64-linux.*
     - packages.aarch64-linux.*
+    - packages.aarch64-darwin.*
     - checks.x86_64-linux.*
   exclude:
     - packages.*.game-shortcuts
