@@ -25,6 +25,7 @@ in
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+  boot.supportedFilesystems = [ "ntfs" ];
 
   # Enable OpenGL
   hardware.graphics = {
