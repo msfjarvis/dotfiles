@@ -937,13 +937,13 @@
     "wallpaper": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-T4fPRwo/uzp0A9xkwPxqkMufBow2SkaXov6GvgTHIUE=",
+        "narHash": "sha256-EaHp0CGbmaJWYTJ+PpuD093A6zymU7wUboARvci6298=",
         "type": "file",
-        "url": "https://raw.githubusercontent.com/isabelroses/nixos-artwork/e0cf0eb23/wallpapers/nix-wallpaper-nineish-catppuccin-mocha-alt.png"
+        "url": "https://til.msfjarvis.dev/wallpaper.png"
       },
       "original": {
         "type": "file",
-        "url": "https://raw.githubusercontent.com/isabelroses/nixos-artwork/e0cf0eb23/wallpapers/nix-wallpaper-nineish-catppuccin-mocha-alt.png"
+        "url": "https://til.msfjarvis.dev/wallpaper.png"
       }
     }
   },

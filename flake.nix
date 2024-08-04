@@ -215,7 +215,7 @@
     stylix.inputs.home-manager.follows = "home-manager";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
 
-    wallpaper.url = "https://raw.githubusercontent.com/isabelroses/nixos-artwork/e0cf0eb23/wallpapers/nix-wallpaper-nineish-catppuccin-mocha-alt.png";
+    wallpaper.url = "https://til.msfjarvis.dev/wallpaper.png";
     wallpaper.flake = false;
   };
 }
