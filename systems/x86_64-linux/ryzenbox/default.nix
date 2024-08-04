@@ -182,6 +182,7 @@
   };
 
   services.${namespace} = {
+    # Duplicated in Matara, keep both in sync until Matara is deployed then delete this.
     glance = {
       enable = true;
       user = "msfjarvis";
