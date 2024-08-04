@@ -6,9 +6,6 @@
   # Items of format `{ name = string; id = number; }`
   games ? [ ],
 }:
-let
-  inherit (lib) lists;
-in
 stdenvNoCC.mkDerivation {
   pname = "game-shortcuts";
   version = "1.0.0";
@@ -19,7 +16,7 @@ stdenvNoCC.mkDerivation {
 
   installPhase = "runHook preInstall; mkdir $out; runHook postInstall";
 
-  desktopItems = lists.forEach games (
+  desktopItems = lib.forEach games (
     game:
     (makeDesktopItem {
       name = "${game.name}";
