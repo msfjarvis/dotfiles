@@ -78,6 +78,7 @@ in
     services.xserver.desktopManager.gnome.enable = true;
     services.displayManager.defaultSession = "gnome";
     programs.seahorse.enable = true;
+    programs.gnome-terminal.enable = true;
     services.gnome.gnome-keyring.enable = true;
 
     # Enable Wayland compatibility workarounds within Nixpkgs
@@ -106,6 +107,7 @@ in
         gnome-calendar
         gnome-characters
         gnome-clocks
+        gnome-console
         gnome-contacts
         gnome-maps
         gnome-music
@@ -134,7 +136,7 @@ in
               if (config.profiles.wezterm.enable or false) then
                 "${lib.getExe pkgs.wezterm}"
               else
-                "${lib.getExe pkgs.gnome-console}";
+                "${lib.getExe pkgs.gnome-terminal}";
           in
           lib.mkDefault {
             binding = "<Control><Alt>t";
