@@ -35,10 +35,11 @@ declare -A VERSION_REGEX=(
   ["healthchecks-monitor"]="healthchecks-monitor-v(.*)"
 )
 
-declare -A UNSTABLE_PACKAGES=(
+declare -A VERSION_OVERRIDE=(
   ["boop-gtk"]=1
   ["caddy-tailscale"]=1
   ["cyberdrop-dl"]=1
+  ["glance"]="release/v0.6.0"
   ["prometheus-qbittorrent-exporter"]=1
 )
 
@@ -63,8 +64,13 @@ for PACKAGE in "${PACKAGES_TO_BUILD[@]}"; do
     PARAMS+=("--version-regex")
     PARAMS+=("${VERSION_REGEX["${PACKAGE}"]}")
   fi
-  if [[ -v UNSTABLE_PACKAGES["${PACKAGE}"] ]]; then
-    PARAMS+=("--version=branch")
+  OVERRIDE="${VERSION_OVERRIDE["${PACKAGE}"]}"
+  if [[ -n "${OVERRIDE}" ]]; then
+    if [[ "${OVERRIDE}" == "1" ]]; then
+      PARAMS+=("--version=branch")
+    else
+      PARAMS+=("--version=branch=${OVERRIDE}")
+    fi
   fi
   if [ -n "${VERSION}" ]; then
     PARAMS+=("--version")
