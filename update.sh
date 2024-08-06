@@ -64,9 +64,9 @@ for PACKAGE in "${PACKAGES_TO_BUILD[@]}"; do
     PARAMS+=("--version-regex")
     PARAMS+=("${VERSION_REGEX["${PACKAGE}"]}")
   fi
-  OVERRIDE="${VERSION_OVERRIDE["${PACKAGE}"]}"
-  if [[ -n "${OVERRIDE}" ]]; then
-    if [[ "${OVERRIDE}" == "1" ]]; then
+  if [[ -v VERSION_OVERRIDE["${PACKAGE}"] ]]; then
+    OVERRIDE="${VERSION_OVERRIDE["${PACKAGE}"]}"
+    if [[ ${OVERRIDE} == "1" ]]; then
       PARAMS+=("--version=branch")
     else
       PARAMS+=("--version=branch=${OVERRIDE}")
