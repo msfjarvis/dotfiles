@@ -214,7 +214,6 @@
     enable = true;
     extraFlags = [ "--no-auth" ];
     listenAddress = "127.0.0.1:8082";
-    prometheus = true;
   };
 
   sops.secrets.gitout-config = {
@@ -283,6 +282,11 @@
     compression = "zstd";
   };
 
+  sops.secrets.restic_repo_password = {
+    sopsFile = lib.snowfall.fs.get-file "secrets/restic/password.yaml";
+    owner = "prometheus";
+    group = "prometheus";
+  };
   services.prometheus = {
     enable = true;
     port = 9001;
@@ -301,6 +305,14 @@
         port = 9004;
         runAsLocalSuperUser = true;
       };
+      restic = {
+        enable = true;
+        port = 9005;
+        repository = "rest:http://${config.services.restic.server.listenAddress}/";
+        passwordFile = config.sops.secrets.restic_repo_password.path;
+        user = "prometheus";
+        group = "prometheus";
+      };
     };
     scrapeConfigs = [
       {
@@ -309,6 +321,7 @@
           { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ]; }
           { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.systemd.port}" ]; }
           { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.postgres.port}" ]; }
+          { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.restic.port}" ]; }
         ];
       }
       {
