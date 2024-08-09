@@ -150,6 +150,11 @@
     ];
   };
 
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
+
   services.mullvad-vpn = {
     enable = true;
   };
