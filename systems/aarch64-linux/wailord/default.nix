@@ -299,6 +299,7 @@
   services.prometheus = {
     enable = true;
     port = 9001;
+    extraFlags = [ "--web.enable-admin-api" ];
     exporters = {
       node = {
         enable = true;
