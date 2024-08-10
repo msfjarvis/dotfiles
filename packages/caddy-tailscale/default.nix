@@ -66,6 +66,6 @@ buildGoModule {
     homepage = "https://github.com/tailscale/caddy-tailscale";
     license = licenses.asl20;
     maintainers = with maintainers; [ ];
-    mainProgram = "caddy-tailscale";
+    mainProgram = "caddy";
   };
 }
