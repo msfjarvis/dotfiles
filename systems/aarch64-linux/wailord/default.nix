@@ -136,6 +136,15 @@
           reverse_proxy :9090
         '';
       };
+      "https://prometheus.tiger-shark.ts.net" = {
+        extraConfig = ''
+          bind tailscale/prometheus
+          tailscale_auth
+          reverse_proxy :${toString config.services.prometheus.port} {
+            header_up X-Webauth-User {http.auth.user.tailscale_user}
+          }
+        '';
+      };
       "https://nix-cache.tiger-shark.ts.net" = {
         extraConfig = ''
           bind tailscale/nix-cache
