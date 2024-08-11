@@ -127,6 +127,7 @@
       newsflash
       nix-init
       nix-update
+      nurl
       pkgs.${namespace}.patreon-dl
       pkgs.${namespace}.pidcat
       (python312.withPackages (
