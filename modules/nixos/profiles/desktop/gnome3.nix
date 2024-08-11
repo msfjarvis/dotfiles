@@ -98,24 +98,21 @@ in
         gnome-tweaks
       ]
       ++ (filter (pkg: pkg != null) (catAttrs "package" extensionsMap));
-    environment.gnome.excludePackages =
-      with pkgs;
-      with pkgs.gnome;
-      [
-        epiphany
-        geary
-        gnome-calendar
-        gnome-characters
-        gnome-clocks
-        gnome-console
-        gnome-contacts
-        gnome-maps
-        gnome-music
-        gnome-weather
-        loupe
-        simple-scan
-        totem
-      ];
+    environment.gnome.excludePackages = with pkgs; [
+      epiphany
+      geary
+      gnome-calendar
+      gnome.gnome-characters
+      gnome.gnome-clocks
+      gnome-console
+      gnome.gnome-contacts
+      gnome.gnome-maps
+      gnome.gnome-music
+      gnome.gnome-weather
+      loupe
+      simple-scan
+      totem
+    ];
 
     stylix.targets = {
       gnome.enable = true;
