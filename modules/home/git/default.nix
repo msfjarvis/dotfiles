@@ -25,6 +25,10 @@ in
         { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig-work"; }
       ];
     lfs.enable = true;
+    delta = {
+      enable = true;
+      catppuccin.enable = true;
+    };
     extraConfig = {
       branch.sort = "-committerdate";
       core = {

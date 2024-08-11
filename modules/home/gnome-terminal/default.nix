@@ -20,21 +20,21 @@ in
         "b1dcc9dd-5262-4d8d-a863-c897e6d979b9" = {
           default = true;
           visibleName = "Catppuccin Mocha";
-          colors = with config.lib.stylix.colors.withHashtag; {
-            foregroundColor = base05;
-            backgroundColor = base00;
-            boldColor = base04;
-            palette = [
-              base00
-              base08
-              base0B
-              base0A
-              base0D
-              base0E
-              base0C
-              base05
-            ];
-          };
+          # colors = with config.lib.stylix.colors.withHashtag; {
+          #   foregroundColor = base05;
+          #   backgroundColor = base00;
+          #   boldColor = base04;
+          #   palette = [
+          #     base00
+          #     base08
+          #     base0B
+          #     base0A
+          #     base0D
+          #     base0E
+          #     base0C
+          #     base05
+          #   ];
+          # };
           boldIsBright = false;
           audibleBell = false;
         };
