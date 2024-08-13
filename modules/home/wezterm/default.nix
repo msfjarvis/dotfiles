@@ -25,8 +25,8 @@ in
         -- Use the in-built 'Catppuccin Mocha' theme
         config.color_scheme = 'catppuccin-mocha'
 
-        -- Disable Wayland since it causes the program to not launch
-        config.enable_wayland = false
+        -- Explicitly enable Wayland support
+        config.enable_wayland = true
 
         -- Use JetBrains Mono with a smaller font size than default
         config.font = wezterm.font 'JetBrains Mono Nerd Font Mono'
