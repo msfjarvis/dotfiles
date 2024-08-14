@@ -78,7 +78,6 @@ in
     services.xserver.desktopManager.gnome.enable = true;
     services.displayManager.defaultSession = "gnome";
     programs.seahorse.enable = true;
-    programs.gnome-terminal.enable = true;
     services.gnome.gnome-keyring.enable = true;
 
     # Enable Wayland compatibility workarounds within Nixpkgs
@@ -127,18 +126,6 @@ in
         enable = true;
       };
       dconf.settings = {
-        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" =
-          let
-            terminal-cmd =
-              if (config.profiles.wezterm.enable or false) then
-                "${lib.getExe pkgs.wezterm}"
-              else
-                "${lib.getExe pkgs.gnome-terminal}";
-          in
-          lib.mkDefault {
-            binding = "<Control><Alt>t";
-            command = terminal-cmd;
-          };
         "org/gnome/shell" = {
           disable-user-extensions = false;
           enabled-extensions = catAttrs "uuid" extensionsMap;
