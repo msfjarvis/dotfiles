@@ -16,6 +16,7 @@
     mpv.enable = true;
     pass.enable = true;
     spotify.enable = true;
+    wezterm.enable = true;
     zed = {
       enable = true;
       extraPackages = with pkgs; [
