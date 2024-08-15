@@ -109,6 +109,14 @@
       }
     '';
     virtualHosts = {
+      "https://cash.tiger-shark.ts.net" = {
+        extraConfig = ''
+          bind tailscale/cash
+          root * ${config.services.firefly-iii.package}/public
+          file_server
+          php_fastcgi unix/${config.services.phpfpm.pools.firefly-iii.socket}
+        '';
+      };
       "https://git.msfjarvis.dev" = {
         extraConfig = ''
           import blackholeCrawlers
@@ -171,6 +179,25 @@
         '';
       };
     };
+  };
+
+  sops.secrets.firefly-iii = {
+    sopsFile = lib.snowfall.fs.get-file "secrets/firefly-iii.yaml";
+    owner = config.services.firefly-iii.user;
+    group = config.services.firefly-iii.group;
+  };
+  services.firefly-iii = {
+    enable = true;
+    settings = {
+      APP_ENV = "production";
+      APP_URL = "https://cash.tiger-shark.ts.net";
+      APP_KEY_FILE = config.sops.secrets.firefly-iii.path;
+      DB_CONNECTION = "sqlite";
+      LOG_CHANNEL = "syslog";
+      TZ = config.time.timeZone;
+    };
+    user = config.services.caddy.user;
+    group = config.services.caddy.group;
   };
 
   services.gitea = {
