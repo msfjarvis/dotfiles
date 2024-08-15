@@ -109,12 +109,6 @@
       }
     '';
     virtualHosts = {
-      "https://cockpit.tiger-shark.ts.net" = {
-        extraConfig = ''
-          bind tailscale/cockpit
-          reverse_proxy :${toString config.services.cockpit.port}
-        '';
-      };
       "https://git.msfjarvis.dev" = {
         extraConfig = ''
           import blackholeCrawlers
@@ -175,16 +169,6 @@
           root * /var/lib/file_share_internal
           file_server browse
         '';
-      };
-    };
-  };
-
-  services.cockpit = {
-    enable = true;
-    port = 9091;
-    settings = {
-      WebService = {
-        Origins = "https://cockpit.tiger-shark.ts.net";
       };
     };
   };
