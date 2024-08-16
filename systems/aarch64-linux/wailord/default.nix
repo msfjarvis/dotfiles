@@ -90,6 +90,7 @@
   };
   services.caddy = {
     enable = true;
+    enableReload = false; # I think caddy-tailscale breaks this
     package = pkgs.jarvis.caddy-tailscale;
     environmentFile = config.sops.secrets.tsauthkey-env.path;
     globalConfig = ''
