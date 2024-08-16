@@ -83,6 +83,7 @@
       age
       attic
       pkgs.${namespace}.boop-gtk
+      pkgs.${namespace}.cyberdrop-dl
       fclones
       (ffmpeg.override {
         buildFfplay = false;
