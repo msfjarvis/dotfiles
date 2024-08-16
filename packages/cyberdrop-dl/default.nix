@@ -6,14 +6,14 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
-  version = "5.3.41-unstable-2024-08-10";
+  version = "5.4.23-unstable-2024-08-14";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jbsparrow";
     repo = "cyberdropdownloader";
-    rev = "458eb07e1c20b70d6c057dd7de59b1a6d7f69694";
-    hash = "sha256-8WRZYYykYtV6Xf3mOA7RoCCzIQ6CQ/SLjefCYDCkJWY=";
+    rev = "71f16e4af111984c3781e9812623806d1a12c03d";
+    hash = "sha256-KAOM6SBosuQ0RJ52egGJNQSR7BBBYLLod9PPjRGwjC8=";
   };
 
   patches = [ ./unpin-dependencies.patch ];
@@ -31,6 +31,7 @@ python3.pkgs.buildPythonApplication rec {
     certifi
     filedate
     get-video-properties
+    humanfriendly
     inquirerpy
     mediafire
     mutagen
@@ -39,6 +40,7 @@ python3.pkgs.buildPythonApplication rec {
     platformdirs
     pyyaml
     rich
+    send2trash
   ];
 
   pythonImportsCheck = [ "cyberdrop_dl" ];
