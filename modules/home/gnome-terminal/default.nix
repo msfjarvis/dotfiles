@@ -35,7 +35,7 @@ in
               base05
             ];
           };
-          boldIsBright = true;
+          boldIsBright = false;
           audibleBell = false;
         };
       };
