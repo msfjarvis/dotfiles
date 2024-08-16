@@ -117,6 +117,14 @@
           php_fastcgi unix/${config.services.phpfpm.pools.firefly-iii.socket}
         '';
       };
+      "https://cash-import.tiger-shark.ts.net" = {
+        extraConfig = ''
+          bind tailscale/cash-import
+          reverse_proxy :9091 {
+            header_down X-Forwarded-Proto https
+          }
+        '';
+      };
       "https://git.msfjarvis.dev" = {
         extraConfig = ''
           import blackholeCrawlers
@@ -184,7 +192,7 @@
   sops.secrets.firefly-iii = {
     sopsFile = lib.snowfall.fs.get-file "secrets/firefly-iii.yaml";
     owner = config.services.firefly-iii.user;
-    group = config.services.firefly-iii.group;
+    inherit (config.services.firefly-iii) group;
   };
   services.firefly-iii = {
     enable = true;
@@ -194,10 +202,11 @@
       APP_KEY_FILE = config.sops.secrets.firefly-iii.path;
       DB_CONNECTION = "sqlite";
       LOG_CHANNEL = "syslog";
+      TRUSTED_PROXIES = "*";
       TZ = config.time.timeZone;
     };
-    user = config.services.caddy.user;
-    group = config.services.caddy.group;
+    inherit (config.services.caddy) user;
+    inherit (config.services.caddy) group;
   };
 
   services.gitea = {
@@ -363,6 +372,17 @@
       image = "ghcr.io/alexta69/metube";
       ports = [ "127.0.0.1:9090:8081" ];
       volumes = [ "/var/lib/metube:/downloads" ];
+    };
+    "firefly-importer" = {
+      image = "fireflyiii/data-importer:version-1.5.3";
+      autoStart = true;
+      environment = {
+        TRUSTED_PROXIES = "*";
+        FIREFLY_III_URL = config.services.firefly-iii.settings.APP_URL;
+        inherit (config.services.firefly-iii.settings) TZ;
+      };
+      ports = [ "127.0.0.1:9091:8080" ];
+      extraOptions = [ "--log-opt=tag='firefly-importer'" ];
     };
   };
 }
