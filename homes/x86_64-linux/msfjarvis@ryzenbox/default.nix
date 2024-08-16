@@ -12,11 +12,11 @@
   };
 
   profiles.${namespace} = {
+    gnome-terminal.enable = true;
     logseq.enable = true;
     mpv.enable = true;
     pass.enable = true;
     spotify.enable = true;
-    wezterm.enable = true;
     zed = {
       enable = true;
       extraPackages = with pkgs; [
