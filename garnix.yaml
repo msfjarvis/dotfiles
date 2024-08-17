@@ -1,5 +1,6 @@
 builds:
   include:
+    - darwinConfigurations.*
     - nixosConfigurations.matara
     - nixosConfigurations.ryzenbox
     - nixosConfigurations.wailord
