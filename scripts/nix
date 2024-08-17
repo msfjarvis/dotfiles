@@ -61,3 +61,16 @@ function flakerev() {
   INPUT="${1:-nixpkgs}"
   jq -r ".flakes[] | select(.from.id == \"${INPUT}\") | .to.rev" /etc/nix/registry.json
 }
+
+function modinit() {
+  local MODULE_DESC MODULE_NAME MODULE_TYPE MODULE_PATH
+  read -rp "Module type? (e.g. programs/services): " MODULE_TYPE
+  read -rp "Name?: " MODULE_NAME
+  read -rp "Desc?: " MODULE_DESC
+  read -rp "Path?: " MODULE_PATH
+  mkdir -p "${MODULE_PATH}"
+  cp -v "${SCRIPT_DIR}/templates/module.nix" "${MODULE_PATH}/default.nix"
+  sd MODULE_TYPE "${MODULE_TYPE}" "${MODULE_PATH}/default.nix"
+  sd MODULE_NAME "${MODULE_NAME}" "${MODULE_PATH}/default.nix"
+  sd MODULE_DESC "${MODULE_DESC}" "${MODULE_PATH}/default.nix"
+}
