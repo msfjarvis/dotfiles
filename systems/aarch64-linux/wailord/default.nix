@@ -110,12 +110,6 @@
       }
     '';
     virtualHosts = {
-      "https://git.msfjarvis.dev" = {
-        extraConfig = ''
-          import blackholeCrawlers
-          reverse_proxy :${toString config.services.gitea.settings.server.HTTP_PORT}
-        '';
-      };
       "https://metube.tiger-shark.ts.net" = {
         extraConfig = ''
           bind tailscale/metube
@@ -156,36 +150,6 @@
     };
   };
 
-  services.gitea = {
-    enable = true;
-    appName = "Harsh Shandilya's Git hosting";
-    settings = {
-      mailer = {
-        ENABLED = false;
-      };
-      other = {
-        SHOW_FOOTER_POWERED_BY = false;
-      };
-      repository = {
-        DISABLE_STARS = false;
-      };
-      server = {
-        DISABLE_SSH = true;
-        DOMAIN = "git.msfjarvis.dev";
-        ENABLE_GZIP = true;
-        LANDING_PAGE = "explore";
-        ROOT_URL = "https://git.msfjarvis.dev/";
-      };
-      service = {
-        COOKIE_SECURE = true;
-        DISABLE_REGISTRATION = true;
-      };
-      ui = {
-        DEFAULT_THEME = "catppuccin-mocha-mauve";
-      };
-    };
-  };
-
   sops.secrets.gitout-config = {
     sopsFile = lib.snowfall.fs.get-file "secrets/gitout.yaml";
     owner = "msfjarvis";
@@ -199,6 +163,11 @@
     firefly = {
       enable = true;
       hostName = "cash";
+    };
+
+    gitea = {
+      enable = true;
+      domain = "git.msfjarvis.dev";
     };
 
     gitout = {
