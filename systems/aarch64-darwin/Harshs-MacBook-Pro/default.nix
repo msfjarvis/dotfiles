@@ -12,7 +12,6 @@
   environment.systemPackages = with pkgs; [
     pkgs.${namespace}.adx
     attic
-    awscli2
     coreutils
     pkgs.${namespace}.diffuse-bin
     pkgs.${namespace}.gdrive
@@ -27,7 +26,6 @@
     openssl
     pkgs.${namespace}.pidcat
     scrcpy
-    pkgs.${namespace}.toml-cli
   ];
 
   programs.gnupg.agent.enable = true;
