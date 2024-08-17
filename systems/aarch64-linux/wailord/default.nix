@@ -116,28 +116,10 @@
           reverse_proxy :${toString config.services.gitea.settings.server.HTTP_PORT}
         '';
       };
-      "https://${config.services.grafana.settings.server.domain}" = {
-        extraConfig = ''
-          bind tailscale/grafana
-          tailscale_auth
-          reverse_proxy ${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port} {
-            header_up X-Webauth-User {http.auth.user.tailscale_user}
-          }
-        '';
-      };
       "https://metube.tiger-shark.ts.net" = {
         extraConfig = ''
           bind tailscale/metube
           reverse_proxy :9090
-        '';
-      };
-      "https://prometheus.tiger-shark.ts.net" = {
-        extraConfig = ''
-          bind tailscale/prometheus
-          tailscale_auth
-          reverse_proxy :${toString config.services.prometheus.port} {
-            header_up X-Webauth-User {http.auth.user.tailscale_user}
-          }
         '';
       };
       "https://nix-cache.tiger-shark.ts.net" = {
@@ -204,12 +186,6 @@
     };
   };
 
-  services.restic.server = {
-    enable = true;
-    extraFlags = [ "--no-auth" ];
-    listenAddress = "127.0.0.1:8082";
-  };
-
   sops.secrets.gitout-config = {
     sopsFile = lib.snowfall.fs.get-file "secrets/gitout.yaml";
     owner = "msfjarvis";
@@ -232,22 +208,12 @@
       user = "msfjarvis";
       group = "users";
     };
-  };
 
-  services.grafana = {
-    enable = true;
-    settings = {
-      "auth.proxy" = {
-        enabled = true;
-        auto_sign_up = false;
-        enable_login_token = false;
-      };
-      server = {
-        domain = "grafana.tiger-shark.ts.net";
-        http_addr = "127.0.0.1";
-        http_port = 2342;
-      };
-    };
+    postgres.enable = true;
+
+    prometheus.enable = true;
+
+    restic-rest-server.enable = true;
   };
 
   sops.secrets.feed-auth = {
@@ -273,66 +239,6 @@
       WEBAUTHN = 1;
     };
     adminCredentialsFile = config.sops.secrets.feed-auth.path;
-  };
-
-  services.postgresqlBackup = {
-    enable = true;
-    backupAll = true;
-    compression = "zstd";
-  };
-
-  sops.secrets.restic_repo_password = {
-    sopsFile = lib.snowfall.fs.get-file "secrets/restic/password.yaml";
-    owner = "prometheus";
-    group = "prometheus";
-  };
-  services.prometheus = {
-    enable = true;
-    port = 9001;
-    extraFlags = [ "--web.enable-admin-api" ];
-    exporters = {
-      node = {
-        enable = true;
-        enabledCollectors = [ "systemd" ];
-        port = 9002;
-      };
-      systemd = {
-        enable = true;
-        port = 9003;
-      };
-      postgres = {
-        enable = true;
-        port = 9004;
-        runAsLocalSuperUser = true;
-      };
-      restic = {
-        enable = true;
-        port = 9005;
-        repository = "rest:http://${config.services.restic.server.listenAddress}/";
-        passwordFile = config.sops.secrets.restic_repo_password.path;
-        user = "prometheus";
-        group = "prometheus";
-      };
-    };
-    scrapeConfigs = [
-      {
-        job_name = "wailord";
-        static_configs = [
-          { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ]; }
-          { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.systemd.port}" ]; }
-          { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.postgres.port}" ]; }
-          { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.restic.port}" ]; }
-        ];
-      }
-      {
-        job_name = "caddy";
-        static_configs = [ { targets = [ "127.0.0.1:2019" ]; } ];
-      }
-      {
-        job_name = "miniflux";
-        static_configs = [ { targets = [ config.services.miniflux.config.LISTEN_ADDR ]; } ];
-      }
-    ];
   };
 
   system.stateVersion = "23.11";
