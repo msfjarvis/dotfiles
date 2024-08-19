@@ -16,7 +16,7 @@ let
 in
 buildGoModule {
   pname = "caddy-tailscale";
-  version = "0-unstable-2024-07-15";
+  version = "0-unstable-2024-08-20";
 
   src = fetchFromGitHub {
     owner = "tailscale";
@@ -25,7 +25,9 @@ buildGoModule {
     hash = "sha256-/UIQiT7IpPmD/7bzI8a50po9Y/IYV8W4Ycl3yqa5wj8=";
   };
 
-  vendorHash = "sha256-x6A59S6ySK5Ws+H45O6aO0VahQxy2mPt7cnEMtHTmQ8=";
+  patches = [ ./update-tailscale.patch ];
+
+  vendorHash = "sha256-2MVDSuWZH7PT3weqRIJYkEF628SYSungvBc71g4cz8w=";
 
   ldflags = [
     "-s"
