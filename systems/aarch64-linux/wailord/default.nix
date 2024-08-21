@@ -160,11 +160,6 @@
       domain = "links.msfjarvis.dev";
     };
 
-    firefly = {
-      enable = true;
-      hostName = "cash";
-    };
-
     gitea = {
       enable = true;
       domain = "git.msfjarvis.dev";
