@@ -48,27 +48,29 @@ in
         ]
       '')
     ];
-    services.pipewire.wireplumber.extraConfig = {
-      "alsa-disable" = {
+    services.pipewire.wireplumber.configPackages = [
+      (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/49-disable-devices.conf"''
         monitor.alsa.rules = [
           {
             matches = [
-              { "node.name" = "alsa_output.pci-0000_01_00.1.hdmi-stereo"; }
+              { "node.name" = "alsa_output.pci-0000_01_00.1.hdmi-stereo" }
               {
-                "node.name" = "alsa_output.usb-Blue_Microphones_Yeti_Nano_2209SG0034Y8_888-000469140106-00.analog-stereo";
+                "node.name" = "alsa_output.usb-Blue_Microphones_Yeti_Nano_2209SG0034Y8_888-000469140106-00.analog-stereo"
               }
-              { "node.name" = "alsa_input.pci-0000_34_00.6.analog-stereo"; }
+              { "node.name" = "alsa_input.pci-0000_34_00.6.analog-stereo" }
               {
-                "node.name" = "alsa_input.usb-Vimicro_Corp._Lenovo_FHD_Webcam_Lenovo_FHD_Webcam_Audio-02.analog-stereo";
+                "node.name" = "alsa_input.usb-Vimicro_Corp._Lenovo_FHD_Webcam_Lenovo_FHD_Webcam_Audio-02.analog-stereo"
               }
-            ];
-            actions.update-props = {
-              "device.disabled" = true;
-              "node.disabled" = true;
-            };
+            ]
+            actions = {
+              update-props = {
+                device.disabled = true
+                node.disabled = true
+              }
+            }
           }
-        ];
-      };
-    };
+        ]
+      '')
+    ];
   };
 }
