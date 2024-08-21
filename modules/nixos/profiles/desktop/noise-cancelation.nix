@@ -20,30 +20,28 @@ in
           {
             name = libpipewire-module-filter-chain
             args = {
-              node.description =  "Noise Canceling source"
-              media.name =  "Noise Canceling source"
+              node.description = "DeepFilter Noise Canceling Source"
+              media.name       = "DeepFilter Noise Canceling Source"
               filter.graph = {
                 nodes = [
                   {
-                    type = ladspa
-                    name = rnnoise
-                    plugin = ${pkgs.${namespace}.rnnoise-plugin-slim}/lib/ladspa/librnnoise_ladspa.so
-                    label = noise_suppressor_mono
+                    type   = ladspa
+                    name   = "DeepFilter Mono"
+                    plugin = "${pkgs.deepfilternet}/lib/ladspa/libdeep_filter_ladspa.so"
+                    label  = deep_filter_mono
                     control = {
-                      "VAD Threshold (%)" = 50.0
+                      "Attenuation Limit (dB)" 100
                     }
                   }
                 ]
               }
+              audio.rate = 48000
+              audio.position = [MONO]
               capture.props = {
-                node.name =  "effect_input.rnnoise"
                 node.passive = true
-                audio.rate = 48000
               }
               playback.props = {
-                node.name =  "effect_output.rnnoise"
                 media.class = Audio/Source
-                audio.rate = 48000
               }
             }
           }
