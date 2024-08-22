@@ -69,22 +69,11 @@
           ];
         };
 
-        formatter = channels.nixpkgs.writeShellApplication {
-          name = "format";
-          runtimeInputs = with channels.nixpkgs; [
-            nixfmt-rfc-style
-            deadnix
-            shfmt
-            statix
-          ];
-          text = ''
-            set -euo pipefail
-            shfmt --write --simplify --language-dialect bash --indent 2 --case-indent --space-redirects .;
-            deadnix --edit
-            statix check . || statix fix .
-            nixfmt .
-          '';
-        };
+        formatter =
+          let
+            treefmtEval = inputs.treefmt-nix.lib.evalModule channels.nixpkgs ./treefmt.nix;
+          in
+          treefmtEval.config.build.wrapper;
       };
 
       deploy = lib.mkDeploy { inherit (inputs) self; };
@@ -214,6 +203,9 @@
     stylix.inputs.flake-compat.follows = "flake-compat";
     stylix.inputs.home-manager.follows = "home-manager";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
+
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     wallpaper.url = "https://til.msfjarvis.dev/wallpaper.png";
     wallpaper.flake = false;
