@@ -37,7 +37,7 @@ if [ -d ~/Android/Sdk ]; then
 fi
 
 # Sexy colors in `ls`
-if type vivid &> /dev/null; then
+if type vivid &>/dev/null; then
   LS_COLORS="$(vivid generate snazzy)"
   export LS_COLORS
 fi
@@ -54,18 +54,18 @@ for DIR in "${HOME}"/bash_completion.d "${HOME}"/.nix-profile/share/bash-complet
 done
 
 # Enable pass user extensions
-if type pass &> /dev/null; then
+if type pass &>/dev/null; then
   export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 fi
 
 # Nano love, or is it?
-if type micro &> /dev/null; then
+if type micro &>/dev/null; then
   export EDITOR=micro
   export MICRO_TRUECOLOR=1
 fi
 
 # Setup zoxide
-if type zoxide &> /dev/null; then
+if type zoxide &>/dev/null; then
   alias cd=z
 fi
 

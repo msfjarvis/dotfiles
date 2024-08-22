@@ -30,7 +30,7 @@ function get_release_assets() {
     RELEASE_ID=$(curl --silent "https://api.github.com/repos/${1:?}/releases/latest" | jq -r .id)
   else
     # Get all releases from the v3 API, get the id and tag_name fields (called name in the slice) for each item, and write it to a temporary file
-    curl --silent "https://api.github.com/repos/${REPOSITORY}/releases" | jq '.[] | {id: .id, name: .tag_name}' > "${TMP_FILE}"
+    curl --silent "https://api.github.com/repos/${REPOSITORY}/releases" | jq '.[] | {id: .id, name: .tag_name}' >"${TMP_FILE}"
     # Stream across the data we sliced earlier, printing the id and name as space separated values, then cleanly filter the one we need using grep and awk
     RELEASE_ID=$(jq -r '"\(.id) \(.name)"' "${TMP_FILE}" | grep "${RELEASE_TAG}" | awk '{print $1}') # Get the ID of the latest release
   fi
@@ -57,7 +57,7 @@ function gcp() {
     OG_COMMITISH="HEAD"
   fi
 
-  COMMITISH="$(git rev-parse --short "${OG_COMMITISH}" 2> /dev/null)"
+  COMMITISH="$(git rev-parse --short "${OG_COMMITISH}" 2>/dev/null)"
 
   if [ -z "${COMMITISH}" ]; then
     reportWarning "Failed to find a commit for '${OG_COMMITISH}'"

@@ -45,12 +45,12 @@ function batch_dl() {
       PROTOCOL=gdrive
     fi
     case "${PROTOCOL}" in
-      gdrive)
-        gdrivedl "${LINK}" --skip
-        ;;
-      ddl)
-        dl "${LINK}" "${DEST}"
-        ;;
+    gdrive)
+      gdrivedl "${LINK}" --skip
+      ;;
+    ddl)
+      dl "${LINK}" "${DEST}"
+      ;;
     esac
   done < <(cat "${INPUT_FILE}")
 }
@@ -63,8 +63,8 @@ function link() {
   ROOT="${3}"
   PWD="$(pwd)"
   case "${SRC:?}" in
-    /*) ;; # No action needed
-    *) SRC="${PWD}"/"${SRC:?}" ;;
+  /*) ;; # No action needed
+  *) SRC="${PWD}"/"${SRC:?}" ;;
   esac
   if [ -z "${ROOT}" ]; then
     ln -sf "${SRC:?}" "${DEST:?}"

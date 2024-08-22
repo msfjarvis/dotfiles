@@ -3,10 +3,8 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 2 * * *'
-
 permissions:
   contents: write
-
 jobs:
   update-firefox-nightly:
     uses: msfjarvis/shared-workflows/.github/workflows/update-flake-lock.yml@main

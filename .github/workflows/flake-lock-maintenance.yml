@@ -3,10 +3,8 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '30 3 * * 0'
-
 permissions:
   contents: write
-
 jobs:
   update-flake-lock:
     uses: msfjarvis/shared-workflows/.github/workflows/update-flake-lock.yml@main

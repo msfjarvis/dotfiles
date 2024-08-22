@@ -10,65 +10,54 @@ on:
       version:
         description: 'Version to pin package to'
         required: false
-
 name: Check for package updates
 jobs:
   check-nix-update:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
-
-    - uses: cachix/install-nix-action@ba0dd844c9180cbf77aa72a116d6fbc515d0e87b # v27
-
-    - name: Add nixpkgs-unstable channel
-      shell: bash
-      run: |
-        nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
-        nix-channel --update
-
-    - name: Setup Tailscale
-      uses: tailscale/github-action@4e4c49acaa9818630ce0bd7a564372c17e33fb4d # v2
-      with:
-        oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-        oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-        tags: "tag:github-actions"
-
-    - name: Setup Attic cache
-      uses: ryanccn/attic-action@618a980988d704a7709daeea88526146acd1d45f # v0
-      with:
-        endpoint: ${{ secrets.ATTIC_ENDPOINT }}
-        cache: ${{ secrets.ATTIC_CACHE }}
-        token: ${{ secrets.ATTIC_TOKEN }}
-
-    - name: Set Git user and email
-      shell: bash
-      run: |
-        git config user.name "GitHub Actions"
-        git config user.email noreply@github.com
-
-    - name: Check pre-update Git ref
-      shell: bash
-      run: |
-        echo "OLD_REF=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
-
-    - name: Check for updates of given package
-      shell: bash
-      if: "github.event.inputs.package != null || github.event.action == 'package-bump'"
-      run: nix-shell -p nix-update git --run './update.sh ${{ github.event.inputs.package || github.event.client_payload.package_name }} ${{ github.event.inputs.version }}'
-
-    - name: Check for updates
-      shell: bash
-      if: "github.event.inputs.package == null"
-      run: nix-shell -p nix-update git --run ./update.sh
-
-    - name: Check post-update Git ref
-      shell: bash
-      run: |
-        echo "NEW_REF=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
-
-    - name: Push to main branch
-      if: env.OLD_REF != env.NEW_REF
-      shell: bash
-      run: |
-        git push origin main
+      - name: Checkout repository
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+      - uses: cachix/install-nix-action@ba0dd844c9180cbf77aa72a116d6fbc515d0e87b # v27
+      - name: Add nixpkgs-unstable channel
+        shell: bash
+        run: |
+          nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
+          nix-channel --update
+      - name: Setup Tailscale
+        uses: tailscale/github-action@4e4c49acaa9818630ce0bd7a564372c17e33fb4d # v2
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: "tag:github-actions"
+      - name: Setup Attic cache
+        uses: ryanccn/attic-action@618a980988d704a7709daeea88526146acd1d45f # v0
+        with:
+          endpoint: ${{ secrets.ATTIC_ENDPOINT }}
+          cache: ${{ secrets.ATTIC_CACHE }}
+          token: ${{ secrets.ATTIC_TOKEN }}
+      - name: Set Git user and email
+        shell: bash
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email noreply@github.com
+      - name: Check pre-update Git ref
+        shell: bash
+        run: |
+          echo "OLD_REF=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+      - name: Check for updates of given package
+        shell: bash
+        if: "github.event.inputs.package != null || github.event.action == 'package-bump'"
+        run: nix-shell -p nix-update git --run './update.sh ${{ github.event.inputs.package || github.event.client_payload.package_name }} ${{ github.event.inputs.version }}'
+      - name: Check for updates
+        shell: bash
+        if: "github.event.inputs.package == null"
+        run: nix-shell -p nix-update git --run ./update.sh
+      - name: Check post-update Git ref
+        shell: bash
+        run: |
+          echo "NEW_REF=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+      - name: Push to main branch
+        if: env.OLD_REF != env.NEW_REF
+        shell: bash
+        run: |
+          git push origin main

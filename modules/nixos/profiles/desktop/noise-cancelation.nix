@@ -49,7 +49,7 @@ in
       '')
     ];
     services.pipewire.wireplumber.configPackages = [
-      (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/49-disable-devices.conf"''
+      (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/49-disable-devices.conf" ''
         monitor.alsa.rules = [
           {
             matches = [

@@ -6,28 +6,28 @@
 alias pidcat='pidcat -i ResourceType -i chatty -i AppCompatDelegate -i EGL_emulation'
 alias today='date +"%F"'
 alias gi=git
-if type hub &> /dev/null; then
+if type hub &>/dev/null; then
   alias git=hub
 fi
-if type bat &> /dev/null; then
+if type bat &>/dev/null; then
   alias cat='bat --style=grid,header --theme="zenburn"'
 fi
-if type micro &> /dev/null; then
+if type micro &>/dev/null; then
   alias nano=micro
 fi
-if type aria2c &> /dev/null; then
+if type aria2c &>/dev/null; then
   alias batch="aria2c --conditional-get true --continue true --auto-file-renaming=false --input-file"
 fi
-if type fd &> /dev/null; then
+if type fd &>/dev/null; then
   alias findjars="fd -Itf jar$ build"
   alias findapks="fd -Itf apk$"
 fi
-if type yt-dlp &> /dev/null; then
+if type yt-dlp &>/dev/null; then
   alias ytdl="yt-dlp --downloader aria2c --downloader-args aria2c:'-c -j 3 -x 3 -s 3 -k 1M' -N 5"
 fi
-if type nix &> /dev/null; then
+if type nix &>/dev/null; then
   alias nix="nix --print-build-logs"
 fi
-if type xdg-open &> /dev/null; then
+if type xdg-open &>/dev/null; then
   alias open="xdg-open"
 fi

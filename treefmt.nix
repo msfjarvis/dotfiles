@@ -22,9 +22,7 @@ _: {
     "shell-init"
     "darwin-init"
   ];
-  settings.formatter.shfmt.excludes = [
-    "scripts/templates/*"
-  ];
+  settings.formatter.shfmt.excludes = [ "scripts/templates/*" ];
   programs.statix = {
     enable = true;
   };
