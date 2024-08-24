@@ -11,7 +11,7 @@
       freeMemThreshold = 2;
       extraArgs = [
         "-g"
-        "--avoid '^(gnome.*|firefox.*|pipewire.*)$'" # things we want to not kill
+        "--avoid '^(gnome.*|firefox.*|pipewire.*|git.*)$'" # things we want to not kill
         "--prefer '^(electron|.*.exe)$'" # I wish we could kill electron permanently
       ];
 
