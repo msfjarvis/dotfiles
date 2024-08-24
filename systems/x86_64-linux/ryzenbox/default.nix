@@ -352,7 +352,7 @@
     };
 
     gphotos-cdp = {
-      enable = true;
+      enable = false;
       session-dir = "/home/msfjarvis/harsh-sess";
       dldir = "/home/msfjarvis/harsh-photos";
       user = "msfjarvis";
