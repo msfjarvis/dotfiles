@@ -32,7 +32,7 @@
       systems.modules.darwin = with inputs; [ srvos.darwinModules.desktop ];
       systems.modules.nixos = with inputs; [
         nix-topology.nixosModules.default
-        nixos-cosmic.nixosModules.default
+        # nixos-cosmic.nixosModules.default
         sops-nix.nixosModules.sops
         stylix.nixosModules.stylix
         srvos.nixosModules.common
@@ -171,10 +171,10 @@
     nix-vscode-extensions.inputs.flake-utils.follows = "flake-utils";
     nix-vscode-extensions.inputs.flake-compat.follows = "flake-compat";
 
-    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
-    nixos-cosmic.inputs.nixpkgs.follows = "nixpkgs";
-    nixos-cosmic.inputs.nixpkgs-stable.follows = "nixpkgs";
-    nixos-cosmic.inputs.flake-compat.follows = "flake-compat";
+    # nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+    # nixos-cosmic.inputs.nixpkgs.follows = "nixpkgs";
+    # nixos-cosmic.inputs.nixpkgs-stable.follows = "nixpkgs";
+    # nixos-cosmic.inputs.flake-compat.follows = "flake-compat";
 
     nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
     nixos-vscode-server.inputs.nixpkgs.follows = "nixpkgs";
@@ -203,6 +203,8 @@
     stylix.inputs.flake-compat.follows = "flake-compat";
     stylix.inputs.home-manager.follows = "home-manager";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
+    stylix.inputs.flake-utils.follows = "flake-utils";
+    stylix.inputs.systems.follows = "systems";
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
