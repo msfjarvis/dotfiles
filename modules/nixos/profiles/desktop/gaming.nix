@@ -30,6 +30,7 @@ in
       # see comment in include/linux/mm.h in the kernel tree.
       "vm.max_map_count" = 2147483642;
     };
+    environment.systemPackages = [ pkgs.mangohud ];
     programs.gamescope = {
       enable = true;
       capSysNice = true;
