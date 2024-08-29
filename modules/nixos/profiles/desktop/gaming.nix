@@ -30,7 +30,10 @@ in
       # see comment in include/linux/mm.h in the kernel tree.
       "vm.max_map_count" = 2147483642;
     };
-    environment.systemPackages = [ pkgs.mangohud ];
+    environment.systemPackages = with pkgs; [
+      mangohud
+      gpu-screen-recorder-gtk
+    ];
     programs.gamescope = {
       enable = true;
       capSysNice = true;
@@ -44,6 +47,9 @@ in
         "--grab"
         "--fullscreen"
       ];
+    };
+    programs.gpu-screen-recorder = {
+      enable = true;
     };
     programs.steam = {
       enable = true;
