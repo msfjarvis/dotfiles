@@ -13,7 +13,7 @@ let
     mkEnableOption
     mkIf
     mkOption
-    mkPackageOptionMD
+    mkPackageOption
     optionalString
     types
     ;
@@ -153,7 +153,7 @@ in
       };
     };
 
-    package = mkPackageOptionMD pkgs.jarvis "glance" { };
+    package = mkPackageOption pkgs.jarvis "glance" { };
 
     user = mkOption {
       type = types.str;

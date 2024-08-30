@@ -11,7 +11,7 @@ let
     mkEnableOption
     mkIf
     mkOption
-    mkPackageOptionMD
+    mkPackageOption
     types
     ;
 in
@@ -43,7 +43,7 @@ in
       description = "Group account under which betula runs.";
     };
 
-    package = mkPackageOptionMD pkgs "betula" { };
+    package = mkPackageOption pkgs "betula" { };
   };
 
   config = mkIf cfg.enable {

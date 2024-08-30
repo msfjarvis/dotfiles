@@ -11,7 +11,7 @@ let
     mkEnableOption
     mkIf
     mkOption
-    mkPackageOptionMD
+    mkPackageOption
     types
     ;
 in
@@ -41,7 +41,7 @@ in
       description = "Group account under which gitout runs.";
     };
 
-    package = mkPackageOptionMD pkgs.jarvis "gitout" { };
+    package = mkPackageOption pkgs.jarvis "gitout" { };
   };
 
   config = mkIf cfg.enable {

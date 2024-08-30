@@ -15,7 +15,7 @@ let
     mkEnableOption
     mkIf
     mkOption
-    mkPackageOptionMD
+    mkPackageOption
     types
     ;
 in
@@ -41,7 +41,7 @@ in
       description = "Shell glob to filter files against to be eligible for moving";
     };
 
-    package = mkPackageOptionMD pkgs.jarvis "rucksack" { };
+    package = mkPackageOption pkgs.jarvis "rucksack" { };
 
     user = mkOption {
       type = types.str;

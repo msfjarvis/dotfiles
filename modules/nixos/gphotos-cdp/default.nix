@@ -11,7 +11,7 @@ let
     mkEnableOption
     mkIf
     mkOption
-    mkPackageOptionMD
+    mkPackageOption
     types
     ;
 in
@@ -41,7 +41,7 @@ in
       description = "Group account under which gphotos-cdp runs.";
     };
 
-    package = mkPackageOptionMD pkgs.jarvis "gphotos-cdp" { };
+    package = mkPackageOption pkgs.jarvis "gphotos-cdp" { };
   };
 
   config = mkIf cfg.enable {
