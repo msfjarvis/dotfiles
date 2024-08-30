@@ -39,6 +39,9 @@
   programs.gnupg.agent.enable = true;
   programs.man.enable = true;
 
+  # Allow sudo with Touch ID
+  security.pam.enableSudoTouchIdAuth = true;
+
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
