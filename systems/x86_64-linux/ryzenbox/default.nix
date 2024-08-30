@@ -117,7 +117,7 @@
       pkgs.${namespace}.gdrive
       git-crypt
       git-lfs
-      handbrake
+      # handbrake
       nerdfonts
       pkgs.${namespace}.katbin
       kondo
