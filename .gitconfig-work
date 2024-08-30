@@ -2,9 +2,8 @@
 	gpgsign = false
 [tag]
 	gpgsign = false
-[url "https://harshs-dyte@github.com/"]
+[url "https://github.com/"]
 	insteadOf = git://github.com/
 	insteadOf = git@github.com:
-	insteadOf = https://github.com/
 [user]
 	email = harsh.shandilya@dyte.io
