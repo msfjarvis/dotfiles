@@ -1,5 +1,5 @@
 diff --git a/go.mod b/go.mod
-index 74431d338e53..8ff2dd70f90e 100644
+index 74431d338e53..f0f91633518b 100644
 --- a/go.mod
 +++ b/go.mod
 @@ -8,7 +8,7 @@ require (
@@ -7,7 +7,7 @@ index 74431d338e53..8ff2dd70f90e 100644
  	github.com/tailscale/tscert v0.0.0-20240608151842-d3f834017e53
  	go.uber.org/zap v1.27.0
 -	tailscale.com v1.68.2
-+	tailscale.com v1.72.0
++	tailscale.com v1.72.1
  )
  
  require (
@@ -108,7 +108,7 @@ index 74431d338e53..8ff2dd70f90e 100644
 -	nhooyr.io/websocket v1.8.10 // indirect
  )
 diff --git a/go.sum b/go.sum
-index f4ecb2616671..9745d2e8506c 100644
+index f4ecb2616671..dbcb7eafb3f5 100644
 --- a/go.sum
 +++ b/go.sum
 @@ -109,10 +109,12 @@ github.com/chzyer/readline v1.5.1/go.mod h1:Eh+b79XXUwfKfcPLepksvw2tcLE/Ct21YObk
@@ -316,5 +316,5 @@ index f4ecb2616671..9745d2e8506c 100644
  software.sslmate.com/src/go-pkcs12 v0.4.0/go.mod h1:Qiz0EyvDRJjjxGyUQa2cCNZn/wMyzrRJ/qcDXOQazLI=
 -tailscale.com v1.68.2 h1:nxy9HTAXPjuTbu/xzF05mS/v9ABMRGGJdPWEScTJxUo=
 -tailscale.com v1.68.2/go.mod h1:uqtoDEA8tw5+S+HLGqQGfpQsqeVtBS/EVVv5mXIaAoQ=
-+tailscale.com v1.72.0 h1:emsPxupFM72zJLt2wvSzpa1vymqPYbL0WVVO+170/s0=
-+tailscale.com v1.72.0/go.mod h1:v7OHtg0KLAnhOVf81Z8WrjNefj238QbFhgkWJQoKxbs=
++tailscale.com v1.72.1 h1:hk82jek36ph2S3Tfsh57NVWKEm/pZ9nfUonvlowpfaA=
++tailscale.com v1.72.1/go.mod h1:v7OHtg0KLAnhOVf81Z8WrjNefj238QbFhgkWJQoKxbs=
