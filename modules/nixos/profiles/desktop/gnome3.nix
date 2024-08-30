@@ -101,13 +101,13 @@ in
       epiphany
       geary
       gnome-calendar
-      gnome.gnome-characters
-      gnome.gnome-clocks
+      gnome-characters
+      gnome-clocks
       gnome-console
-      gnome.gnome-contacts
-      gnome.gnome-maps
-      gnome.gnome-music
-      gnome.gnome-weather
+      gnome-contacts
+      gnome-maps
+      gnome-music
+      gnome-weather
       loupe
       simple-scan
       totem
