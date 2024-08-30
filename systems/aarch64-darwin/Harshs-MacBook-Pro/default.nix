@@ -28,6 +28,14 @@
     scrcpy
   ];
 
+  environment.pathsToLink = [
+    "Applications"
+    "/bin"
+    "/lib"
+    "/man"
+    "/share"
+  ];
+
   programs.gnupg.agent.enable = true;
   programs.man.enable = true;
 
