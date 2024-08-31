@@ -164,29 +164,29 @@
   # https://discourse.nixos.org/t/connected-to-mullvadvpn-but-no-internet-connection/35803/11
   services.resolved.enable = true;
 
-  # sops.secrets.restic_repo_url = {
-  #   sopsFile = lib.snowfall.fs.get-file "secrets/restic/repo.yaml";
-  #   owner = config.services.restic.backups.minecraft.user;
-  # };
-  # sops.secrets.restic_repo_password = {
-  #   sopsFile = lib.snowfall.fs.get-file "secrets/restic/password.yaml";
-  #   owner = config.services.restic.backups.minecraft.user;
-  # };
-  # services.restic.backups = {
-  #   minecraft = {
-  #     initialize = true;
-  #     repositoryFile = config.sops.secrets.restic_repo_url.path;
-  #     passwordFile = config.sops.secrets.restic_repo_password.path;
+  sops.secrets.restic_repo_url = {
+    sopsFile = lib.snowfall.fs.get-file "secrets/restic/repo.yaml";
+    owner = config.services.restic.backups.minecraft.user;
+  };
+  sops.secrets.restic_repo_password = {
+    sopsFile = lib.snowfall.fs.get-file "secrets/restic/password.yaml";
+    owner = config.services.restic.backups.minecraft.user;
+  };
+  services.restic.backups = {
+    minecraft = {
+      initialize = true;
+      repositoryFile = config.sops.secrets.restic_repo_url.path;
+      passwordFile = config.sops.secrets.restic_repo_password.path;
 
-  #     paths = [ "${config.users.users.msfjarvis.home}/Games/PrismLauncher/instances" ];
+      paths = [ "${config.users.users.msfjarvis.home}/Games/PrismLauncher/instances" ];
 
-  #     pruneOpts = [
-  #       "--keep-daily 7"
-  #       "--keep-weekly 2"
-  #       "--keep-monthly 10"
-  #     ];
-  #   };
-  # };
+      pruneOpts = [
+        "--keep-daily 7"
+        "--keep-weekly 2"
+        "--keep-monthly 10"
+      ];
+    };
+  };
 
   services.${namespace} = {
     # Duplicated in Matara, keep both in sync until Matara is deployed then delete this.
