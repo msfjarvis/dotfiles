@@ -180,7 +180,7 @@
     nixos-vscode-server.inputs.nixpkgs.follows = "nixpkgs";
     nixos-vscode-server.inputs.flake-utils.follows = "flake-utils";
 
-    rust-manifest.url = "https://static.rust-lang.org/dist/2024-05-25/channel-rust-nightly.toml";
+    rust-manifest.url = "https://static.rust-lang.org/dist/2024-07-25/channel-rust-nightly.toml";
     rust-manifest.flake = false;
 
     snowfall-lib.url = "github:snowfallorg/lib";
