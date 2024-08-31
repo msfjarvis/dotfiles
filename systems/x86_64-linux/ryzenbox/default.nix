@@ -164,7 +164,11 @@
   # https://discourse.nixos.org/t/connected-to-mullvadvpn-but-no-internet-connection/35803/11
   services.resolved.enable = true;
 
-  sops.secrets.restic_repo_url = {
+  sops.secrets.restic_minecraft_repo_url = {
+    sopsFile = lib.snowfall.fs.get-file "secrets/restic/repo.yaml";
+    owner = config.services.restic.backups.minecraft.user;
+  };
+  sops.secrets.restic_screenshots_repo_url = {
     sopsFile = lib.snowfall.fs.get-file "secrets/restic/repo.yaml";
     owner = config.services.restic.backups.minecraft.user;
   };
@@ -175,7 +179,7 @@
   services.restic.backups = {
     minecraft = {
       initialize = true;
-      repositoryFile = config.sops.secrets.restic_repo_url.path;
+      repositoryFile = config.sops.secrets.restic_minecraft_repo_url.path;
       passwordFile = config.sops.secrets.restic_repo_password.path;
 
       paths = [ "${config.users.users.msfjarvis.home}/Games/PrismLauncher/instances" ];
@@ -184,6 +188,19 @@
         "--keep-daily 7"
         "--keep-weekly 2"
         "--keep-monthly 10"
+      ];
+    };
+    screenshots = {
+      initialize = true;
+      repositoryFile = config.sops.secrets.restic_screenshots_repo_url.path;
+      passwordFile = config.sops.secrets.restic_repo_password.path;
+
+      paths = [ "/mediahell/screenshots" ];
+
+      pruneOpts = [
+        "--keep-daily 5"
+        "--keep-weekly 1"
+        "--keep-monthly 1"
       ];
     };
   };
@@ -368,6 +385,7 @@
         sources = [
           (minecraft "Fabulously.Optimized.1.20.6")
           (minecraft "Fabulously.Optimized.1.21")
+          "${home}/Pictures/Screenshots"
         ];
         target = "/mediahell/screenshots/";
         file_filter = "*.png";
