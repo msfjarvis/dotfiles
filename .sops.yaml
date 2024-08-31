@@ -7,6 +7,10 @@ creation_rules:
       - age:
           - *wailord
           - *ryzenbox
+  - path_regex: ^secrets/restic/
+    key_groups:
+      - age:
+          - *ryzenbox
   - key_groups:
       - age:
           - *wailord
