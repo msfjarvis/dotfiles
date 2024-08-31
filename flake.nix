@@ -31,6 +31,7 @@
       ];
       systems.modules.darwin = with inputs; [ srvos.darwinModules.desktop ];
       systems.modules.nixos = with inputs; [
+        disko.nixosModules.disko
         nix-topology.nixosModules.default
         # nixos-cosmic.nixosModules.default
         sops-nix.nixosModules.sops
@@ -46,7 +47,6 @@
       systems.hosts.ryzenbox.modules = with inputs; [ srvos.nixosModules.desktop ];
       systems.hosts.wailord.modules = with inputs; [
         attic.nixosModules.atticd
-        disko.nixosModules.disko
         srvos.nixosModules.mixins-telegraf
         srvos.nixosModules.mixins-terminfo
         srvos.nixosModules.roles-prometheus
