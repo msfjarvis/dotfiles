@@ -119,10 +119,10 @@ in
     users.users.msfjarvis.packages = with pkgs; [
       # Minecraft
       mcaselector
-      (prismlauncher.override {
-        jdks = [ openjdk22 ];
-        withWaylandGLFW = config.profiles.${namespace}.desktop.gnome3.enable;
-      })
+      # (prismlauncher.override {
+      #   jdks = [ openjdk22 ];
+      #   withWaylandGLFW = config.profiles.${namespace}.desktop.gnome3.enable;
+      # })
       (pkgs.${namespace}.game-shortcuts.override {
         games = [
           {
