@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   programs.gh = {
     enable = true;
@@ -10,5 +11,6 @@
         co = "pr checkout";
       };
     };
+    extensions = [ pkgs.gh-poi ];
   };
 }
