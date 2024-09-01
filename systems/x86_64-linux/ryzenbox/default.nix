@@ -18,6 +18,7 @@
     desktop.gaming.enable = true;
     desktop.gnome3.enable = true;
     desktop.noise-cancelation.enable = true;
+    gallery-dl.enable = true;
   };
 
   # Only enable for first installation
@@ -109,7 +110,6 @@
       })
       forge-sparks
       fzf
-      gallery-dl
       pkgs.${namespace}.gdrive
       git-crypt
       git-lfs
