@@ -24,10 +24,6 @@
   # boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
-  # Enable SOPS, force it to be age-only
-  sops.age.sshKeyPaths = lib.mkForce [ "/etc/ssh/ssh_host_ed25519_key" ];
-  sops.gnupg.sshKeyPaths = lib.mkForce [ ];
-
   snowfallorg.users.msfjarvis.home.config = {
     stylix = {
       targets = {
