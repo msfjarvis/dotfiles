@@ -121,7 +121,6 @@ in
       mcaselector
       (prismlauncher.override {
         jdks = [ openjdk22 ];
-        withWaylandGLFW = config.profiles.${namespace}.desktop.gnome3.enable;
       })
       (pkgs.${namespace}.game-shortcuts.override {
         games = [
