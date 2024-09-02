@@ -112,7 +112,6 @@
       fzf
       pkgs.${namespace}.gdrive
       git-crypt
-      git-lfs
       # handbrake
       nerdfonts
       pkgs.${namespace}.katbin

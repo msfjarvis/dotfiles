@@ -24,6 +24,7 @@ in
       ++ lib.optionals isWorkMachine [
         { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig-work"; }
       ];
+    lfs.enable = true;
     extraConfig = {
       branch.sort = "-committerdate";
       core = {
