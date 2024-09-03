@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   lib,
   host,
   ...
@@ -43,4 +44,6 @@ in
       transfer.fsckobjects = true;
     };
   };
+
+  home.packages = [pkgs.jujutsu];
 }
