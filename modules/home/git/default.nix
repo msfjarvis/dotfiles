@@ -45,5 +45,5 @@ in
     };
   };
 
-  home.packages = [pkgs.jujutsu];
+  home.packages = [ pkgs.jujutsu ];
 }
