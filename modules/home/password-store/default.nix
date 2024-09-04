@@ -39,7 +39,7 @@ in
       repositories = {
         password-store = {
           path = config.programs.password-store.settings.PASSWORD_STORE_DIR;
-          uri = "git+ssh://msfjarvis@github.com:msfjarvis/pass-store.git";
+          uri = "https://msfjarvis@git.msfjarvis.dev/msfjarvis/pass-store";
           interval = 600;
         };
       };
