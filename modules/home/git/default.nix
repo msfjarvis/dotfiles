@@ -35,7 +35,6 @@ in
       fetch = {
         fsckobjects = true;
         prune = true;
-        prunetags = true;
       };
       init.defaultBranch = "main";
       merge.conflictstyle = "zdiff3";
