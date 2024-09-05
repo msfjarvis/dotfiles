@@ -130,6 +130,12 @@ in
           disable-user-extensions = false;
           enabled-extensions = catAttrs "uuid" extensionsMap;
         };
+        "org/gnome/desktop/privacy" = {
+          old-files-age = 7;
+          remember-recent-files = false;
+          remove-old-trash-files = true;
+          remove-old-temp-files = true;
+        };
         "org/gnome/desktop/background" = {
           color-shading-type = "solid";
           picture-options = "zoom";
