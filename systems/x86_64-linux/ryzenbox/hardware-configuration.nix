@@ -8,7 +8,7 @@
   ...
 }:
 let
-  nvidiaDriver = config.boot.kernelPackages.nvidiaPackages.production.bin;
+  nvidiaDriver = config.boot.kernelPackages.nvidiaPackages.beta.bin;
 in
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
@@ -53,7 +53,7 @@ in
     # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
     # Only available from driver 515.43.04+
     # Currently alpha-quality/buggy, so false is currently the recommended setting.
-    open = false;
+    open = true;
 
     # Enable the Nvidia settings menu,
     # accessible via `nvidia-settings`.
