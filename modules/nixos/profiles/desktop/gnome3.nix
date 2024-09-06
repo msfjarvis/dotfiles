@@ -129,6 +129,7 @@ in
         "org/gnome/shell" = {
           disable-user-extensions = false;
           enabled-extensions = catAttrs "uuid" extensionsMap;
+          last-selected-power-profile = "performance";
         };
         "org/gnome/desktop/privacy" = {
           old-files-age = 7;
@@ -151,6 +152,10 @@ in
         };
         "org/gnome/desktop/notifications/application/org-gnome-console" = {
           enable = false;
+        };
+        "org/gnome/settings-daemon/plugins/power" = {
+          power-button-action = "interactive";
+          sleep-inactive-ac-type = "nothing";
         };
       };
     };
