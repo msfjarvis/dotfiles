@@ -21,7 +21,7 @@
 }:
 let
   pname = "boop-gtk";
-  version = "1.9.0-unstable-2024-08-09";
+  version = "0-unstable-2024-09-07";
   description = "Port of @IvanMathy's Boop to GTK, a scriptable scratchpad for developers";
 in
 rustPlatform.buildRustPackage {
@@ -30,12 +30,12 @@ rustPlatform.buildRustPackage {
   src = fetchFromGitHub {
     owner = "msfjarvis";
     repo = "boop-gtk";
-    rev = "40b7ced7e716c6b15a5977ac7d7e9e9b6fee287c";
-    hash = "sha256-7SmQ5DBJY1mN/JjFlAHZb+8XAQj2YI6oTDyk7S90i1c=";
+    rev = "7005b0ab55ba1ffb40c3523ef553cc6bb64c2d28";
+    hash = "sha256-pGV8z+z7TTv+3z2BTHH4NX8rXT4Hcmku1VfH5O+FLGE=";
     fetchSubmodules = true;
   };
 
-  cargoHash = "sha256-du/Y6ahm4zwu0PHtmcrtSYazOuKeJjiZmx+/e3fc/l4=";
+  cargoHash = "sha256-92yui4+Dg8ZA049iGKVMyky9aCEdTXHvtTr5vgV8EEM=";
 
   RUSTY_V8_ARCHIVE = callPackage ./librusty_v8.nix { };
 
