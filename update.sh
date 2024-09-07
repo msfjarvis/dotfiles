@@ -39,6 +39,7 @@ declare -A VERSION_OVERRIDE=(
   ["boop-gtk"]=1
   ["caddy-tailscale"]=1
   ["cyberdrop-dl"]=1
+  ["gitout"]=1
   ["glance"]="release/v0.6.0"
   ["prometheus-qbittorrent-exporter"]=1
 )

@@ -12,6 +12,7 @@
 }:
 let
   version = "0.2.2";
+  rev = "950f5dbe5b920af620a6120d1713848bb954578c";
 in
 rustPlatform.buildRustPackage {
   pname = "gitout";
@@ -20,7 +21,7 @@ rustPlatform.buildRustPackage {
   src = fetchFromGitHub {
     owner = "msfjarvis";
     repo = "gitout";
-    rev = "v${version}";
+    inherit rev;
     hash = "sha256-lUai0pqLsRxAB+aH0dO6d66f4ccHGPRsRPWUWPA0i3w=";
   };
 
@@ -50,7 +51,7 @@ rustPlatform.buildRustPackage {
   meta = with lib; {
     description = "A command-line tool and Docker image to automatically backup Git repositories from GitHub or anywhere";
     homepage = "https://github.com/msfjarvis/gitout";
-    changelog = "https://github.com/msfjarvis/gitout/blob/v${version}/CHANGELOG.md";
+    changelog = "https://github.com/msfjarvis/gitout/blob/${rev}/CHANGELOG.md";
     license = licenses.mit;
     mainProgram = "gitout";
   };
