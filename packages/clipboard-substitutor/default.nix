@@ -7,7 +7,7 @@
   lib,
 }:
 let
-  version = "0.7.7";
+  version = "0.7.8";
 in
 rustPlatform.buildRustPackage {
   pname = "clipboard-substitutor";
@@ -17,11 +17,11 @@ rustPlatform.buildRustPackage {
     owner = "msfjarvis";
     repo = "clipboard-substitutor";
     rev = "v${version}";
-    hash = "sha256-WSvSDZJ2SOtE68BHv7IINieVgblfWdpNrurFH7+83aI=";
+    hash = "sha256-em3Zwr0rg53I7HACn8souLzr3Bd+iSoR5rKvxwYTDEI=";
   };
 
   buildFeatures = lib.optionals stdenv.isLinux [ "journald" ];
-  cargoHash = "sha256-iYSR7dXrEU0VasCzmkA0lSW6Wj5t8o3uF4oVIc8chy8=";
+  cargoHash = "sha256-5jKZcH+B6KhBeFpXH6Ce4iNkXSol8Iwnp0JB4p9LcLM=";
 
   useNextest = true;
 
