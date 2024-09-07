@@ -41,6 +41,7 @@ declare -A VERSION_OVERRIDE=(
   ["cyberdrop-dl"]=1
   ["gitout"]=1
   ["glance"]="release/v0.6.0"
+  ["gphotos-cdp"]=1
   ["prometheus-qbittorrent-exporter"]=1
 )
 
