@@ -1,5 +1,5 @@
 diff --git a/pyproject.toml b/pyproject.toml
-index efa8a8969916..e00716493f4f 100644
+index 7b356a07cc7e..099c4581deed 100644
 --- a/pyproject.toml
 +++ b/pyproject.toml
 @@ -20,8 +20,8 @@ certifi = "^2024.2.2"
@@ -19,6 +19,6 @@ index efa8a8969916..e00716493f4f 100644
  humanfriendly = "^10.0"
 -send2trash = "^1.8.3"
 +send2trash = "^1.8.2"
+ arrow = "^1.3.0"
  
  [tool.poetry.scripts]
- cyberdrop-dl = "cyberdrop_dl.main:main"

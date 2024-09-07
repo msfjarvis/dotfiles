@@ -6,14 +6,14 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
-  version = "5.4.23-unstable-2024-08-14";
+  version = "5.4.57-unstable-2024-09-03";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jbsparrow";
     repo = "cyberdropdownloader";
-    rev = "71f16e4af111984c3781e9812623806d1a12c03d";
-    hash = "sha256-KAOM6SBosuQ0RJ52egGJNQSR7BBBYLLod9PPjRGwjC8=";
+    rev = "366561f94c890d3acfa3c71f945d7fbb1e741795";
+    hash = "sha256-QFnGGV97De6UKb9UdGdZ+IhNxm26vTS6llxs54iwazQ=";
   };
 
   patches = [ ./unpin-dependencies.patch ];
@@ -25,6 +25,7 @@ python3.pkgs.buildPythonApplication rec {
     aiohttp
     aiolimiter
     aiosqlite
+    arrow
     asyncpraw
     beautifulsoup4
     browser-cookie3
