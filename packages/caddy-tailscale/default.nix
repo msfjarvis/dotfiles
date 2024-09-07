@@ -16,7 +16,7 @@ let
 in
 buildGoModule {
   pname = "caddy-tailscale";
-  version = "0-unstable-2024-08-20";
+  version = "0-unstable-2024-07-15";
 
   src = fetchFromGitHub {
     owner = "tailscale";
