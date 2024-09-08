@@ -162,6 +162,18 @@ function tmpshare() {
 }
 
 function reencode_dir() {
+  function select_ext() {
+    local INPUT_FILE
+    INPUT_FILE="${1:?}"
+    if [ -f "${INPUT_FILE}.mp4" ]; then
+      echo "mp4"
+    elif [ -f "${INPUT_FILE}.m4v" ]; then
+      echo "m4v"
+    else
+      echo ""
+    fi
+  }
+  local INPUT_FILE
   INPUT_FILE="${1}"
   if [ -z "${INPUT_FILE}" ]; then
     INPUT_FILE="/dev/stdin"
@@ -170,12 +182,13 @@ function reencode_dir() {
     return 1
   fi
   while read -r f; do
-    encode "${f}.mp4" "${f}_x265.mp4"
-    du -sh "${f}.mp4" | tee -a ~/stats
+    ext="$(select_ext "${f}")"
+    encode "${f}.${ext}" "${f}_x265.mp4"
+    du -sh "${f}.${ext}" | tee -a ~/stats
     du -sh "${f}_x265.mp4" | tee -a ~/stats
-    if [[ $(stat -c %s "${f}_x265.mp4") -ne 0 && $(stat -c %s "${f}_x265.mp4") -le $(stat -c %s "${f}.mp4") ]]; then
-      touch -r "${f}.mp4" "${f}_x265.mp4"
-      rm -v "${f}.mp4"
+    if [[ $(stat -c %s "${f}_x265.mp4") -ne 0 && $(stat -c %s "${f}_x265.mp4") -le $(stat -c %s "${f}.${ext}") ]]; then
+      touch -r "${f}.${ext}" "${f}_x265.mp4"
+      rm -v "${f}.${ext}"
     else rm -v "${f}_x265.mp4"; fi
     sleep 5
   done < <(cat "${INPUT_FILE}")
