@@ -33,6 +33,8 @@
     useXkbConfig = true;
   };
 
+  nix.settings.max-jobs = 1; # The server has a weak CPU that deals poorly with concurrent builds
+
   users = {
     mutableUsers = false;
     groups.miniflux = { };
