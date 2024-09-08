@@ -4,7 +4,7 @@
   fetchurl,
 }:
 let
-  arch = rust.toRustTarget stdenv.hostPlatform;
+  arch = stdenv.hostPlatform.rust.rustcTarget;
   fetch_librusty_v8 =
     args:
     fetchurl {
