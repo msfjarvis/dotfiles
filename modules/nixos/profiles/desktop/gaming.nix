@@ -53,7 +53,8 @@ in
     };
     programs.steam = {
       enable = true;
-      gamescopeSession.enable = true;
+      # Graphical glitches and broken rendering
+      gamescopeSession.enable = false;
       package = pkgs.steam.override {
         extraLibraries =
           p: with p; [
