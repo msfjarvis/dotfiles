@@ -1,3 +1,5 @@
+# Taken from https://github.com/tadfisher/flake/blob/1f27b56873b37d639b3abb7475239df94d581918/home/modules/programs/pass-git-helper.nix with minor changes
+# such as removing an assertion that trips with the `DEFAULT` clause supported by `pass-git-helper` and namespacing this appropriately.
 {
   config,
   lib,
