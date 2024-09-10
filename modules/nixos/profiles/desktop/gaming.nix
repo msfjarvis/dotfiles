@@ -72,6 +72,17 @@ in
       libraries = pkgs.steam-run.fhsenv.args.multiPkgs pkgs;
     };
 
+    systemd.user.services.steam = {
+      enable = true;
+      description = "Open Steam in the background at boot";
+      wantedBy = [ "graphical-session.target" ];
+      serviceConfig = {
+        ExecStart = "${lib.getExe pkgs.steam} -nochatui -nofriendsui -silent %U";
+        Restart = "on-failure";
+        RestartSec = "5s";
+      };
+    };
+
     # Pipewire LowLatency configuration from nix-gaming
     # ref: https://github.com/fufexan/nix-gaming/blob/6caa391790442baea22260296041429fb365e0ce/modules/pipewireLowLatency.nix
     services.pipewire = {
