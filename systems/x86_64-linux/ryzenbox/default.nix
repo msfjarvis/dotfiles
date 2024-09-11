@@ -380,6 +380,7 @@
         sources = [
           (minecraft "Fabulously.Optimized.1.20.6")
           (minecraft "Fabulously.Optimized.1.21")
+          (minecraft "Fabulously.Optimized.1.21.1")
           "${home}/Pictures/Screenshots"
         ];
         target = "/mediahell/screenshots/";
