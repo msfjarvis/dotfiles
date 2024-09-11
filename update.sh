@@ -23,7 +23,6 @@ declare -a ALL_PACKAGES=(
   pidcat
   piv-agent
   prometheus-qbittorrent-exporter
-  rnnoise-plugin-slim
   rucksack
   toml-cli
   when
