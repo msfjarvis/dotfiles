@@ -19,7 +19,6 @@ declare -a ALL_PACKAGES=(
   healthchecks-monitor
   katbin
   linkleaner
-  monocraft-nerdfonts
   patreon-dl
   pidcat
   piv-agent
