@@ -182,26 +182,32 @@
                       {
                         title = "Attic cache";
                         url = "https://nix-cache.tiger-shark.ts.net";
+                        icon = "si:dask";
                       }
                       {
                         title = "Git mirror";
                         url = "https://git.msfjarvis.dev";
+                        icon = "si:gitea";
                       }
                       {
                         title = "Grafana";
                         url = "https://grafana.tiger-shark.ts.net";
+                        icon = "si:grafana";
                       }
                       {
                         title = "Private file share";
                         url = "https://wailord.tiger-shark.ts.net";
+                        icon = "si:files";
                       }
                       {
                         title = "Public file share";
                         url = "https://til.msfjarvis.dev";
+                        icon = "si:files";
                       }
                       {
                         title = "RSS reader";
                         url = "https://read.msfjarvis.dev";
+                        icon = "si:rss";
                       }
                     ];
                   }
