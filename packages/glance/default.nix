@@ -4,7 +4,7 @@
   fetchFromGitHub,
 }:
 let
-  version = "0.5.1-unstable-2024-09-01";
+  version = "0.6.1-unstable-2024-09-08";
 in
 buildGoModule {
   pname = "glance";
@@ -13,8 +13,8 @@ buildGoModule {
   src = fetchFromGitHub {
     owner = "glanceapp";
     repo = "glance";
-    rev = "f76e06ec5707c72bc446d783e161512eafde22b0";
-    hash = "sha256-z5W4EYC0M9Qo+sTpvw2A1vp5D/WdkoFl6QkFer4Vd1k=";
+    rev = "d60457afaf6fe88dbed82ea04c765f9c24789644";
+    hash = "sha256-0P1f7IDEPSlVHtrygIsD502lIHqLISsSAi9pqB/gFdA=";
   };
 
   patches = [ ./auto-update.patch ];
