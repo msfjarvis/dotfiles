@@ -12,8 +12,8 @@ python3.pkgs.buildPythonApplication rec {
   src = fetchFromGitHub {
     owner = "jbsparrow";
     repo = "cyberdropdownloader";
-    rev = "d010385a7574f89cd635353cfebce29ec0bea6ee";
-    hash = "sha256-PU7VIfwGOZXJvYsviTmIqeVBOyVI3Lx+ZioxANYDI3A=";
+    rev = "2dac22cb1e8bdbd8d6479946a9d6669005b50750";
+    hash = "sha256-tZ85/CwKKmMCTgzDZiww751BM5vI7TWI8edgqh61TB4=";
   };
 
   patches = [ ./unpin-dependencies.patch ];
