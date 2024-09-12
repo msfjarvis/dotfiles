@@ -78,7 +78,7 @@ in
         Install.WantedBy = [ "graphical-session.target" ];
         Service = {
           ExecStart = "${lib.getExe pkgs.steam} -nochatui -nofriendsui -silent %U";
-          Restart = "on-failure";
+          Restart = "always";
           RestartSec = "5s";
         };
       };
