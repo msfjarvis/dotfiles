@@ -113,7 +113,10 @@
               {
                 size = "full";
                 widgets = [
-                  { type = "calendar"; }
+                  {
+                    type = "lobsters";
+                    sort-by = "hot";
+                  }
                   {
                     type = "videos";
                     cache = "15m";
@@ -216,6 +219,7 @@
               {
                 size = "small";
                 widgets = [
+                  { type = "calendar"; }
                   {
                     type = "weather";
                     location = "New Delhi, India";
@@ -233,24 +237,6 @@
                       "pearlescentmoon"
                       "sliggytv"
                     ];
-                  }
-                ];
-              }
-            ];
-          }
-          {
-            name = "Internet";
-            columns = [
-              {
-                size = "full";
-                widgets = [
-                  {
-                    type = "search";
-                    search-engine = "https://search.nixos.org/options?channel=unstable&from=0&size=50&sort=relevance&type=packages&query={QUERY}";
-                  }
-                  {
-                    type = "lobsters";
-                    sort-by = "hot";
                   }
                 ];
               }
