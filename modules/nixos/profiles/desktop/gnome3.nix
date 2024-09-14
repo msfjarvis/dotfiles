@@ -157,6 +157,9 @@ in
           power-button-action = "interactive";
           sleep-inactive-ac-type = "nothing";
         };
+        "org/gnome/desktop/session" = {
+          idle-delay = 0;
+        };
       };
     };
   };
