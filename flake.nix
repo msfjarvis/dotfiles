@@ -95,7 +95,6 @@
     attic.url = "github:zhaofengli/attic";
     attic.inputs.nixpkgs.follows = "nixpkgs";
     attic.inputs.nixpkgs-stable.follows = "nixpkgs";
-    attic.inputs.flake-utils.follows = "flake-utils";
     attic.inputs.flake-compat.follows = "flake-compat";
 
     catppuccin-vscode.url = "github:catppuccin/vscode";
