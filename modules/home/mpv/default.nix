@@ -60,6 +60,7 @@ in
       config = {
         autofit = "100%";
         window-maximized = "yes";
+        hwdec = "nvdec";
       };
     };
   };
