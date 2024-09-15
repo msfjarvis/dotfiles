@@ -112,7 +112,7 @@
       fzf
       pkgs.${namespace}.gdrive
       git-crypt
-      # handbrake
+      handbrake
       nerdfonts
       pkgs.${namespace}.katbin
       kondo
