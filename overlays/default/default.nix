@@ -20,5 +20,6 @@ _final: prev: {
   });
   # Set default fonts
   nerdfonts = prev.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+  cudaPackages = prev.cudaPackages_12_3;
   qbittorrent = prev.qbittorrent.override { guiSupport = false; };
 }
