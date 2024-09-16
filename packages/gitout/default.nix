@@ -11,8 +11,8 @@
   lib,
 }:
 let
-  version = "0.2.2-unstable-2024-09-08";
-  rev = "cb0b037ddc38c172779220469ca18593dcf49592";
+  version = "0.2.2-unstable-2024-09-15";
+  rev = "a90a7f7efafe2bfc666df4a5eb9a8337bc311dc1";
 in
 rustPlatform.buildRustPackage {
   pname = "gitout";
@@ -22,10 +22,10 @@ rustPlatform.buildRustPackage {
     owner = "msfjarvis";
     repo = "gitout";
     inherit rev;
-    hash = "sha256-SRwDXjkj9GYnGd8J1jYOemS5zMbXKqmjiF887tzkqFI=";
+    hash = "sha256-idQ8SQWFZ8i9D+5pb40Qwb8NHaXW7mlf0pQf7NteztI=";
   };
 
-  cargoHash = "sha256-9sjB37aS/y06cBhpKkeUfdp5D1tmsjRfCVlK+awhsQE=";
+  cargoHash = "sha256-XkEnDkGQktIpUlMkA99ZVBJQuuH8MaUTk4L7tGB4k1Y=";
 
   PKG_CONFIG_PATH = "${openssl.dev}/lib/pkgconfig";
 
