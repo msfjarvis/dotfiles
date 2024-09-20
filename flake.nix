@@ -96,6 +96,7 @@
     attic.inputs.nixpkgs.follows = "nixpkgs";
     attic.inputs.nixpkgs-stable.follows = "nixpkgs";
     attic.inputs.flake-compat.follows = "flake-compat";
+    attic.inputs.flake-parts.follows = "flake-parts";
 
     catppuccin-vscode.url = "github:catppuccin/vscode";
     catppuccin-vscode.inputs.nixpkgs.follows = "nixpkgs";
@@ -119,6 +120,9 @@
 
     flake-compat.url = "github:nix-community/flake-compat";
     flake-compat.flake = false;
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
 
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
