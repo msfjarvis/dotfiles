@@ -138,6 +138,7 @@
       scrcpy
       smile
       sshfs
+      systemctl-tui
       telegram-desktop
       thunderbird
       tuba
