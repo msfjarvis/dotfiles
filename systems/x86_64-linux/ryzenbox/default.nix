@@ -81,6 +81,7 @@
       attic
       pkgs.${namespace}.boop-gtk
       pkgs.${namespace}.cyberdrop-dl
+      dconf2nix
       fclones
       (ffmpeg.override {
         buildFfplay = false;
