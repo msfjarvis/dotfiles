@@ -27,11 +27,6 @@
 
   nix = lib.${namespace}.mkNixConfig { inherit lib pkgs inputs; } // {
     optimise.automatic = true;
-    settings.allowed-users = [ "@wheel" ];
-    settings.trusted-users = [
-      "root"
-      "@wheel"
-    ];
   };
 
   system.switch = {
