@@ -42,11 +42,13 @@
         ];
         warn-dirty = false;
 
-        trusted-substituters = [
+        substituters = [
           "https://msfjarvis.cachix.org"
+          "https://cosmic.cachix.org/"
         ];
         trusted-public-keys = [
           "msfjarvis.cachix.org-1:/sKPgZblk/LgoOKtDgMTwvRuethILGkr/maOvZ6W11U="
+          "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
         ];
       };
     };
