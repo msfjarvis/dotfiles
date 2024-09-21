@@ -12,6 +12,9 @@
       automatic = true;
       options = "--delete-older-than 3d";
     };
+    # Linux builder causes conflicts here
+    generateNixPathFromInputs = false;
+    generateRegistryFromInputs = false;
   };
   services.nix-daemon.enable = true;
 }
