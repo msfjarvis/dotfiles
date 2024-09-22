@@ -53,22 +53,13 @@ in
     sops.secrets.tsauthkey = {
       sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
     };
-    services.${namespace}.tailscale-autoconnect = {
-      enable = true;
-      authkeyFile = config.sops.secrets.tsauthkey.path;
-      extraOptions = [
+    services.tailscale = {
+      authKeyFile = config.sops.secrets.tsauthkey.path;
+      extraUpFlags = [
         "--accept-risk=lose-ssh"
         "--ssh"
       ] ++ lib.optionals cfg.tailscaleExitNode [ "--advertise-exit-node" ];
+      useRoutingFeatures = if cfg.tailscaleExitNode then "both" else "client";
     };
-
-    boot.kernel.sysctl =
-      if cfg.tailscaleExitNode then
-        {
-          "net.ipv4.ip_forward" = 1;
-          "net.ipv6.conf.all.forwarding" = 1;
-        }
-      else
-        { };
   };
 }
