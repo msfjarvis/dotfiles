@@ -24,7 +24,6 @@
         builders-use-substitutes = true;
         experimental-features = lib.mkForce [
           "auto-allocate-uids"
-          "ca-derivations"
           "cgroups"
           "flakes"
           "nix-command"
