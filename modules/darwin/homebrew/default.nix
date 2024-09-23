@@ -12,7 +12,10 @@
       "gnu-sed"
       "ruby"
     ];
-    casks = [ "flutter" ];
+    casks = [
+      "flutter"
+      "zed"
+    ];
     taps = [ ];
   };
 }
