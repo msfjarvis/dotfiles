@@ -53,8 +53,8 @@ in
       programs.gradle = {
         enable = true;
         package = pkgs.callPackage (pkgs.gradleGen {
-          version = "8.10.1";
-          hash = "sha256-FUH6NlmeEoVxQEZfPJGpdAm0USUBwm+WMfsRPjksW9E=";
+          version = "8.10.2";
+          hash = "sha256-McVXE+QCM6gwOCfOtCykikcmegrUurkXcSMSHnFSTCY=";
           defaultJava = defaultJdk;
         }) { };
         settings = {
