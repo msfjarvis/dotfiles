@@ -10,6 +10,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    pkgs.${namespace}.adbear
     pkgs.${namespace}.adx
     attic
     coreutils

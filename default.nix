@@ -69,6 +69,11 @@ let
 in
 {
   adb-sync = callPackage ./packages/adb-sync { };
+  adbear = callPackage ./packages/adbear {
+    inputs = {
+      inherit fenix rust-manifest;
+    };
+  };
   adbtuifm = callPackage ./packages/adbtuifm { };
   adx = callPackage ./packages/adx { };
   boop-gtk = callPackage ./packages/boop-gtk { };

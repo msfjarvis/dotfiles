@@ -77,6 +77,7 @@
       "libvirtd"
     ];
     packages = with pkgs; [
+      pkgs.${namespace}.adbear
       age
       attic
       pkgs.${namespace}.boop-gtk

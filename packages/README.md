@@ -3,6 +3,7 @@ NixOS packages for personal use.
 ## Included packages
 
 - [adb-sync] : Fork of [Google's adb-sync] with bugfixes for busybox users and the pull times feature
+- [adbear] : CLI to automatically pair and join Android devices via ADB
 - [adbtuifm] : TUI based file manager for ADB
 - [adx] : Rust tool to poll Google Maven for AndroidX packages and their latest versions
 - [boop-gtk] : A scriptable scratchpad for developers
@@ -27,6 +28,7 @@ NixOS packages for personal use.
 - [when] : A CLI tool to deal with timezones
 
 [adb-sync]: https://msfjarvis.dev/g/adb-sync
+[adbear]: https://github.com/msfjarvis/adbear
 [adbtuifm]: https://github.com/darkhz/adbtuifm
 [adx]: https://msfjarvis.dev/g/androidx-release-watcher
 [boop-gtk]: https://msfjarvis.dev/g/boop-gtk

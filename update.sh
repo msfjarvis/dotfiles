@@ -4,6 +4,7 @@ set -euxo pipefail
 
 declare -a ALL_PACKAGES=(
   adb-sync
+  adbear
   adbtuifm
   adx
   boop-gtk
