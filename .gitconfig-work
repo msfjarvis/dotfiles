@@ -7,3 +7,5 @@
 	insteadOf = git@github.com:
 [user]
 	email = harsh.shandilya@dyte.io
+[delta]
+	features = catppuccin-latte

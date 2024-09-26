@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
   programs.micro = {
     enable = true;
@@ -9,5 +9,9 @@
       wordwrap = true;
     };
   };
-  xdg.configFile."micro/colorschemes/custom.micro".source = "${inputs.micro-theme}/src/catppuccin-mocha.micro";
+  xdg.configFile."micro/colorschemes/custom.micro".source =
+    let
+      variant = if pkgs.stdenv.isDarwin then "latte" else "mocha";
+    in
+    "${inputs.micro-theme}/src/catppuccin-${variant}.micro";
 }
