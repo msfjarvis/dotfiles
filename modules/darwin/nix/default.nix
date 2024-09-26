@@ -12,6 +12,9 @@
       automatic = true;
       options = "--delete-older-than 3d";
     };
+    settings = {
+      sandbox = false;
+    };
     # Linux builder causes conflicts here
     generateNixPathFromInputs = false;
     generateRegistryFromInputs = false;

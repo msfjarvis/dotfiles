@@ -31,7 +31,7 @@ case "${ARG}" in
     nom build .#darwinConfigurations.Harshs-MacBook-Pro.system
     ;;
   darwin-switch)
-    darwin-rebuild switch --print-build-logs --flake .
+    darwin-rebuild switch --option sandbox false --print-build-logs --flake .
     ;;
   home-boot)
     nh os boot .
