@@ -38,7 +38,7 @@ fi
 
 # Sexy colors in `ls`
 if type vivid &>/dev/null; then
-  LS_COLORS="$(vivid generate snazzy)"
+  LS_COLORS="$(vivid generate catppuccin-mocha)"
   export LS_COLORS
 fi
 
