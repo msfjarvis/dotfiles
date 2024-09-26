@@ -20,14 +20,14 @@ rustPlatform.buildRustPackage {
     hash = "sha256-em3Zwr0rg53I7HACn8souLzr3Bd+iSoR5rKvxwYTDEI=";
   };
 
-  buildFeatures = lib.optionals stdenv.isLinux [ "journald" ];
+  buildFeatures = lib.optionals stdenv.hostPlatform.isLinux [ "journald" ];
   cargoHash = "sha256-5jKZcH+B6KhBeFpXH6Ce4iNkXSol8Iwnp0JB4p9LcLM=";
 
   useNextest = true;
 
   buildInputs =
-    lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.AppKit ]
-    ++ lib.optionals stdenv.isLinux [ xorg.libxcb ];
+    lib.optionals stdenv.hostPlatform.isDarwin [ darwin.apple_sdk.frameworks.AppKit ]
+    ++ lib.optionals stdenv.hostPlatform.isLinux [ xorg.libxcb ];
 
   meta = with lib; {
     description = "CLI to listen to clipboard events and perform operations on the copied text";

@@ -20,7 +20,9 @@ in
       enableExtensionUpdateCheck = false;
       mutableExtensionsDir = false;
       extensions = lib.mkDefault (
-        (lib.optionals pkgs.stdenv.isLinux [ pkgs.vscode-extensions.rust-lang.rust-analyzer-nightly ])
+        (lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+          pkgs.vscode-extensions.rust-lang.rust-analyzer-nightly
+        ])
         ++ (with pkgs.vscode-marketplace; [
           arrterian.nix-env-selector
           catppuccin.catppuccin-vsc-icons

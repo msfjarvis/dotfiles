@@ -23,7 +23,7 @@ rustPlatform.buildRustPackage {
 
   doCheck = false;
 
-  buildInputs = lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.Security ];
+  buildInputs = lib.optionals stdenv.hostPlatform.isDarwin [ darwin.apple_sdk.frameworks.Security ];
 
   meta = with lib; {
     description = "A CLI for katbin";

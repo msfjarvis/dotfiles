@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  initScript = if pkgs.stdenv.isDarwin then "darwin-init" else "shell-init";
+  initScript = if pkgs.stdenv.hostPlatform.isDarwin then "darwin-init" else "shell-init";
 in
 {
   programs.bash = {

@@ -3,7 +3,7 @@
   programs.bat = {
     enable = true;
     config = {
-      theme = lib.mkDefault (if pkgs.stdenv.isDarwin then "catppuccin-latte" else "zenburn");
+      theme = lib.mkDefault (if pkgs.stdenv.hostPlatform.isDarwin then "catppuccin-latte" else "zenburn");
     };
   };
 }

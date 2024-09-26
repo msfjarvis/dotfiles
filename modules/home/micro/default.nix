@@ -11,7 +11,7 @@
   };
   xdg.configFile."micro/colorschemes/custom.micro".source =
     let
-      variant = if pkgs.stdenv.isDarwin then "latte" else "mocha";
+      variant = if pkgs.stdenv.hostPlatform.isDarwin then "latte" else "mocha";
     in
     "${inputs.micro-theme}/src/catppuccin-${variant}.micro";
 }
