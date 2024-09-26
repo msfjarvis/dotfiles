@@ -15,7 +15,7 @@ export SDKMAN_DIR="${HOME}/.sdkman"
 
 # Sexy colors in `ls`
 if type vivid &>/dev/null; then
-  LS_COLORS="$(vivid generate catppuccin-latte)"
+  LS_COLORS="$(vivid generate snazzy)"
   export LS_COLORS
 fi
 
