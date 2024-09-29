@@ -178,12 +178,6 @@
     nixos-cosmic.inputs.nixpkgs.follows = "nixpkgs";
     nixos-cosmic.inputs.nixpkgs-stable.follows = "nixpkgs";
     nixos-cosmic.inputs.flake-compat.follows = "flake-compat";
-    nixos-cosmic.inputs.nix-update.follows = "nix-update";
-
-    nix-update.url = "github:Mic92/nix-update";
-    nix-update.inputs.nixpkgs.follows = "nixpkgs";
-    nix-update.inputs.flake-parts.follows = "flake-parts";
-    nix-update.inputs.treefmt-nix.follows = "treefmt-nix";
 
     nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
     nixos-vscode-server.inputs.nixpkgs.follows = "nixpkgs";
