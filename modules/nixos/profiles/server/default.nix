@@ -45,6 +45,10 @@ in
     services.openssh = {
       enable = true;
       package = pkgs.openssh_hpn;
+      settings = {
+        KbdInteractiveAuthentication = false;
+        PasswordAuthentication = false;
+      };
     };
     users.users.root.openssh.authorizedKeys.keys = [
       ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOZFw0Dgs0z29Brvj+CejlgBG5t0AtoFvNIjd3DPvL7N''
