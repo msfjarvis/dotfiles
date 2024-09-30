@@ -59,7 +59,7 @@ in
       serviceConfig = {
         User = cfg.user;
         Group = cfg.group;
-        Restart = "no";
+        Restart = "on-failure";
         RestartSec = "30s";
         Type = "simple";
         TimeoutSec = "600s";
