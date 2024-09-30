@@ -1,0 +1,39 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+name: Build and cache NixOS configuration
+jobs:
+  build-and-cache:
+    strategy:
+      matrix:
+        include:
+          - cache: aarch64-linux
+            runner: buildjet-4vcpu-ubuntu-2204-arm
+            target: wailord
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+      - name: Install Nix
+        uses: cachix/install-nix-action@9f70348d77d0422624097c4b7a75563948901306 # v29
+      - name: Add nixpkgs-unstable channel
+        shell: bash
+        run: |
+          nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
+          nix-channel --update
+      - name: Setup Tailscale
+        uses: tailscale/github-action@4e4c49acaa9818630ce0bd7a564372c17e33fb4d # v2
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: "tag:github-actions"
+      - name: Setup Attic cache
+        uses: ryanccn/attic-action@618a980988d704a7709daeea88526146acd1d45f # v0
+        with:
+          endpoint: ${{ secrets.ATTIC_ENDPOINT }}
+          cache: ${{ matrix.cache }}
+          token: ${{ secrets.ATTIC_TOKEN }}
+      - name: Build NixOS configuration
+        shell: bash
+        run: nix build .#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel
