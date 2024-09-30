@@ -205,7 +205,7 @@
 
   services.${namespace} = {
     gphotos-cdp = {
-      enable = false;
+      enable = true;
       session-dir = "/home/msfjarvis/harsh-sess";
       dldir = "/home/msfjarvis/harsh-photos";
       user = "msfjarvis";
