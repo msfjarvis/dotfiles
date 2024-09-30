@@ -166,6 +166,10 @@
     sopsFile = lib.snowfall.fs.get-file "secrets/restic/repo.yaml";
     owner = config.services.restic.backups.minecraft.user;
   };
+  sops.secrets.restic_photos_repo_url = {
+    sopsFile = lib.snowfall.fs.get-file "secrets/restic/repo.yaml";
+    owner = config.services.restic.backups.minecraft.user;
+  };
   sops.secrets.restic_screenshots_repo_url = {
     sopsFile = lib.snowfall.fs.get-file "secrets/restic/repo.yaml";
     owner = config.services.restic.backups.minecraft.user;
@@ -186,6 +190,19 @@
         "--keep-daily 7"
         "--keep-weekly 2"
         "--keep-monthly 10"
+      ];
+    };
+    photos = {
+      initialize = true;
+      repositoryFile = config.sops.secrets.restic_photos_repo_url.path;
+      passwordFile = config.sops.secrets.restic_repo_password.path;
+
+      paths = [ config.services.${namespace}.gphotos-cdp.dldir ];
+
+      pruneOpts = [
+        "--keep-daily 2"
+        "--keep-weekly 1"
+        "--keep-monthly 1"
       ];
     };
     screenshots = {
