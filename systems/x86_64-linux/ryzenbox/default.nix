@@ -82,7 +82,6 @@
       attic
       pkgs.${namespace}.boop-gtk
       pkgs.${namespace}.cyberdrop-dl
-      dconf2nix
       fclones
       ffmpeg_7-full
       (inputs.firefox.packages.${pkgs.system}.firefox-nightly-bin.override {
@@ -101,8 +100,6 @@
       kondo
       maestro
       megatools
-      mullvad
-      mullvad-vpn
       newsflash
       nix-init
       nix-update
@@ -117,15 +114,11 @@
           virtualenv
         ]
       ))
-      restic
       scrcpy
       smile
-      sshfs
-      systemctl-tui
       telegram-desktop
       thunderbird
       tuba
-      uv
       vesktop
       yt-dlp
     ];
@@ -135,13 +128,6 @@
     enable = true;
     binfmt = true;
   };
-
-  services.mullvad-vpn = {
-    enable = true;
-  };
-  # Required for Mullvad
-  # https://discourse.nixos.org/t/connected-to-mullvadvpn-but-no-internet-connection/35803/11
-  services.resolved.enable = true;
 
   sops.secrets.restic_minecraft_repo_url = {
     sopsFile = lib.snowfall.fs.get-file "secrets/restic/repo.yaml";
