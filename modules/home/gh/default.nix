@@ -9,6 +9,7 @@
       prompt = "enabled";
       aliases = {
         co = "pr checkout";
+        vw = "pr view --web";
       };
     };
     extensions = [ pkgs.gh-poi ];
