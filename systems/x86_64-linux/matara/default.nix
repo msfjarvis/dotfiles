@@ -42,14 +42,14 @@
     yt-dlp
   ];
 
-  sops.secrets.tsauthkey-env = {
+  sops.secrets.services-tsauthkey-env = {
     sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
     owner = config.services.caddy.user;
   };
   services.caddy = {
     enable = true;
     package = pkgs.jarvis.caddy-tailscale;
-    environmentFile = config.sops.secrets.tsauthkey-env.path;
+    environmentFile = config.sops.secrets.services-tsauthkey-env.path;
     virtualHosts = {
       "https://matara.tiger-shark.ts.net" = {
         extraConfig = ''

@@ -54,11 +54,11 @@ in
       ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOZFw0Dgs0z29Brvj+CejlgBG5t0AtoFvNIjd3DPvL7N''
     ];
 
-    sops.secrets.tsauthkey = {
+    sops.secrets.server-tsauthkey = {
       sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
     };
     services.tailscale = {
-      authKeyFile = config.sops.secrets.tsauthkey.path;
+      authKeyFile = config.sops.secrets.server-tsauthkey.path;
       extraUpFlags = [
         "--accept-risk=lose-ssh"
         "--ssh"
