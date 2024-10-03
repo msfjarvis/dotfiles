@@ -31,3 +31,6 @@ fi
 if type xdg-open &>/dev/null; then
   alias open="xdg-open"
 fi
+if type zeditor &>/dev/null; then
+  alias zed=zeditor
+fi
