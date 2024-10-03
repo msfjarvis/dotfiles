@@ -39,7 +39,7 @@ declare -A VERSION_OVERRIDE=(
   ["caddy-tailscale"]=1
   ["cyberdrop-dl"]=1
   ["gitout"]=1
-  ["glance"]="release/v0.6.0"
+  ["glance"]="release/v0.7.0"
   ["gphotos-cdp"]=1
   ["prometheus-qbittorrent-exporter"]=1
 )
