@@ -161,6 +161,11 @@
     sopsFile = lib.snowfall.fs.get-file "secrets/gitout.yaml";
     owner = "msfjarvis";
   };
+  sops.secrets.linkleaner = {
+    format = "dotenv";
+    owner = config.services.${namespace}.linkleaner.user;
+    sopsFile = lib.snowfall.fs.get-file "secrets/linkleaner.env";
+  };
   services.${namespace} = {
     betula = {
       enable = true;
@@ -331,6 +336,11 @@
           }
         ];
       };
+    };
+
+    linkleaner = {
+      enable = true;
+      environmentFile = config.sops.secrets.linkleaner.path;
     };
 
     postgres.enable = true;
