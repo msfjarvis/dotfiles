@@ -7,17 +7,33 @@
 }:
 let
   cfg = config.services.${namespace}.linkleaner;
-  inherit (lib) mkEnableOption mkIf mkPackageOption;
+  inherit (lib) mkEnableOption mkIf mkOption mkPackageOption types;
 in
 {
   options.services.${namespace}.linkleaner = {
+
     enable = mkEnableOption { description = "Whether to configure the linkleaner service"; };
+
     package = mkPackageOption pkgs.jarvis "linkleaner" { };
+
     environmentFile = mkOption {
       type = types.nullOr types.path;
       example = "/root/linkleaner-secrets.env";
       description = "Environment file to inject secrets into the configuration.";
     };
+
+    user = mkOption {
+      type = types.str;
+      default = "linkleaner";
+      description = "User account under which linkleaner runs.";
+    };
+
+    group = mkOption {
+      type = types.str;
+      default = "linkleaner";
+      description = "Group account under which linkleaner runs.";
+    };
+
   };
 
   config = mkIf cfg.enable {
@@ -25,7 +41,8 @@ in
       description = "Telegram bot to improve social media previews";
 
       serviceConfig = {
-        DynamicUser="yes";
+        User = cfg.user;
+        Group = cfg.group;
         ExecStart = "${lib.getExe cfg.package}";
         EnvironmentFile = cfg.environmentFile;
         Restart = "on-failure";
@@ -58,6 +75,21 @@ in
         RestrictNamespaces = true;
         RestrictSUIDSGID = true;
         SystemCallFilter = [ "@system-service" ];
+      };
+    };
+
+    users.users = mkIf (cfg.user == "linkleaner") {
+      linkleaner = {
+        inherit (cfg) group;
+        createHome = false;
+        description = "linkleaner daemon user";
+        isSystemUser = true;
+      };
+    };
+
+    users.groups = mkIf (cfg.group == "linkleaner") {
+      linkleaner = {
+        gid = null;
       };
     };
   };
