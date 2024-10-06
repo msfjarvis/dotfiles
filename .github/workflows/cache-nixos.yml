@@ -32,11 +32,20 @@ jobs:
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: "tag:github-actions"
       - name: Setup Attic cache
-        uses: ryanccn/attic-action@618a980988d704a7709daeea88526146acd1d45f # v0
-        with:
-          endpoint: ${{ secrets.ATTIC_ENDPOINT }}
-          cache: ${{ matrix.cache }}
-          token: ${{ secrets.ATTIC_TOKEN }}
+        shell: bash
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/zhaofengli/attic/main/.github/install-attic-ci.sh | bash -s
+          attic login --set-default "${CACHE}" "${ENDPOINT}" "${TOKEN}"
+          attic use "${CACHE}"
+        env:
+          ENDPOINT: ${{ secrets.ATTIC_ENDPOINT }}
+          CACHE: ${{ matrix.cache }}
+          TOKEN: ${{ secrets.ATTIC_TOKEN }}
       - name: Build NixOS configuration
         shell: bash
         run: nix build .#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel
+      - name: Push store paths to Attic
+        shell: bash
+        run: attic push "${CACHE}" ./result
+        env:
+          CACHE: ${{ matrix.cache }}
