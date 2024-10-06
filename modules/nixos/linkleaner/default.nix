@@ -7,7 +7,13 @@
 }:
 let
   cfg = config.services.${namespace}.linkleaner;
-  inherit (lib) mkEnableOption mkIf mkOption mkPackageOption types;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    mkPackageOption
+    types
+    ;
 in
 {
   options.services.${namespace}.linkleaner = {
