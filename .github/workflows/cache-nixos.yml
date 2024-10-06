@@ -6,14 +6,17 @@ name: Build and cache NixOS configuration
 jobs:
   build-and-cache:
     strategy:
+      fail-fast: false
       matrix:
         include:
           - cache: aarch64-linux
             runner: buildjet-4vcpu-ubuntu-2204-arm
             target: wailord
+            extra-build-flags: --max-jobs 1
           - cache: x86_64-linux
             runner: buildjet-4vcpu-ubuntu-2204
             target: ryzenbox
+            extra-build-flags: ''
     runs-on: ${{ matrix.runner }}
     steps:
       - name: Checkout repository
@@ -43,7 +46,9 @@ jobs:
           TOKEN: ${{ secrets.ATTIC_TOKEN }}
       - name: Build NixOS configuration
         shell: bash
-        run: nix build .#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel
+        run: nix build $FLAGS .#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel
+        env:
+          FLAGS: ${{ matrix.extra-build-flags }}
       - name: Push store paths to Attic
         shell: bash
         run: attic push "${CACHE}" ./result
