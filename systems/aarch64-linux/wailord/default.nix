@@ -54,7 +54,7 @@
   programs.command-not-found.enable = false;
 
   environment.systemPackages = with pkgs; [
-    attic
+    attic-client
     megatools
   ];
 
@@ -63,6 +63,7 @@
   };
   services.atticd = {
     enable = true;
+    package = pkgs.attic-server;
     credentialsFile = config.sops.secrets.atticd.path;
 
     settings = {

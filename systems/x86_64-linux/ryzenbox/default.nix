@@ -79,7 +79,7 @@
     packages = with pkgs; [
       pkgs.${namespace}.adbear
       age
-      attic
+      attic-client
       pkgs.${namespace}.boop-gtk
       pkgs.${namespace}.cyberdrop-dl
       fclones

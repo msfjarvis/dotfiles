@@ -1,6 +1,5 @@
 { inputs, ... }:
 _final: prev: {
-  attic = inputs.attic.packages.${prev.system}.attic-client;
   # Force the use of the JDK we're using everywhere else
   jdk = prev.openjdk22;
   jdk_headless = prev.openjdk22_headless;
