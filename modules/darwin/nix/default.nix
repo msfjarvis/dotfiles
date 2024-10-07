@@ -13,6 +13,7 @@
       options = "--delete-older-than 3d";
     };
     settings = {
+      trusted-users = [ "msfjarvis" ];
       sandbox = false;
     };
     # Linux builder causes conflicts here
