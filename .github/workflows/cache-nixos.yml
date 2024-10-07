@@ -37,6 +37,13 @@ jobs:
           endpoint: ${{ secrets.ATTIC_ENDPOINT }}
           cache: ${{ matrix.cache }}
           token: ${{ secrets.ATTIC_TOKEN }}
+          skip-push: true
       - name: Build NixOS configuration
         shell: bash
         run: nix build .#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel
+      - name: Push to attic cache
+        shell: bash
+        run: |
+          for i in {1..5}; do attic push "${CACHE}" ./result && break || sleep 5; done
+        env:
+          CACHE: ${{ matrix.cache }}
