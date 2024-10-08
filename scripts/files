@@ -144,7 +144,7 @@ function encode() {
   local INPUT OUTPUT
   INPUT="${1}"
   OUTPUT="${2:-output.mp4}"
-  HandBrakeCLI -i "${INPUT}" -o "${OUTPUT}" --preset="H.265 NVENC 1080p" --quality 32.0
+  ffmpeg -nostdin -i "${INPUT:?}" -c:v hevc_nvenc -preset p3 -c:a aac -b:a 128k "${OUTPUT:?}"
 }
 
 function encmasto() {
