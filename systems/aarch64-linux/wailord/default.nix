@@ -65,6 +65,7 @@
     enable = true;
     package = pkgs.attic-server;
     credentialsFile = config.sops.secrets.atticd.path;
+    useFlakeCompatOverlay = false;
 
     settings = {
       listen = "[::]:8081";

@@ -1,4 +1,4 @@
-{ inputs, ... }:
+_:
 _final: prev: {
   # Force the use of the JDK we're using everywhere else
   jdk = prev.openjdk22;

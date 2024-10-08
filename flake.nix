@@ -46,7 +46,7 @@
       ];
       systems.hosts.ryzenbox.modules = with inputs; [ srvos.nixosModules.desktop ];
       systems.hosts.wailord.modules = with inputs; [
-        attic.nixosModules.atticd
+        (attic + "/nixos/atticd.nix")
         srvos.nixosModules.mixins-telegraf
         srvos.nixosModules.mixins-terminfo
         srvos.nixosModules.roles-prometheus
