@@ -45,6 +45,6 @@ jobs:
       - name: Push to attic cache
         shell: bash
         run: |
-          for i in {1..5}; do attic push "${CACHE}" ./result && break || sleep 5; done
+          attic push "${CACHE}" ./result --jobs $(nproc)
         env:
           CACHE: ${{ matrix.cache }}
