@@ -6,6 +6,7 @@ name: Build and cache NixOS configuration
 jobs:
   build-and-cache:
     strategy:
+      fail-fast: false
       matrix:
         include:
           - cache: aarch64-linux

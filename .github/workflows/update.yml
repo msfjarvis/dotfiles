@@ -15,6 +15,7 @@ jobs:
   check-nix-update:
     strategy:
       matrix:
+        fail-fast: false
         include:
           - runner: ubuntu-latest
             cache: x86_64-linux
