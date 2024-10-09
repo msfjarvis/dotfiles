@@ -92,7 +92,7 @@
 
     systems.url = "github:msfjarvis/flake-systems";
 
-    attic.url = "github:zhaofengli/attic";
+    attic.url = "github:zhaofengli/attic?rev=f36329a299ecc9bf1e7d11f2f3c110709c899888";
     attic.inputs.nixpkgs.follows = "nixpkgs";
     attic.inputs.nixpkgs-stable.follows = "nixpkgs";
     attic.inputs.flake-compat.follows = "flake-compat";
