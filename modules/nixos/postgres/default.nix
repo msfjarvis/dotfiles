@@ -16,13 +16,6 @@ in
   config = mkIf cfg.enable {
     services.postgresql = {
       enable = true;
-      ensureUsers = [
-        {
-          name = "vaultwarden";
-          ensureDBOwnership = true;
-        }
-      ];
-      ensureDatabases = [ "vaultwarden" ];
     };
     services.postgresqlBackup = {
       enable = true;

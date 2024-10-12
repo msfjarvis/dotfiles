@@ -132,12 +132,6 @@
           reverse_proxy ${config.services.atticd.settings.listen}
         '';
       };
-      "https://pass.tiger-shark.ts.net" = {
-        extraConfig = ''
-          bind tailscale/pass
-          reverse_proxy :${builtins.toString config.services.vaultwarden.config.ROCKET_PORT}
-        '';
-      };
       "https://read.msfjarvis.dev" = {
         extraConfig = ''
           import blackholeCrawlers
@@ -357,6 +351,11 @@
     prometheus.enable = true;
 
     restic-rest-server.enable = true;
+
+    vaultwarden = {
+      enable = true;
+      domain = "https://pass.tiger-shark.ts.net";
+    };
   };
 
   sops.secrets.feed-auth = {
@@ -382,19 +381,6 @@
       WEBAUTHN = 1;
     };
     adminCredentialsFile = config.sops.secrets.feed-auth.path;
-  };
-
-  services.vaultwarden = {
-    enable = true;
-    dbBackend = "postgresql";
-    config = {
-      DOMAIN = "https://pass.tiger-shark.ts.net";
-      DISABLE_ADMIN_TOKEN = true; # Drop this if ever hosting on public domain
-      SIGNUPS_ALLOWED = false;
-      INVITATIONS_ALLOWED = false;
-      ROCKET_PORT = 8890;
-      DATABASE_URL = "postgres://vaultwarden?host=/run/postgresql";
-    };
   };
 
   system.stateVersion = "23.11";
