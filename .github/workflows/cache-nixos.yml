@@ -12,9 +12,11 @@ jobs:
           - cache: aarch64-linux
             runner: buildjet-4vcpu-ubuntu-2204-arm
             target: wailord
+            public-key: "aarch64-linux:czBXxHtNIDorynmG/2pRuFSENM+fnu0rgVkH+8I4niQ="
           - cache: x86_64-linux
             runner: buildjet-4vcpu-ubuntu-2204
             target: ryzenbox
+            public-key: "x86_64-linux:HLQszdZAPt0hy6dsMxsI7EDeghCzfSwB8VyBEnei/j0="
     runs-on: ${{ matrix.runner }}
     steps:
       - name: Checkout repository
@@ -32,13 +34,17 @@ jobs:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: "tag:github-actions"
-      - name: Setup Attic cache
-        uses: ryanccn/attic-action@548bc43642d3ab8fb4fbea6b7d508ddab0181a7c # v0
-        with:
-          endpoint: ${{ secrets.ATTIC_ENDPOINT }}
-          cache: ${{ matrix.cache }}
-          token: ${{ secrets.ATTIC_TOKEN }}
-          skip-push: true
+      - name: Set up Attic
+        shell: bash
+        run: |
+          nix profile install --option substituters "$ENDPOINT/$CACHE" --option trusted-public-keys "$PUBLIC_KEY" "github:msfjarvis/nixpkgs?rev=dcddeb9f100da0d198b2a459667f6e4a7824cbb4#attic-client"
+          attic login --set-default ci "$ENDPOINT" "$TOKEN"
+          attic use "$CACHE"
+        env:
+          CACHE: ${{ matrix.cache }}
+          ENDPOINT: ${{ secrets.ATTIC_ENDPOINT }}
+          PUBLIC_KEY: ${{ matrix.public-key }}
+          TOKEN: ${{ secrets.ATTIC_TOKEN }}
       - name: Build NixOS configuration
         shell: bash
         run: nix build .#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel
