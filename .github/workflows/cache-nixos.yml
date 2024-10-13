@@ -37,8 +37,12 @@ jobs:
       - name: Set up Attic
         shell: bash
         run: |
-          nix profile install --option substituters "$ENDPOINT/$CACHE" --option trusted-public-keys "$PUBLIC_KEY" "github:msfjarvis/nixpkgs?rev=dcddeb9f100da0d198b2a459667f6e4a7824cbb4#attic-client"
-          attic login --set-default ci "$ENDPOINT" "$TOKEN"
+          mkdir -p ~/.config/nix
+          echo "machine $ENDPOINT" >> ~/.config/nix/netrc
+          echo "password $TOKEN" >> ~/.config/nix/netrc
+          echo "netrc-file = $HOME/.config/nix/netrc" >> ~/.config/nix/nix.conf
+          nix profile install --option substituters "https://$ENDPOINT/$CACHE" --option trusted-public-keys "$PUBLIC_KEY" "github:msfjarvis/nixpkgs?rev=dcddeb9f100da0d198b2a459667f6e4a7824cbb4#attic-client"
+          attic login --set-default ci "https://$ENDPOINT" "$TOKEN"
           attic use "$CACHE"
         env:
           CACHE: ${{ matrix.cache }}
