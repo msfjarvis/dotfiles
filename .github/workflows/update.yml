@@ -14,8 +14,8 @@ name: Check for package updates
 jobs:
   check-nix-update:
     strategy:
+      fail-fast: false
       matrix:
-        fail-fast: false
         include:
           - runner: ubuntu-latest
             cache: x86_64-linux
