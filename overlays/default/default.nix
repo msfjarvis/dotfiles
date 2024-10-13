@@ -1,5 +1,4 @@
-_:
-_final: prev: {
+_: _final: prev: {
   # Force the use of the JDK we're using everywhere else
   jdk = prev.openjdk22;
   jdk_headless = prev.openjdk22_headless;
