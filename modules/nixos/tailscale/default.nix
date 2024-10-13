@@ -27,6 +27,7 @@ in
     services.tailscale = {
       enable = true;
       permitCertUid = "caddy";
+      useRoutingFeatures = lib.mkDefault "client";
     };
 
     users.users.msfjarvis.packages = with pkgs; [ tailscale ];
