@@ -16,6 +16,7 @@ in
   config = mkIf cfg.enable {
     programs.rbw = {
       enable = true;
+      package = pkgs.rbw.override { withFzf = true; };
       settings = {
         email = "me@msfjarvis.dev";
         base_url = "https://pass.tiger-shark.ts.net";
