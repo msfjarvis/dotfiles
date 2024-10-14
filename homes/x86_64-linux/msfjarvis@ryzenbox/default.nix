@@ -12,21 +12,10 @@
   };
 
   profiles.${namespace} = {
+    bitwarden.enable = true;
     gnome-terminal.enable = true;
     logseq.enable = true;
     mpv.enable = true;
-    pass.enable = true;
-    pass.git-helper = {
-      enable = true;
-      mapping = {
-        "DEFAULT" = {
-          username_extractor = "specific_line";
-          # Strip the leading 'login: ', the number below is the character count for the string
-          skip_username = 7;
-        };
-        "git.msfjarvis.dev*".target = "personal/git.msfjarvis.dev";
-      };
-    };
     spotify.enable = true;
     zed = {
       enable = true;
