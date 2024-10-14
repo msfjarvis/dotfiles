@@ -20,7 +20,7 @@ in
       settings = {
         email = "me@msfjarvis.dev";
         base_url = "https://pass.tiger-shark.ts.net";
-        pinentry = pkgs.pinentry-gnome3;
+        pinentry = pkgs.jarvis.rbw-pinentry-keyring;
       };
     };
 
