@@ -1,13 +1,18 @@
 {
   config,
   lib,
+  pkgs,
   host,
   ...
 }:
 let
   isWorkMachine = host == "Harshs-MacBook-Pro";
+  gcm = pkgs.git-credential-manager.override {
+    withGpgSupport = false;
+  };
 in
 {
+  home.packages = [ gcm ];
   programs.git = {
     enable = true;
     ignores = [
@@ -26,6 +31,16 @@ in
       ];
     lfs.enable = true;
     extraConfig = {
+      credential = {
+        credentialStore = "secretservice";
+        helper = lib.getExe gcm;
+        "https://git.msfjarvis.dev" = {
+          provider = "generic";
+        };
+        "https://github.com" = {
+          provider = "github";
+        };
+      };
       branch.sort = "-committerdate";
       core = {
         autocrlf = "input";

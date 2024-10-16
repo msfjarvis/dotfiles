@@ -23,7 +23,5 @@ in
         pinentry = pkgs.pinentry-gnome3;
       };
     };
-
-    programs.git.extraConfig.credential."https://git.msfjarvis.dev".helper = "${config.programs.rbw.package}/bin/git-credential-rbw";
   };
 }
