@@ -35,12 +35,9 @@ declare -A VERSION_REGEX=(
 )
 
 declare -A VERSION_OVERRIDE=(
-  ["boop-gtk"]=1
   ["caddy-tailscale"]=1
   ["cyberdrop-dl"]=1
-  ["gitout"]=1
   ["glance"]="release/v0.7.0"
-  ["gphotos-cdp"]=1
   ["prometheus-qbittorrent-exporter"]=1
 )
 
