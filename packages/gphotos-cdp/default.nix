@@ -4,7 +4,7 @@
   lib,
 }:
 let
-  version = "1.0.0-unstable-2024-10-06";
+  version = "1.0.0-unstable-2024-10-13";
 in
 buildGoModule {
   pname = "gphotos-cdp";
@@ -13,8 +13,8 @@ buildGoModule {
   src = fetchFromGitHub {
     owner = "msfjarvis";
     repo = "gphotos-cdp";
-    rev = "b13473ade1138969ce96e1d0e4156191aaac2519";
-    hash = "sha256-yWIT1xJh8SIK0UuYR5cp/y38uCApJJA6VvknhqEHIqo=";
+    rev = "782fb3b1907a10ca4ccc4f55bb800a30843d6dde";
+    hash = "sha256-6J/OWvL/cC7qE+q40dnyqfBP42mUAXIesF0VmOJsEUo=";
   };
 
   vendorHash = "sha256-Uk9u1GEA0XIietbIwg4xCkrxG3VABM2B+DAzPJyPiHA=";
