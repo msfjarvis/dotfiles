@@ -21,7 +21,6 @@ NixOS packages for personal use.
 - [patreon-dl] : Download content from creators you're subscribed to on Patreon
 - [pidcat] : Fork of [JakeWharton's pidcat] with Python3 support and some other fixes
 - [piv-agent] : An SSH and GPG agent which you can use with your PIV hardware security device (e.g. a Yubikey).
-- [rbw-pinentry-keyring]: Standalone packaging of rbw's keyring helper
 - [rucksack] : Simple CLI tool to watch directories and move their files to a single dumping ground
 - [tea] : Gitea CLI built from latest sources
 - [toml-cli] : Simple CLI for editing and querying TOML files
@@ -50,7 +49,6 @@ NixOS packages for personal use.
 [patreon-dl]: https://github.com/PrivateGER/patreon-dl
 [pidcat]: https://msfjarvis.dev/g/pidcat
 [piv-agent]: https://github.com/smlx/piv-agent
-[rbw-pinentry-keyring]: https://github.com/doy/rbw
 [rucksack]: https://msfjarvis.dev/g/rucksack
 [tea]: https://gitea.com/gitea/tea
 [toml-cli]: https://github.com/gnprice/toml-cli

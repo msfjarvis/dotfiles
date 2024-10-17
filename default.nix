@@ -103,7 +103,6 @@ in
   pidcat = callPackage ./packages/pidcat { };
   piv-agent = callPackage ./packages/piv-agent { };
   prometheus-qbittorrent-exporter = callPackage ./packages/prometheus-qbittorrent-exporter { };
-  rbw-pinentry-keyring = callPackage ./packages/rbw-pinentry-keyring { };
   rnnoise-plugin-slim = callPackage ./packages/rnnoise-plugin-slim { };
   rucksack = callPackage ./packages/rucksack { };
   toml-cli = callPackage ./packages/toml-cli { };
