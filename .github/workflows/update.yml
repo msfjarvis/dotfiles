@@ -13,15 +13,7 @@ on:
 name: Check for package updates
 jobs:
   check-nix-update:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - runner: ubuntu-latest
-            cache: x86_64-linux
-          - runner: buildjet-4vcpu-ubuntu-2204-arm
-            cache: aarch64-linux
-    runs-on: ${{ matrix.runner }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4
@@ -66,7 +58,7 @@ jobs:
         run: |
           echo "NEW_REF=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
       - name: Push to main branch
-        if: "env.OLD_REF != env.NEW_REF && matrix.runner == 'ubuntu-latest'"
+        if: "env.OLD_REF != env.NEW_REF"
         shell: bash
         run: |
           git pull --rebase origin main
