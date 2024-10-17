@@ -69,4 +69,5 @@ jobs:
         if: "env.OLD_REF != env.NEW_REF && matrix.runner == 'ubuntu-latest'"
         shell: bash
         run: |
+          git pull --rebase origin main
           git push origin main
