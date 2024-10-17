@@ -41,7 +41,7 @@ jobs:
       - name: Setup Attic cache
         uses: ryanccn/attic-action@548bc43642d3ab8fb4fbea6b7d508ddab0181a7c # v0
         with:
-          endpoint: ${{ secrets.ATTIC_ENDPOINT }}
+          endpoint: "https://${{ secrets.ATTIC_ENDPOINT }}"
           cache: ${{ matrix.cache }}
           token: ${{ secrets.ATTIC_TOKEN }}
       - name: Set Git user and email
