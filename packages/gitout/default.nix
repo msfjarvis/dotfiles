@@ -11,7 +11,7 @@
   lib,
 }:
 let
-  version = "0.2.2-unstable-2024-10-06";
+  version = "0.2.3";
   rev = "3b35f0e3dd7022ddf8574e5bd587d2afc0ab4e66";
 in
 rustPlatform.buildRustPackage {
@@ -25,7 +25,7 @@ rustPlatform.buildRustPackage {
     hash = "sha256-JIv61I2ZB7Pzaufg2/Fohsfe/mZ6mLVJwGtopEFr/6w=";
   };
 
-  cargoHash = "sha256-jVQiesuI2ZNNyRWLk9ZyPWXQPYRXvnzd+0PaJROLyuc=";
+  cargoHash = "sha256-i4HyB/vTayO0u6Igx6CCIek2HRoodzJUa2yHGI13uTw=";
 
   PKG_CONFIG_PATH = "${openssl.dev}/lib/pkgconfig";
 
