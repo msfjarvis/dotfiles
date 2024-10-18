@@ -141,16 +141,12 @@ in
             id = 1145360;
           }
           {
-            name = "Helldivers 2";
-            id = 553850;
-          }
-          {
-            name = "Hollow Knight";
-            id = 367520;
-          }
-          {
             name = "Marvel Snap";
             id = 1997040;
+          }
+          {
+            name = "Satisfactory";
+            id = 526870;
           }
         ];
       })
