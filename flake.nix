@@ -46,7 +46,6 @@
       ];
       systems.hosts.ryzenbox.modules = with inputs; [ srvos.nixosModules.desktop ];
       systems.hosts.wailord.modules = with inputs; [
-        (attic + "/nixos/atticd.nix")
         srvos.nixosModules.mixins-telegraf
         srvos.nixosModules.mixins-terminfo
         srvos.nixosModules.roles-prometheus
@@ -91,12 +90,6 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     systems.url = "github:msfjarvis/flake-systems";
-
-    attic.url = "github:zhaofengli/attic?rev=f36329a299ecc9bf1e7d11f2f3c110709c899888";
-    attic.inputs.nixpkgs.follows = "nixpkgs";
-    attic.inputs.nixpkgs-stable.follows = "nixpkgs";
-    attic.inputs.flake-compat.follows = "flake-compat";
-    attic.inputs.flake-parts.follows = "flake-parts";
 
     catppuccin-vscode.url = "github:catppuccin/vscode";
     catppuccin-vscode.inputs.nixpkgs.follows = "nixpkgs";
