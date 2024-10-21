@@ -12,6 +12,7 @@
   topology.self.name = "Desktop";
 
   profiles.${namespace} = {
+    bitwarden.enable = true;
     tailscale.enable = true;
     desktop.enable = true;
     desktop.android-dev.enable = true;

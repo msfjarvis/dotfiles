@@ -12,7 +12,6 @@
   };
 
   profiles.${namespace} = {
-    bitwarden.enable = true;
     gnome-terminal.enable = true;
     logseq.enable = true;
     mpv.enable = true;
