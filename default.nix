@@ -82,6 +82,7 @@ in
   cyberdrop-dl = callPackage ./packages/cyberdrop-dl { };
   diffuse-bin = callPackage ./packages/diffuse-bin { };
   ficsit-cli = callPackage ./packages/ficsit-cli { };
+  gallery-dl-unstable = callPackage ./packages/gallery-dl-unstable { };
   gdrive = callPackage ./packages/gdrive { };
   gitice = callPackage ./packages/gitice {
     inputs = {

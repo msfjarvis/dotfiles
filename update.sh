@@ -12,6 +12,7 @@ declare -a ALL_PACKAGES=(
   clipboard-substitutor
   cyberdrop-dl
   ficsit-cli
+  gallery-dl-unstable
   gdrive
   gitice
   gitout
@@ -38,6 +39,7 @@ declare -A VERSION_REGEX=(
 declare -A VERSION_OVERRIDE=(
   ["caddy-tailscale"]=1
   ["cyberdrop-dl"]=1
+  ["gallery-dl-unstable"]=1
   ["glance"]="release/v0.7.0"
   ["prometheus-qbittorrent-exporter"]=1
 )
