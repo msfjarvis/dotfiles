@@ -56,6 +56,11 @@ in
         "networking.target"
       ];
 
+      path = with pkgs; [
+        coreutils
+        google-chrome
+      ];
+
       serviceConfig = {
         User = cfg.user;
         Group = cfg.group;
@@ -63,12 +68,6 @@ in
         RestartSec = "30s";
         Type = "simple";
         TimeoutSec = "600s";
-        Environment = "PATH=${
-          lib.makeBinPath [
-            pkgs.coreutils
-            pkgs.google-chrome
-          ]
-        }";
       };
       script = ''
         exec env ${lib.getExe cfg.package} -v -dev -headless -dldir ${cfg.dldir} -session-dir ${cfg.session-dir}
