@@ -34,7 +34,7 @@ jobs:
         uses: ryanccn/attic-action@548bc43642d3ab8fb4fbea6b7d508ddab0181a7c # v0
         with:
           endpoint: "https://${{ secrets.ATTIC_ENDPOINT }}"
-          cache: ${{ matrix.cache }}
+          cache: x86_64-linux
           token: ${{ secrets.ATTIC_TOKEN }}
       - name: Set Git user and email
         shell: bash
