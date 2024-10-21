@@ -81,6 +81,7 @@ in
   clipboard-substitutor = callPackage ./packages/clipboard-substitutor { };
   cyberdrop-dl = callPackage ./packages/cyberdrop-dl { };
   diffuse-bin = callPackage ./packages/diffuse-bin { };
+  ficsit-cli = callPackage ./packages/ficsit-cli { };
   gdrive = callPackage ./packages/gdrive { };
   gitice = callPackage ./packages/gitice {
     inputs = {

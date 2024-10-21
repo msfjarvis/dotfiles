@@ -17,7 +17,10 @@ buildGoModule rec {
 
   vendorHash = "sha256-vmA3jvxOLRYj5BmvWMhSEnCTEoe8BLm8lpm2kruIEv4=";
 
-  ldflags = [ "-s" "-w" ];
+  ldflags = [
+    "-s"
+    "-w"
+  ];
 
   # Tests try to access the live ficsit.app API
   doCheck = false;

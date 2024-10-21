@@ -11,6 +11,7 @@ declare -a ALL_PACKAGES=(
   caddy-tailscale
   clipboard-substitutor
   cyberdrop-dl
+  ficsit-cli
   gdrive
   gitice
   gitout
