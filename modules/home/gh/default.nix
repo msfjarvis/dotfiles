@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ config, pkgs, namespace, ... }:
 {
   programs.gh = {
     enable = true;
-    gitCredentialHelper.enable = false;
+    gitCredentialHelper.enable = config.profiles.${namespace}.starship.server;
     settings = {
       version = 1;
       git_protocol = "https";

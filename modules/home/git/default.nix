@@ -3,16 +3,18 @@
   lib,
   pkgs,
   host,
+  namespace,
   ...
 }:
 let
   isWorkMachine = host == "Harshs-MacBook-Pro";
+  isServer = config.profiles.${namespace}.starship.server;
   gcm = pkgs.git-credential-manager.override {
     withGpgSupport = false;
   };
 in
 {
-  home.packages = [ gcm ];
+  home.packages = lib.optionals isServer [ gcm ];
   programs.git = {
     enable = true;
     ignores = [
@@ -30,31 +32,34 @@ in
         { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig-work"; }
       ];
     lfs.enable = true;
-    extraConfig = {
-      credential = {
-        credentialStore = "secretservice";
-        helper = lib.getExe gcm;
-        "https://git.msfjarvis.dev" = {
-          provider = "generic";
+    extraConfig =
+      {
+        branch.sort = "-committerdate";
+        core = {
+          autocrlf = "input";
         };
-        "https://github.com" = {
-          provider = "github";
+        commit.verbose = true;
+        fetch = {
+          fsckobjects = true;
+          prune = true;
+        };
+        init.defaultBranch = "main";
+        merge.conflictstyle = "zdiff3";
+        push.autoSetupRemote = true;
+        receive.fsckObjects = true;
+        transfer.fsckobjects = true;
+      }
+      // lib.attrsets.optionalAttrs (!isServer) {
+        credential = {
+          credentialStore = "secretservice";
+          helper = lib.getExe gcm;
+          "https://git.msfjarvis.dev" = {
+            provider = "generic";
+          };
+          "https://github.com" = {
+            provider = "github";
+          };
         };
       };
-      branch.sort = "-committerdate";
-      core = {
-        autocrlf = "input";
-      };
-      commit.verbose = true;
-      fetch = {
-        fsckobjects = true;
-        prune = true;
-      };
-      init.defaultBranch = "main";
-      merge.conflictstyle = "zdiff3";
-      push.autoSetupRemote = true;
-      receive.fsckObjects = true;
-      transfer.fsckobjects = true;
-    };
   };
 }
