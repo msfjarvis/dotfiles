@@ -22,7 +22,9 @@ in
     };
     environment.systemPackages = [
       (pkgs.writeShellScriptBin "gallery-dl" ''
-        ${lib.getExe pkgs.gallery-dl} --config ${config.sops.secrets.gallery-dl-config.path} ''$@
+        ${
+          lib.getExe pkgs.${namespace}.gallery-dl-unstable
+        } --config ${config.sops.secrets.gallery-dl-config.path} ''$@
       '')
     ];
   };
