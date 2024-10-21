@@ -31,7 +31,7 @@ jobs:
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: "tag:github-actions"
       - name: Setup Attic cache
-        uses: ryanccn/attic-action@548bc43642d3ab8fb4fbea6b7d508ddab0181a7c # v0
+        uses: ryanccn/attic-action@3354ae812cb672e1381be4c7914204c44db53866 # v0
         with:
           endpoint: "https://${{ secrets.ATTIC_ENDPOINT }}"
           cache: x86_64-linux
