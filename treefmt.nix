@@ -18,6 +18,7 @@ _: {
     indent_size = 2;
   };
   settings.formatter.shfmt.includes = [
+    "x"
     "scripts/*"
     "shell-init"
     "darwin-init"
