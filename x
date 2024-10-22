@@ -20,44 +20,44 @@ function cleanup_generations() {
 ARG="${1:-nothing}"
 
 case "${ARG}" in
-  matara-check)
-    nom_build matara
-    ;;
-  matara-switch)
-    nh os switch .
-    cleanup_generations
-    ;;
-  darwin-check)
-    nom build .#darwinConfigurations.Harshs-MacBook-Pro.system
-    ;;
-  darwin-switch)
-    darwin-rebuild switch --option sandbox false --print-build-logs --flake .
-    ;;
-  home-boot)
-    nh os boot .
-    ;;
-  home-check)
-    nom_build ryzenbox
-    ;;
-  home-switch)
-    nh os switch .
-    cleanup_generations
-    ;;
-  home-test)
-    nh os test .
-    ;;
-  server-boot)
-    nh os boot .
-    ;;
-  server-check)
-    nom_build wailord
-    ;;
-  server-switch)
-    nh os switch .
-    cleanup_generations
-    ;;
-  *)
-    echo "Invalid command: ${ARG}"
-    exit 1
-    ;;
+matara-check)
+  nom_build matara
+  ;;
+matara-switch)
+  nh os switch .
+  cleanup_generations
+  ;;
+darwin-check)
+  nom build .#darwinConfigurations.Harshs-MacBook-Pro.system
+  ;;
+darwin-switch)
+  darwin-rebuild switch --option sandbox false --print-build-logs --flake .
+  ;;
+home-boot)
+  nh os boot .
+  ;;
+home-check)
+  nom_build ryzenbox
+  ;;
+home-switch)
+  nh os switch .
+  cleanup_generations
+  ;;
+home-test)
+  nh os test .
+  ;;
+server-boot)
+  nh os boot .
+  ;;
+server-check)
+  nom_build wailord
+  ;;
+server-switch)
+  nh os switch .
+  cleanup_generations
+  ;;
+*)
+  echo "Invalid command: ${ARG}"
+  exit 1
+  ;;
 esac
