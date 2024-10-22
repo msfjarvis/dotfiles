@@ -26,16 +26,17 @@
         ];
       };
       homes.modules = with inputs; [
+        catppuccin.homeManagerModules.catppuccin
         nix-index-database.hmModules.nix-index
         spicetify-nix.homeManagerModules.default
       ];
       systems.modules.darwin = with inputs; [ srvos.darwinModules.desktop ];
       systems.modules.nixos = with inputs; [
+        catppuccin.nixosModules.catppuccin
         disko.nixosModules.disko
         nix-topology.nixosModules.default
         nixos-cosmic.nixosModules.default
         sops-nix.nixosModules.sops
-        stylix.nixosModules.stylix
         srvos.nixosModules.common
         srvos.nixosModules.mixins-systemd-boot
       ];
@@ -53,7 +54,6 @@
       ];
 
       overlays = with inputs; [
-        catppuccin-vscode.overlays.default
         fenix.overlays.default
         gphotos-cdp.overlays.default
         nix-topology.overlays.default
@@ -91,8 +91,7 @@
 
     systems.url = "github:msfjarvis/flake-systems";
 
-    catppuccin-vscode.url = "github:catppuccin/vscode";
-    catppuccin-vscode.inputs.nixpkgs.follows = "nixpkgs";
+    catppuccin.url = "github:catppuccin/nix";
 
     darwin.url = "github:LnL7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -150,9 +149,6 @@
     lix.inputs.pre-commit-hooks.follows = "";
     lix.inputs.flake-compat.follows = "flake-compat";
 
-    micro-theme.url = "git+https://github.com/catppuccin/micro";
-    micro-theme.flake = false;
-
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -194,13 +190,6 @@
 
     srvos.url = "github:nix-community/srvos";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
-
-    stylix.url = "github:danth/stylix";
-    stylix.inputs.flake-compat.follows = "flake-compat";
-    stylix.inputs.home-manager.follows = "home-manager";
-    stylix.inputs.nixpkgs.follows = "nixpkgs";
-    stylix.inputs.flake-utils.follows = "flake-utils";
-    stylix.inputs.systems.follows = "systems";
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";

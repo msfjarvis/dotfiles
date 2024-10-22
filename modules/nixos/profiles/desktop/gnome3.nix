@@ -113,15 +113,7 @@ in
       totem
     ];
 
-    stylix.targets = {
-      gnome.enable = true;
-      gtk.enable = true;
-    };
-
     snowfallorg.users.msfjarvis.home.config = {
-      stylix.targets = {
-        gtk.enable = true;
-      };
       gtk = {
         enable = true;
       };
@@ -136,19 +128,6 @@ in
           remember-recent-files = false;
           remove-old-trash-files = true;
           remove-old-temp-files = true;
-        };
-        "org/gnome/desktop/background" = {
-          color-shading-type = "solid";
-          picture-options = "zoom";
-          picture-uri = "file://${config.stylix.image}";
-          picture-uri-dark = "file://${config.stylix.image}";
-        };
-        "org/gnome/desktop/interface" = with config.stylix.fonts; {
-          # Taken from Stylix
-          color-scheme = if config.stylix.polarity == "dark" then "prefer-dark" else "default";
-          font-name = "${sansSerif.name} ${toString sizes.applications}";
-          document-font-name = "${serif.name} ${toString (sizes.applications - 1)}";
-          monospace-font-name = "${monospace.name} ${toString sizes.terminal}";
         };
         "org/gnome/desktop/notifications/application/org-gnome-console" = {
           enable = false;

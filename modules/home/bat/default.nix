@@ -1,9 +1,6 @@
-{ lib, ... }:
 {
   programs.bat = {
     enable = true;
-    config = {
-      theme = lib.mkDefault "zenburn";
-    };
+    catppuccin.enable = true;
   };
 }
