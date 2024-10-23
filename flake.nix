@@ -194,7 +194,7 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    wallpaper.url = "https://til.msfjarvis.dev/wallpaper.png";
+    wallpaper.url = "https://til.msfjarvis.dev/soft-rose.jpg";
     wallpaper.flake = false;
   };
 }

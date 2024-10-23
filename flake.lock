@@ -745,13 +745,13 @@
     "wallpaper": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-EaHp0CGbmaJWYTJ+PpuD093A6zymU7wUboARvci6298=",
+        "narHash": "sha256-C69+Mh90XYv+PnWNZ4SPuIPUhsTNLUbGWHS6I7+Fsk8=",
         "type": "file",
-        "url": "https://til.msfjarvis.dev/wallpaper.png"
+        "url": "https://til.msfjarvis.dev/soft-rose.jpg"
       },
       "original": {
         "type": "file",
-        "url": "https://til.msfjarvis.dev/wallpaper.png"
+        "url": "https://til.msfjarvis.dev/soft-rose.jpg"
       }
     }
   },
