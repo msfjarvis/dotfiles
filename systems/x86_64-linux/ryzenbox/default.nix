@@ -36,6 +36,7 @@
             "Secondary"
           ];
         };
+        vesktop.enable = true;
       };
     };
   };
