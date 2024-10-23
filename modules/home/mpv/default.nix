@@ -16,7 +16,6 @@ in
   config = mkIf cfg.enable {
     programs.mpv = {
       enable = true;
-      catppuccin.enable = true;
       package = pkgs.mpv-unwrapped.wrapper {
         mpv = pkgs.mpv-unwrapped.override {
           waylandSupport = true;

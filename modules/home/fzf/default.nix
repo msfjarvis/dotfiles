@@ -1,7 +1,6 @@
 {
   programs.fzf = {
     enable = true;
-    catppuccin.enable = true;
     defaultCommand = "fd -tf";
     defaultOptions = [ "--height 40%" ];
     enableBashIntegration = true;

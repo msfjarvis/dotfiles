@@ -26,6 +26,20 @@
   # boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
+  snowfallorg.users.msfjarvis.home.config = {
+    stylix = {
+      targets = {
+        firefox = {
+          enable = true;
+          profileNames = [
+            "Primary"
+            "Secondary"
+          ];
+        };
+      };
+    };
+  };
+
   # Enable networking
   networking = {
     hostName = "ryzenbox";

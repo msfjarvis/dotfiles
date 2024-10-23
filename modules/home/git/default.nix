@@ -39,10 +39,6 @@ in
           autocrlf = "input";
         };
         commit.verbose = true;
-        delta = {
-          enable = true;
-          catppuccin.enable = true;
-        };
         fetch = {
           fsckobjects = true;
           prune = true;

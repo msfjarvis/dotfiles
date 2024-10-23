@@ -15,7 +15,6 @@ in
   config = {
     programs.starship = {
       enable = true;
-      catppuccin.enable = true;
       enableBashIntegration = true;
       settings = {
         format = if cfg.server then "$directory$git_branch$git_state$git_status➜ " else "$all";

@@ -4,6 +4,7 @@
     aria2
     byobu
     curl
+    delta
     diskus
     (fastfetch.override {
       x11Support = false;

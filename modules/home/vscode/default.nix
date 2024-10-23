@@ -26,7 +26,6 @@ in
         ++ (with pkgs.vscode-marketplace; [
           arrterian.nix-env-selector
           catppuccin.catppuccin-vsc-icons
-          catppuccin.catppuccin-vsc
           eamodio.gitlens
           github.copilot
           github.copilot-chat
@@ -37,6 +36,17 @@ in
           ms-vscode-remote.remote-ssh-edit
           oderwat.indent-rainbow
           tamasfe.even-better-toml
+          (pkgs.catppuccin-vsc.override {
+            accent = "mauve";
+            boldKeywords = true;
+            italicComments = true;
+            italicKeywords = true;
+            extraBordersEnabled = false;
+            workbenchMode = "default";
+            bracketMode = "rainbow";
+            colorOverrides = { };
+            customUIColors = { };
+          })
         ])
       );
       userSettings = {
