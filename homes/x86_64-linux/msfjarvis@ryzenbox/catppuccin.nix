@@ -26,6 +26,8 @@ let
       terminal = 10;
     };
   };
+  picture-uri = "file://${inputs.wallpaper}";
+  picture-uri-dark = "file://${inputs.wallpaper}";
 in
 {
   catppuccin.pointerCursor.enable = true;
@@ -55,20 +57,17 @@ in
       font-name = "${sansSerif.name} ${toString sizes.applications}";
       document-font-name = "${serif.name} ${toString (sizes.applications - 1)}";
       monospace-font-name = "${monospace.name} ${toString sizes.terminal}";
-      picture-uri = "file://${inputs.wallpaper}";
-      picture-uri-dark = "file://${inputs.wallpaper}";
+      inherit picture-uri picture-uri-dark;
     };
     "org/gnome/desktop/background" = {
       color-shading-type = "solid";
       picture-options = "zoom";
-      picture-uri = "file://${inputs.wallpaper}";
-      picture-uri-dark = "file://${inputs.wallpaper}";
+      inherit picture-uri picture-uri-dark;
     };
     "org/cinnamon/desktop/background" = {
       color-shading-type = "solid";
       picture-options = "zoom";
-      picture-uri = "file://${inputs.wallpaper}";
-      picture-uri-dark = "file://${inputs.wallpaper}";
+      inherit picture-uri picture-uri-dark;
     };
   };
 }
