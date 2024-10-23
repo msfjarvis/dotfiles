@@ -28,8 +28,6 @@ let
   };
 in
 {
-  catppuccin.accent = "mauve";
-  catppuccin.flavor = "mocha";
   catppuccin.pointerCursor.enable = true;
 
   home.sessionVariables.GTK_THEME = "Catppuccin Mocha";
