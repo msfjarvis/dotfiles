@@ -6,14 +6,14 @@
 
 python3.pkgs.buildPythonApplication {
   pname = "prometheus-qbittorrent-exporter";
-  version = "develop1-unstable-2024-09-23";
+  version = "1.6.0-unstable-2024-10-25";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "esanchezm";
     repo = "prometheus-qbittorrent-exporter";
-    rev = "7e0e09513c5f5705b997aff168354613835d5ba0";
-    hash = "sha256-LKh4hBFzN9YRFCEUkzit95ix6AmaKG16AxCwNWWDpNo=";
+    rev = "2b64a91f8d3c3a3b9b80c0e620460b333aa2f84c";
+    hash = "sha256-tPt/iS3TroHga6zGdWI4VL9HrZ2s0BSGvV+Wam4cwZo=";
   };
 
   nativeBuildInputs = [ python3.pkgs.pdm-backend ];
