@@ -41,7 +41,6 @@ declare -A VERSION_OVERRIDE=(
   ["cyberdrop-dl"]=1
   ["gallery-dl-unstable"]=1
   ["glance"]="release/v0.7.0"
-  ["prometheus-qbittorrent-exporter"]=1
 )
 
 PKG="${1-}"

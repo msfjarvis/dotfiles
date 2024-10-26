@@ -6,7 +6,7 @@
 
 python3.pkgs.buildPythonApplication {
   pname = "prometheus-qbittorrent-exporter";
-  version = "1.6.0-unstable-2024-10-25";
+  version = "1.6.0";
   pyproject = true;
 
   src = fetchFromGitHub {
