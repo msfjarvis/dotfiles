@@ -53,6 +53,8 @@ in
     };
     programs.steam = {
       enable = true;
+      remotePlay.openFirewall = true;
+      dedicatedServer.openFirewall = true;
       # Graphical glitches and broken rendering
       gamescopeSession.enable = false;
       package = pkgs.steam.override {
