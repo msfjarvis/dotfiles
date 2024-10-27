@@ -24,7 +24,7 @@
 
   # Only enable for first installation
   # boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_11;
 
   snowfallorg.users.msfjarvis.home.config = {
     stylix = {
