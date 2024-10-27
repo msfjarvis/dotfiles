@@ -334,65 +334,6 @@
         "type": "github"
       }
     },
-    "gomod2nix": {
-      "inputs": {
-        "flake-utils": [
-          "gphotos-cdp",
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "gphotos-cdp",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1728509152,
-        "narHash": "sha256-tQo1rg3TlwgyI8eHnLvZSlQx9d/o2Rb4oF16TfaTOw0=",
-        "owner": "nix-community",
-        "repo": "gomod2nix",
-        "rev": "d5547e530464c562324f171006fc8f639aa01c9f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "ref": "master",
-        "repo": "gomod2nix",
-        "type": "github"
-      }
-    },
-    "gphotos-cdp": {
-      "inputs": {
-        "devshell": [
-          "devshell"
-        ],
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "gomod2nix": "gomod2nix",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": [
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1729404520,
-        "narHash": "sha256-Kk2UpNi2FWm7/OGtGCzRLIUdZlYHe+gVJN8JhU3OtVA=",
-        "owner": "msfjarvis",
-        "repo": "gphotos-cdp",
-        "rev": "e1ebd7f55828cb21e70c1b70185733c0d742b627",
-        "type": "github"
-      },
-      "original": {
-        "owner": "msfjarvis",
-        "repo": "gphotos-cdp",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -666,7 +607,6 @@
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "flake-utils-plus": "flake-utils-plus",
-        "gphotos-cdp": "gphotos-cdp",
         "home-manager": "home-manager",
         "lib-aggregate": "lib-aggregate",
         "lix": "lix",

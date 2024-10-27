@@ -55,7 +55,6 @@
       overlays = with inputs; [
         catppuccin-vscode.overlays.default
         fenix.overlays.default
-        gphotos-cdp.overlays.default
         nix-topology.overlays.default
         nix-vscode-extensions.overlays.default
       ];
@@ -128,13 +127,6 @@
     firefox.inputs.cachix.follows = "nixpkgs";
     firefox.inputs.flake-compat.follows = "flake-compat";
     firefox.inputs.lib-aggregate.follows = "lib-aggregate";
-
-    gphotos-cdp.url = "github:msfjarvis/gphotos-cdp";
-    gphotos-cdp.inputs.devshell.follows = "devshell";
-    gphotos-cdp.inputs.flake-compat.follows = "flake-compat";
-    gphotos-cdp.inputs.flake-utils.follows = "flake-utils";
-    gphotos-cdp.inputs.nixpkgs.follows = "nixpkgs";
-    gphotos-cdp.inputs.systems.follows = "systems";
 
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
