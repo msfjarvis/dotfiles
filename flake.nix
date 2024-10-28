@@ -33,7 +33,6 @@
       systems.modules.nixos = with inputs; [
         disko.nixosModules.disko
         nix-topology.nixosModules.default
-        nixos-cosmic.nixosModules.default
         sops-nix.nixosModules.sops
         stylix.nixosModules.stylix
         srvos.nixosModules.common
@@ -158,11 +157,6 @@
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
     nix-vscode-extensions.inputs.flake-utils.follows = "flake-utils";
     nix-vscode-extensions.inputs.flake-compat.follows = "flake-compat";
-
-    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
-    nixos-cosmic.inputs.nixpkgs.follows = "nixpkgs";
-    nixos-cosmic.inputs.nixpkgs-stable.follows = "nixpkgs";
-    nixos-cosmic.inputs.flake-compat.follows = "flake-compat";
 
     nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
     nixos-vscode-server.inputs.nixpkgs.follows = "nixpkgs";

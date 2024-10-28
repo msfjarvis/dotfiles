@@ -14,7 +14,6 @@ in
   imports = [
     ./android-dev.nix
     ./cinnamon.nix
-    ./cosmic.nix
     ./earlyoom.nix
     ./gaming.nix
     ./gnome3.nix
