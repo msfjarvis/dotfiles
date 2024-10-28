@@ -131,18 +131,6 @@
     binfmt = true;
   };
 
-  sops.secrets.restic_minecraft_repo_url = {
-    sopsFile = lib.snowfall.fs.get-file "secrets/restic/repo.yaml";
-    owner = config.services.restic.backups.minecraft.user;
-  };
-  sops.secrets.restic_photos_repo_url = {
-    sopsFile = lib.snowfall.fs.get-file "secrets/restic/repo.yaml";
-    owner = config.services.restic.backups.minecraft.user;
-  };
-  sops.secrets.restic_screenshots_repo_url = {
-    sopsFile = lib.snowfall.fs.get-file "secrets/restic/repo.yaml";
-    owner = config.services.restic.backups.minecraft.user;
-  };
   sops.secrets.restic_repo_password = {
     sopsFile = lib.snowfall.fs.get-file "secrets/restic/password.yaml";
     owner = config.services.restic.backups.minecraft.user;
@@ -150,7 +138,7 @@
   services.restic.backups = {
     minecraft = {
       initialize = true;
-      repositoryFile = config.sops.secrets.restic_minecraft_repo_url.path;
+      repository = "rest:https://restic.tiger-shark.ts.net/";
       passwordFile = config.sops.secrets.restic_repo_password.path;
 
       paths = [ "${config.users.users.msfjarvis.home}/Games/PrismLauncher/instances" ];
@@ -163,7 +151,7 @@
     };
     photos = {
       initialize = true;
-      repositoryFile = config.sops.secrets.restic_photos_repo_url.path;
+      repository = "rest:https://restic.tiger-shark.ts.net/photos";
       passwordFile = config.sops.secrets.restic_repo_password.path;
 
       paths = [ config.services.${namespace}.gphotos-cdp.dldir ];
@@ -176,7 +164,7 @@
     };
     screenshots = {
       initialize = true;
-      repositoryFile = config.sops.secrets.restic_screenshots_repo_url.path;
+      repository = "rest:https://restic.tiger-shark.ts.net/screenshots";
       passwordFile = config.sops.secrets.restic_repo_password.path;
 
       paths = [ "/mediahell/screenshots" ];

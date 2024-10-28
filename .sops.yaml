@@ -2,15 +2,6 @@ keys:
   - &wailord age10fy49p7faufe5533rxgshwjn9kr3aqcxjyqk6ty26j99w50dkswsvn2maq
   - &ryzenbox age1ywapg38t5dmwjkjtm8xrfct8ty9g974ytrsfmqerh0yvjnqhgswstkhjvd
 creation_rules:
-  - path_regex: ^secrets/restic/password.yaml$
-    key_groups:
-      - age:
-          - *wailord
-          - *ryzenbox
-  - path_regex: ^secrets/restic/
-    key_groups:
-      - age:
-          - *ryzenbox
   - key_groups:
       - age:
           - *wailord
