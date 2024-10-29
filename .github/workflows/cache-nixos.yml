@@ -60,6 +60,6 @@ jobs:
       - name: Push to attic cache
         shell: bash
         run: |
-          attic push --jobs $(nproc) --filter '^((steam|appimage)-run|(nvidia|android-studio|firefox-nightly-bin).*)$' "${CACHE}" ./result
+          attic push --jobs 1 --filter '^((steam|appimage)-(run|fhs)(-run)?|(nvidia|android-studio|firefox-nightly-bin).*)$' "${CACHE}" ./result
         env:
           CACHE: ${{ matrix.cache }}
