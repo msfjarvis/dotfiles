@@ -26,7 +26,7 @@ jobs:
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: "tag:github-actions"
       - name: Create disk space
-        uses: pexcn/maximize-disk-space@v1.0.4
+        uses: pexcn/maximize-disk-space@59cf0266acd2974782e225501a0807b7d9a4304a # v1.0.4
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - name: Install Nix
