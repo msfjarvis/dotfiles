@@ -473,16 +473,15 @@
         "pre-commit-hooks": []
       },
       "locked": {
-        "lastModified": 1730142941,
+        "lastModified": 1730284926,
         "narHash": "sha256-4aIBZ4/xTDYP9yuU67atTC/tRE3NDONBTybBqwOXMso=",
-        "owner": "msfjarvis",
+        "owner": "oddlama",
         "repo": "nix-topology",
-        "rev": "544b2344a72453cf2dbbb8154c9189f7f679b606",
+        "rev": "927567a4d46831c4e417a7c440b83d915bd5d7a1",
         "type": "github"
       },
       "original": {
-        "owner": "msfjarvis",
-        "ref": "hs/caddy-suffix",
+        "owner": "oddlama",
         "repo": "nix-topology",
         "type": "github"
       }
