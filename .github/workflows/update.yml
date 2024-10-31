@@ -30,12 +30,24 @@ jobs:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: "tag:github-actions"
-      - name: Setup Attic cache
-        uses: ryanccn/attic-action@548bc43642d3ab8fb4fbea6b7d508ddab0181a7c # v0
-        with:
-          endpoint: "https://${{ secrets.ATTIC_ENDPOINT }}"
-          cache: x86_64-linux
-          token: ${{ secrets.ATTIC_TOKEN }}
+      - name: Set up Attic
+        shell: bash
+        run: |
+          mkdir -p ~/.config/nix
+          echo "machine $ENDPOINT" >> ~/.config/nix/netrc
+          echo "password $TOKEN" >> ~/.config/nix/netrc
+          echo "netrc-file = $HOME/.config/nix/netrc" >> ~/.config/nix/nix.conf
+          nix profile install \
+            --option extra-substituters "https://$ENDPOINT/$CACHE" \
+            --option extra-trusted-public-keys "$PUBLIC_KEY" \
+            "github:msfjarvis/nixpkgs?rev=dcddeb9f100da0d198b2a459667f6e4a7824cbb4#attic-client"
+          attic login --set-default ci "https://$ENDPOINT" "$TOKEN"
+          attic use "$CACHE"
+        env:
+          CACHE: "x86_64-linux"
+          ENDPOINT: ${{ secrets.ATTIC_ENDPOINT }}
+          PUBLIC_KEY: "x86_64-linux:HLQszdZAPt0hy6dsMxsI7EDeghCzfSwB8VyBEnei/j0="
+          TOKEN: ${{ secrets.ATTIC_TOKEN }}
       - name: Set Git user and email
         shell: bash
         run: |
