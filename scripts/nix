@@ -53,7 +53,7 @@ function cache() {
   CACHE_PATHS=("$@")
   ARCH="$(uname -m)"
   KERNEL="$(uname --kernel-name | tr '[:upper:]' '[:lower:]')"
-  attic push --filter '^((steam|appimage)-run|(nvidia|android-studio|firefox-nightly-bin).*)$' "${ARCH}-${KERNEL}" "${CACHE_PATHS[@]:?}"
+  attic push --filter '^((steam|appimage)-(run|fhs)(-run)?|(nvidia|android-studio|firefox-nightly-bin).*)$' "${ARCH}-${KERNEL}" "${CACHE_PATHS[@]:?}"
 }
 
 function flakerev() {
