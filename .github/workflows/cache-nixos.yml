@@ -10,7 +10,7 @@ jobs:
       matrix:
         include:
           - cache: aarch64-linux
-            runner: buildjet-4vcpu-ubuntu-2204-arm
+            runner: buildjet-8vcpu-ubuntu-2204-arm
             target: wailord
             public-key: "aarch64-linux:czBXxHtNIDorynmG/2pRuFSENM+fnu0rgVkH+8I4niQ="
           - cache: x86_64-linux
