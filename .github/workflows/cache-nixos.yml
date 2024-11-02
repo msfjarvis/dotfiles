@@ -9,10 +9,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # - cache: aarch64-linux
-          #   runner: buildjet-4vcpu-ubuntu-2204-arm
-          #   target: wailord
-          #   public-key: "aarch64-linux:czBXxHtNIDorynmG/2pRuFSENM+fnu0rgVkH+8I4niQ="
+          - cache: aarch64-linux
+            runner: buildjet-4vcpu-ubuntu-2204-arm
+            target: wailord
+            public-key: "aarch64-linux:czBXxHtNIDorynmG/2pRuFSENM+fnu0rgVkH+8I4niQ="
           - cache: x86_64-linux
             runner: ubuntu-latest
             target: ryzenbox
