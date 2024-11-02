@@ -16,10 +16,7 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-WNN1jr4lVJJjAEZaeayoxpr4deXQu7DZvUTXqRKJ9Uc=";
   };
 
-  patches = [
-    ./fix-bad-import.patch
-    ./unpin-dependencies.patch
-  ];
+  patches = [ ./unpin-dependencies.patch ];
 
   nativeBuildInputs = [ python3.pkgs.poetry-core ];
 
