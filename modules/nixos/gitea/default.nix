@@ -37,6 +37,14 @@ in
         mailer = {
           ENABLED = false;
         };
+        oauth2 = {
+          # Increase token expiry to one day as a workaround for GCM
+          # handling token refresh poorly. Refs:
+          # - https://forum.gitea.com/t/authentication-failed-for-but-running-the-command-again-works/8521
+          # - https://github.com/git-ecosystem/git-credential-manager/issues/1408
+          # - https://github.com/go-gitea/gitea/issues/31470
+          ACCESS_TOKEN_EXPIRATION_TIME = 86400;
+        };
         other = {
           SHOW_FOOTER_POWERED_BY = false;
         };
