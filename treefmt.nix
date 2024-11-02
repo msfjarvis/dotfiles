@@ -1,6 +1,9 @@
 _: {
   projectRootFile = "flake.nix";
 
+  programs.actionlint = {
+    enable = true;
+  };
   programs.deadnix = {
     enable = true;
   };
