@@ -110,13 +110,13 @@
       "https://glance.tiger-shark.ts.net" = {
         extraConfig = ''
           bind tailscale/glance
-          reverse_proxy :${toString config.services.${namespace}.glance.settings.server.port}
+          reverse_proxy 127.0.0.1:${toString config.services.${namespace}.glance.settings.server.port}
         '';
       };
       "https://metube.tiger-shark.ts.net" = {
         extraConfig = ''
           bind tailscale/metube
-          reverse_proxy :9090
+          reverse_proxy 127.0.0.1:9090
         '';
       };
       "https://nix-cache.tiger-shark.ts.net" = {

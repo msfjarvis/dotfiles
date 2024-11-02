@@ -28,7 +28,7 @@ in
         extraConfig = ''
           bind tailscale/prometheus
           tailscale_auth
-          reverse_proxy :${toString config.services.prometheus.port} {
+          reverse_proxy 127.0.0.1:${toString config.services.prometheus.port} {
             header_up X-Webauth-User {http.auth.user.tailscale_user}
           }
         '';
