@@ -153,10 +153,6 @@
     };
   };
 
-  sops.secrets.gitout-config = {
-    sopsFile = lib.snowfall.fs.get-file "secrets/gitout.yaml";
-    owner = "msfjarvis";
-  };
   services.${namespace} = {
     betula = {
       enable = true;
@@ -166,14 +162,6 @@
     gitea = {
       enable = true;
       domain = "git.msfjarvis.dev";
-    };
-
-    gitout = {
-      enable = true;
-      config-file = config.sops.secrets.gitout-config.path;
-      destination-dir = "/home/msfjarvis/gitout";
-      user = "msfjarvis";
-      group = "users";
     };
 
     glance = {
