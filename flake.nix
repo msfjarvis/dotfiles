@@ -73,8 +73,6 @@
           treefmtEval.config.build.wrapper;
       };
 
-      deploy = lib.mkDeploy { inherit (inputs) self; };
-
       templates.cpp.description = "devshell for a C++ project";
       templates.go.description = "devshell for a Golang project";
       templates.node.description = "devshell for a NodeJS project";
@@ -94,11 +92,6 @@
 
     darwin.url = "github:LnL7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-
-    deploy-rs.url = "github:serokell/deploy-rs";
-    deploy-rs.inputs.flake-compat.follows = "flake-compat";
-    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
-    deploy-rs.inputs.utils.follows = "flake-utils";
 
     devshell.url = "github:numtide/devshell";
     devshell.inputs.nixpkgs.follows = "nixpkgs";
