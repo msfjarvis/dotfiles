@@ -6,6 +6,17 @@
   namespace,
   ...
 }:
+let
+  inherit (lib.lists) forEach;
+  homeDir = config.users.users.msfjarvis.home;
+  minecraftInstances = [
+    "Fabulously.Optimized.1.20.6"
+    "Fabulously.Optimized.1.21"
+    "Fabulously.Optimized.1.21.1"
+    "Fabulously.Optimized.1.21.3"
+  ];
+  instancePath = name: "${homeDir}/Games/PrismLauncher/instances/${name}/.minecraft";
+in
 {
   imports = [ ./hardware-configuration.nix ];
 
@@ -141,7 +152,7 @@
       repository = "rest:https://restic.tiger-shark.ts.net/";
       passwordFile = config.sops.secrets.restic_repo_password.path;
 
-      paths = [ "${config.users.users.msfjarvis.home}/Games/PrismLauncher/instances" ];
+      paths = forEach minecraftInstances (name: "${instancePath name}/saves");
 
       pruneOpts = [
         "--keep-daily 7"
@@ -185,24 +196,16 @@
       user = "msfjarvis";
       group = "users";
     };
-    rucksack =
-      let
-        inherit (config.users.users.msfjarvis) home;
-        minecraft = name: "${home}/Games/PrismLauncher/instances/${name}/.minecraft/screenshots/";
-      in
-      {
-        enable = true;
-        sources = [
-          (minecraft "Fabulously.Optimized.1.20.6")
-          (minecraft "Fabulously.Optimized.1.21")
-          (minecraft "Fabulously.Optimized.1.21.1")
-          "${home}/Pictures/Screenshots"
-        ];
-        target = "/mediahell/screenshots/";
-        file_filter = "*.png";
-        user = "msfjarvis";
-        group = "users";
-      };
+    rucksack = {
+      enable = true;
+      sources = (forEach minecraftInstances (name: "${instancePath name}/screenshots")) ++ [
+        "${homeDir}/Pictures/Screenshots"
+      ];
+      target = "/mediahell/screenshots/";
+      file_filter = "*.png";
+      user = "msfjarvis";
+      group = "users";
+    };
   };
 
   virtualisation.libvirtd = {
