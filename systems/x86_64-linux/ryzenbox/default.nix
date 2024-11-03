@@ -121,7 +121,7 @@
       telegram-desktop
       thunderbird
       tuba
-      vesktop
+      (vesktop.override { withSystemVencord = true; })
       yt-dlp
     ];
   };
