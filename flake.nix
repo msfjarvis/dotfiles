@@ -105,9 +105,6 @@
     flake-compat.url = "github:nix-community/flake-compat";
     flake-compat.flake = false;
 
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
-
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
 
