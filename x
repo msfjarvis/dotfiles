@@ -8,7 +8,7 @@ set -o pipefail
 function nom_build() {
   local FLAKE
   FLAKE="${1}"
-  nom build .#nixosConfigurations."${FLAKE}".config.system.build.toplevel
+  nom build --option always-allow-substitutes true .#nixosConfigurations."${FLAKE}".config.system.build.toplevel
 }
 
 function cleanup_generations() {
