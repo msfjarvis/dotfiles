@@ -31,6 +31,7 @@ in
     tailscale.enable = true;
     desktop.enable = true;
     desktop.android-dev.enable = true;
+    desktop.bluetooth.enable = true;
     desktop.gaming.enable = true;
     desktop.gnome3.enable = true;
     desktop.noise-cancelation.enable = true;

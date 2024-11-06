@@ -13,6 +13,7 @@ in
 {
   imports = [
     ./android-dev.nix
+    ./bluetooth.nix
     ./cinnamon.nix
     ./earlyoom.nix
     ./gaming.nix
