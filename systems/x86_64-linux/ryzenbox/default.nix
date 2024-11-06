@@ -155,9 +155,9 @@ in
       paths = forEach minecraftInstances (name: "${instancePath name}/saves");
 
       pruneOpts = [
-        "--keep-daily 7"
-        "--keep-weekly 2"
-        "--keep-monthly 10"
+        "--keep-daily 2"
+        "--keep-weekly 1"
+        "--keep-monthly 1"
       ];
     };
     photos = {
