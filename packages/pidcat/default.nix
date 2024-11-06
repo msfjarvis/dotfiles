@@ -25,7 +25,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   '';
 
   installPhase = ''
+    runHook preInstall
     install -m755 -D pidcat.py $out/bin/pidcat
+    runHook postInstall
   '';
 
   meta = with lib; {

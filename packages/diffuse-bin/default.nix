@@ -16,10 +16,12 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   dontConfigure = true;
 
   installPhase = ''
+    runHook preInstall
     mkdir -p $out/bin
     printf "#!/bin/sh\n\nexec java \$JAVA_OPTS -jar \$0 \"\$@\"\n" > $out/bin/diffuse
     cat $src >> $out/bin/diffuse
     chmod +x $out/bin/diffuse
+    runHook postInstall
   '';
 
   meta = with lib; {

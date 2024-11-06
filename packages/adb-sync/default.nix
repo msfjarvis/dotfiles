@@ -20,8 +20,10 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   dontBuild = true;
 
   installPhase = ''
+    runHook preInstall
     install -m755 -D adb-sync $out/bin/adb-sync
     install -m755 -D adb-channel $out/bin/adb-channel
+    runHook postInstall
   '';
 
   meta = with lib; {
