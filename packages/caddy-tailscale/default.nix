@@ -16,13 +16,13 @@ let
 in
 buildGoModule {
   pname = "caddy-tailscale";
-  version = "0-unstable-2024-07-15";
+  version = "0-unstable-2024-11-05";
 
   src = fetchFromGitHub {
     owner = "tailscale";
     repo = "caddy-tailscale";
-    rev = "c357e484b153daf7000ec5dc64a06c704d500d26";
-    hash = "sha256-/UIQiT7IpPmD/7bzI8a50po9Y/IYV8W4Ycl3yqa5wj8=";
+    rev = "f21c01b660c896bdd6bacc37178dc00d9af282b4";
+    hash = "sha256-oNwnKoNZ9JhAJmtjdIS1ChbJJ1SqMy3pZu7Qj4ficE0=";
   };
 
   patches = [ ./update-tailscale.patch ];
