@@ -148,6 +148,8 @@
     nix-vscode-extensions.inputs.flake-utils.follows = "flake-utils";
     nix-vscode-extensions.inputs.flake-compat.follows = "flake-compat";
 
+    nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
+
     rust-manifest.url = "https://static.rust-lang.org/dist/2024-07-25/channel-rust-nightly.toml";
     rust-manifest.flake = false;
 

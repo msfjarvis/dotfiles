@@ -18,7 +18,11 @@ let
   instancePath = name: "${homeDir}/Games/PrismLauncher/instances/${name}/.minecraft";
 in
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    inputs.nixos-facter-modules.nixosModules.facter
+    { config.facter.reportPath = ./facter.json; }
+  ];
 
   topology.self.name = "Desktop";
 
