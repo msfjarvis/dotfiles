@@ -6,14 +6,14 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
-  version = "5.7.0-unstable-2024-11-04";
+  version = "5.7.0-unstable-2024-11-05";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jbsparrow";
     repo = "cyberdropdownloader";
-    rev = "1e9d4a0543810142a6f3a5e3190cc4d471f01bc8";
-    hash = "sha256-w2jcdSYFeAGXLQddDA9GPZdcLldhng/Nx0XINyN9s7Y=";
+    rev = "b14d1c56bb5f961d97840dd92e51ee17f41108bd";
+    hash = "sha256-2W+bFyccO6enysyAuq7rnd4bS9jZ5yFyYec/XeOX2tM=";
   };
 
   patches = [ ./unpin-dependencies.patch ];
