@@ -16,6 +16,18 @@ _: {
   programs.nixfmt = {
     enable = true;
   };
+  programs.shellcheck = {
+    enable = true;
+  };
+  settings.formatter.shellcheck.includes = [
+    "x"
+    "scripts/*"
+    "shell-init"
+    "darwin-init"
+  ];
+  settings.formatter.shellcheck.excludes = [
+    "scripts/templates"
+  ];
   programs.shfmt = {
     enable = true;
     indent_size = 2;
