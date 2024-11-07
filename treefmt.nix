@@ -25,9 +25,6 @@ _: {
     "shell-init"
     "darwin-init"
   ];
-  settings.formatter.shellcheck.excludes = [
-    "scripts/templates"
-  ];
   programs.shfmt = {
     enable = true;
     indent_size = 2;
@@ -38,7 +35,6 @@ _: {
     "shell-init"
     "darwin-init"
   ];
-  settings.formatter.shfmt.excludes = [ "scripts/templates/*" ];
   programs.statix = {
     enable = true;
   };
