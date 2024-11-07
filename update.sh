@@ -10,7 +10,7 @@ declare -a ALL_PACKAGES=(
   boop-gtk
   caddy-tailscale
   clipboard-substitutor
-  cyberdrop-dl
+  # cyberdrop-dl
   ficsit-cli
   gallery-dl-unstable
   gdrive
