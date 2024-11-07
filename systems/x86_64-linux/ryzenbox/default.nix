@@ -108,6 +108,7 @@ in
           pipewireSupport = true;
         };
       })
+      fluent-reader
       forge-sparks
       fzf
       pkgs.${namespace}.gdrive
@@ -118,7 +119,6 @@ in
       kondo
       maestro
       megatools
-      newsflash
       nix-init
       nix-update
       nurl
