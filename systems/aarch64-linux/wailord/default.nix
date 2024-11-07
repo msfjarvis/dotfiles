@@ -2,11 +2,16 @@
   config,
   lib,
   pkgs,
+  inputs,
   namespace,
   ...
 }:
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    inputs.nixos-facter-modules.nixosModules.facter
+    { config.facter.reportPath = ./facter.json; }
+  ];
 
   boot = {
     # Only enable for first installation
