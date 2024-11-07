@@ -69,8 +69,22 @@ function modinit() {
   read -rp "Desc?: " MODULE_DESC
   read -rp "Path?: " MODULE_PATH
   mkdir -p "${MODULE_PATH}"
-  cp -v "${SCRIPT_DIR}/templates/module.nix" "${MODULE_PATH}/default.nix"
-  sd MODULE_TYPE "${MODULE_TYPE}" "${MODULE_PATH}/default.nix"
-  sd MODULE_NAME "${MODULE_NAME}" "${MODULE_PATH}/default.nix"
-  sd MODULE_DESC "${MODULE_DESC}" "${MODULE_PATH}/default.nix"
+  cat <<EOF >"${MODULE_PATH}/default.nix"
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
+let
+  cfg = config.${MODULE_TYPE}.\${namespace}.${MODULE_NAME};
+  inherit (lib) mkEnableOption mkIf;
+in
+{
+  options.${MODULE_TYPE}.\${namespace}.${MODULE_NAME} = {
+    enable = mkEnableOption "${MODULE_DESC}";
+  };
+  config = mkIf cfg.enable { };
+}
+EOF
 }
