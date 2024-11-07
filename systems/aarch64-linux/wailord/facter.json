@@ -1,0 +1,3881 @@
+{
+  "version": 1,
+  "system": "aarch64-linux",
+  "virtualisation": "kvm",
+  "hardware": {
+    "bridge": [
+      {
+        "index": 10,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 3
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:03.1",
+        "sysfs_bus_id": "0000:00:03.1",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 33,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337711104,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 1,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 18,
+          "irq": 33,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 11,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 2
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:02.7",
+        "sysfs_bus_id": "0000:00:02.7",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 24,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337702912,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 7,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 16,
+          "irq": 24,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 12,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 4
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:04.4",
+        "sysfs_bus_id": "0000:00:04.4",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 42,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337756160,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 4,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 29,
+          "irq": 42,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 13,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 1
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.2",
+        "sysfs_bus_id": "0000:00:01.2",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 15,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337649664,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 2,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 3,
+          "irq": 15,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 14,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 2
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:02.5",
+        "sysfs_bus_id": "0000:00:02.5",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 24,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337694720,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 5,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 14,
+          "irq": 24,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 17,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 4
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:04.2",
+        "sysfs_bus_id": "0000:00:04.2",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 42,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337747968,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 2,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 27,
+          "irq": 42,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 18,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 1
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.0",
+        "sysfs_bus_id": "0000:00:01.0",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 15,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337641472,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 0,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 1,
+          "irq": 15,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 19,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 2
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:02.3",
+        "sysfs_bus_id": "0000:00:02.3",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 24,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337686528,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 3,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 12,
+          "irq": 24,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 20,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 4
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:04.0",
+        "sysfs_bus_id": "0000:00:04.0",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 42,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337739776,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 0,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 25,
+          "irq": 42,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 21,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 3
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:03.6",
+        "sysfs_bus_id": "0000:00:03.6",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 33,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337731584,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 6,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 23,
+          "irq": 33,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 24,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 2
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:02.1",
+        "sysfs_bus_id": "0000:00:02.1",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 24,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337678336,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 1,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 10,
+          "irq": 24,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 25,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 1
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.7",
+        "sysfs_bus_id": "0000:00:01.7",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 15,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337670144,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 7,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 8,
+          "irq": 15,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 26,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 3
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:03.4",
+        "sysfs_bus_id": "0000:00:03.4",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 33,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337723392,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 4,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 21,
+          "irq": 33,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 27,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 4
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:04.7",
+        "sysfs_bus_id": "0000:00:04.7",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 42,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337768448,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 7,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 33,
+          "irq": 42,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 28,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 1
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.5",
+        "sysfs_bus_id": "0000:00:01.5",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 15,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337661952,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 5,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 6,
+          "irq": 15,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 29,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 3
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:03.2",
+        "sysfs_bus_id": "0000:00:03.2",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 33,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337715200,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 2,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 19,
+          "irq": 33,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 30,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 0
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "Host bridge",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6900
+        },
+        "device": {
+          "value": 8
+        },
+        "sub_device": {
+          "value": 4352
+        },
+        "model": "Host bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:00.0",
+        "sysfs_bus_id": "0000:00:00.0",
+        "detail": {
+          "function": 0,
+          "command": 0,
+          "header_type": 0,
+          "secondary_bus": 0,
+          "irq": 0,
+          "prog_if": 0
+        },
+        "module_alias": "pci:v00001B36d00000008sv00001AF4sd00001100bc06sc00i00"
+      },
+      {
+        "index": 31,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 4
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:04.5",
+        "sysfs_bus_id": "0000:00:04.5",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 42,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337760256,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 5,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 30,
+          "irq": 42,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 32,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 1
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.3",
+        "sysfs_bus_id": "0000:00:01.3",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 15,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337653760,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 3,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 4,
+          "irq": 15,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 33,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 3
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:03.0",
+        "sysfs_bus_id": "0000:00:03.0",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 33,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337707008,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 0,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 17,
+          "irq": 33,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 34,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 2
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:02.6",
+        "sysfs_bus_id": "0000:00:02.6",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 24,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337698816,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 6,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 15,
+          "irq": 24,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 35,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 4
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:04.3",
+        "sysfs_bus_id": "0000:00:04.3",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 42,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337752064,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 3,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 28,
+          "irq": 42,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 36,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 1
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.1",
+        "sysfs_bus_id": "0000:00:01.1",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 15,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337645568,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 1,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 2,
+          "irq": 15,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 37,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 2
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:02.4",
+        "sysfs_bus_id": "0000:00:02.4",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 24,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337690624,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 4,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 13,
+          "irq": 24,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 38,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 4
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:04.1",
+        "sysfs_bus_id": "0000:00:04.1",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 42,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337743872,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 1,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 26,
+          "irq": 42,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 40,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 3
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:03.7",
+        "sysfs_bus_id": "0000:00:03.7",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 33,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337735680,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 7,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 24,
+          "irq": 33,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 42,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 2
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:02.2",
+        "sysfs_bus_id": "0000:00:02.2",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 24,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337682432,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 2,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 11,
+          "irq": 24,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 43,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 3
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:03.5",
+        "sysfs_bus_id": "0000:00:03.5",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 33,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337727488,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 5,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 22,
+          "irq": 33,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 44,
+        "attached_to": 49,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 31,
+          "number": 0
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 14
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:04.6/0000:1f:00.0",
+        "sysfs_bus_id": "0000:1f:00.0",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 42,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 332398592,
+            "range": 256,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 0,
+          "command": 7,
+          "header_type": 1,
+          "secondary_bus": 32,
+          "irq": 42,
+          "prog_if": 0
+        },
+        "module_alias": "pci:v00001B36d0000000Esv00000000sd00000000bc06sc04i00"
+      },
+      {
+        "index": 45,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 2
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:02.0",
+        "sysfs_bus_id": "0000:00:02.0",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 24,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337674240,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 0,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 9,
+          "irq": 24,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 46,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 1
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.6",
+        "sysfs_bus_id": "0000:00:01.6",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 15,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337666048,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 6,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 7,
+          "irq": 15,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 47,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 3
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:03.3",
+        "sysfs_bus_id": "0000:00:03.3",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 33,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337719296,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 3,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 20,
+          "irq": 33,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 48,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 5
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:05.0",
+        "sysfs_bus_id": "0000:00:05.0",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 15,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337772544,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 0,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 34,
+          "irq": 15,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 49,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 4
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:04.6",
+        "sysfs_bus_id": "0000:00:04.6",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 42,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337764352,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 6,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 31,
+          "irq": 42,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      },
+      {
+        "index": 50,
+        "attached_to": 0,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 0,
+          "number": 1
+        },
+        "base_class": {
+          "name": "Bridge",
+          "value": 6
+        },
+        "sub_class": {
+          "name": "PCI bridge",
+          "value": 4
+        },
+        "pci_interface": {
+          "name": "Normal decode",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6966
+        },
+        "sub_vendor": {
+          "value": 6966
+        },
+        "device": {
+          "value": 12
+        },
+        "sub_device": {
+          "value": 0
+        },
+        "model": "PCI bridge",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.4",
+        "sysfs_bus_id": "0000:00:01.4",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 15,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 337657856,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 4,
+          "command": 1031,
+          "header_type": 1,
+          "secondary_bus": 5,
+          "irq": 15,
+          "prog_if": 0
+        },
+        "driver": "pcieport",
+        "drivers": [
+          "pcieport"
+        ],
+        "module_alias": "pci:v00001B36d0000000Csv00001B36sd00000000bc06sc04i00"
+      }
+    ],
+    "cdrom": [
+      {
+        "index": 60,
+        "attached_to": 54,
+        "bus_type": {
+          "name": "SCSI",
+          "value": 132
+        },
+        "slot": {
+          "bus": 6,
+          "number": 0
+        },
+        "base_class": {
+          "name": "Mass Storage Device",
+          "value": 262
+        },
+        "sub_class": {
+          "name": "CD-ROM",
+          "value": 2
+        },
+        "pci_interface": {
+          "name": "DVD",
+          "value": 3
+        },
+        "vendor": {
+          "name": "QEMU",
+          "value": 0
+        },
+        "device": {
+          "name": "QEMU CD-ROM",
+          "value": 0
+        },
+        "revision": {
+          "name": "2.5+",
+          "value": 0
+        },
+        "model": "QEMU CD-ROM",
+        "sysfs_id": "/class/block/sr0",
+        "sysfs_bus_id": "6:0:0:0",
+        "sysfs_device_link": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:04.4/0000:1d:00.0/virtio4/host6/target6:0:0/6:0:0:0",
+        "unix_device_name": "/dev/sr0",
+        "unix_device_number": {
+          "type": 98,
+          "major": 11,
+          "minor": 0,
+          "range": 1
+        },
+        "unix_device_names": [
+          "/dev/cdrom",
+          "/dev/disk/by-diskseq/11",
+          "/dev/disk/by-id/scsi-0QEMU_QEMU_CD-ROM_drive-scsi0-0-0-0",
+          "/dev/disk/by-path/platform-4010000000.pcie-pci-0000:1d:00.0-scsi-0:0:0:0",
+          "/dev/sr0"
+        ],
+        "unix_device_name2": "/dev/sg0",
+        "unix_device_number2": {
+          "type": 99,
+          "major": 21,
+          "minor": 0,
+          "range": 1
+        },
+        "driver": "virtio_scsi",
+        "driver_module": "virtio_scsi",
+        "drivers": [
+          "sr",
+          "virtio_scsi"
+        ],
+        "driver_modules": [
+          "sr_mod",
+          "virtio_scsi"
+        ]
+      }
+    ],
+    "cpu": [
+      {
+        "architecture": "aarch64",
+        "vendor_name": "ARM Limited",
+        "family": 3,
+        "model": 1,
+        "stepping": 0,
+        "features": [
+          "fp",
+          "asimd",
+          "evtstrm",
+          "aes",
+          "pmull",
+          "sha1",
+          "sha2",
+          "crc32",
+          "atomics",
+          "fphp",
+          "asimdhp",
+          "cpuid",
+          "asimdrdm",
+          "lrcpc",
+          "dcpop",
+          "asimddp"
+        ],
+        "bogo": 50,
+        "physical_id": 0,
+        "fpu": false,
+        "fpu_exception": false,
+        "write_protect": false,
+        "address_sizes": {}
+      }
+    ],
+    "disk": [
+      {
+        "index": 61,
+        "attached_to": 0,
+        "base_class": {
+          "name": "Mass Storage Device",
+          "value": 262
+        },
+        "sub_class": {
+          "name": "Disk",
+          "value": 0
+        },
+        "model": "Disk",
+        "sysfs_id": "/class/block/zram0",
+        "unix_device_name": "/dev/zram0",
+        "unix_device_number": {
+          "type": 98,
+          "major": 252,
+          "minor": 0,
+          "range": 1
+        },
+        "unix_device_names": [
+          "/dev/zram0"
+        ],
+        "resources": [
+          {
+            "type": "size",
+            "unit": "sectors",
+            "value_1": 1012096,
+            "value_2": 4096
+          }
+        ]
+      },
+      {
+        "index": 62,
+        "attached_to": 55,
+        "base_class": {
+          "name": "Mass Storage Device",
+          "value": 262
+        },
+        "sub_class": {
+          "name": "Disk",
+          "value": 0
+        },
+        "model": "Disk",
+        "sysfs_id": "/class/block/vda",
+        "sysfs_bus_id": "virtio2",
+        "sysfs_device_link": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:02.7/0000:10:00.0/virtio2",
+        "unix_device_name": "/dev/vda",
+        "unix_device_number": {
+          "type": 98,
+          "major": 254,
+          "minor": 0,
+          "range": 16
+        },
+        "unix_device_names": [
+          "/dev/disk/by-diskseq/9",
+          "/dev/disk/by-path/platform-4010000000.pcie-pci-0000:10:00.0",
+          "/dev/vda"
+        ],
+        "resources": [
+          {
+            "type": "disk_geo",
+            "cylinders": 532610,
+            "heads": 16,
+            "sectors": 63,
+            "size": 0,
+            "geo_type": "logical"
+          },
+          {
+            "type": "size",
+            "unit": "sectors",
+            "value_1": 536870912,
+            "value_2": 512
+          }
+        ],
+        "driver": "virtio-pci",
+        "drivers": [
+          "virtio-pci",
+          "virtio_blk"
+        ]
+      }
+    ],
+    "graphics_card": [
+      {
+        "index": 16,
+        "attached_to": 36,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 2,
+          "number": 0
+        },
+        "base_class": {
+          "name": "Display controller",
+          "value": 3
+        },
+        "sub_class": {
+          "name": "Display controller",
+          "value": 128
+        },
+        "vendor": {
+          "value": 6900
+        },
+        "sub_vendor": {
+          "value": 6900
+        },
+        "device": {
+          "value": 4176
+        },
+        "sub_device": {
+          "value": 4352
+        },
+        "revision": {
+          "value": 1
+        },
+        "model": "Display controller",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.1/0000:02:00.0",
+        "sysfs_bus_id": "0000:02:00.0",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 15,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 270532608,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          },
+          {
+            "type": "mem",
+            "base": 549757911040,
+            "range": 16384,
+            "enabled": true,
+            "access": "read_only",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 0,
+          "command": 1030,
+          "header_type": 0,
+          "secondary_bus": 0,
+          "irq": 15,
+          "prog_if": 0
+        },
+        "driver": "virtio-pci",
+        "drivers": [
+          "virtio-pci"
+        ],
+        "module_alias": "pci:v00001AF4d00001050sv00001AF4sd00001100bc03sc80i00"
+      }
+    ],
+    "hub": [
+      {
+        "index": 64,
+        "attached_to": 23,
+        "bus_type": {
+          "name": "USB",
+          "value": 134
+        },
+        "slot": {
+          "bus": 0,
+          "number": 0
+        },
+        "base_class": {
+          "name": "Hub",
+          "value": 266
+        },
+        "vendor": {
+          "name": "Linux 6.6.48 xhci-hcd",
+          "value": 7531
+        },
+        "device": {
+          "name": "xHCI Host Controller",
+          "value": 2
+        },
+        "revision": {
+          "name": "6.06",
+          "value": 0
+        },
+        "serial": "0000:01:00.0",
+        "model": "Linux 6.6.48 xhci-hcd xHCI Host Controller",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.0/0000:01:00.0/usb1/1-0:1.0",
+        "sysfs_bus_id": "1-0:1.0",
+        "resources": [
+          {
+            "type": "baud",
+            "speed": 480000000,
+            "bits": 0,
+            "stop_bits": 0,
+            "parity": 0,
+            "handshake": 0
+          }
+        ],
+        "detail": {
+          "device_class": {
+            "name": "hub",
+            "value": 9
+          },
+          "device_subclass": {
+            "name": "per_interface",
+            "value": 0
+          },
+          "device_protocol": 1,
+          "interface_class": {
+            "name": "hub",
+            "value": 9
+          },
+          "interface_subclass": {
+            "name": "per_interface",
+            "value": 0
+          },
+          "interface_protocol": 0,
+          "interface_number": 0,
+          "interface_alternate_setting": 0
+        },
+        "hotplug": "usb",
+        "driver": "hub",
+        "drivers": [
+          "hub"
+        ],
+        "module_alias": "usb:v1D6Bp0002d0606dc09dsc00dp01ic09isc00ip00in00"
+      },
+      {
+        "index": 66,
+        "attached_to": 23,
+        "bus_type": {
+          "name": "USB",
+          "value": 134
+        },
+        "slot": {
+          "bus": 0,
+          "number": 0
+        },
+        "base_class": {
+          "name": "Hub",
+          "value": 266
+        },
+        "vendor": {
+          "name": "Linux 6.6.48 xhci-hcd",
+          "value": 7531
+        },
+        "device": {
+          "name": "xHCI Host Controller",
+          "value": 3
+        },
+        "revision": {
+          "name": "6.06",
+          "value": 0
+        },
+        "serial": "0000:01:00.0",
+        "model": "Linux 6.6.48 xhci-hcd xHCI Host Controller",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.0/0000:01:00.0/usb2/2-0:1.0",
+        "sysfs_bus_id": "2-0:1.0",
+        "detail": {
+          "device_class": {
+            "name": "hub",
+            "value": 9
+          },
+          "device_subclass": {
+            "name": "per_interface",
+            "value": 0
+          },
+          "device_protocol": 3,
+          "interface_class": {
+            "name": "hub",
+            "value": 9
+          },
+          "interface_subclass": {
+            "name": "per_interface",
+            "value": 0
+          },
+          "interface_protocol": 0,
+          "interface_number": 0,
+          "interface_alternate_setting": 0
+        },
+        "hotplug": "usb",
+        "driver": "hub",
+        "drivers": [
+          "hub"
+        ],
+        "module_alias": "usb:v1D6Bp0003d0606dc09dsc00dp03ic09isc00ip00in00"
+      }
+    ],
+    "keyboard": [
+      {
+        "index": 63,
+        "attached_to": 64,
+        "bus_type": {
+          "name": "USB",
+          "value": 134
+        },
+        "slot": {
+          "bus": 0,
+          "number": 0
+        },
+        "base_class": {
+          "name": "Keyboard",
+          "value": 264
+        },
+        "sub_class": {
+          "name": "Keyboard",
+          "value": 0
+        },
+        "vendor": {
+          "name": "QEMU",
+          "value": 1575
+        },
+        "device": {
+          "name": "QEMU USB Keyboard",
+          "value": 1
+        },
+        "serial": "68284-0000:00:01.0:00.0-2",
+        "model": "QEMU USB Keyboard",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.0/0000:01:00.0/usb1/1-2/1-2:1.0",
+        "sysfs_bus_id": "1-2:1.0",
+        "unix_device_name": "/dev/input/event2",
+        "unix_device_number": {
+          "type": 99,
+          "major": 13,
+          "minor": 66,
+          "range": 1
+        },
+        "unix_device_names": [
+          "/dev/input/by-id/usb-QEMU_QEMU_USB_Keyboard_68284-0000:00:01.0:00.0-2-event-kbd",
+          "/dev/input/by-path/platform-4010000000.pcie-pci-0000:01:00.0-usb-0:2:1.0-event-kbd",
+          "/dev/input/by-path/platform-4010000000.pcie-pci-0000:01:00.0-usbv2-0:2:1.0-event-kbd",
+          "/dev/input/event2"
+        ],
+        "resources": [
+          {
+            "type": "baud",
+            "speed": 480000000,
+            "bits": 0,
+            "stop_bits": 0,
+            "parity": 0,
+            "handshake": 0
+          }
+        ],
+        "detail": {
+          "device_class": {
+            "name": "per_interface",
+            "value": 0
+          },
+          "device_subclass": {
+            "name": "per_interface",
+            "value": 0
+          },
+          "device_protocol": 0,
+          "interface_class": {
+            "name": "hid",
+            "value": 3
+          },
+          "interface_subclass": {
+            "name": "audio",
+            "value": 1
+          },
+          "interface_protocol": 1,
+          "interface_number": 0,
+          "interface_alternate_setting": 0
+        },
+        "hotplug": "usb",
+        "driver": "usbhid",
+        "drivers": [
+          "usbhid"
+        ],
+        "driver_info": {
+          "type": "keyboard",
+          "xkb_rules": "xfree86"
+        },
+        "module_alias": "usb:v0627p0001d0000dc00dsc00dp00ic03isc01ip01in00"
+      }
+    ],
+    "memory": [
+      {
+        "index": 8,
+        "attached_to": 0,
+        "base_class": {
+          "name": "Internally Used Class",
+          "value": 257
+        },
+        "sub_class": {
+          "name": "Main Memory",
+          "value": 2
+        },
+        "model": "Main Memory",
+        "resources": [
+          {
+            "type": "mem",
+            "base": 0,
+            "range": 8291168256,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "unknown"
+          },
+          {
+            "type": "phys_mem",
+            "range": 8053063680
+          }
+        ]
+      }
+    ],
+    "monitor": [
+      {
+        "index": 59,
+        "attached_to": 16,
+        "base_class": {
+          "name": "Monitor",
+          "value": 256
+        },
+        "sub_class": {
+          "name": "LCD Monitor",
+          "value": 2
+        },
+        "vendor": {
+          "value": 18708
+        },
+        "device": {
+          "name": "QEMU Monitor",
+          "value": 4660
+        },
+        "serial": "0",
+        "model": "QEMU Monitor",
+        "resources": [
+          {
+            "type": "monitor",
+            "width": 1024,
+            "height": 768,
+            "vertical_frequency": 60,
+            "interlaced": false
+          },
+          {
+            "type": "monitor",
+            "width": 1600,
+            "height": 1200,
+            "vertical_frequency": 60,
+            "interlaced": false
+          },
+          {
+            "type": "monitor",
+            "width": 1920,
+            "height": 1080,
+            "vertical_frequency": 60,
+            "interlaced": false
+          },
+          {
+            "type": "monitor",
+            "width": 2048,
+            "height": 1152,
+            "vertical_frequency": 60,
+            "interlaced": false
+          },
+          {
+            "type": "monitor",
+            "width": 640,
+            "height": 480,
+            "vertical_frequency": 60,
+            "interlaced": false
+          },
+          {
+            "type": "monitor",
+            "width": 800,
+            "height": 600,
+            "vertical_frequency": 60,
+            "interlaced": false
+          },
+          {
+            "type": "size",
+            "unit": "mm",
+            "value_1": 260,
+            "value_2": 195
+          }
+        ],
+        "detail": {
+          "manufacture_year": 2014,
+          "manufacture_week": 42,
+          "vertical_sync": {
+            "min": 50,
+            "max": 125
+          },
+          "horizontal_sync": {
+            "min": 30,
+            "max": 160
+          },
+          "horizontal_sync_timings": {
+            "disp": 1024,
+            "sync_start": 1280,
+            "sync_end": 1310,
+            "total": 1382
+          },
+          "vertical_sync_timings": {
+            "disp": 768,
+            "sync_start": 771,
+            "sync_end": 774,
+            "total": 794
+          },
+          "clock": 82290,
+          "width": 1024,
+          "height": 768,
+          "width_millimetres": 260,
+          "height_millimetres": 195,
+          "horizontal_flag": 45,
+          "vertical_flag": 45,
+          "vendor": "",
+          "name": "QEMU Monitor"
+        },
+        "driver_info": {
+          "type": "display",
+          "width": 2048,
+          "height": 1152,
+          "vertical_sync": {
+            "min": 50,
+            "max": 125
+          },
+          "horizontal_sync": {
+            "min": 30,
+            "max": 160
+          },
+          "bandwidth": 0,
+          "horizontal_sync_timings": {
+            "disp": 1024,
+            "sync_start": 1280,
+            "sync_end": 1310,
+            "total": 1382
+          },
+          "vertical_sync_timings": {
+            "disp": 768,
+            "sync_start": 771,
+            "sync_end": 774,
+            "total": 794
+          },
+          "horizontal_flag": 45,
+          "vertical_flag": 45
+        }
+      }
+    ],
+    "mouse": [
+      {
+        "index": 65,
+        "attached_to": 64,
+        "bus_type": {
+          "name": "USB",
+          "value": 134
+        },
+        "slot": {
+          "bus": 0,
+          "number": 0
+        },
+        "base_class": {
+          "name": "Mouse",
+          "value": 261
+        },
+        "sub_class": {
+          "name": "USB Mouse",
+          "value": 3
+        },
+        "vendor": {
+          "name": "QEMU",
+          "value": 1575
+        },
+        "device": {
+          "name": "QEMU USB Tablet",
+          "value": 1
+        },
+        "serial": "28754-0000:00:01.0:00.0-1",
+        "compat_vendor": "Unknown",
+        "compat_device": "Generic USB Mouse",
+        "model": "QEMU USB Tablet",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.0/0000:01:00.0/usb1/1-1/1-1:1.0",
+        "sysfs_bus_id": "1-1:1.0",
+        "unix_device_name": "/dev/input/mice",
+        "unix_device_number": {
+          "type": 99,
+          "major": 13,
+          "minor": 63,
+          "range": 1
+        },
+        "unix_device_names": [
+          "/dev/input/mice"
+        ],
+        "unix_device_name2": "/dev/input/mouse0",
+        "unix_device_number2": {
+          "type": 99,
+          "major": 13,
+          "minor": 32,
+          "range": 1
+        },
+        "resources": [
+          {
+            "type": "baud",
+            "speed": 480000000,
+            "bits": 0,
+            "stop_bits": 0,
+            "parity": 0,
+            "handshake": 0
+          }
+        ],
+        "detail": {
+          "device_class": {
+            "name": "per_interface",
+            "value": 0
+          },
+          "device_subclass": {
+            "name": "per_interface",
+            "value": 0
+          },
+          "device_protocol": 0,
+          "interface_class": {
+            "name": "hid",
+            "value": 3
+          },
+          "interface_subclass": {
+            "name": "per_interface",
+            "value": 0
+          },
+          "interface_protocol": 0,
+          "interface_number": 0,
+          "interface_alternate_setting": 0
+        },
+        "hotplug": "usb",
+        "driver": "usbhid",
+        "drivers": [
+          "usbhid"
+        ],
+        "driver_info": {
+          "type": "mouse",
+          "db_entry_0": [
+            "explorerps/2",
+            "exps2"
+          ],
+          "xf86": "explorerps/2",
+          "gpm": "exps2",
+          "buttons": -1,
+          "wheels": -1
+        },
+        "module_alias": "usb:v0627p0001d0000dc00dsc00dp00ic03isc00ip00in00"
+      }
+    ],
+    "network_controller": [
+      {
+        "index": 52,
+        "attached_to": 0,
+        "base_class": {
+          "name": "Network controller",
+          "value": 2
+        },
+        "sub_class": {
+          "name": "Ethernet controller",
+          "value": 0
+        },
+        "device": {
+          "name": "ARM Ethernet controller",
+          "value": 0
+        },
+        "model": "ARM Ethernet controller",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.2/0000:03:00.0/virtio1",
+        "sysfs_bus_id": "virtio1",
+        "unix_device_name": "enp3s0",
+        "unix_device_names": [
+          "enp3s0"
+        ],
+        "resources": [
+          {
+            "type": "hwaddr",
+            "address": 56
+          },
+          {
+            "type": "phwaddr",
+            "address": 56
+          }
+        ],
+        "driver": "virtio_net",
+        "drivers": [
+          "virtio_net"
+        ],
+        "module_alias": "of:NpcieTpciCpci-host-ecam-generic"
+      },
+      {
+        "index": 53,
+        "attached_to": 9,
+        "bus_type": {
+          "name": "Virtio",
+          "value": 143
+        },
+        "slot": {
+          "bus": 0,
+          "number": 0
+        },
+        "base_class": {
+          "name": "Network controller",
+          "value": 2
+        },
+        "sub_class": {
+          "name": "Ethernet controller",
+          "value": 0
+        },
+        "vendor": "Virtio",
+        "device": "Ethernet Card 0",
+        "model": "Virtio Ethernet Card 0",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.2/0000:03:00.0/virtio1",
+        "sysfs_bus_id": "virtio1",
+        "driver": "virtio_net",
+        "drivers": [
+          "virtio_net"
+        ],
+        "module_alias": "virtio:d00000001v00001AF4"
+      }
+    ],
+    "network_interface": [
+      {
+        "index": 69,
+        "attached_to": 52,
+        "base_class": {
+          "name": "Network Interface",
+          "value": 263
+        },
+        "sub_class": {
+          "name": "Ethernet",
+          "value": 1
+        },
+        "model": "Ethernet network interface",
+        "sysfs_id": "/class/net/enp3s0",
+        "sysfs_device_link": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.2/0000:03:00.0/virtio1",
+        "unix_device_name": "enp3s0",
+        "unix_device_names": [
+          "enp3s0"
+        ],
+        "resources": [
+          {
+            "type": "hwaddr",
+            "address": 56
+          },
+          {
+            "type": "phwaddr",
+            "address": 56
+          }
+        ],
+        "driver": "virtio_net",
+        "drivers": [
+          "virtio_net"
+        ]
+      },
+      {
+        "index": 70,
+        "attached_to": 0,
+        "base_class": {
+          "name": "Network Interface",
+          "value": 263
+        },
+        "sub_class": {
+          "name": "Loopback",
+          "value": 0
+        },
+        "model": "Loopback network interface",
+        "sysfs_id": "/class/net/lo",
+        "unix_device_name": "lo",
+        "unix_device_names": [
+          "lo"
+        ]
+      }
+    ],
+    "storage_controller": [
+      {
+        "index": 15,
+        "attached_to": 12,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 29,
+          "number": 0
+        },
+        "base_class": {
+          "name": "Mass storage controller",
+          "value": 1
+        },
+        "sub_class": {
+          "name": "SCSI storage controller",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6900
+        },
+        "sub_vendor": {
+          "value": 6900
+        },
+        "device": {
+          "value": 4168
+        },
+        "sub_device": {
+          "value": 4352
+        },
+        "revision": {
+          "value": 1
+        },
+        "model": "SCSI storage controller",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:04.4/0000:1d:00.0",
+        "sysfs_bus_id": "0000:1d:00.0",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 42,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 327155712,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          },
+          {
+            "type": "mem",
+            "base": 549814534144,
+            "range": 16384,
+            "enabled": true,
+            "access": "read_only",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 0,
+          "command": 1030,
+          "header_type": 0,
+          "secondary_bus": 0,
+          "irq": 42,
+          "prog_if": 0
+        },
+        "driver": "virtio-pci",
+        "drivers": [
+          "virtio-pci"
+        ],
+        "module_alias": "pci:v00001AF4d00001048sv00001AF4sd00001100bc01sc00i00"
+      },
+      {
+        "index": 39,
+        "attached_to": 44,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 32,
+          "number": 1
+        },
+        "base_class": {
+          "name": "Mass storage controller",
+          "value": 1
+        },
+        "sub_class": {
+          "value": 6
+        },
+        "pci_interface": {
+          "value": 1
+        },
+        "vendor": {
+          "value": 32902
+        },
+        "sub_vendor": {
+          "value": 6900
+        },
+        "device": {
+          "value": 10530
+        },
+        "sub_device": {
+          "value": 4352
+        },
+        "revision": {
+          "value": 2
+        },
+        "model": "Mass storage controller",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:04.6/0000:1f:00.0/0000:20:01.0",
+        "sysfs_bus_id": "0000:20:01.0",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 61,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 331350016,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 0,
+          "command": 1030,
+          "header_type": 0,
+          "secondary_bus": 0,
+          "irq": 61,
+          "prog_if": 1
+        },
+        "driver": "ahci",
+        "drivers": [
+          "ahci"
+        ],
+        "module_alias": "pci:v00008086d00002922sv00001AF4sd00001100bc01sc06i01"
+      },
+      {
+        "index": 55,
+        "attached_to": 41,
+        "bus_type": {
+          "name": "Virtio",
+          "value": 143
+        },
+        "slot": {
+          "bus": 0,
+          "number": 0
+        },
+        "base_class": {
+          "name": "Mass storage controller",
+          "value": 1
+        },
+        "sub_class": {
+          "name": "Storage controller",
+          "value": 128
+        },
+        "vendor": "Virtio",
+        "device": "Storage 0",
+        "model": "Virtio Storage 0",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:02.7/0000:10:00.0/virtio2",
+        "sysfs_bus_id": "virtio2",
+        "driver": "virtio_blk",
+        "drivers": [
+          "virtio_blk"
+        ],
+        "module_alias": "virtio:d00000002v00001AF4"
+      }
+    ],
+    "system": {},
+    "unknown": [
+      {
+        "index": 9,
+        "attached_to": 13,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 3,
+          "number": 0
+        },
+        "base_class": {
+          "name": "Network controller",
+          "value": 2
+        },
+        "sub_class": {
+          "name": "Ethernet controller",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6900
+        },
+        "sub_vendor": {
+          "value": 6900
+        },
+        "device": {
+          "value": 4161
+        },
+        "sub_device": {
+          "value": 4352
+        },
+        "revision": {
+          "value": 1
+        },
+        "model": "Ethernet controller",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.2/0000:03:00.0",
+        "sysfs_bus_id": "0000:03:00.0",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 15,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 272629760,
+            "range": 262144,
+            "enabled": false,
+            "access": "read_only",
+            "prefetch": "no"
+          },
+          {
+            "type": "mem",
+            "base": 272891904,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          },
+          {
+            "type": "mem",
+            "base": 549760008192,
+            "range": 16384,
+            "enabled": true,
+            "access": "read_only",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 0,
+          "command": 1030,
+          "header_type": 0,
+          "secondary_bus": 0,
+          "irq": 15,
+          "prog_if": 0
+        },
+        "driver": "virtio-pci",
+        "drivers": [
+          "virtio-pci"
+        ],
+        "module_alias": "pci:v00001AF4d00001041sv00001AF4sd00001100bc02sc00i00"
+      },
+      {
+        "index": 22,
+        "attached_to": 35,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 28,
+          "number": 0
+        },
+        "base_class": {
+          "name": "Communication controller",
+          "value": 7
+        },
+        "sub_class": {
+          "name": "Communication controller",
+          "value": 128
+        },
+        "vendor": {
+          "value": 6900
+        },
+        "sub_vendor": {
+          "value": 6900
+        },
+        "device": {
+          "value": 4163
+        },
+        "sub_device": {
+          "value": 4352
+        },
+        "revision": {
+          "value": 1
+        },
+        "model": "Communication controller",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:04.3/0000:1c:00.0",
+        "sysfs_bus_id": "0000:1c:00.0",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 42,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 325058560,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          },
+          {
+            "type": "mem",
+            "base": 549812436992,
+            "range": 16384,
+            "enabled": true,
+            "access": "read_only",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 0,
+          "command": 1030,
+          "header_type": 0,
+          "secondary_bus": 0,
+          "irq": 42,
+          "prog_if": 0
+        },
+        "driver": "virtio-pci",
+        "drivers": [
+          "virtio-pci"
+        ],
+        "module_alias": "pci:v00001AF4d00001043sv00001AF4sd00001100bc07sc80i00"
+      },
+      {
+        "index": 41,
+        "attached_to": 11,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 16,
+          "number": 0
+        },
+        "base_class": {
+          "name": "Mass storage controller",
+          "value": 1
+        },
+        "sub_class": {
+          "name": "SCSI storage controller",
+          "value": 0
+        },
+        "vendor": {
+          "value": 6900
+        },
+        "sub_vendor": {
+          "value": 6900
+        },
+        "device": {
+          "value": 4162
+        },
+        "sub_device": {
+          "value": 4352
+        },
+        "revision": {
+          "value": 1
+        },
+        "model": "SCSI storage controller",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:02.7/0000:10:00.0",
+        "sysfs_bus_id": "0000:10:00.0",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 24,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 299892736,
+            "range": 4096,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          },
+          {
+            "type": "mem",
+            "base": 549787271168,
+            "range": 16384,
+            "enabled": true,
+            "access": "read_only",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 0,
+          "command": 1030,
+          "header_type": 0,
+          "secondary_bus": 0,
+          "irq": 24,
+          "prog_if": 0
+        },
+        "driver": "virtio-pci",
+        "drivers": [
+          "virtio-pci"
+        ],
+        "module_alias": "pci:v00001AF4d00001042sv00001AF4sd00001100bc01sc00i00"
+      },
+      {
+        "index": 51,
+        "attached_to": 31,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 30,
+          "number": 0
+        },
+        "base_class": {
+          "name": "Unclassified device",
+          "value": 0
+        },
+        "sub_class": {
+          "value": 255
+        },
+        "vendor": {
+          "value": 6900
+        },
+        "sub_vendor": {
+          "value": 6900
+        },
+        "device": {
+          "value": 4165
+        },
+        "sub_device": {
+          "value": 4352
+        },
+        "revision": {
+          "value": 1
+        },
+        "model": "Unclassified device",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:04.5/0000:1e:00.0",
+        "sysfs_bus_id": "0000:1e:00.0",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 42,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 549816631296,
+            "range": 16384,
+            "enabled": true,
+            "access": "read_only",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 0,
+          "command": 6,
+          "header_type": 0,
+          "secondary_bus": 0,
+          "irq": 42,
+          "prog_if": 0
+        },
+        "driver": "virtio-pci",
+        "drivers": [
+          "virtio-pci"
+        ],
+        "module_alias": "pci:v00001AF4d00001045sv00001AF4sd00001100bc00scFFi00"
+      },
+      {
+        "index": 54,
+        "attached_to": 15,
+        "base_class": {
+          "name": "Unclassified device",
+          "value": 0
+        },
+        "sub_class": {
+          "name": "Unclassified device",
+          "value": 0
+        },
+        "vendor": "Virtio",
+        "device": "",
+        "model": "Virtio Unclassified device",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:04.4/0000:1d:00.0/virtio4",
+        "sysfs_bus_id": "virtio4",
+        "driver": "virtio_scsi",
+        "driver_module": "virtio_scsi",
+        "drivers": [
+          "virtio_scsi"
+        ],
+        "driver_modules": [
+          "virtio_scsi"
+        ],
+        "module_alias": "virtio:d00000008v00001AF4"
+      },
+      {
+        "index": 56,
+        "attached_to": 16,
+        "base_class": {
+          "name": "Unclassified device",
+          "value": 0
+        },
+        "sub_class": {
+          "name": "Unclassified device",
+          "value": 0
+        },
+        "vendor": "Virtio",
+        "device": "",
+        "model": "Virtio Unclassified device",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.1/0000:02:00.0/virtio0",
+        "sysfs_bus_id": "virtio0",
+        "driver": "virtio_gpu",
+        "driver_module": "virtio_gpu",
+        "drivers": [
+          "virtio_gpu"
+        ],
+        "driver_modules": [
+          "virtio_gpu"
+        ],
+        "module_alias": "virtio:d00000010v00001AF4"
+      },
+      {
+        "index": 57,
+        "attached_to": 51,
+        "base_class": {
+          "name": "Unclassified device",
+          "value": 0
+        },
+        "sub_class": {
+          "name": "Unclassified device",
+          "value": 0
+        },
+        "vendor": "Virtio",
+        "device": "",
+        "model": "Virtio Unclassified device",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:04.5/0000:1e:00.0/virtio5",
+        "sysfs_bus_id": "virtio5",
+        "driver": "virtio_balloon",
+        "drivers": [
+          "virtio_balloon"
+        ],
+        "module_alias": "virtio:d00000005v00001AF4"
+      },
+      {
+        "index": 58,
+        "attached_to": 22,
+        "base_class": {
+          "name": "Unclassified device",
+          "value": 0
+        },
+        "sub_class": {
+          "name": "Unclassified device",
+          "value": 0
+        },
+        "vendor": "Virtio",
+        "device": "",
+        "model": "Virtio Unclassified device",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:04.3/0000:1c:00.0/virtio3",
+        "sysfs_bus_id": "virtio3",
+        "driver": "virtio_console",
+        "drivers": [
+          "virtio_console"
+        ],
+        "module_alias": "virtio:d00000003v00001AF4"
+      }
+    ],
+    "usb_controller": [
+      {
+        "index": 23,
+        "attached_to": 18,
+        "bus_type": {
+          "name": "PCI",
+          "value": 4
+        },
+        "slot": {
+          "bus": 1,
+          "number": 0
+        },
+        "base_class": {
+          "name": "Serial bus controller",
+          "value": 12
+        },
+        "sub_class": {
+          "name": "USB Controller",
+          "value": 3
+        },
+        "pci_interface": {
+          "value": 48
+        },
+        "vendor": {
+          "value": 4147
+        },
+        "sub_vendor": {
+          "value": 6900
+        },
+        "device": {
+          "value": 404
+        },
+        "sub_device": {
+          "value": 4352
+        },
+        "revision": {
+          "value": 3
+        },
+        "model": "USB Controller",
+        "sysfs_id": "/devices/platform/4010000000.pcie/pci0000:00/0000:00:01.0/0000:01:00.0",
+        "sysfs_bus_id": "0000:01:00.0",
+        "resources": [
+          {
+            "type": "irq",
+            "base": 15,
+            "triggered": 0,
+            "enabled": true
+          },
+          {
+            "type": "mem",
+            "base": 268435456,
+            "range": 16384,
+            "enabled": true,
+            "access": "read_write",
+            "prefetch": "no"
+          }
+        ],
+        "detail": {
+          "function": 0,
+          "command": 1030,
+          "header_type": 0,
+          "secondary_bus": 0,
+          "irq": 15,
+          "prog_if": 48
+        },
+        "driver": "xhci_hcd",
+        "driver_module": "xhci_pci",
+        "drivers": [
+          "xhci_hcd"
+        ],
+        "driver_modules": [
+          "xhci_pci"
+        ],
+        "module_alias": "pci:v00001033d00000194sv00001AF4sd00001100bc0Csc03i30"
+      }
+    ]
+  },
+  "smbios": {}
+}
