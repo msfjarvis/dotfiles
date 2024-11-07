@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 
 # Source common functions
-# shellcheck source=common
+# shellcheck source=scripts/common
 source "${SCRIPT_DIR}/common"
 
 function adbp() {

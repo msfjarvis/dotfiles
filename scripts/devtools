@@ -3,10 +3,6 @@
 # Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
 # SPDX-License-Identifier: MIT
 
-# Source common functions
-# shellcheck source=common
-source "${SCRIPT_DIR}"/common
-
 function mkexecjar() {
   local JAR_FILE EXEC_FILE
   JAR_FILE="${1:?}"

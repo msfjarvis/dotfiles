@@ -55,6 +55,7 @@ function venv() {
     NEW_INSTALL=true
     python"${1:-3}" -m venv venv
   fi
+  # shellcheck disable=SC1091
   source venv/bin/activate
   if [ -f requirements.txt ] && [ -n "${NEW_INSTALL}" ]; then
     pip install -r requirements.txt

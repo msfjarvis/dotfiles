@@ -74,23 +74,23 @@ if [ -d "${HOME}/.spicetify" ]; then
   export PATH="${PATH}:${HOME}/.spicetify"
 fi
 
-# shellcheck source=bash_completions.bash
+# shellcheck source=scripts/bash_completions.bash
 source "${SCRIPT_DIR}"/bash_completions.bash
-# shellcheck source=aliases
+# shellcheck source=scripts/aliases
 source "${SCRIPT_DIR}"/aliases
-# shellcheck source=apps
+# shellcheck source=scripts/apps
 source "${SCRIPT_DIR}"/apps
-# shellcheck source=common
+# shellcheck source=scripts/common
 source "${SCRIPT_DIR}"/common
-# shellcheck source=devtools
+# shellcheck source=scripts/devtools
 source "${SCRIPT_DIR}"/devtools
-# shellcheck source=files
+# shellcheck source=scripts/files
 source "${SCRIPT_DIR}"/files
-# shellcheck source=gitshit
+# shellcheck source=scripts/gitshit
 source "${SCRIPT_DIR}"/gitshit
-# shellcheck source=nix
+# shellcheck source=scripts/nix
 source "${SCRIPT_DIR}"/nix
-# shellcheck source=system
+# shellcheck source=scripts/system
 source "${SCRIPT_DIR}"/system
-# shellcheck source=system_linux
+# shellcheck source=scripts/system_linux
 source "${SCRIPT_DIR}"/system_linux
