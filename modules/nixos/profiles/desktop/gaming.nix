@@ -134,7 +134,7 @@ in
       # Minecraft
       mcaselector
       (prismlauncher.override {
-        jdks = [ openjdk22 ];
+        jdks = [ openjdk23 ];
       })
       (pkgs.${namespace}.game-shortcuts.override {
         games = [
