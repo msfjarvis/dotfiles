@@ -12,7 +12,7 @@ let
   inherit ((import fenix { inherit pkgs; })) fromManifestFile;
   toolchain = (fromManifestFile rust-manifest).minimalToolchain;
 
-  version = "2.4.1";
+  version = "2.4.2";
 in
 (makeRustPlatform {
   cargo = toolchain;
@@ -26,7 +26,7 @@ in
       owner = "msfjarvis";
       repo = "linkleaner";
       rev = "v${version}";
-      hash = "sha256-yZb+9AHwWFBFaU0vRyxEA6Mpft9zLSO8hhgU0zqkzbo=";
+      hash = "sha256-w8BUUwV5IlgAgFHcjSjCbvtsY9opSqc5J1EgQ5UUHno=";
     };
 
     buildInputs = lib.optionals stdenv.hostPlatform.isDarwin [
