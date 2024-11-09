@@ -1,6 +1,8 @@
 {
+  darwin,
   fetchFromGitHub,
   rustPlatform,
+  stdenv,
   lib,
 }:
 let
@@ -20,6 +22,8 @@ rustPlatform.buildRustPackage {
   cargoHash = "sha256-Wbcw2eMD2OtL7qp8XL2Ri60yuyisiQRatY77egtEKlg=";
 
   doCheck = false;
+
+  buildInputs = lib.optionals stdenv.hostPlatform.isDarwin [ darwin.apple_sdk.frameworks.Security ];
 
   meta = with lib; {
     description = "A CLI for katbin";

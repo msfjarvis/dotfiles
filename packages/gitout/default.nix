@@ -6,6 +6,8 @@
   libgit2,
   openssl,
   zlib,
+  stdenv,
+  darwin,
   lib,
 }:
 let
@@ -32,11 +34,19 @@ rustPlatform.buildRustPackage {
     pkg-config
   ];
 
-  buildInputs = [
-    libgit2
-    openssl
-    zlib
-  ];
+  buildInputs =
+    [
+      libgit2
+      openssl
+      zlib
+    ]
+    ++ lib.optionals stdenv.hostPlatform.isDarwin (
+      with darwin.apple_sdk.frameworks;
+      [
+        Security
+        SystemConfiguration
+      ]
+    );
 
   meta = with lib; {
     description = "A command-line tool and Docker image to automatically backup Git repositories from GitHub or anywhere";

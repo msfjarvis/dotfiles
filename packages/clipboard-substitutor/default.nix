@@ -1,4 +1,5 @@
 {
+  darwin,
   fetchFromGitHub,
   rustPlatform,
   stdenv,
@@ -24,7 +25,9 @@ rustPlatform.buildRustPackage {
 
   useNextest = true;
 
-  buildInputs = lib.optionals stdenv.hostPlatform.isLinux [ xorg.libxcb ];
+  buildInputs =
+    lib.optionals stdenv.hostPlatform.isDarwin [ darwin.apple_sdk.frameworks.AppKit ]
+    ++ lib.optionals stdenv.hostPlatform.isLinux [ xorg.libxcb ];
 
   meta = with lib; {
     description = "CLI to listen to clipboard events and perform operations on the copied text";

@@ -1,6 +1,8 @@
 {
+  darwin,
   fetchFromGitHub,
   rustPlatform,
+  stdenv,
   lib,
 }:
 let
@@ -16,6 +18,8 @@ rustPlatform.buildRustPackage {
     rev = "hcctl-v${version}";
     hash = "sha256-oUbGeEKEUAKtgOqB+LL/LYNjjDi6VKsGtu0KwQQKXzo=";
   };
+
+  buildInputs = lib.optionals stdenv.hostPlatform.isDarwin [ darwin.apple_sdk.frameworks.Security ];
 
   buildAndTestSubdir = "hcctl";
 

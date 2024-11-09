@@ -32,15 +32,22 @@ in
           dvbinSupport = false;
           jackaudioSupport = false;
           javascriptSupport = false;
+          libpngSupport = false;
           openalSupport = false;
           pulseSupport = false;
           pipewireSupport = true;
           rubberbandSupport = false;
+          screenSaverSupport = false;
           sdl2Support = true;
           sixelSupport = false;
+          speexSupport = false;
+          swiftSupport = false;
+          theoraSupport = false;
           vaapiSupport = true;
           vapoursynthSupport = false;
           vdpauSupport = true;
+          xineramaSupport = false;
+          xvSupport = false;
           zimgSupport = false;
         };
         scripts = with pkgs.mpvScripts; [

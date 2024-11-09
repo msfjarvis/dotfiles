@@ -1,6 +1,8 @@
 {
+  darwin,
   fetchFromGitHub,
   rustPlatform,
+  stdenv,
   lib,
 }:
 let
@@ -21,6 +23,11 @@ rustPlatform.buildRustPackage {
 
   # Tests are annoying to make work with buildRustPackage
   doCheck = false;
+
+  buildInputs = lib.optionals stdenv.hostPlatform.isDarwin [
+    darwin.apple_sdk.frameworks.Security
+    darwin.apple_sdk.frameworks.SystemConfiguration
+  ];
 
   meta = with lib; {
     description = "Rust tooling to poll Google Maven repository for updates to AndroidX artifacts";

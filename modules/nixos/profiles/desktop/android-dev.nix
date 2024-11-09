@@ -7,7 +7,7 @@
 }:
 let
   cfg = config.profiles.${namespace}.desktop;
-  defaultJdk = pkgs.openjdk23;
+  defaultJdk = pkgs.openjdk22;
   toolchains = [
     pkgs.openjdk11
     pkgs.openjdk17

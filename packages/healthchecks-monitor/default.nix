@@ -2,6 +2,8 @@
   lib,
   rustPlatform,
   fetchFromGitHub,
+  stdenv,
+  darwin,
 }:
 let
   version = "3.0.7";
@@ -16,6 +18,8 @@ rustPlatform.buildRustPackage {
     rev = "healthchecks-monitor-v${version}";
     hash = "sha256-oUbGeEKEUAKtgOqB+LL/LYNjjDi6VKsGtu0KwQQKXzo=";
   };
+
+  buildInputs = lib.optionals stdenv.hostPlatform.isDarwin [ darwin.apple_sdk.frameworks.Security ];
 
   buildAndTestSubdir = "monitor";
 

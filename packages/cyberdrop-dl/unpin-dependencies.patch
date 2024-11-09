@@ -9,7 +9,7 @@ index 7b356a07cc7e..099c4581deed 100644
 -aiosqlite = "0.17.0"
 -aiofiles = "0.8.0"
 +aiosqlite = "^0.20.0"
-+aiofiles = "^24.0.0"
++aiofiles = "^23.2.1"
  asyncpraw = "^7.7.1"
  myjdapi = "^1.1.7"
  mediafire = "^0.6.1"

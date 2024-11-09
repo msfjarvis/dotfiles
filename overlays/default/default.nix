@@ -1,9 +1,9 @@
 _: _final: prev: {
   # Force the use of the JDK we're using everywhere else
-  jdk = prev.openjdk23;
-  jdk_headless = prev.openjdk23_headless;
-  jre = prev.openjdk23;
-  jre_headless = prev.openjdk23_headless;
+  jdk = prev.openjdk22;
+  jdk_headless = prev.openjdk22_headless;
+  jre = prev.openjdk22;
+  jre_headless = prev.openjdk22_headless;
   logseq = prev.logseq.overrideAttrs (old: {
     # Remove NIXOS_OZONE_WL compat which breaks the app entirely
     postFixup = ''
