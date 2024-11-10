@@ -10,7 +10,10 @@
   imports = [
     ./hardware-configuration.nix
     inputs.nixos-facter-modules.nixosModules.facter
-    { config.facter.reportPath = ./facter.json; }
+    {
+      facter.reportPath = ./facter.json;
+      facter.detected.graphics.enable = false;
+    }
   ];
 
   boot = {
