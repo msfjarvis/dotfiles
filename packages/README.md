@@ -6,6 +6,7 @@ NixOS packages for personal use.
 - [adbear] : CLI to automatically pair and join Android devices via ADB
 - [adbtuifm] : TUI based file manager for ADB
 - [adx] : Rust tool to poll Google Maven for AndroidX packages and their latest versions
+- [age-keygen-deterministic] : Simple Rust CLI tool to derive an age private key from passphrase
 - [boop-gtk] : A scriptable scratchpad for developers
 - [clipboard-substitutor] : Rust CLI to listen to clipboard events and perform operations on the copied text
 - [diffuse] : Java tool to diff between APKs, AARs and JARs
@@ -31,6 +32,7 @@ NixOS packages for personal use.
 [adbear]: https://github.com/msfjarvis/adbear
 [adbtuifm]: https://github.com/darkhz/adbtuifm
 [adx]: https://msfjarvis.dev/g/androidx-release-watcher
+[age-keygen-deterministic]: https://github.com/keisentraut/age-keygen-deterministic
 [boop-gtk]: https://msfjarvis.dev/g/boop-gtk
 [clipboard-substitutor]: https://msfjarvis.dev/g/clipboard-substitutor
 [diffuse]: https://github.com/JakeWharton/diffuse

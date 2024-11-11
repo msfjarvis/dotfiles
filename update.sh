@@ -7,6 +7,7 @@ declare -a ALL_PACKAGES=(
   adbear
   adbtuifm
   adx
+  age-keygen-deterministic
   boop-gtk
   caddy-tailscale
   clipboard-substitutor
