@@ -508,7 +508,7 @@
       },
       "original": {
         "owner": "msfjarvis",
-        "ref": "nixpkgs-unstable",
+        "ref": "stable-pin",
         "repo": "nixpkgs",
         "type": "github"
       }
