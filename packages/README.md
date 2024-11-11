@@ -8,8 +8,13 @@ NixOS packages for personal use.
 - [adx] : Rust tool to poll Google Maven for AndroidX packages and their latest versions
 - [age-keygen-deterministic] : Simple Rust CLI tool to derive an age private key from passphrase
 - [boop-gtk] : A scriptable scratchpad for developers
+- [caddy-tailscale] : Caddy plugin that enables serving sites directly into your Tailnet
 - [clipboard-substitutor] : Rust CLI to listen to clipboard events and perform operations on the copied text
-- [diffuse] : Java tool to diff between APKs, AARs and JARs
+- [cyberdrop-dl] : Downloader for CyberDrop and other archive sites
+- [diffuse-bin] : Java tool to diff between APKs, AARs and JARs
+- [ficsit-cli] : CLI-based mod manager for Satisfactory
+- [gallery-dl-unstable] : gallery-dl repackaging that follows the main branch
+- [game-shortcuts] : Metapackage to generate desktop entries for Steam games
 - [gdrive] : Golang CLI to interact with Google Drive
 - [gitice] : Simple Rust CLI that snapshots the state of Git repositories to allow re-cloning in a separate location
 - [gitout] : Command line tool to automatically backup Git repositories from GitHub or anywhere
@@ -22,10 +27,9 @@ NixOS packages for personal use.
 - [patreon-dl] : Download content from creators you're subscribed to on Patreon
 - [pidcat] : Fork of [JakeWharton's pidcat] with Python3 support and some other fixes
 - [piv-agent] : An SSH and GPG agent which you can use with your PIV hardware security device (e.g. a Yubikey).
+- [prometheus-qbittorrent-exporter] : Prometheus exporter for QBittorrent
 - [rucksack] : Simple CLI tool to watch directories and move their files to a single dumping ground
-- [tea] : Gitea CLI built from latest sources
 - [toml-cli] : Simple CLI for editing and querying TOML files
-- [twt] : Multipurpose tool to extract metadata from a user's tweets
 - [when] : A CLI tool to deal with timezones
 
 [adb-sync]: https://msfjarvis.dev/g/adb-sync
@@ -34,8 +38,13 @@ NixOS packages for personal use.
 [adx]: https://msfjarvis.dev/g/androidx-release-watcher
 [age-keygen-deterministic]: https://github.com/keisentraut/age-keygen-deterministic
 [boop-gtk]: https://msfjarvis.dev/g/boop-gtk
+[caddy-tailscale]: https://github.com/tailscale/caddy-tailscale
 [clipboard-substitutor]: https://msfjarvis.dev/g/clipboard-substitutor
-[diffuse]: https://github.com/JakeWharton/diffuse
+[cyberdrop-dl]: https://github.com/jbsparrow/cyberdropdownloader
+[diffuse-bin]: https://github.com/JakeWharton/diffuse
+[ficsit-cli]: https://github.com/satisfactorymodding/ficsit-cli
+[gallery-dl-unstable]: https://github.com/mikf/gallery-dl
+[game-shortcuts]: https://store.steampowered.com
 [gdrive]: https://msfjarvis.dev/g/gdrive
 [gitice]: https://msfjarvis.dev/g/gitice
 [gitout]: https://msfjarvis.dev/g/gitout
@@ -51,8 +60,7 @@ NixOS packages for personal use.
 [patreon-dl]: https://github.com/PrivateGER/patreon-dl
 [pidcat]: https://msfjarvis.dev/g/pidcat
 [piv-agent]: https://github.com/smlx/piv-agent
+[prometheus-qbittorrent-exporter]: https://github.com/esanchezm/prometheus-qbittorrent-exporter
 [rucksack]: https://msfjarvis.dev/g/rucksack
-[tea]: https://gitea.com/gitea/tea
 [toml-cli]: https://github.com/gnprice/toml-cli
-[twt]: https://msfjarvis.dev/g/twt
 [when]: https://github.com/mitsuhiko/when
