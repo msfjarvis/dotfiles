@@ -98,6 +98,15 @@
     enableReload = false; # I think caddy-tailscale breaks this
     package = pkgs.jarvis.caddy-tailscale;
     environmentFile = config.sops.secrets.services-tsauthkey-env.path;
+    logFormat = ''
+      output file /var/log/caddy/caddy_main.log {
+        roll_size 100MiB
+        roll_keep 5
+        roll_keep_for 100d
+      }
+      format json
+      level INFO
+    '';
     globalConfig = ''
       servers {
         metrics
