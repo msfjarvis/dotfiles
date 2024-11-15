@@ -47,6 +47,7 @@ declare -A VERSION_OVERRIDE=(
 PKG="${1-}"
 VERSION="${2-}"
 NO_BUILD="${NO_BUILD-}"
+CACHE_CMD="${CACHE_CMD-}"
 declare -a PACKAGES_TO_BUILD=()
 declare -a BASE_PARAMS=("--commit")
 if [ -z "${NO_BUILD}" ]; then
@@ -79,4 +80,7 @@ for PACKAGE in "${PACKAGES_TO_BUILD[@]}"; do
   fi
   PARAMS+=("${PACKAGE}")
   nix-update "${PARAMS[@]}"
+  if [ -n "${CACHE_CMD}" ]; then
+    ${CACHE_CMD} ./result
+  fi
 done
