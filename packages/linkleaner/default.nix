@@ -2,8 +2,6 @@
   pkgs,
   fetchFromGitHub,
   makeRustPlatform,
-  stdenv,
-  darwin,
   lib,
   inputs,
 }:
@@ -28,11 +26,6 @@ in
       rev = "v${version}";
       hash = "sha256-w8BUUwV5IlgAgFHcjSjCbvtsY9opSqc5J1EgQ5UUHno=";
     };
-
-    buildInputs = lib.optionals stdenv.hostPlatform.isDarwin [
-      darwin.apple_sdk.frameworks.Security
-      darwin.apple_sdk.frameworks.SystemConfiguration
-    ];
 
     cargoLock = {
       lockFile = ./Cargo.lock;

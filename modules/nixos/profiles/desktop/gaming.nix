@@ -69,10 +69,6 @@ in
           ];
       };
     };
-    programs.nix-ld = {
-      enable = true;
-      libraries = pkgs.steam-run.fhsenv.args.multiPkgs pkgs;
-    };
 
     snowfallorg.users.msfjarvis.home.config = {
       systemd.user.services.steam = {
@@ -134,7 +130,7 @@ in
       # Minecraft
       mcaselector
       (prismlauncher.override {
-        jdks = [ openjdk22 ];
+        jdks = [ openjdk23 ];
       })
       (pkgs.${namespace}.game-shortcuts.override {
         games = [
