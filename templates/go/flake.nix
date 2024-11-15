@@ -46,7 +46,7 @@
           packages = with pkgs; [
             git
             go-outline
-            go_1_21
+            go
             gopls
             gotools
           ];
