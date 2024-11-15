@@ -1,0 +1,55 @@
+name: 'Setup Attic cache'
+description: 'Set up Tailscale and Attic to enable automatic caching for Nix Store'
+inputs:
+  ts-oauth-client-id:
+    description: 'Your Tailscale OAuth Client ID.'
+    required: true
+  ts-oauth-secret:
+    description: 'Your Tailscale OAuth Client Secret.'
+    required: true
+  attic-cache:
+    description: 'Name of Attic cache'
+    required: true
+  attic-endpoint:
+    description: 'URL of the Attic server'
+    required: true
+  attic-public-key:
+    description: 'Public key for the Attic cache'
+    required: true
+  attic-token:
+    description: 'Auth token for Attic'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Install Nix
+      uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72 # v30
+    - name: Setup Tailscale
+      uses: tailscale/github-action@4e4c49acaa9818630ce0bd7a564372c17e33fb4d # v2
+      with:
+        oauth-client-id: ${{ inputs.ts-oauth-client-id }}
+        oauth-secret: ${{ inputs.ts-oauth-secret }}
+        tags: "tag:github-actions"
+    - name: Add nixpkgs-unstable channel
+      shell: bash
+      run: |
+        nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
+        nix-channel --update
+    - name: Set up Attic
+      shell: bash
+      run: |
+        mkdir -p ~/.config/nix
+        echo "machine $ENDPOINT" >> ~/.config/nix/netrc
+        echo "password $TOKEN" >> ~/.config/nix/netrc
+        echo "netrc-file = $HOME/.config/nix/netrc" >> ~/.config/nix/nix.conf
+        nix profile install \
+          --option extra-substituters "https://$ENDPOINT/$CACHE" \
+          --option extra-trusted-public-keys "$PUBLIC_KEY" \
+          "github:msfjarvis/nixpkgs?rev=bd239a078bec40943b6e71b3a51d0f1948872b64#attic-client"
+        attic login --set-default ci "https://$ENDPOINT" "$TOKEN"
+        attic use "$CACHE"
+      env:
+        CACHE: ${{ inputs.attic-cache }}
+        ENDPOINT: ${{ inputs.attic-endpoint }}
+        PUBLIC_KEY: ${{ inputs.attic-public-key }}
+        TOKEN: ${{ inputs.attic-token }}

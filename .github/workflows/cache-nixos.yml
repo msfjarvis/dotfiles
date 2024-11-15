@@ -19,42 +19,20 @@ jobs:
             public-key: "x86_64-linux:HLQszdZAPt0hy6dsMxsI7EDeghCzfSwB8VyBEnei/j0="
     runs-on: ${{ matrix.runner }}
     steps:
-      - name: Setup Tailscale
-        uses: tailscale/github-action@4e4c49acaa9818630ce0bd7a564372c17e33fb4d # v2
+      - name: Setup Nix and Attic
+        uses: msfjarvis/dotfiles/.github/reusable-workflows/setup-nix-cache@main
         with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: "tag:github-actions"
+          ts-oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          ts-oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          attic-cache: ${{ matrix.cache }}
+          attic-public-key: ${{ matrix.public-key }}
+          attic-endpoint: ${{ secrets.ATTIC_ENDPOINT }}
+          attic-token: ${{ secrets.ATTIC_TOKEN }}
       - name: Create disk space
         if: "${{ matrix.runner == 'ubuntu-latest' }}"
         uses: pexcn/maximize-disk-space@59cf0266acd2974782e225501a0807b7d9a4304a # v1.0.4
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      - name: Install Nix
-        uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72 # v30
-      - name: Add nixpkgs-unstable channel
-        shell: bash
-        run: |
-          nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
-          nix-channel --update
-      - name: Set up Attic
-        shell: bash
-        run: |
-          mkdir -p ~/.config/nix
-          echo "machine $ENDPOINT" >> ~/.config/nix/netrc
-          echo "password $TOKEN" >> ~/.config/nix/netrc
-          echo "netrc-file = $HOME/.config/nix/netrc" >> ~/.config/nix/nix.conf
-          nix profile install \
-            --option extra-substituters "https://$ENDPOINT/$CACHE" \
-            --option extra-trusted-public-keys "$PUBLIC_KEY" \
-            "github:msfjarvis/nixpkgs?rev=dcddeb9f100da0d198b2a459667f6e4a7824cbb4#attic-client"
-          attic login --set-default ci "https://$ENDPOINT" "$TOKEN"
-          attic use "$CACHE"
-        env:
-          CACHE: ${{ matrix.cache }}
-          ENDPOINT: ${{ secrets.ATTIC_ENDPOINT }}
-          PUBLIC_KEY: ${{ matrix.public-key }}
-          TOKEN: ${{ secrets.ATTIC_TOKEN }}
       - name: Build NixOS configuration
         shell: bash
         run: nix build .#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel
