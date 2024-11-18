@@ -101,12 +101,10 @@ in
       inherit fenix rust-manifest;
     };
   };
-  monocraft-nerdfonts = callPackage ./packages/monocraft-nerdfonts { };
   patreon-dl = callPackage ./packages/patreon-dl { };
   pidcat = callPackage ./packages/pidcat { };
   piv-agent = callPackage ./packages/piv-agent { };
   prometheus-qbittorrent-exporter = callPackage ./packages/prometheus-qbittorrent-exporter { };
-  rnnoise-plugin-slim = callPackage ./packages/rnnoise-plugin-slim { };
   rucksack = callPackage ./packages/rucksack { };
   toml-cli = callPackage ./packages/toml-cli { };
   when = callPackage ./packages/when { };
