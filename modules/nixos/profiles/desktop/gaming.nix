@@ -139,6 +139,10 @@ in
             id = 1145360;
           }
           {
+            name = "HoloCure";
+            id = 2420510;
+          }
+          {
             name = "Marvel Snap";
             id = 1997040;
           }
