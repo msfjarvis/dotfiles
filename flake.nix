@@ -87,6 +87,8 @@
 
     systems.url = "github:msfjarvis/flake-systems";
 
+    base16.url = "github:SenchoPens/base16.nix";
+
     catppuccin-vscode.url = "github:catppuccin/vscode";
     catppuccin-vscode.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -172,6 +174,7 @@
     stylix.inputs.flake-compat.follows = "flake-compat";
     stylix.inputs.home-manager.follows = "home-manager";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
+    stylix.inputs.base16.follows = "base16";
     stylix.inputs.flake-utils.follows = "flake-utils";
     stylix.inputs.systems.follows = "systems";
 
