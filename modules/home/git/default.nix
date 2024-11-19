@@ -51,7 +51,7 @@ in
       }
       // lib.attrsets.optionalAttrs (!isServer) {
         credential = {
-          credentialStore = "secretservice";
+          credentialStore = if (isWorkMachine) then "keychain" else "secretservice";
           helper = lib.getExe gcm;
           "https://git.msfjarvis.dev" = {
             provider = "generic";
