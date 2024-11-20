@@ -27,11 +27,8 @@ in
       hash = "sha256-w8BUUwV5IlgAgFHcjSjCbvtsY9opSqc5J1EgQ5UUHno=";
     };
 
-    cargoLock = {
-      lockFile = ./Cargo.lock;
-    };
-
-    cargoHash = "sha256-9oAC+B3uboNyIvk/C5WLlPZT/d4FgSKrGIMw40cbxEE=";
+    useFetchCargoVendor = true;
+    cargoHash = "sha256-4kgPBV1mQ1CZpd7an49mOO2rqhMroHSUNMkuMgfDcIc=";
 
     useNextest = true;
 
