@@ -40,13 +40,13 @@ jobs:
         if: "github.event.inputs.package != null || github.event.action == 'package-bump'"
         run: nix-shell -p nix-update git --run './update.sh ${{ github.event.inputs.package || github.event.client_payload.package_name }} ${{ github.event.inputs.version }}'
         env:
-          CACHE_CMD: "attic push ${{ matrix.cache }}"
+          CACHE_CMD: "attic push x86_64-linux"
       - name: Check for updates
         shell: bash
         if: "github.event.inputs.package == null"
         run: nix-shell -p nix-update git --run ./update.sh
         env:
-          CACHE_CMD: "attic push ${{ matrix.cache }}"
+          CACHE_CMD: "attic push x86_64-linux"
       - name: Check post-update Git ref
         shell: bash
         run: |
