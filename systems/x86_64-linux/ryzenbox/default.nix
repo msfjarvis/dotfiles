@@ -134,6 +134,7 @@ in
       ))
       scrcpy
       smile
+      pkgs.${namespace}.spot-unstable
       telegram-desktop
       thunderbird
       tuba
