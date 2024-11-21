@@ -28,6 +28,7 @@ declare -a ALL_PACKAGES=(
   piv-agent
   prometheus-qbittorrent-exporter
   rucksack
+  spot-unstable
   toml-cli
   when
 )
@@ -42,6 +43,7 @@ declare -A VERSION_OVERRIDE=(
   ["cyberdrop-dl"]=1
   ["gallery-dl-unstable"]=1
   ["glance"]="release/v0.7.0"
+  ["spot-unstable"]="development"
 )
 
 PKG="${1-}"
