@@ -15,6 +15,8 @@ jobs:
   check-nix-update:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - name: Setup Nix and Attic
         uses: msfjarvis/dotfiles/.github/reusable-workflows/setup-nix-cache@main
         with:
@@ -24,8 +26,6 @@ jobs:
           attic-public-key: "x86_64-linux:HLQszdZAPt0hy6dsMxsI7EDeghCzfSwB8VyBEnei/j0="
           attic-endpoint: ${{ secrets.ATTIC_ENDPOINT }}
           attic-token: ${{ secrets.ATTIC_TOKEN }}
-      - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - name: Set Git user and email
         shell: bash
         run: |
