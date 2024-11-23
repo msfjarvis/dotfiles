@@ -33,7 +33,7 @@ runs:
     - name: Add nixpkgs-unstable channel
       shell: bash
       run: |
-        nix-channel --add https://github.com/msfjarvis/nixpkgs/archive/nixpkgs-unstable.tar.gz nixpkgs
+        nix-channel --add https://github.com/msfjarvis/nixpkgs/archive/"$(jq -r .nodes.nixpkgs.locked.rev flake.lock)".tar.gz nixpkgs
         nix-channel --update
     - name: Set up Attic
       shell: bash
