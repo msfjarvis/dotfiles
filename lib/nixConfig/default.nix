@@ -4,9 +4,12 @@
       pkgs,
       lib,
       inputs,
+      namespace,
     }:
     {
-      package = inputs.lix.packages.${pkgs.system}.default;
+      package = inputs.lix.packages.${pkgs.system}.default.override {
+        curl = pkgs.${namespace}.curlFixup;
+      };
 
       generateNixPathFromInputs = true;
       generateRegistryFromInputs = true;

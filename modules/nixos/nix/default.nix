@@ -25,9 +25,18 @@
     flake = "/home/msfjarvis/git-repos/dotfiles";
   };
 
-  nix = lib.${namespace}.mkNixConfig { inherit lib pkgs inputs; } // {
-    optimise.automatic = true;
-  };
+  nix =
+    lib.${namespace}.mkNixConfig {
+      inherit
+        lib
+        pkgs
+        inputs
+        namespace
+        ;
+    }
+    // {
+      optimise.automatic = true;
+    };
 
   system.switch = {
     enable = false;
