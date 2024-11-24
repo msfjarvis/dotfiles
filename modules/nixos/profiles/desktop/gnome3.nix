@@ -153,6 +153,9 @@ in
         "org/gnome/desktop/notifications/application/org-gnome-console" = {
           enable = false;
         };
+        "org/gnome/desktop/wm/preferences" = {
+          num-workspaces = 6;
+        };
         "org/gnome/settings-daemon/plugins/power" = {
           power-button-action = "interactive";
           sleep-inactive-ac-type = "nothing";
