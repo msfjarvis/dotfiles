@@ -1,5 +1,7 @@
-_: {
+{ pkgs, ... }:
+{
   projectRootFile = "flake.nix";
+  package = pkgs.treefmt2;
 
   programs.actionlint = {
     enable = true;

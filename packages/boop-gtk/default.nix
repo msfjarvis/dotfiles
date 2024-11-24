@@ -8,7 +8,7 @@
   fetchFromGitHub,
   makeDesktopItem,
   pkg-config,
-  wrapGAppsHook,
+  wrapGAppsHook3,
   atk,
   cairo,
   gdk-pixbuf,
@@ -43,7 +43,7 @@ rustPlatform.buildRustPackage {
     copyDesktopItems
     glib
     pkg-config
-    wrapGAppsHook
+    wrapGAppsHook3
   ];
 
   buildInputs = [

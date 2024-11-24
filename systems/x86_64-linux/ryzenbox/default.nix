@@ -40,7 +40,7 @@ in
 
   # Only enable for first installation
   # boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_6_11;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_11;
 
   snowfallorg.users.msfjarvis.home.config = {
     stylix = {
@@ -102,7 +102,7 @@ in
       pkgs.${namespace}.cyberdrop-dl
       fclones
       ffmpeg_7-full
-      (inputs.firefox.packages.${pkgs.system}.firefox-nightly-bin.override {
+      (inputs.firefox.packages.${pkgs.stdenv.hostPlatform.system}.firefox-nightly-bin.override {
         cfg = {
           smartcardSupport = true;
           pipewireSupport = true;

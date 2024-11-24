@@ -7,7 +7,7 @@
       namespace,
     }:
     {
-      package = inputs.lix.packages.${pkgs.system}.default.override {
+      package = inputs.lix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
         curl = pkgs.${namespace}.curlFixup;
       };
 
