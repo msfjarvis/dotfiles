@@ -587,15 +587,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1732472895,
+        "lastModified": 1732544274,
         "narHash": "sha256-qvzLIxuqukl0nxpXHEh5+iw1BLeLxYOwRC0+7cFUbPo=",
-        "owner": "msfjarvis",
+        "owner": "snowfallorg",
         "repo": "lib",
-        "rev": "fe5c2acd4b7281864dc0dad98a8e4fd16a048025",
+        "rev": "cfeacd055545ab5de0ecfd41e09324dcd8fb2bbb",
         "type": "github"
       },
       "original": {
-        "owner": "msfjarvis",
+        "owner": "snowfallorg",
         "repo": "lib",
         "type": "github"
       }
