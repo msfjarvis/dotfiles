@@ -15,6 +15,10 @@
     gnome-terminal.enable = true;
     logseq.enable = true;
     mpv.enable = true;
+    spotify = {
+      enable = true;
+      spot = true;
+    };
     zed = {
       enable = true;
       extraPackages = with pkgs; [
