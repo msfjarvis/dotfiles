@@ -77,8 +77,12 @@ in
     services.xserver.displayManager.gdm.enable = true;
     services.xserver.desktopManager.gnome.enable = true;
     services.displayManager.defaultSession = "gnome";
-    programs.seahorse.enable = true;
     services.gnome.gnome-keyring.enable = true;
+    programs.seahorse.enable = true;
+    programs.nautilus-open-any-terminal = {
+      enable = true;
+      terminal = "gnome-terminal";
+    };
 
     # Enable Wayland compatibility workarounds within Nixpkgs
     environment.variables.ELECTRON_OZONE_PLATFORM_HINT = "x11";
