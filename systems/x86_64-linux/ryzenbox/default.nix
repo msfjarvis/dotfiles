@@ -90,6 +90,10 @@ in
   # Set your time zone.
   time.timeZone = "Asia/Kolkata";
 
+  services.flatpak = {
+    enable = true;
+  };
+
   services.libinput = {
     enable = true;
     mouse.accelProfile = "flat";
@@ -117,7 +121,6 @@ in
           pipewireSupport = true;
         };
       })
-      fluent-reader
       forge-sparks
       fzf
       pkgs.${namespace}.gdrive
