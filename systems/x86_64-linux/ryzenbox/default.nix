@@ -40,6 +40,15 @@ in
 
   # Only enable for first installation
   # boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot = {
+    memtest86.enable = true;
+    windows = {
+      "10" = {
+        efiDeviceHandle = "HD0b";
+        title = "Windows 10";
+      };
+    };
+  };
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_11;
 
   snowfallorg.users.msfjarvis.home.config = {
