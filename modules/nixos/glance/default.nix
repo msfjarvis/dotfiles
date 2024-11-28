@@ -199,7 +199,7 @@ in
             name = "glance.yaml";
             text = builtins.readFile settingsFile;
             checkPhase = optionalString cfg.checkConfig ''
-              ${lib.getExe cfg.package} -check-config -config ${settingsFile}
+              ${lib.getExe cfg.package} -config ${settingsFile} config:validate
             '';
           };
         in
