@@ -57,6 +57,12 @@ in
         other = {
           SHOW_FOOTER_POWERED_BY = false;
         };
+        indexer = {
+          REPO_INDEXER_ENABLED = true;
+          REPO_INDEXER_PATH = "ndexers/repos.bleve";
+          MAX_FILE_SIZE = 1048576;
+          REPO_INDEXER_EXCLUDE = "resources/bin/**";
+        };
         repository = {
           DISABLE_STARS = false;
         };
