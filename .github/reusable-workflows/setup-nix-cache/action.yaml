@@ -23,7 +23,10 @@ runs:
   using: "composite"
   steps:
     - name: Install Nix
-      uses: cachix/install-nix-action@08dcb3a5e62fa31e2da3d490afc4176ef55ecd72 # v30
+      shell: bash
+      run: |
+        export NIX_INSTALLER_EXTRA_CONF="trusted-users = $(whoami)"
+        curl --proto '=https' --tlsv1.2 -sSf -L https://install.lix.systems/lix | sh -s -- install --no-confirm
     - name: Setup Tailscale
       uses: tailscale/github-action@4e4c49acaa9818630ce0bd7a564372c17e33fb4d # v2
       with:
