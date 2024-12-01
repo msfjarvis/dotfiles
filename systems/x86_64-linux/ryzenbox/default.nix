@@ -126,7 +126,7 @@ in
       pkgs.${namespace}.gdrive
       git-crypt
       handbrake
-      nerdfonts
+      nerd-fonts.jetbrains-mono
       pkgs.${namespace}.katbin
       kondo
       maestro

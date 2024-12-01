@@ -73,7 +73,7 @@ in
         };
         monospace = {
           name = "JetBrainsMonoNL Nerd Font Mono Regular";
-          package = pkgs.nerdfonts;
+          package = pkgs.nerd-fonts.jetbrains-mono;
         };
         sansSerif = {
           name = "Roboto Regular";
