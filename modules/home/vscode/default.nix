@@ -69,7 +69,7 @@ in
         "editor.unicodeHighlight.invisibleCharacters" = false;
         "explorer.confirmDelete" = false;
         "explorer.confirmDragAndDrop" = false;
-        "editor.fontFamily" = "'JetBrainsMono Nerd Font'";
+        "editor.fontFamily" = "'IosevkaTerm Nerd Font Regular'";
         "editor.fontSize" = 15;
         "editor.fontWeight" = "500";
         "editor.renderWhitespace" = "all";

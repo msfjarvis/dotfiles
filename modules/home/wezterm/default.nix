@@ -28,9 +28,9 @@ in
         -- Explicitly enable Wayland support
         config.enable_wayland = true
 
-        -- Use JetBrains Mono with a smaller font size than default
-        config.font = wezterm.font 'JetBrains Mono Nerd Font Mono'
-        config.font_size = 10.0
+        -- Use Iosevka with a smaller font size than default
+        config.font = wezterm.font 'IosevkaTerm Nerd Font Regular'
+        config.font_size = 11.0
 
         -- Set initial size
         config.initial_cols = 169

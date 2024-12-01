@@ -72,8 +72,8 @@ in
           package = pkgs.noto-fonts-color-emoji;
         };
         monospace = {
-          name = "JetBrainsMonoNL Nerd Font Mono Regular";
-          package = pkgs.nerd-fonts.jetbrains-mono;
+          name = "IosevkaTerm Nerd Font Regular";
+          package = pkgs.nerd-fonts.iosevka-term;
         };
         sansSerif = {
           name = "Roboto Regular";
@@ -85,7 +85,7 @@ in
         };
         sizes = {
           applications = 12;
-          terminal = 10;
+          terminal = 12;
         };
       };
       opacity = {
