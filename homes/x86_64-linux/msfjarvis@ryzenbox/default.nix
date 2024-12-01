@@ -32,31 +32,42 @@
         "toml"
       ];
       userSettings = {
-        theme = "Catppuccin Mocha - No Italics";
-        ui_font_size = 16;
-        buffer_font_size = 16;
-        show_wrap_guides = true;
-        indent_guides.enabled = true;
-        toolbar = {
-          breadcrumbs = true;
-          quick_actions = true;
-          selections_menu = true;
+        autosave = {
+          after_delay.milliseconds = 1000;
         };
-        inlayHints = {
-          maxLength = null;
-          lifetimeElisionHints = {
-            useParameterNames = true;
-            enable = "skip_trivial";
-          };
-          closureReturnTypeHints = {
-            enable = true;
-          };
+        auto_update = false;
+        base_keymap = "JetBrains";
+        buffer_font_family = "IosevkaTerm Nerd Font";
+        buffer_font_size = 16;
+        load_direnv = "shell_hook";
+        indent_guides.enabled = true;
+        inline_completions.disabled_globs = [ "*.md" ];
+        inlay_hints = {
+          enabled = true;
+          show_type_hints = true;
+          show_parameter_hints = true;
+          show_other_hints = true;
+          show_background = true;
+          edit_debounce_ms = 700;
+          scroll_debounce_ms = 50;
         };
         lsp = {
           rust-analyzer = {
             binary.path = "${lib.getExe inputs.fenix.packages.${pkgs.stdenv.system}.rust-analyzer}";
           };
         };
+        show_wrap_guides = true;
+        telemetry = {
+          diagnostics = true;
+          metrics = true;
+        };
+        theme = "Catppuccin Mocha - No Italics";
+        toolbar = {
+          breadcrumbs = true;
+          quick_actions = true;
+          selections_menu = true;
+        };
+        ui_font_size = 16;
       };
     };
   };
