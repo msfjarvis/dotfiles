@@ -58,8 +58,8 @@
         };
         show_wrap_guides = true;
         telemetry = {
-          diagnostics = true;
-          metrics = true;
+          diagnostics = false;
+          metrics = false;
         };
         theme = "Catppuccin Mocha - No Italics";
         toolbar = {
