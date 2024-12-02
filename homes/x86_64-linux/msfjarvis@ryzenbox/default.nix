@@ -1,7 +1,5 @@
 {
   pkgs,
-  lib,
-  inputs,
   namespace,
   ...
 }:
@@ -50,11 +48,6 @@
           show_background = true;
           edit_debounce_ms = 700;
           scroll_debounce_ms = 50;
-        };
-        lsp = {
-          rust-analyzer = {
-            binary.path = "${lib.getExe inputs.fenix.packages.${pkgs.stdenv.system}.rust-analyzer}";
-          };
         };
         show_wrap_guides = true;
         telemetry = {
