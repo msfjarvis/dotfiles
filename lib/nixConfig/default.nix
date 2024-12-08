@@ -4,7 +4,6 @@
       pkgs,
       lib,
       inputs,
-      namespace,
     }:
     {
       package = inputs.lix.packages.${pkgs.stdenv.hostPlatform.system}.default;
