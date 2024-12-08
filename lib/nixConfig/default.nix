@@ -7,9 +7,7 @@
       namespace,
     }:
     {
-      package = inputs.lix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-        curl = pkgs.${namespace}.curlFixup;
-      };
+      package = inputs.lix.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
       generateNixPathFromInputs = true;
       generateRegistryFromInputs = true;
