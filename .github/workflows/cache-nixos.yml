@@ -1,7 +1,7 @@
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: '0 3 * * *'
+  schedule:
+    - cron: '0 3 * * *'
 name: Build and cache NixOS configuration
 jobs:
   build-and-cache:
