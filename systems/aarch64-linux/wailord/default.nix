@@ -284,6 +284,7 @@
                         title = "Grafana";
                         url = "https://grafana.tiger-shark.ts.net";
                         icon = "si:grafana";
+                        alt-status-codes = [ 401 ];
                       }
                       {
                         title = "Private file share";
