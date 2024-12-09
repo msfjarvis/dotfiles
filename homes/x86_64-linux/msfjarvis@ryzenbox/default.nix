@@ -15,7 +15,7 @@
     mpv.enable = true;
     spotify = {
       enable = true;
-      spot = false; # Audio playback has been pretty janky lately
+      spot = true;
     };
     zed = {
       enable = true;
