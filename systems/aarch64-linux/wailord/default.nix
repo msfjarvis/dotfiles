@@ -83,7 +83,7 @@
     enable = true;
     openRegistration = true;
     path = "";
-    host = "0.0.0.0";
+    host = "127.0.0.1";
     port = 8888;
     openFirewall = true;
     database.createLocally = true;
