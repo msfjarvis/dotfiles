@@ -33,6 +33,10 @@ jobs:
       - name: Create disk space
         if: "${{ matrix.runner == 'ubuntu-latest' }}"
         uses: pexcn/maximize-disk-space@59cf0266acd2974782e225501a0807b7d9a4304a # v1.0.4
+      - name: Update nixpkgs
+        if: "${{ github.event_name == 'schedule' }}"
+        shell: bash
+        run: nix flake update nixpkgs --commit-lock-file
       - name: Build NixOS configuration
         shell: bash
         run: nix build --max-jobs 1 --print-build-logs .#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel
