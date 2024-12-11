@@ -18,16 +18,17 @@ in
     # Enable Tailscale
     profiles.${namespace}.tailscale.enable = true;
 
-    # Open HTTP(S) ports
     networking = {
       networkmanager.enable = lib.mkDefault true;
       networkmanager.plugins = lib.mkForce [ ];
       nftables.enable = true;
       firewall = {
+        # Open HTTP(S) ports
         allowedTCPPorts = [
           80
           443
         ];
+        # Torrent clients
         allowedTCPPortRanges = [
           {
             from = 6881;
