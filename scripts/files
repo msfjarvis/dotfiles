@@ -182,14 +182,21 @@ function reencode_dir() {
     return 1
   fi
   while read -r f; do
+    local ext src dst codec
     ext="$(select_ext "${f}")"
-    encode "${f}.${ext}" "${f}_x265.mp4"
-    du -sh "${f}.${ext}" | tee -a ~/stats
-    du -sh "${f}_x265.mp4" | tee -a ~/stats
-    if [[ $(stat -c %s "${f}_x265.mp4") -ne 0 && $(stat -c %s "${f}_x265.mp4") -le $(stat -c %s "${f}.${ext}") ]]; then
-      touch -r "${f}.${ext}" "${f}_x265.mp4"
-      rm -v "${f}.${ext}"
-    else rm -v "${f}_x265.mp4"; fi
+    src="${f}.${ext}"
+    dst="${f}_x265.mp4"
+    codec="$(ffprobe -v quiet -print_format json -show_format -show_streams "${src}" | jq -r .streams[0].codec_name)"
+
+    if [[ ${codec} == "hevc" ]]; then continue; fi
+
+    encode "${src}" "${dst}"
+    du -sh "${src}" | tee -a ~/stats
+    du -sh "${dst}" | tee -a ~/stats
+    if [[ $(stat -c %s "${dst}") -ne 0 && $(stat -c %s "${dst}") -le $(stat -c %s "${src}") ]]; then
+      touch -r "${src}" "${dst}"
+      rm -v "${src}"
+    else rm -v "${dst}"; fi
     sleep 5
   done < <(cat "${INPUT_FILE}")
 }
