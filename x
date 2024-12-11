@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1091
 
-set -e
-set -u
-set -o pipefail
+set -euo pipefail
 
 function nom_build() {
   local FLAKE
@@ -20,12 +18,8 @@ function cleanup_generations() {
 ARG="${1:-nothing}"
 
 case "${ARG}" in
-matara-check)
-  nom_build matara
-  ;;
-matara-switch)
-  nh os switch .
-  cleanup_generations
+chart)
+  nom build .#topology.x86_64-linux.config.output
   ;;
 darwin-check)
   nom build .#darwinConfigurations.Harshs-MacBook-Pro.system
@@ -45,6 +39,13 @@ home-switch)
   ;;
 home-test)
   nh os test .
+  ;;
+matara-check)
+  nom_build matara
+  ;;
+matara-switch)
+  nh os switch .
+  cleanup_generations
   ;;
 server-boot)
   nh os boot .

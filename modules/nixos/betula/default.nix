@@ -73,7 +73,7 @@ in
       "https://${cfg.domain}" = {
         extraConfig = ''
           # Port hardcoded by betula
-          reverse_proxy :1738
+          reverse_proxy 127.0.0.1:1738
         '';
       };
     };

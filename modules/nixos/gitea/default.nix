@@ -26,7 +26,7 @@ in
       "https://${cfg.domain}" = {
         extraConfig = ''
           import blackholeCrawlers
-          reverse_proxy :${toString config.services.gitea.settings.server.HTTP_PORT}
+          reverse_proxy 127.0.0.1:${toString config.services.gitea.settings.server.HTTP_PORT}
           log {
             output file /var/log/caddy/caddy_${cfg.domain}.log {
               roll_size 100MiB

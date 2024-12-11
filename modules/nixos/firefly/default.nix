@@ -34,7 +34,7 @@ in
       "https://${cfg.hostName}-import.tiger-shark.ts.net" = {
         extraConfig = ''
           bind tailscale/${cfg.hostName}-import
-          reverse_proxy :9091 {
+          reverse_proxy 127.0.0.1:9091 {
             header_down X-Forwarded-Proto https
           }
         '';

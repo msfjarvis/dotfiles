@@ -53,13 +53,13 @@
     virtualHosts = {
       "https://matara.tiger-shark.ts.net" = {
         extraConfig = ''
-          reverse_proxy :${toString config.services.${namespace}.qbittorrent.port}
+          reverse_proxy 127.0.0.1:${toString config.services.${namespace}.qbittorrent.port}
         '';
       };
       "https://prom-matara.tiger-shark.ts.net" = {
         extraConfig = ''
           bind tailscale/prom-matara
-          reverse_proxy :${toString config.services.prometheus.port}
+          reverse_proxy 127.0.0.1:${toString config.services.prometheus.port}
         '';
       };
     };
