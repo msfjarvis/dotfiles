@@ -36,7 +36,7 @@ jobs:
       - name: Update nixpkgs
         if: "${{ github.event_name == 'schedule' }}"
         shell: bash
-        run: nix flake update nixpkgs --commit-lock-file
+        run: nix flake update nixpkgs
       - name: Build NixOS configuration
         shell: bash
         run: nix build --max-jobs 1 --print-build-logs .#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel
