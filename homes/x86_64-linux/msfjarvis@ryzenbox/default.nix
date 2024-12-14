@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   namespace,
   ...
@@ -48,6 +49,22 @@
           show_background = true;
           edit_debounce_ms = 700;
           scroll_debounce_ms = 50;
+        };
+        lsp = {
+          nil = {
+            binary.path = "${lib.getExe pkgs.nil}";
+            settings = {
+              formatting.command = [ "${lib.getExe pkgs.nixfmt-rfc-style}" ];
+              nix = {
+                flake = {
+                  autoArchive = true;
+                  autoEvalInputs = false;
+                  nixpkgsInputName = "nixpkgs";
+                };
+                maxMemoryMB = 8192;
+              };
+            };
+          };
         };
         show_wrap_guides = true;
         telemetry = {
