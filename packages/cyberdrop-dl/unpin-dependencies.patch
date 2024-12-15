@@ -1,45 +1,31 @@
-From 25a5a332ba3500d81a379f934698df05a934aaa8 Mon Sep 17 00:00:00 2001
-From: Harsh Shandilya <me@msfjarvis.dev>
-Date: Fri, 6 Dec 2024 01:17:05 +0530
-Subject: [PATCH] deps: align with Nixpkgs
-
----
- pyproject.toml | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
 diff --git a/pyproject.toml b/pyproject.toml
-index a0f099c81061..4197c0c7f2a2 100644
+index 7a310b22c1a8..a7814f60ef3e 100644
 --- a/pyproject.toml
 +++ b/pyproject.toml
-@@ -19,23 +19,23 @@ pyyaml = "^6.0.1"
- certifi = "^2024.2.2"
- beautifulsoup4 = "^4.12.2"
- filedate = "^3.0"
+@@ -12,9 +12,9 @@ include = ["CHANGELOG.md"]
+ [tool.poetry.dependencies]
+ python = ">=3.11,<3.13"
+ aiofiles = "^24.1.0"
+-aiohttp = "^3.11.10"
+-aiolimiter = "^1.2.0"
 -aiosqlite = "0.17.0"
--aiofiles = "0.8.0"
-+aiosqlite = "^0.20.0"
-+aiofiles = "^24.0.0"
- asyncpraw = "^7.7.1"
- myjdapi = "^1.1.7"
- mediafire = "^0.6.1"
- mutagen = "^1.47.0"
--pillow = "^10.2.0"
-+pillow = "11.0.0"
- get-video-properties = "^0.1.1"
- send2trash = "^1.8.3"
- arrow = "^1.3.0"
++aiohttp = "^3.10.10"
++aiolimiter = "^1.1.0"
++aiosqlite = "0.20.0"
  apprise = "^1.9.0"
- lz4 = "^4.3.3"
+ arrow = "^1.3.0"
+ asyncpraw = "^7.7.1"
+@@ -29,10 +29,10 @@ mediafire = "^0.6.1"
+ myjdapi = "^1.1.7"
+ pillow = "^11.0.0"
+ platformdirs = "^4.3.6"
 -pycryptodomex = "^3.21.0"
-+pycryptodomex = "^3.20.0"
- jeepney =   [{platform = "linux", version = "^0.8.0"},{platform = "bsd", version = "^0.8.0"}]
- xxhash = "^3.5.0"
- pyreadline3 = "^3.5.4"
 -pydantic = "^2.10.2"
++pycryptodomex = "^3.20.0"
 +pydantic = "^2.9.2"
- aenum = "^3.1.15"
- aiolimiter = "1.1.0"
+ pyyaml = "^6.0.2"
+-rich = "^13.9.4"
++rich = "^13.8.1"
+ send2trash = "^1.8.3"
+ xxhash = "^3.5.0"
  
--- 
-2.47.0
-

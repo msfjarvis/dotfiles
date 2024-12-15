@@ -6,23 +6,17 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
-  version = "5.7.2-unstable-2024-12-04";
+  version = "5.7.2-unstable-2024-12-15";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jbsparrow";
     repo = "CyberDropDownloader";
-    rev = "490631aacc0a6d98e0ef4f38d8b995f3173adf07";
-    hash = "sha256-O8lPRUeCqzvccKg9nipCYqOV23b1nPKE/CkoBYe0CjI=";
+    rev = "8aad094a2d32f31319c3a884c0d1095635823119";
+    hash = "sha256-UbK9OSkOFk4x9JDb5rXe9rheFYiNpR/1ql7kidODRKo=";
   };
 
   patches = [ ./unpin-dependencies.patch ];
-
-  postPatch = ''
-    # pyreadline3 is Windows-only
-    substituteInPlace pyproject.toml \
-      --replace-fail 'pyreadline3 = "^3.5.4"' ""
-  '';
 
   build-system = [
     python3.pkgs.poetry-core
