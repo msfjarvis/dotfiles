@@ -2,6 +2,8 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 3 * * *'
+permissions:
+  actions: write
 name: Build and cache NixOS configuration
 jobs:
   build-and-cache:
@@ -33,6 +35,16 @@ jobs:
       - name: Create disk space
         if: "${{ matrix.runner == 'ubuntu-latest' }}"
         uses: pexcn/maximize-disk-space@59cf0266acd2974782e225501a0807b7d9a4304a # v1.0.4
+      - name: Restore and cache Nix store
+        uses: nix-community/cache-nix-action@8351fb9f51c580c96c509987ebb99e38aed956ce # v5.2.1
+        with:
+          primary-key: nix-${{ runner.os }}-${{ hashFiles('flake.lock') }}
+          restore-prefixes-first-match: nix-${{ runner.os }}-
+          gc-max-store-size-linux: 1073741824
+          purge: true
+          purge-prefixes: nix-${{ runner.os }}-
+          purge-created: 0
+          purge-primary-key: never
       - name: Update nixpkgs
         if: "${{ github.event_name == 'schedule' }}"
         shell: bash
