@@ -30,6 +30,15 @@ in
       useRoutingFeatures = lib.mkDefault "client";
     };
 
+    services.prometheus.scrapeConfigs = [
+      {
+        job_name = "tailscaled_client_metrics";
+        static_configs = [
+          { targets = [ "100.100.100.100" ]; }
+        ];
+      }
+    ];
+
     users.users.msfjarvis.packages = with pkgs; [ tailscale ];
   };
 }
