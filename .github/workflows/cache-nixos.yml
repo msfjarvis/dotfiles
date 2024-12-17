@@ -34,7 +34,7 @@ jobs:
           attic-token: ${{ secrets.ATTIC_TOKEN }}
       - name: Create disk space
         if: "${{ matrix.runner == 'ubuntu-latest' }}"
-        uses: pexcn/maximize-disk-space@59cf0266acd2974782e225501a0807b7d9a4304a # v1.0.4
+        uses: jlumbroso/free-disk-space@main
       - name: Restore and cache Nix store
         uses: nix-community/cache-nix-action@8351fb9f51c580c96c509987ebb99e38aed956ce # v5.2.1
         with:
