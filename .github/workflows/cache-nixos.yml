@@ -58,3 +58,6 @@ jobs:
           attic push --jobs 1 --filter '^((steam|appimage)-(run|fhs)(-run)?|(nvidia|android-studio|firefox-nightly-bin).*)$' "${CACHE}" ./result
         env:
           CACHE: ${{ matrix.cache }}
+      - name: Cleanup intermediate store paths
+        shell: bash
+        run: nix store gc --debug
