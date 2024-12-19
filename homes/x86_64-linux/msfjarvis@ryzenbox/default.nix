@@ -10,6 +10,13 @@
     name = "msfjarvis";
   };
 
+  services.flatpak.update.auto.enable = true;
+  services.flatpak.uninstallUnmanaged = true;
+  services.flatpak.packages = [
+    "com.spotify.Client"
+    "io.gitlab.news_flash.NewsFlash"
+  ];
+
   profiles.${namespace} = {
     gnome-terminal.enable = true;
     logseq.enable = true;
