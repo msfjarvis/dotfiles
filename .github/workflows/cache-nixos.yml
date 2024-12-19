@@ -46,7 +46,7 @@ jobs:
           purge-created: 0
           purge-primary-key: never
       - name: Update nixpkgs
-        if: "${{ github.event_name == 'schedule' }}"
+        # if: "${{ github.event_name == 'schedule' }}"
         shell: bash
         run: nix flake update nixpkgs
       - name: Build NixOS configuration
