@@ -20,10 +20,6 @@
     };
     zed = {
       enable = true;
-      extraPackages = with pkgs; [
-        # Nix
-        nixd
-      ];
       extensions = [
         "catppuccin"
         "html"
