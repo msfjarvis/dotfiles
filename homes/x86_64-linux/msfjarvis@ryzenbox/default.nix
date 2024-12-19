@@ -15,8 +15,8 @@
     logseq.enable = true;
     mpv.enable = true;
     spotify = {
-      enable = true;
-      spot = true;
+      enable = false;
+      spot = false; # Audio quality is just so consistently ass cheeks
     };
     zed = {
       enable = true;
