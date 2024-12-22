@@ -224,9 +224,11 @@ in
       enable = true;
       sources = (forEach minecraftInstances (name: "${instancePath name}/screenshots")) ++ [
         "${homeDir}/Pictures/Screenshots"
+        # Helldivers 2
+        "${homeDir}/.local/share/Steam/userdata/896827038/760/remote/553850/screenshots"
       ];
       target = "/mediahell/screenshots/";
-      file_filter = "*.png";
+      file_filter = "*.{png,jpg}";
       user = "msfjarvis";
       group = "users";
     };
