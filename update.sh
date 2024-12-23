@@ -24,6 +24,7 @@ declare -a ALL_PACKAGES=(
   katbin
   linkleaner
   patreon-dl
+  phanpy
   pidcat
   piv-agent
   prometheus-qbittorrent-exporter
@@ -33,17 +34,15 @@ declare -a ALL_PACKAGES=(
   when
 )
 
-declare -A VERSION_REGEX=(
-  ["hcctl"]="hcctl-v(.*)"
-  ["healthchecks-monitor"]="healthchecks-monitor-v(.*)"
-)
-
-declare -A VERSION_OVERRIDE=(
-  ["caddy-tailscale"]=1
-  ["cyberdrop-dl"]=1
-  ["gallery-dl-unstable"]=1
-  ["glance"]="release/v0.7.0"
-  ["spot-unstable"]="development"
+declare -r -A EXTRA_PARAMS=(
+  ["caddy-tailscale"]="--version=branch"
+  ["cyberdrop-dl"]="--version=branch"
+  ["gallery-dl-unstable"]="--version=branch"
+  ["glance"]="--version=branch=release/v0.7.0"
+  ["hcctl"]="--version-regex=hcctl-v(.*)"
+  ["healthchecks-monitor"]="--version-regex=healthchecks-monitor-v(.*)"
+  ["phanpy"]="--url=https://github.com/cheeaun/phanpy"
+  ["spot-unstable"]="--version=branch=development"
 )
 
 PKG="${1-}"
@@ -64,17 +63,9 @@ fi
 
 for PACKAGE in "${PACKAGES_TO_BUILD[@]}"; do
   declare -a PARAMS=("${BASE_PARAMS[@]}")
-  if [[ -v VERSION_REGEX["${PACKAGE}"] ]]; then
-    PARAMS+=("--version-regex")
-    PARAMS+=("${VERSION_REGEX["${PACKAGE}"]}")
-  fi
-  if [[ -v VERSION_OVERRIDE["${PACKAGE}"] ]]; then
-    OVERRIDE="${VERSION_OVERRIDE["${PACKAGE}"]}"
-    if [[ ${OVERRIDE} == "1" ]]; then
-      PARAMS+=("--version=branch")
-    else
-      PARAMS+=("--version=branch=${OVERRIDE}")
-    fi
+  PPARAMS="${EXTRA_PARAMS["${PACKAGE}"]:-}"
+  if [[ -n ${PPARAMS} ]]; then
+    PARAMS+=("${PPARAMS}")
   fi
   if [ -n "${VERSION}" ]; then
     PARAMS+=("--version")
