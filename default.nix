@@ -102,6 +102,7 @@ in
     };
   };
   patreon-dl = callPackage ./packages/patreon-dl { };
+  phanpy = callPackage ./packages/phanpy { };
   pidcat = callPackage ./packages/pidcat { };
   piv-agent = callPackage ./packages/piv-agent { };
   prometheus-qbittorrent-exporter = callPackage ./packages/prometheus-qbittorrent-exporter { };

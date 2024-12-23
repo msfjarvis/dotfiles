@@ -25,6 +25,7 @@ NixOS packages for personal use.
 - [katbin] : A CLI for [katb.in]
 - [linkleaner] : Telegram bot to fix social media link previews
 - [patreon-dl] : Download content from creators you're subscribed to on Patreon
+- [phanpy] : Alternate Mastodon client
 - [pidcat] : Fork of [JakeWharton's pidcat] with Python3 support and some other fixes
 - [piv-agent] : An SSH and GPG agent which you can use with your PIV hardware security device (e.g. a Yubikey).
 - [prometheus-qbittorrent-exporter] : Prometheus exporter for QBittorrent
@@ -59,6 +60,7 @@ NixOS packages for personal use.
 [katbin]: https://github.com/SphericalKat/katbin-cli
 [linkleaner]: https://msfjarvis.dev/g/linkleaner
 [patreon-dl]: https://github.com/PrivateGER/patreon-dl
+[phanpy]: https://github.com/cheeaun/phanpy
 [pidcat]: https://msfjarvis.dev/g/pidcat
 [piv-agent]: https://github.com/smlx/piv-agent
 [prometheus-qbittorrent-exporter]: https://github.com/esanchezm/prometheus-qbittorrent-exporter
