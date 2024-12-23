@@ -24,7 +24,8 @@ in
     enable = mkEnableOption { description = "Whether to enable the rucksack daemon."; };
 
     sources = mkOption {
-      type = types.listOf types.str;
+      # This can either be plain paths or struct types with modifiers
+      type = types.listOf (types.either types.str types.attrs);
       default = [ ];
       description = "Directories to watch and pull files from";
     };

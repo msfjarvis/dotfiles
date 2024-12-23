@@ -16,6 +16,10 @@ let
     "Fabulously.Optimized.1.21.3"
   ];
   instancePath = name: "${homeDir}/Games/PrismLauncher/instances/${name}/.minecraft";
+  mkSteamPath = gameId: {
+    path = "${homeDir}/.local/share/Steam/userdata/896827038/760/remote/${gameId}/screenshots";
+    recursive = false;
+  };
 in
 {
   imports = [
@@ -225,7 +229,9 @@ in
       sources = (forEach minecraftInstances (name: "${instancePath name}/screenshots")) ++ [
         "${homeDir}/Pictures/Screenshots"
         # Helldivers 2
-        "${homeDir}/.local/share/Steam/userdata/896827038/760/remote/553850/screenshots"
+        (mkSteamPath "553850")
+        # Tiny Glade
+        (mkSteamPath "2198150")
       ];
       target = "/mediahell/screenshots/";
       file_filter = "*.{png,jpg}";
