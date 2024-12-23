@@ -124,6 +124,13 @@
       }
     '';
     virtualHosts = {
+      "https://fedi.msfjarvis.dev" = {
+        extraConfig = ''
+          import blackholeCrawlers
+          root * ${pkgs.${namespace}.phanpy}
+          file_server
+        '';
+      };
       "https://glance.tiger-shark.ts.net" = {
         extraConfig = ''
           bind tailscale/glance
