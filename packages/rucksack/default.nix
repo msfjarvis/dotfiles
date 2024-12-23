@@ -5,7 +5,7 @@
   lib,
 }:
 let
-  version = "1.2.0";
+  version = "1.2.1";
 in
 rustPlatform.buildRustPackage {
   pname = "rucksack";
@@ -15,11 +15,11 @@ rustPlatform.buildRustPackage {
     owner = "msfjarvis";
     repo = "rucksack";
     rev = "v${version}";
-    hash = "sha256-UhKRqjybeMOpy7oxsTsEAejwPTP32aBBNr/2AsgMWaY=";
+    hash = "sha256-MdIGtHw4xrvVYUUcC3hjNz+eVYA2F1UBZ7pIWYcY38s=";
   };
 
   buildFeatures = lib.optionals stdenv.hostPlatform.isLinux [ "journald" ];
-  cargoHash = "sha256-moYh0zvLy3rL0YZEB7p60Q05zbnm/ML4u1SPg/DLzck=";
+  cargoHash = "sha256-B0nokvnz3ypWW3P6b7MHhI7dEx9xTJmnzhyn83JBOHA=";
 
   useNextest = true;
 
