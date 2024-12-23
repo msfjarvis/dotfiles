@@ -16,6 +16,12 @@ _: _final: prev: {
   megatools = prev.megatools.overrideAttrs (_: {
     patches = [ ./megatools.patch ];
   });
-  cudaPackages = prev.cudaPackages_12_3;
   qbittorrent = prev.qbittorrent.override { guiSupport = false; };
+  vesktop = prev.vesktop.overrideAttrs (_old: {
+    # Remove NIXOS_OZONE_WL compat which breaks the app entirely
+    postFixup = ''
+      makeWrapper ${prev.electron}/bin/electron $out/bin/vesktop \
+        --add-flags $out/opt/Vesktop/resources/app.asar
+    '';
+  });
 }
