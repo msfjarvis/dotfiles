@@ -31,6 +31,7 @@ in
       "vm.max_map_count" = 2147483642;
     };
     environment.systemPackages = with pkgs; [
+      cartridges
       mangohud
     ];
     programs.steam = {
