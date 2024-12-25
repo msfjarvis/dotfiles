@@ -32,25 +32,7 @@ in
     };
     environment.systemPackages = with pkgs; [
       mangohud
-      gpu-screen-recorder-gtk
     ];
-    programs.gamescope = {
-      enable = true;
-      capSysNice = true;
-      args = [
-        "--steam"
-        "--expose-wayland"
-        "--rt"
-        "-W 2560"
-        "-H 1440"
-        "--force-grab-cursor"
-        "--grab"
-        "--fullscreen"
-      ];
-    };
-    programs.gpu-screen-recorder = {
-      enable = true;
-    };
     programs.steam = {
       enable = true;
       remotePlay.openFirewall = true;
