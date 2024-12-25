@@ -66,26 +66,6 @@
         "type": "github"
       }
     },
-    "catppuccin-vscode": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1733066065,
-        "narHash": "sha256-H4BKe79KqrbaegHR4YIjIAsY4AXzVH+MpFxJdHRzllE=",
-        "owner": "catppuccin",
-        "repo": "vscode",
-        "rev": "7b0ff73aa9e9718cbe418a3f90f771aa14a655b8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "catppuccin",
-        "repo": "vscode",
-        "type": "github"
-      }
-    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -455,32 +435,6 @@
         "type": "github"
       }
     },
-    "nix-vscode-extensions": {
-      "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1734745696,
-        "narHash": "sha256-rTGDkcbzfcTL7jE4TtxhNQtDssD1QY8yLo8ApAv3XRs=",
-        "owner": "nix-community",
-        "repo": "nix-vscode-extensions",
-        "rev": "113779a6601d5b5c8ef7c5b5c4ab3f377fd3e2c3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nix-vscode-extensions",
-        "type": "github"
-      }
-    },
     "nixos-facter-modules": {
       "locked": {
         "lastModified": 1734596637,
@@ -530,7 +484,6 @@
     },
     "root": {
       "inputs": {
-        "catppuccin-vscode": "catppuccin-vscode",
         "darwin": "darwin",
         "devshell": "devshell",
         "disko": "disko",
@@ -546,7 +499,6 @@
         "nix-flatpak": "nix-flatpak",
         "nix-index-database": "nix-index-database",
         "nix-topology": "nix-topology",
-        "nix-vscode-extensions": "nix-vscode-extensions",
         "nixos-facter-modules": "nixos-facter-modules",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",

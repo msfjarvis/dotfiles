@@ -55,10 +55,8 @@
       ];
 
       overlays = with inputs; [
-        catppuccin-vscode.overlays.default
         fenix.overlays.default
         nix-topology.overlays.default
-        nix-vscode-extensions.overlays.default
       ];
       outputs-builder = channels: {
         topology = import inputs.nix-topology {
@@ -89,9 +87,6 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     systems.url = "github:msfjarvis/flake-systems";
-
-    catppuccin-vscode.url = "github:catppuccin/vscode";
-    catppuccin-vscode.inputs.nixpkgs.follows = "nixpkgs";
 
     darwin.url = "github:LnL7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -147,11 +142,6 @@
     nix-topology.inputs.devshell.follows = "devshell";
     nix-topology.inputs.flake-utils.follows = "flake-utils";
     nix-topology.inputs.pre-commit-hooks.follows = "";
-
-    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
-    nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
-    nix-vscode-extensions.inputs.flake-utils.follows = "flake-utils";
-    nix-vscode-extensions.inputs.flake-compat.follows = "flake-compat";
 
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
 
