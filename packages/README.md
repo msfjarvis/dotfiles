@@ -33,6 +33,7 @@ NixOS packages for personal use.
 - [spot-unstable]: Spotify player for GNOME tracking the main branch
 - [toml-cli] : Simple CLI for editing and querying TOML files
 - [when] : A CLI tool to deal with timezones
+- [zizmor] : zizmor is a static analysis tool for GitHub Actions.
 
 [adb-sync]: https://msfjarvis.dev/g/adb-sync
 [adbear]: https://github.com/msfjarvis/adbear
@@ -68,3 +69,4 @@ NixOS packages for personal use.
 [spot-unstable]: https://github.com/xou816/spot
 [toml-cli]: https://github.com/gnprice/toml-cli
 [when]: https://github.com/mitsuhiko/when
+[zizmor]: https://github.com/woodruffw/zizmor
