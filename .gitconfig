@@ -107,20 +107,6 @@
 	diffFilter = delta --color-only
 [log]
 	follow = true
-[maintenance]
-	repo = /home/msfjarvis/git-repos/nixpkgs/src
-[maintenance "commit-graph"]
-	enable = true
-[maintenance "gc"]
-	enable = true
-[maintenance "incremental-repack"]
-	enable = true
-[maintenance "loose-objects"]
-	enable = true
-[maintenance "pack-refs"]
-	enable = true
-[maintenance "prefetch"]
-	enable = true
 [merge]
 	conflictstyle = diff3
 	log = true
