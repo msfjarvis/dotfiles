@@ -139,3 +139,9 @@ function refresh_cachix_tokens() {
     fi
   done
 }
+
+function unr() {
+  local LAST_TAG
+  LAST_TAG="$(git tag --list --sort=-taggerdate | head -n1)"
+  git diff "${LAST_TAG}"
+}
