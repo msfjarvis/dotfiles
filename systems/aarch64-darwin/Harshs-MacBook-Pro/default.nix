@@ -37,15 +37,6 @@
     "/share"
   ];
 
-  nix.linux-builder = {
-    enable = true;
-    maxJobs = 4;
-    systems = [
-      "x86_64-linux"
-      "aarch64-linux"
-    ];
-  };
-
   programs.gnupg.agent.enable = true;
   programs.man.enable = true;
 
