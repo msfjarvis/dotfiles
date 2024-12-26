@@ -40,20 +40,6 @@
 	su = submodule update --init --recursive
 	sw = "!git switch $(git branch | fzf | tr -d '*[:space:]')"
 
-[color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
-
-[color "diff"]
-	meta = yellow
-	frag = magenta bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
-
 [color]
 	ui = true
 
@@ -93,7 +79,7 @@
 		bold cyan => syntax "#384d5d", \
 		bold yellow => syntax "#544f4e"
 	# Should match the name of the bat theme
-	syntax-theme = Catppuccin Mocha
+	syntax-theme = base16-stylix
 
 [delta]
 	navigate = true
