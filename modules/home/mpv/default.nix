@@ -14,6 +14,7 @@ in
     enable = mkEnableOption "Enable MPV player";
   };
   config = mkIf cfg.enable {
+    catppuccin.mpv.enable = true;
     programs.mpv = {
       enable = true;
       package = pkgs.mpv-unwrapped.wrapper {
