@@ -27,6 +27,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          # We run Git commands at the end
+          persist-credentials: true
       - name: Setup Nix and Attic
         uses: msfjarvis/dotfiles/.github/reusable-workflows/setup-nix-cache@main
         with:
@@ -48,9 +51,11 @@ jobs:
       - name: Check for updates of given package
         shell: bash
         if: "github.event.inputs.package != null || github.event.action == 'package-bump'"
-        run: nix-shell -p nix-update git --run './update.sh ${{ github.event.inputs.package || github.event.client_payload.package_name }} ${{ github.event.inputs.version }}'
+        run: nix-shell -p nix-update git --run "./update.sh ${PACKAGE} ${VERSION}"
         env:
           CACHE_CMD: "attic push ${{ matrix.cache }}"
+          PACKAGE_NAME: ${{ github.event.inputs.package || github.event.client_payload.package_name }}
+          VERSION: ${{ github.event.inputs.version }}
       - name: Check for updates
         shell: bash
         if: "github.event.inputs.package == null"
