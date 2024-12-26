@@ -21,7 +21,7 @@
 
   programs.nh = {
     enable = true;
-    clean.enable = true;
+    clean.enable = false;
     flake = "/home/msfjarvis/git-repos/dotfiles";
   };
 
@@ -30,7 +30,7 @@
       inherit lib pkgs inputs;
     }
     // {
-      optimise.automatic = true;
+      optimise.automatic = false;
     };
 
   system.switch = {
