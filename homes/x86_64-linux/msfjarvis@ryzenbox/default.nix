@@ -20,11 +20,11 @@
         "bold-is-bright" = true;
         "window-width" = 244;
         "window-height" = 58;
+        keybind = [
+          "ctrl+shift+right=unbind"
+          "ctrl+shift+left=unbind"
+        ];
       };
-      keybinds = [
-        "ctrl+shift+right=unbind"
-        "ctrl+shift+left=unbind"
-      ];
     };
     gnome-terminal.enable = false;
     logseq.enable = true;
