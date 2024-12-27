@@ -3,10 +3,9 @@
     {
       pkgs,
       lib,
-      inputs,
     }:
     {
-      package = inputs.lix.packages.${pkgs.stdenv.hostPlatform.system}.default;
+      package = pkgs.lix;
 
       generateNixPathFromInputs = true;
       generateRegistryFromInputs = true;

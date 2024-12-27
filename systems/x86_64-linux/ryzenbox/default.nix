@@ -126,7 +126,7 @@ in
       pkgs.${namespace}.cyberdrop-dl
       fclones
       ffmpeg_7-full
-      (inputs.firefox.packages.${pkgs.stdenv.hostPlatform.system}.firefox-nightly-bin.override {
+      (firefox-nightly-bin.override {
         cfg = {
           smartcardSupport = true;
           pipewireSupport = true;

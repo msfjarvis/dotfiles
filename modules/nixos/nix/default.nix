@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  inputs,
   namespace,
   ...
 }:
@@ -27,7 +26,7 @@
 
   nix =
     lib.${namespace}.mkNixConfig {
-      inherit lib pkgs inputs;
+      inherit lib pkgs;
     }
     // {
       optimise.automatic = false;
