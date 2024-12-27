@@ -1,4 +1,6 @@
-_: _final: prev: {
+{ inputs, ... }:
+_final: prev: {
+  ghostty = inputs.ghostty.packages.${prev.stdenv.hostPlatform.system}.ghostty-releasefast;
   # Force the use of the JDK we're using everywhere else
   jdk = prev.openjdk23;
   jdk_headless = prev.openjdk23_headless;

@@ -115,6 +115,12 @@
     firefox.inputs.flake-compat.follows = "flake-compat";
     firefox.inputs.lib-aggregate.follows = "lib-aggregate";
 
+    ghostty.url = "github:ghostty-org/ghostty";
+    ghostty.inputs.nixpkgs-stable.follows = "nixpkgs";
+    ghostty.inputs.nixpkgs-unstable.follows = "nixpkgs";
+    ghostty.inputs.flake-compat.follows = "flake-compat";
+    ghostty.inputs.zig.follows = "zig";
+
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -175,5 +181,10 @@
 
     wallpaper.url = "https://til.msfjarvis.dev/soft-rose.jpg";
     wallpaper.flake = false;
+
+    zig.url = "github:mitchellh/zig-overlay";
+    zig.inputs.nixpkgs.follows = "nixpkgs";
+    zig.inputs.flake-compat.follows = "flake-compat";
+    zig.inputs.flake-utils.follows = "flake-utils";
   };
 }
