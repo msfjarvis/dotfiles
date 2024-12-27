@@ -81,7 +81,7 @@ in
     programs.seahorse.enable = true;
     programs.nautilus-open-any-terminal = {
       enable = true;
-      terminal = "gnome-terminal";
+      terminal = "ghostty";
     };
 
     # Enable Wayland compatibility workarounds within Nixpkgs
