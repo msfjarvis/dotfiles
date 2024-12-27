@@ -11,7 +11,8 @@
   };
 
   profiles.${namespace} = {
-    gnome-terminal.enable = true;
+    ghostty.enable = true;
+    gnome-terminal.enable = false;
     logseq.enable = true;
     mpv.enable = true;
     spotify = {
