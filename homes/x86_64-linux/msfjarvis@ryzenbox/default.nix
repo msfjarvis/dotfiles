@@ -11,7 +11,21 @@
   };
 
   profiles.${namespace} = {
-    ghostty.enable = true;
+    ghostty = {
+      enable = true;
+      settings = {
+        "shell-integration" = "bash";
+        "theme" = "catppuccin-mocha";
+        "font-family" = "IosevkaTerm NFM";
+        "bold-is-bright" = true;
+        "window-width" = 244;
+        "window-height" = 58;
+      };
+      keybinds = [
+        "ctrl+shift+right=unbind"
+        "ctrl+shift+left=unbind"
+      ];
+    };
     gnome-terminal.enable = false;
     logseq.enable = true;
     mpv.enable = true;
