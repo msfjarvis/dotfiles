@@ -43,6 +43,7 @@ in
         daml.disabled = true;
         dart.disabled = true;
         deno.disabled = true;
+        direnv.disabled = true;
         docker_context.disabled = true;
         dotnet.disabled = true;
         elixir.disabled = true;
@@ -68,6 +69,7 @@ in
           diverged = "";
           typechanged = "[⇢\($count\)](bold green)";
         };
+        gleam.disabled = true;
         golang.disabled = true;
         guix_shell.disabled = true;
         gradle = {
@@ -89,10 +91,13 @@ in
         lua.disabled = true;
         memory_usage.disabled = true;
         meson.disabled = true;
+        mojo.disabled = true;
+        nats.disabled = true;
         nim.disabled = true;
         nix_shell.disabled = true;
         nodejs.disabled = true;
         ocaml.disabled = true;
+        odin.disabled = true;
         opa.disabled = true;
         openstack.disabled = true;
         os.disabled = true;
@@ -103,6 +108,7 @@ in
         pulumi.disabled = true;
         purescript.disabled = true;
         python.disabled = false;
+        quarto.disabled = true;
         rlang.disabled = true;
         raku.disabled = true;
         red.disabled = true;
