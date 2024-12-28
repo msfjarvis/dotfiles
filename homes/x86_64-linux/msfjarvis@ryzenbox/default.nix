@@ -14,16 +14,18 @@
     ghostty = {
       enable = true;
       settings = {
-        "shell-integration" = "bash";
-        "theme" = "catppuccin-mocha";
-        "font-family" = "IosevkaTerm NFM";
-        "bold-is-bright" = true;
-        "window-width" = 244;
-        "window-height" = 58;
+        bold-is-bright = true;
+        font-family = "IosevkaTerm NFM";
         keybind = [
           "ctrl+shift+right=unbind"
           "ctrl+shift+left=unbind"
+          "shift+end=unbind"
+          "shift+home=unbind"
         ];
+        shell-integration = "bash";
+        theme = "catppuccin-mocha";
+        window-width = 244;
+        window-height = 58;
       };
     };
     gnome-terminal.enable = false;
