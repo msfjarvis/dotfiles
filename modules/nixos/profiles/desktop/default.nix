@@ -62,8 +62,8 @@ in
       image = inputs.wallpaper;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
       cursor = {
-        package = pkgs.bibata-cursors;
-        name = "Bibata-Modern-Classic";
+        package = pkgs.catppuccin-cursors.mochaMauve;
+        name = "catppuccin-mocha-mauve-cursors";
       };
 
       fonts = {
