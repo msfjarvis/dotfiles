@@ -84,6 +84,11 @@
           diagnostics = false;
           metrics = false;
         };
+        terminal = {
+          env = {
+            GIT_EDITOR = "zeditor --wait";
+          };
+        };
         theme = "Catppuccin Mocha - No Italics";
         toolbar = {
           breadcrumbs = true;
