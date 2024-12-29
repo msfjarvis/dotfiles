@@ -39,6 +39,7 @@
       enable = true;
       extensions = [
         "catppuccin"
+        "git-firefly"
         "html"
         "nix"
         "toml"
