@@ -31,7 +31,6 @@ declare -a ALL_PACKAGES=(
   rucksack
   spot-unstable
   toml-cli
-  when
   zizmor
 )
 
