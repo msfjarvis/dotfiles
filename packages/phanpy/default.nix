@@ -4,7 +4,7 @@
   fetchurl,
 }:
 let
-  version = "2024.12.08.7e1ffc5";
+  version = "2024.12.28.119d4b0";
 in
 stdenvNoCC.mkDerivation {
   name = "phanpy";
@@ -12,7 +12,7 @@ stdenvNoCC.mkDerivation {
 
   src = fetchurl {
     url = "https://github.com/cheeaun/phanpy/releases/download/${version}/phanpy-dist.tar.gz";
-    hash = "sha256-J49M8+IeJ5faW0UAuuvpXMKnqxpsPjtLoQOGVkkIfU8=";
+    hash = "sha256-9E2hr+f0hfNeSZcErdm4EZIOj5G+7ftqg4zJh/mFcUQ=";
   };
   dontUnpack = true;
   dontConfigure = true;
