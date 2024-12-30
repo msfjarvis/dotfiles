@@ -159,7 +159,6 @@ in
       smile
       telegram-desktop
       thunderbird
-      tuba
       (vesktop.override { withSystemVencord = true; })
       yt-dlp
     ];
