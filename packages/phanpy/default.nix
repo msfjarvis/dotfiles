@@ -1,27 +1,34 @@
 {
   lib,
-  stdenvNoCC,
-  fetchurl,
+  buildNpmPackage,
+  fetchFromGitHub,
+  defaultUrl ? "https://fedi.msfjarvis.dev",
 }:
+
 let
+  inherit (lib) optionalString;
   version = "2024.12.28.119d4b0";
 in
-stdenvNoCC.mkDerivation {
+buildNpmPackage {
   name = "phanpy";
   inherit version;
 
-  src = fetchurl {
-    url = "https://github.com/cheeaun/phanpy/releases/download/${version}/phanpy-dist.tar.gz";
-    hash = "sha256-9E2hr+f0hfNeSZcErdm4EZIOj5G+7ftqg4zJh/mFcUQ=";
+  src = fetchFromGitHub {
+    owner = "cheeaun";
+    repo = "phanpy";
+    tag = version;
+    hash = "sha256-Y1wqYaBWsiw1Ns3yhaKDd4iPEWOLVLCwJ3NCKbndS7Y=";
   };
-  dontUnpack = true;
-  dontConfigure = true;
-  dontBuild = true;
+
+  npmDepsHash = "sha256-hLp5CvEZmEPNuNkw2fE+sPO288S2FlsGLKKL44ux4Vk=";
 
   installPhase = ''
-    mkdir -p $out
-    tar xvzf $src -C $out
+    mkdir $out
+    pushd dist || exit 1
+    cp -vR ./ $out/
   '';
+
+  PHANPY_WEBSITE = optionalString (defaultUrl != null) defaultUrl;
 
   meta = {
     description = "A minimalistic opinionated Mastodon web client ";
