@@ -8,16 +8,16 @@
 
 rustPlatform.buildRustPackage {
   pname = "zizmor";
-  version = "unstable-2024-12-25";
+  version = "0.10.0-unstable-2024-12-28";
 
   src = fetchFromGitHub {
     owner = "woodruffw";
     repo = "zizmor";
-    rev = "c28d44c9032f0983829e217470d7c9b57804ddfe";
-    hash = "sha256-M/ZR/aFcVU6U6fyQjzbCFCWCC35xMrd464XVW7lFjts=";
+    rev = "238e30dd61b89f64f7edef28cba176f1917000b8";
+    hash = "sha256-F9y5LFQkCRESjG103bQLImzqW7nRqP/k9lJPiosGMso=";
   };
 
-  cargoHash = "sha256-RL9eAr31uRaboN8K7xz0r45KDDk9C6Ocq6TzRCfcHMk=";
+  cargoHash = "sha256-1M3G/SlnA/Ta4SlVUNlQ4IOkj9e5mhpFzcFas3UFxIk=";
 
   buildInputs = lib.optionals stdenv.isDarwin [
     darwin.apple_sdk.frameworks.Security
