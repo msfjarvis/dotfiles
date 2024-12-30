@@ -109,4 +109,5 @@ in
   rucksack = callPackage ./packages/rucksack { };
   spot-unstable = callPackage ./packages/spot-unstable { };
   toml-cli = callPackage ./packages/toml-cli { };
+  zizmor = callPackage ./packages/zizmor { };
 }
