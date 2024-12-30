@@ -1,7 +1,6 @@
 { inputs, ... }:
 _final: prev: {
   inherit (inputs.firefox.packages.${prev.stdenv.hostPlatform.system}) firefox-nightly-bin;
-  inherit (inputs.ghostty.packages.${prev.stdenv.hostPlatform.system}) ghostty;
   # Force the use of the JDK we're using everywhere else
   jdk = prev.openjdk23;
   jdk_headless = prev.openjdk23_headless;
