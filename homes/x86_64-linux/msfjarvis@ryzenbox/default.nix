@@ -63,7 +63,7 @@
         indent_guides.enabled = true;
         inline_completions.disabled_globs = [ "*.md" ];
         inlay_hints = {
-          enabled = true;
+          enabled = false;
           show_type_hints = true;
           show_parameter_hints = true;
           show_other_hints = true;
