@@ -7,7 +7,7 @@
   ...
 }:
 let
-  nvidiaDriver = config.boot.kernelPackages.nvidiaPackages.beta.bin;
+  nvidiaDriver = config.boot.kernelPackages.nvidiaPackages.production.bin;
 in
 {
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
