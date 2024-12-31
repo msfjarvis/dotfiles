@@ -45,6 +45,11 @@
         "toml"
       ];
       userSettings = {
+        assistant = {
+          enabled = false;
+          # Necessary for this to be parsed, see https://github.com/zed-industries/zed/issues/16839#issuecomment-2309043157
+          version = "2";
+        };
         autosave = {
           after_delay.milliseconds = 1000;
         };
@@ -52,7 +57,9 @@
         base_keymap = "JetBrains";
         buffer_font_family = "IosevkaTerm Nerd Font";
         buffer_font_size = 16;
-        load_direnv = "shell_hook";
+        features = {
+          inline_completion_provider = "none";
+        };
         indent_guides.enabled = true;
         inline_completions.disabled_globs = [ "*.md" ];
         inlay_hints = {
@@ -64,6 +71,7 @@
           edit_debounce_ms = 700;
           scroll_debounce_ms = 50;
         };
+        load_direnv = "shell_hook";
         lsp = {
           nil = {
             binary.path = "${lib.getExe pkgs.nil}";
@@ -80,6 +88,7 @@
             };
           };
         };
+        show_inline_completions = false;
         show_wrap_guides = true;
         telemetry = {
           diagnostics = false;
