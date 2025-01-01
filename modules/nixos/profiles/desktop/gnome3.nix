@@ -124,7 +124,10 @@ in
 
     snowfallorg.users.msfjarvis.home.config = {
       stylix.targets = {
-        gtk.enable = true;
+        gtk = {
+          enable = true;
+          flatpakSupport.enable = true;
+        };
       };
       gtk = {
         enable = true;
