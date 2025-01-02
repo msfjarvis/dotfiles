@@ -27,7 +27,7 @@ in
       hash = "sha256-coJSDcVEJY7FgwSlcpgoF9Hggc7v2XrET/+JXmR10l0=";
     };
 
-    cargoHash = "sha256-kNSPijPhPvkkmm0hNDnUn5FVpoHv8Rj97oW53weH6Hw=";
+    cargoHash = "sha256-tgP9/qcepm6X6pTOgEdwlXIhdX0Q1wH7rJpy1V6J+kw=";
 
     useNextest = true;
 
