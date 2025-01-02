@@ -6,14 +6,14 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
-  version = "5.7.2-unstable-2024-12-15";
+  version = "6.0.1-unstable-2024-12-31";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jbsparrow";
     repo = "CyberDropDownloader";
-    rev = "8aad094a2d32f31319c3a884c0d1095635823119";
-    hash = "sha256-UbK9OSkOFk4x9JDb5rXe9rheFYiNpR/1ql7kidODRKo=";
+    rev = "ef75bb061e933a0356214cccae3e1d97e652ebb9";
+    hash = "sha256-z0PrpwHc6ON/ilWyldXFyfJqQmfqD4MA4gdm2dTDXaI=";
   };
 
   patches = [ ./unpin-dependencies.patch ];
@@ -26,6 +26,7 @@ python3.pkgs.buildPythonApplication rec {
     aenum
     aiofiles
     aiohttp
+    aiohttp-client-cache
     aiolimiter
     aiosqlite
     apprise
