@@ -145,7 +145,7 @@
 
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
 
-    rust-manifest.url = "https://static.rust-lang.org/dist/2024-07-25/channel-rust-nightly.toml";
+    rust-manifest.url = "https://static.rust-lang.org/dist/2024-12-15/channel-rust-nightly.toml";
     rust-manifest.flake = false;
 
     snowfall-lib.url = "github:snowfallorg/lib";
