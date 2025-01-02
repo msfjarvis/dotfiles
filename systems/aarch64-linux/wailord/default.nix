@@ -241,24 +241,35 @@
                     ];
                   }
                   {
-                    type = "reddit";
-                    subreddit = "hermitcraft";
-                    style = "horizontal-cards";
-                    sort-by = "top";
-                    top-period = "day";
-                  }
-                  {
-                    type = "reddit";
-                    subreddit = "hermitcraftmemes";
-                    style = "horizontal-cards";
-                    sort-by = "top";
-                    top-period = "day";
+                    type = "group";
+                    widgets = [
+                      {
+                        type = "reddit";
+                        subreddit = "hermitcraft";
+                        style = "vertical-list";
+                        show-thumbnails = true;
+                        sort-by = "top";
+                        top-period = "day";
+                      }
+                      {
+                        type = "reddit";
+                        subreddit = "hermitcraftmemes";
+                        style = "vertical-list";
+                        show-thumbnails = true;
+                        sort-by = "top";
+                        top-period = "week";
+                      }
+                    ];
                   }
                 ];
               }
               {
                 size = "small";
                 widgets = [
+                  {
+                    type = "weather";
+                    location = "New Delhi, India";
+                  }
                   {
                     type = "releases";
                     cache = "15m";
@@ -317,8 +328,23 @@
                 widgets = [
                   { type = "calendar"; }
                   {
-                    type = "weather";
-                    location = "New Delhi, India";
+                    type = "clock";
+                    hour-format = "12h";
+                    timezones = [
+                      {
+                        timezone = "Asia/Tokyo";
+                        label = "JST";
+                      }
+                      {
+                        timezone = "Europe/London";
+                        label = "UTC";
+                      }
+                      {
+                        timezone = "America/Los_Angeles";
+                        label = "Rot sellers";
+
+                      }
+                    ];
                   }
                   {
                     type = "twitch-channels";
