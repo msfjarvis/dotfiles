@@ -10,7 +10,7 @@ if type hub &>/dev/null; then
   alias git=hub
 fi
 if type bat &>/dev/null; then
-  alias cat='bat --style=grid,header --theme="zenburn"'
+  alias cat='bat --style=grid,header'
 fi
 if type micro &>/dev/null; then
   alias nano=micro
