@@ -7,15 +7,7 @@
   ...
 }:
 let
-  inherit (lib.lists) forEach;
   homeDir = config.users.users.msfjarvis.home;
-  minecraftInstances = [
-    "Fabulously.Optimized.1.20.6"
-    "Fabulously.Optimized.1.21"
-    "Fabulously.Optimized.1.21.1"
-    "Fabulously.Optimized.1.21.3"
-  ];
-  instancePath = name: "${homeDir}/Games/PrismLauncher/instances/${name}/.minecraft";
   mkSteamPath = gameId: {
     path = "${homeDir}/.local/share/Steam/userdata/896827038/760/remote/${gameId}/screenshots";
     recursive = false;
@@ -169,24 +161,7 @@ in
     binfmt = true;
   };
 
-  sops.secrets.restic_repo_password = {
-    sopsFile = lib.snowfall.fs.get-file "secrets/restic/password.yaml";
-    owner = config.services.restic.backups.minecraft.user;
-  };
   services.restic.backups = {
-    minecraft = {
-      initialize = true;
-      repository = "rest:https://restic.tiger-shark.ts.net/";
-      passwordFile = config.sops.secrets.restic_repo_password.path;
-
-      paths = forEach minecraftInstances (name: "${instancePath name}/saves");
-
-      pruneOpts = [
-        "--keep-daily 2"
-        "--keep-weekly 1"
-        "--keep-monthly 1"
-      ];
-    };
     photos = {
       initialize = true;
       repository = "rest:https://restic.tiger-shark.ts.net/photos";
@@ -218,14 +193,14 @@ in
   services.${namespace} = {
     gphotos-cdp = {
       enable = true;
-      session-dir = "/home/msfjarvis/harsh-sess";
-      dldir = "/home/msfjarvis/harsh-photos";
+      session-dir = "${homeDir}/harsh-sess";
+      dldir = "${homeDir}/harsh-photos";
       user = "msfjarvis";
       group = "users";
     };
     rucksack = {
       enable = true;
-      sources = (forEach minecraftInstances (name: "${instancePath name}/screenshots")) ++ [
+      sources = [
         "${homeDir}/Pictures/Screenshots"
         # Helldivers 2
         (mkSteamPath "553850")

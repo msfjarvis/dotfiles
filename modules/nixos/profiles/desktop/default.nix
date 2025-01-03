@@ -18,7 +18,9 @@ in
     ./earlyoom.nix
     ./gaming.nix
     ./gnome3.nix
+    ./minecraft.nix
     ./noise-cancelation.nix
+    ./restic.nix
   ];
   options.profiles.${namespace}.desktop = {
     enable = mkEnableOption "Profile for desktop machines (i.e. not servers)";

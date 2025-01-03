@@ -109,12 +109,7 @@ in
       };
     };
 
-    users.users.msfjarvis.packages = with pkgs; [
-      # Minecraft
-      mcaselector
-      (prismlauncher.override {
-        jdks = [ openjdk23 ];
-      })
+    users.users.msfjarvis.packages = [
       (pkgs.${namespace}.game-shortcuts.override {
         games = [
           {
