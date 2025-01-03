@@ -29,20 +29,10 @@ let
       package = gsconnect;
       uuid = "gsconnect@andyholmes.github.io";
     }
-    # Top bar media control widget
-    {
-      package = media-controls;
-      uuid = "mediacontrols@cliffniff.github.com";
-    }
     # Better tiling controls
     {
       package = tiling-shell;
       uuid = "tilingshell@ferrarodomenico.com";
-    }
-    # System activity indicator
-    {
-      package = astra-monitor;
-      uuid = "monitor@astraext.github.io";
     }
     # Make top bar transparent when nothing is docked to it
     {
