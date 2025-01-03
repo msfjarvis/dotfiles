@@ -15,6 +15,9 @@ let
     ;
 in
 {
+  # home-manager and stylix both have ghostty modules but
+  # they don't handle fonts right and the theme looks wack, just stick
+  # with this one.
   options.profiles.${namespace}.ghostty = {
     enable = mkEnableOption "ghostty, a fast, feature-rich, and cross-platform terminal emulator that uses platform-native UI and GPU acceleration.";
     settings = mkOption {
