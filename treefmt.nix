@@ -1,4 +1,12 @@
 { pkgs, ... }:
+let
+  shellScripts = [
+    "x"
+    "scripts/*"
+    "shell-init"
+    "darwin-init"
+  ];
+in
 {
   projectRootFile = "flake.nix";
   package = pkgs.treefmt2;
@@ -21,22 +29,12 @@
   programs.shellcheck = {
     enable = true;
   };
-  settings.formatter.shellcheck.includes = [
-    "x"
-    "scripts/*"
-    "shell-init"
-    "darwin-init"
-  ];
+  settings.formatter.shellcheck.includes = shellScripts;
   programs.shfmt = {
     enable = true;
     indent_size = 2;
   };
-  settings.formatter.shfmt.includes = [
-    "x"
-    "scripts/*"
-    "shell-init"
-    "darwin-init"
-  ];
+  settings.formatter.shfmt.includes = shellScripts;
   programs.statix = {
     enable = true;
   };
