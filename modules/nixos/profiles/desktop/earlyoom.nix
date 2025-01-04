@@ -11,8 +11,12 @@
       freeMemThreshold = 2;
       extraArgs = [
         "-g"
-        "--avoid '^(gnome.*|firefox.*|pipewire.*|git.*)$'" # things we want to not kill
-        "--prefer '^(electron|.*.exe)$'" # I wish we could kill electron permanently
+        # things we want to not kill
+        "--avoid"
+        "^(gnome.*|firefox.*|pipewire.*|git.*)$"
+        # I wish we could kill electron permanently
+        "--prefer"
+        "^(electron|.*.exe)$"
       ];
 
       # we should ideally write the logs into a designated log file; or even better, to the journal
