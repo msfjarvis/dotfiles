@@ -64,7 +64,10 @@ in
   };
   config = mkIf cfg.gnome3.enable {
     # Enable the GNOME Desktop Environment.
-    services.xserver.displayManager.gdm.enable = true;
+    services.xserver.displayManager.gdm = {
+      enable = true;
+      wayland = false;
+    };
     services.xserver.desktopManager.gnome.enable = true;
     services.displayManager.defaultSession = "gnome";
     services.gnome.gnome-keyring.enable = true;
@@ -75,8 +78,8 @@ in
     };
 
     # Enable Wayland compatibility workarounds within Nixpkgs
-    environment.variables.ELECTRON_OZONE_PLATFORM_HINT = "x11";
-    environment.variables.NIXOS_OZONE_WL = "1";
+    # environment.variables.ELECTRON_OZONE_PLATFORM_HINT = "x11";
+    # environment.variables.NIXOS_OZONE_WL = "0";
 
     environment.systemPackages = with pkgs; [
       wl-clipboard
