@@ -32,7 +32,6 @@ NixOS packages for personal use.
 - [rucksack] : Simple CLI tool to watch directories and move their files to a single dumping ground
 - [spot-unstable]: Spotify player for GNOME tracking the main branch
 - [toml-cli] : Simple CLI for editing and querying TOML files
-- [zizmor] : zizmor is a static analysis tool for GitHub Actions.
 
 [adb-sync]: https://msfjarvis.dev/g/adb-sync
 [adbear]: https://github.com/msfjarvis/adbear
@@ -67,4 +66,3 @@ NixOS packages for personal use.
 [rucksack]: https://msfjarvis.dev/g/rucksack
 [spot-unstable]: https://github.com/xou816/spot
 [toml-cli]: https://github.com/gnprice/toml-cli
-[zizmor]: https://github.com/woodruffw/zizmor

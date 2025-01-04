@@ -31,7 +31,6 @@ declare -a ALL_PACKAGES=(
   rucksack
   spot-unstable
   toml-cli
-  zizmor
 )
 
 declare -r -A EXTRA_PARAMS=(
@@ -43,7 +42,6 @@ declare -r -A EXTRA_PARAMS=(
   ["healthchecks-monitor"]="--version-regex=healthchecks-monitor-v(.*)"
   ["phanpy"]="--url=https://github.com/cheeaun/phanpy"
   ["spot-unstable"]="--version=branch=development"
-  ["zizmor"]="--version=branch"
 )
 
 PKG="${1-}"
