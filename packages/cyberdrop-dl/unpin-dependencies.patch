@@ -1,8 +1,8 @@
 diff --git a/pyproject.toml b/pyproject.toml
-index 5dabf6d218b5..2aad1a295e29 100644
+index fe13ab95930a..2a0fe9cb3e99 100644
 --- a/pyproject.toml
 +++ b/pyproject.toml
-@@ -12,15 +12,15 @@ include = ["CHANGELOG.md"]
+@@ -12,15 +12,15 @@ version = "6.0.1"
  [tool.poetry.dependencies]
  python = ">=3.11,<3.14"
  aiofiles = "^24.1.0"
@@ -31,6 +31,6 @@ index 5dabf6d218b5..2aad1a295e29 100644
 -pydantic = "^2.10.4"
 +pycryptodomex = "^3.20.0"
 +pydantic = "^2.10.3"
+ pywin32 = {platform = "win32", version = "^308"}
  pyyaml = "^6.0.2"
- pywin32 = {version = "^308", platform = "win32"}
  rich = "^13.9.4"
