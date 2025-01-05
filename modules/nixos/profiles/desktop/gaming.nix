@@ -110,26 +110,27 @@ in
     };
 
     users.users.msfjarvis.packages = [
-      (pkgs.${namespace}.game-shortcuts.override {
-        games = [
-          {
-            name = "Hades";
-            id = 1145360;
-          }
-          {
-            name = "HoloCure";
-            id = 2420510;
-          }
-          {
-            name = "Marvel Snap";
-            id = 1997040;
-          }
-          {
-            name = "Satisfactory";
-            id = 526870;
-          }
-        ];
-      })
+      # Supplied by Cartridges, restore when removing it.
+      # (pkgs.${namespace}.game-shortcuts.override {
+      #   games = [
+      #     {
+      #       name = "Hades";
+      #       id = 1145360;
+      #     }
+      #     {
+      #       name = "HoloCure";
+      #       id = 2420510;
+      #     }
+      #     {
+      #       name = "Marvel Snap";
+      #       id = 1997040;
+      #     }
+      #     {
+      #       name = "Satisfactory";
+      #       id = 526870;
+      #     }
+      #   ];
+      # })
       pkgs.${namespace}.ficsit-cli
     ];
     # Required to avoid some logspew
