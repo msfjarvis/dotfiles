@@ -169,6 +169,7 @@
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     stylix.inputs.flake-utils.follows = "flake-utils";
     stylix.inputs.systems.follows = "systems";
+    stylix.inputs.git-hooks.follows = "";
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
