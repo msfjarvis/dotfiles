@@ -109,7 +109,7 @@ in
       };
     };
 
-    users.users.msfjarvis.packages = [
+    users.users.msfjarvis.packages = with pkgs; [
       # Supplied by Cartridges, restore when removing it.
       # (pkgs.${namespace}.game-shortcuts.override {
       #   games = [
@@ -131,6 +131,7 @@ in
       #     }
       #   ];
       # })
+      heroic
       pkgs.${namespace}.ficsit-cli
     ];
     # Required to avoid some logspew
