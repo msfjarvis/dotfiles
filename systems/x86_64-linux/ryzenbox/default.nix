@@ -52,6 +52,63 @@ in
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_11;
 
   snowfallorg.users.msfjarvis.home.config = {
+    programs.firefox = {
+      enable = true;
+      package = pkgs.firefox-nightly-bin.override {
+        cfg = {
+          smartcardSupport = true;
+          pipewireSupport = true;
+        };
+      };
+      profiles = {
+        Primary = {
+          id = 0;
+          name = "Primary";
+          bookmarks = [
+            {
+              name = "Shortcuts";
+              toolbar = true;
+              bookmarks = [
+                {
+                  name = "Minecraft Wiki";
+                  url = "https://minecraft.wiki/w/%s";
+                  keyword = "mc";
+                }
+                {
+                  name = "Rust crate";
+                  url = "https://lib.rs/crates/%s";
+                  keyword = "crates";
+                }
+                {
+                  name = "Nix GitHub search";
+                  url = "https://github.com/search?q=path%3A*.nix+%s&type=code";
+                  keyword = "nixs";
+                }
+                {
+                  name = "NixOS options";
+                  url = "https://search.xn--nschtos-n2a.de/?scope=NixOS&option_scope=9&query=%s";
+                  keyword = "nixopt";
+                }
+                {
+                  name = "Nixpkgs";
+                  url = "https://search.nixos.org/packages?channel=unstable&size=50&sort=relevance&type=packages&query=%s";
+                  keyword = "nixpkgs";
+                }
+                {
+                  name = "Search Rust crates";
+                  url = "https://lib.rs/search?q=%s";
+                  keyword = "rs";
+                }
+              ];
+            }
+          ];
+        };
+        Secondary = {
+          id = 1;
+          name = "Secondary";
+        };
+      };
+    };
     stylix = {
       targets = {
         firefox = {
@@ -127,12 +184,6 @@ in
       pkgs.${namespace}.cyberdrop-dl
       fclones
       ffmpeg_7-full
-      (firefox-nightly-bin.override {
-        cfg = {
-          smartcardSupport = true;
-          pipewireSupport = true;
-        };
-      })
       forge-sparks
       fzf
       pkgs.${namespace}.gdrive
