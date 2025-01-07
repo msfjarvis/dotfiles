@@ -201,6 +201,8 @@ in
       enable = true;
       sources = [
         "${homeDir}/Pictures/Screenshots"
+        # Detroit: Become Human
+        (mkSteamPath "1222140")
         # Helldivers 2
         (mkSteamPath "553850")
         # Tiny Glade
