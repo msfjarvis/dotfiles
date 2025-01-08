@@ -1,6 +1,7 @@
 {
   lib,
   python3,
+  gnused,
   fetchFromGitHub,
 }:
 
@@ -16,15 +17,17 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-N2pcbNZLtKqQYL/6pX6pLJI1odjZPBsyW9Aa4bpVt8c=";
   };
 
-  postPatch = ''
-    substituteInPlace pyproject.toml --replace-fail 'aiohttp = "^3.11.10"' 'aiohttp = "^3.11.9"'
-    substituteInPlace pyproject.toml --replace-fail 'aiolimiter = "^1.2.1"' 'aiolimiter = "^1.1.0"'
-    substituteInPlace pyproject.toml --replace-fail 'aiosqlite = "0.17.0"' 'aiosqlite = "0.20.0"'
-    substituteInPlace pyproject.toml --replace-fail 'asyncpraw = "^7.8.0"' 'asyncpraw = "^7.7.1"'
-    substituteInPlace pyproject.toml --replace-fail 'certifi = "^2024.12.14"' 'certifi = "^2024.8.30"'
-    substituteInPlace pyproject.toml --replace-fail 'pycryptodomex = "^3.21.0"' 'pycryptodomex = "^3.20.0"'
-    substituteInPlace pyproject.toml --replace-fail 'pydantic = "^2.10.4"' 'pydantic = "^2.10.3"'
-  '';
+  postPatch =
+    let
+      sed = lib.getExe gnused;
+      # Convert python3.12-aiohttp-3.11.9 to aiohttp
+      mkRealName =
+        pkg: pkg.pname |> lib.removePrefix "${python3.libPrefix}-" |> lib.removeSuffix "-${pkg.version}";
+      mkPatch =
+        pkg:
+        ''${sed} -i 's/${mkRealName pkg} = ".*"/${mkRealName pkg} = "^${pkg.version}"/' pyproject.toml'';
+    in
+    lib.concatStringsSep "\n" (lib.lists.map (pkg: mkPatch pkg) dependencies);
 
   build-system = [
     python3.pkgs.poetry-core
