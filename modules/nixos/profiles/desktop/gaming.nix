@@ -56,21 +56,6 @@ in
       enable = true;
       enableRenice = true;
     };
-    programs.gamescope = {
-      enable = true;
-      # Should be true but doesn't work due to a bug
-      # see: https://github.com/NixOS/nixpkgs/issues/351516
-      capSysNice = false;
-      args = [
-        "-W 2560 -H 1440"
-        "-r 165"
-        "--rt"
-        "--steam"
-        "--hdr-enabled"
-        "--mangoapp"
-        "--borderless"
-      ];
-    };
 
     snowfallorg.users.msfjarvis.home.config = {
       systemd.user.services.steam = {
