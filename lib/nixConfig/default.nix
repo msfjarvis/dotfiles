@@ -27,6 +27,7 @@
           "flakes"
           "nix-command"
           "recursive-nix"
+          "pipe-operator"
         ];
         flake-registry = "/etc/nix/registry.json";
         http-connections = 50;

@@ -25,7 +25,7 @@ runs:
     - name: Install Nix
       shell: bash
       run: |
-        export NIX_INSTALLER_EXTRA_CONF="trusted-users = $(whoami)"
+        export NIX_INSTALLER_EXTRA_CONF="trusted-users = $(whoami)\nexperimental-features = pipe-operator"
         curl --proto '=https' --tlsv1.2 -sSf -L https://install.lix.systems/lix | sh -s -- install --no-confirm
     - name: Setup Tailscale
       uses: tailscale/github-action@8688eb839e58e6b25c1ae96cd99d1c173299b842 # v3
