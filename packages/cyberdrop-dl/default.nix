@@ -27,7 +27,7 @@ python3.pkgs.buildPythonApplication rec {
         pkg:
         ''${sed} -i 's/${mkRealName pkg} = ".*"/${mkRealName pkg} = "^${pkg.version}"/' pyproject.toml'';
     in
-    lib.concatStringsSep "\n" (lib.lists.map (pkg: mkPatch pkg) dependencies);
+    lib.concatStringsSep "\n" (lib.lists.map mkPatch dependencies);
 
   build-system = [
     python3.pkgs.poetry-core
