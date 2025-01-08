@@ -22,7 +22,7 @@ python3.pkgs.buildPythonApplication rec {
       sed = lib.getExe gnused;
       # Convert python3.12-aiohttp-3.11.9 to aiohttp
       mkRealName =
-        pkg: pkg.pname |> lib.removePrefix "${python3.libPrefix}-" |> lib.removeSuffix "-${pkg.version}";
+        pkg: lib.removePrefix "${python3.libPrefix}-" (lib.removeSuffix "-${pkg.version}" pkg.pname);
       mkPatch =
         pkg:
         ''${sed} -i 's/${mkRealName pkg} = ".*"/${mkRealName pkg} = "^${pkg.version}"/' pyproject.toml'';
