@@ -20,9 +20,11 @@ jobs:
           - runner: ubuntu-latest
             cache: x86_64-linux
             public-key: "x86_64-linux:HLQszdZAPt0hy6dsMxsI7EDeghCzfSwB8VyBEnei/j0="
+            nixos-configuration: ryzenbox
             # - runner: buildjet-4vcpu-ubuntu-2204-arm
             #   cache: aarch64-linux
             #   public-key: "aarch64-linux:czBXxHtNIDorynmG/2pRuFSENM+fnu0rgVkH+8I4niQ="
+            #   nixos-configuration: wailord
     runs-on: ${{ matrix.runner }}
     steps:
       - name: Checkout repository
@@ -48,20 +50,19 @@ jobs:
         shell: bash
         run: |
           echo "OLD_REF=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
-      - name: Check for updates of given package
+      - name: Install nix-update
         shell: bash
-        if: "github.event.inputs.package != null || github.event.action == 'package-bump'"
-        run: nix-shell -p nix-update git --run "./update.sh ${PACKAGE} ${VERSION}"
+        run: |
+          nix profile install ".#nixosConfigurations.${HOST}.pkgs.nix-update"
+        env:
+          HOST: ${{ matrix.nixos-configuration }}
+      - name: Check for updates
+        shell: bash
+        run: ./update.sh "${PACKAGE}" "${VERSION}"
         env:
           CACHE_CMD: "attic push ${{ matrix.cache }}"
           PACKAGE_NAME: ${{ github.event.inputs.package || github.event.client_payload.package_name }}
           VERSION: ${{ github.event.inputs.version }}
-      - name: Check for updates
-        shell: bash
-        if: "github.event.inputs.package == null"
-        run: nix-shell -p nix-update git --run ./update.sh
-        env:
-          CACHE_CMD: "attic push ${{ matrix.cache }}"
       - name: Check post-update Git ref
         shell: bash
         run: |
