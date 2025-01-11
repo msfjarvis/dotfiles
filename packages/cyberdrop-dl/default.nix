@@ -1,11 +1,11 @@
 {
   lib,
-  python313,
+  python3,
   gnused,
   fetchFromGitHub,
 }:
 
-python313.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
   version = "6.0.1-unstable-2025-01-03";
   pyproject = true;
@@ -20,9 +20,9 @@ python313.pkgs.buildPythonApplication rec {
   postPatch =
     let
       sed = lib.getExe gnused;
-      # Convert python3.13-aiohttp-3.11.9 to aiohttp
+      # Convert python3.12-aiohttp-3.11.9 to aiohttp
       mkRealName =
-        pkg: pkg.pname |> lib.removePrefix "${python313.libPrefix}-" |> lib.removeSuffix "-${pkg.version}";
+        pkg: pkg.pname |> lib.removePrefix "${python3.libPrefix}-" |> lib.removeSuffix "-${pkg.version}";
       mkPatch =
         pkg:
         ''${sed} -i 's/${mkRealName pkg} = ".*"/${mkRealName pkg} = "^${pkg.version}"/' pyproject.toml'';
@@ -30,10 +30,10 @@ python313.pkgs.buildPythonApplication rec {
     lib.concatStringsSep "\n" (lib.lists.map mkPatch dependencies);
 
   build-system = [
-    python313.pkgs.poetry-core
+    python3.pkgs.poetry-core
   ];
 
-  dependencies = with python313.pkgs; [
+  dependencies = with python3.pkgs; [
     aenum
     aiofiles
     aiohttp

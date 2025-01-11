@@ -138,7 +138,7 @@ in
       nurl
       pkgs.${namespace}.patreon-dl
       pkgs.${namespace}.pidcat
-      (python313.withPackages (
+      (python312.withPackages (
         ps: with ps; [
           beautifulsoup4
           black
