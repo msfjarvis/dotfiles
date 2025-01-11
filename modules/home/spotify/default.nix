@@ -33,6 +33,27 @@ in
           showQueueDuration
           shuffle
         ];
+        enabledSnippets = with spicePkgs.snippets; [
+          disableRecommendations
+          fixLikedButton
+          fixMainViewWidth
+          fixNowPlayingIcon
+          hideAudiobooksButton
+          hideDownloadButton
+          hideFriendActivityButton
+          hideFriendsActivityButton
+          hideLikedSongsCard
+          hideMadeForYou
+          hidePlayingGif
+          hidePodcastButton
+          hideRecentlyPlayed
+          hideWhatsNewButton
+          modernScrollbar
+          newHoverPanel
+          removeEpLikes
+          removeGradient
+          removePopular
+        ];
       };
     })
     (mkIf (cfg.enable && cfg.spot) {
