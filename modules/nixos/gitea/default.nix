@@ -43,8 +43,37 @@ in
       enable = true;
       appName = "Harsh Shandilya's Git hosting";
       settings = {
+        api = {
+          ENABLE_SWAGGER = false;
+        };
+        "cron.update_mirrors" = {
+          PULL_LIMIT = -1;
+        };
+        "cron.delete_repo_archives" = {
+          ENABLED = true;
+          SCHEDULE = "@daily";
+        };
+        "cron.git_gc_repos" = {
+          ENABLED = true;
+          ARGS = "--aggressive --auto";
+        };
+        "cron.update_checker" = {
+          ENABLED = false;
+        };
+        "git.config" = {
+          "diff.algorithm" = "patience";
+        };
+        indexer = {
+          REPO_INDEXER_ENABLED = true;
+          REPO_INDEXER_PATH = "ndexers/repos.bleve";
+          MAX_FILE_SIZE = 1048576;
+          REPO_INDEXER_EXCLUDE = "resources/bin/**";
+        };
         mailer = {
           ENABLED = false;
+        };
+        mirror = {
+          DEFAULT_INTERVAL = "1h";
         };
         oauth2 = {
           # Increase token expiry to one day as a workaround for GCM
@@ -57,14 +86,15 @@ in
         other = {
           SHOW_FOOTER_POWERED_BY = false;
         };
-        indexer = {
-          REPO_INDEXER_ENABLED = true;
-          REPO_INDEXER_PATH = "ndexers/repos.bleve";
-          MAX_FILE_SIZE = 1048576;
-          REPO_INDEXER_EXCLUDE = "resources/bin/**";
-        };
         repository = {
-          DISABLE_STARS = false;
+          DISABLE_HTTP_GIT = true;
+          DISABLE_STARS = true;
+          ENABLE_PUSH_CREATE_USER = true;
+          DISABLE_DOWNLOAD_SOURCE_ARCHIVES = true;
+        };
+        "repository.pull-request" = {
+          DEFAULT_MERGE_STYLE = "rebase";
+          DEFAULT_MERGE_MESSAGE_ALL_AUTHORS = true;
         };
         server = {
           DISABLE_SSH = true;
@@ -77,8 +107,17 @@ in
           COOKIE_SECURE = true;
           DISABLE_REGISTRATION = true;
         };
+        time = {
+          DEFAULT_UI_LOCATION = "Asia/Kolkata";
+        };
         ui = {
           DEFAULT_THEME = "catppuccin-mocha-mauve";
+          DEFAULT_SHOW_FULL_NAME = true;
+        };
+        "ui.meta" = {
+          AUTHOR = "Harsh Shandilya";
+          DESCRIPTION = "Harsh Shandilya's personal Git repositories";
+          KEYWORDS = "msfjarvis,msfjarvis github,harsh shandilya, harsh shandilya github";
         };
       };
     };
