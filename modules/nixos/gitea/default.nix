@@ -87,7 +87,7 @@ in
           SHOW_FOOTER_POWERED_BY = false;
         };
         repository = {
-          DISABLE_HTTP_GIT = true;
+          DISABLE_HTTP_GIT = false;
           DISABLE_STARS = true;
           ENABLE_PUSH_CREATE_USER = true;
           DISABLE_DOWNLOAD_SOURCE_ARCHIVES = true;
