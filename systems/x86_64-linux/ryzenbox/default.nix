@@ -92,6 +92,7 @@ in
     update.auto.enable = true;
     uninstallUnmanaged = true;
     packages = [
+      "com.dec05eba.gpu_screen_recorder"
       "io.gitlab.news_flash.NewsFlash"
     ];
   };
