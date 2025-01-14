@@ -27,7 +27,7 @@ runs:
       with:
         nix_conf: |
           trusted-users = runner
-          experimental-features = pipe-operators
+          extra-experimental-features = pipe-operators
     - name: Setup Tailscale
       uses: tailscale/github-action@8688eb839e58e6b25c1ae96cd99d1c173299b842 # v3
       with:
