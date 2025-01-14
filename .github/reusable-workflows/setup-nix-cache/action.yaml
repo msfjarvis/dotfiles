@@ -23,7 +23,7 @@ runs:
   using: "composite"
   steps:
     - name: Install Nix
-      uses: nixbuild/nix-quick-install-action@v29
+      uses: nixbuild/nix-quick-install-action@25aff27c252e0c8cdda3264805f7b6bcd92c8718 # v29
       with:
         nix_conf: |
           trusted-users = runner
