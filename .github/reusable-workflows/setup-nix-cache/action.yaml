@@ -23,12 +23,11 @@ runs:
   using: "composite"
   steps:
     - name: Install Nix
-      shell: bash
-      run: |
-        curl --proto '=https' --tlsv1.2 -sSf -L https://install.lix.systems/lix | sh -s -- install --no-confirm --extra-conf "
-          trusted-users = $(whoami)
-          experimental-features = pipe-operator
-        "
+      uses: nixbuild/nix-quick-install-action@v29
+      with:
+        nix_conf: |
+          trusted-users = runner
+          experimental-features = pipe-operators
     - name: Setup Tailscale
       uses: tailscale/github-action@8688eb839e58e6b25c1ae96cd99d1c173299b842 # v3
       with:
