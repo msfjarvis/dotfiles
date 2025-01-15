@@ -10,7 +10,7 @@ let
   inherit ((import fenix { inherit pkgs; })) fromManifestFile;
   toolchain = (fromManifestFile rust-manifest).minimalToolchain;
 
-  version = "2.6.2";
+  version = "2.6.4";
 in
 (makeRustPlatform {
   cargo = toolchain;
@@ -24,11 +24,11 @@ in
       owner = "msfjarvis";
       repo = "linkleaner";
       rev = "v${version}";
-      hash = "sha256-IkgFZ6sTpVoldBQ69B4RRPh/vrCIbT4MM0Qcrw1Fiec=";
+      hash = "sha256-7scRKiUrdbKh+/jR8ZGgWSznXFPSijW37y5h0iixHiU=";
     };
 
     useFetchCargoVendor = true;
-    cargoHash = "sha256-+F/T6NTTiJdMqTTM4+3cJtOULbEyNCOmo11jlwa/kcI=";
+    cargoHash = "sha256-NYFpkZoe5XH6kJjPrt2/lKrAhdqmCGPxg72NfMAsQ+g=";
 
     useNextest = true;
 
