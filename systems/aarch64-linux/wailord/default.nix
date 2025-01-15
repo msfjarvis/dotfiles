@@ -63,7 +63,6 @@
 
   environment.systemPackages = with pkgs; [
     attic-client
-    ghostty.terminfo
     megatools
   ];
 

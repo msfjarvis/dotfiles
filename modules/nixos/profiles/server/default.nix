@@ -38,6 +38,16 @@ in
       };
     };
 
+    # Install Ghostty's bash integration and terminfo
+    environment.systemPackages = [ pkgs.ghostty.terminfo ];
+    programs.bash = {
+      interactiveShellInit = ''
+        if [[ "$TERM" == "xterm-ghostty" ]]; then
+          builtin source ${pkgs.ghostty.shell_integration}/bash/ghostty.bash
+        fi
+      '';
+    };
+
     # Automatically log into my user account
     services.getty.autologinUser = lib.mkForce "msfjarvis";
 
