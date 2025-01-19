@@ -121,7 +121,7 @@
     lib-aggregate.inputs.nixpkgs-lib.follows = "nixpkgs";
     lib-aggregate.inputs.flake-utils.follows = "flake-utils";
 
-    lix.url = "git+https://git.lix.systems/lix-project/lix?ref=refs/tags/2.91.1";
+    lix.url = "git+https://git.lix.systems/lix-project/lix?ref=refs/tags/2.92.0";
     lix.inputs.nixpkgs.follows = "nixpkgs";
     lix.inputs.nixpkgs-regression.follows = "nixpkgs";
     lix.inputs.nix2container.follows = "";
