@@ -8,6 +8,9 @@
 let
   cfg = config.profiles.${namespace}.gnome-terminal;
   inherit (lib) mkEnableOption mkIf;
+  palette =
+    (lib.importJSON (config.catppuccin.sources.palette + "/palette.json"))
+    .${config.catppuccin.flavor}.colors;
 in
 {
   options.profiles.${namespace}.gnome-terminal = {
@@ -21,19 +24,19 @@ in
           default = true;
           visibleName = "Catppuccin Mocha";
           font = "IosevkaTerm Nerd Font Mono 13";
-          colors = with config.lib.stylix.colors.withHashtag; {
-            foregroundColor = base05;
-            backgroundColor = base00;
-            boldColor = base04;
+          colors = with palette; {
+            foregroundColor = text.hex; # base05
+            backgroundColor = base.hex; # base00
+            boldColor = surface2.hex; # base04
             palette = [
-              base00
-              base08
-              base0B
-              base0A
-              base0D
-              base0E
-              base0C
-              base05
+              base.hex # base00
+              red.hex # base08
+              green.hex # base0B
+              yellow.hex # base0A
+              blue.hex # base0D
+              mauve.hex # base0E
+              teal.hex # base0C
+              text.hex # base05
             ];
           };
           boldIsBright = false;
