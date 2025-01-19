@@ -42,8 +42,6 @@ in
     environment.systemPackages = [ pkgs.ghostty.terminfo ];
     programs.bash = {
       interactiveShellInit = ''
-        GHOSTTY_RESOURCES_DIR="${pkgs.ghostty}/share/ghostty"
-        export GHOSTTY_RESOURCES_DIR
         if [[ "$TERM" == "xterm-ghostty" ]]; then
           builtin source ${pkgs.ghostty.shell_integration}/bash/ghostty.bash
         fi
