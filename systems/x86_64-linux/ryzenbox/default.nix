@@ -51,21 +51,6 @@ in
   };
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_11;
 
-  snowfallorg.users.msfjarvis.home.config = {
-    stylix = {
-      targets = {
-        firefox = {
-          enable = true;
-          profileNames = [
-            "Primary"
-            "Secondary"
-          ];
-        };
-        vesktop.enable = true;
-      };
-    };
-  };
-
   # Enable networking
   networking = {
     hostName = "ryzenbox";

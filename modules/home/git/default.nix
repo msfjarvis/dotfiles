@@ -14,6 +14,7 @@ let
   };
 in
 {
+  catppuccin.delta.enable = true;
   home.packages = lib.optionals isServer [ gcm ];
   programs.git = {
     enable = true;
@@ -39,6 +40,9 @@ in
           autocrlf = "input";
         };
         commit.verbose = true;
+        delta = {
+          enable = true;
+        };
         fetch = {
           fsckobjects = true;
           prune = true;
