@@ -18,6 +18,30 @@ in
     # Enable Tailscale
     profiles.${namespace}.tailscale.enable = true;
 
+    # Disable a bunch of stuff that's unnecessary on servers
+    documentation = {
+      enable = false;
+      info.enable = false;
+      doc.enable = false;
+      nixos.enable = false;
+    };
+    environment.stub-ld.enable = lib.mkForce false;
+    programs.less.lessopen = lib.mkForce null;
+    programs.nano.enable = false;
+    fonts.fontconfig.enable = false;
+    xdg = {
+      autostart.enable = false;
+      icons.enable = false;
+      menus.enable = false;
+      mime.enable = false;
+      sounds.enable = false;
+    };
+    services.logrotate.enable = false;
+    services.udisks2.enable = false;
+    boot.bcache.enable = false;
+    appstream.enable = false;
+    powerManagement.enable = false;
+
     networking = {
       networkmanager.enable = lib.mkDefault true;
       networkmanager.plugins = lib.mkForce [ ];
