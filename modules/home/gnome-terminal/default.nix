@@ -20,6 +20,7 @@ in
         "b1dcc9dd-5262-4d8d-a863-c897e6d979b9" = {
           default = true;
           visibleName = "Catppuccin Mocha";
+          font = "IosevkaTerm Nerd Font Mono 13";
           colors = with config.lib.stylix.colors.withHashtag; {
             foregroundColor = base05;
             backgroundColor = base00;
