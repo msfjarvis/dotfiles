@@ -15,8 +15,8 @@ final: prev: {
     patches = [
       # https://github.com/Mic92/nix-update/pull/317
       (prev.fetchpatch2 {
-        url = "https://github.com/Mic92/nix-update/commit/8e9c62b7649ef5b0c1d8522ba9e7ffc4aa248ba4.patch?full_index=1";
-        hash = "sha256-NtOGL5DexeCKYqUZid+EEEm3q28yVsE6qcJztgU0nsI=";
+        url = "https://github.com/Mic92/nix-update/commit/26a2459088658c8e395c67f18a232ee3ce9e2dc0.patch?full_index=1";
+        hash = "sha256-bXAEJq8WsZm+fl1jTeBXNH+je+wpWzXG7OkTOT/mgew=";
       })
     ];
   });
