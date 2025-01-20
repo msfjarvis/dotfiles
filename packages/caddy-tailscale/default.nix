@@ -27,7 +27,7 @@ buildGoModule {
 
   patches = [ ./update-tailscale.patch ];
 
-  vendorHash = "sha256-o4gL5mEr2KBbdW4KA4vbJw3mxdteGVnFgmEAyYhEhaI=";
+  vendorHash = "sha256-5lkmGggoFNL0gqEa0tJr4hifYQnjSmaMWGA+ZDFPvHE=";
 
   ldflags = [
     "-s"
