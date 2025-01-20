@@ -12,7 +12,7 @@
 
   profiles.${namespace} = {
     ghostty = {
-      enable = true;
+      enable = false;
       settings = {
         bold-is-bright = true;
         font-family = "IosevkaTerm NFM";
@@ -28,7 +28,7 @@
         window-height = 58;
       };
     };
-    gnome-terminal.enable = false;
+    gnome-terminal.enable = true;
     logseq.enable = true;
     mpv.enable = true;
     spotify = {
