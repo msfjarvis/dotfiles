@@ -25,7 +25,10 @@ in
     users.users.msfjarvis.packages = with pkgs; [
       mcaselector
       (prismlauncher.override {
-        jdks = [ openjdk23 ];
+        jdks = [
+          openjdk23
+          openjdk17
+        ];
       })
     ];
 
