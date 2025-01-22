@@ -42,12 +42,18 @@ in
       ensureDatabases = [ "vaultwarden" ];
     };
 
+    sops.secrets.vaultwarden = {
+      sopsFile = lib.snowfall.fs.get-file "secrets/vaultwarden.env";
+      owner = "vaultwarden";
+      group = "vaultwarden";
+      format = "dotenv";
+    };
     services.vaultwarden = {
       enable = true;
       dbBackend = "postgresql";
+      environmentFile = config.sops.secrets.vaultwarden.path;
       config = {
         DOMAIN = cfg.domain;
-        DISABLE_ADMIN_TOKEN = true; # Drop this if ever hosting on public domain
         SIGNUPS_ALLOWED = false;
         INVITATIONS_ALLOWED = false;
         ROCKET_PORT = 8890;
