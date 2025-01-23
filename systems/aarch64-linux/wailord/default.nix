@@ -378,7 +378,7 @@
 
     vaultwarden = {
       enable = true;
-      domain = "https://pass.tiger-shark.ts.net";
+      domain = "https://vault.msfjarvis.dev";
     };
   };
 
