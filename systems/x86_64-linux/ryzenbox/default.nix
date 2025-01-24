@@ -112,6 +112,7 @@ in
     ];
     packages = with pkgs; [
       pkgs.${namespace}.adbear
+      pkgs.${namespace}.age-keygen-deterministic
       age
       attic-client
       pkgs.${namespace}.boop-gtk
