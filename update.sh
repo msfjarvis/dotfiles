@@ -40,7 +40,7 @@ declare -r -A EXTRA_PARAMS=(
   ["glance"]="--version=branch=release/v0.7.0"
   ["hcctl"]="--version-regex=hcctl-v(.*)"
   ["healthchecks-monitor"]="--version-regex=healthchecks-monitor-v(.*)"
-  ["phanpy"]="--url=https://github.com/cheeaun/phanpy"
+  ["phanpy"]="--url=https://github.com/cheeaun/phanpy --version=branch"
   ["spot-unstable"]="--version=branch=development"
 )
 
@@ -64,7 +64,10 @@ for PACKAGE in "${PACKAGES_TO_BUILD[@]}"; do
   declare -a PARAMS=("${BASE_PARAMS[@]}")
   PPARAMS="${EXTRA_PARAMS["${PACKAGE}"]:-}"
   if [[ -n ${PPARAMS} ]]; then
-    PARAMS+=("${PPARAMS}")
+    IFS=' ' read -ra SPLIT_PARAMS <<<"${PPARAMS}"
+    for P in "${SPLIT_PARAMS[@]}"; do
+      PARAMS+=("${P}")
+    done
   fi
   if [ -n "${VERSION}" ]; then
     PARAMS+=("--version")
