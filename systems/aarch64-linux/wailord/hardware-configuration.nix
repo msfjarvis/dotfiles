@@ -1,3 +1,4 @@
+{ lib, ... }:
 {
   disko.devices = {
     disk = {
@@ -29,4 +30,6 @@
       };
     };
   };
+
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }

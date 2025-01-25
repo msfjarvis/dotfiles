@@ -21,4 +21,6 @@
     fsType = "ext4";
     options = [ "nofail" ];
   };
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
