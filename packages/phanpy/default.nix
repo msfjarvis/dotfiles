@@ -16,7 +16,7 @@ buildNpmPackage {
   src = fetchFromGitHub {
     owner = "cheeaun";
     repo = "phanpy";
-    tag = version;
+    rev = version;
     hash = "sha256-Y1wqYaBWsiw1Ns3yhaKDd4iPEWOLVLCwJ3NCKbndS7Y=";
   };
 
