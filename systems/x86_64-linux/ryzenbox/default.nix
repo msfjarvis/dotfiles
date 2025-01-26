@@ -20,6 +20,9 @@ in
     { config.facter.reportPath = ./facter.json; }
   ];
 
+  # We use a deterministically generate SOPS key instead of re-keying based on the system SSH key
+  sops.age.keyFile = "/var/lib/sops-nix/keys.txt";
+
   topology.self.name = "Desktop";
 
   profiles.${namespace} = {
