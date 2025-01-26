@@ -37,6 +37,36 @@ let
     };
   };
 
+  brandingType = types.submodule {
+    options = {
+      hide-footer = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Hides the footer when set to `true`";
+      };
+      custom-footer = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = "Specify custom HTML to use for the footer.";
+      };
+      logo-text = mkOption {
+        type = types.str;
+        default = "G";
+        description = "Specify custom text to use instead of the 'G' found in the navigation.";
+      };
+      logo-url = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = "Specify a URL to a custom image to use instead of the 'G' found in the navigation. If both logo-text and logo-url are set, only logo-url will be used.";
+      };
+      favicon-url = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = "Specify a URL to a custom image to use for the favicon.";
+      };
+    };
+  };
+
   themeType = types.submodule {
     options = {
       light = mkOption {
@@ -139,6 +169,10 @@ in
           server = mkOption {
             type = serverType;
             description = "Server settings.";
+          };
+          branding = mkOption {
+            type = brandingType;
+            description = "Branding settings.";
           };
           theme = mkOption {
             type = themeType;
