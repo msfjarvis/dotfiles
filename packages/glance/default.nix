@@ -17,8 +17,6 @@ buildGo123Module {
     hash = "sha256-mEDuP/wIqNo3OZcTYT0RGH96tRQ1IQ1bhrF/2/fpxUA=";
   };
 
-  patches = [ ./auto-update.patch ];
-
   vendorHash = "sha256-6lYlfiUJpXANv9D7Ssc0yZ2iCz1VwrOzw8rhMo4HgkQ=";
 
   excludedPackages = [ "build-and-ship" ];

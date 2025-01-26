@@ -196,6 +196,12 @@
       group = "users";
       settings = {
         server.port = 8080;
+        branding.custom-footer = ''
+          <script>
+          if (pageData.slug === 'home')
+            setTimeout(() => location.reload(), 60 * 1000);
+          </script>
+        '';
         theme = {
           background-color = "240 21 15";
           contrast-multiplier = 1.2;
