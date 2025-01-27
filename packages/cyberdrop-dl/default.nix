@@ -7,14 +7,14 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
-  version = "6.0.1-unstable-2025-01-03";
+  version = "6.3.0-unstable-2025-01-25";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jbsparrow";
     repo = "CyberDropDownloader";
-    rev = "30a03db33a6f2a2f94873ac5e02727ebd42c2007";
-    hash = "sha256-N2pcbNZLtKqQYL/6pX6pLJI1odjZPBsyW9Aa4bpVt8c=";
+    rev = "722b42aabd0b3b699eabb04fde9dd9b9160ca896";
+    hash = "sha256-TkkCLLM6ZJCcvsWx/QE1ykq8acToGVHiV5rHqoQDo5I=";
   };
 
   postPatch =
@@ -24,8 +24,7 @@ python3.pkgs.buildPythonApplication rec {
       mkRealName =
         pkg: pkg.pname |> lib.removePrefix "${python3.libPrefix}-" |> lib.removeSuffix "-${pkg.version}";
       mkPatch =
-        pkg:
-        ''${sed} -i 's/${mkRealName pkg} = ".*"/${mkRealName pkg} = "^${pkg.version}"/' pyproject.toml'';
+        pkg: ''${sed} -i 's/\s*"${mkRealName pkg}.*"/"${mkRealName pkg}==${pkg.version}"/' pyproject.toml'';
     in
     lib.concatStringsSep "\n" (lib.lists.map mkPatch dependencies);
 
