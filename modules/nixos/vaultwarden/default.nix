@@ -53,6 +53,7 @@ in
       environmentFile = config.sops.secrets.vaultwarden.path;
       config = {
         DOMAIN = cfg.domain;
+        EXPERIMENTAL_CLIENT_FEATURE_FLAGS = "autofill-v2,extension-refresh,fido2-vault-credentials,inline-menu-positioning-improvements,ssh-key-vault-item";
         SIGNUPS_ALLOWED = false;
         INVITATIONS_ALLOWED = false;
         ROCKET_PORT = 8890;
