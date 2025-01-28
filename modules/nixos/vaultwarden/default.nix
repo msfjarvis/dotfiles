@@ -52,12 +52,12 @@ in
       dbBackend = "postgresql";
       environmentFile = config.sops.secrets.vaultwarden.path;
       config = {
+        DATABASE_URL = "postgres://vaultwarden?host=/run/postgresql";
         DOMAIN = cfg.domain;
         EXPERIMENTAL_CLIENT_FEATURE_FLAGS = "autofill-v2,extension-refresh,fido2-vault-credentials,inline-menu-positioning-improvements,ssh-key-vault-item";
-        SIGNUPS_ALLOWED = false;
         INVITATIONS_ALLOWED = false;
         ROCKET_PORT = 8890;
-        DATABASE_URL = "postgres://vaultwarden?host=/run/postgresql";
+        SIGNUPS_ALLOWED = false;
       };
     };
   };
