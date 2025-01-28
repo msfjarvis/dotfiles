@@ -56,6 +56,9 @@ in
         DOMAIN = cfg.domain;
         EXPERIMENTAL_CLIENT_FEATURE_FLAGS = "autofill-v2,extension-refresh,fido2-vault-credentials,inline-menu-positioning-improvements,ssh-key-vault-item";
         INVITATIONS_ALLOWED = false;
+        PUSH_ENABLED = true;
+        PUSH_IDENTITY_URI = "https://identity.bitwarden.eu";
+        PUSH_RELAY_URI = "https://api.bitwarden.eu";
         ROCKET_PORT = 8890;
         SIGNUPS_ALLOWED = false;
       };
