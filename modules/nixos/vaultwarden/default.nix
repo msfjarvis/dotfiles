@@ -61,6 +61,7 @@ in
         PUSH_RELAY_URI = "https://api.bitwarden.eu";
         ROCKET_PORT = 8890;
         SIGNUPS_ALLOWED = false;
+        USE_SYSLOG = true;
       };
     };
   };
