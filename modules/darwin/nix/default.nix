@@ -10,6 +10,9 @@
       inherit lib pkgs;
     }
     // {
+      extraOptions = ''
+        experimental-features = auto-allocate-uids cgroups flakes nix-command recursive-nix pipe-operator
+      '';
       gc = {
         automatic = true;
         options = "--delete-older-than 3d";
