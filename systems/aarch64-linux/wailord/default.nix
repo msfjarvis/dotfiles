@@ -139,6 +139,12 @@
           reverse_proxy 127.0.0.1:${toString config.services.${namespace}.glance.settings.server.port}
         '';
       };
+      "https://mail.tiger-shark.ts.net" = {
+        extraConfig = ''
+          bind tailscale/mail
+          reverse_proxy ${config.services.alps.bindIP}:${toString config.services.alps.port}
+        '';
+      };
       "https://metube.tiger-shark.ts.net" = {
         extraConfig = ''
           bind tailscale/metube
@@ -386,6 +392,21 @@
     vaultwarden = {
       enable = true;
       domain = "https://vault.msfjarvis.dev";
+    };
+  };
+
+  services.alps = {
+    enable = true;
+    port = 9006;
+    bindIP = "127.0.0.1";
+    theme = "alps";
+    imaps = {
+      port = 993;
+      host = "imap.purelymail.com";
+    };
+    smtps = {
+      port = 465;
+      host = "smtp.purelymail.com";
     };
   };
 
