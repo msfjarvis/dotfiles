@@ -81,6 +81,7 @@ in
   caddy-tailscale = callPackage ./packages/caddy-tailscale { };
   clipboard-substitutor = callPackage ./packages/clipboard-substitutor { };
   cyberdrop-dl = callPackage ./packages/cyberdrop-dl { };
+  dependency-watch = callPackage ./packages/dependency-watch { };
   diffuse-bin = callPackage ./packages/diffuse-bin { };
   ficsit-cli = callPackage ./packages/ficsit-cli { };
   gallery-dl-unstable = callPackage ./packages/gallery-dl-unstable { };

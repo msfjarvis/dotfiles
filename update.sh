@@ -12,6 +12,7 @@ declare -a ALL_PACKAGES=(
   caddy-tailscale
   clipboard-substitutor
   cyberdrop-dl
+  dependency-watch
   ficsit-cli
   gallery-dl-unstable
   gdrive
