@@ -196,10 +196,11 @@
       group = "users";
       settings = {
         server.port = 8080;
+        # Refresh every 5 minutes
         branding.custom-footer = ''
           <script>
           if (pageData.slug === 'home')
-            setTimeout(() => location.reload(), 60 * 1000);
+            setTimeout(() => location.reload(), 60 * 1000 * 5);
           </script>
         '';
         theme = {
