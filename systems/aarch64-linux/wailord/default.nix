@@ -365,13 +365,15 @@
                     type = "twitch-channels";
                     cache = "1m";
                     channels = [
+                      "atrioc"
                       "couriway"
-                      "geminitay"
+                      "feinberg"
+                      "kqsii"
                       "laynalazar"
                       "matarakan"
                       "michimochievee"
                       "mush"
-                      "pearlescentmoon"
+                      "onigiri"
                       "sliggytv"
                     ];
                   }
