@@ -155,6 +155,7 @@ in
       smile
       telegram-desktop
       thunderbird
+      unrar
       (vesktop.override { withSystemVencord = true; })
       yt-dlp
     ];
