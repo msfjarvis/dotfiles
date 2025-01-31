@@ -32,6 +32,7 @@ in
     desktop.android-dev.enable = true;
     desktop.bluetooth.enable = true;
     desktop.gaming.enable = true;
+    desktop.gaming.minecraft.enable = true;
     desktop.gnome3.enable = true;
     desktop.noise-cancelation.enable = true;
     gallery-dl.enable = true;

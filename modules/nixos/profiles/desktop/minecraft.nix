@@ -10,10 +10,9 @@ let
   cfg = config.profiles.${namespace}.desktop.gaming;
   homeDir = config.users.users.msfjarvis.home;
   minecraftInstances = [
-    "Fabulously.Optimized.1.20.6"
-    "Fabulously.Optimized.1.21"
-    "Fabulously.Optimized.1.21.1"
+    "Big Globe"
     "Fabulously.Optimized.1.21.3"
+    "Fabulously.Optimized.1.21.4"
   ];
   instancePath = name: "${homeDir}/Games/PrismLauncher/instances/${name}/.minecraft";
 in
