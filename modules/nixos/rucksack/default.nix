@@ -69,11 +69,12 @@ in
         Restart = "on-failure";
         RestartSec = "30s";
         Type = "simple";
-        Environment = "PATH=${pkgs.coreutils}/bin:${pkgs.watchman}/bin";
+        Environment = [
+          "RUCKSACK_CONFIG=${settingsFile}"
+          "PATH=${pkgs.coreutils}/bin:${pkgs.watchman}/bin"
+        ];
+        ExecStart = "${lib.getExe cfg.package}";
       };
-      script = ''
-        exec env RUCKSACK_CONFIG=${settingsFile} ${lib.getExe cfg.package}
-      '';
     };
 
     users.users = mkIf (cfg.user == "rucksack") {
