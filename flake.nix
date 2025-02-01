@@ -158,6 +158,7 @@
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     spicetify-nix.inputs.nixpkgs.follows = "nixpkgs";
     spicetify-nix.inputs.flake-compat.follows = "flake-compat";
+    spicetify-nix.inputs.systems.follows = "systems";
 
     srvos.url = "github:nix-community/srvos";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
