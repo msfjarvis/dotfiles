@@ -137,6 +137,7 @@ in
       nerd-fonts.iosevka-term
       pkgs.${namespace}.katbin
       kondo
+      logseq
       maestro
       megatools
       nix-init
