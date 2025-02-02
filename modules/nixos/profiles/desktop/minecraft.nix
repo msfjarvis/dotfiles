@@ -36,7 +36,7 @@ in
       repository = "rest:https://restic.tiger-shark.ts.net/";
       passwordFile = config.sops.secrets.restic_repo_password.path;
 
-      paths = forEach minecraftInstances (name: "${instancePath name}/saves");
+      paths = forEach minecraftInstances (name: "${instancePath name}");
 
       pruneOpts = [
         "--keep-daily 2"
