@@ -143,7 +143,6 @@ in
       nix-init
       nix-update
       nurl
-      obsidian
       pkgs.${namespace}.patreon-dl
       pkgs.${namespace}.pidcat
       (python312.withPackages (
