@@ -40,10 +40,7 @@ function clrclip_wl() {
 }
 
 function clrclip_x() {
-  xclip -i /dev/null
-  touch blank
-  xclip -selection clipboard blank
-  rm blank
+  echo ' ' | xclip
 }
 
 function vpnup() {
