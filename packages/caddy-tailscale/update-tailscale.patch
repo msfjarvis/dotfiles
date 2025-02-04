@@ -1,15 +1,15 @@
-From 8d3c4611a85498f0794156c0f23c1328c47b09d8 Mon Sep 17 00:00:00 2001
+From 1e3c1fad263db4e8fc7b8d6948334d17d0047894 Mon Sep 17 00:00:00 2001
 From: Harsh Shandilya <me@msfjarvis.dev>
 Date: Thu, 12 Dec 2024 20:21:08 +0530
-Subject: [PATCH] feat(deps): update Tailscale to v1.79.0-pre.0.20250119
+Subject: [PATCH] feat(deps): update Tailscale to v1.80.0
 
 ---
- go.mod | 117 ++++++++++++------------
- go.sum | 275 ++++++++++++++++++++++++++++-----------------------------
- 2 files changed, 193 insertions(+), 199 deletions(-)
+ go.mod | 121 ++++++++++++------------
+ go.sum | 283 ++++++++++++++++++++++++++++-----------------------------
+ 2 files changed, 199 insertions(+), 205 deletions(-)
 
 diff --git a/go.mod b/go.mod
-index 74431d338e53..5a7fbd6729c6 100644
+index 74431d338e53..fbc76cc7ef36 100644
 --- a/go.mod
 +++ b/go.mod
 @@ -1,6 +1,6 @@
@@ -25,7 +25,7 @@ index 74431d338e53..5a7fbd6729c6 100644
  	github.com/tailscale/tscert v0.0.0-20240608151842-d3f834017e53
  	go.uber.org/zap v1.27.0
 -	tailscale.com v1.68.2
-+	tailscale.com v1.79.0-pre.0.20250119190021-6c30840cac13
++	tailscale.com v1.80.0
  )
  
  require (
@@ -92,7 +92,8 @@ index 74431d338e53..5a7fbd6729c6 100644
 -	github.com/google/pprof v0.0.0-20231212022811-ec68065c825e // indirect
 +	github.com/google/pprof v0.0.0-20240409012703-83162a5b38cd // indirect
  	github.com/google/uuid v1.6.0 // indirect
- 	github.com/gorilla/csrf v1.7.2 // indirect
+-	github.com/gorilla/csrf v1.7.2 // indirect
++	github.com/gorilla/csrf v1.7.3-0.20250123201450-9dd6af1f6d30 // indirect
  	github.com/gorilla/securecookie v1.1.2 // indirect
 -	github.com/grpc-ecosystem/grpc-gateway/v2 v2.18.0 // indirect
 +	github.com/grpc-ecosystem/grpc-gateway/v2 v2.24.0 // indirect
@@ -159,12 +160,13 @@ index 74431d338e53..5a7fbd6729c6 100644
  	github.com/tailscale/hujson v0.0.0-20221223112325-20486734a56a // indirect
 -	github.com/tailscale/netlink v1.1.1-0.20211101221916-cabfb018fe85 // indirect
 -	github.com/tailscale/peercred v0.0.0-20240214030740-b535050b2aa4 // indirect
-+	github.com/tailscale/netlink v1.1.1-0.20240822203006-4d49adab4de7 // indirect
-+	github.com/tailscale/peercred v0.0.0-20250107143737-35a0c7bd7edc // indirect
- 	github.com/tailscale/web-client-prebuilt v0.0.0-20240226180453-5db17b287bf1 // indirect
+-	github.com/tailscale/web-client-prebuilt v0.0.0-20240226180453-5db17b287bf1 // indirect
 -	github.com/tailscale/wireguard-go v0.0.0-20240429185444-03c5a0ccf754 // indirect
 -	github.com/tcnksm/go-httpstat v0.2.0 // indirect
 -	github.com/u-root/uio v0.0.0-20240118234441-a3c409a6018e // indirect
++	github.com/tailscale/netlink v1.1.1-0.20240822203006-4d49adab4de7 // indirect
++	github.com/tailscale/peercred v0.0.0-20250107143737-35a0c7bd7edc // indirect
++	github.com/tailscale/web-client-prebuilt v0.0.0-20250124233751-d4cd19a26976 // indirect
 +	github.com/tailscale/wireguard-go v0.0.0-20250107165329-0b8b35511f19 // indirect
 +	github.com/u-root/uio v0.0.0-20240224005618-d2acac8f3701 // indirect
  	github.com/urfave/cli v1.22.14 // indirect
@@ -251,7 +253,7 @@ index 74431d338e53..5a7fbd6729c6 100644
 -	nhooyr.io/websocket v1.8.10 // indirect
  )
 diff --git a/go.sum b/go.sum
-index f4ecb2616671..27ed49c05907 100644
+index f4ecb2616671..0f8979f8353c 100644
 --- a/go.sum
 +++ b/go.sum
 @@ -3,9 +3,9 @@ cloud.google.com/go/auth v0.4.1 h1:Z7YNIhlWRtrnKlZke7z3GMqzvuYzdc2z98F9D1NV5Hg=
@@ -396,8 +398,14 @@ index f4ecb2616671..27ed49c05907 100644
  github.com/google/renameio v0.1.0/go.mod h1:KWCgfxg9yswjAJkECMjeO8J8rahYeXnNhOm40UhjYkI=
  github.com/google/s2a-go v0.1.7 h1:60BLSyTrOV4/haCDW4zb1guZItoSq8foHCXrAnjBo/o=
  github.com/google/s2a-go v0.1.7/go.mod h1:50CgR4k1jNlWBu4UfS4AcfhVe1r6pdZPygJ3R8F0Qdw=
-@@ -248,18 +251,18 @@ github.com/gorilla/csrf v1.7.2 h1:oTUjx0vyf2T+wkrx09Trsev1TE+/EbDAeHtSTbtC2eI=
- github.com/gorilla/csrf v1.7.2/go.mod h1:F1Fj3KG23WYHE6gozCmBAezKookxbIvUJT+121wTuLk=
+@@ -244,22 +247,22 @@ github.com/googleapis/enterprise-certificate-proxy v0.3.2 h1:Vie5ybvEvT75RniqhfF
+ github.com/googleapis/enterprise-certificate-proxy v0.3.2/go.mod h1:VLSiSSBs/ksPL8kq3OBOQ6WRI2QnaFynd1DCjZ62+V0=
+ github.com/googleapis/gax-go/v2 v2.12.4 h1:9gWcmF85Wvq4ryPFvGFaOgPIs1AQX0d0bcbGw4Z96qg=
+ github.com/googleapis/gax-go/v2 v2.12.4/go.mod h1:KYEYLorsnIGDi/rPC8b5TdlB9kbKoFubselGIoBMCwI=
+-github.com/gorilla/csrf v1.7.2 h1:oTUjx0vyf2T+wkrx09Trsev1TE+/EbDAeHtSTbtC2eI=
+-github.com/gorilla/csrf v1.7.2/go.mod h1:F1Fj3KG23WYHE6gozCmBAezKookxbIvUJT+121wTuLk=
++github.com/gorilla/csrf v1.7.3-0.20250123201450-9dd6af1f6d30 h1:fiJdrgVBkjZ5B1HJ2WQwNOaXB+QyYcNXTA3t1XYLz0M=
++github.com/gorilla/csrf v1.7.3-0.20250123201450-9dd6af1f6d30/go.mod h1:F1Fj3KG23WYHE6gozCmBAezKookxbIvUJT+121wTuLk=
  github.com/gorilla/securecookie v1.1.2 h1:YCIWL56dvtr73r6715mJs5ZvhtnY73hBvEF8kXD8ePA=
  github.com/gorilla/securecookie v1.1.2/go.mod h1:NfCASbcHqRSY+3a8tlWJwsQap2VX5pwzwo4h3eOamfo=
 -github.com/grpc-ecosystem/grpc-gateway/v2 v2.18.0 h1:RtRsiaGvWxcwd8y3BiRZxsylPT8hLWZ5SPcfI+3IDNk=
@@ -531,8 +539,10 @@ index f4ecb2616671..27ed49c05907 100644
 +github.com/tailscale/peercred v0.0.0-20250107143737-35a0c7bd7edc/go.mod h1:f93CXfllFsO9ZQVq+Zocb1Gp4G5Fz0b0rXHLOzt/Djc=
  github.com/tailscale/tscert v0.0.0-20240608151842-d3f834017e53 h1:uxMgm0C+EjytfAqyfBG55ZONKQ7mvd7x4YYCWsf8QHQ=
  github.com/tailscale/tscert v0.0.0-20240608151842-d3f834017e53/go.mod h1:kNGUQ3VESx3VZwRwA9MSCUegIl6+saPL8Noq82ozCaU=
- github.com/tailscale/web-client-prebuilt v0.0.0-20240226180453-5db17b287bf1 h1:tdUdyPqJ0C97SJfjB9tW6EylTtreyee9C44de+UBG0g=
- github.com/tailscale/web-client-prebuilt v0.0.0-20240226180453-5db17b287bf1/go.mod h1:agQPE6y6ldqCOui2gkIh7ZMztTkIQKH049tv8siLuNQ=
+-github.com/tailscale/web-client-prebuilt v0.0.0-20240226180453-5db17b287bf1 h1:tdUdyPqJ0C97SJfjB9tW6EylTtreyee9C44de+UBG0g=
+-github.com/tailscale/web-client-prebuilt v0.0.0-20240226180453-5db17b287bf1/go.mod h1:agQPE6y6ldqCOui2gkIh7ZMztTkIQKH049tv8siLuNQ=
++github.com/tailscale/web-client-prebuilt v0.0.0-20250124233751-d4cd19a26976 h1:UBPHPtv8+nEAy2PD8RyAhOYvau1ek0HDJqLS/Pysi14=
++github.com/tailscale/web-client-prebuilt v0.0.0-20250124233751-d4cd19a26976/go.mod h1:agQPE6y6ldqCOui2gkIh7ZMztTkIQKH049tv8siLuNQ=
  github.com/tailscale/wf v0.0.0-20240214030419-6fbb0a674ee6 h1:l10Gi6w9jxvinoiq15g8OToDdASBni4CyJOdHY1Hr8M=
  github.com/tailscale/wf v0.0.0-20240214030419-6fbb0a674ee6/go.mod h1:ZXRML051h7o4OcI0d3AaILDIad/Xw0IkXaHM17dic1Y=
 -github.com/tailscale/wireguard-go v0.0.0-20240429185444-03c5a0ccf754 h1:iazWjqVHE6CbNam7WXRhi33Qad5o7a8LVYgVoILpZdI=
@@ -796,8 +806,8 @@ index f4ecb2616671..27ed49c05907 100644
  software.sslmate.com/src/go-pkcs12 v0.4.0/go.mod h1:Qiz0EyvDRJjjxGyUQa2cCNZn/wMyzrRJ/qcDXOQazLI=
 -tailscale.com v1.68.2 h1:nxy9HTAXPjuTbu/xzF05mS/v9ABMRGGJdPWEScTJxUo=
 -tailscale.com v1.68.2/go.mod h1:uqtoDEA8tw5+S+HLGqQGfpQsqeVtBS/EVVv5mXIaAoQ=
-+tailscale.com v1.79.0-pre.0.20250119190021-6c30840cac13 h1:5yQotM4nOCN/fj/YuCgtBvkVHlsGsMAkyKKo7yB6Ol8=
-+tailscale.com v1.79.0-pre.0.20250119190021-6c30840cac13/go.mod h1:ABzV+1HvaG+72MdrrsXBIgj1/+aJJHlxHzBQFTNSfn8=
++tailscale.com v1.80.0 h1:7joWtDtdHEHJvGmOag10RNITKp1I4Ts7Hrn6pU33/1I=
++tailscale.com v1.80.0/go.mod h1:4tasV1xjJAMHuX2xWMWAnXEmlrAA6M3w1xnc32DlpMk=
 -- 
 2.47.0
 
