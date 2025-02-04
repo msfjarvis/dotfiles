@@ -11,6 +11,9 @@
       generateRegistryFromInputs = true;
       linkInputs = true;
 
+      # Lix and CppNix disagree on some feature names
+      checkAllErrors = false;
+
       extraOptions = ''
         keep-outputs = true
         warn-dirty = false
@@ -27,7 +30,10 @@
           "flakes"
           "nix-command"
           "recursive-nix"
+          # Lix name
           "pipe-operator"
+          # CppNix name
+          "pipe-operators"
         ];
         flake-registry = "/etc/nix/registry.json";
         http-connections = 50;
