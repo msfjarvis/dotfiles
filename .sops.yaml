@@ -1,8 +1,10 @@
 keys:
   - &wailord age10fy49p7faufe5533rxgshwjn9kr3aqcxjyqk6ty26j99w50dkswsvn2maq
   - &ryzenbox age1lx7mrr66ewummv3mqp4wesq57w0rld8hsujcqcrnnedgjpy7fv2qlkrqk2
+  - &melody age1hkfcgddpm7yrpzw63ndggppm4e4t42wfx0q8vlg6lx30scsg2g7qgfn6gh
 creation_rules:
   - key_groups:
       - age:
           - *wailord
           - *ryzenbox
+          - *melody
