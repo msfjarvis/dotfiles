@@ -11,7 +11,7 @@
     }
     // {
       extraOptions = ''
-        experimental-features = auto-allocate-uids cgroups flakes nix-command recursive-nix pipe-operator
+        experimental-features = auto-allocate-uids cgroups flakes nix-command recursive-nix
       '';
       gc = {
         automatic = true;
