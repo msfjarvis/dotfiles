@@ -31,7 +31,6 @@ NixOS packages for personal use.
 - [piv-agent] : An SSH and GPG agent which you can use with your PIV hardware security device (e.g. a Yubikey).
 - [prometheus-qbittorrent-exporter] : Prometheus exporter for QBittorrent
 - [rucksack] : Simple CLI tool to watch directories and move their files to a single dumping ground
-- [spot-unstable]: Spotify player for GNOME tracking the main branch
 - [toml-cli] : Simple CLI for editing and querying TOML files
 
 [adb-sync]: https://msfjarvis.dev/g/adb-sync
@@ -66,5 +65,4 @@ NixOS packages for personal use.
 [piv-agent]: https://github.com/smlx/piv-agent
 [prometheus-qbittorrent-exporter]: https://github.com/esanchezm/prometheus-qbittorrent-exporter
 [rucksack]: https://msfjarvis.dev/g/rucksack
-[spot-unstable]: https://github.com/xou816/spot
 [toml-cli]: https://github.com/gnprice/toml-cli

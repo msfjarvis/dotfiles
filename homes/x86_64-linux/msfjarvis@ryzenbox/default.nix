@@ -30,10 +30,7 @@
     };
     gnome-terminal.enable = true;
     mpv.enable = true;
-    spotify = {
-      enable = true;
-      spot = false; # Audio quality is just so consistently ass cheeks
-    };
+    spotify.enable = true;
     zed = {
       enable = true;
       extensions = [
