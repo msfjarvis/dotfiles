@@ -110,9 +110,13 @@ in
     isNormalUser = true;
     description = "Harsh Shandilya";
     extraGroups = [
-      "networkmanager"
-      "wheel"
+      # Arduino
+      "dialout"
+      # Virtualization
       "libvirtd"
+      "networkmanager"
+      # Root
+      "wheel"
     ];
     packages = with pkgs; [
       pkgs.${namespace}.adbear
