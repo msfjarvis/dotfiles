@@ -31,7 +31,6 @@ declare -a ALL_PACKAGES=(
   piv-agent
   prometheus-qbittorrent-exporter
   rucksack
-  spot-unstable
   toml-cli
 )
 

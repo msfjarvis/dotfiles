@@ -108,6 +108,5 @@ in
   piv-agent = callPackage ./packages/piv-agent { };
   prometheus-qbittorrent-exporter = callPackage ./packages/prometheus-qbittorrent-exporter { };
   rucksack = callPackage ./packages/rucksack { };
-  spot-unstable = callPackage ./packages/spot-unstable { };
   toml-cli = callPackage ./packages/toml-cli { };
 }
