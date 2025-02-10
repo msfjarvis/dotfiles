@@ -23,7 +23,8 @@ rustPlatform.buildRustPackage {
     hash = "sha256-JIv61I2ZB7Pzaufg2/Fohsfe/mZ6mLVJwGtopEFr/6w=";
   };
 
-  cargoHash = "sha256-i4HyB/vTayO0u6Igx6CCIek2HRoodzJUa2yHGI13uTw=";
+  cargoHash = "sha256-b/5koKvq0aa8u9G5XtDuMf1jzuDUnJE3yrUV2FJafnM=";
+  useFetchCargoVendor = true;
 
   PKG_CONFIG_PATH = "${openssl.dev}/lib/pkgconfig";
 

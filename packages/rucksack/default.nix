@@ -19,7 +19,8 @@ rustPlatform.buildRustPackage {
   };
 
   buildFeatures = lib.optionals stdenv.hostPlatform.isLinux [ "journald" ];
-  cargoHash = "sha256-tEkWan50+HN87IdI8/gTEuAKvcj3SGz39m7o8+/0Xms=";
+  cargoHash = "sha256-DzpUx02xUVN/qltADmOl/GlQg3w1I57T7MXle+959Hs=";
+  useFetchCargoVendor = true;
 
   useNextest = true;
 

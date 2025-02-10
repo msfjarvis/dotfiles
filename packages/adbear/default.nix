@@ -27,7 +27,8 @@ in
       hash = "sha256-ylSR5N9l8dJGelO/+r/CpwyBAJzhVyscxv6IbkO+oow=";
     };
 
-    cargoHash = "sha256-4dVjXwEYKhLWjPODMflDIAClUBTlrCN+VHMzPwf5xgk=";
+    cargoHash = "sha256-81kcQgApTalt2BRBf5o9emE/+52tBUZF0/dbeR2Ugzk=";
+    useFetchCargoVendor = true;
 
     meta = {
       description = "CLI to automatically pair and join Android devices via ADB";

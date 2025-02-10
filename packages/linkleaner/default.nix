@@ -27,8 +27,8 @@ in
       hash = "sha256-7scRKiUrdbKh+/jR8ZGgWSznXFPSijW37y5h0iixHiU=";
     };
 
-    useFetchCargoVendor = true;
     cargoHash = "sha256-NYFpkZoe5XH6kJjPrt2/lKrAhdqmCGPxg72NfMAsQ+g=";
+    useFetchCargoVendor = true;
 
     useNextest = true;
 

@@ -19,7 +19,8 @@ rustPlatform.buildRustPackage {
 
   buildAndTestSubdir = "monitor";
 
-  cargoHash = "sha256-9sZfCna4jSEJ2z4xtlk+YHN2MHC2IGf0Zzyw96MMhnI=";
+  cargoHash = "sha256-va3/FcTlQjNgWr3w0zGzcoTMqE/gX0Wl09vRGB9vc/M=";
+  useFetchCargoVendor = true;
 
   useNextest = true;
 
