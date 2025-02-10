@@ -18,7 +18,8 @@ declare -a ALL_PACKAGES=(
   gdrive
   gitice
   gitout
-  glance
+  # Disabled due to Go 1.23.6 requirement
+  # glance
   gphotos-cdp
   hcctl
   healthchecks-monitor
@@ -38,7 +39,6 @@ declare -r -A EXTRA_PARAMS=(
   ["caddy-tailscale"]="--version=branch"
   ["cyberdrop-dl"]="--version=branch"
   ["gallery-dl-unstable"]="--version=branch"
-  ["glance"]="--version=branch=release/v0.7.0"
   ["hcctl"]="--version-regex=hcctl-v(.*)"
   ["healthchecks-monitor"]="--version-regex=healthchecks-monitor-v(.*)"
   ["phanpy"]="--url=https://github.com/cheeaun/phanpy --version=branch"
