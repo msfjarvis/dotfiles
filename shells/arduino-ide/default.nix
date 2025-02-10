@@ -2,9 +2,7 @@
 (pkgs.buildFHSEnv {
   name = "arduino-env";
   targetPkgs =
-    pkgs:
-    with pkgs;
-    [
+    pkgs: with pkgs; [
       ncurses
       arduino-ide
       zlib
