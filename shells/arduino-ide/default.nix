@@ -11,4 +11,5 @@
       ]))
     ];
   multiPkgs = null;
+  runScript = "arduino-ide";
 }).env
