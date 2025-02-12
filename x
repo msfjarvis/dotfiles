@@ -57,6 +57,11 @@ server-switch)
   nh os switch .
   cleanup_generations
   ;;
+gradle-hash)
+  shift
+  VERSION="${1}"
+  nix hash to-sri --type sha256 "$(nix-prefetch-url --type sha256 https://services.gradle.org/distributions/gradle-"${VERSION}"-bin.zip)"
+  ;;
 *)
   echo "Invalid command: ${ARG}"
   exit 1
