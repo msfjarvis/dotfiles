@@ -85,6 +85,19 @@ in
       ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOZFw0Dgs0z29Brvj+CejlgBG5t0AtoFvNIjd3DPvL7N''
     ];
 
+    # Enable passwordless sudo.
+    security.sudo.extraRules = [
+      {
+        groups = [ "wheel" ];
+        commands = [
+          {
+            command = "ALL";
+            options = [ "NOPASSWD" ];
+          }
+        ];
+      }
+    ];
+
     sops.secrets.server-tsauthkey = {
       sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
     };
