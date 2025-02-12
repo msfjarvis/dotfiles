@@ -11,10 +11,27 @@
       generateRegistryFromInputs = true;
       linkInputs = true;
 
+      buildMachines = [
+        {
+          hostName = "melody";
+          system = "aarch64-linux";
+          protocol = "ssh-ng";
+          maxJobs = 2;
+          speedFactor = 2;
+          supportedFeatures = [
+            "big-parallel"
+            "kvm"
+          ];
+          mandatoryFeatures = [ ];
+        }
+      ];
+      distributedBuilds = true;
+
       extraOptions = ''
         keep-outputs = true
         warn-dirty = false
         keep-derivations = true
+        builders-use-substitutes = true
       '';
       settings = {
         accept-flake-config = true;
