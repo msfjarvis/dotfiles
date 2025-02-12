@@ -2069,8 +2069,8 @@
         },
         "unix_device_names": [
           "/dev/disk/by-diskseq/9",
-          "/dev/disk/by-id/scsi-3605fdbcf6c144d90bc0fc63f4ed82178",
-          "/dev/disk/by-id/wwn-0x605fdbcf6c144d90bc0fc63f4ed82178",
+          "/dev/disk/by-id/scsi-36032b6815dc54f4ea285178777dd56ac",
+          "/dev/disk/by-id/wwn-0x6032b6815dc54f4ea285178777dd56ac",
           "/dev/disk/by-path/pci-0000:18:00.0-scsi-0:0:0:1",
           "/dev/sda"
         ],
@@ -2221,7 +2221,7 @@
         },
         "vendor": {
           "hex": "1d6b",
-          "name": "Linux 6.12.12 xhci-hcd",
+          "name": "Linux 6.6.76 xhci-hcd",
           "value": 7531
         },
         "device": {
@@ -2231,11 +2231,11 @@
         },
         "revision": {
           "hex": "0000",
-          "name": "6.12",
+          "name": "6.06",
           "value": 0
         },
         "serial": "0000:00:02.0",
-        "model": "Linux 6.12.12 xhci-hcd xHCI Host Controller",
+        "model": "Linux 6.6.76 xhci-hcd xHCI Host Controller",
         "sysfs_id": "/devices/pci0000:00/0000:00:02.0/usb1/1-0:1.0",
         "sysfs_bus_id": "1-0:1.0",
         "resources": [
@@ -2279,7 +2279,7 @@
         "drivers": [
           "hub"
         ],
-        "module_alias": "usb:v1D6Bp0002d0612dc09dsc00dp01ic09isc00ip00in00"
+        "module_alias": "usb:v1D6Bp0002d0606dc09dsc00dp01ic09isc00ip00in00"
       },
       {
         "index": 45,
@@ -2304,7 +2304,7 @@
         },
         "vendor": {
           "hex": "1d6b",
-          "name": "Linux 6.12.12 xhci-hcd",
+          "name": "Linux 6.6.76 xhci-hcd",
           "value": 7531
         },
         "device": {
@@ -2314,11 +2314,11 @@
         },
         "revision": {
           "hex": "0000",
-          "name": "6.12",
+          "name": "6.06",
           "value": 0
         },
         "serial": "0000:00:02.0",
-        "model": "Linux 6.12.12 xhci-hcd xHCI Host Controller",
+        "model": "Linux 6.6.76 xhci-hcd xHCI Host Controller",
         "sysfs_id": "/devices/pci0000:00/0000:00:02.0/usb2/2-0:1.0",
         "sysfs_bus_id": "2-0:1.0",
         "detail": {
@@ -2352,7 +2352,7 @@
         "drivers": [
           "hub"
         ],
-        "module_alias": "usb:v1D6Bp0003d0612dc09dsc00dp03ic09isc00ip00in00"
+        "module_alias": "usb:v1D6Bp0003d0606dc09dsc00dp03ic09isc00ip00in00"
       }
     ],
     "keyboard": [
@@ -2479,7 +2479,7 @@
           {
             "type": "mem",
             "base": 0,
-            "range": 25127432192,
+            "range": 25133813760,
             "enabled": true,
             "access": "read_write",
             "prefetch": "unknown"
@@ -3304,8 +3304,12 @@
           "prog_if": 48
         },
         "driver": "xhci_hcd",
+        "driver_module": "xhci_pci",
         "drivers": [
           "xhci_hcd"
+        ],
+        "driver_modules": [
+          "xhci_pci"
         ],
         "module_alias": "pci:v00001B36d0000000Dsv00001AF4sd00001100bc0Csc03i30"
       }
