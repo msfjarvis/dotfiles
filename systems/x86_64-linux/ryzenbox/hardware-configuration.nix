@@ -10,8 +10,6 @@ let
   nvidiaDriver = config.boot.kernelPackages.nvidiaPackages.beta.bin;
 in
 {
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-
   # Enable NVIDIA driver
   hardware.graphics = {
     enable = true;
