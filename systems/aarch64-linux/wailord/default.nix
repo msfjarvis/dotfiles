@@ -35,12 +35,6 @@
 
   time.timeZone = "Asia/Kolkata";
 
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = lib.mkForce "us";
-    useXkbConfig = true;
-  };
-
   nix.settings.max-jobs = lib.mkForce 1; # The server has a weak CPU that deals poorly with concurrent builds
 
   users = {

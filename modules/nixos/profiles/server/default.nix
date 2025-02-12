@@ -62,6 +62,12 @@ in
       };
     };
 
+    console = {
+      font = "Lat2-Terminus16";
+      keyMap = lib.mkForce "us";
+      useXkbConfig = true;
+    };
+
     # Automatically log into my user account
     services.getty.autologinUser = lib.mkForce "msfjarvis";
 

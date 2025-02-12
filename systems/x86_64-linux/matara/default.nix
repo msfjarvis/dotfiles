@@ -12,12 +12,6 @@
 
   time.timeZone = "Asia/Kolkata";
 
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = lib.mkForce "us";
-    useXkbConfig = true;
-  };
-
   users = {
     mutableUsers = false;
     users = {
