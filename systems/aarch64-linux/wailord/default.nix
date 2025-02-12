@@ -35,7 +35,8 @@
 
   time.timeZone = "Asia/Kolkata";
 
-  nix.settings.max-jobs = lib.mkForce 1; # The server has a weak CPU that deals poorly with concurrent builds
+  # The server has a weak CPU, so always offload to a remote builder
+  nix.settings.max-jobs = lib.mkForce 0;
 
   users = {
     mutableUsers = false;
