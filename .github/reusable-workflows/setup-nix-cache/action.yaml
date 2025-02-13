@@ -58,3 +58,9 @@ runs:
         ENDPOINT: ${{ inputs.attic-endpoint }}
         PUBLIC_KEY: ${{ inputs.attic-public-key }}
         TOKEN: ${{ inputs.attic-token }}
+    - name: Set up remote builder
+      shell: bash
+      run: |
+        sudo mkdir -p /etc/nix/ /root/.ssh/
+        printf '%s\n' 'ssh-ng://melody aarch64-linux - 2 2 big-parallel,kvm - -' | sudo tee -a /etc/nix/machines
+        printf '%s\n' 'melody ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOd+qst3bY4ru0zaIGf/wHhRVfXfg4QenF/uFSU/rk/+' | sudo tee -a /root/.ssh/known_hosts
