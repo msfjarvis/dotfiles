@@ -40,10 +40,10 @@ home-switch)
 home-test)
   nh os test .
   ;;
-matara-check)
-  nom_build matara
+melody-check)
+  nom_build melody
   ;;
-matara-switch)
+melody-switch)
   nh os switch .
   cleanup_generations
   ;;
