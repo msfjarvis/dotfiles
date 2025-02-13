@@ -15,6 +15,14 @@ jobs:
           #   runner: buildjet-8vcpu-ubuntu-2204-arm
           #   target: wailord
           #   public-key: "aarch64-linux:czBXxHtNIDorynmG/2pRuFSENM+fnu0rgVkH+8I4niQ="
+          - cache: aarch64-linux
+            runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
+            target: melody
+            public-key: "aarch64-linux:czBXxHtNIDorynmG/2pRuFSENM+fnu0rgVkH+8I4niQ="
+          - cache: aarch64-linux
+            runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
+            target: wailord
+            public-key: "aarch64-linux:czBXxHtNIDorynmG/2pRuFSENM+fnu0rgVkH+8I4niQ="
           - cache: x86_64-linux
             runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
             target: ryzenbox
