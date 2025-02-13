@@ -44,8 +44,9 @@ function clrclip_x() {
 }
 
 function vpnup() {
-  local TAILSCALE_IP
-  TAILSCALE_IP=$(tailscale status --json | jq -r '.Peer[] | select(.HostName == "wailord") | .TailscaleIPs[0]')
+  local TAILSCALE_IP DEVICE
+  DEVICE="${1:-wailord}"
+  TAILSCALE_IP=$(tailscale status --json | jq -r ".Peer[] | select(.HostName == ${DEVICE}) | .TailscaleIPs[0]")
   tailscale up --reset --operator="$USER" --exit-node="${TAILSCALE_IP:?}"
 }
 
