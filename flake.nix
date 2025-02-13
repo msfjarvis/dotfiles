@@ -46,6 +46,11 @@
         srvos.nixosModules.mixins-mdns
         srvos.nixosModules.server
       ];
+      systems.hosts.melody.modules = with inputs; [
+        srvos.nixosModules.mixins-telegraf
+        srvos.nixosModules.roles-prometheus
+        srvos.nixosModules.server
+      ];
       systems.hosts.ryzenbox.modules = with inputs; [ srvos.nixosModules.desktop ];
       systems.hosts.wailord.modules = with inputs; [
         srvos.nixosModules.mixins-telegraf
