@@ -23,10 +23,10 @@ jobs:
             runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
             target: wailord
             public-key: "aarch64-linux:czBXxHtNIDorynmG/2pRuFSENM+fnu0rgVkH+8I4niQ="
-          - cache: x86_64-linux
-            runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
-            target: ryzenbox
-            public-key: "x86_64-linux:HLQszdZAPt0hy6dsMxsI7EDeghCzfSwB8VyBEnei/j0="
+          # - cache: x86_64-linux
+          #   runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
+          #   target: ryzenbox
+          #   public-key: "x86_64-linux:HLQszdZAPt0hy6dsMxsI7EDeghCzfSwB8VyBEnei/j0="
     runs-on: ${{ matrix.runner }}
     steps:
       - name: Checkout repository
@@ -51,7 +51,7 @@ jobs:
         run: nix flake update nixpkgs
       - name: Build NixOS configuration
         shell: bash
-        run: nix build --max-jobs 1 --print-build-logs .#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel
+        run: nix build --print-build-logs .#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel
       - name: Push to attic cache
         shell: bash
         run: |
