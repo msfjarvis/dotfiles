@@ -67,6 +67,8 @@ fi
 # Setup zoxide
 if type zoxide &>/dev/null; then
   alias cd=z
+  # zoxide 0.9.7 spams me
+  export _ZO_DOCTOR=0
 fi
 
 # Spicetify
