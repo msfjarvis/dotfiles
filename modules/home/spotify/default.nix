@@ -38,7 +38,6 @@ in
         hideAudiobooksButton
         hideDownloadButton
         hideFriendActivityButton
-        hideFriendsActivityButton
         hideLikedSongsCard
         hideMadeForYou
         hidePlayingGif
