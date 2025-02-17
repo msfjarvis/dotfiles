@@ -7,14 +7,14 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
-  version = "6.4.0-unstable-2025-02-01";
+  version = "6.5.0-unstable-2025-02-17";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jbsparrow";
     repo = "CyberDropDownloader";
-    rev = "a114d697c74c5c3199b695db6cf8c3bdf3944bde";
-    hash = "sha256-0537AScibl2qcvVDU1eYtS5yNBBJzCpMI98K8wW1ju4=";
+    rev = "cbbc11d1a061865326b289d3a5eff765624c6e25";
+    hash = "sha256-JOiMhmVgKUq4dFRYmJD0X5DWEdT1qBezzYnJ3aINuPk=";
   };
 
   postPatch =
@@ -43,6 +43,7 @@ python3.pkgs.buildPythonApplication rec {
     arrow
     asyncpraw
     beautifulsoup4
+    browser-cookie3
     certifi
     filedate
     get-video-properties
