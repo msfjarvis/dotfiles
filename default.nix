@@ -102,6 +102,7 @@ in
       inherit fenix rust-manifest;
     };
   };
+  mediafire_rs = callPackage ./packages/mediafire_rs { };
   patreon-dl = callPackage ./packages/patreon-dl { };
   phanpy = callPackage ./packages/phanpy { };
   pidcat = callPackage ./packages/pidcat { };

@@ -25,6 +25,7 @@ declare -a ALL_PACKAGES=(
   healthchecks-monitor
   katbin
   linkleaner
+  mediafire_rs
   patreon-dl
   phanpy
   pidcat

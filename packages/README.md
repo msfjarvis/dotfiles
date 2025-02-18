@@ -25,6 +25,7 @@ NixOS packages for personal use.
 - [healthchecks-monitor]: CLI tool to run commands and report its result to https://healthchecks.io
 - [katbin] : A CLI for [katb.in]
 - [linkleaner] : Telegram bot to fix social media link previews
+- [mediafire_rs] : Downloader for Mediafire folders
 - [patreon-dl] : Download content from creators you're subscribed to on Patreon
 - [phanpy] : Alternate Mastodon client
 - [pidcat] : Fork of [JakeWharton's pidcat] with Python3 support and some other fixes
@@ -59,6 +60,7 @@ NixOS packages for personal use.
 [katb.in]: https://katb.in
 [katbin]: https://github.com/SphericalKat/katbin-cli
 [linkleaner]: https://msfjarvis.dev/g/linkleaner
+[mediafire_rs]: https://github.com/nickoehler/mediafire_rs
 [patreon-dl]: https://github.com/PrivateGER/patreon-dl
 [phanpy]: https://github.com/cheeaun/phanpy
 [pidcat]: https://msfjarvis.dev/g/pidcat
