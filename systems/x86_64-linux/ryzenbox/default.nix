@@ -137,12 +137,14 @@ in
       fzf
       pkgs.${namespace}.gdrive
       git-crypt
+      google-chrome # Hotstar hates Firefox
       handbrake
       nerd-fonts.iosevka-term
       pkgs.${namespace}.katbin
       kondo
       logseq
       maestro
+      pkgs.${namespace}.mediafire_rs
       megatools
       nix-init
       nix-update
