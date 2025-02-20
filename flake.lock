@@ -812,13 +812,13 @@
     "wallpaper": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-C69+Mh90XYv+PnWNZ4SPuIPUhsTNLUbGWHS6I7+Fsk8=",
+        "narHash": "sha256-PbvgZnTkqAMkwsPOIuDNDeCoA0s51zO2ITu+GF9U6Co=",
         "type": "file",
-        "url": "https://til.msfjarvis.dev/soft-rose.jpg"
+        "url": "https://til.msfjarvis.dev/matara%20valentine%20wallpaper.jpg"
       },
       "original": {
         "type": "file",
-        "url": "https://til.msfjarvis.dev/soft-rose.jpg"
+        "url": "https://til.msfjarvis.dev/matara%20valentine%20wallpaper.jpg"
       }
     }
   },
