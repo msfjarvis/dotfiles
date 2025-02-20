@@ -14,7 +14,13 @@ let
     "Fabulously.Optimized.1.21.3"
     "Fabulously.Optimized.1.21.4"
   ];
-  instancePath = name: "${homeDir}/Games/PrismLauncher/instances/${name}/.minecraft";
+  instancePath = name: "${homeDir}/Games/PrismLauncher/instances/${name}";
+  prismLauncher = pkgs.prismlauncher.override {
+    jdks = with pkgs; [
+      openjdk23
+      openjdk17
+    ];
+  };
 in
 {
   options.profiles.${namespace}.desktop.gaming.minecraft = {
@@ -23,11 +29,26 @@ in
   config = mkIf cfg.minecraft.enable {
     users.users.msfjarvis.packages = with pkgs; [
       mcaselector
-      (prismlauncher.override {
-        jdks = [
-          openjdk23
-          openjdk17
-        ];
+      (pkgs.symlinkJoin {
+        name = "prismlauncher-with-launchers";
+        paths =
+          [ prismLauncher ]
+          ++ (forEach minecraftInstances (
+            instance:
+            (pkgs.makeDesktopItem {
+              desktopName = instance;
+              type = "Application";
+              categories = [
+                "Game"
+                "ActionGame"
+                "AdventureGame"
+                "Simulation"
+              ];
+              exec = "${lib.getExe prismLauncher} --launch ${instance}";
+              name = instance;
+              icon = "${instancePath instance}/icon.png";
+            })
+          ));
       })
     ];
 
@@ -36,7 +57,7 @@ in
       repository = "rest:https://restic.tiger-shark.ts.net/";
       passwordFile = config.sops.secrets.restic_repo_password.path;
 
-      paths = forEach minecraftInstances (name: "${instancePath name}");
+      paths = forEach minecraftInstances (name: "${instancePath name}/.minecraft");
 
       pruneOpts = [
         "--keep-daily 2"
@@ -46,7 +67,7 @@ in
     };
 
     services.${namespace}.rucksack = {
-      sources = forEach minecraftInstances (name: "${instancePath name}/screenshots");
+      sources = forEach minecraftInstances (name: "${instancePath name}/.minecraft/screenshots");
     };
   };
 }
