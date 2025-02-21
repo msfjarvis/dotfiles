@@ -6,13 +6,13 @@
 }:
 buildNpmPackage {
   name = "phanpy";
-  version = "2025.01.26.24f03f5-unstable-2025-02-17";
+  version = "2025.01.26.24f03f5-unstable-2025-02-20";
 
   src = fetchFromGitHub {
     owner = "cheeaun";
     repo = "phanpy";
-    rev = "29ce176e0a004a3f5ef5be61ed6bfb48316b0643";
-    hash = "sha256-Zwa8EKBkeOKdD3GDNKzbUU4DwpUx62D5OVkmYHFJCVk=";
+    rev = "97d089141bc9fca84d0223b6eff49dc122c8717e";
+    hash = "sha256-hmV1eqROwqAxKfjIiMvH4Z6J8tI/waGswvbUGKhIwgc=";
   };
 
   npmDepsHash = "sha256-pyys6/Eyl1yRlbQrbxCQG090rlu3WNd6/268f7r3kUo=";
