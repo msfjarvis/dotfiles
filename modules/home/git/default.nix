@@ -35,18 +35,26 @@ in
     extraConfig =
       {
         branch.sort = "-committerdate";
-        core = {
-          autocrlf = "input";
-        };
+        core.autocrlf = "input";
         commit.verbose = true;
-        fetch = {
-          fsckobjects = true;
-          prune = true;
-        };
+        diff.algorithm = "histogram";
+        diff.colorMoved = "plain"; # show code movement in different colors than added and removed lines.
+        diff.mnemonicPrefix = true; # replace a/ and b/ in diff header output with where the diff is coming from; i/ (index), w/ (working directory) or c/ commit.
+        fetch.all = true;
+        fetch.fsckobjects = true;
+        fetch.prune = true;
+        fetch.pruneTags = true;
+        help.autocorrect = "prompt";
         init.defaultBranch = "main";
+        log.date = "iso";
         merge.conflictstyle = "zdiff3";
+        pull.rebase = true;
         push.autoSetupRemote = true;
+        rebase.autostash = true;
         receive.fsckObjects = true;
+        rerere.enabled = true; # record before and after states of rebase conflicts.
+        rerere.autoupdate = true; # automatically re-apply discovered resolutions.
+        tag.sort = "version:refname";
         transfer.fsckobjects = true;
       }
       // lib.attrsets.optionalAttrs (!isServer) {
