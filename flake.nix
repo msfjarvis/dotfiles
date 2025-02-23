@@ -171,6 +171,7 @@
     stylix.inputs.flake-compat.follows = "flake-compat";
     stylix.inputs.home-manager.follows = "home-manager";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
+    stylix.inputs.nur.follows = "";
     stylix.inputs.flake-utils.follows = "flake-utils";
     stylix.inputs.systems.follows = "systems";
     stylix.inputs.git-hooks.follows = "";
