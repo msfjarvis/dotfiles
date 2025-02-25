@@ -1,0 +1,53 @@
+diff --git i/cyberdrop_dl/main.py w/cyberdrop_dl/main.py
+index 9d325df656d7..6876e8d8962a 100644
+--- i/cyberdrop_dl/main.py
++++ w/cyberdrop_dl/main.py
+@@ -24,7 +24,7 @@ from cyberdrop_dl.utils import constants
+ from cyberdrop_dl.utils.apprise import send_apprise_notifications
+ from cyberdrop_dl.utils.logger import RedactedConsole, add_custom_log_render, log, log_spacer, log_with_color
+ from cyberdrop_dl.utils.sorting import Sorter
+-from cyberdrop_dl.utils.updates import check_latest_pypi
++# from cyberdrop_dl.utils.updates import check_latest_pypi
+ from cyberdrop_dl.utils.utilities import check_partials_and_empty_folders, send_webhook_message
+ from cyberdrop_dl.utils.yaml import handle_validation_error
+ 
+@@ -258,7 +258,7 @@ async def director(manager: Manager) -> None:
+         if not configs_to_run:
+             log_spacer(20)
+             log("Checking for Updates...", 20)
+-            check_latest_pypi()
++            # check_latest_pypi()
+             log_spacer(20)
+             log("Closing Program...", 20)
+             log_with_color("Finished downloading. Enjoy :)", "green", 20, show_in_stats=False)
+diff --git i/cyberdrop_dl/ui/program_ui.py w/cyberdrop_dl/ui/program_ui.py
+index 4864dc9ad1c2..8ca086695556 100644
+--- i/cyberdrop_dl/ui/program_ui.py
++++ w/cyberdrop_dl/ui/program_ui.py
+@@ -19,7 +19,7 @@ from cyberdrop_dl.ui.prompts.basic_prompts import ask_dir_path, enter_to_continu
+ from cyberdrop_dl.ui.prompts.defaults import DONE_CHOICE, EXIT_CHOICE
+ from cyberdrop_dl.utils.cookie_management import clear_cookies
+ from cyberdrop_dl.utils.sorting import Sorter
+-from cyberdrop_dl.utils.updates import check_latest_pypi
++# from cyberdrop_dl.utils.updates import check_latest_pypi
+ from cyberdrop_dl.utils.utilities import clear_term, open_in_text_editor
+ 
+ if TYPE_CHECKING:
+@@ -104,7 +104,7 @@ class ProgramUI:
+ 
+     def _check_updates(self) -> None:
+         """Checks Cyberdrop-DL updates."""
+-        check_latest_pypi(logging="CONSOLE")
++        # check_latest_pypi(logging="CONSOLE")
+         enter_to_continue()
+ 
+     def _change_config(self) -> None:
+@@ -267,7 +267,7 @@ class ProgramUI:
+         """Get latest changelog file from github. Returns its content."""
+         path = self.manager.path_manager.config_folder.parent / "CHANGELOG.md"
+         url = "https://raw.githubusercontent.com/jbsparrow/CyberDropDownloader/refs/heads/master/CHANGELOG.md"
+-        _, latest_version = check_latest_pypi(logging="OFF")
++        _, latest_version = None
+         if not latest_version:
+             self.print_error("UNABLE TO GET LATEST VERSION INFORMATION")
+             return None

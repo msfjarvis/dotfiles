@@ -17,6 +17,8 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-QwZ1y7qqoHSQ6ShwhcxV9RWINaT0EHX2jug4dXU8V8s=";
   };
 
+  patches = [ ./disable-update-check.diff ];
+
   postPatch =
     let
       sed = lib.getExe gnused;
