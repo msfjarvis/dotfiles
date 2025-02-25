@@ -52,11 +52,12 @@ in
     snowfallorg.users.msfjarvis.home.config = {
       programs.gradle = {
         enable = true;
-        package = pkgs.callPackage (pkgs.gradleGen {
-          version = "8.13-rc-2";
-          hash = "sha256-JkNT8XoTORYm/I0Ohq6AI/MOozSkcMquDP7gL+bNHz0=";
-          defaultJava = defaultJdk;
-        }) { };
+        package = pkgs.callPackage (pkgs.gradleGen (
+          (import ./gradle-version.nix)
+          // {
+            defaultJava = defaultJdk;
+          }
+        )) { };
         settings = {
           "org.gradle.caching" = true;
           "org.gradle.parallel" = true;
