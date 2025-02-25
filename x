@@ -60,7 +60,8 @@ server-switch)
 gradle-hash)
   shift
   VERSION="${1}"
-  nix hash to-sri --type sha256 "$(nix-prefetch-url --type sha256 https://services.gradle.org/distributions/gradle-"${VERSION}"-bin.zip)"
+  NIX_HASH="$(nix hash to-sri --type sha256 "$(nix-prefetch-url --type sha256 https://services.gradle.org/distributions/gradle-"${VERSION}"-bin.zip)")"
+  printf '{ version = "%s"; hash = "%s";}' "${VERSION}" "${NIX_HASH}" >modules/nixos/profiles/desktop/gradle-version.nix
   ;;
 *)
   echo "Invalid command: ${ARG}"
