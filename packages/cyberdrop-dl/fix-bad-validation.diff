@@ -1,0 +1,13 @@
+diff --git i/cyberdrop_dl/config_definitions/config_settings.py w/cyberdrop_dl/config_definitions/config_settings.py
+index d9cecfb38dc6..40359bea724d 100644
+--- i/cyberdrop_dl/config_definitions/config_settings.py
++++ w/cyberdrop_dl/config_definitions/config_settings.py
+@@ -117,7 +117,7 @@ class IgnoreOptions(BaseModel):
+         if not value:
+             return None
+         try:
+-            value = re.compile(value)  # type: ignore
++            re.compile(value)
+         except re.error as e:
+             raise ValueError("input is not a valid regex") from e
+         return value
