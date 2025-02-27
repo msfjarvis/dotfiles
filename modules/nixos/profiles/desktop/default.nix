@@ -64,6 +64,28 @@ in
       opacity = {
         terminal = 0.6;
       };
+      fonts = {
+        emoji = {
+          name = "Noto Color Emoji";
+          package = pkgs.noto-fonts-color-emoji;
+        };
+        monospace = {
+          name = "IosevkaTerm Nerd Font Regular";
+          package = pkgs.nerd-fonts.iosevka-term;
+        };
+        sansSerif = {
+          name = "Roboto Regular";
+          package = pkgs.roboto;
+        };
+        serif = {
+          name = "Roboto Serif 20pt Regular";
+          package = pkgs.roboto-serif;
+        };
+        sizes = {
+          applications = 12;
+          terminal = 12;
+        };
+      };
     };
 
     # Enable PCSC-Lite daemon for use with my Yubikey.
