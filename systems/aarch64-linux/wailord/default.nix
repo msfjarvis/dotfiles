@@ -71,6 +71,10 @@
 
     settings = {
       listen = "[::]:8081";
+      garbage-collection = {
+        interval = "1 hour";
+        default-retention-period = "14 days";
+      };
     };
   };
 
