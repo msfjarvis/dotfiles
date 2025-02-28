@@ -15,13 +15,13 @@ jobs:
           #   runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
           #   target: ryzenbox
           #   public-key: "x86_64-linux:HLQszdZAPt0hy6dsMxsI7EDeghCzfSwB8VyBEnei/j0="
-          - cache: aarch64-linux
+          - target: melody
             runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
-            target: melody
+            cache: aarch64-linux
             public-key: "aarch64-linux:czBXxHtNIDorynmG/2pRuFSENM+fnu0rgVkH+8I4niQ="
-          - cache: aarch64-linux
+          - target: wailord
             runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
-            target: wailord
+            cache: aarch64-linux
             public-key: "aarch64-linux:czBXxHtNIDorynmG/2pRuFSENM+fnu0rgVkH+8I4niQ="
     runs-on: ${{ matrix.runner }}
     steps:
