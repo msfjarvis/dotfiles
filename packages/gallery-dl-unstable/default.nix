@@ -1,29 +1,20 @@
 {
   lib,
   python3,
-  fetchpatch2,
   fetchFromGitHub,
 }:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "gallery-dl-unstable";
-  version = "1.28.5-unstable-2025-02-26";
+  version = "1.28.5-unstable-2025-02-28";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "mikf";
     repo = "gallery-dl";
-    rev = "1d3b9a9e4065bab55738693c69ed7f2fb0e6a918";
-    hash = "sha256-rrFor8A1v1kz4UYONeDJM5ovuajJslh/Q6RjRfBScUI=";
+    rev = "7c33b9fbfe5137be1c78afb651337eb9824771a0";
+    hash = "sha256-7gQeULAYjp3HNPfS+3NMEQRrajDO8jAkfvQqc7IJdYw=";
   };
-
-  patches = [
-    (fetchpatch2 {
-      name = "unbreak-bunkr";
-      url = "https://patch-diff.githubusercontent.com/raw/mikf/gallery-dl/pull/7070.patch?full_index=1";
-      hash = "sha256-5WkMOD5vWH2+rlVPuXeDmb5fto/+4f3sUt8VpVVvjgU=";
-    })
-  ];
 
   build-system = [
     python3.pkgs.setuptools
