@@ -151,7 +151,7 @@ in
       nurl
       pkgs.${namespace}.patreon-dl
       pkgs.${namespace}.pidcat
-      (python312.withPackages (
+      (python3.withPackages (
         ps: with ps; [
           beautifulsoup4
           black
@@ -164,6 +164,7 @@ in
       telegram-desktop
       thunderbird
       unrar
+      uv
       (vesktop.override { withSystemVencord = true; })
       yt-dlp
     ];
