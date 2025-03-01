@@ -366,13 +366,18 @@
                       "atrioc"
                       "couriway"
                       "feinberg"
+                      "geega"
                       "kqsii"
                       "laynalazar"
                       "matarakan"
                       "michimochievee"
+                      "mintcastella"
                       "mush"
                       "onigiri"
+                      "projektmelody"
+                      "shindigs"
                       "sliggytv"
+                      "trickywi"
                     ];
                   }
                 ];
