@@ -113,10 +113,10 @@
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus?rev=3542fe9126dc492e53ddd252bb0260fe035f2c0f";
     flake-utils-plus.inputs.flake-utils.follows = "flake-utils";
 
-    # TODO: revert after https://github.com/nix-community/flake-firefox-nightly/pull/45 is merged
-    firefox.url = "github:K900/flake-firefox-nightly/oops-i-rewrote-it";
+    firefox.url = "github:nix-community/flake-firefox-nightly";
     firefox.inputs.nixpkgs.follows = "nixpkgs";
     firefox.inputs.flake-compat.follows = "flake-compat";
+    firefox.inputs.cachix.follows = "nixpkgs";
     firefox.inputs.lib-aggregate.follows = "lib-aggregate";
 
     home-manager.url = "github:nix-community/home-manager/master";
