@@ -162,7 +162,7 @@ in
       scrcpy
       smile
       telegram-desktop
-      thunderbird
+      thunderbird-latest
       unrar
       uv
       (vesktop.override { withSystemVencord = true; })
