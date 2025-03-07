@@ -21,10 +21,7 @@
         allowUnfree = true;
         allowAliases = false;
         cudaSupport = true;
-        permittedInsecurePackages = [
-          # Logseq
-          "electron-27.3.11"
-        ];
+        permittedInsecurePackages = [];
       };
       homes.modules = with inputs; [
         nix-flatpak.homeManagerModules.nix-flatpak

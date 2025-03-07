@@ -142,13 +142,13 @@ in
       nerd-fonts.iosevka-term
       pkgs.${namespace}.katbin
       kondo
-      logseq
       maestro
       pkgs.${namespace}.mediafire_rs
       megatools
       nix-init
       nix-update
       nurl
+      obsidian
       pkgs.${namespace}.patreon-dl
       pkgs.${namespace}.pidcat
       (python3.withPackages (
