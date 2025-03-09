@@ -21,7 +21,7 @@
         allowUnfree = true;
         allowAliases = false;
         cudaSupport = true;
-        permittedInsecurePackages = [];
+        permittedInsecurePackages = [ ];
       };
       homes.modules = with inputs; [
         nix-flatpak.homeManagerModules.nix-flatpak
