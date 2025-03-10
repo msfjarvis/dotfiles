@@ -59,11 +59,15 @@ in
 
     snowfallorg.users.msfjarvis.home.config = {
       systemd.user.services.steam = {
-        Unit.Description = "Open Steam in the background at boot";
+        Unit = {
+          Description = "Open Steam in the background at boot";
+          StartLimitIntervalSec = "1min";
+          StartLimitBurst = 1;
+        };
         Install.WantedBy = [ "graphical-session.target" ];
         Service = {
           ExecStart = "${lib.getExe pkgs.steam} -nochatui -nofriendsui -silent %U";
-          Restart = "always";
+          Restart = "on-abort";
           RestartSec = "5s";
         };
       };
