@@ -34,9 +34,14 @@
     zed = {
       enable = true;
       extensions = [
+        "basher"
         "catppuccin"
+        "catppuccin-icons"
+        "env"
         "git-firefly"
+        "harper"
         "html"
+        "log"
         "nix"
         "toml"
       ];
