@@ -151,26 +151,22 @@
     },
     "firefox": {
       "inputs": {
-        "cachix": [
-          "nixpkgs"
-        ],
         "flake-compat": [
           "flake-compat"
         ],
         "lib-aggregate": [
           "lib-aggregate"
         ],
-        "mozilla": "mozilla",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1741482326,
-        "narHash": "sha256-AeVDwwN71LEJ7OGRv36E9kHook1Au+wcJ0T6v5ssv/I=",
+        "lastModified": 1741744571,
+        "narHash": "sha256-qxrbfB2hJOAQBaHtLPXv5tgIUbD12p8NFo1KSuzJceg=",
         "owner": "nix-community",
         "repo": "flake-firefox-nightly",
-        "rev": "2ac1e54861fd76a1c93af2068cc2f314bcd8c87e",
+        "rev": "83997cf19427335d56bc19aae8445b983a08f1d6",
         "type": "github"
       },
       "original": {
@@ -372,22 +368,6 @@
       "original": {
         "type": "git",
         "url": "https://github.com/catppuccin/micro"
-      }
-    },
-    "mozilla": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1740762144,
-        "narHash": "sha256-I7a6e3IYJAp9u3PwUSW1+oilO1tAfnbeN3/YJQ+ObCo=",
-        "owner": "mozilla",
-        "repo": "nixpkgs-mozilla",
-        "rev": "e35b0e071cae97469d80222be988fdd972b22c3b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mozilla",
-        "repo": "nixpkgs-mozilla",
-        "type": "github"
       }
     },
     "nix-flatpak": {

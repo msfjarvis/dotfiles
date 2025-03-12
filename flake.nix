@@ -113,7 +113,6 @@
     firefox.url = "github:nix-community/flake-firefox-nightly";
     firefox.inputs.nixpkgs.follows = "nixpkgs";
     firefox.inputs.flake-compat.follows = "flake-compat";
-    firefox.inputs.cachix.follows = "nixpkgs";
     firefox.inputs.lib-aggregate.follows = "lib-aggregate";
 
     home-manager.url = "github:nix-community/home-manager/master";
