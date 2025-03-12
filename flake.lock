@@ -793,13 +793,13 @@
     "wallpaper": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-PbvgZnTkqAMkwsPOIuDNDeCoA0s51zO2ITu+GF9U6Co=",
+        "narHash": "sha256-XIMLfOmVVNVGjTlzv6uhtizlNaGt49noWW8k4lAi6uA=",
         "type": "file",
-        "url": "https://til.msfjarvis.dev/matara%20valentine%20wallpaper.jpg"
+        "url": "https://til.msfjarvis.dev/20250126195618_1.jpg"
       },
       "original": {
         "type": "file",
-        "url": "https://til.msfjarvis.dev/matara%20valentine%20wallpaper.jpg"
+        "url": "https://til.msfjarvis.dev/20250126195618_1.jpg"
       }
     }
   },
