@@ -79,8 +79,70 @@ function gcp() {
 
 function gitsync() {
   fd --no-ignore-vcs -Htd \\.git$ -x echo '{//}' | while read -r dir; do
-    echoText "$dir"
-    hub -C "$dir" sync
+    pushd "${dir}" || exit 1
+    # Fetch remote name and default branch
+    REMOTE=$(git remote show | head -n 1)
+    DEFAULT_BRANCH=$(git remote show "$REMOTE" | awk '/HEAD branch/ {print $NF}')
+    CURRENT_BRANCH=$(git branch --show-current)
+
+    # Fetch updates from the remote
+    git fetch --prune --quiet --progress "$REMOTE"
+
+    # Get local branches
+    BRANCHES=$(git for-each-ref --format '%(refname:short)' refs/heads/)
+
+    # Define colors
+    GREEN="\033[32m"
+    LIGHT_GREEN="\033[32;1m"
+    RED="\033[31m"
+    LIGHT_RED="\033[31;1m"
+    RESET_COLOR="\033[0m"
+
+    # Iterate through each branch
+    for BRANCH in $BRANCHES; do
+      FULL_BRANCH="refs/heads/$BRANCH"
+      REMOTE_BRANCH="refs/remotes/$REMOTE/$BRANCH"
+      GONE=false
+
+      # Check if branch has upstream config
+      UPSTREAM=$(git for-each-ref --format '%(upstream:short)' "refs/heads/$BRANCH")
+
+      if [ -z "$UPSTREAM" ]; then
+        if git show-ref --verify --quiet "$REMOTE_BRANCH"; then
+          UPSTREAM=$REMOTE_BRANCH
+        else
+          GONE=true
+        fi
+      else
+        REMOTE_BRANCH=$UPSTREAM
+      fi
+
+      if [ -n "$UPSTREAM" ]; then
+        if git merge-base --is-ancestor "$BRANCH" "$UPSTREAM"; then
+          if [ "$BRANCH" == "$CURRENT_BRANCH" ]; then
+            git merge --ff-only --quiet "$UPSTREAM"
+          else
+            git update-ref "$FULL_BRANCH" "$UPSTREAM"
+          fi
+          echo -e "${GREEN}Updated branch ${LIGHT_GREEN}$BRANCH${RESET_COLOR}"
+        else
+          echo -e "${RED}Warning: ${BRANCH} contains unpushed commits${RESET_COLOR}"
+        fi
+      elif [ "$GONE" = true ]; then
+        if git merge-base --is-ancestor "$BRANCH" "refs/remotes/$REMOTE/$DEFAULT_BRANCH"; then
+          if [ "$BRANCH" == "$CURRENT_BRANCH" ]; then
+            git checkout --quiet "$DEFAULT_BRANCH"
+            CURRENT_BRANCH=$DEFAULT_BRANCH
+          fi
+          git branch -D "$BRANCH"
+          echo -e "${RED}Deleted branch ${LIGHT_RED}$BRANCH${RESET_COLOR}"
+        else
+          echo -e "${RED}Warning: ${BRANCH} was deleted on ${REMOTE}, but appears not merged into ${DEFAULT_BRANCH}${RESET_COLOR}"
+        fi
+      fi
+    done
+
+    popd || exit 1
   done
 }
 
