@@ -12,9 +12,15 @@ let
   gcm = pkgs.git-credential-manager.override {
     withGpgSupport = false;
   };
+  inherit (pkgs) mergiraf;
 in
 {
-  home.packages = lib.optionals isServer [ gcm ];
+  home.packages = [ mergiraf ] ++ lib.optionals isServer [ gcm ];
+
+  home.file.".gitattributes".source = pkgs.runCommandLocal "gitattributes" { } ''
+    ${lib.getExe mergiraf} languages --gitattributes >> $out
+  '';
+
   programs.git = {
     enable = true;
     ignores = [
@@ -41,6 +47,7 @@ in
         commit.verbose = true;
 
         core.autocrlf = "input";
+        core.attributesfile = "~/.gitattributes";
 
         help.autocorrect = "prompt";
 
@@ -54,6 +61,11 @@ in
         log.date = "iso";
 
         merge.conflictstyle = "zdiff3";
+
+        "merge \"mergiraf\"" = {
+          name = "mergiraf";
+          driver = "${lib.getExe mergiraf} merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
+        };
 
         pull.rebase = true;
 
