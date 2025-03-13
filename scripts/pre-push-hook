@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# Read the variables from stdin
+while read -r local_ref local_oid remote_ref remote_oid; do
+  _=$local_ref
+  _=$remote_ref
+  # Check for changes in .nix files or flake.lock
+  changed_files=$(git diff --name-only "$local_oid" "$remote_oid" | grep -E '\.nix$|flake\.lock$')
+
+  if [ -n "$changed_files" ]; then
+    # Run nix flake check
+    nix flake check
+    result=$?
+
+    if [ $result -ne 0 ]; then
+      exit 1
+    fi
+  else
+    # Run nix fmt
+    nix fmt
+
+    # Check if there are any changes after formatting
+    if [ -n "$(git diff --name-only)" ]; then
+      exit 1
+    fi
+  fi
+done
+
+exit 0
