@@ -62,7 +62,7 @@ in
 
         merge.conflictstyle = "zdiff3";
 
-        "merge \"mergiraf\"" = {
+        merge.mergiraf = {
           name = "mergiraf";
           driver = "${lib.getExe mergiraf} merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
         };
