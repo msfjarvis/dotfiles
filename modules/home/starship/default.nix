@@ -13,6 +13,7 @@ in
     server = mkEnableOption "Customize starship for servers";
   };
   config = {
+    catppuccin.starship.enable = true;
     programs.starship = {
       enable = true;
       enableBashIntegration = true;

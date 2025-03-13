@@ -5,6 +5,8 @@
   ...
 }:
 {
+  imports = [ ./catppuccin.nix ];
+
   snowfallorg.user = {
     enable = true;
     name = "msfjarvis";

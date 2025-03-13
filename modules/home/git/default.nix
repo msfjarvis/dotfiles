@@ -15,6 +15,7 @@ let
   inherit (pkgs) mergiraf;
 in
 {
+  catppuccin.delta.enable = true;
   home.packages = [ mergiraf ] ++ lib.optionals isServer [ gcm ];
 
   home.file.".gitattributes".source = pkgs.runCommandLocal "gitattributes" { } ''
@@ -48,7 +49,9 @@ in
 
         core.autocrlf = "input";
         core.attributesfile = "~/.gitattributes";
-
+        delta = {
+          enable = true;
+        };
         help.autocorrect = "prompt";
 
         init.defaultBranch = "main";

@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  inputs,
   namespace,
   ...
 }:
@@ -14,6 +13,7 @@ in
   imports = [
     ./android-dev.nix
     ./bluetooth.nix
+    ./catppuccin.nix
     ./cinnamon.nix
     ./earlyoom.nix
     ./gaming.nix
@@ -26,6 +26,7 @@ in
     enable = mkEnableOption "Profile for desktop machines (i.e. not servers)";
   };
   config = mkIf cfg.enable {
+
     # Use latest kernel by default.
     boot.kernelPackages = mkDefault pkgs.linuxPackages_latest;
 
@@ -53,37 +54,6 @@ in
         xkb = {
           layout = mkDefault "us";
           variant = mkDefault "";
-        };
-      };
-    };
-
-    # Theming
-    stylix = {
-      image = inputs.wallpaper;
-      polarity = "dark";
-      opacity = {
-        terminal = 0.6;
-      };
-      fonts = {
-        emoji = {
-          name = "Noto Color Emoji";
-          package = pkgs.noto-fonts-color-emoji;
-        };
-        monospace = {
-          name = "IosevkaTerm Nerd Font Regular";
-          package = pkgs.nerd-fonts.iosevka-term;
-        };
-        sansSerif = {
-          name = "Roboto Regular";
-          package = pkgs.roboto;
-        };
-        serif = {
-          name = "Roboto Serif 20pt Regular";
-          package = pkgs.roboto-serif;
-        };
-        sizes = {
-          applications = 12;
-          terminal = 12;
         };
       };
     };
