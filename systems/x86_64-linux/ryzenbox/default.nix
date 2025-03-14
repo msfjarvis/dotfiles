@@ -220,6 +220,8 @@ in
         (mkSteamPath "1222140")
         # Helldivers 2
         (mkSteamPath "553850")
+        # Split Fiction
+        (mkSteamPath "2001120")
         # Tiny Glade
         (mkSteamPath "2198150")
       ];
