@@ -80,10 +80,26 @@ function gcp() {
 function gitsync() {
   fd --no-ignore-vcs -Htd \\.git$ -x echo '{//}' | while read -r dir; do
     pushd "${dir}" || exit 1
+
+    # List of directory base names where a hard reset should be performed
+    HARD_RESET_DIRS=("nixpkgs")
+
     # Fetch remote name and default branch
     REMOTE=$(git remote show | head -n 1)
     DEFAULT_BRANCH=$(git remote show "$REMOTE" | awk '/HEAD branch/ {print $NF}')
     CURRENT_BRANCH=$(git branch --show-current)
+
+    # Function to determine if hard reset is required
+    should_hard_reset() {
+      local dir_base_name
+      dir_base_name=$(basename "$PWD")
+      for reset_dir in "${HARD_RESET_DIRS[@]}"; do
+        if [[ $dir_base_name == "$reset_dir" ]]; then
+          return 0
+        fi
+      done
+      return 1
+    }
 
     # Fetch updates from the remote
     git fetch --prune --quiet --progress "$REMOTE"
@@ -118,15 +134,24 @@ function gitsync() {
       fi
 
       if [ -n "$UPSTREAM" ]; then
-        if git merge-base --is-ancestor "$BRANCH" "$UPSTREAM"; then
+        if should_hard_reset; then
           if [ "$BRANCH" == "$CURRENT_BRANCH" ]; then
-            git merge --ff-only --quiet "$UPSTREAM"
+            git reset --hard "$UPSTREAM"
           else
-            git update-ref "$FULL_BRANCH" "$UPSTREAM"
+            git branch -f "$BRANCH" "$UPSTREAM"
           fi
-          echo -e "${GREEN}Updated branch ${LIGHT_GREEN}$BRANCH${RESET_COLOR}"
+          echo -e "${GREEN}Hard reset branch ${LIGHT_GREEN}$BRANCH${RESET_COLOR}"
         else
-          echo -e "${RED}Warning: ${BRANCH} contains unpushed commits${RESET_COLOR}"
+          if git merge-base --is-ancestor "$BRANCH" "$UPSTREAM"; then
+            if [ "$BRANCH" == "$CURRENT_BRANCH" ]; then
+              git merge --ff-only --quiet "$UPSTREAM"
+            else
+              git update-ref "$FULL_BRANCH" "$UPSTREAM"
+            fi
+            echo -e "${GREEN}Updated branch ${LIGHT_GREEN}$BRANCH${RESET_COLOR}"
+          else
+            echo -e "${RED}Warning: ${BRANCH} contains unpushed commits${RESET_COLOR}"
+          fi
         fi
       elif [ "$GONE" = true ]; then
         if git merge-base --is-ancestor "$BRANCH" "refs/remotes/$REMOTE/$DEFAULT_BRANCH"; then
@@ -143,6 +168,7 @@ function gitsync() {
     done
 
     popd || exit 1
+
   done
 }
 
