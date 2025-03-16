@@ -159,6 +159,7 @@ in
           enable = false;
         };
         "org/gnome/desktop/wm/preferences" = {
+          dynamic-workspaces = false;
           num-workspaces = 6;
         };
         "org/gnome/settings-daemon/plugins/power" = {
