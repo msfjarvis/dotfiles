@@ -9,7 +9,7 @@ let
 in
 {
   projectRootFile = "flake.nix";
-  package = pkgs.treefmt2;
+  package = pkgs.treefmt;
 
   programs.actionlint = {
     enable = true;
