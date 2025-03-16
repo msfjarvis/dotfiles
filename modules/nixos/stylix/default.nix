@@ -12,6 +12,7 @@
     cursor = {
       package = pkgs.catppuccin-cursors.mochaMauve;
       name = "catppuccin-mocha-mauve-cursors";
+      size = 32;
     };
   };
   snowfallorg.users.msfjarvis.home.config = {
