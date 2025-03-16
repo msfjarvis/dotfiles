@@ -78,49 +78,44 @@ function gcp() {
 }
 
 function gitsync() {
+  local HARD_RESET_DIRS=("nixpkgs")
+  local GREEN="\033[32m"
+  local LIGHT_GREEN="\033[32;1m"
+  local RED="\033[31m"
+  local LIGHT_RED="\033[31;1m"
+  local RESET_COLOR="\033[0m"
+
+  function should_hard_reset() {
+    local dir_base_name
+    dir_base_name=$(basename "$PWD")
+    for reset_dir in "${HARD_RESET_DIRS[@]}"; do
+      if [[ $dir_base_name == "$reset_dir" ]]; then
+        return 0
+      fi
+    done
+    return 1
+  }
+
   fd --no-ignore-vcs -Htd \\.git$ -x echo '{//}' | while read -r dir; do
-    pushd "${dir}" || exit 1
+    echoText "$dir"
 
-    # List of directory base names where a hard reset should be performed
-    HARD_RESET_DIRS=("nixpkgs")
+    cd "$dir" || continue
 
-    # Fetch remote name and default branch
+    local REMOTE DEFAULT_BRANCH CURRENT_BRANCH BRANCHES
     REMOTE=$(git remote show | head -n 1)
     DEFAULT_BRANCH=$(git remote show "$REMOTE" | awk '/HEAD branch/ {print $NF}')
     CURRENT_BRANCH=$(git branch --show-current)
 
-    # Function to determine if hard reset is required
-    should_hard_reset() {
-      local dir_base_name
-      dir_base_name=$(basename "$PWD")
-      for reset_dir in "${HARD_RESET_DIRS[@]}"; do
-        if [[ $dir_base_name == "$reset_dir" ]]; then
-          return 0
-        fi
-      done
-      return 1
-    }
-
-    # Fetch updates from the remote
     git fetch --prune --quiet --progress "$REMOTE"
 
-    # Get local branches
     BRANCHES=$(git for-each-ref --format '%(refname:short)' refs/heads/)
 
-    # Define colors
-    GREEN="\033[32m"
-    LIGHT_GREEN="\033[32;1m"
-    RED="\033[31m"
-    LIGHT_RED="\033[31;1m"
-    RESET_COLOR="\033[0m"
-
-    # Iterate through each branch
     for BRANCH in $BRANCHES; do
-      FULL_BRANCH="refs/heads/$BRANCH"
-      REMOTE_BRANCH="refs/remotes/$REMOTE/$BRANCH"
-      GONE=false
+      local UPSTREAM
+      local FULL_BRANCH="refs/heads/$BRANCH"
+      local REMOTE_BRANCH="refs/remotes/$REMOTE/$BRANCH"
+      local GONE=false
 
-      # Check if branch has upstream config
       UPSTREAM=$(git for-each-ref --format '%(upstream:short)' "refs/heads/$BRANCH")
 
       if [ -z "$UPSTREAM" ]; then
@@ -134,23 +129,29 @@ function gitsync() {
       fi
 
       if [ -n "$UPSTREAM" ]; then
-        if should_hard_reset; then
-          if [ "$BRANCH" == "$CURRENT_BRANCH" ]; then
-            git reset --hard "$UPSTREAM"
-          else
-            git branch -f "$BRANCH" "$UPSTREAM"
-          fi
-          echo -e "${GREEN}Hard reset branch ${LIGHT_GREEN}$BRANCH${RESET_COLOR}"
-        else
-          if git merge-base --is-ancestor "$BRANCH" "$UPSTREAM"; then
+        local LOCAL_SHA
+        LOCAL_SHA=$(git rev-parse "$BRANCH")
+        local REMOTE_SHA
+        REMOTE_SHA=$(git rev-parse "$UPSTREAM")
+        if [ "$LOCAL_SHA" != "$REMOTE_SHA" ]; then
+          if should_hard_reset; then
             if [ "$BRANCH" == "$CURRENT_BRANCH" ]; then
-              git merge --ff-only --quiet "$UPSTREAM"
+              git reset --hard "$UPSTREAM"
             else
-              git update-ref "$FULL_BRANCH" "$UPSTREAM"
+              git branch -f "$BRANCH" "$UPSTREAM"
             fi
-            echo -e "${GREEN}Updated branch ${LIGHT_GREEN}$BRANCH${RESET_COLOR}"
+            echo -e "${GREEN}Hard reset branch ${LIGHT_GREEN}$BRANCH${RESET_COLOR}"
           else
-            echo -e "${RED}Warning: ${BRANCH} contains unpushed commits${RESET_COLOR}"
+            if git merge-base --is-ancestor "$BRANCH" "$UPSTREAM"; then
+              if [ "$BRANCH" == "$CURRENT_BRANCH" ]; then
+                git merge --ff-only --quiet "$UPSTREAM"
+              else
+                git update-ref "$FULL_BRANCH" "$UPSTREAM"
+              fi
+              echo -e "${GREEN}Updated branch ${LIGHT_GREEN}$BRANCH${RESET_COLOR}"
+            else
+              echo -e "${RED}Warning: ${BRANCH} contains unpushed commits${RESET_COLOR}"
+            fi
           fi
         fi
       elif [ "$GONE" = true ]; then
@@ -167,8 +168,7 @@ function gitsync() {
       fi
     done
 
-    popd || exit 1
-
+    cd - >/dev/null || continue
   done
 }
 
