@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, namespace, ... }:
 {
   stylix = {
     autoEnable = false;
@@ -10,8 +10,8 @@
     };
 
     cursor = {
-      package = pkgs.catppuccin-cursors.mochaMauve;
-      name = "catppuccin-mocha-mauve-cursors";
+      package = pkgs.${namespace}.michi-cursors;
+      name = "michi-cursors";
       size = 32;
     };
   };
