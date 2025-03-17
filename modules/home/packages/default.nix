@@ -2,7 +2,6 @@
 {
   home.packages = with pkgs; [
     aria2
-    byobu
     curl
     delta
     diskus
