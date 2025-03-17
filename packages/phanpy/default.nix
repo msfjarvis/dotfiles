@@ -11,8 +11,8 @@ buildNpmPackage {
   src = fetchFromGitHub {
     owner = "cheeaun";
     repo = "phanpy";
-    rev = "937c1d7927064fd96c078e6c9c744e3408dbc8dc";
-    hash = "sha256-w80IDOUwGQF0VbqjuLC1/r6qUnP4RPuzurcOoiTZxY4=";
+    rev = "6ac064fa37a8d5e659a98462bbdcf27f6da9354b";
+    hash = "sha256-2ymLisrDDIWOQvhQLuDLQPkrsr+MbuVTXdlV14bTG4I=";
   };
 
   npmDepsHash = "sha256-1faItl+LsUGmBmznUSog3TLRYbbCCadFzlpa30w/xOQ=";
