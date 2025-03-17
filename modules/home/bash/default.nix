@@ -5,6 +5,9 @@ in
 {
   programs.bash = {
     enable = true;
+    sessionVariables = {
+      COLORTERM = "truecolor";
+    };
     historySize = 1000;
     historyFile = "${config.home.homeDirectory}/.bash_history";
     historyFileSize = 10000;
