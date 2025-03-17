@@ -167,7 +167,7 @@ in
           sleep-inactive-ac-type = "nothing";
         };
         "org/gnome/desktop/session" = {
-          idle-delay = 0;
+          idle-delay = lib.gvariant.mkInt32 0;
         };
       };
     };
