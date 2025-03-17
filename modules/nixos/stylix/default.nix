@@ -11,7 +11,7 @@
 
     cursor = {
       package = pkgs.${namespace}.michi-cursors;
-      name = "michi-cursors";
+      name = "michi";
       size = 32;
     };
   };
