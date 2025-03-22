@@ -97,7 +97,13 @@
   services.caddy = {
     enable = true;
     enableReload = false; # I think caddy-tailscale breaks this
-    package = pkgs.jarvis.caddy-tailscale;
+    package = pkgs.caddy.withPlugins {
+      plugins = [
+        "github.com/jasonlovesdoggo/caddy-defender@v0.8.0"
+        "github.com/tailscale/caddy-tailscale@v0.0.0-20250207163903-69a970c84556"
+      ];
+      hash = "sha256-nB3D/r/GmSfzJ9IyzxkSQGGIo0FJiHezDCxPHLeLKmw=";
+    };
     environmentFile = config.sops.secrets.services-tsauthkey-env.path;
     logFormat = ''
       output file /var/log/caddy/caddy_main.log {
@@ -118,9 +124,8 @@
     '';
     extraConfig = ''
       (blackholeCrawlers) {
-        @ban_crawler header_regexp User-Agent "(AdsBot-Google|Amazonbot|anthropic-ai|Applebot|Applebot-Extended|AwarioRssBot|AwarioSmartBot|Bytespider|CCBot|ChatGPT-User|ClaudeBot|Claude-Web|cohere-ai|DataForSeoBot|Diffbot|FacebookBot|FriendlyCrawler|Google-Extended|GoogleOther|GPTBot|img2dataset|ImagesiftBot|magpie-crawler|Meltwater|omgili|omgilibot|peer39_crawler|peer39_crawler/1.0|PerplexityBot|PiplBot|scoop.it|Seekr|YouBot)"
-        handle @ban_crawler {
-          redir https://ash-speed.hetzner.com/10GB.bin 307
+        defender drop {
+          ranges vpn aws deepseek githubcopilot gcloud oci azurepubliccloud openai mistral vultr digitalocean linode
         }
       }
     '';
