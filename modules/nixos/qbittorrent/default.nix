@@ -128,7 +128,7 @@ in
         export QBITTORRENT_HOST=localhost
         export QBITTORRENT_PORT=${toString cfg.port}
         export EXPORTER_PORT=${toString cfg.prometheus.port}
-        ${lib.getExe pkgs.jarvis.prometheus-qbittorrent-exporter}
+        ${lib.getExe pkgs.${namespace}.prometheus-qbittorrent-exporter}
       '';
     };
 

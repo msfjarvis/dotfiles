@@ -42,7 +42,7 @@
   };
   services.caddy = {
     enable = true;
-    package = pkgs.jarvis.caddy-tailscale;
+    package = pkgs.${namespace}.caddy-tailscale;
     environmentFile = config.sops.secrets.services-tsauthkey-env.path;
     virtualHosts = {
       "https://matara.tiger-shark.ts.net" = {
