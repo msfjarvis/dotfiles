@@ -125,7 +125,7 @@
     extraConfig = ''
       (blackholeCrawlers) {
         defender drop {
-          ranges vpn aws deepseek githubcopilot gcloud oci azurepubliccloud openai mistral vultr digitalocean linode
+          ranges vpn aws deepseek githubcopilot gcloud azurepubliccloud openai mistral vultr digitalocean linode
         }
       }
     '';
