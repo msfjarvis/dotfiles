@@ -32,6 +32,10 @@ in
       "fleet.toml"
       ".DS_Store"
     ];
+    difftastic = {
+      enable = true;
+      enableAsDifftool = true;
+    };
     includes =
       [ { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig"; } ]
       ++ lib.optionals isWorkMachine [
