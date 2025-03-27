@@ -58,10 +58,10 @@
         warn-dirty = false;
 
         substituters = [
-          "https://msfjarvis.cachix.org"
+          "https://nix-community.cachix.org"
         ];
         trusted-public-keys = [
-          "msfjarvis.cachix.org-1:/sKPgZblk/LgoOKtDgMTwvRuethILGkr/maOvZ6W11U="
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         ];
       };
     };
