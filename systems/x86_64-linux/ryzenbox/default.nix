@@ -49,7 +49,7 @@ in
       };
     };
   };
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_11;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_14;
 
   snowfallorg.users.msfjarvis.home.config = {
     stylix = {
