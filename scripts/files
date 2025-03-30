@@ -118,9 +118,7 @@ function mediainfo() {
 }
 
 function fao() {
-  local FILE
-  FILE="$(fzf --query="$1" --select-1 --exit-0)"
-  [[ -n ${FILE} ]] && ${EDITOR:-micro} "${FILE}"
+  fzf --query="$1" --select-1 --exit-0 --bind "enter:become(${EDITOR} {1})"
 }
 
 # shellcheck disable=SC2016
