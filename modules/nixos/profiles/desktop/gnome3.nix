@@ -102,7 +102,6 @@ in
     environment.gnome.excludePackages = with pkgs; [
       epiphany
       geary
-      gnome-calendar
       gnome-characters
       gnome-clocks
       gnome-console
