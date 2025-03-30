@@ -58,6 +58,7 @@
         base_keymap = "JetBrains";
         buffer_font_family = "IosevkaTerm Nerd Font";
         buffer_font_size = 16;
+        edit_predictions.disabled_globs = [ "**/*" ];
         features = {
           inline_completion_provider = "none";
         };
@@ -89,6 +90,7 @@
             };
           };
         };
+        restore_on_startup = "none";
         show_inline_completions = false;
         show_wrap_guides = true;
         telemetry = {
