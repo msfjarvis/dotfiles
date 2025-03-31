@@ -50,6 +50,7 @@ in
             gtk3
             pango
           ];
+        extraPkgs = p: with p; [ gamemode ];
       };
     };
     programs.gamemode = {
@@ -139,7 +140,9 @@ in
       #     }
       #   ];
       # })
-      heroic
+      (heroic.override {
+        extraPkgs = p: with p; [ gamemode ];
+      })
       pkgs.${namespace}.ficsit-cli
     ];
     # Required to avoid some logspew
