@@ -9,7 +9,6 @@ declare -a ALL_PACKAGES=(
   adx
   age-keygen-deterministic
   boop-gtk
-  caddy-tailscale
   clipboard-substitutor
   cyberdrop-dl
   dependency-watch
@@ -36,7 +35,6 @@ declare -a ALL_PACKAGES=(
 )
 
 declare -r -A EXTRA_PARAMS=(
-  ["caddy-tailscale"]="--version=branch"
   ["cyberdrop-dl"]="--version=branch"
   ["gallery-dl-unstable"]="--version=branch"
   ["hcctl"]="--version-regex=hcctl-v(.*)"

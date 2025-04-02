@@ -97,13 +97,7 @@
   services.caddy = {
     enable = true;
     enableReload = false; # I think caddy-tailscale breaks this
-    package = pkgs.caddy.withPlugins {
-      plugins = [
-        "github.com/jasonlovesdoggo/caddy-defender@v0.8.0"
-        "github.com/tailscale/caddy-tailscale@v0.0.0-20250207163903-69a970c84556"
-      ];
-      hash = "sha256-nB3D/r/GmSfzJ9IyzxkSQGGIo0FJiHezDCxPHLeLKmw=";
-    };
+    package = pkgs.${namespace}.caddy-with-plugins;
     environmentFile = config.sops.secrets.services-tsauthkey-env.path;
     logFormat = ''
       output file /var/log/caddy/caddy_main.log {

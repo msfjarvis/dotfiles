@@ -8,7 +8,7 @@ NixOS packages for personal use.
 - [adx] : Rust tool to poll Google Maven for AndroidX packages and their latest versions
 - [age-keygen-deterministic] : Simple Rust CLI tool to derive an age private key from passphrase
 - [boop-gtk] : A scriptable scratchpad for developers
-- [caddy-tailscale] : Caddy plugin that enables serving sites directly into your Tailnet
+- [caddy-with-plugins] : Personal distribution of Caddy with plugins of my choosing
 - [clipboard-substitutor] : Rust CLI to listen to clipboard events and perform operations on the copied text
 - [cyberdrop-dl] : Downloader for CyberDrop and other archive sites
 - [dependency-watch]: Script to wait for an artifact to appear in a Maven repository or to monitor coordinates for new versions.
@@ -40,7 +40,7 @@ NixOS packages for personal use.
 [adx]: https://msfjarvis.dev/g/androidx-release-watcher
 [age-keygen-deterministic]: https://github.com/keisentraut/age-keygen-deterministic
 [boop-gtk]: https://msfjarvis.dev/g/boop-gtk
-[caddy-tailscale]: https://github.com/tailscale/caddy-tailscale
+[caddy-with-plugins]: https://github.com/NixOS/nixpkgs/blob/77b584d61ff80b4cef9245829a6f1dfad5afdfa3/pkgs/by-name/ca/caddy/package.nix#L82
 [clipboard-substitutor]: https://msfjarvis.dev/g/clipboard-substitutor
 [cyberdrop-dl]: https://github.com/jbsparrow/cyberdropdownloader
 [dependency-watch]: https://github.com/JakeWharton/dependency-watch

@@ -78,7 +78,7 @@ in
   adx = callPackage ./packages/adx { };
   age-keygen-deterministic = callPackage ./packages/age-keygen-deterministic { };
   boop-gtk = callPackage ./packages/boop-gtk { };
-  caddy-tailscale = callPackage ./packages/caddy-tailscale { };
+  caddy-with-plugins = callPackage ./packages/caddy-with-plugins { };
   clipboard-substitutor = callPackage ./packages/clipboard-substitutor { };
   cyberdrop-dl = callPackage ./packages/cyberdrop-dl { };
   dependency-watch = callPackage ./packages/dependency-watch { };
