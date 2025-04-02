@@ -25,5 +25,4 @@
       generateNixPathFromInputs = false;
       generateRegistryFromInputs = false;
     };
-  services.nix-daemon.enable = true;
 }
