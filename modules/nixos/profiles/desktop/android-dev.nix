@@ -29,7 +29,6 @@ in
       androidStudioPackages.beta
       androidStudioPackages.canary
       pkgs.${namespace}.diffuse-bin
-      kotlin
     ];
 
     programs.java = {
