@@ -6,14 +6,10 @@
   lib,
   ...
 }:
-let
-  nvidiaDriver = config.boot.kernelPackages.nvidiaPackages.beta.bin;
-in
 {
   # Enable NVIDIA driver
   hardware.graphics = {
     enable = true;
-    package = nvidiaDriver;
   };
 
   # Load nvidia driver for Xorg and Wayland
@@ -43,7 +39,7 @@ in
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = nvidiaDriver;
+    package = config.boot.kernelPackages.nvidiaPackages.production;
   };
 
   disko.devices = {
