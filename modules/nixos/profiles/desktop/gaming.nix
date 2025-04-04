@@ -34,6 +34,7 @@ in
       cartridges
       mangohud
     ];
+    programs.gpu-screen-recorder-ui.enable = true;
     programs.steam = {
       enable = true;
       remotePlay.openFirewall = true;
@@ -72,16 +73,6 @@ in
             Restart = "on-abort";
             RestartSec = "5s";
           };
-        };
-        gpu-screen-recorder-ui = {
-          Unit.Description = "GPU Screen Recorder UI Service";
-          Service = {
-            ExecStart = "${pkgs.flatpak}/bin/flatpak run com.dec05eba.gpu_screen_recorder gsr-ui";
-            KillSignal = "SIGINT";
-            Restart = "on-failure";
-            RestartSec = "5s";
-          };
-          Install.WantedBy = [ "default.target" ];
         };
       };
     };
