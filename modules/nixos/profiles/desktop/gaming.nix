@@ -59,17 +59,29 @@ in
     };
 
     snowfallorg.users.msfjarvis.home.config = {
-      systemd.user.services.steam = {
-        Unit = {
-          Description = "Open Steam in the background at boot";
-          StartLimitIntervalSec = "1min";
-          StartLimitBurst = 1;
+      systemd.user.services = {
+        steam = {
+          Unit = {
+            Description = "Open Steam in the background at boot";
+            StartLimitIntervalSec = "1min";
+            StartLimitBurst = 1;
+          };
+          Install.WantedBy = [ "graphical-session.target" ];
+          Service = {
+            ExecStart = "${lib.getExe pkgs.steam} -nochatui -nofriendsui -silent %U";
+            Restart = "on-abort";
+            RestartSec = "5s";
+          };
         };
-        Install.WantedBy = [ "graphical-session.target" ];
-        Service = {
-          ExecStart = "${lib.getExe pkgs.steam} -nochatui -nofriendsui -silent %U";
-          Restart = "on-abort";
-          RestartSec = "5s";
+        gpu-screen-recorder-ui = {
+          Unit.Description = "GPU Screen Recorder UI Service";
+          Service = {
+            ExecStart = "${pkgs.flatpak}/bin/flatpak run com.dec05eba.gpu_screen_recorder gsr-ui";
+            KillSignal = "SIGINT";
+            Restart = "on-failure";
+            RestartSec = "5s";
+          };
+          Install.WantedBy = [ "default.target" ];
         };
       };
     };
