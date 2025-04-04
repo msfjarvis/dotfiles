@@ -6,7 +6,7 @@ set -euo pipefail
 function nom_build() {
   local FLAKE
   FLAKE="${1}"
-  nom build --option always-allow-substitutes true .#nixosConfigurations."${FLAKE}".config.system.build.toplevel
+  nom build --option always-allow-substitutes true --option max-cores "$(($(nproc) / 2))" .#nixosConfigurations."${FLAKE}".config.system.build.toplevel
 }
 
 function cleanup_generations() {
