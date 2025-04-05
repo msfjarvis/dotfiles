@@ -24,7 +24,7 @@ in
       (pkgs.writeShellScriptBin "gallery-dl" ''
         ${
           lib.getExe pkgs.${namespace}.gallery-dl-unstable
-        } --config ${config.sops.secrets.gallery-dl-config.path} ''$@
+        } --config ${config.sops.secrets.gallery-dl-config.path} "''$@"
       '')
     ];
   };
