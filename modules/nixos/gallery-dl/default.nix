@@ -20,12 +20,7 @@ in
       group = "users";
       mode = "0440";
     };
-    environment.systemPackages = [
-      (pkgs.writeShellScriptBin "gallery-dl" ''
-        ${
-          lib.getExe pkgs.${namespace}.gallery-dl-unstable
-        } --config ${config.sops.secrets.gallery-dl-config.path} "''$@"
-      '')
-    ];
+    environment.etc."gallery-dl.conf".source = config.sops.secrets.gallery-dl-config.path;
+    environment.systemPackages = [ pkgs.${namespace}.gallery-dl-unstable ];
   };
 }
