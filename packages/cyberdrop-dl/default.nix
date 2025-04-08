@@ -7,14 +7,14 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
-  version = "6.7.0-unstable-2025-03-31";
+  version = "6.8.0-unstable-2025-04-07";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jbsparrow";
     repo = "CyberDropDownloader";
-    rev = "63641f0d3e27773a9d5fe0891a8fe9d0da65563d";
-    hash = "sha256-qcYtTPT7jKMfpro1FNPRjubnmU6vhjY9GDyt0aatA54=";
+    rev = "48cb5d4857c829ce09ad7f48f8e4bcceaaeef96a";
+    hash = "sha256-4OvXex+jskLs3lxWS1VoEsqSNct/DBbEHKhzVIJaCCo=";
   };
 
   patches = [ ./disable-update-check.diff ];
@@ -58,6 +58,7 @@ python3.pkgs.buildPythonApplication rec {
     myjdapi
     pillow
     platformdirs
+    psutil
     pycryptodomex
     pydantic
     pyyaml
