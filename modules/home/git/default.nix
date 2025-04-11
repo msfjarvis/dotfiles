@@ -2,12 +2,12 @@
   config,
   lib,
   pkgs,
-  host,
+  system,
   namespace,
   ...
 }:
 let
-  isWorkMachine = host == "Harshs-MacBook-Pro";
+  isWorkMachine = lib.strings.hasSuffix "darwin" system;
   isServer = config.profiles.${namespace}.starship.server;
   gcm = pkgs.git-credential-manager.override {
     withGpgSupport = false;
