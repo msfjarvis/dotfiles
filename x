@@ -22,7 +22,7 @@ chart)
   nom build .#topology.x86_64-linux.config.output
   ;;
 darwin-check)
-  nom build .#darwinConfigurations.Harshs-MacBook-Pro.system
+  nom build ".#darwinConfigurations.${HOSTNAME}.system"
   ;;
 darwin-switch)
   darwin-rebuild switch --option sandbox false --print-build-logs --flake .
