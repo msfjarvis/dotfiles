@@ -11,6 +11,7 @@ let
   homeDir = config.users.users.msfjarvis.home;
   minecraftInstances = [
     "Big Globe"
+    "CraftMine"
     "Fabulously.Optimized.1.21.3"
     "Fabulously.Optimized.1.21.4"
   ];
