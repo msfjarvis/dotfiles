@@ -26,7 +26,7 @@ in
         prefer-no-csd = true;
         window-rules = [
         ];
-        binds = { };
+        binds = (import ./keybinds.nix) // { };
       };
     };
     programs.swaylock = {
