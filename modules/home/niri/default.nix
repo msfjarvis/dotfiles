@@ -29,5 +29,8 @@ in
         binds = { };
       };
     };
+    programs.swaylock = {
+      enable = true;
+    };
   };
 }
