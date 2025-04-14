@@ -3,6 +3,7 @@
   lib,
   pkgs,
   namespace,
+  inputs,
   ...
 }:
 let
@@ -22,6 +23,7 @@ in
         };
         spawn-at-startup = [
           { command = [ (lib.getExe pkgs.xwayland-satellite) ]; }
+          { command = [ "${lib.getExe pkgs.swaybg} --image ${inputs.wallpaper}" ]; }
         ];
         prefer-no-csd = true;
         window-rules = [
