@@ -14,7 +14,9 @@ in
     enable = mkEnableOption "Niri wayland compositor";
   };
   config = mkIf cfg.enable {
-    programs.niri.package = pkgs.niri;
-    programs.niri.enable = true;
+    programs.niri = {
+      enable = true;
+      package = pkgs.niri-unstable;
+    };
   };
 }
