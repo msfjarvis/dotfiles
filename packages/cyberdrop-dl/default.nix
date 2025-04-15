@@ -7,14 +7,14 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
-  version = "6.8.0-unstable-2025-04-13";
+  version = "6.8.0-unstable-2025-04-14";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jbsparrow";
     repo = "CyberDropDownloader";
-    rev = "50228efaae8da73d1ccfc51cc24e9fe4c66d2367";
-    hash = "sha256-QAK55lWYTwRYI6deQessKH/mL4dC7X8z5BWKKE1PEvg=";
+    rev = "264b7a04350bdbb037ca82885d08f7430842dccf";
+    hash = "sha256-gDpMUTcPjlbo2iGRRwLKU+hYXoJ9iAD/wErVSij+rmM=";
   };
 
   patches = [ ./disable-update-check.diff ];
