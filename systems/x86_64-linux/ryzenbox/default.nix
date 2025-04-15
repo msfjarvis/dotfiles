@@ -34,6 +34,7 @@ in
     desktop.gaming.enable = true;
     desktop.gaming.minecraft.enable = true;
     desktop.gnome3.enable = true;
+    desktop.niri.enable = true;
     desktop.noise-cancelation.enable = true;
     gallery-dl.enable = true;
   };
