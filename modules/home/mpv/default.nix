@@ -19,8 +19,8 @@ in
       enable = true;
       package = pkgs.mpv-unwrapped.wrapper {
         mpv = pkgs.mpv-unwrapped.override {
-          waylandSupport = false;
-          x11Support = true;
+          waylandSupport = true;
+          x11Support = false;
           cddaSupport = false;
           vulkanSupport = false;
           drmSupport = false;
