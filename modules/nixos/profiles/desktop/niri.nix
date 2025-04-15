@@ -21,6 +21,7 @@ in
     };
     environment.variables.NIXOS_OZONE_WL = "1";
     environment.systemPackages = with pkgs; [
+      anyrun
       wl-clipboard
       wayland-utils
       libsecret

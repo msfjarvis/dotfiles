@@ -15,8 +15,8 @@
   "Mod+Shift+Slash".action.show-hotkey-overlay = { };
 
   # Suggested binds for running programs: terminal, app launcher, screen locker.
-  "Mod+T".action.spawn = "gnome-terminal";
-  "Mod+D".action.spawn = "anyrun";
+  "Ctrl+Alt+T".action.spawn = "gnome-terminal";
+  "Super+D".action.spawn = "anyrun";
   "Super+L".action.spawn = "swaylock";
 
   # You can also use a shell. Do this if you need pipes, multiple commands, etc.
@@ -64,53 +64,20 @@
 
   "Mod+Q".action.close-window = { };
 
-  "Mod+Left".action.focus-column-left = { };
-  "Mod+Down".action.focus-window-down = { };
-  "Mod+Up".action.focus-window-up = { };
-  "Mod+Right".action.focus-column-right = { };
-  "Mod+H".action.focus-column-left = { };
-  "Mod+J".action.focus-window-down = { };
-  "Mod+K".action.focus-window-up = { };
-  "Mod+L".action.focus-column-right = { };
+  "Ctrl+Alt+Left".action.focus-column-left = { };
+  "Ctrl+Alt+Down".action.focus-window-down = { };
+  "Ctrl+Alt+Up".action.focus-window-up = { };
+  "Ctrl+Alt+Right".action.focus-column-right = { };
 
-  "Mod+Ctrl+Left".action.move-column-left = { };
-  "Mod+Ctrl+Down".action.move-window-down = { };
-  "Mod+Ctrl+Up".action.move-window-up = { };
-  "Mod+Ctrl+Right".action.move-column-right = { };
-  "Mod+Ctrl+H".action.move-column-left = { };
-  "Mod+Ctrl+J".action.move-window-down = { };
-  "Mod+Ctrl+K".action.move-window-up = { };
-  "Mod+Ctrl+L".action.move-column-right = { };
-
-  # Alternative commands that move across workspaces when reaching
-  # the first or last window in a column.
-  # Mod+J     { focus-window-or-workspace-down; }
-  # Mod+K     { focus-window-or-workspace-up; }
-  # Mod+Ctrl+J     { move-window-down-or-to-workspace-down; }
-  # Mod+Ctrl+K     { move-window-up-or-to-workspace-up; }
+  "Ctrl+Shift+Left".action.move-column-left = { };
+  "Ctrl+Shift+Down".action.move-window-down = { };
+  "Ctrl+Shift+Up".action.move-window-up = { };
+  "Ctrl+Shift+Right".action.move-column-right = { };
 
   "Mod+Home".action.focus-column-first = { };
   "Mod+End".action.focus-column-last = { };
   "Mod+Ctrl+Home".action.move-column-to-first = { };
   "Mod+Ctrl+End".action.move-column-to-last = { };
-
-  "Mod+Shift+Left".action.focus-monitor-left = { };
-  "Mod+Shift+Down".action.focus-monitor-down = { };
-  "Mod+Shift+Up".action.focus-monitor-up = { };
-  "Mod+Shift+Right".action.focus-monitor-right = { };
-  "Mod+Shift+H".action.focus-monitor-left = { };
-  "Mod+Shift+J".action.focus-monitor-down = { };
-  "Mod+Shift+K".action.focus-monitor-up = { };
-  "Mod+Shift+L".action.focus-monitor-right = { };
-
-  "Mod+Shift+Ctrl+Left".action.move-column-to-monitor-left = { };
-  "Mod+Shift+Ctrl+Down".action.move-column-to-monitor-down = { };
-  "Mod+Shift+Ctrl+Up".action.move-column-to-monitor-up = { };
-  "Mod+Shift+Ctrl+Right".action.move-column-to-monitor-right = { };
-  "Mod+Shift+Ctrl+H".action.move-column-to-monitor-left = { };
-  "Mod+Shift+Ctrl+J".action.move-column-to-monitor-down = { };
-  "Mod+Shift+Ctrl+K".action.move-column-to-monitor-up = { };
-  "Mod+Shift+Ctrl+L".action.move-column-to-monitor-right = { };
 
   # Alternatively, there are commands to move just a single window:
   # Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
