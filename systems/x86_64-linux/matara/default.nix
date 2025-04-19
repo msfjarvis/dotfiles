@@ -29,8 +29,12 @@
   };
 
   profiles.${namespace} = {
-    server.enable = true;
+    server = {
+      enable = true;
+      tailscaleExitNode = true;
+    };
   };
+
   networking.hostName = "matara";
 
   environment.systemPackages = with pkgs; [
