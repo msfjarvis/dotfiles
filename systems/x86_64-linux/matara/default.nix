@@ -131,6 +131,15 @@
       target = "/media/.omg";
       file_filter = "*.mp4";
     };
+    ksmbd.enable = true;
+    ksmbd.openFirewall = true;
+    ksmbd.shares.public = {
+      path = "/media";
+      "read only" = true;
+      browseable = "yes";
+      "guest ok" = "yes";
+      comment = "Public samba share.";
+    };
   };
 
   system.stateVersion = "24.05";
