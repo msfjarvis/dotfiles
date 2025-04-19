@@ -8,14 +8,14 @@
 }:
 let
   isWorkMachine = lib.strings.hasSuffix "darwin" system;
-  isServer = config.profiles.${namespace}.starship.server;
+  notServer = !config.profiles.${namespace}.starship.server;
   gcm = pkgs.git-credential-manager.override {
     withGpgSupport = false;
   };
   inherit (pkgs) mergiraf;
 in
 {
-  home.packages = [ mergiraf ] ++ lib.optionals isServer [ gcm ];
+  home.packages = [ mergiraf ] ++ lib.optionals notServer [ gcm ];
 
   home.file.".gitattributes".source = pkgs.runCommandLocal "gitattributes" { } ''
     ${lib.getExe mergiraf} languages --gitattributes >> $out
@@ -95,7 +95,7 @@ in
 
         transfer.fsckobjects = true;
       }
-      // lib.attrsets.optionalAttrs (!isServer) {
+      // lib.attrsets.optionalAttrs notServer {
         credential = {
           credentialStore = if isWorkMachine then "keychain" else "secretservice";
           helper = lib.getExe gcm;
