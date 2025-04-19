@@ -4,16 +4,41 @@
   boot.supportedFilesystems = [ "ntfs" ];
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 
-  # TODO(msfjarvis): change to real values
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/6c1ecd8b-8365-4993-8acf-441eb680576c";
-    fsType = "ext4";
-  };
-
-  # TODO(msfjarvis): change to real values
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/ECEE-915B";
-    fsType = "vfat";
+  disko.devices = {
+    disk = {
+      main = {
+        # When using disko-install, we will overwrite this value from the commandline
+        device = "/dev/nvme0n1";
+        type = "disk";
+        content = {
+          type = "gpt";
+          partitions = {
+            MBR = {
+              type = "EF02"; # for grub MBR
+              size = "1M";
+              priority = 1; # Needs to be first partition
+            };
+            ESP = {
+              type = "EF00";
+              size = "500M";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+              };
+            };
+            root = {
+              size = "100%";
+              content = {
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/";
+              };
+            };
+          };
+        };
+      };
+    };
   };
 
   fileSystems."/media" = {
