@@ -176,19 +176,6 @@ in
   };
 
   services.restic.backups = {
-    photos = {
-      initialize = true;
-      repository = "rest:https://restic.tiger-shark.ts.net/photos";
-      passwordFile = config.sops.secrets.restic_repo_password.path;
-
-      paths = [ config.services.${namespace}.gphotos-cdp.dldir ];
-
-      pruneOpts = [
-        "--keep-daily 2"
-        "--keep-weekly 1"
-        "--keep-monthly 1"
-      ];
-    };
     screenshots = {
       initialize = true;
       repository = "rest:https://restic.tiger-shark.ts.net/screenshots";
@@ -205,13 +192,6 @@ in
   };
 
   services.${namespace} = {
-    gphotos-cdp = {
-      enable = true;
-      session-dir = "${homeDir}/harsh-sess";
-      dldir = "${homeDir}/harsh-photos";
-      user = "msfjarvis";
-      group = "users";
-    };
     rucksack = {
       enable = true;
       sources = [

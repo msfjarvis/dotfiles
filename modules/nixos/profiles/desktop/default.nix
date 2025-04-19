@@ -21,7 +21,6 @@ in
     ./minecraft.nix
     ./niri.nix
     ./noise-cancelation.nix
-    ./restic.nix
   ];
   options.profiles.${namespace}.desktop = {
     enable = mkEnableOption "Profile for desktop machines (i.e. not servers)";

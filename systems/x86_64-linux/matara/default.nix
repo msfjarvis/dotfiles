@@ -45,6 +45,22 @@
     yt-dlp
   ];
 
+  services.restic.backups = {
+    photos = {
+      initialize = true;
+      repository = "rest:https://restic.tiger-shark.ts.net/photos";
+      passwordFile = config.sops.secrets.restic_repo_password.path;
+
+      paths = [ config.services.${namespace}.gphotos-cdp.dldir ];
+
+      pruneOpts = [
+        "--keep-daily 2"
+        "--keep-weekly 1"
+        "--keep-monthly 1"
+      ];
+    };
+  };
+
   sops.secrets.services-tsauthkey-env = {
     sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
     owner = config.services.caddy.user;
