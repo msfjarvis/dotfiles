@@ -100,6 +100,7 @@ in
 
     sops.secrets.server-tsauthkey = {
       sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
+      owner = "msfjarvis";
     };
     services.tailscale = {
       authKeyFile = config.sops.secrets.server-tsauthkey.path;
