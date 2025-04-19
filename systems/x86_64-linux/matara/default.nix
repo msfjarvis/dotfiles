@@ -87,7 +87,7 @@
 
   services.${namespace} = {
     gphotos-cdp = {
-      enable = true;
+      enable = false;
       session-dir = "/home/msfjarvis/harsh-sess";
       dldir = "/home/msfjarvis/harsh-photos";
       user = "msfjarvis";
@@ -100,7 +100,7 @@
       prometheus.enable = true;
     };
     rucksack = {
-      enable = true;
+      enable = false;
       user = "root";
       group = "root";
       sources = [ "/var/lib/qbittorrent/downloads" ];
@@ -109,5 +109,5 @@
     };
   };
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 }

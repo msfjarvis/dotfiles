@@ -7,5 +7,5 @@
 
   profiles.${namespace}.starship.server = true;
 
-  home.stateVersion = "21.05";
+  home.stateVersion = "24.05";
 }
