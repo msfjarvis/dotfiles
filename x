@@ -18,8 +18,14 @@ function cleanup_generations() {
 ARG="${1:-nothing}"
 
 case "${ARG}" in
+boot)
+  nh os boot .
+  ;;
 chart)
   nom build .#topology.x86_64-linux.config.output
+  ;;
+check)
+  nom_build "${HOSTNAME}"
   ;;
 darwin-check)
   nom build ".#darwinConfigurations.${HOSTNAME}.system"
@@ -27,41 +33,18 @@ darwin-check)
 darwin-switch)
   darwin-rebuild switch --option sandbox false --print-build-logs --flake .
   ;;
-home-boot)
-  nh os boot .
-  ;;
-home-check)
-  nom_build ryzenbox
-  ;;
-home-switch)
-  nh os switch .
-  cleanup_generations
-  ;;
-home-test)
-  nh os test .
-  ;;
-melody-check)
-  nom_build melody
-  ;;
-melody-switch)
-  nh os switch .
-  cleanup_generations
-  ;;
-server-boot)
-  nh os boot .
-  ;;
-server-check)
-  nom_build wailord
-  ;;
-server-switch)
-  nh os switch .
-  cleanup_generations
-  ;;
 gradle-hash)
   shift
   VERSION="${1}"
   NIX_HASH="$(nix hash to-sri --type sha256 "$(nix-prefetch-url --type sha256 https://services.gradle.org/distributions/gradle-"${VERSION}"-bin.zip)")"
   printf '{ version = "%s"; hash = "%s";}' "${VERSION}" "${NIX_HASH}" >modules/nixos/profiles/desktop/gradle-version.nix
+  ;;
+test)
+  nh os test .
+  ;;
+switch)
+  nh os switch .
+  cleanup_generations
   ;;
 *)
   echo "Invalid command: ${ARG}"
