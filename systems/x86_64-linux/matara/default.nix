@@ -90,13 +90,17 @@
   };
 
   services.${namespace} = {
-    gphotos-cdp = {
-      enable = false;
-      session-dir = "/home/msfjarvis/harsh-sess";
-      dldir = "/home/msfjarvis/harsh-photos";
-      user = "msfjarvis";
-      group = "users";
-    };
+    gphotos-cdp =
+      let
+        homeDir = config.users.users.msfjarvis.home;
+      in
+      {
+        enable = true;
+        session-dir = "${homeDir}/harsh-sess";
+        dldir = "${homeDir}/harsh-photos";
+        user = "msfjarvis";
+        group = "users";
+      };
     qbittorrent = {
       enable = true;
       port = 9091;
