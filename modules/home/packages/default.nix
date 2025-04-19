@@ -16,7 +16,6 @@
     git-quickfix
     mosh
     ncdu_1
-    neofetch
     nixfmt-rfc-style
     nixpkgs-review
     nvd
