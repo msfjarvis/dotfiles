@@ -41,9 +41,7 @@
 
       extraOptions = ''
         keep-outputs = true
-        warn-dirty = false
         keep-derivations = true
-        builders-use-substitutes = true
       '';
       settings = {
         accept-flake-config = true;
