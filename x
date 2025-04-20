@@ -25,7 +25,10 @@ chart)
   nom build .#topology.x86_64-linux.config.output
   ;;
 check)
-  nom_build "${HOSTNAME}"
+  shift
+  TARGET="${1:-}"
+  [[ -z ${TARGET} ]] && TARGET="${HOSTNAME}"
+  nom_build "${TARGET}"
   ;;
 darwin-check)
   nom build ".#darwinConfigurations.${HOSTNAME}.system"
