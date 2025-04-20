@@ -73,6 +73,22 @@
           edit_debounce_ms = 700;
           scroll_debounce_ms = 50;
         };
+        languages = {
+          "Shell Script" = {
+            formatter.external = {
+              command = "shfmt";
+              arguments = [
+                "--simplify"
+                "--language-dialect"
+                "bash"
+                "--indent"
+                "2"
+                "--filename"
+                "{buffer_path}"
+              ];
+            };
+          };
+        };
         load_direnv = "shell_hook";
         lsp = {
           nil = {
