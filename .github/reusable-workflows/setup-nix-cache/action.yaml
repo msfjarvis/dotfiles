@@ -29,7 +29,7 @@ runs:
           trusted-users = $(whoami)
         "
     - name: Setup Tailscale
-      uses: tailscale/github-action@93605f7b8f223bf5f44e83275e64fb28f3e49d9e # v3
+      uses: tailscale/github-action@5d536117a7378beffcd6d8523ce73c50fa98684d # v3
       with:
         oauth-client-id: ${{ inputs.ts-oauth-client-id }}
         oauth-secret: ${{ inputs.ts-oauth-secret }}
