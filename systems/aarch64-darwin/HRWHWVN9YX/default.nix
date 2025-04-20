@@ -12,7 +12,7 @@
   environment.systemPackages = with pkgs; [
     pkgs.${namespace}.adbear
     pkgs.${namespace}.adx
-    attic-client
+
     coreutils
     pkgs.${namespace}.diffuse-bin
     pkgs.${namespace}.gdrive

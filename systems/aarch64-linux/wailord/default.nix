@@ -57,7 +57,7 @@
   programs.command-not-found.enable = false;
 
   environment.systemPackages = with pkgs; [
-    attic-client
+
     megatools
   ];
 

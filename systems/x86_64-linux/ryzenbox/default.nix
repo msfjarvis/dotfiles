@@ -122,7 +122,7 @@ in
       pkgs.${namespace}.adbear
       pkgs.${namespace}.age-keygen-deterministic
       age
-      attic-client
+
       pkgs.${namespace}.boop-gtk
       pkgs.${namespace}.cyberdrop-dl
       fclones
