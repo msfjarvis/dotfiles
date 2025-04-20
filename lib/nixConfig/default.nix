@@ -24,6 +24,18 @@
           ];
           mandatoryFeatures = [ ];
         }
+        {
+          hostName = "matara";
+          system = "x86_64-linux";
+          protocol = "ssh-ng";
+          maxJobs = 4;
+          speedFactor = 2;
+          supportedFeatures = [
+            "big-parallel"
+            "kvm"
+          ];
+          mandatoryFeatures = [ ];
+        }
       ];
       distributedBuilds = true;
 
