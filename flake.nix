@@ -24,7 +24,7 @@
         permittedInsecurePackages = [ ];
       };
       homes.modules = with inputs; [
-        niri.homeModules.niri
+        # niri.homeModules.niri
         nix-flatpak.homeManagerModules.nix-flatpak
         nix-index-database.hmModules.nix-index
         spicetify-nix.homeManagerModules.default
@@ -61,7 +61,7 @@
 
       overlays = with inputs; [
         fenix.overlays.default
-        niri.overlays.niri
+        # niri.overlays.niri
         nix-topology.overlays.default
       ];
       outputs-builder = channels: {
@@ -137,9 +137,9 @@
     micro-theme.url = "git+https://github.com/catppuccin/micro";
     micro-theme.flake = false;
 
-    niri.url = "github:sodiboo/niri-flake";
-    niri.inputs.nixpkgs.follows = "nixpkgs";
-    niri.inputs.nixpkgs-stable.follows = "nixpkgs";
+    # niri.url = "github:sodiboo/niri-flake";
+    # niri.inputs.nixpkgs.follows = "nixpkgs";
+    # niri.inputs.nixpkgs-stable.follows = "nixpkgs";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 

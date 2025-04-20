@@ -19,7 +19,7 @@ in
     ./gaming.nix
     ./gnome3.nix
     ./minecraft.nix
-    ./niri.nix
+    # ./niri.nix
     ./noise-cancelation.nix
   ];
   options.profiles.${namespace}.desktop = {
