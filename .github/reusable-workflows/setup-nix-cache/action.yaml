@@ -34,7 +34,8 @@ runs:
         oauth-client-id: ${{ inputs.ts-oauth-client-id }}
         oauth-secret: ${{ inputs.ts-oauth-secret }}
         tags: "tag:github-actions"
-        version: latest
+        version: 1.82.0
+        use-cache: true
     - name: Add nixpkgs-unstable channel
       shell: bash
       run: |
