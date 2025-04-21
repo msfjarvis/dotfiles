@@ -167,6 +167,16 @@
           reverse_proxy ${config.services.restic.server.listenAddress}
         '';
       };
+      "https://stats.msfjarvis.dev" =
+        let
+          p = config.services.plausible.server;
+        in
+        {
+          extraConfig = ''
+            import blackholeCrawlers
+            reverse_proxy ${p.listenAddress}:${toString p.port}
+          '';
+        };
       "https://til.msfjarvis.dev" = {
         extraConfig = ''
           import blackholeCrawlers
@@ -180,6 +190,17 @@
           file_server browse
         '';
       };
+    };
+  };
+
+  sops.secrets.plausible-secret = {
+    sopsFile = lib.snowfall.fs.get-file "secrets/plausible.yaml";
+  };
+  services.plausible = {
+    enable = true;
+    server = {
+      baseUrl = "https://stats.msfjarvis.dev";
+      secretKeybaseFile = config.sops.secrets.plausible-secret.path;
     };
   };
 
