@@ -1,7 +1,7 @@
 keys:
   - &matara age1amgta8nhsxfm3wu9xa4yhwppway52ap7rj0yjhcrjp9sz6e0gcdqpl6xp3
   - &melody age1e7mhx6p2wmnl72c3k3nxajaxurmh63vn27l2kcrxt8xape6mq4dqrpvjnq
-  - &ryzenbox age1lx7mrr66ewummv3mqp4wesq57w0rld8hsujcqcrnnedgjpy7fv2qlkrqk2
+  - &ryzenbox age1v6ak02xxkkmlh42c7vul75twymkq427kyv5pa99ws44frwxn752sure46u
   - &wailord age10fy49p7faufe5533rxgshwjn9kr3aqcxjyqk6ty26j99w50dkswsvn2maq
 creation_rules:
   - key_groups:
