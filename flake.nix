@@ -35,6 +35,7 @@
       ];
       systems.modules.nixos = with inputs; [
         disko.nixosModules.disko
+        golink.nixosModules.default
         nix-flatpak.nixosModules.nix-flatpak
         nix-topology.nixosModules.default
         sops-nix.nixosModules.sops
@@ -119,6 +120,10 @@
     firefox.inputs.nixpkgs.follows = "nixpkgs";
     firefox.inputs.flake-compat.follows = "flake-compat";
     firefox.inputs.lib-aggregate.follows = "lib-aggregate";
+
+    golink.url = "github:msfjarvis/golink?rev=42d8d8eea760e80bc85cfd1c33782c7013c12b35";
+    golink.inputs.nixpkgs.follows = "nixpkgs";
+    golink.inputs.systems.follows = "systems";
 
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";

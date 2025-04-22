@@ -281,6 +281,30 @@
         "type": "github"
       }
     },
+    "golink": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": [
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1745332964,
+        "narHash": "sha256-Tjs0F5rinesxYPBulIqg2iDomS/h8Qm4eyzEUdTsDxU=",
+        "owner": "msfjarvis",
+        "repo": "golink",
+        "rev": "42d8d8eea760e80bc85cfd1c33782c7013c12b35",
+        "type": "github"
+      },
+      "original": {
+        "owner": "msfjarvis",
+        "repo": "golink",
+        "rev": "42d8d8eea760e80bc85cfd1c33782c7013c12b35",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -489,6 +513,7 @@
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "flake-utils-plus": "flake-utils-plus",
+        "golink": "golink",
         "home-manager": "home-manager",
         "lib-aggregate": "lib-aggregate",
         "lix": "lix",

@@ -1,5 +1,7 @@
 {
+  config,
   pkgs,
+  lib,
   inputs,
   namespace,
   ...
@@ -48,9 +50,18 @@
   programs.command-not-found.enable = true;
 
   environment.systemPackages = with pkgs; [
-
     megatools
   ];
+
+  sops.secrets.golink-tsauthkey = {
+    sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
+    owner = config.services.golink.user;
+    key = "services-tsauthkey-env";
+  };
+  services.golink = {
+    enable = true;
+  };
+  systemd.services.golink.serviceConfig.EnvironmentFile = config.sops.secrets.golink-tsauthkey.path;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
