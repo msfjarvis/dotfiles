@@ -77,7 +77,7 @@ in
     systemd.timers.gphotos-cdp = {
       description = "Run gphotos-cdp every day";
       timerConfig = {
-        OnCalendar = "*-*-* 12:00:00";
+        OnCalendar = "*-*-* 00:00:00";
         Persistent = true;
       };
       wantedBy = [ "timers.target" ];
