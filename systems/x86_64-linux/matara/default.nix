@@ -133,12 +133,27 @@
     };
     ksmbd.enable = true;
     ksmbd.openFirewall = true;
-    ksmbd.shares.public = {
-      path = "/media";
-      "read only" = true;
-      browseable = "yes";
-      "guest ok" = "yes";
-      comment = "Public samba share.";
+    ksmbd.shares = {
+      public = {
+        path = "/media";
+        "read only" = true;
+        browseable = "yes";
+        writeable = "yes";
+        "force user" = "root";
+        "force group" = "users";
+        "guest ok" = "yes";
+        comment = "Public samba share.";
+      };
+      media = {
+        path = "/mediahell";
+        "read only" = true;
+        browseable = "yes";
+        writeable = "yes";
+        "force user" = "root";
+        "force group" = "users";
+        "guest ok" = "yes";
+        comment = "Media samba share.";
+      };
     };
   };
 

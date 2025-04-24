@@ -42,5 +42,16 @@
     options = [ "nofail" ];
   };
 
+  fileSystems."/mediahell" = {
+    device = "/dev/disk/by-uuid/776C677B7E1D53F0";
+    fsType = "ntfs-3g";
+    options = [
+      "nofail"
+      "uid=0"
+      "gid=users"
+      "umask=002"
+    ];
+  };
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
