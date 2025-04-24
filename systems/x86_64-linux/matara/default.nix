@@ -136,7 +136,7 @@
     ksmbd.shares = {
       public = {
         path = "/media";
-        "read only" = true;
+        "read only" = false;
         browseable = "yes";
         writeable = "yes";
         "force user" = "root";
@@ -146,7 +146,7 @@
       };
       media = {
         path = "/mediahell";
-        "read only" = true;
+        "read only" = false;
         browseable = "yes";
         writeable = "yes";
         "force user" = "root";
