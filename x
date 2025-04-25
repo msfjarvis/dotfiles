@@ -40,7 +40,7 @@ gradle-hash)
   shift
   VERSION="${1}"
   NIX_HASH="$(nix hash to-sri --type sha256 "$(nix-prefetch-url --type sha256 https://services.gradle.org/distributions/gradle-"${VERSION}"-bin.zip)")"
-  printf '{ version = "%s"; hash = "%s";}' "${VERSION}" "${NIX_HASH}" >modules/nixos/profiles/desktop/gradle-version.nix
+  printf '{ version = "%s"; hash = "%s";}' "${VERSION}" "${NIX_HASH}" | nixfmt >modules/nixos/profiles/desktop/gradle-version.nix
   ;;
 test)
   nh os test .
