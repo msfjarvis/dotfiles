@@ -139,7 +139,7 @@
         "read only" = false;
         browseable = "yes";
         writeable = "yes";
-        "force user" = "root";
+        "force user" = "msfjarvis";
         "force group" = "users";
         "guest ok" = "yes";
         comment = "Public samba share.";
@@ -149,7 +149,7 @@
         "read only" = false;
         browseable = "yes";
         writeable = "yes";
-        "force user" = "root";
+        "force user" = "msfjarvis";
         "force group" = "users";
         "guest ok" = "yes";
         comment = "Media samba share.";
