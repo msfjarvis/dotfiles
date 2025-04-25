@@ -47,7 +47,7 @@
     fsType = "ntfs-3g";
     options = [
       "nofail"
-      "uid=0"
+      "uid=msfjarvis"
       "gid=users"
       "umask=002"
     ];
