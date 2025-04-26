@@ -133,28 +133,23 @@
     };
     ksmbd.enable = true;
     ksmbd.openFirewall = true;
-    ksmbd.shares = {
-      public = {
-        path = "/media";
-        "read only" = false;
-        browseable = "yes";
-        writeable = "yes";
-        "force user" = "msfjarvis";
-        "force group" = "users";
-        "guest ok" = "yes";
-        comment = "Public samba share.";
+    ksmbd.shares =
+      let
+        mkShare = path: name: {
+          inherit path;
+          "read only" = false;
+          browseable = "yes";
+          writeable = "yes";
+          "force user" = "msfjarvis";
+          "force group" = "users";
+          "guest ok" = "yes";
+          comment = "${name} samba share.";
+        };
+      in
+      {
+        public = mkShare "/media" "Public";
+        media = mkShare "/mediahell" "Media";
       };
-      media = {
-        path = "/mediahell";
-        "read only" = false;
-        browseable = "yes";
-        writeable = "yes";
-        "force user" = "msfjarvis";
-        "force group" = "users";
-        "guest ok" = "yes";
-        comment = "Media samba share.";
-      };
-    };
   };
 
   system.stateVersion = "24.05";
