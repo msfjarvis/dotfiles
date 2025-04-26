@@ -149,6 +149,7 @@
       {
         public = mkShare "/media" "Public";
         media = mkShare "/mediahell" "Media";
+        downloads = mkShare "/home/msfjarvis/Downloads" "Downloads";
       };
   };
 
