@@ -160,7 +160,6 @@ in
         ]
       ))
       scrcpy
-      smile
       telegram-desktop
       thunderbird-latest
       unrar
