@@ -13,8 +13,8 @@ python3.pkgs.buildPythonApplication rec {
   src = fetchFromGitHub {
     owner = "jbsparrow";
     repo = "CyberDropDownloader";
-    rev = "7ea85d42f86e7ad4ccea3026b1e09fdf137ad9df";
-    hash = "sha256-obYCvY02sEMjHIILNcEXJajXajnmSgWLQIq9wiikE/I=";
+    rev = "73abe539746c546c405ee11c105cad71045815e1";
+    hash = "sha256-J4dMjD3T0zsjaWkRpnqORJzJemy++GF7h9DW0yQusl0=";
   };
 
   patches = [ ./disable-update-check.diff ];
