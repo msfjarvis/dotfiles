@@ -54,7 +54,7 @@ in
       config = {
         DATABASE_URL = "postgres://vaultwarden?host=/run/postgresql";
         DOMAIN = cfg.domain;
-        EXPERIMENTAL_CLIENT_FEATURE_FLAGS = "autofill-v2,extension-refresh,fido2-vault-credentials,inline-menu-positioning-improvements,ssh-key-vault-item";
+        EXPERIMENTAL_CLIENT_FEATURE_FLAGS = "autofill-overlay,autofill-v2,browser-fileless-import,extension-refresh,fido2-vault-credentials,inline-menu-positioning-improvements,ssh-key-vault-item,ssh-agent";
         INVITATIONS_ALLOWED = false;
         PUSH_ENABLED = true;
         PUSH_IDENTITY_URI = "https://identity.bitwarden.eu";
