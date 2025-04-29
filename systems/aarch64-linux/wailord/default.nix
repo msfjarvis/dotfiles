@@ -196,11 +196,24 @@
   sops.secrets.plausible-secret = {
     sopsFile = lib.snowfall.fs.get-file "secrets/plausible.yaml";
   };
+  sops.secrets.plausible-smtp-pass = {
+    sopsFile = lib.snowfall.fs.get-file "secrets/plausible.yaml";
+  };
   services.plausible = {
     enable = true;
     server = {
       baseUrl = "https://stats.msfjarvis.dev";
       secretKeybaseFile = config.sops.secrets.plausible-secret.path;
+    };
+    mail = {
+      email = "reports@stats.msfjarvis.dev";
+      smtp = {
+        enableSSL = true;
+        hostAddr = "smtp.purelymail.com";
+        hostPort = 587;
+        passwordFile = config.sops.secrets.plausible-smtp-pass.path;
+        user = "me@msfjarvis.dev";
+      };
     };
   };
 
