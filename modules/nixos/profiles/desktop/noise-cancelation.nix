@@ -69,6 +69,14 @@ in
           }
         ]
       '')
+      (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/50-prevent-audio-changes.conf" ''
+        access.rules = [
+          {
+            matches = [ { application.process.binary = "electron" } ]
+            actions = { update-props = { default_permissions = "rx" } }
+          }
+        ]
+      '')
     ];
   };
 }
