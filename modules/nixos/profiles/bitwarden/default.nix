@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   namespace,
   ...
 }:
@@ -16,8 +17,9 @@ in
     enable = mkEnableOption "Bitwarden password manager";
   };
   config = mkIf cfg.enable {
-    programs.goldwarden = {
-      enable = true;
-    };
+    environment.systemPackages = with pkgs; [
+      (rbw.override { withFzf = true; })
+      pinentry-curses
+    ];
   };
 }
