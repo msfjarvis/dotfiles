@@ -107,8 +107,10 @@ in
       extraUpFlags = [
         "--accept-risk=lose-ssh"
         "--ssh"
-        "--accept-dns=false" # I don't want my servers to use NextDNS
       ] ++ lib.optionals cfg.tailscaleExitNode [ "--advertise-exit-node" ];
+      extraSetFlags = [
+        "--accept-dns=false" # I don't want my servers to use NextDNS
+      ];
       useRoutingFeatures = if cfg.tailscaleExitNode then "both" else "client";
     };
   };
