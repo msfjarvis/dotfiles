@@ -125,8 +125,9 @@ in
         Group = cfg.group;
       };
       script = ''
-        export QBITTORRENT_HOST=localhost
+        export QBITTORRENT_HOST=127.0.0.1
         export QBITTORRENT_PORT=${toString cfg.port}
+        export EXPORTER_ADDRESS=127.0.0.1
         export EXPORTER_PORT=${toString cfg.prometheus.port}
         ${lib.getExe pkgs.${namespace}.prometheus-qbittorrent-exporter}
       '';
