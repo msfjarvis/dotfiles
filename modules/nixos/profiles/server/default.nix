@@ -7,11 +7,20 @@
 }:
 let
   cfg = config.profiles.${namespace}.server;
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    ;
 in
 {
   options.profiles.${namespace}.server = {
     enable = mkEnableOption "server profile";
+    adapterName = mkOption {
+      type = types.str;
+      description = "Name of the network adapter to configure for exit node performance";
+    };
     tailscaleExitNode = mkEnableOption "Run this machine as a Tailscale exit node";
   };
   config = mkIf cfg.enable {
@@ -110,6 +119,14 @@ in
         "--accept-dns=false" # I don't want my servers to use NextDNS
       ] ++ lib.optionals cfg.tailscaleExitNode [ "--advertise-exit-node" ];
       useRoutingFeatures = if cfg.tailscaleExitNode then "both" else "client";
+    };
+
+    services.networkd-dispatcher = lib.mkIf cfg.tailscaleExitNode {
+      enable = true;
+      rules."50-tailscale" = {
+        onState = [ "routable" ];
+        script = "${lib.getExe pkgs.ethtool} -K ${cfg.adapterName} rx-udp-gro-forwarding on rx-gro-list off";
+      };
     };
   };
 }

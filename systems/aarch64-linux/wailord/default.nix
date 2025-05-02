@@ -28,6 +28,7 @@
   profiles.${namespace} = {
     server = {
       enable = true;
+      adapterName = "enp3s0";
       tailscaleExitNode = true;
     };
   };

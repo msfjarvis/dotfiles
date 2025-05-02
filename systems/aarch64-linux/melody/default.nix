@@ -31,6 +31,7 @@
   profiles.${namespace} = {
     server = {
       enable = true;
+      adapterName = "enp0s6";
       tailscaleExitNode = true;
     };
   };

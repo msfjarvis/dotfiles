@@ -31,6 +31,7 @@
   profiles.${namespace} = {
     server = {
       enable = true;
+      adapterName = "eno1";
       tailscaleExitNode = true;
     };
   };
