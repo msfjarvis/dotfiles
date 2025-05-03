@@ -66,8 +66,8 @@ in
         Group = cfg.group;
         Restart = "on-failure";
         RestartSec = "30s";
-        Type = "simple";
-        TimeoutSec = "600s";
+        Type = "oneshot";
+        TimeoutStartSec = "600s";
       };
       script = ''
         exec env ${lib.getExe cfg.package} -v -dev -headless -dldir ${cfg.dldir} -session-dir ${cfg.session-dir}
