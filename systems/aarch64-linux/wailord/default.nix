@@ -373,7 +373,7 @@
                       }
                       {
                         title = "Prometheus (wailord)";
-                        url = "https://prometheus.tiger-shark.ts.net";
+                        url = "https://prom-wailord.tiger-shark.ts.net";
                         icon = "si:prometheus";
                       }
                       {
