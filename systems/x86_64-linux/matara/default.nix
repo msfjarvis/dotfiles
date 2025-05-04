@@ -76,12 +76,6 @@
           reverse_proxy 127.0.0.1:${toString config.services.${namespace}.qbittorrent.port}
         '';
       };
-      "https://prom-matara.tiger-shark.ts.net" = {
-        extraConfig = ''
-          bind tailscale/prom-matara
-          reverse_proxy 127.0.0.1:${toString config.services.prometheus.port}
-        '';
-      };
     };
   };
 
@@ -95,14 +89,6 @@
         port = 9002;
       };
     };
-    scrapeConfigs = [
-      {
-        job_name = "matara";
-        static_configs = [
-          { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ]; }
-        ];
-      }
-    ];
   };
 
   services.${namespace} = {
@@ -117,6 +103,9 @@
         user = "msfjarvis";
         group = "users";
       };
+    prometheus = {
+      enable = true;
+    };
     qbittorrent = {
       enable = true;
       port = 9091;

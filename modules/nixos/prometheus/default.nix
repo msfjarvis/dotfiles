@@ -6,36 +6,51 @@
 }:
 let
   cfg = config.services.${namespace}.prometheus;
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib)
+    mkEnableOption
+    mkMerge
+    mkOption
+    mkIf
+    types
+    ;
 in
 {
   options.services.${namespace}.prometheus = {
     enable = mkEnableOption "Prometheus";
+    enableGrafana = mkEnableOption "Grafana";
+    host = mkOption {
+      type = types.str;
+      default = "prom-${config.networking.hostName}";
+      description = "Host name for the Prometheus server";
+    };
   };
   config = mkIf cfg.enable {
-    services.caddy.virtualHosts = {
-      "https://${config.services.grafana.settings.server.domain}" = {
-        extraConfig = ''
-          bind tailscale/grafana
-          tailscale_auth
-          reverse_proxy ${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port} {
-            header_up X-Webauth-User {http.auth.user.tailscale_user}
-          }
-        '';
-      };
-
-      "https://prometheus.tiger-shark.ts.net" = {
-        extraConfig = ''
-          bind tailscale/prometheus
-          tailscale_auth
-          reverse_proxy 127.0.0.1:${toString config.services.prometheus.port} {
-            header_up X-Webauth-User {http.auth.user.tailscale_user}
-          }
-        '';
-      };
-    };
+    services.caddy.virtualHosts = mkMerge [
+      (mkIf cfg.enableGrafana {
+        "https://${config.services.grafana.settings.server.domain}" = {
+          extraConfig = ''
+            bind tailscale/grafana
+            tailscale_auth
+            reverse_proxy ${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port} {
+              header_up X-Webauth-User {http.auth.user.tailscale_user}
+            }
+          '';
+        };
+      })
+      {
+        "https://${cfg.host}.tiger-shark.ts.net" = {
+          extraConfig = ''
+            bind tailscale/${cfg.host}
+            tailscale_auth
+            reverse_proxy 127.0.0.1:${toString config.services.prometheus.port} {
+              header_up X-Webauth-User {http.auth.user.tailscale_user}
+            }
+          '';
+        };
+      }
+    ];
     services.grafana = {
-      enable = true;
+      enable = cfg.enableGrafana;
       settings = {
         "auth.proxy" = {
           enabled = true;
@@ -66,7 +81,7 @@ in
       };
       scrapeConfigs = [
         {
-          job_name = "wailord";
+          job_name = config.networking.hostName;
           static_configs = [
             { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ]; }
             { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.systemd.port}" ]; }
@@ -75,10 +90,6 @@ in
         {
           job_name = "caddy";
           static_configs = [ { targets = [ "127.0.0.1:2019" ]; } ];
-        }
-        {
-          job_name = "miniflux";
-          static_configs = [ { targets = [ config.services.miniflux.config.LISTEN_ADDR ]; } ];
         }
       ];
     };

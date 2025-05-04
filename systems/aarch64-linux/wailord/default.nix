@@ -424,7 +424,10 @@
 
     postgres.enable = true;
 
-    prometheus.enable = true;
+    prometheus = {
+      enable = true;
+      enableGrafana = true;
+    };
 
     restic-rest-server.enable = true;
 
@@ -456,13 +459,11 @@
     sopsFile = lib.snowfall.fs.get-file "secrets/feed-auth.env";
     format = "dotenv";
   };
-
   services.miniflux = {
     enable = true;
     createDatabaseLocally = true;
     config = {
       LISTEN_ADDR = "127.0.0.1:8889";
-
       FETCH_ODYSEE_WATCH_TIME = 1;
       FETCH_YOUTUBE_WATCH_TIME = 1;
       LOG_DATE_TIME = 1;
@@ -475,6 +476,12 @@
     };
     adminCredentialsFile = config.sops.secrets.feed-auth.path;
   };
+  services.prometheus.scrapeConfigs = [
+    {
+      job_name = "miniflux";
+      static_configs = [ { targets = [ config.services.miniflux.config.LISTEN_ADDR ]; } ];
+    }
+  ];
 
   system.stateVersion = "23.11";
 
