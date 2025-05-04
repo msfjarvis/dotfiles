@@ -12,6 +12,7 @@ let
   inherit (lib)
     mkEnableOption
     mkIf
+    mkMerge
     mkOption
     types
     ;
@@ -84,69 +85,81 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    environment.systemPackages = [ pkgs.qbittorrent ];
+  config = mkMerge [
+    (mkIf cfg.enable {
+      environment.systemPackages = [ pkgs.qbittorrent ];
 
-    networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [ cfg.port ];
-      allowedUDPPorts = [ cfg.port ];
-    };
+      networking.firewall = mkIf cfg.openFirewall {
+        allowedTCPPorts = [ cfg.port ];
+        allowedUDPPorts = [ cfg.port ];
+      };
 
-    systemd.services.qbittorrent = {
-      after = [ "network.target" ];
-      description = "qBittorrent Daemon";
-      wantedBy = [ "multi-user.target" ];
-      path = [ pkgs.qbittorrent ];
-      serviceConfig = {
-        ExecStart = ''
-          ${pkgs.qbittorrent}/bin/qbittorrent-nox \
-            --profile=${configDir} \
-            --webui-port=${toString cfg.port}
+      systemd.services.qbittorrent = {
+        after = [ "network.target" ];
+        description = "qBittorrent Daemon";
+        wantedBy = [ "multi-user.target" ];
+        path = [ pkgs.qbittorrent ];
+        serviceConfig = {
+          ExecStart = ''
+            ${pkgs.qbittorrent}/bin/qbittorrent-nox \
+              --profile=${configDir} \
+              --webui-port=${toString cfg.port}
+          '';
+          # To prevent "Quit & shutdown daemon" from working; we want systemd to
+          # manage it!
+          Restart = "on-success";
+          User = cfg.user;
+          Group = cfg.group;
+          UMask = "0002";
+          LimitNOFILE = cfg.openFilesLimit;
+        };
+      };
+
+      users.users = mkIf (cfg.user == "qbittorrent") {
+        qbittorrent = {
+          inherit (cfg) group;
+          home = cfg.dataDir;
+          createHome = true;
+          description = "qBittorrent Daemon user";
+          isNormalUser = true;
+        };
+      };
+
+      users.groups = mkIf (cfg.group == "qbittorrent") {
+        qbittorrent = {
+          gid = null;
+        };
+      };
+    })
+    (mkIf cfg.prometheus.enable {
+      systemd.services.prometheus-qbittorrent-exporter = {
+        after = [ "qbittorrent.service" ];
+        description = "qBittorrent Prometheus exporter";
+        wantedBy = [ "multi-user.target" ];
+        environment = {
+          EXPORT_METRICS_BY_TORRENT = "True";
+        };
+        serviceConfig = {
+          User = cfg.user;
+          Group = cfg.group;
+        };
+        script = ''
+          export QBITTORRENT_HOST=127.0.0.1
+          export QBITTORRENT_PORT=${toString cfg.port}
+          export EXPORTER_ADDRESS=127.0.0.1
+          export EXPORTER_PORT=${toString cfg.prometheus.port}
+          ${lib.getExe pkgs.${namespace}.prometheus-qbittorrent-exporter}
         '';
-        # To prevent "Quit & shutdown daemon" from working; we want systemd to
-        # manage it!
-        Restart = "on-success";
-        User = cfg.user;
-        Group = cfg.group;
-        UMask = "0002";
-        LimitNOFILE = cfg.openFilesLimit;
       };
-    };
 
-    systemd.services.prometheus-qbittorrent-exporter = mkIf cfg.prometheus.enable {
-      after = [ "qbittorrent.service" ];
-      description = "qBittorrent Prometheus exporter";
-      wantedBy = [ "multi-user.target" ];
-      environment = {
-        EXPORT_METRICS_BY_TORRENT = "True";
-      };
-      serviceConfig = {
-        User = cfg.user;
-        Group = cfg.group;
-      };
-      script = ''
-        export QBITTORRENT_HOST=127.0.0.1
-        export QBITTORRENT_PORT=${toString cfg.port}
-        export EXPORTER_ADDRESS=127.0.0.1
-        export EXPORTER_PORT=${toString cfg.prometheus.port}
-        ${lib.getExe pkgs.${namespace}.prometheus-qbittorrent-exporter}
-      '';
-    };
-
-    users.users = mkIf (cfg.user == "qbittorrent") {
-      qbittorrent = {
-        inherit (cfg) group;
-        home = cfg.dataDir;
-        createHome = true;
-        description = "qBittorrent Daemon user";
-        isNormalUser = true;
-      };
-    };
-
-    users.groups = mkIf (cfg.group == "qbittorrent") {
-      qbittorrent = {
-        gid = null;
-      };
-    };
-  };
+      services.prometheus.scrapeConfigs = [
+        {
+          job_name = "qbittorrent";
+          static_configs = [
+            { targets = [ "127.0.0.1:${toString config.services.${namespace}.qbittorrent.prometheus.port}" ]; }
+          ];
+        }
+      ];
+    })
+  ];
 }
