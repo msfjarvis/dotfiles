@@ -362,9 +362,34 @@
                         icon = "si:files";
                       }
                       {
+                        title = "Prometheus (matara)";
+                        url = "https://prom-matara.tiger-shark.ts.net";
+                        icon = "si:prometheus";
+                      }
+                      {
+                        title = "Prometheus (melody)";
+                        url = "https://prom-melody.tiger-shark.ts.net";
+                        icon = "si:prometheus";
+                      }
+                      {
+                        title = "Prometheus (wailord)";
+                        url = "https://prometheus.tiger-shark.ts.net";
+                        icon = "si:prometheus";
+                      }
+                      {
+                        title = "QBittorrent";
+                        url = "https://matara.tiger-shark.ts.net";
+                        icon = "si:qbittorrent";
+                      }
+                      {
                         title = "RSS reader";
                         url = "https://read.msfjarvis.dev";
                         icon = "si:rss";
+                      }
+                      {
+                        title = "Vaultwarden";
+                        url = "https://vault.msfjarvis.dev";
+                        icon = "si:vaultwarden";
                       }
                     ];
                   }
