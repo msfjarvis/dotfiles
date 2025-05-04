@@ -45,9 +45,10 @@ in
           zimgSupport = false;
         };
         scripts = with pkgs.mpvScripts; [
-          uosc
-          thumbfast
           inhibit-gnome
+          modernz
+          mpv-cheatsheet
+          thumbfast
         ];
 
       };
