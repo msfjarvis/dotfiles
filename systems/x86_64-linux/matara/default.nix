@@ -68,6 +68,7 @@
   };
   services.caddy = {
     enable = true;
+    enableReload = false;
     package = pkgs.${namespace}.caddy-with-plugins;
     environmentFile = config.sops.secrets.services-tsauthkey-env.path;
     virtualHosts = {
