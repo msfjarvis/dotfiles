@@ -69,9 +69,16 @@
       enable = true;
     };
   };
+
+  sops.secrets.services-tsauthkey-env = {
+    sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
+    owner = config.services.caddy.user;
+  };
   services.caddy = {
     enable = true;
-    enableReload = false;
+    enableReload = false; # I think caddy-tailscale breaks this
+    package = pkgs.${namespace}.caddy-with-plugins;
+    environmentFile = config.sops.secrets.services-tsauthkey-env.path;
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
