@@ -456,8 +456,6 @@
 
     restic-rest-server.enable = true;
 
-    tandoor.enable = true;
-
     vaultwarden = {
       enable = true;
       domain = "https://vault.msfjarvis.dev";
