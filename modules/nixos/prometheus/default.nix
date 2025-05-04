@@ -41,10 +41,7 @@ in
         "https://${cfg.host}.tiger-shark.ts.net" = {
           extraConfig = ''
             bind tailscale/${cfg.host}
-            tailscale_auth
-            reverse_proxy 127.0.0.1:${toString config.services.prometheus.port} {
-              header_up X-Webauth-User {http.auth.user.tailscale_user}
-            }
+            reverse_proxy 127.0.0.1:${toString config.services.prometheus.port}
           '';
         };
       }
