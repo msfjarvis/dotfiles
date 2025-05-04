@@ -46,6 +46,8 @@
 
       systems.hosts.matara.modules = with inputs; [
         srvos.nixosModules.mixins-mdns
+        srvos.nixosModules.mixins-telegraf
+        srvos.nixosModules.roles-prometheus
         srvos.nixosModules.server
       ];
       systems.hosts.melody.modules = with inputs; [
