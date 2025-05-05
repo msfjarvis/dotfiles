@@ -164,7 +164,7 @@ in
       thunderbird-latest
       unrar
       uv
-      (vesktop.override { withSystemVencord = false; })
+      (vesktop.override { withSystemVencord = true; })
       yt-dlp
     ];
   };
