@@ -6,6 +6,9 @@ while read -r local_ref local_oid remote_ref remote_oid; do
   : "$local_ref"
   : "$remote_ref"
 
+  # Run nix fmt
+  nix fmt -- --fail-on-change
+
   # Retrieve the commit hash of the currently built system
   built_commit=$(jq -r '.flakes[] | select(.from.id == "self") | .to.rev' /etc/nix/registry.json 2>/dev/null || echo "")
 
@@ -26,14 +29,6 @@ while read -r local_ref local_oid remote_ref remote_oid; do
     result=$?
 
     if [ $result -ne 0 ]; then
-      exit 1
-    fi
-  else
-    # Run nix fmt
-    nix fmt
-
-    # Check if there are any changes after formatting
-    if [ -n "$(git diff --name-only)" ]; then
       exit 1
     fi
   fi
