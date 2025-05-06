@@ -234,14 +234,16 @@
       user = "msfjarvis";
       group = "users";
       settings = {
-        server.port = 8080;
+        server = {
+          host = "localhost";
+          port = 8080;
+        };
         # Refresh every 5 minutes
-        branding.custom-footer = ''
-          <script>
-          if (pageData.slug === 'home')
-            setTimeout(() => location.reload(), 60 * 1000 * 5);
-          </script>
-        '';
+        branding = {
+          logo-url = "https://msfjarvis.dev/favicon.ico";
+          favicon-url = "https://msfjarvis.dev/favicon.ico";
+          custom-footer = "<script>if (pageData.slug === 'home')setTimeout(() => location.reload(), 60 * 1000 * 5);</script>";
+        };
         theme = {
           background-color = "240 21 15";
           contrast-multiplier = 1.2;
@@ -259,6 +261,27 @@
                   {
                     type = "lobsters";
                     sort-by = "hot";
+                  }
+                  {
+                    type = "group";
+                    widgets = [
+                      {
+                        type = "reddit";
+                        subreddit = "hermitcraft";
+                        style = "vertical-list";
+                        show-thumbnails = true;
+                        sort-by = "top";
+                        top-period = "day";
+                      }
+                      {
+                        type = "reddit";
+                        subreddit = "hermitcraftmemes";
+                        style = "vertical-list";
+                        show-thumbnails = true;
+                        sort-by = "top";
+                        top-period = "week";
+                      }
+                    ];
                   }
                   {
                     type = "videos";
@@ -280,32 +303,10 @@
                       "UCodkNmk9oWRTIYZdr_HuSlg"
                       "UCYdXHOv7srjm-ZsNsTcwbBw"
                       "UC4qdHN4zHhd4VvNy3zNgXPA"
-                      "UC24lkOxZYna9nlXYBcJ9B8Q"
                       "UC4YUKOBld2PoOLzk0YZ80lw"
                       "UCU9pX8hKcrx06XfOB-VQLdw"
                       "UCPK5G4jeoVEbUp5crKJl6CQ"
                       "UCjI5qxhtyv3srhWr60HemRw"
-                    ];
-                  }
-                  {
-                    type = "group";
-                    widgets = [
-                      {
-                        type = "reddit";
-                        subreddit = "hermitcraft";
-                        style = "vertical-list";
-                        show-thumbnails = true;
-                        sort-by = "top";
-                        top-period = "day";
-                      }
-                      {
-                        type = "reddit";
-                        subreddit = "hermitcraftmemes";
-                        style = "vertical-list";
-                        show-thumbnails = true;
-                        sort-by = "top";
-                        top-period = "week";
-                      }
                     ];
                   }
                 ];
@@ -330,6 +331,55 @@
                       "tailscale/tailscale"
                     ];
                   }
+                  {
+                    type = "clock";
+                    hour-format = "12h";
+                    timezones = [
+                      {
+                        timezone = "Asia/Tokyo";
+                        label = "JST";
+                      }
+                      {
+                        timezone = "Europe/London";
+                        label = "UTC";
+                      }
+                      {
+                        timezone = "America/Los_Angeles";
+                        label = "Rot sellers";
+                      }
+                    ];
+                  }
+                ];
+              }
+              {
+                size = "small";
+                widgets = [
+                  { type = "calendar"; }
+                  {
+                    type = "twitch-channels";
+                    cache = "1m";
+                    collapse-after = 10;
+                    channels = [
+                      "atrioc"
+                      "couriway"
+                      "feinberg"
+                      "geega"
+                      "kqsii"
+                      "laynalazar"
+                      "mintcastella"
+                      "projektmelody"
+                    ];
+                  }
+                ];
+              }
+            ];
+          }
+          {
+            name = "Services";
+            columns = [
+              {
+                size = "full";
+                widgets = [
                   {
                     type = "monitor";
                     cache = "1m";
@@ -391,52 +441,6 @@
                         url = "https://vault.msfjarvis.dev";
                         icon = "si:vaultwarden";
                       }
-                    ];
-                  }
-                ];
-              }
-              {
-                size = "small";
-                widgets = [
-                  { type = "calendar"; }
-                  {
-                    type = "clock";
-                    hour-format = "12h";
-                    timezones = [
-                      {
-                        timezone = "Asia/Tokyo";
-                        label = "JST";
-                      }
-                      {
-                        timezone = "Europe/London";
-                        label = "UTC";
-                      }
-                      {
-                        timezone = "America/Los_Angeles";
-                        label = "Rot sellers";
-
-                      }
-                    ];
-                  }
-                  {
-                    type = "twitch-channels";
-                    cache = "1m";
-                    channels = [
-                      "atrioc"
-                      "couriway"
-                      "feinberg"
-                      "geega"
-                      "kqsii"
-                      "laynalazar"
-                      "matarakan"
-                      "michimochievee"
-                      "mintcastella"
-                      "mush"
-                      "onigiri"
-                      "projektmelody"
-                      "shindigs"
-                      "sliggytv"
-                      "trickywi"
                     ];
                   }
                 ];
