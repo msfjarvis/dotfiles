@@ -109,7 +109,7 @@
     fenix.url = "github:nix-community/fenix";
     fenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    flake-compat.url = "github:nix-community/flake-compat";
+    flake-compat.url = "git+https://git.lix.systems/lix-project/flake-compat";
     flake-compat.flake = false;
 
     flake-utils.url = "github:numtide/flake-utils";
