@@ -80,23 +80,6 @@
           size = "small";
           widgets = [
             {
-              type = "weather";
-              location = "New Delhi, India";
-            }
-            {
-              type = "releases";
-              cache = "15m";
-              repositories = [
-                "thunderbird/thunderbird-android"
-                "UweTrottmann/SeriesGuide"
-                "JetBrains/Kotlin"
-                "Kotlin/kotlinx.serialization"
-                "Kotlin/kotlinx.coroutines"
-                "square/anvil"
-                "tailscale/tailscale"
-              ];
-            }
-            {
               type = "clock";
               hour-format = "12h";
               timezones = [
@@ -112,6 +95,23 @@
                   timezone = "America/Los_Angeles";
                   label = "Rot sellers";
                 }
+              ];
+            }
+            {
+              type = "weather";
+              location = "New Delhi, India";
+            }
+            {
+              type = "releases";
+              cache = "15m";
+              repositories = [
+                "thunderbird/thunderbird-android"
+                "UweTrottmann/SeriesGuide"
+                "JetBrains/Kotlin"
+                "Kotlin/kotlinx.serialization"
+                "Kotlin/kotlinx.coroutines"
+                "square/anvil"
+                "tailscale/tailscale"
               ];
             }
           ];
