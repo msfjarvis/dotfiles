@@ -68,6 +68,7 @@ in
           behind = "";
           diverged = "";
           typechanged = "[⇢\($count\)](bold green)";
+          use_git_executable = true;
         };
         gleam.disabled = true;
         golang.disabled = true;
