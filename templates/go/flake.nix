@@ -11,7 +11,7 @@
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.flake-utils.inputs.systems.follows = "systems";
 
-  inputs.flake-compat.url = "github:nix-community/flake-compat";
+  inputs.flake-compat.url = "git+https://git.lix.systems/lix-project/flake-compat";
   inputs.flake-compat.flake = false;
 
   outputs =
