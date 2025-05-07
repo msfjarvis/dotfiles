@@ -63,6 +63,7 @@
       ];
 
       overlays = with inputs; [
+        devshell.overlays.default
         fenix.overlays.default
         # niri.overlays.niri
         nix-topology.overlays.default
