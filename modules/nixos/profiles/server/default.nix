@@ -125,7 +125,10 @@ in
       enable = true;
       rules."50-tailscale" = {
         onState = [ "routable" ];
-        script = "${lib.getExe pkgs.ethtool} -K ${cfg.adapterName} rx-udp-gro-forwarding on rx-gro-list off";
+        script = ''
+          #!${pkgs.runtimeShell}
+          ${lib.getExe pkgs.ethtool} -K ${cfg.adapterName} rx-udp-gro-forwarding on rx-gro-list off
+        '';
       };
     };
   };
