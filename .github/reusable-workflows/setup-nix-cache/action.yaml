@@ -51,7 +51,7 @@ runs:
         nix profile install \
           --option extra-substituters "https://$ENDPOINT/$CACHE" \
           --option extra-trusted-public-keys "$PUBLIC_KEY" \
-          "github:msfjarvis/nixpkgs?rev=b4524458384b11dbc4bd46900afe0a02c4b1d16f#attic-client"
+          "github:msfjarvis/nixpkgs?rev=487d2ddb60f6e009db5fa0fd783bf3e3341dc992#attic-client"
         attic login --set-default ci "https://$ENDPOINT" "$TOKEN"
         attic use "$CACHE"
       env:
