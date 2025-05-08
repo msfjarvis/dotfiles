@@ -190,6 +190,13 @@ in
     };
   };
 
+  services.udev.extraRules = ''
+    # Disable the in-built Bluetooth adapter
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="0e8d", ATTRS{idProduct}=="0616", ATTR{authorized}="0"
+    # Allow access to the CoryDora macropad
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="4344", ATTRS{idProduct}=="0001", MODE="660", TAG+="uaccess", TAG+="udev-acl"
+  '';
+
   services.${namespace} = {
     rucksack = {
       enable = true;
