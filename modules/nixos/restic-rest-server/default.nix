@@ -6,7 +6,8 @@
 }:
 let
   cfg = config.services.${namespace}.restic-rest-server;
-  prometheusPort = 9005;
+  # Was 9005 before but that is being used by Clickhouse now
+  prometheusPort = 9008;
   inherit (lib) mkEnableOption mkIf;
 in
 {
