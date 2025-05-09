@@ -191,7 +191,7 @@ if __name__ == "__main__":
         case "boot":
             run_command(["nh", "os", "boot", "."])
         case "chart":
-            run_command(["nom", "build", ".#topology.x86_64-linux.config.output"])
+            run_command(["nix", "build", ".#topology.x86_64-linux.config.output"])
         case "check":
             # Use the 'hostname' command to get the default target if none is provided
             target = args.target if args.target else get_hostname()
