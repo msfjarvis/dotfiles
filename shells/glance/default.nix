@@ -10,7 +10,6 @@ pkgs.devshell.mkShell {
   };
   packages = with pkgs; [
     glance
-    nix-converter
     watchexec
   ];
   commands = [
@@ -19,9 +18,7 @@ pkgs.devshell.mkShell {
       category = "development";
       help = "Run a Glance server with an automatically updating config";
       command = ''
-        out_conf=$(mktemp)
-        ${getExe pkgs.watchexec} -r -w "${glanceConf}" -- "${getExe pkgs.nix-converter} --from-nix -f ${glanceConf} -l yaml > $out_conf" &
-        ${getExe pkgs.glance} -config "$out_conf"
+        ${getExe pkgs.watchexec} -r -w "${glanceConf}" -- "./shells/glance/build.sh ${glanceConf}"
       '';
     }
   ];
