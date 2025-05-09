@@ -14,15 +14,15 @@ jobs:
           # - cache: x86_64-linux
           #   runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
           #   target: ryzenbox
-          #   public-key: "x86_64-linux:HLQszdZAPt0hy6dsMxsI7EDeghCzfSwB8VyBEnei/j0="
+          #   public-key: "x86_64-linux:7L1XuoniEc65yX3tVGjkNyNadfePhfMD+TxodWdZtgM="
           - target: melody
             runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
             cache: aarch64-linux
-            public-key: "aarch64-linux:czBXxHtNIDorynmG/2pRuFSENM+fnu0rgVkH+8I4niQ="
+            public-key: "aarch64-linux:6ntU2NXXz/mVNFqypWKVCkGZa9STsUzyc2ThpqQwP5k="
           - target: wailord
             runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
             cache: aarch64-linux
-            public-key: "aarch64-linux:czBXxHtNIDorynmG/2pRuFSENM+fnu0rgVkH+8I4niQ="
+            public-key: "aarch64-linux:6ntU2NXXz/mVNFqypWKVCkGZa9STsUzyc2ThpqQwP5k="
     runs-on: ${{ matrix.runner }}
     steps:
       - name: Checkout repository

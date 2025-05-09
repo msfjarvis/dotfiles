@@ -19,10 +19,10 @@ jobs:
         include:
           - runner: ubuntu-latest
             cache: x86_64-linux
-            public-key: "x86_64-linux:HLQszdZAPt0hy6dsMxsI7EDeghCzfSwB8VyBEnei/j0="
+            public-key: "x86_64-linux:7L1XuoniEc65yX3tVGjkNyNadfePhfMD+TxodWdZtgM="
             # - runner: buildjet-4vcpu-ubuntu-2204-arm
             #   cache: aarch64-linux
-            #   public-key: "aarch64-linux:czBXxHtNIDorynmG/2pRuFSENM+fnu0rgVkH+8I4niQ="
+            #   public-key: "aarch64-linux:6ntU2NXXz/mVNFqypWKVCkGZa9STsUzyc2ThpqQwP5k="
     runs-on: ${{ matrix.runner }}
     steps:
       - name: Checkout repository
