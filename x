@@ -107,8 +107,49 @@ def gradle_hash(version: str) -> None:
     ]
     run_command(prefetch_url_command)
 
+
+def bash_completion(args: List[str]) -> None:
+    """
+    Outputs possible completions for the script arguments.
+    """
+    # Simulate command-line arguments for completion
+    partial = args[-1] if args else ""
+    commands = [
+        "boot",
+        "chart",
+        "check",
+        "darwin-check",
+        "darwin-switch",
+        "gradle-hash",
+        "test",
+        "switch",
+    ]
+
+    # If the user has already provided a command, complete its arguments
+    if len(args) > 1 and args[0] in commands:
+        command = args[0]
+        if command == "check":
+            options = []
+            # Suggest --local only if not already in args
+            if "--local" not in args:
+                options.append("--local")
+            print("\n".join(o for o in options if o.startswith(partial)))
+        elif command == "gradle-hash":
+            print("Provide a Gradle version (e.g., 7.5)")
+    else:
+        # Complete the main commands
+        print("\n".join(c for c in commands if c.startswith(partial)))
+
+
 if __name__ == "__main__":
-    parser: argparse.ArgumentParser = argparse.ArgumentParser(description="Nix helper script")
+    # Check if the script is invoked for Bash completion
+    if "--bash-completion" in sys.argv:
+        bash_completion(sys.argv[sys.argv.index("--bash-completion") + 1 :])
+        sys.exit(0)
+
+    parser: argparse.ArgumentParser = argparse.ArgumentParser(
+        description="Nix helper script"
+    )
     subparsers = parser.add_subparsers(dest="command", help="Sub-command help")
 
     # boot

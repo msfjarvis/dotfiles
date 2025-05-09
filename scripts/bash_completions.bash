@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
 _x_completions() {
-  mapfile -t COMPREPLY < <(compgen -W "boot chart check darwin-check darwin-switch gradle-hash test switch" -- "${COMP_WORDS[1]}")
-}
+  local words cword
+  _init_completion || return
 
-complete -F _x_completions x
+  mapfile -t COMPREPLY < <(COMP_WORDS="${words[*]}" COMP_CWORD=$cword "${SCRIPT_DIR}/../x" --bash-completion "${words[@]:1}")
+  return 0
+}
+complete -F _x_completions ./x
