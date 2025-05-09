@@ -9,11 +9,16 @@ let
   inherit (lib) forEach mkEnableOption mkIf;
   cfg = config.profiles.${namespace}.desktop.gaming;
   homeDir = config.users.users.msfjarvis.home;
-  minecraftInstances = [
+  vanillaInstances = [
+    "CraftMine"
+  ];
+  moddedInstances = [
     "Big Globe"
     "Fabulously.Optimized.1.21.3"
     "Fabulously.Optimized.1.21.4"
+    "Fabulously.Optimized.1.21.5"
   ];
+  minecraftInstances = vanillaInstances ++ moddedInstances;
   instancePath = name: "${homeDir}/Games/PrismLauncher/instances/${name}";
   prismLauncher = pkgs.prismlauncher.override {
     jdks = with pkgs; [
@@ -57,7 +62,9 @@ in
       repository = "rest:https://restic.tiger-shark.ts.net/";
       passwordFile = config.sops.secrets.restic_repo_password.path;
 
-      paths = forEach minecraftInstances (name: "${instancePath name}/.minecraft");
+      paths =
+        (forEach moddedInstances (name: "${instancePath name}/.minecraft"))
+        ++ (forEach vanillaInstances (name: "${instancePath name}/minecraft"));
 
       pruneOpts = [
         "--keep-daily 2"
@@ -67,7 +74,10 @@ in
     };
 
     services.${namespace}.rucksack = {
-      sources = forEach minecraftInstances (name: "${instancePath name}/.minecraft/screenshots");
+      sources =
+        (forEach moddedInstances (name: "${instancePath name}/.minecraft/screenshots"))
+        ++ (forEach vanillaInstances (name: "${instancePath name}/minecraft/screenshots"));
+
     };
   };
 }
