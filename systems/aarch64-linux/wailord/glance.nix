@@ -208,6 +208,10 @@
                 }
               ];
             }
+            {
+              type = "html";
+              source = ''<img src="https://msfjarvis.github.io/dotfiles/main.svg" />'';
+            }
           ];
         }
       ];
