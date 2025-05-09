@@ -20,6 +20,14 @@
     nixfmt-rfc-style
     nixpkgs-review
     nvd
+    (python3.withPackages (
+      ps: with ps; [
+        beautifulsoup4
+        black
+        requests
+        virtualenv
+      ]
+    ))
     ripgrep
     sd
     shellcheck

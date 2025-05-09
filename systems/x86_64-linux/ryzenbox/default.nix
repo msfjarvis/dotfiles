@@ -151,14 +151,6 @@ in
       obsidian
       pkgs.${namespace}.patreon-dl
       pkgs.${namespace}.pidcat
-      (python3.withPackages (
-        ps: with ps; [
-          beautifulsoup4
-          black
-          requests
-          virtualenv
-        ]
-      ))
       scrcpy
       telegram-desktop
       thunderbird-latest
