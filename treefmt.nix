@@ -1,7 +1,6 @@
 { pkgs, ... }:
 let
   shellScripts = [
-    "x"
     "scripts/*"
     "shell-init"
     "darwin-init"
@@ -14,6 +13,10 @@ in
   programs.actionlint = {
     enable = true;
   };
+  programs.black = {
+    enable = true;
+  };
+  settings.formatter.black.includes = [ "x" ];
   programs.deadnix = {
     enable = true;
   };
