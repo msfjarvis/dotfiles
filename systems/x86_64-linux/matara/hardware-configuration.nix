@@ -43,15 +43,21 @@
   };
 
   fileSystems."/mediahell" = {
-    device = "/dev/disk/by-uuid/776C677B7E1D53F0";
-    fsType = "ntfs-3g";
-    options = [
-      "nofail"
-      "uid=msfjarvis"
-      "gid=users"
-      "umask=002"
-    ];
+    device = "/dev/disk/by-uuid/710b3729-811b-4844-a6ef-3ff343822f42";
+    fsType = "ext4";
+    options = [ "nofail" ];
   };
+
+  # fileSystems."/mediahell" = {
+  #   device = "/dev/disk/by-uuid/776C677B7E1D53F0";
+  #   fsType = "ntfs-3g";
+  #   options = [
+  #     "nofail"
+  #     "uid=msfjarvis"
+  #     "gid=users"
+  #     "umask=002"
+  #   ];
+  # };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
