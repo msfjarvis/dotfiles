@@ -64,9 +64,26 @@
   };
   systemd.services.golink.serviceConfig.EnvironmentFile = config.sops.secrets.golink-tsauthkey.path;
 
+  services.caddy = {
+    virtualHosts = {
+      "https://melody.tiger-shark.ts.net" = {
+        extraConfig = ''
+          reverse_proxy 127.0.0.1:${toString config.services.${namespace}.qbittorrent.port}
+        '';
+      };
+    };
+  };
+
   services.${namespace} = {
     prometheus = {
       enable = true;
+    };
+    qbittorrent = {
+      enable = true;
+      port = 9091;
+      group = "users";
+      openFirewall = true;
+      prometheus.enable = true;
     };
   };
 
