@@ -76,6 +76,9 @@ if [ -d "${HOME}/.spicetify" ]; then
   export PATH="${PATH}:${HOME}/.spicetify"
 fi
 
+# Force initialize properties on my home-manager only setups
+. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+
 # shellcheck source=scripts/bash_completions.bash
 source "${SCRIPT_DIR}"/bash_completions.bash
 # shellcheck source=scripts/aliases
