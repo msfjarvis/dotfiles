@@ -144,7 +144,8 @@ function encode() {
   local INPUT OUTPUT
   INPUT="${1}"
   OUTPUT="${2:-output.mp4}"
-  ffmpeg -nostdin -i "${INPUT:?}" -c:v hevc_nvenc -preset p3 -c:a aac -b:a 128k "${OUTPUT:?}"
+  ffmpeg -nostdin -i "${INPUT:?}" -c:v libx265 -crf 26 -preset fast -c:a aac -b:a 128k "${OUTPUT?}"
+  # ffmpeg -nostdin -i "${INPUT:?}" -c:v hevc_nvenc -preset p3 -c:a aac -b:a 128k "${OUTPUT:?}"
 }
 
 function encmasto() {
