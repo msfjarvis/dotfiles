@@ -28,6 +28,7 @@
         nix-flatpak.homeManagerModules.nix-flatpak
         nix-index-database.hmModules.nix-index
         spicetify-nix.homeManagerModules.default
+        stylix.homeManagerModules.stylix
       ];
       systems.modules.darwin = with inputs; [
         srvos.darwinModules.desktop
