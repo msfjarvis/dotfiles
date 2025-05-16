@@ -77,7 +77,10 @@ if [ -d "${HOME}/.spicetify" ]; then
 fi
 
 # Force initialize properties on my home-manager only setups
-. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+# shellcheck disable=SC1091
+if [ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+  source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
 
 # shellcheck source=scripts/bash_completions.bash
 source "${SCRIPT_DIR}"/bash_completions.bash
