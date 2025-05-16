@@ -96,7 +96,7 @@
             "read only" = false;
             browseable = "yes";
             writeable = "yes";
-            "force user" = "msfjarvis";
+            "force user" = "qbittorrent";
             "force group" = "users";
             "guest ok" = "yes";
             comment = "${name} samba share.";
