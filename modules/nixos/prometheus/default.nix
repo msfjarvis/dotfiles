@@ -6,6 +6,17 @@
 }:
 let
   cfg = config.services.${namespace}.prometheus;
+  email.text = ''
+    {{ template "__alertmanagerURL" . }}
+
+    {{ range .Alerts }}
+      {{ .Labels.severity }}: {{ .Annotations.summary }}
+        {{ .Annotations.description }}
+      *Details:*
+        {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+        {{ end }}
+    {{ end }}
+  '';
   inherit (lib)
     mkEnableOption
     mkMerge
@@ -18,10 +29,15 @@ in
   options.services.${namespace}.prometheus = {
     enable = mkEnableOption "Prometheus";
     enableGrafana = mkEnableOption "Grafana";
-    host = mkOption {
+    prometheusHost = mkOption {
       type = types.str;
       default = "prom-${config.networking.hostName}";
       description = "Host name for the Prometheus server";
+    };
+    alertManagerHost = mkOption {
+      type = types.str;
+      default = "alerts-${config.networking.hostName}";
+      description = "Host name for the alertmanager server";
     };
   };
   config = mkIf cfg.enable {
@@ -38,10 +54,16 @@ in
         };
       })
       {
-        "https://${cfg.host}.tiger-shark.ts.net" = {
+        "https://${cfg.prometheusHost}.tiger-shark.ts.net" = {
           extraConfig = ''
-            bind tailscale/${cfg.host}
+            bind tailscale/${cfg.prometheusHost}
             reverse_proxy 127.0.0.1:${toString config.services.prometheus.port}
+          '';
+        };
+        "https://${cfg.alertManagerHost}.tiger-shark.ts.net" = {
+          extraConfig = ''
+            bind tailscale/${cfg.alertManagerHost}
+            reverse_proxy 127.0.0.1:${toString config.services.prometheus.alertmanager.port}
           '';
         };
       }
@@ -60,6 +82,10 @@ in
           http_port = 2342;
         };
       };
+    };
+    sops.secrets.prometheus-alertmanager = {
+      sopsFile = lib.snowfall.fs.get-file "secrets/alertmanager.env";
+      format = "dotenv";
     };
     services.prometheus = {
       enable = true;
@@ -82,6 +108,22 @@ in
           static_configs = [
             { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ]; }
             { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.systemd.port}" ]; }
+            {
+              targets = [
+                "127.0.0.1:${toString config.services.prometheus.alertmanager.port}"
+              ];
+              labels = {
+                alias = "alertmanager";
+              };
+            }
+            {
+              targets = [
+                "127.0.0.1:${toString config.services.prometheus.port}"
+              ];
+              labels = {
+                alias = "prometheus";
+              };
+            }
           ];
         }
         {
@@ -89,6 +131,57 @@ in
           static_configs = [ { targets = [ "127.0.0.1:2019" ]; } ];
         }
       ];
+
+      alertmanagers = [
+        {
+          scheme = "http";
+          path_prefix = "/";
+          static_configs = [
+            { targets = [ "127.0.0.1:${toString config.services.prometheus.alertmanager.port}" ]; }
+          ];
+        }
+      ];
+
+      alertmanager = {
+        enable = true;
+        # TODO: start segragating these into 9_${toInt service}_xy
+        port = 9009;
+        webExternalUrl = "https://${cfg.alertManagerHost}.tiger-shark.ts.net/";
+        environmentFile = config.sops.secrets.prometheus-alertmanager.path;
+        extraFlags = [
+          "--cluster.listen-address="
+        ];
+        configuration = {
+          route = {
+            receiver = "email";
+            group_wait = "30s";
+            group_interval = "5m";
+            repeat_interval = "4h";
+            group_by = [
+              "alertname"
+              "job"
+            ];
+            routes = [ ];
+          };
+          receivers = [
+            {
+              name = "email";
+              email_configs = [
+                {
+                  auth_password = "$ALERTMANAGER_EMAIL_PASSWORD";
+                  to = "me@msfjarvis.dev";
+                  from = "monitoring@msfjarvis";
+                  smarthost = "smtp.purelymail.com:587";
+                  auth_username = "me@msfjarvis.dev";
+                  auth_identity = "me@msfjarvis.dev";
+                  send_resolved = true;
+                  inherit (email) text;
+                }
+              ];
+            }
+          ];
+        };
+      };
     };
   };
 }
