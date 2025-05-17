@@ -1,5 +1,4 @@
-_:
-{
+_: {
   snowfallorg.user = {
     enable = true;
     name = "msfjarvis";
