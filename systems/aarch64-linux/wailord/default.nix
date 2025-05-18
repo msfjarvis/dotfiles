@@ -240,9 +240,10 @@
 
     prometheus = {
       enable = true;
+      port = 9010;
       grafana.enable = true;
       # TODO: start segragating these into 9_${toInt service}_xy
-      alertmanager.port = 9010;
+      alertmanager.port = 9011;
     };
 
     restic-rest-server.enable = true;
