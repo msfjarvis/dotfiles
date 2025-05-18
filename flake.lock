@@ -207,27 +207,6 @@
         "url": "https://git.lix.systems/lix-project/flake-compat"
       }
     },
-    "flake-parts": {
-      "inputs": {
-        "nixpkgs-lib": [
-          "stylix",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1733312601,
-        "narHash": "sha256-4pDvzqnegAfRkPwO3wmwBhVi/Sye1mzps0zHWYnP88c=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "205b12d8b7cd4802fbcb8e8ef6a0f1408781a4f9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
-      }
-    },
     "flake-utils": {
       "inputs": {
         "systems": [
@@ -266,6 +245,27 @@
         "owner": "gytis-ivaskevicius",
         "repo": "flake-utils-plus",
         "rev": "3542fe9126dc492e53ddd252bb0260fe035f2c0f",
+        "type": "github"
+      }
+    },
+    "flake-utils_2": {
+      "inputs": {
+        "systems": [
+          "stylix",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
         "type": "github"
       }
     },
@@ -683,7 +683,7 @@
         "flake-compat": [
           "flake-compat"
         ],
-        "flake-parts": "flake-parts",
+        "flake-utils": "flake-utils_2",
         "git-hooks": [],
         "gnome-shell": "gnome-shell",
         "home-manager": [
@@ -703,16 +703,17 @@
         "tinted-zed": "tinted-zed"
       },
       "locked": {
-        "lastModified": 1747533965,
-        "narHash": "sha256-MEbRvR/ZlQHf8vcX1AIby/ILdN/q7SSMGCd2mWIy1DA=",
+        "lastModified": 1747415633,
+        "narHash": "sha256-ZRHZrMVrqnallhB2Y+eTZHxF92a+K6tiVAwj++PGk4I=",
         "owner": "nix-community",
         "repo": "stylix",
-        "rev": "5f6f08daad947b3116ccb878e4226e6bdf7a0c61",
+        "rev": "49b1eb937152b686626be269ee3fe462d1541d5a",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
         "repo": "stylix",
+        "rev": "49b1eb937152b686626be269ee3fe462d1541d5a",
         "type": "github"
       }
     },
