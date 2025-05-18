@@ -28,7 +28,7 @@
         nix-flatpak.homeManagerModules.nix-flatpak
         nix-index-database.hmModules.nix-index
         spicetify-nix.homeManagerModules.default
-        stylix.homeManagerModules.stylix
+        stylix.homeModules.stylix
       ];
       systems.modules.darwin = with inputs; [
         srvos.darwinModules.desktop
@@ -183,7 +183,7 @@
     srvos.url = "github:nix-community/srvos";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
-    stylix.url = "github:nix-community/stylix";
+    stylix.url = "github:nix-community/stylix?rev=49b1eb937152b686626be269ee3fe462d1541d5a";
     stylix.inputs.flake-compat.follows = "flake-compat";
     stylix.inputs.home-manager.follows = "home-manager";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
