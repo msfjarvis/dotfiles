@@ -100,7 +100,7 @@
       port = 9091;
       group = "users";
       openFirewall = true;
-      prometheus.enable = true;
+      prometheus.enable = false;
     };
     rucksack = {
       enable = false;
