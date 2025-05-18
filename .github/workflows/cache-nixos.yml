@@ -11,10 +11,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # - cache: x86_64-linux
-          #   runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
-          #   target: ryzenbox
-          #   public-key: "x86_64-linux:7L1XuoniEc65yX3tVGjkNyNadfePhfMD+TxodWdZtgM="
+          - cache: x86_64-linux
+            runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
+            target: matara
+            public-key: "x86_64-linux:czBXxHtNIDorynmG/2pRuFSENM+fnu0rgVkH+8I4niQ="
           - target: melody
             runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
             cache: aarch64-linux
