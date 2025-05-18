@@ -25,7 +25,7 @@ jobs:
           ts-oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           ts-oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           attic-cache: "x86_64-linux"
-          attic-public-key: "x86_64-linux:7L1XuoniEc65yX3tVGjkNyNadfePhfMD+TxodWdZtgM="
+          attic-public-key: "x86_64-linux:czBXxHtNIDorynmG/2pRuFSENM+fnu0rgVkH+8I4niQ="
           attic-endpoint: ${{ secrets.ATTIC_ENDPOINT }}
           attic-token: ${{ secrets.ATTIC_TOKEN }}
       - name: Setup Pages
