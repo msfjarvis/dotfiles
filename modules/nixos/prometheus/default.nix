@@ -28,21 +28,38 @@ in
 {
   options.services.${namespace}.prometheus = {
     enable = mkEnableOption "Prometheus";
-    enableGrafana = mkEnableOption "Grafana";
-    prometheusHost = mkOption {
+    grafana = {
+      enable = mkEnableOption "Grafana";
+    };
+    host = mkOption {
       type = types.str;
       default = "prom-${config.networking.hostName}";
       description = "Host name for the Prometheus server";
     };
-    alertManagerHost = mkOption {
-      type = types.str;
-      default = "alerts-${config.networking.hostName}";
-      description = "Host name for the alertmanager server";
+    port = mkOption {
+      type = types.int;
+      # TODO: start segragating these into 9_${toInt service}_xy
+      default = 9009;
+      description = "Port for the alertmanager server";
+    };
+    alertmanager = {
+      enable = mkEnableOption "Alertmanager";
+      port = mkOption {
+        type = types.int;
+        # TODO: start segragating these into 9_${toInt service}_xy
+        default = 9009;
+        description = "Port for the alertmanager server";
+      };
+      host = mkOption {
+        type = types.str;
+        default = "alerts-${config.networking.hostName}";
+        description = "Host name for the alertmanager server";
+      };
     };
   };
   config = mkIf cfg.enable {
     services.caddy.virtualHosts = mkMerge [
-      (mkIf cfg.enableGrafana {
+      (mkIf cfg.grafana.enable {
         "https://${config.services.grafana.settings.server.domain}" = {
           extraConfig = ''
             bind tailscale/grafana
@@ -54,22 +71,22 @@ in
         };
       })
       {
-        "https://${cfg.prometheusHost}.tiger-shark.ts.net" = {
+        "https://${cfg.host}.tiger-shark.ts.net" = {
           extraConfig = ''
-            bind tailscale/${cfg.prometheusHost}
+            bind tailscale/${cfg.host}
             reverse_proxy 127.0.0.1:${toString config.services.prometheus.port}
           '';
         };
-        "https://${cfg.alertManagerHost}.tiger-shark.ts.net" = {
+        "https://${cfg.alertmanager.host}.tiger-shark.ts.net" = {
           extraConfig = ''
-            bind tailscale/${cfg.alertManagerHost}
+            bind tailscale/${cfg.alertmanager.host}
             reverse_proxy 127.0.0.1:${toString config.services.prometheus.alertmanager.port}
           '';
         };
       }
     ];
     services.grafana = {
-      enable = cfg.enableGrafana;
+      inherit (cfg.grafana) enable;
       settings = {
         "auth.proxy" = {
           enabled = true;
@@ -89,16 +106,18 @@ in
     };
     services.prometheus = {
       enable = true;
-      port = 9001;
+      inherit (cfg) port;
       extraFlags = [ "--web.enable-admin-api" ];
       exporters = {
         node = {
           enable = true;
           enabledCollectors = [ "systemd" ];
+          # TODO: start segragating these into 9_${toInt service}_xy
           port = 9002;
         };
         systemd = {
           enable = true;
+          # TODO: start segragating these into 9_${toInt service}_xy
           port = 9003;
         };
       };
@@ -144,9 +163,8 @@ in
 
       alertmanager = {
         enable = true;
-        # TODO: start segragating these into 9_${toInt service}_xy
-        port = 9009;
-        webExternalUrl = "https://${cfg.alertManagerHost}.tiger-shark.ts.net/";
+        inherit (cfg.alertmanager) port;
+        webExternalUrl = "https://${cfg.alertmanager.host}.tiger-shark.ts.net/";
         environmentFile = config.sops.secrets.prometheus-alertmanager.path;
         extraFlags = [
           "--cluster.listen-address="
