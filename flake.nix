@@ -183,12 +183,11 @@
     srvos.url = "github:nix-community/srvos";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
-    stylix.url = "github:danth/stylix";
+    stylix.url = "github:nix-community/stylix";
     stylix.inputs.flake-compat.follows = "flake-compat";
     stylix.inputs.home-manager.follows = "home-manager";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     stylix.inputs.nur.follows = "";
-    stylix.inputs.flake-utils.follows = "flake-utils";
     stylix.inputs.systems.follows = "systems";
     stylix.inputs.git-hooks.follows = "";
 
