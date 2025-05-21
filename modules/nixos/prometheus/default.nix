@@ -47,7 +47,7 @@ in
       port = mkOption {
         type = types.int;
         # TODO: start segragating these into 9_${toInt service}_xy
-        default = 9009;
+        default = 9010;
         description = "Port for the alertmanager server";
       };
       host = mkOption {
