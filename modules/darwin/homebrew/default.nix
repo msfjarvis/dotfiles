@@ -12,17 +12,5 @@
       cleanup = lib.mkDefault "uninstall";
       upgrade = true;
     };
-    brews = [
-      "cocoapods"
-      "carthage"
-      "gnu-sed"
-      "ruby"
-    ];
-    casks = [
-      "raycast"
-      "rectangle"
-      "zed"
-    ];
-    taps = [ ];
   };
 }

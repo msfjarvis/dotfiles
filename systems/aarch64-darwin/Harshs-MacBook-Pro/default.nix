@@ -38,6 +38,21 @@
     "/share"
   ];
 
+  homebrew = {
+    brews = [
+      "cocoapods"
+      "carthage"
+      "gnu-sed"
+      "ruby"
+    ];
+    casks = [
+      "raycast"
+      "rectangle"
+      "zed"
+    ];
+    taps = [ ];
+  };
+
   programs.gnupg.agent.enable = true;
   programs.man.enable = true;
 
