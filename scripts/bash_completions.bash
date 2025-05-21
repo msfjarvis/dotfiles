@@ -1,10 +1,29 @@
 #!/usr/bin/env bash
 
 _x_completions() {
-  local words cword
-  _init_completion || return
+  local cur=${COMP_WORDS[COMP_CWORD]}
+  local cmd=${COMP_WORDS[1]}
+  local commands="boot chart check darwin-check darwin-switch gradle-hash test switch"
 
-  mapfile -t COMPREPLY < <(COMP_WORDS="${words[*]}" COMP_CWORD=$cword "${SCRIPT_DIR}/../x" --bash-completion "${words[@]:1}")
-  return 0
+  if [[ $COMP_CWORD -eq 1 ]]; then
+    mapfile -t COMPREPLY < <(compgen -W "$commands" -- "$cur")
+    return 0
+  fi
+
+  case $cmd in
+  check)
+    if [[ $cur == -* ]]; then
+      mapfile -t COMPREPLY < <(compgen -W "--local" -- "$cur")
+    fi
+    ;;
+  gradle-hash)
+    # No specific completions for gradle version
+    ;;
+  *) ;;
+  esac
 }
-complete -F _x_completions ./x
+
+# Register completion
+if [[ -n ${BASH_VERSION:-} ]]; then
+  complete -F _x_completions x
+fi
