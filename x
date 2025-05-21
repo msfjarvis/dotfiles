@@ -44,8 +44,6 @@ usage() {
   echo "  boot            Boot the system"
   echo "  chart           Build the topology chart"
   echo "  check [target]  Check a Nix flake"
-  echo "  darwin-check    Check a Darwin system"
-  echo "  darwin-switch   Switch a Darwin system"
   echo "  gradle-hash     Calculate Gradle hash"
   echo "  test           Run tests"
   echo "  switch         Switch the system"
@@ -78,14 +76,13 @@ main() {
       esac
     done
     target=${target:-$(get_hostname)}
-    nom_build "$target" "$local_build"
+    if [[ "$(uname)" == "Darwin" ]]; then
+      run_command nom build ".#darwinConfigurations.$target.system"
+    else
+      nom_build "$target" "$local_build"
+    fi
     ;;
-  darwin-check)
-    run_command nom build ".#darwinConfigurations.$(get_hostname).system"
-    ;;
-  darwin-switch)
-    run_command sudo darwin-rebuild switch --option sandbox false --print-build-logs --flake .
-    ;;
+
   gradle-hash)
     if [[ $# -lt 1 ]]; then
       echo "Error: Gradle version required"
@@ -97,8 +94,12 @@ main() {
     run_command nh os test .
     ;;
   switch)
-    run_command nh os switch .
-    cleanup_generations
+    if [[ "$(uname)" == "Darwin" ]]; then
+      run_command sudo darwin-rebuild switch --option sandbox false --print-build-logs --flake .
+    else
+      run_command nh os switch .
+      cleanup_generations
+    fi
     ;;
   --help | -h)
     usage

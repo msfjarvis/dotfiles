@@ -3,7 +3,7 @@
 _x_completions() {
   local cur=${COMP_WORDS[COMP_CWORD]}
   local cmd=${COMP_WORDS[1]}
-  local commands="boot chart check darwin-check darwin-switch gradle-hash test switch"
+  local commands="boot chart check gradle-hash test switch"
 
   if [[ $COMP_CWORD -eq 1 ]]; then
     mapfile -t COMPREPLY < <(compgen -W "$commands" -- "$cur")
