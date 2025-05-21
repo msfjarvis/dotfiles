@@ -53,6 +53,7 @@ python3.pkgs.buildPythonApplication rec {
     inquirerpy
     jeepney
     lz4
+    m3u8
     mediafire
     mutagen
     myjdapi
@@ -65,6 +66,7 @@ python3.pkgs.buildPythonApplication rec {
     rich
     send2trash
     textual
+    truststore
     xxhash
   ];
 
