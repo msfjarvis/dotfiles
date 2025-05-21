@@ -82,23 +82,23 @@ if [ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
   source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 fi
 
-# shellcheck source=scripts/bash_completions.bash
+# shellcheck source=scripts/bash_completions.bash disable=SC1091
 source "${SCRIPT_DIR}"/bash_completions.bash
-# shellcheck source=scripts/aliases
+# shellcheck source=scripts/aliases disable=SC1091
 source "${SCRIPT_DIR}"/aliases
-# shellcheck source=scripts/apps
+# shellcheck source=scripts/apps disable=SC1091
 source "${SCRIPT_DIR}"/apps
-# shellcheck source=scripts/common
+# shellcheck source=scripts/common disable=SC1091
 source "${SCRIPT_DIR}"/common
-# shellcheck source=scripts/devtools
+# shellcheck source=scripts/devtools disable=SC1091
 source "${SCRIPT_DIR}"/devtools
-# shellcheck source=scripts/files
+# shellcheck source=scripts/files disable=SC1091
 source "${SCRIPT_DIR}"/files
-# shellcheck source=scripts/gitshit
+# shellcheck source=scripts/gitshit disable=SC1091
 source "${SCRIPT_DIR}"/gitshit
-# shellcheck source=scripts/nix
+# shellcheck source=scripts/nix disable=SC1091
 source "${SCRIPT_DIR}"/nix
-# shellcheck source=scripts/system
+# shellcheck source=scripts/system disable=SC1091
 source "${SCRIPT_DIR}"/system
-# shellcheck source=scripts/system_linux
+# shellcheck source=scripts/system_linux disable=SC1091
 source "${SCRIPT_DIR}"/system_linux
