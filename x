@@ -202,6 +202,7 @@ if __name__ == "__main__":
         case "darwin-switch":
             run_command(
                 [
+                    "sudo",
                     "darwin-rebuild",
                     "switch",
                     "--option",
