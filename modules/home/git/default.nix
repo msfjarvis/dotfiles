@@ -2,12 +2,10 @@
   config,
   lib,
   pkgs,
-  system,
   namespace,
   ...
 }:
 let
-  isWorkMachine = lib.strings.hasSuffix "darwin" system;
   notServer = !config.profiles.${namespace}.starship.server;
   gcm = pkgs.git-credential-manager.override {
     withGpgSupport = false;
@@ -36,11 +34,7 @@ in
       enable = true;
       enableAsDifftool = true;
     };
-    includes =
-      [ { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig"; } ]
-      ++ lib.optionals isWorkMachine [
-        { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig-work"; }
-      ];
+    includes = [ { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig"; } ];
     lfs.enable = true;
     extraConfig =
       {
@@ -97,7 +91,7 @@ in
       }
       // lib.attrsets.optionalAttrs notServer {
         credential = {
-          credentialStore = if isWorkMachine then "keychain" else "secretservice";
+          credentialStore = if pkgs.stdenv.hostPlatform.isDarwin then "keychain" else "secretservice";
           helper = lib.getExe gcm;
           "https://git.msfjarvis.dev" = {
             provider = "generic";
