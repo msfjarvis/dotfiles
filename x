@@ -56,7 +56,7 @@ main() {
 
   case $arg in
   boot)
-    run_command nh os boot .
+    run_command sudo nixos-rebuild boot --flake .
     ;;
   chart)
     run_command nix build '.#topology.x86_64-linux.config.output'
@@ -91,13 +91,13 @@ main() {
     gradle_hash "$1"
     ;;
   test)
-    run_command nh os test .
+    run_command nixos-rebuild test --flake .
     ;;
   switch)
     if [[ "$(uname)" == "Darwin" ]]; then
       run_command sudo darwin-rebuild switch --option sandbox false --print-build-logs --flake .
     else
-      run_command nh os switch .
+      run_command sudo nixos-rebuild switch --flake .
       cleanup_generations
     fi
     ;;
