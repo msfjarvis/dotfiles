@@ -4,6 +4,7 @@
     name = "msfjarvis";
     home = "/Users/msfjarvis";
   };
+  system.primaryUser = "msfjarvis";
 
   environment.variables = {
     LANG = "en_US.UTF-8";
@@ -43,17 +44,11 @@
   # Allow sudo with Touch ID
   security.pam.services.sudo_local.touchIdAuth = true;
 
-  system.activationScripts = {
-    # https://github.com/ryan4yin/nix-darwin-kickstarter/blob/f79b4d4cbd9c8c2ea56b6e5016131ff2179d3775/minimal/modules/system.nix#L14-L19
-    postUserActivation.text = ''
-      killall Dock
-      /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-    '';
-  };
-
   security.sudo.extraConfig = ''
     Defaults    env_keep += "TERMINFO"
   '';
+
+  ids.gids.nixbld = 350;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

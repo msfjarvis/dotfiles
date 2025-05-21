@@ -1,3 +1,4 @@
+{ lib, ... }:
 {
   environment.variables = {
     HOMEBREW_NO_ANALYTICS = "1";
@@ -8,7 +9,7 @@
     enable = true;
     onActivation = {
       autoUpdate = true;
-      cleanup = "uninstall";
+      cleanup = lib.mkDefault "uninstall";
       upgrade = true;
     };
     brews = [
@@ -18,7 +19,8 @@
       "ruby"
     ];
     casks = [
-      "flutter"
+      "raycast"
+      "rectangle"
       "zed"
     ];
     taps = [ ];
