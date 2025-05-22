@@ -69,26 +69,6 @@
     prometheus = {
       enable = true;
     };
-    ksmbd = {
-      enable = true;
-      openFirewall = true;
-      shares =
-        let
-          mkShare = path: name: {
-            inherit path;
-            "read only" = false;
-            browseable = "yes";
-            writeable = "yes";
-            "force user" = "msfjarvis";
-            "force group" = "users";
-            "guest ok" = "yes";
-            comment = "${name} samba share.";
-          };
-        in
-        {
-          media = mkShare "/var/lib/downloads" "Public";
-        };
-    };
   };
 
   sops.secrets.services-tsauthkey-env = {
