@@ -191,8 +191,7 @@ in
 
   services.${namespace} = {
     rucksack = {
-      # mediahell is on matara for now
-      enable = false;
+      enable = true;
       sources = [
         "${homeDir}/Pictures/Screenshots"
         # Detroit: Become Human
