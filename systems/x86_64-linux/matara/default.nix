@@ -56,11 +56,11 @@
     package = pkgs.${namespace}.caddy-with-plugins;
     environmentFile = config.sops.secrets.services-tsauthkey-env.path;
     virtualHosts = {
-      # "https://matara.tiger-shark.ts.net" = {
-      #   extraConfig = ''
-      #     reverse_proxy 127.0.0.1:${toString config.services.${namespace}.qbittorrent.port}
-      #   '';
-      # };
+      "https://matara.tiger-shark.ts.net" = {
+        extraConfig = ''
+          reverse_proxy 127.0.0.1:${toString config.services.${namespace}.qbittorrent.port}
+        '';
+      };
     };
   };
 
@@ -96,7 +96,7 @@
       enable = true;
     };
     qbittorrent = {
-      enable = false; # I boofed up the disk replacement and this machine no longer has space for this
+      enable = true;
       port = 9091;
       group = "users";
       openFirewall = true;

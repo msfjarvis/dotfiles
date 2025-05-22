@@ -193,7 +193,7 @@
                 }
                 {
                   title = "QBittorrent";
-                  url = "https://melody.tiger-shark.ts.net";
+                  url = "https://matara.tiger-shark.ts.net";
                   icon = "si:qbittorrent";
                 }
                 {
