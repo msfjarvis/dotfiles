@@ -36,13 +36,12 @@
     };
   };
 
-  fileSystems."/media" = {
-    device = "/dev/disk/by-uuid/1d9cbc92-8ea9-4ae7-8c8f-5f72c3d75626";
+  fileSystems."/mediahell" = {
+    device = "/dev/disk/by-uuid/710b3729-811b-4844-a6ef-3ff343822f42";
     fsType = "ext4";
-    options = [ "nofail" ];
   };
 
-  fileSystems."/mediahell" = {
+  fileSystems."/media" = {
     device = "/dev/disk/by-uuid/776C677B7E1D53F0";
     fsType = "ntfs-3g";
     options = [
