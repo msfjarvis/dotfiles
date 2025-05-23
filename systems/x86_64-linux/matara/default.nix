@@ -39,6 +39,7 @@
   networking.hostName = "matara";
 
   environment.systemPackages = with pkgs; [
+    ffmpeg_7-headless
     git
     megatools
     micro
