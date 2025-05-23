@@ -99,6 +99,7 @@
     qbittorrent = {
       enable = true;
       port = 9091;
+      user = "msfjarvis";
       group = "users";
       openFirewall = true;
       prometheus.enable = true;
