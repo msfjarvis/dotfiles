@@ -13,7 +13,6 @@
   environment.systemPackages = with pkgs; [
     pkgs.${namespace}.adbear
     pkgs.${namespace}.adx
-
     coreutils
     pkgs.${namespace}.diffuse-bin
     pkgs.${namespace}.gdrive
@@ -24,6 +23,7 @@
     nh
     ninja
     nix-output-monitor
+    nixd
     openssh
     openssl
     pkgs.${namespace}.pidcat
