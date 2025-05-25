@@ -112,26 +112,27 @@
       target = "/media/.omg";
       file_filter = "*.mp4";
     };
-    ksmbd.enable = true;
-    ksmbd.openFirewall = true;
-    ksmbd.shares =
-      let
-        mkShare = path: name: {
-          inherit path;
-          "read only" = false;
-          browseable = "yes";
-          writeable = "yes";
-          "force user" = "msfjarvis";
-          "force group" = "users";
-          "guest ok" = "yes";
-          comment = "${name} samba share.";
+    ksmbd = {
+      enable = true;
+      openFirewall = true;
+      shares =
+        let
+          mkShare = path: name: {
+            inherit path;
+            "read only" = false;
+            browseable = "yes";
+            writeable = "yes";
+            "force user" = "msfjarvis";
+            "force group" = "users";
+            "guest ok" = "yes";
+            comment = "${name} samba share.";
+          };
+        in
+        {
+          media = mkShare "/media" "Chonk Disk";
+          mediahell = mkShare "/mediahell" "Less Chonk Disk";
         };
-      in
-      {
-        public = mkShare "/media" "Public";
-        media = mkShare "/mediahell" "Media";
-        downloads = mkShare "/home/msfjarvis/Downloads" "Downloads";
-      };
+    };
   };
 
   system.stateVersion = "24.05";
