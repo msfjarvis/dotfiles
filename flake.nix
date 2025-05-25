@@ -48,6 +48,7 @@
       ];
 
       systems.hosts.matara.modules = with inputs; [
+        copyparty.nixosModules.default
         srvos.nixosModules.mixins-mdns
         srvos.nixosModules.mixins-telegraf
         srvos.nixosModules.roles-prometheus
@@ -66,6 +67,7 @@
       ];
 
       overlays = with inputs; [
+        copyparty.overlays.default
         devshell.overlays.default
         fenix.overlays.default
         # niri.overlays.niri

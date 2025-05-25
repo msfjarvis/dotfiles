@@ -62,6 +62,41 @@
           reverse_proxy 127.0.0.1:${toString config.services.${namespace}.qbittorrent.port}
         '';
       };
+      "https://matara-files.tiger-shark.ts.net" = {
+        extraConfig = ''
+          bind tailscale/matara-files
+          reverse_proxy ${config.services.copyparty.settings.i}:${config.services.copyparty.settings.p}
+        '';
+      };
+    };
+  };
+  services.copyparty = {
+    enable = true;
+    package = pkgs.copyparty.override {
+      withHashedPasswords = true;
+      withCertgen = false;
+      withThumbnails = false;
+      withFastThumbnails = false;
+      withMediaProcessing = false;
+      withBasicAudioMetadata = false;
+      withZeroMQ = false;
+      withFTPS = true;
+      withSMB = false;
+    };
+    mkHashWrapper = true;
+    user = "msfjarvis";
+    group = "users";
+    settings = {
+      i = "127.0.0.1";
+      p = "9099";
+    };
+    volumes = {
+      "/" = {
+        path = "/media/.omg";
+        access = {
+          "rwmd" = "*";
+        };
+      };
     };
   };
 
