@@ -104,14 +104,6 @@
       openFirewall = true;
       prometheus.enable = true;
     };
-    rucksack = {
-      enable = false;
-      user = "root";
-      group = "root";
-      sources = [ "/var/lib/qbittorrent/downloads" ];
-      target = "/media/.omg";
-      file_filter = "*.mp4";
-    };
     ksmbd = {
       enable = true;
       openFirewall = true;
