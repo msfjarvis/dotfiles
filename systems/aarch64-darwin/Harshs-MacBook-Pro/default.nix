@@ -40,14 +40,16 @@
 
   homebrew = {
     brews = [
-      "cocoapods"
-      "carthage"
       "gnu-sed"
-      "ruby"
+      "mpv"
+      "spicetify-cli"
     ];
     casks = [
+      "alt-tab"
+      "obsidian"
       "raycast"
       "rectangle"
+      "spotify"
       "zed"
     ];
     taps = [ ];
