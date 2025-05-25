@@ -87,7 +87,7 @@
         homeDir = config.users.users.msfjarvis.home;
       in
       {
-        enable = true;
+        enable = false;
         session-dir = "${homeDir}/harsh-sess";
         dldir = "${homeDir}/harsh-photos";
         user = "msfjarvis";
