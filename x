@@ -91,6 +91,10 @@ main() {
     gradle_hash "$1"
     ;;
   test)
+    if [[ "$(uname)" == "Darwin" ]]; then
+      echo "Error: 'test' command is not supported on Darwin systems" >&2
+      exit 1
+    fi
     run_command nixos-rebuild test --flake .
     ;;
   switch)
