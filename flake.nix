@@ -101,6 +101,10 @@
 
     systems.url = "github:msfjarvis/flake-systems";
 
+    copyparty.url = "github:9001/copyparty";
+    copyparty.inputs.nixpkgs.follows = "nixpkgs";
+    copyparty.inputs.flake-utils.follows = "flake-utils";
+
     darwin.url = "github:LnL7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
