@@ -95,7 +95,7 @@ main() {
       echo "Error: 'test' command is not supported on Darwin systems" >&2
       exit 1
     fi
-    run_command nixos-rebuild test --flake .
+    run_command sudo nixos-rebuild test --flake .
     ;;
   switch)
     if [[ "$(uname)" == "Darwin" ]]; then
