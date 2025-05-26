@@ -97,6 +97,12 @@
           "rwmd" = "*";
         };
       };
+      "/mediahell" = {
+        path = "/mediahell";
+        access = {
+          "rwmd" = "*";
+        };
+      };
     };
   };
 
@@ -138,27 +144,6 @@
       group = "users";
       openFirewall = true;
       prometheus.enable = true;
-    };
-    ksmbd = {
-      enable = true;
-      openFirewall = true;
-      shares =
-        let
-          mkShare = path: name: {
-            inherit path;
-            "read only" = false;
-            browseable = "yes";
-            writeable = "yes";
-            "force user" = "msfjarvis";
-            "force group" = "users";
-            "guest ok" = "yes";
-            comment = "${name} samba share.";
-          };
-        in
-        {
-          media = mkShare "/media" "Chonk Disk";
-          mediahell = mkShare "/mediahell" "Less Chonk Disk";
-        };
     };
   };
 
