@@ -91,7 +91,7 @@
       p = "9099";
     };
     volumes = {
-      "/" = {
+      "/media" = {
         path = "/media/.omg";
         access = {
           "rwmd" = "*";
