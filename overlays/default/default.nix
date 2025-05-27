@@ -23,5 +23,4 @@ _: prev: {
     patches = [ ./megatools.patch ];
   });
   qbittorrent = prev.qbittorrent.override { guiSupport = false; };
-  utillinux = prev.util-linux;
 }
