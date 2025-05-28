@@ -143,7 +143,7 @@
       user = "msfjarvis";
       group = "users";
       openFirewall = true;
-      prometheus.enable = true;
+      prometheus.enable = false;
     };
   };
 
