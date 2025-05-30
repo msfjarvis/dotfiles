@@ -1,4 +1,4 @@
-{}
+{
   config,
   lib,
   pkgs,
@@ -138,7 +138,7 @@
       enable = true;
     };
     qbittorrent = {
-      enable = false; # I boofed up the disk replacement and this machine no longer has space for this
+      enable = true;
       port = 9091;
       user = "msfjarvis";
       group = "users";
