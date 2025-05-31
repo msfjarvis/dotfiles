@@ -68,8 +68,15 @@
           reverse_proxy ${config.services.copyparty.settings.i}:${config.services.copyparty.settings.p}
         '';
       };
+      "https://stash.tiger-shark.ts.net" = {
+        extraConfig = ''
+          bind tailscale/stash
+          reverse_proxy ${config.services.stash.settings.host}:${toString config.services.stash.settings.port}
+        '';
+      };
     };
   };
+
   services.copyparty = {
     enable = true;
     package = pkgs.copyparty.override {
@@ -121,6 +128,29 @@
       ];
     };
   };
+
+  services.stash = {
+    enable = true;
+    user = "msfjarvis";
+    group = "users";
+    jwtSecretKeyFile = "/home/msfjarvis/stash-jwt";
+    sessionStoreKeyFile = "/home/msfjarvis/stash-sess";
+    passwordFile = "/home/msfjarvis/stash-pass";
+    username = "msfjarvis";
+    mutableSettings = true;
+    settings = {
+      ui.frontPageContent = [];
+      host = "127.0.0.1";
+      port = 9012;
+      stash = [
+        {
+          path = "/media/.omg";
+        }
+      ];
+    };
+  };
+  # Stash module is stupid and unconditionally sets this
+  users.users.msfjarvis.isSystemUser = lib.mkForce false;
 
   services.${namespace} = {
     gphotos-cdp =
