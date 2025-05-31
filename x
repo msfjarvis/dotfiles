@@ -46,7 +46,7 @@ usage() {
   echo "  check [target]  Check a Nix flake"
   echo "  gradle-hash     Calculate Gradle hash"
   echo "  test           Run tests"
-  echo "  switch         Switch the system"
+  echo "  switch         Switch the system [--local]"
   exit 1
 }
 
@@ -114,10 +114,26 @@ main() {
     fi
     ;;
   switch)
+    local local_build=false
+    while [[ $# -gt 0 ]]; do
+      case $1 in
+      --local)
+        local_build=true
+        shift
+        ;;
+      *)
+        shift
+        ;;
+      esac
+    done
     if [[ "$(uname)" == "Darwin" ]]; then
       run_command sudo darwin-rebuild switch --option sandbox false --print-build-logs --flake .
     else
-      run_command sudo nixos-rebuild switch --flake .
+      if [[ $local_build == "true" ]]; then
+        run_command sudo nixos-rebuild switch --option builders "" --flake .
+      else
+        run_command sudo nixos-rebuild switch --flake .
+      fi
       cleanup_generations
     fi
     ;;
