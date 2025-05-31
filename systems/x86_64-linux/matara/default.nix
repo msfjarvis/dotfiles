@@ -139,7 +139,7 @@
     username = "msfjarvis";
     mutableSettings = true;
     settings = {
-      ui.frontPageContent = [];
+      ui.frontPageContent = [ ];
       host = "127.0.0.1";
       port = 9012;
       stash = [

@@ -150,6 +150,12 @@
           reverse_proxy 127.0.0.1:9090
         '';
       };
+      "https://money.msfjarvis.dev" = {
+        extraConfig = ''
+          encode gzip zstd
+          reverse_proxy ${config.services.actual.settings.hostname}:${toString config.services.actual.settings.port}
+        '';
+      };
       "https://nix-cache.tiger-shark.ts.net" = {
         extraConfig = ''
           bind tailscale/nix-cache
@@ -187,6 +193,14 @@
           file_server browse
         '';
       };
+    };
+  };
+
+  services.actual = {
+    enable = true;
+    settings = {
+      hostname = "127.0.0.1";
+      port = 9013;
     };
   };
 
