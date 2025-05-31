@@ -151,6 +151,11 @@
               title = "Services";
               sites = [
                 {
+                  title = "Actual Budget";
+                  url = "https://money.msfjarvis.dev";
+                  icon = "si:actualbudget";
+                }
+                {
                   title = "Attic cache";
                   url = "https://nix-cache.tiger-shark.ts.net";
                   icon = "si:dask";
