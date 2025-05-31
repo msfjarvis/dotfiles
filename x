@@ -91,11 +91,27 @@ main() {
     gradle_hash "$1"
     ;;
   test)
+    local local_build=false
+    while [[ $# -gt 0 ]]; do
+      case $1 in
+      --local)
+        local_build=true
+        shift
+        ;;
+      *)
+        shift
+        ;;
+      esac
+    done
     if [[ "$(uname)" == "Darwin" ]]; then
       echo "Error: 'test' command is not supported on Darwin systems" >&2
       exit 1
     fi
-    run_command sudo nixos-rebuild test --flake .
+    if [[ $local_build == "true" ]]; then
+      run_command sudo nixos-rebuild test --option builders "" --flake .
+    else
+      run_command sudo nixos-rebuild test --flake .
+    fi
     ;;
   switch)
     if [[ "$(uname)" == "Darwin" ]]; then
