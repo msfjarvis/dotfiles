@@ -168,16 +168,12 @@
           reverse_proxy ${config.services.restic.server.listenAddress}
         '';
       };
-      "https://stats.msfjarvis.dev" =
-        let
-          p = config.services.plausible.server;
-        in
-        {
-          extraConfig = ''
-            import blackholeCrawlers
-            reverse_proxy ${p.listenAddress}:${toString p.port}
-          '';
-        };
+      "https://stats.msfjarvis.dev" = {
+        extraConfig = ''
+          import blackholeCrawlers
+          reverse_proxy ${config.services.plausible.server.listenAddress}:${toString config.services.plausible.server.port}
+        '';
+      };
       "https://til.msfjarvis.dev" = {
         extraConfig = ''
           import blackholeCrawlers
