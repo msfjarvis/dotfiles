@@ -12,6 +12,10 @@ get_hostname() {
   hostname
 }
 
+get_max_jobs() {
+  echo "$(($(nproc || echo 1)))"
+}
+
 nom_build() {
   local flake=$1
   local local_build=${2:-false}
@@ -108,7 +112,9 @@ main() {
       exit 1
     fi
     if [[ $local_build == "true" ]]; then
-      run_command sudo nixos-rebuild test --option builders "" --flake .
+      local max_jobs
+      max_jobs=$(get_max_jobs)
+      run_command sudo nixos-rebuild test --option builders "" --option max-jobs "$max_jobs" --flake .
     else
       run_command sudo nixos-rebuild test --flake .
     fi
@@ -130,7 +136,9 @@ main() {
       run_command sudo darwin-rebuild switch --option sandbox false --print-build-logs --flake .
     else
       if [[ $local_build == "true" ]]; then
-        run_command sudo nixos-rebuild switch --option builders "" --flake .
+        local max_jobs
+        max_jobs=$(get_max_jobs)
+        run_command sudo nixos-rebuild switch --option builders "" --option max-jobs "$max_jobs" --flake .
       else
         run_command sudo nixos-rebuild switch --flake .
       fi
