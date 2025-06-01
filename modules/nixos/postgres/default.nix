@@ -6,7 +6,7 @@
 }:
 let
   cfg = config.services.${namespace}.postgres;
-  prometheusPort = 9004;
+  prometheusPort = lib.${namespace}.ports.exporters.postgres;
   inherit (lib) mkEnableOption mkIf;
 in
 {

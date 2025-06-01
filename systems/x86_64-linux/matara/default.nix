@@ -6,6 +6,9 @@
   namespace,
   ...
 }:
+let
+  inherit (lib.${namespace}) ports;
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -95,7 +98,7 @@
     group = "users";
     settings = {
       i = "127.0.0.1";
-      p = "9099";
+      p = toString ports.copyparty;
     };
     volumes = {
       "/media" = {
@@ -141,7 +144,7 @@
     settings = {
       ui.frontPageContent = [ ];
       host = "127.0.0.1";
-      port = 9012;
+      port = ports.stash;
       stash = [
         {
           path = "/media/.omg";
@@ -169,7 +172,7 @@
     };
     qbittorrent = {
       enable = true;
-      port = 9091;
+      port = ports.qbittorrent;
       user = "msfjarvis";
       group = "users";
       openFirewall = true;

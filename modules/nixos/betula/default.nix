@@ -14,6 +14,7 @@ let
     mkPackageOption
     types
     ;
+  inherit (lib.${namespace}) ports;
 in
 {
   options.services.${namespace}.betula = {
@@ -72,8 +73,8 @@ in
     services.caddy.virtualHosts = mkIf (cfg.domain != null) {
       "https://${cfg.domain}" = {
         extraConfig = ''
-          # Port hardcoded by betula
-          reverse_proxy 127.0.0.1:1738
+          # Port hardcoded by betula, need to be changed via Web UI
+          reverse_proxy 127.0.0.1:${toString ports.betula}
         '';
       };
     };

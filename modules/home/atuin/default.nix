@@ -1,3 +1,7 @@
+{ lib, namespace, ... }:
+let
+  inherit (lib.${namespace}) ports;
+in
 {
   programs.atuin = {
     enable = true;
@@ -12,7 +16,7 @@
       store_failed = false;
       style = "full";
       sync_frequency = "5m";
-      sync_address = "http://wailord:8888";
+      sync_address = "http://wailord:${toString ports.atuin}";
     };
   };
 }

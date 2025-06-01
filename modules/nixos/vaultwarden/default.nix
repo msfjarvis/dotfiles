@@ -12,6 +12,7 @@ let
     mkOption
     types
     ;
+  inherit (lib.${namespace}) ports;
 in
 {
   options.services.${namespace}.vaultwarden = {
@@ -59,7 +60,7 @@ in
         PUSH_ENABLED = true;
         PUSH_IDENTITY_URI = "https://identity.bitwarden.eu";
         PUSH_RELAY_URI = "https://api.bitwarden.eu";
-        ROCKET_PORT = 8890;
+        ROCKET_PORT = ports.vaultwarden;
         SIGNUPS_ALLOWED = false;
         USE_SYSLOG = true;
       };

@@ -6,6 +6,9 @@
   namespace,
   ...
 }:
+let
+  inherit (lib.${namespace}) ports;
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -71,7 +74,7 @@
     environmentFile = config.sops.secrets.atticd.path;
 
     settings = {
-      listen = "[::]:8081";
+      listen = "127.0.0.1:${toString ports.atticd}";
       garbage-collection = {
         interval = "1 hour";
         default-retention-period = "14 days";
@@ -81,12 +84,13 @@
 
   services.atuin = {
     enable = true;
-    openRegistration = true;
+    openRegistration = false;
     path = "";
     # This needs to be 0.0.0.0 so that it's accessible
-    # by the rest of the tailnet
+    # by the rest of the tailnet.
+    # TODO: Reverse proxy this and lock it down.
     host = "0.0.0.0";
-    port = 8888;
+    port = ports.atuin;
     openFirewall = true;
     database.createLocally = true;
   };
@@ -147,7 +151,7 @@
       "https://metube.tiger-shark.ts.net" = {
         extraConfig = ''
           bind tailscale/metube
-          reverse_proxy 127.0.0.1:9090
+          reverse_proxy 127.0.0.1:${toString ports.metube}
         '';
       };
       "https://money.msfjarvis.dev" = {
@@ -201,7 +205,7 @@
     enable = true;
     settings = {
       hostname = "127.0.0.1";
-      port = 9013;
+      port = ports.actual;
     };
   };
 
@@ -213,6 +217,7 @@
   };
   services.plausible = {
     enable = true;
+    database.clickhouse.url = "http://localhost:${toString lib.${namespace}.ports.clickhouse.http}/default";
     server = {
       baseUrl = "https://stats.msfjarvis.dev";
       secretKeybaseFile = config.sops.secrets.plausible-secret.path;
@@ -228,6 +233,18 @@
       };
     };
   };
+  # Force override the ports used by Clickhouse
+  environment.etc."clickhouse-server/config.xml".source = lib.mkForce (
+    pkgs.runCommandLocal "clickhouse-server-config.xml" { } ''
+      cp "${config.services.clickhouse.package}/etc/clickhouse-server/config.xml" temp.xml
+      substituteInPlace temp.xml \
+        --replace-fail 8123 ${toString lib.${namespace}.ports.clickhouse.http} \
+        --replace-fail 9000 ${toString lib.${namespace}.ports.clickhouse.tcp} \
+        --replace-fail 9005 ${toString lib.${namespace}.ports.clickhouse.postgresql} \
+        --replace-fail 9009 ${toString lib.${namespace}.ports.clickhouse.interserver_http}
+      mv temp.xml $out
+    ''
+  );
 
   services.${namespace} = {
     betula = {
@@ -244,17 +261,14 @@
       enable = true;
       user = "msfjarvis";
       group = "users";
-      settings = import ./glance.nix;
+      settings = import ./glance.nix { port = ports.glance; };
     };
 
     postgres.enable = true;
 
     prometheus = {
       enable = true;
-      port = 9010;
       grafana.enable = true;
-      # TODO: start segragating these into 9_${toInt service}_xy
-      alertmanager.port = 9011;
     };
 
     restic-rest-server.enable = true;
@@ -267,7 +281,7 @@
 
   services.alps = {
     enable = true;
-    port = 9006;
+    port = ports.alps;
     bindIP = "127.0.0.1";
     theme = "alps";
     imaps = {
@@ -289,7 +303,7 @@
     enable = true;
     createDatabaseLocally = true;
     config = {
-      LISTEN_ADDR = "127.0.0.1:8889";
+      LISTEN_ADDR = "127.0.0.1:${toString ports.miniflux}";
       FETCH_ODYSEE_WATCH_TIME = 1;
       FETCH_YOUTUBE_WATCH_TIME = 1;
       LOG_DATE_TIME = 1;
@@ -314,7 +328,7 @@
   virtualisation.oci-containers.containers = {
     metube = {
       image = "ghcr.io/alexta69/metube";
-      ports = [ "127.0.0.1:9090:8081" ];
+      ports = [ "127.0.0.1:${toString ports.metube}:8081" ];
       volumes = [ "/var/lib/metube:/downloads" ];
     };
   };

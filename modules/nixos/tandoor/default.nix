@@ -8,6 +8,7 @@ let
   cfg = config.services.${namespace}.tandoor;
   domain = "tandoor.tiger-shark.ts.net";
   inherit (lib) mkEnableOption mkIf;
+  inherit (lib.${namespace}) ports;
 in
 {
   options.services.${namespace}.tandoor = {
@@ -54,7 +55,7 @@ in
     services = {
       tandoor-recipes = {
         enable = true;
-        port = 9007;
+        port = ports.tandoor;
         extraConfig = {
           ALLOWED_HOSTS = domain;
           DB_ENGINE = "django.db.backends.postgresql";

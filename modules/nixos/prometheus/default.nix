@@ -24,6 +24,7 @@ let
     mkIf
     types
     ;
+  inherit (lib.${namespace}) ports;
 in
 {
   options.services.${namespace}.prometheus = {
@@ -38,16 +39,14 @@ in
     };
     port = mkOption {
       type = types.int;
-      # TODO: start segragating these into 9_${toInt service}_xy
-      default = 9009;
+      default = ports.prometheus;
       description = "Port for the alertmanager server";
     };
     alertmanager = {
       enable = mkEnableOption "Alertmanager";
       port = mkOption {
         type = types.int;
-        # TODO: start segragating these into 9_${toInt service}_xy
-        default = 9010;
+        default = ports.alertmanager;
         description = "Port for the alertmanager server";
       };
       host = mkOption {
@@ -96,7 +95,7 @@ in
         server = {
           domain = "grafana.tiger-shark.ts.net";
           http_addr = "127.0.0.1";
-          http_port = 2342;
+          http_port = ports.grafana;
         };
       };
     };
@@ -112,13 +111,11 @@ in
         node = {
           enable = true;
           enabledCollectors = [ "systemd" ];
-          # TODO: start segragating these into 9_${toInt service}_xy
-          port = 9002;
+          port = ports.exporters.node;
         };
         systemd = {
           enable = true;
-          # TODO: start segragating these into 9_${toInt service}_xy
-          port = 9003;
+          port = ports.exporters.systemd;
         };
       };
       scrapeConfigs = [
@@ -147,7 +144,7 @@ in
         }
         {
           job_name = "caddy";
-          static_configs = [ { targets = [ "127.0.0.1:2019" ]; } ];
+          static_configs = [ { targets = [ "127.0.0.1:${toString ports.caddy}" ]; } ];
         }
       ];
 

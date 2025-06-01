@@ -8,6 +8,7 @@
 }:
 let
   homeDir = config.users.users.msfjarvis.home;
+  inherit (lib.${namespace}) ports;
   mkSteamPath = gameId: {
     path = "${homeDir}/.local/share/Steam/userdata/896827038/760/remote/${gameId}/screenshots";
     recursive = false;
@@ -75,16 +76,10 @@ in
     # KDEConnect needs these ports
     firewall = {
       allowedTCPPortRanges = [
-        {
-          from = 1714;
-          to = 1764;
-        }
+        ports.kdeconnect_range
       ];
       allowedUDPPortRanges = [
-        {
-          from = 1714;
-          to = 1764;
-        }
+        ports.kdeconnect_range
       ];
     };
   };

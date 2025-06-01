@@ -1,7 +1,8 @@
+{ port }:
 {
   server = {
     host = "localhost";
-    port = 8080;
+    inherit port;
   };
   # Refresh every 5 minutes
   branding = {

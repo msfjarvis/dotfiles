@@ -12,6 +12,7 @@ let
     mkOption
     types
     ;
+  inherit (lib.${namespace}) ports;
 in
 {
   options.services.${namespace}.firefly = {
@@ -34,7 +35,7 @@ in
       "https://${cfg.hostName}-import.tiger-shark.ts.net" = {
         extraConfig = ''
           bind tailscale/${cfg.hostName}-import
-          reverse_proxy 127.0.0.1:9091 {
+          reverse_proxy 127.0.0.1:${toString ports.firefly-importer} {
             header_down X-Forwarded-Proto https
           }
         '';
@@ -68,7 +69,7 @@ in
           FIREFLY_III_URL = config.services.firefly-iii.settings.APP_URL;
           inherit (config.services.firefly-iii.settings) TZ;
         };
-        ports = [ "127.0.0.1:9091:8080" ];
+        ports = [ "127.0.0.1:${toString ports.firefly-importer}:8080" ];
         extraOptions = [ "--log-opt=tag='firefly-importer'" ];
       };
     };

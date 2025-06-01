@@ -6,8 +6,7 @@
 }:
 let
   cfg = config.services.${namespace}.restic-rest-server;
-  # Was 9005 before but that is being used by Clickhouse now
-  prometheusPort = 9008;
+  inherit (lib.${namespace}) ports;
   inherit (lib) mkEnableOption mkIf;
 in
 {
@@ -18,7 +17,7 @@ in
     services.restic.server = {
       enable = true;
       extraFlags = [ "--no-auth" ];
-      listenAddress = "127.0.0.1:8082";
+      listenAddress = "127.0.0.1:${toString ports.restic-rest-server}";
     };
 
     sops.secrets.restic_repo_password = {
@@ -32,7 +31,7 @@ in
           enable = true;
           repository = "rest:http://${config.services.restic.server.listenAddress}/";
           passwordFile = config.sops.secrets.restic_repo_password.path;
-          port = prometheusPort;
+          port = ports.exporters.restic-rest-server;
           user = "prometheus";
           group = "prometheus";
         };
@@ -40,7 +39,7 @@ in
       scrapeConfigs = [
         {
           job_name = "restic_exporter";
-          static_configs = [ { targets = [ "127.0.0.1:${toString prometheusPort}" ]; } ];
+          static_configs = [ { targets = [ "127.0.0.1:${toString ports.exporters.restic-rest-server}" ]; } ];
         }
       ];
     };

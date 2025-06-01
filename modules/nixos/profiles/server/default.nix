@@ -13,6 +13,7 @@ let
     mkIf
     types
     ;
+  inherit (lib.${namespace}) ports;
 in
 {
   options.profiles.${namespace}.server = {
@@ -63,10 +64,7 @@ in
         ];
         # Torrent clients
         allowedTCPPortRanges = [
-          {
-            from = 6881;
-            to = 6889;
-          }
+          ports.torrent_range
         ];
       };
     };

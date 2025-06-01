@@ -16,12 +16,13 @@ let
     mkOption
     types
     ;
+  inherit (lib.${namespace}) ports;
   prometheusType = types.submodule {
     options = {
       enable = mkEnableOption "Attach a Prometheus exporter to the QBittorrent server.";
       port = mkOption {
         type = types.port;
-        default = 9999;
+        default = ports.exporters.qbittorrent;
         description = "Port on which the Prometheus exporter runs.";
       };
     };
@@ -57,7 +58,7 @@ in
 
     port = mkOption {
       type = types.port;
-      default = 8080;
+      default = ports.qbittorrent;
       description = ''
         qBittorrent web UI port.
       '';
