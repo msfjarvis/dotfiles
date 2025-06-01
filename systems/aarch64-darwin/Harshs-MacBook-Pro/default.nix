@@ -41,7 +41,6 @@
   homebrew = {
     brews = [
       "gnu-sed"
-      "mpv"
       "spicetify-cli"
     ];
     casks = [
@@ -50,6 +49,7 @@
       "raycast"
       "rectangle"
       "spotify"
+      "stolendata-mpv"
       "zed"
     ];
     taps = [ ];
