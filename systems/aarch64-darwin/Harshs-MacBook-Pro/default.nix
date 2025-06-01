@@ -45,7 +45,9 @@
     ];
     casks = [
       "alt-tab"
+      "iterm2"
       "obsidian"
+      "prismlauncher"
       "raycast"
       "rectangle"
       "spotify"
