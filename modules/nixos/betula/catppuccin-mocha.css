@@ -1,0 +1,364 @@
+:root {
+    --ctp-mocha-rosewater: #f5e0dc;
+    --ctp-mocha-rosewater-rgb: 245 224 220;
+    --ctp-mocha-rosewater-hsl: 9.6 55.556% 91.176%;
+    --ctp-mocha-flamingo: #f2cdcd;
+    --ctp-mocha-flamingo-rgb: 242 205 205;
+    --ctp-mocha-flamingo-hsl: 0 58.73% 87.647%;
+    --ctp-mocha-pink: #f5c2e7;
+    --ctp-mocha-pink-rgb: 245 194 231;
+    --ctp-mocha-pink-hsl: 316.471 71.831% 86.078%;
+    --ctp-mocha-mauve: #cba6f7;
+    --ctp-mocha-mauve-rgb: 203 166 247;
+    --ctp-mocha-mauve-hsl: 267.407 83.505% 80.98%;
+    --ctp-mocha-red: #f38ba8;
+    --ctp-mocha-red-rgb: 243 139 168;
+    --ctp-mocha-red-hsl: 343.269 81.25% 74.902%;
+    --ctp-mocha-maroon: #eba0ac;
+    --ctp-mocha-maroon-rgb: 235 160 172;
+    --ctp-mocha-maroon-hsl: 350.4 65.217% 77.451%;
+    --ctp-mocha-peach: #fab387;
+    --ctp-mocha-peach-rgb: 250 179 135;
+    --ctp-mocha-peach-hsl: 22.957 92% 75.49%;
+    --ctp-mocha-yellow: #f9e2af;
+    --ctp-mocha-yellow-rgb: 249 226 175;
+    --ctp-mocha-yellow-hsl: 41.351 86.047% 83.137%;
+    --ctp-mocha-green: #a6e3a1;
+    --ctp-mocha-green-rgb: 166 227 161;
+    --ctp-mocha-green-hsl: 115.455 54.098% 76.078%;
+    --ctp-mocha-teal: #94e2d5;
+    --ctp-mocha-teal-rgb: 148 226 213;
+    --ctp-mocha-teal-hsl: 170 57.353% 73.333%;
+    --ctp-mocha-sky: #89dceb;
+    --ctp-mocha-sky-rgb: 137 220 235;
+    --ctp-mocha-sky-hsl: 189.184 71.014% 72.941%;
+    --ctp-mocha-sapphire: #74c7ec;
+    --ctp-mocha-sapphire-rgb: 116 199 236;
+    --ctp-mocha-sapphire-hsl: 198.5 75.949% 69.02%;
+    --ctp-mocha-blue: #89b4fa;
+    --ctp-mocha-blue-rgb: 137 180 250;
+    --ctp-mocha-blue-hsl: 217.168 91.87% 75.882%;
+    --ctp-mocha-lavender: #b4befe;
+    --ctp-mocha-lavender-rgb: 180 190 254;
+    --ctp-mocha-lavender-hsl: 231.892 97.368% 85.098%;
+    --ctp-mocha-text: #cdd6f4;
+    --ctp-mocha-text-rgb: 205 214 244;
+    --ctp-mocha-text-hsl: 226.154 63.934% 88.039%;
+    --ctp-mocha-subtext1: #bac2de;
+    --ctp-mocha-subtext1-rgb: 186 194 222;
+    --ctp-mocha-subtext1-hsl: 226.667 35.294% 80%;
+    --ctp-mocha-subtext0: #a6adc8;
+    --ctp-mocha-subtext0-rgb: 166 173 200;
+    --ctp-mocha-subtext0-hsl: 227.647 23.611% 71.765%;
+    --ctp-mocha-overlay2: #9399b2;
+    --ctp-mocha-overlay2-rgb: 147 153 178;
+    --ctp-mocha-overlay2-hsl: 228.387 16.757% 63.725%;
+    --ctp-mocha-overlay1: #7f849c;
+    --ctp-mocha-overlay1-rgb: 127 132 156;
+    --ctp-mocha-overlay1-hsl: 229.655 12.775% 55.49%;
+    --ctp-mocha-overlay0: #6c7086;
+    --ctp-mocha-overlay0-rgb: 108 112 134;
+    --ctp-mocha-overlay0-hsl: 230.769 10.744% 47.451%;
+    --ctp-mocha-surface2: #585b70;
+    --ctp-mocha-surface2-rgb: 88 91 112;
+    --ctp-mocha-surface2-hsl: 232.5 12% 39.216%;
+    --ctp-mocha-surface1: #45475a;
+    --ctp-mocha-surface1-rgb: 69 71 90;
+    --ctp-mocha-surface1-hsl: 234.286 13.208% 31.176%;
+    --ctp-mocha-surface0: #313244;
+    --ctp-mocha-surface0-rgb: 49 50 68;
+    --ctp-mocha-surface0-hsl: 236.842 16.239% 22.941%;
+    --ctp-mocha-base: #1e1e2e;
+    --ctp-mocha-base-rgb: 30 30 46;
+    --ctp-mocha-base-hsl: 240 21.053% 14.902%;
+    --ctp-mocha-mantle: #181825;
+    --ctp-mocha-mantle-rgb: 24 24 37;
+    --ctp-mocha-mantle-hsl: 240 21.311% 11.961%;
+    --ctp-mocha-crust: #11111b;
+    --ctp-mocha-crust-rgb: 17 17 27;
+    --ctp-mocha-crust-hsl: 240 22.727% 8.627%;
+}
+
+html {
+    background: var(--ctp-mocha-base) !important;
+    color: var(--ctp-mocha-text) !important;
+}
+
+body {
+    background: var(--ctp-mocha-base) !important;
+    color: var(--ctp-mocha-text) !important;
+}
+
+/*=====================================
+  Main Content Areas
+=====================================*/
+
+main > article {
+    background: var(--ctp-mocha-surface0) !important;
+    box-shadow: 0 4px 12px 0 var(--ctp-mocha-crust) !important;
+}
+
+/*=====================================
+  Links and Navigation
+=====================================*/
+
+a,
+.wikilink_external {
+    color: var(--ctp-mocha-blue) !important;
+}
+
+a:visited,
+.wikilink_external:visited {
+    color: var(--ctp-mocha-mauve) !important;
+}
+
+.wikilink_new,
+.wikilink_new:visited {
+    color: var(--ctp-mocha-red) !important;
+}
+
+nav a,
+nav a:hover,
+nav a:visited {
+    color: var(--ctp-mocha-text) !important;
+    text-decoration: underline;
+}
+
+.edit-post-btn,
+.edit-post-btn:visited,
+.post-tags a,
+.date-heading a,
+.date-link,
+.card-line a {
+    color: var(--ctp-mocha-subtext1) !important;
+    text-decoration: underline;
+}
+
+/*=====================================
+  Forms and Inputs
+=====================================*/
+
+form input[type="number"],
+form input[type="text"],
+form input[type="url"],
+form input[type="password"],
+form input[type="search"],
+textarea {
+    background: var(--ctp-mocha-surface1) !important;
+    color: var(--ctp-mocha-text) !important;
+    border: 2px solid var(--ctp-mocha-surface2) !important;
+}
+
+form input[type="number"]:focus,
+form input[type="text"]:focus,
+form input[type="url"]:focus,
+form input[type="password"]:focus,
+form input[type="search"]:focus,
+textarea:focus {
+    border-color: var(--ctp-mocha-blue) !important;
+    outline: none;
+}
+
+/*=====================================
+  Buttons
+=====================================*/
+
+.btn,
+.btn:active,
+.btn:hover,
+.btn:visited,
+input[type="submit"],
+::-webkit-file-upload-button {
+    background: var(--ctp-mocha-surface1) !important;
+    color: var(--ctp-mocha-text) !important;
+    border: 1px solid var(--ctp-mocha-surface2) !important;
+}
+
+.btn:hover,
+input[type="submit"]:hover,
+::-webkit-file-upload-button:hover {
+    background: var(--ctp-mocha-surface2) !important;
+}
+
+.btn_accent {
+    background: var(--ctp-mocha-blue) !important;
+    color: var(--ctp-mocha-base) !important;
+    border-color: var(--ctp-mocha-blue) !important;
+}
+
+.btn_accent:hover {
+    background: var(--ctp-mocha-sapphire) !important;
+    border-color: var(--ctp-mocha-sapphire) !important;
+}
+
+.btn_destructive,
+a.btn_destructive,
+a.btn_destructive:visited {
+    background: var(--ctp-mocha-red) !important;
+    color: var(--ctp-mocha-base) !important;
+    border-color: var(--ctp-mocha-red) !important;
+}
+
+.btn_destructive:hover {
+    background: var(--ctp-mocha-maroon) !important;
+    border-color: var(--ctp-mocha-maroon) !important;
+}
+
+.btn_weak {
+    background: transparent !important;
+    border: 1px dashed var(--ctp-mocha-surface2) !important;
+    color: var(--ctp-mocha-subtext1) !important;
+}
+
+.confirmation-tick:checked ~ .btn_confirmation-tick {
+    background: var(--ctp-mocha-surface1) !important;
+    border: 1px solid var(--ctp-mocha-surface2) !important;
+}
+
+.confirmation-tick:not(:checked) ~ .btn_confirmation-tick {
+    background: transparent !important;
+    border: 1px dashed var(--ctp-mocha-surface2) !important;
+    color: var(--ctp-mocha-overlay0) !important;
+}
+
+/*=====================================
+  Code and Preformatted Text
+=====================================*/
+
+article code,
+article .codeblock,
+p code {
+    background: var(--ctp-mocha-mantle) !important;
+    color: var(--ctp-mocha-text) !important;
+}
+
+.codeblock {
+    border: 1px solid var(--ctp-mocha-surface1) !important;
+}
+
+code {
+    font-family: "JetBrains Mono", "Fira Code", "Menlo", "PT Mono", monospace;
+}
+
+/*=====================================
+  Tables
+=====================================*/
+
+table {
+    background: var(--ctp-mocha-surface0) !important;
+    border: 1px solid var(--ctp-mocha-surface1) !important;
+}
+
+/*=====================================
+  Card Elements
+=====================================*/
+
+.card-line {
+    background: var(--ctp-mocha-surface1) !important;
+}
+
+/*=====================================
+  Autocompletion
+=====================================*/
+
+.autocompletion-list {
+    background: var(--ctp-mocha-surface0) !important;
+    border: 1px solid var(--ctp-mocha-surface2) !important;
+}
+
+.autocompletion-item:hover,
+.autocompletion-item.selected {
+    background: var(--ctp-mocha-surface1) !important;
+}
+
+/*=====================================
+  Pagination
+=====================================*/
+
+.paginator {
+    background: var(--ctp-mocha-surface0) !important;
+}
+
+.paginator-entry {
+    color: var(--ctp-mocha-text) !important;
+}
+
+/*=====================================
+  Notifications
+=====================================*/
+
+.notif[notif-cat="Host mismatch"] {
+    background: var(--ctp-mocha-yellow) !important;
+    color: var(--ctp-mocha-base) !important;
+}
+
+.notif[notif-cat="Wrong protocol"] {
+    background: var(--ctp-mocha-peach) !important;
+    color: var(--ctp-mocha-base) !important;
+}
+
+.notif[notif-cat="Failure"] {
+    background: var(--ctp-mocha-red) !important;
+    color: var(--ctp-mocha-base) !important;
+}
+
+.notif[notif-cat="Success"] {
+    background: var(--ctp-mocha-green) !important;
+    color: var(--ctp-mocha-base) !important;
+}
+
+/*=====================================
+  Bookmarklet
+=====================================*/
+
+.bookmarklet {
+    border: 1px dashed var(--ctp-mocha-surface2) !important;
+    background: var(--ctp-mocha-surface0) !important;
+}
+
+.bookmarklet a {
+    color: var(--ctp-mocha-blue) !important;
+}
+
+/*=====================================
+  Transclusions and Special Elements
+=====================================*/
+
+.transclusion_failed {
+    border: 1px solid var(--ctp-mocha-red) !important;
+    background: rgba(243, 139, 168, 0.1) !important;
+}
+
+.transclusion_stand-out {
+    background: var(--ctp-mocha-surface1) !important;
+}
+
+.myco blockquote {
+    border-left: 2px solid var(--ctp-mocha-surface2) !important;
+}
+
+/*=====================================
+  Miscellaneous Elements
+=====================================*/
+
+mark {
+    background: var(--ctp-mocha-yellow) !important;
+    color: var(--ctp-mocha-base) !important;
+}
+
+.post-visibility-private {
+    color: var(--ctp-mocha-red) !important;
+}
+
+.dashed-btn {
+    color: var(--ctp-mocha-blue) !important;
+}
+
+.u-bookmark-of {
+    color: var(--ctp-mocha-subtext1) !important;
+}
+
+.post-page .u-repost-of,
+.post-page .u-bookmark-of {
+    color: var(--ctp-mocha-subtext1) !important;
+}
