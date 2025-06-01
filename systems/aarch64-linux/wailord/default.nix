@@ -152,6 +152,7 @@
       };
       "https://money.msfjarvis.dev" = {
         extraConfig = ''
+          import blackholeCrawlers
           encode gzip zstd
           reverse_proxy ${config.services.actual.settings.hostname}:${toString config.services.actual.settings.port}
         '';
