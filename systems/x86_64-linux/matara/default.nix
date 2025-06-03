@@ -37,6 +37,7 @@ in
       adapterName = "eno1";
       tailscaleExitNode = true;
     };
+    gallery-dl.enable = true;
   };
 
   networking.hostName = "matara";
