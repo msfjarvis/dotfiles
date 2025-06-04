@@ -7,14 +7,14 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
-  version = "6.9.1-unstable-2025-05-28";
+  version = "6.10.0-unstable-2025-06-02";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jbsparrow";
     repo = "CyberDropDownloader";
-    rev = "2f2fb3a29b07eb82b8556cfc1841d312cc6cac48";
-    hash = "sha256-XWk4pthiXLpft8TfZ9AKAHtGbozdo8jNlHlFzIL9GRs=";
+    rev = "02059c86e85cd14e3fadb48465b87968167daa17";
+    hash = "sha256-OvkTC8Kbsy3TIMiukaimQ3Qp0AsJCsfm6ZfbDjw/fsY=";
   };
 
   patches = [ ./disable-update-check.diff ];
@@ -48,6 +48,7 @@ python3.pkgs.buildPythonApplication rec {
     browser-cookie3
     certifi
     curl-cffi
+    dateparser
     filedate
     get-video-properties
     inquirerpy
