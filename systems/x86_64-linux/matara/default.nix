@@ -43,6 +43,7 @@ in
   networking.hostName = "matara";
 
   environment.systemPackages = with pkgs; [
+    pkgs.${namespace}.cyberdrop-dl
     ffmpeg_7-headless
     git
     megatools
