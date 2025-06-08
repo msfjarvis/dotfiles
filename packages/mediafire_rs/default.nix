@@ -10,16 +10,16 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "mediafire-rs";
-  version = "0.1.6";
+  version = "0.1.7";
 
   src = fetchFromGitHub {
     owner = "nickoehler";
     repo = "mediafire_rs";
     rev = "v${version}";
-    hash = "sha256-5oYVVj/X9bKCe2Q3Pt9s9jEFvSJdmHqbo6zDjiXwoA4=";
+    hash = "sha256-poRanHyPX9HpqenJv6rkyqPX7OUcuAmR1enn52mUAiE=";
   };
 
-  cargoHash = "sha256-d5OnI1tqyfdxMq5m52lOaI7H5gS2oeoRqd9A7sGuAMM=";
+  cargoHash = "sha256-lGtOt6X57fAi01vHwlYVfVq3ptn4gRLYohmuzHUDU2M=";
   useFetchCargoVendor = true;
 
   nativeBuildInputs = [
