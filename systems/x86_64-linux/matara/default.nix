@@ -85,14 +85,14 @@ in
   services.copyparty = {
     enable = true;
     package = pkgs.copyparty.override {
-      withHashedPasswords = true;
+      withHashedPasswords = false;
       withCertgen = false;
       withThumbnails = false;
-      withFastThumbnails = false;
+      withFastThumbnails = true;
       withMediaProcessing = false;
       withBasicAudioMetadata = false;
       withZeroMQ = false;
-      withFTPS = true;
+      withFTPS = false;
       withSMB = false;
     };
     mkHashWrapper = true;
@@ -101,22 +101,39 @@ in
     settings = {
       i = "127.0.0.1";
       p = toString ports.copyparty;
+      theme = 2;
+      e2dsa = true;
+      stats = true;
     };
     volumes = {
       "/media" = {
         path = "/media/.omg";
         access = {
-          "rwmd" = "*";
+          "r.wmd" = "*";
         };
       };
       "/mediahell" = {
         path = "/mediahell";
         access = {
-          "rwmd" = "*";
+          "r.wmd" = "*";
         };
       };
     };
   };
+
+  services.prometheus.scrapeConfigs = [
+    {
+      job_name = "copyparty";
+      metrics_path = "/.cpr/metrics";
+      static_configs = [
+        {
+          targets = [
+            "${config.services.copyparty.settings.i}:${toString config.services.copyparty.settings.p}"
+          ];
+        }
+      ];
+    }
+  ];
 
   services.restic.backups = {
     photos = {
