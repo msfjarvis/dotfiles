@@ -217,7 +217,9 @@ in
   };
   services.plausible = {
     enable = true;
-    database.clickhouse.url = "http://localhost:${toString lib.${namespace}.ports.clickhouse.http}/default";
+    database.clickhouse.url = "http://localhost:${
+      toString lib.${namespace}.ports.clickhouse.http
+    }/default";
     server = {
       baseUrl = "https://stats.msfjarvis.dev";
       secretKeybaseFile = config.sops.secrets.plausible-secret.path;
