@@ -1,8 +1,13 @@
-{ pkgs, namespace, ... }:
+{
+  pkgs,
+  lib,
+  namespace,
+  ...
+}:
 {
   stylix = {
     autoEnable = false;
-    enable = true;
+    enable = lib.mkDefault true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     targets = {
       console.enable = true;

@@ -52,6 +52,8 @@ in
     appstream.enable = false;
     powerManagement.enable = false;
 
+    stylix.enable = false;
+
     networking = {
       networkmanager.enable = lib.mkDefault true;
       networkmanager.plugins = lib.mkForce [ ];
