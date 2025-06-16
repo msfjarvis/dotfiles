@@ -6,7 +6,7 @@ keys:
 creation_rules:
   - key_groups:
       - age:
-          - *matara
-          - *melody
-          - *ryzenbox
-          - *wailord
+          - *matara 
+          - *melody 
+          - *ryzenbox 
+          - *wailord 

@@ -51,8 +51,11 @@ in
     boot.bcache.enable = false;
     appstream.enable = false;
     powerManagement.enable = false;
-
     stylix.enable = false;
+
+    environment.systemPackages = [
+      pkgs.${namespace}.gdrive
+    ];
 
     networking = {
       networkmanager.enable = lib.mkDefault true;

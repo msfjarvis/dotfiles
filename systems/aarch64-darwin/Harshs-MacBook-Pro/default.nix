@@ -15,7 +15,6 @@
     pkgs.${namespace}.adx
     coreutils
     pkgs.${namespace}.diffuse-bin
-    pkgs.${namespace}.gdrive
     git-absorb
     hub
     pkgs.${namespace}.katbin
