@@ -69,8 +69,8 @@ in
   };
   config = mkIf cfg.gnome3.enable {
     # Enable the GNOME Desktop Environment.
-    services.xserver.displayManager.gdm.enable = true;
-    services.xserver.desktopManager.gnome.enable = true;
+    services.displayManager.gdm.enable = true;
+    services.desktopManager.gnome.enable = true;
     services.displayManager.defaultSession = "gnome-xorg";
     services.gnome.gnome-keyring.enable = true;
     programs.seahorse.enable = true;
