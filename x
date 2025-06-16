@@ -19,11 +19,12 @@ get_max_jobs() {
 nom_build() {
   local flake=$1
   local local_build=${2:-false}
-  local max_jobs=$(($(nproc || echo 1) / 2))
 
-  local cmd=(nom build --option always-allow-substitutes true --option max-jobs "$max_jobs")
+  local cmd=(nom build --option always-allow-substitutes true)
   if [[ $local_build == "true" ]]; then
-    cmd+=(--builders "''")
+    local max_jobs
+    max_jobs=$(($(nproc || echo 1) / 2))
+    cmd+=(--option max-jobs "$max_jobs" --builders "''")
   fi
   cmd+=(".#nixosConfigurations.$flake.config.system.build.toplevel")
 
