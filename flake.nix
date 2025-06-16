@@ -148,6 +148,7 @@
     lix.inputs.nixpkgs.follows = "nixpkgs";
     lix.inputs.nixpkgs-regression.follows = "nixpkgs";
     lix.inputs.nix2container.follows = "";
+    lix.inputs.nix_2_18.follows = "";
     lix.inputs.pre-commit-hooks.follows = "";
     lix.inputs.flake-compat.follows = "flake-compat";
 
