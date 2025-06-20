@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   namespace,
   ...
 }:
@@ -111,6 +112,12 @@ in
           DEFAULT_UI_LOCATION = "Asia/Kolkata";
         };
         ui = {
+          THEMES = builtins.concatStringsSep "," (
+            [ "auto" ]
+            ++ (map (name: lib.removePrefix "theme-" (lib.removeSuffix ".css" name)) (
+              builtins.attrNames (builtins.readDir "${pkgs.${namespace}.catppuccin-gitea}")
+            ))
+          );
           DEFAULT_THEME = "catppuccin-mocha-mauve";
           DEFAULT_SHOW_FULL_NAME = true;
         };
@@ -121,6 +128,12 @@ in
         };
       };
     };
-
+    systemd.services.gitea = {
+      preStart = lib.mkAfter ''
+        rm -rf ${config.services.gitea.stateDir}/custom/public/assets/css
+        mkdir -p ${config.services.gitea.stateDir}/custom/public/assets/
+        ln -sfn ${pkgs.${namespace}.catppuccin-gitea} ${config.services.gitea.stateDir}/custom/public/assets/css
+      '';
+    };
   };
 }
