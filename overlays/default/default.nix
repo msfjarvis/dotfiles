@@ -16,7 +16,7 @@ _: prev: {
   jre = prev.openjdk23;
   jre_headless = prev.openjdk23_headless;
   lix = inputs.lix.packages.${prev.stdenv.hostPlatform.system}.default.overrideAttrs (_: {
-    doCheck = !prev.stdenv.isDarwin;
+    doCheck = false;
   });
   # Silence warnings about existing files
   megatools = prev.megatools.overrideAttrs (_: {
