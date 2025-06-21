@@ -32,9 +32,4 @@
       optimise.automatic = false;
       settings.netrc-file = config.sops.secrets.nix-netrc-file.path;
     };
-
-  system.switch = {
-    enable = false;
-    enableNg = true;
-  };
 }
