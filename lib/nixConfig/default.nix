@@ -25,11 +25,11 @@
           mandatoryFeatures = [ ];
         }
         {
-          hostName = "geega";
+          hostName = "matara";
           system = "x86_64-linux";
           protocol = "ssh-ng";
-          maxJobs = 24;
-          speedFactor = 8;
+          maxJobs = 4;
+          speedFactor = 2;
           supportedFeatures = [
             "big-parallel"
             "kvm"
