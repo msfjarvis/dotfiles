@@ -40,7 +40,7 @@ jobs:
           attic-token: ${{ secrets.ATTIC_TOKEN }}
       - name: Create disk space
         if: "${{ matrix.runner == 'ubuntu-22.04' }}"
-        uses: pexcn/maximize-disk-space@59cf0266acd2974782e225501a0807b7d9a4304a # v1.0.4
+        uses: xd009642/ci-hoover@main
       - name: Update nixpkgs
         if: "${{ github.event_name == 'schedule' }}"
         shell: bash
