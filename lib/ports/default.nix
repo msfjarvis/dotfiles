@@ -27,6 +27,7 @@
     actual = 9015;
     glance = 9016;
     vaultwarden = 9017;
+    pocket-id = 9018;
     exporters = {
       node = 9100;
       systemd = 9101;
