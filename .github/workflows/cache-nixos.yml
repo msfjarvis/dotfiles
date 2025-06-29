@@ -14,7 +14,7 @@ jobs:
           - target: matara
             runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
             cache: x86_64-linux
-            public-key: "x86_64-linux:czBXxHtNIDorynmG/2pRuFSENM+fnu0rgVkH+8I4niQ="
+            public-key: "x86_64-linux:7L1XuoniEc65yX3tVGjkNyNadfePhfMD+TxodWdZtgM="
           - target: melody
             runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
             cache: aarch64-linux
