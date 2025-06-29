@@ -129,11 +129,15 @@ in
       };
     };
     systemd.services.gitea = {
-      preStart = lib.mkAfter ''
-        rm -rf ${config.services.gitea.stateDir}/custom/public/assets/css
-        mkdir -p ${config.services.gitea.stateDir}/custom/public/assets/
-        ln -sfn ${pkgs.${namespace}.catppuccin-gitea} ${config.services.gitea.stateDir}/custom/public/assets/css
-      '';
+      preStart =
+        let
+          inherit (config.services.gitea) stateDir;
+        in
+        lib.mkAfter ''
+          rm -rf ${stateDir}/custom/public/assets/css
+          mkdir -p ${stateDir}/custom/public/assets/
+          ln -sfn ${pkgs.${namespace}.catppuccin-gitea} ${stateDir}/custom/public/assets/css
+        '';
     };
   };
 }
