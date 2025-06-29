@@ -61,7 +61,7 @@ main() {
 
   case $arg in
   boot)
-    run_command sudo nixos-rebuild boot --flake .
+    run_command sudo nixos-rebuild --print-build-logs boot --flake .
     ;;
   chart)
     run_command nix build '.#topology.x86_64-linux.config.output'
@@ -115,9 +115,9 @@ main() {
     if [[ $local_build == "true" ]]; then
       local max_jobs
       max_jobs=$(get_max_jobs)
-      run_command sudo nixos-rebuild test --option builders "" --option max-jobs "$max_jobs" --flake .
+      run_command sudo nixos-rebuild --print-build-logs test --option builders "" --option max-jobs "$max_jobs" --flake .
     else
-      run_command sudo nixos-rebuild test --flake .
+      run_command sudo nixos-rebuild --print-build-logs test --flake .
     fi
     ;;
   switch)
@@ -139,9 +139,9 @@ main() {
       if [[ $local_build == "true" ]]; then
         local max_jobs
         max_jobs=$(get_max_jobs)
-        run_command sudo nixos-rebuild switch --option builders "" --option max-jobs "$max_jobs" --flake .
+        run_command sudo nixos-rebuild --print-build-logs switch --option builders "" --option max-jobs "$max_jobs" --flake .
       else
-        run_command sudo nixos-rebuild switch --flake .
+        run_command sudo nixos-rebuild --print-build-logs switch --flake .
       fi
       cleanup_generations
     fi
