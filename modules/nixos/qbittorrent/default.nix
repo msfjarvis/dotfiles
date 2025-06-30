@@ -104,6 +104,7 @@ in
           ExecStart = ''
             ${pkgs.qbittorrent}/bin/qbittorrent-nox \
               --profile=${configDir} \
+              --confirm-legal-notice \
               --webui-port=${toString cfg.port}
           '';
           # To prevent "Quit & shutdown daemon" from working; we want systemd to
