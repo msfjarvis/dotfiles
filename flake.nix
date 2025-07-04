@@ -28,12 +28,10 @@
         nix-flatpak.homeManagerModules.nix-flatpak
         nix-index-database.hmModules.nix-index
         spicetify-nix.homeManagerModules.default
-        stylix.homeModules.stylix
       ];
       systems.modules.darwin = with inputs; [
         srvos.darwinModules.desktop
         stylix.darwinModules.stylix
-        { stylix.homeManagerIntegration.autoImport = false; }
       ];
       systems.modules.nixos = with inputs; [
         disko.nixosModules.disko
@@ -42,7 +40,6 @@
         nix-topology.nixosModules.default
         sops-nix.nixosModules.sops
         stylix.nixosModules.stylix
-        { stylix.homeManagerIntegration.autoImport = false; }
         srvos.nixosModules.common
         srvos.nixosModules.mixins-systemd-boot
       ];

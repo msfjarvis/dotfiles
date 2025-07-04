@@ -186,7 +186,7 @@ in
 
   services.${namespace} = {
     rucksack = {
-      enable = true;
+      enable = false;
       sources = [
         "${homeDir}/Pictures/Screenshots"
         # Detroit: Become Human
