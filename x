@@ -12,10 +12,6 @@ get_hostname() {
   hostname
 }
 
-get_max_jobs() {
-  echo "$(($(nproc || echo 1)))"
-}
-
 nom_build() {
   local flake=$1
   local local_build=${2:-false}
@@ -114,7 +110,7 @@ main() {
     fi
     if [[ $local_build == "true" ]]; then
       local max_jobs
-      max_jobs=$(get_max_jobs)
+      max_jobs=$(($(nproc || echo 1) / 2))
       run_command sudo nixos-rebuild --print-build-logs test --option builders "" --option max-jobs "$max_jobs" --flake .
     else
       run_command sudo nixos-rebuild --print-build-logs test --flake .
@@ -138,7 +134,7 @@ main() {
     else
       if [[ $local_build == "true" ]]; then
         local max_jobs
-        max_jobs=$(get_max_jobs)
+        max_jobs=$(($(nproc || echo 1) / 2))
         run_command sudo nixos-rebuild --print-build-logs switch --option builders "" --option max-jobs "$max_jobs" --flake .
       else
         run_command sudo nixos-rebuild --print-build-logs switch --flake .
