@@ -34,8 +34,9 @@ cleanup_generations() {
 }
 
 gradle_hash() {
-  local version=$1
-  run_command nix-prefetch-url --type sha256 "https://services.gradle.org/distributions/gradle-$version-bin.zip"
+  local version=$1 nix_hash
+  nix_hash="$(nix hash to-sri --type sha256 "$(nix-prefetch-url --type sha256 https://services.gradle.org/distributions/gradle-"${version}"-bin.zip)")"
+  printf '{ version = "%s"; hash = "%s";}' "${version}" "${nix_hash}" >modules/nixos/profiles/desktop/gradle-version.nix
 }
 
 usage() {
