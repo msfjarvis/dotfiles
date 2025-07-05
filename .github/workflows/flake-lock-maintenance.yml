@@ -32,7 +32,7 @@ jobs:
           attic-token: ${{ secrets.ATTIC_TOKEN }}
       - name: Update Caddy plugins
         run: |
-          python3 dev/caddy/update_caddy_plugins.py
+          python3 dev/caddy/update_caddy_plugins.py --force
       - name: Commit and push changes
         run: |
           git config --local user.email "action@github.com"
