@@ -1,12 +1,46 @@
-name: Update flake.lock
+name: Update flake.lock and Caddy plugins
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 1 * * 0'
+    - cron: "0 1 * * 0"
 permissions:
   contents: write
+  actions: write
 jobs:
   update-flake-lock:
     uses: msfjarvis/shared-workflows/.github/workflows/update-flake-lock.yml@main
     secrets:
       github-token: ${{ secrets.GITHUB_TOKEN }}
+  update-caddy-plugins:
+    needs: update-flake-lock
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.ref }}
+          persist-credentials: false
+      - name: Setup Nix and Attic
+        uses: msfjarvis/dotfiles/.github/reusable-workflows/setup-nix-cache@main
+        with:
+          ts-oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          ts-oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          attic-cache: x86_64-linux
+          attic-public-key: "x86_64-linux:7L1XuoniEc65yX3tVGjkNyNadfePhfMD+TxodWdZtgM="
+          attic-endpoint: ${{ secrets.ATTIC_ENDPOINT }}
+          attic-token: ${{ secrets.ATTIC_TOKEN }}
+      - name: Update Caddy plugins
+        run: |
+          python3 dev/caddy/update_caddy_plugins.py
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add packages/caddy-with-plugins/default.nix
+          if git diff --staged --quiet; then
+            echo "No Caddy plugin updates found"
+          else
+            git commit -m "chore: update Caddy plugins"
+            git push
+          fi
