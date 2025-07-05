@@ -4,6 +4,11 @@ keys:
   - &ryzenbox age1v6ak02xxkkmlh42c7vul75twymkq427kyv5pa99ws44frwxn752sure46u
   - &wailord age10fy49p7faufe5533rxgshwjn9kr3aqcxjyqk6ty26j99w50dkswsvn2maq
 creation_rules:
+  - path_regex: secrets/wireless.yaml
+    key_groups:
+      - age:
+          - *matara 
+          - *ryzenbox 
   - key_groups:
       - age:
           - *matara 

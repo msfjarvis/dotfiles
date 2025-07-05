@@ -40,7 +40,22 @@ in
     gallery-dl.enable = true;
   };
 
+  sops.secrets.wireless-secrets = {
+    sopsFile = lib.snowfall.fs.get-file "secrets/wireless.yaml";
+  };
   networking.hostName = "matara";
+  networking = {
+    networkmanager.unmanaged = [ "wlp0s20f0u8" ];
+    wireless = {
+      enable = true;
+      secretsFile = config.sops.secrets.wireless-secrets.path;
+      networks = {
+        "Home 4G" = {
+          pskRaw = "ext:psk_home_4g";
+        };
+      };
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     pkgs.${namespace}.cyberdrop-dl
@@ -49,6 +64,7 @@ in
     megatools
     micro
     usbutils
+    wirelesstools
     yt-dlp
   ];
 
