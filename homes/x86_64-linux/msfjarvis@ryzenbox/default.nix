@@ -47,9 +47,13 @@
         "toml"
       ];
       userSettings = {
-        assistant = {
-          enabled = false;
-          # Necessary for this to be parsed, see https://github.com/zed-industries/zed/issues/16839#issuecomment-2309043157
+        agent = {
+          default_profile = "write";
+          model_parameters = [ ];
+          default_model = {
+            provider = "copilot_chat";
+            model = "claude-sonnet-4";
+          };
           version = "2";
         };
         autosave = {
@@ -61,18 +65,17 @@
         buffer_font_size = 16;
         edit_predictions.disabled_globs = [ "**/*" ];
         features = {
-          inline_completion_provider = "none";
+          edit_prediction_provider = "none";
         };
         indent_guides.enabled = true;
-        inline_completions.disabled_globs = [ "*.md" ];
         inlay_hints = {
-          enabled = false;
-          show_type_hints = true;
-          show_parameter_hints = true;
-          show_other_hints = true;
-          show_background = true;
           edit_debounce_ms = 700;
+          enabled = false;
           scroll_debounce_ms = 50;
+          show_background = true;
+          show_other_hints = true;
+          show_parameter_hints = true;
+          show_type_hints = true;
         };
         languages = {
           "Shell Script" = {
@@ -108,7 +111,7 @@
           };
         };
         restore_on_startup = "none";
-        show_inline_completions = false;
+        show_edit_predictions = false;
         show_wrap_guides = true;
         telemetry = {
           diagnostics = false;
