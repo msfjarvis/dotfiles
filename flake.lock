@@ -392,36 +392,6 @@
         "type": "github"
       }
     },
-    "lix": {
-      "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "nix2container": [],
-        "nix_2_18": [],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "nixpkgs-regression": [
-          "nixpkgs"
-        ],
-        "pre-commit-hooks": []
-      },
-      "locked": {
-        "lastModified": 1751225196,
-        "narHash": "sha256-kZhhg4j+dD8ShKUepSO6z/Jfrfn0BGcAU/QdOs7X8Is=",
-        "ref": "refs/heads/main",
-        "rev": "286aa409b24ebc950118d640f3045d9996043ce2",
-        "revCount": 18102,
-        "type": "git",
-        "url": "https://git.lix.systems/lix-project/lix"
-      },
-      "original": {
-        "ref": "refs/heads/main",
-        "type": "git",
-        "url": "https://git.lix.systems/lix-project/lix"
-      }
-    },
     "micro-theme": {
       "flake": false,
       "locked": {
@@ -561,7 +531,6 @@
         "golink": "golink",
         "home-manager": "home-manager",
         "lib-aggregate": "lib-aggregate",
-        "lix": "lix",
         "micro-theme": "micro-theme",
         "nix-flatpak": "nix-flatpak",
         "nix-index-database": "nix-index-database",

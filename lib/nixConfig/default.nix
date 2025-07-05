@@ -5,7 +5,7 @@
       lib,
     }:
     {
-      package = pkgs.lix;
+      package = pkgs.lixPackageSets.latest.lix;
 
       generateNixPathFromInputs = true;
       generateRegistryFromInputs = true;

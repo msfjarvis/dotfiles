@@ -15,9 +15,6 @@ _: prev: {
   jdk_headless = prev.openjdk23_headless;
   jre = prev.openjdk23;
   jre_headless = prev.openjdk23_headless;
-  lix = inputs.lix.packages.${prev.stdenv.hostPlatform.system}.default.overrideAttrs (_: {
-    doCheck = false;
-  });
   # Silence warnings about existing files
   megatools = prev.megatools.overrideAttrs (_: {
     patches = [ ./megatools.patch ];
