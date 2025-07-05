@@ -12,15 +12,15 @@ jobs:
       matrix:
         include:
           - target: matara
-            runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
+            runner: ubuntu-latest
             cache: x86_64-linux
             public-key: "x86_64-linux:7L1XuoniEc65yX3tVGjkNyNadfePhfMD+TxodWdZtgM="
           - target: melody
-            runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
+            runner: ubuntu-24.04-arm
             cache: aarch64-linux
             public-key: "aarch64-linux:6ntU2NXXz/mVNFqypWKVCkGZa9STsUzyc2ThpqQwP5k="
           - target: wailord
-            runner: ubuntu-22.04 # ubuntu-24.04 breaks the pexcn/maximize-disk-space action
+            runner: ubuntu-24.04-arm
             cache: aarch64-linux
             public-key: "aarch64-linux:6ntU2NXXz/mVNFqypWKVCkGZa9STsUzyc2ThpqQwP5k="
     runs-on: ${{ matrix.runner }}
@@ -39,7 +39,7 @@ jobs:
           attic-endpoint: ${{ secrets.ATTIC_ENDPOINT }}
           attic-token: ${{ secrets.ATTIC_TOKEN }}
       - name: Create disk space
-        if: "${{ matrix.runner == 'ubuntu-22.04' }}"
+        if: "${{ matrix.runner == 'ubuntu-latest' }}"
         uses: xd009642/ci-hoover@main
       - name: Update nixpkgs
         if: "${{ github.event_name == 'schedule' }}"
