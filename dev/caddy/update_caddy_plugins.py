@@ -301,6 +301,7 @@ Examples:
   %(prog)s --force            # Force rebuild even if no updates
   %(prog)s --verbose          # Enable detailed logging
   %(prog)s --file /path/to/default.nix  # Use specific file
+  %(prog)s --add-plugin github.com/user/plugin  # Add new plugin
         """,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
@@ -323,6 +324,11 @@ Examples:
         "--file",
         type=Path,
         help="Path to caddy-with-plugins/default.nix file (auto-detected if not specified)",
+    )
+    parser.add_argument(
+        "--add-plugin",
+        type=str,
+        help="Add a new plugin by Go import path (e.g. github.com/user/plugin)",
     )
 
     args = parser.parse_args()
@@ -362,6 +368,26 @@ Examples:
         if plugins is None:
             sys.exit(1)
 
+        # Add new plugin if specified
+        if args.add_plugin:
+            logging.info(f"Adding new plugin: {args.add_plugin}")
+            latest_version = get_latest_pseudo_version(args.add_plugin)
+            if latest_version:
+                # Check if plugin already exists
+                existing_plugins = [pkg_path for pkg_path, _ in plugins]
+                if args.add_plugin not in existing_plugins:
+                    plugins.append((args.add_plugin, latest_version))
+                    logging.info(f"Added {args.add_plugin}@{latest_version}")
+                else:
+                    logging.warning(
+                        f"Plugin {args.add_plugin} already exists, will be updated instead"
+                    )
+            else:
+                logging.error(
+                    f"Could not get version for new plugin: {args.add_plugin}"
+                )
+                sys.exit(1)
+
         # Update each plugin to latest version
         updated_plugins = []
         updates_made = False
@@ -388,7 +414,7 @@ Examples:
                 logging.info(f"No update needed for {pkg_path}")
                 updated_plugins.append((pkg_path, current_version))
 
-        if not updates_made and not args.force:
+        if not updates_made and not args.force and not args.add_plugin:
             logging.info("No plugin updates needed!")
             if not args.force:
                 logging.info("Use --force to rebuild anyway")
@@ -411,7 +437,7 @@ Examples:
             return
 
         # Update the file with new plugin versions
-        if updates_made or args.force:
+        if updates_made or args.force or args.add_plugin:
             logging.info("Updating plugins file with new versions...")
             update_plugins_file(caddy_file, content, updated_plugins)
 
