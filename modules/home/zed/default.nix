@@ -50,18 +50,10 @@ in
         Use the name of a repository in the [extension list](https://github.com/zed-industries/extensions/tree/main/extensions).
       '';
     };
-
-    extraPackages = mkOption {
-      type = types.listOf types.package;
-      default = [ ];
-      description = ''
-        A list of additional packages to install alongside Zed.
-      '';
-    };
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ cfg.package ] ++ cfg.extraPackages;
+    home.packages = [ cfg.package ];
     xdg.configFile."zed/settings.json" = mkIf (mergedSettings != { }) {
       source = jsonFormat.generate "zed-user-settings" mergedSettings;
     };

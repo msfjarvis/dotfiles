@@ -33,6 +33,7 @@
     spotify.enable = true;
     zed = {
       enable = true;
+      package = pkgs.zed-editor.fhsWithPackages (pkgs: with pkgs; [ nixd ]);
       extensions = [
         "basher"
         "catppuccin"
@@ -92,7 +93,7 @@
         load_direnv = "shell_hook";
         lsp = {
           nil = {
-            binary.path = "${lib.getExe pkgs.nil}";
+            binary.path = "${lib.getExe pkgs.nixd}";
             settings = {
               formatting.command = [ "${lib.getExe pkgs.nixfmt-rfc-style}" ];
               nix = {
