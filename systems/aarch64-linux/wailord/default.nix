@@ -120,6 +120,7 @@ in
       tailscale {
         ephemeral true
       }
+      order plausible before reverse_proxy
     '';
     extraConfig = ''
       (blackholeCrawlers) {
@@ -164,6 +165,10 @@ in
       "https://nix-cache.tiger-shark.ts.net" = {
         extraConfig = ''
           bind tailscale/nix-cache
+          plausible {
+            domain_name nix-cache.tiger-shark.ts.net
+            base_url https://stats.msfjarvis.dev
+          }
           reverse_proxy ${config.services.atticd.settings.listen}
         '';
       };
