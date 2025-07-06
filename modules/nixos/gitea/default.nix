@@ -30,6 +30,71 @@ in
           reverse_proxy 127.0.0.1:${toString config.services.gitea.settings.server.HTTP_PORT}
         '';
       };
+      "https://vibes.msfjarvis.dev" = {
+        extraConfig = ''
+          # Serve HTML files (including /project-x and /project-x/index.html)
+          @html path_regexp html ^/([^/]+)(/index\.html)?$
+          handle @html {
+              rewrite * /msfjarvis/acceptable-vibes/raw/branch/main/{re.html.1}/index.html
+              reverse_proxy https://git.msfjarvis.dev {
+                  header_up Host git.msfjarvis.dev
+                  header_down Content-Type "text/html; charset=utf-8"
+              }
+          }
+          @htmlFile path_regexp htmlfile ^/([^/]+)/(.*\.html)$
+          handle @htmlFile {
+              rewrite * /msfjarvis/acceptable-vibes/raw/branch/main/{re.htmlfile.1}/{re.htmlfile.2}
+              reverse_proxy https://git.msfjarvis.dev {
+                  header_up Host git.msfjarvis.dev
+                  header_down Content-Type "text/html; charset=utf-8"
+              }
+          }
+
+          # Serve CSS
+          @css path_regexp css ^/([^/]+)/(.*\.css)$
+          handle @css {
+              rewrite * /msfjarvis/acceptable-vibes/raw/branch/main/{re.css.1}/{re.css.2}
+              reverse_proxy https://git.msfjarvis.dev {
+                  header_up Host git.msfjarvis.dev
+                  header_down Content-Type "text/css; charset=utf-8"
+              }
+          }
+
+          # Serve JS
+          @js path_regexp js ^/([^/]+)/(.*\.js)$
+          handle @js {
+              rewrite * /msfjarvis/acceptable-vibes/raw/branch/main/{re.js.1}/{re.js.2}
+              reverse_proxy https://git.msfjarvis.dev {
+                  header_up Host git.msfjarvis.dev
+                  header_down Content-Type "application/javascript; charset=utf-8"
+              }
+          }
+
+          # Serve SVG
+          @svg path_regexp svg ^/([^/]+)/(.*\.svg)$
+          handle @svg {
+              rewrite * /msfjarvis/acceptable-vibes/raw/branch/main/{re.svg.1}/{re.svg.2}
+              reverse_proxy https://git.msfjarvis.dev {
+                  header_up Host git.msfjarvis.dev
+                  header_down Content-Type "image/svg+xml"
+              }
+          }
+
+          # Fallback for other files (images etc.)
+          @projectFiles path_regexp projectpath ^/([^/]+)/(.*)$
+          handle @projectFiles {
+              rewrite * /msfjarvis/acceptable-vibes/raw/branch/main/{re.projectpath.1}/{re.projectpath.2}
+              reverse_proxy https://git.msfjarvis.dev {
+                  header_up Host git.msfjarvis.dev
+              }
+          }
+
+          # Optionally, handle /
+          handle / {
+              respond "Welcome to the project gateway!"
+          }
+        '';
+      };
     };
     services.gitea = {
       enable = true;
