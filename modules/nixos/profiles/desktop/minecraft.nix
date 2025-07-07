@@ -17,8 +17,12 @@ let
     "Fabulously.Optimized.1.21.3"
     "Fabulously.Optimized.1.21.4"
     "Fabulously.Optimized.1.21.5"
+    "Fabulously.Optimized.1.21.7"
   ];
   minecraftInstances = vanillaInstances ++ moddedInstances;
+  backupInstances = [
+    "Fabulously.Optimized.1.21.7"
+  ];
   instancePath = name: "${homeDir}/Games/PrismLauncher/instances/${name}";
   prismLauncher = pkgs.prismlauncher.override {
     jdks = with pkgs; [
@@ -62,9 +66,13 @@ in
       repository = "rest:https://restic.tiger-shark.ts.net/";
       passwordFile = config.sops.secrets.restic_repo_password.path;
 
-      paths =
-        (forEach moddedInstances (name: "${instancePath name}/.minecraft"))
-        ++ (forEach vanillaInstances (name: "${instancePath name}/minecraft"));
+      paths = forEach backupInstances (
+        name:
+        if builtins.elem name moddedInstances then
+          "${instancePath name}/.minecraft"
+        else
+          "${instancePath name}/minecraft"
+      );
 
       pruneOpts = [
         "--keep-daily 2"
