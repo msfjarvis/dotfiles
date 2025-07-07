@@ -8,42 +8,44 @@
   inputs.devshell.url = "github:numtide/devshell";
   inputs.devshell.inputs.nixpkgs.follows = "nixpkgs";
 
-  inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.flake-utils.inputs.systems.follows = "systems";
-
   inputs.flake-compat.url = "git+https://git.lix.systems/lix-project/flake-compat";
   inputs.flake-compat.flake = false;
 
   outputs =
     {
+      systems,
       nixpkgs,
       devshell,
-      flake-utils,
       ...
     }:
-    flake-utils.lib.eachDefaultSystem (
-      system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [ devshell.overlays.default ];
-        };
-      in
-      {
-        devShells.default = pkgs.devshell.mkShell {
-          bash = {
-            interactive = "";
+    let
+      eachSystem = nixpkgs.lib.genAttrs (import systems);
+    in
+    {
+      devShells = eachSystem (
+        system:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [ devshell.overlays.default ];
           };
+        in
+        {
+          default = pkgs.devshell.mkShell {
+            bash = {
+              interactive = "";
+            };
 
-          env = [
-            {
-              name = "DEVSHELL_NO_MOTD";
-              value = 1;
-            }
-          ];
+            env = [
+              {
+                name = "DEVSHELL_NO_MOTD";
+                value = 1;
+              }
+            ];
 
-          packages = with pkgs; [ python312 ];
-        };
-      }
-    );
+            packages = with pkgs; [ python312 ];
+          };
+        }
+      );
+    };
 }
