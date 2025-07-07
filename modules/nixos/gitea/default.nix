@@ -91,7 +91,11 @@ in
 
           # Optionally, handle /
           handle / {
-              respond "Welcome to the project gateway!"
+              rewrite * /msfjarvis/acceptable-vibes/raw/branch/main/index.html
+              reverse_proxy https://git.msfjarvis.dev {
+                  header_up Host git.msfjarvis.dev
+                  header_down Content-Type "text/html; charset=utf-8"
+              }
           }
         '';
       };
