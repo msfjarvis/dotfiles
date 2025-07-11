@@ -119,6 +119,8 @@ in
       p = toString ports.copyparty;
       theme = 2;
       e2dsa = true;
+      e2ts = true;
+      re-maxage = 3600;
       stats = true;
     };
     volumes = {
