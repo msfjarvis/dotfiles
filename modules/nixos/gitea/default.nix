@@ -33,7 +33,8 @@ in
       "https://vibes.msfjarvis.dev" = {
         extraConfig = ''
           # Serve HTML files (including /project-x and /project-x/index.html)
-          @html path_regexp html ^/([^/]+)(/index\.html)?$
+          # @html path_regexp html ^/([^/]+)(/index\.html)?$
+          @html path_regexp html ^/([^/]+)(/|/index\.html)?$
           handle @html {
               rewrite * /msfjarvis/acceptable-vibes/raw/branch/main/{re.html.1}/index.html
               reverse_proxy https://git.msfjarvis.dev {
