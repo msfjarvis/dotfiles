@@ -123,7 +123,7 @@ in
     };
     volumes = {
       "/media" = {
-        path = "/media/.omg";
+        path = "/media";
         access = {
           "r.wmd" = "*";
         };
