@@ -26,7 +26,7 @@
       homes.modules = with inputs; [
         # niri.homeModules.niri
         nix-flatpak.homeManagerModules.nix-flatpak
-        nix-index-database.hmModules.nix-index
+        nix-index-database.homeModules.nix-index
         spicetify-nix.homeManagerModules.default
       ];
       systems.modules.darwin = with inputs; [
