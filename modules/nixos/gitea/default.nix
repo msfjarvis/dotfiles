@@ -35,7 +35,7 @@ in
           gitea_pages {
             gitea_url https://git.msfjarvis.dev
             domain_mapping vibes.msfjarvis.dev msfjarvis acceptable-vibes
-            cache_ttl 1m
+            cache_ttl 15m
           }
         '';
       };
