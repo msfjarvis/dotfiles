@@ -133,3 +133,74 @@
 [user]
 	email = me@msfjarvis.dev
 	name = Harsh Shandilya
+[branch]
+	sort = "-committerdate"
+
+[column]
+	ui = "auto"
+
+[commit]
+	verbose = true
+
+[core]
+	attributesfile = "~/.gitattributes"
+	autocrlf = "input"
+
+[diff]
+	algorithm = "histogram"
+	colorMoved = "plain"
+	mnemonicPrefix = true
+	renames = true
+
+[fetch]
+	all = true
+	fsckobjects = true
+	prune = true
+	pruneTags = true
+
+[filter "lfs"]
+	clean = "git-lfs clean -- %f"
+	process = "git-lfs filter-process"
+	required = true
+	smudge = "git-lfs smudge -- %f"
+
+[gpg]
+	format = "openpgp"
+
+[help]
+	autocorrect = "prompt"
+
+[init]
+	defaultBranch = "main"
+
+[log]
+	date = "iso"
+
+[merge]
+	conflictstyle = "zdiff3"
+
+[pull]
+	rebase = true
+
+[push]
+	autoSetupRemote = true
+	default = "simple"
+	followTags = true
+
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+
+[receive]
+	fsckObjects = true
+
+[rerere]
+	autoupdate = true
+	enabled = true
+
+[tag]
+	sort = "version:refname"
+
+[transfer]
+	fsckobjects = true

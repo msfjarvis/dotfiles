@@ -38,56 +38,10 @@ in
     lfs.enable = true;
     extraConfig =
       {
-        branch.sort = "-committerdate";
-
-        column.ui = "auto";
-
-        commit.verbose = true;
-
-        core.autocrlf = "input";
-        core.attributesfile = "~/.gitattributes";
-
-        help.autocorrect = "prompt";
-
-        init.defaultBranch = "main";
-
-        diff.algorithm = "histogram";
-        diff.colorMoved = "plain"; # show code movement in different colors than added and removed lines.
-        diff.mnemonicPrefix = true; # replace a/ and b/ in diff header output with where the diff is coming from; i/ (index), w/ (working directory) or c/ commit.
-        diff.renames = true;
-
-        log.date = "iso";
-
-        merge.conflictstyle = "zdiff3";
-
         merge.mergiraf = {
           name = "mergiraf";
           driver = "${lib.getExe mergiraf} merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
         };
-
-        pull.rebase = true;
-
-        push.autoSetupRemote = true;
-        push.default = "simple";
-        push.followTags = true;
-
-        fetch.all = true;
-        fetch.fsckobjects = true;
-        fetch.prune = true;
-        fetch.pruneTags = true;
-
-        rerere.enabled = true;
-        rerere.autoupdate = true;
-
-        rebase.autoSquash = true;
-        rebase.autoStash = true;
-        rebase.updateRefs = true;
-
-        receive.fsckObjects = true;
-
-        tag.sort = "version:refname";
-
-        transfer.fsckobjects = true;
       }
       // lib.attrsets.optionalAttrs notServer {
         credential = {
