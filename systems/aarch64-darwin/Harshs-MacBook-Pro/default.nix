@@ -27,6 +27,7 @@
     openssl
     pkgs.${namespace}.pidcat
     scrcpy
+    yt-dlp
   ];
 
   environment.pathsToLink = [
