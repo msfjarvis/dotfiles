@@ -35,7 +35,6 @@ python3.pkgs.buildPythonApplication rec {
   ];
 
   dependencies = with python3.pkgs; [
-    aenum
     aiofiles
     aiohttp
     aiohttp-client-cache
@@ -49,24 +48,18 @@ python3.pkgs.buildPythonApplication rec {
     certifi
     curl-cffi
     dateparser
-    filedate
     get-video-properties
     inquirerpy
-    jeepney
-    lz4
     m3u8
     mediafire
-    mutagen
     myjdapi
     pillow
     platformdirs
     psutil
-    pycryptodomex
     pydantic
     pyyaml
     rich
     send2trash
-    textual
     truststore
     xxhash
   ];
