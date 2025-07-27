@@ -20,7 +20,7 @@
       channels-config = {
         allowUnfree = true;
         allowAliases = false;
-        cudaSupport = true;
+        cudaSupport = false;
         permittedInsecurePackages = [ ];
       };
       homes.modules = with inputs; [
