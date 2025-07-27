@@ -40,24 +40,25 @@ in
       mcaselector
       (pkgs.symlinkJoin {
         name = "prismlauncher-with-launchers";
-        paths =
-          [ prismLauncher ]
-          ++ (forEach minecraftInstances (
-            instance:
-            (pkgs.makeDesktopItem {
-              desktopName = instance;
-              type = "Application";
-              categories = [
-                "Game"
-                "ActionGame"
-                "AdventureGame"
-                "Simulation"
-              ];
-              exec = "${lib.getExe prismLauncher} --launch ${instance}";
-              name = instance;
-              icon = "${instancePath instance}/icon.png";
-            })
-          ));
+        paths = [
+          prismLauncher
+        ]
+        ++ (forEach minecraftInstances (
+          instance:
+          (pkgs.makeDesktopItem {
+            desktopName = instance;
+            type = "Application";
+            categories = [
+              "Game"
+              "ActionGame"
+              "AdventureGame"
+              "Simulation"
+            ];
+            exec = "${lib.getExe prismLauncher} --launch ${instance}";
+            name = instance;
+            icon = "${instancePath instance}/icon.png";
+          })
+        ));
       })
     ];
 

@@ -36,24 +36,23 @@ in
     };
     includes = [ { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig"; } ];
     lfs.enable = true;
-    extraConfig =
-      {
-        merge.mergiraf = {
-          name = "mergiraf";
-          driver = "${lib.getExe mergiraf} merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
+    extraConfig = {
+      merge.mergiraf = {
+        name = "mergiraf";
+        driver = "${lib.getExe mergiraf} merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
+      };
+    }
+    // lib.attrsets.optionalAttrs notServer {
+      credential = {
+        credentialStore = if pkgs.stdenv.hostPlatform.isDarwin then "keychain" else "secretservice";
+        helper = lib.getExe gcm;
+        "https://git.msfjarvis.dev" = {
+          provider = "generic";
         };
-      }
-      // lib.attrsets.optionalAttrs notServer {
-        credential = {
-          credentialStore = if pkgs.stdenv.hostPlatform.isDarwin then "keychain" else "secretservice";
-          helper = lib.getExe gcm;
-          "https://git.msfjarvis.dev" = {
-            provider = "generic";
-          };
-          "https://github.com" = {
-            provider = "github";
-          };
+        "https://github.com" = {
+          provider = "github";
         };
       };
+    };
   };
 }

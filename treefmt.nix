@@ -28,6 +28,7 @@ in
   };
   programs.nixfmt = {
     enable = true;
+    package = pkgs.nixfmt;
   };
   programs.shellcheck = {
     enable = true;

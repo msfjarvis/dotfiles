@@ -17,7 +17,7 @@
     git-quickfix
     mosh
     ncdu_1
-    nixfmt-rfc-style
+    nixfmt
     nixpkgs-review
     nvd
     (python3.withPackages (

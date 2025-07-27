@@ -98,7 +98,7 @@
           nil = {
             binary.path = "${lib.getExe pkgs.nixd}";
             settings = {
-              formatting.command = [ "${lib.getExe pkgs.nixfmt-rfc-style}" ];
+              formatting.command = [ "${lib.getExe pkgs.nixfmt}" ];
               nix = {
                 flake = {
                   autoArchive = true;
