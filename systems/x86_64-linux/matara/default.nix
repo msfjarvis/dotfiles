@@ -208,64 +208,13 @@ in
       enable = true;
     };
     qbittorrent = {
-      enable = false;
+      enable = true;
       port = ports.qbittorrent;
       user = "msfjarvis";
       group = "users";
       openFirewall = true;
       prometheus.enable = true;
     };
-  };
-
-  services.qbittorrent = {
-    enable = true;
-    webuiPort = ports.qbittorrent;
-    user = "msfjarvis";
-    group = "users";
-    openFirewall = true;
-    extraArgs = [ "--confirm-legal-notice" ];
-    serverConfig = {
-      AutoRun = {
-        enabled = true;
-        program = "/media/.omg/prep";
-      };
-      BitTorrent = {
-        Session = {
-          DefaultSavePath = "/media/.omg";
-          GlobalMaxSeedingMinutes = 10;
-          TempPath = "/media/.omg/temp";
-          TempPathEnabled = true;
-        };
-      };
-      WebUI = {
-        RootFolder = "${pkgs.vuetorrent}/share/vuetorrent";
-        AuthSubnetWhitelist = "100.64.0.0/10, 127.0.0.0/8";
-        AuthSubnetWhitelistEnabled = true;
-        Password_PBKDF2 = "@ByteArray(nT9LLIxitMDRc6EPIOslwA==:5hanmHRABcmgdSHSPiJNs39SoBrcKqm2eyFfjbVnnPiP0S30NREuyWbfFzBxR8VJ/DwRnkPTTcl5WjE40Gfl4Q==)";
-        ReverseProxySupportEnabled = true;
-        TrustedReverseProxiesList = "127.0.0.1";
-      };
-    };
-  };
-
-  systemd.services.prometheus-qbittorrent-exporter = {
-    after = [ "qbittorrent.service" ];
-    description = "qBittorrent Prometheus exporter";
-    wantedBy = [ "multi-user.target" ];
-    environment = {
-      EXPORT_METRICS_BY_TORRENT = "True";
-    };
-    serviceConfig = {
-      User = config.services.qbittorrent.user;
-      Group = config.services.qbittorrent.group;
-    };
-    script = ''
-      export QBITTORRENT_HOST=127.0.0.1
-      export QBITTORRENT_PORT=${toString config.services.qbittorrent.webuiPort}
-      export EXPORTER_ADDRESS=127.0.0.1
-      export EXPORTER_PORT=${toString ports.exporters.qbittorrent}
-      ${lib.getExe pkgs.${namespace}.prometheus-qbittorrent-exporter}
-    '';
   };
 
   system.stateVersion = "24.05";
