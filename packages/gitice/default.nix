@@ -28,7 +28,6 @@ in
     };
 
     cargoHash = "sha256-YXnw1hRpUTn8tjE1bwU5AWjaRRJKI8jC/57W3U+an6A=";
-    useFetchCargoVendor = true;
 
     useNextest = true;
 

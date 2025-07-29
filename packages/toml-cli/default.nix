@@ -21,7 +21,6 @@ rustPlatform.buildRustPackage {
   doCheck = false;
 
   cargoHash = "sha256-PoqVMTCRmSTt7UhCpMF3ixmAfVtpkaOfaTTmDNhrpLA=";
-  useFetchCargoVendor = true;
 
   meta = with lib; {
     description = "Simple CLI for editing and querying TOML files.";

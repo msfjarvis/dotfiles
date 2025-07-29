@@ -7,11 +7,11 @@ creation_rules:
   - path_regex: secrets/wireless.yaml
     key_groups:
       - age:
-          - *matara 
-          - *ryzenbox 
+          - *matara
+          - *ryzenbox
   - key_groups:
       - age:
-          - *matara 
-          - *melody 
-          - *ryzenbox 
-          - *wailord 
+          - *matara
+          - *melody
+          - *ryzenbox
+          - *wailord

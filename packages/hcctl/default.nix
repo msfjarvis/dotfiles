@@ -20,7 +20,6 @@ rustPlatform.buildRustPackage {
   buildAndTestSubdir = "hcctl";
 
   cargoHash = "sha256-va3/FcTlQjNgWr3w0zGzcoTMqE/gX0Wl09vRGB9vc/M=";
-  useFetchCargoVendor = true;
 
   useNextest = true;
 

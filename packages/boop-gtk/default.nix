@@ -36,7 +36,6 @@ rustPlatform.buildRustPackage {
   };
 
   cargoHash = "sha256-neRYFVHXF0xv2pfG94SxCjV4bGdfflZxVnkIIGp/xVA=";
-  useFetchCargoVendor = true;
 
   RUSTY_V8_ARCHIVE = callPackage ./librusty_v8.nix { };
 
