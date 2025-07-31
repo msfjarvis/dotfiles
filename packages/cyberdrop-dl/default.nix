@@ -1,7 +1,6 @@
 {
   lib,
   python3,
-  gnused,
   fetchFromGitHub,
 }:
 
@@ -19,16 +18,12 @@ python3.pkgs.buildPythonApplication rec {
 
   patches = [ ./disable-update-check.diff ];
 
-  postPatch =
-    let
-      sed = lib.getExe gnused;
-      # Convert python3.12-aiohttp-3.11.9 to aiohttp
-      mkRealName =
-        pkg: lib.removePrefix "${python3.libPrefix}-" (lib.removeSuffix "-${pkg.version}" pkg.pname);
-      mkPatch =
-        pkg: ''${sed} -i 's/\s*"${mkRealName pkg}.*"/"${mkRealName pkg}==${pkg.version}"/' pyproject.toml'';
-    in
-    lib.concatStringsSep "\n" (lib.lists.map mkPatch dependencies);
+  pythonRelaxDeps = [
+    "aiosqlite"
+    "certifi"
+    "curl-cffi"
+    "dateparser"
+  ];
 
   build-system = [
     python3.pkgs.poetry-core
