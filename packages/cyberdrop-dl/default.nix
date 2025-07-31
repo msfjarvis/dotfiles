@@ -1,10 +1,10 @@
 {
   lib,
-  python3,
+  python313,
   fetchFromGitHub,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python313.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
   version = "7.3.0-unstable-2025-07-26";
   pyproject = true;
@@ -26,10 +26,10 @@ python3.pkgs.buildPythonApplication rec {
   ];
 
   build-system = [
-    python3.pkgs.poetry-core
+    python313.pkgs.poetry-core
   ];
 
-  dependencies = with python3.pkgs; [
+  dependencies = with python313.pkgs; [
     aiofiles
     aiohttp
     aiohttp-client-cache
