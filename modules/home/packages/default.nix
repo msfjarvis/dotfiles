@@ -18,6 +18,7 @@
     mosh
     ncdu_1
     nixfmt
+    nix-update
     nixpkgs-review
     nvd
     (python3.withPackages (

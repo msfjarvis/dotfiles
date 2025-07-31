@@ -141,7 +141,6 @@ in
       pkgs.${namespace}.mediafire_rs
       megatools
       nix-init
-      nix-update
       nurl
       obsidian
       pkgs.${namespace}.patreon-dl
