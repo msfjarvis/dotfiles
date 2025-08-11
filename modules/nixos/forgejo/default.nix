@@ -113,6 +113,7 @@ in
           ENABLE_GZIP = true;
           LANDING_PAGE = "explore";
           ROOT_URL = "https://${cfg.domain}/";
+          HTTP_PORT = lib.${namespace}.ports.forgejo;
         };
         service = {
           COOKIE_SECURE = true;

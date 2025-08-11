@@ -103,6 +103,7 @@ in
           ENABLE_GZIP = true;
           LANDING_PAGE = "explore";
           ROOT_URL = "https://${cfg.domain}/";
+          HTTP_PORT = lib.${namespace}.ports.gitea;
         };
         service = {
           COOKIE_SECURE = true;

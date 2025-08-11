@@ -28,6 +28,8 @@
     glance = 9016;
     vaultwarden = 9017;
     pocket-id = 9018;
+    gitea = 9019;
+    forgejo = 9020;
     exporters = {
       node = 9100;
       systemd = 9101;
