@@ -42,6 +42,14 @@ in
     };
     services.forgejo = {
       enable = true;
+      database = {
+        type = "postgres";
+        createDatabase = true;
+      };
+      dump = {
+        enable = true;
+        type = "tar.zst";
+      };
       settings = {
         DEFAULT = {
           APP_NAME = "Harsh Shandilya's Git hosting";
