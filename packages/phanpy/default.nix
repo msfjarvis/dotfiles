@@ -6,7 +6,7 @@
   defaultUrl ? "https://fedi.msfjarvis.dev",
 }:
 buildNpmPackage {
-  name = "phanpy";
+  pname = "phanpy";
   version = "2025.07.18.3f4b1a6-unstable-2025-08-07";
 
   src = fetchFromGitHub {
