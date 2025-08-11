@@ -33,7 +33,7 @@ in
       "https://vibes.msfjarvis.dev" = {
         extraConfig = ''
           gitea_pages {
-            gitea_url https://git.msfjarvis.dev
+            gitea_url https://${cfg.domain}
             domain_mapping vibes.msfjarvis.dev msfjarvis acceptable-vibes
             cache_ttl 15m
           }
