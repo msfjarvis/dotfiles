@@ -258,7 +258,7 @@ in
       domain = "links.msfjarvis.dev";
     };
 
-    gitea = {
+    forgejo = {
       enable = true;
       domain = "git.msfjarvis.dev";
     };
