@@ -25,6 +25,9 @@ jobs:
             public-key: "aarch64-linux:6ntU2NXXz/mVNFqypWKVCkGZa9STsUzyc2ThpqQwP5k="
     runs-on: ${{ matrix.runner }}
     steps:
+      - name: Create disk space
+        if: "${{ matrix.runner == 'ubuntu-latest' }}"
+        uses: wimpysworld/nothing-but-nix@v6
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
@@ -38,9 +41,6 @@ jobs:
           attic-public-key: ${{ matrix.public-key }}
           attic-endpoint: ${{ secrets.ATTIC_ENDPOINT }}
           attic-token: ${{ secrets.ATTIC_TOKEN }}
-      - name: Create disk space
-        if: "${{ matrix.runner == 'ubuntu-latest' }}"
-        uses: xd009642/ci-hoover@main
       - name: Update nixpkgs
         if: "${{ github.event_name == 'schedule' }}"
         shell: bash
