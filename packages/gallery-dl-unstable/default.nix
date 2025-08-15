@@ -12,8 +12,8 @@ python3.pkgs.buildPythonApplication rec {
   src = fetchFromGitHub {
     owner = "mikf";
     repo = "gallery-dl";
-    rev = "df15fc0157683ef537a0ac181cff495d98d788e7";
-    hash = "sha256-IQtwGRVA9VolN4LLTv0w5UEc/qcn1Rnaz1XzbX4o1go=";
+    rev = "682e29a535411d5a6e895532162bb9a1277f11ae";
+    hash = "sha256-OzCrdDJqYr+qkPilzcXFHMmcrIgkpD3MFSvG//pio/g=";
   };
 
   build-system = [
