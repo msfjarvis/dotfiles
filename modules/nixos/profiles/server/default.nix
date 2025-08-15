@@ -28,6 +28,10 @@ in
     # Enable Tailscale
     profiles.${namespace}.tailscale.enable = true;
 
+    snowfallorg.users.msfjarvis.home.config = {
+      services.gpg-agent.pinentry.package = pkgs.pinentry-curses;
+    };
+
     # Disable a bunch of stuff that's unnecessary on servers
     documentation = {
       enable = false;
