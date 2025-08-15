@@ -25,8 +25,7 @@ declare -a ALL_PACKAGES=(
   linkleaner
   mediafire_rs
   patreon-dl
-  # Upstream breakage: https://github.com/cheeaun/phanpy/issues/1240
-  # phanpy
+  phanpy
   pidcat
   piv-agent
   prometheus-qbittorrent-exporter
