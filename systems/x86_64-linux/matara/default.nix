@@ -111,8 +111,11 @@ in
       withMediaProcessing = false;
       withBasicAudioMetadata = false;
       withZeroMQ = false;
+      withFTP = false;
+      withTFTP = false;
       withFTPS = false;
       withSMB = false;
+      withMagic = false;
     };
     mkHashWrapper = true;
     user = "msfjarvis";
