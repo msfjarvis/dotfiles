@@ -59,6 +59,7 @@
     sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
     owner = config.services.golink.user;
     key = "services-tsauthkey-env";
+    restartUnits = ["golink.service"];
   };
   services.golink = {
     enable = true;
