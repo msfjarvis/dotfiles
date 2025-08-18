@@ -8,7 +8,7 @@ permissions:
   actions: write
 jobs:
   update-flake-lock:
-    uses: msfjarvis/shared-workflows/.github/workflows/update-flake-lock.yml@hs/package-diffs
+    uses: msfjarvis/shared-workflows/.github/workflows/update-flake-lock.yml@main
     secrets:
       github-token: ${{ secrets.GITHUB_TOKEN }}
   update-caddy-plugins:
