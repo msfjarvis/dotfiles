@@ -71,6 +71,12 @@ in
         "cron.update_checker" = {
           ENABLED = false;
         };
+        federation = {
+          ENABLED = true;
+        };
+        git = {
+          GC_ARGS = "--aggressive --auto";
+        };
         "git.config" = {
           "diff.algorithm" = "patience";
         };
@@ -82,6 +88,9 @@ in
         };
         mailer = {
           ENABLED = false;
+        };
+        metrics = {
+          ENABLE = true;
         };
         mirror = {
           DEFAULT_INTERVAL = "1h";
@@ -116,8 +125,12 @@ in
           HTTP_PORT = lib.${namespace}.ports.forgejo;
         };
         service = {
-          COOKIE_SECURE = true;
           DISABLE_REGISTRATION = true;
+        };
+        session = {
+          COOKIE_NAME = "i_dont_like_gitea";
+          COOKIE_SECURE = true;
+          DOMAIN = cfg.domain;
         };
         time = {
           DEFAULT_UI_LOCATION = "Asia/Kolkata";
