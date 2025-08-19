@@ -29,7 +29,7 @@ in
     # Use latest kernel by default.
     boot.kernelPackages = mkDefault pkgs.linuxPackages_latest;
 
-    networking.networkmanager.enable = true;
+    networking.useNetworkd = true;
 
     security.rtkit.enable = true;
     services.pulseaudio.enable = false;

@@ -62,8 +62,7 @@ in
     ];
 
     networking = {
-      networkmanager.enable = lib.mkDefault true;
-      networkmanager.plugins = lib.mkForce [ ];
+      useNetworkd = true;
       nftables.enable = true;
       firewall = {
         # Open HTTP(S) ports

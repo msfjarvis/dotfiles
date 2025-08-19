@@ -48,7 +48,6 @@ in
   };
   networking.hostName = "matara";
   networking = {
-    networkmanager.unmanaged = [ "wlp0s20f0u8" ];
     wireless = {
       enable = true;
       secretsFile = config.sops.secrets.wireless-secrets.path;

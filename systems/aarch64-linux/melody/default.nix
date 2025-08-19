@@ -40,10 +40,7 @@
     mutableUsers = false;
     users.msfjarvis = {
       isNormalUser = true;
-      extraGroups = [
-        "networkmanager"
-        "wheel"
-      ];
+      extraGroups = [ "wheel" ];
       hashedPassword = ''$y$j9T$g8JL/B98ogQF/ryvwHpWe.$jyKMeotGz/o8Pje.nejKzPMiYOxtn//33OzMu5bAHm2'';
     };
   };
@@ -59,7 +56,7 @@
     sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
     owner = config.services.golink.user;
     key = "services-tsauthkey-env";
-    restartUnits = ["golink.service"];
+    restartUnits = [ "golink.service" ];
   };
   services.golink = {
     enable = true;
