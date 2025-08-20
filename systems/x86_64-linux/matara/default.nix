@@ -132,13 +132,13 @@ in
       "/media" = {
         path = "/media";
         access = {
-          "r.wmd" = "*";
+          "r.wmda" = "*";
         };
       };
       "/mediahell" = {
         path = "/mediahell";
         access = {
-          "r.wmd" = "*";
+          "r.wmda" = "*";
         };
       };
     };
