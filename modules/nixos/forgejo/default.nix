@@ -40,6 +40,16 @@ in
         '';
       };
     };
+    services.prometheus.scrapeConfigs = [
+      {
+        job_name = "forgejo";
+        static_configs = [
+          {
+            targets = with config.services.forgejo.settings.server; [ "${HTTP_ADDR}:${toString HTTP_PORT}" ];
+          }
+        ];
+      }
+    ];
     services.forgejo = {
       enable = true;
       package = pkgs.forgejo;
@@ -91,7 +101,7 @@ in
           ENABLED = false;
         };
         metrics = {
-          ENABLE = true;
+          ENABLED = true;
         };
         mirror = {
           DEFAULT_INTERVAL = "1h";
