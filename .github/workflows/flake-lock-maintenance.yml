@@ -3,15 +3,20 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "0 1 * * 0"
-permissions:
-  contents: write
-  actions: write
+permissions: {}
+
 jobs:
   update-flake-lock:
+    name: "Update flake.lock"
+    permissions:
+      contents: write
     uses: msfjarvis/shared-workflows/.github/workflows/update-flake-lock.yml@main
     secrets:
       github-token: ${{ secrets.GITHUB_TOKEN }}
   update-caddy-plugins:
+    name: "Update Caddy plugins"
+    permissions:
+      contents: write
     needs: update-flake-lock
     runs-on: ubuntu-latest
     steps:
@@ -23,7 +28,7 @@ jobs:
           # We push at the end
           persist-credentials: true
       - name: Setup Nix and Attic
-        uses: msfjarvis/dotfiles/.github/reusable-workflows/setup-nix-cache@main
+        uses: ./.github/reusable-workflows/setup-nix-cache
         with:
           ts-oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           ts-oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}

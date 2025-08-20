@@ -1,18 +1,23 @@
 on:
   repository_dispatch:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
   workflow_dispatch:
     inputs:
       package:
-        description: 'Package to check updates for'
+        description: "Package to check updates for"
         required: false
       version:
-        description: 'Version to pin package to'
+        description: "Version to pin package to"
         required: false
+
+permissions: {}
 name: Check for package updates
 jobs:
   check-nix-update:
+    name: "Update Nix packages in the Flake"
+    permissions:
+      contents: write
     strategy:
       fail-fast: false
       matrix:
@@ -31,7 +36,7 @@ jobs:
           # We run Git commands at the end
           persist-credentials: true
       - name: Setup Nix and Attic
-        uses: msfjarvis/dotfiles/.github/reusable-workflows/setup-nix-cache@main
+        uses: ./.github/reusable-workflows/setup-nix-cache
         with:
           ts-oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           ts-oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
