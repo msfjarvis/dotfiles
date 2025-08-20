@@ -10,7 +10,6 @@ on:
       version:
         description: "Version to pin package to"
         required: false
-
 permissions: {}
 name: Check for package updates
 jobs:

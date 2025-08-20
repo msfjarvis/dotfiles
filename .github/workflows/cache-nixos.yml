@@ -2,9 +2,7 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "0 3 * * *"
-
 permissions: {}
-
 name: Build and cache NixOS configuration
 jobs:
   build-and-cache:
@@ -54,14 +52,13 @@ jobs:
         shell: bash
         env:
           TARGET: ${{ matrix.target }}
-        run: nix build --print-build-logs .#nixosConfigurations.${TARGET}.config.system.build.toplevel
+        run: nix build --print-build-logs ".#nixosConfigurations.${TARGET}.config.system.build.toplevel"
       - name: Push to attic cache
         shell: bash
         run: |
           attic push --jobs 1 --filter '^((steam|appimage)-(run|fhs)(-run)?|(google-chrome|nvidia|android-studio|firefox-nightly-bin).*)$' "${CACHE}" ./result
         env:
           CACHE: ${{ matrix.cache }}
-
   update-services-chart:
     name: "Update the nix-topology chart"
     permissions:
