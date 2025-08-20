@@ -42,6 +42,7 @@ in
     };
     services.forgejo = {
       enable = true;
+      package = pkgs.forgejo;
       database = {
         type = "postgres";
         createDatabase = true;
