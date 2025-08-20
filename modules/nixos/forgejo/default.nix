@@ -27,7 +27,7 @@ in
       "https://${cfg.domain}" = {
         extraConfig = ''
           import blackholeCrawlers
-          reverse_proxy 127.0.0.1:${toString config.services.forgejo.settings.server.HTTP_PORT}
+          reverse_proxy ${toString config.services.forgejo.settings.server.HTTP_ADDR}:${toString config.services.forgejo.settings.server.HTTP_PORT}
         '';
       };
       "https://vibes.msfjarvis.dev" = {
@@ -123,6 +123,7 @@ in
           ENABLE_GZIP = true;
           LANDING_PAGE = "explore";
           ROOT_URL = "https://${cfg.domain}/";
+          HTTP_ADDR = "127.0.0.1";
           HTTP_PORT = lib.${namespace}.ports.forgejo;
         };
         service = {
