@@ -25,9 +25,9 @@ in
   config = mkIf cfg.enable {
     services.caddy.virtualHosts = {
       "https://${cfg.domain}" = {
-        extraConfig = ''
+        extraConfig = with config.services.forgejo.settings.server; ''
           import blackholeCrawlers
-          reverse_proxy ${toString config.services.forgejo.settings.server.HTTP_ADDR}:${toString config.services.forgejo.settings.server.HTTP_PORT}
+          reverse_proxy ${HTTP_ADDR}:${toString HTTP_PORT}
         '';
       };
       "https://vibes.msfjarvis.dev" = {
