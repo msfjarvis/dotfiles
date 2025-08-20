@@ -85,12 +85,6 @@ in
           reverse_proxy 127.0.0.1:${toString config.services.${namespace}.qbittorrent.port}
         '';
       };
-      "https://matara-files.tiger-shark.ts.net" = {
-        extraConfig = ''
-          bind tailscale/matara-files
-          reverse_proxy ${config.services.copyparty.settings.i}:${config.services.copyparty.settings.p}
-        '';
-      };
       "https://stash.tiger-shark.ts.net" = {
         extraConfig = ''
           bind tailscale/stash
@@ -99,64 +93,6 @@ in
       };
     };
   };
-
-  services.copyparty = {
-    enable = true;
-    package = pkgs.copyparty.override {
-      withHashedPasswords = false;
-      withCertgen = false;
-      withThumbnails = false;
-      withFastThumbnails = true;
-      withMediaProcessing = false;
-      withBasicAudioMetadata = false;
-      withZeroMQ = false;
-      withFTP = false;
-      withTFTP = false;
-      withFTPS = false;
-      withSMB = false;
-      withMagic = false;
-    };
-    mkHashWrapper = true;
-    user = "msfjarvis";
-    group = "users";
-    settings = {
-      i = "127.0.0.1";
-      p = toString ports.copyparty;
-      theme = 2;
-      e2dsa = true;
-      e2ts = true;
-      re-maxage = 3600;
-      stats = true;
-    };
-    volumes = {
-      "/media" = {
-        path = "/media";
-        access = {
-          "r.wmda" = "*";
-        };
-      };
-      "/mediahell" = {
-        path = "/mediahell";
-        access = {
-          "r.wmda" = "*";
-        };
-      };
-    };
-  };
-
-  services.prometheus.scrapeConfigs = [
-    {
-      job_name = "copyparty";
-      metrics_path = "/.cpr/metrics";
-      static_configs = [
-        {
-          targets = [
-            "${config.services.copyparty.settings.i}:${toString config.services.copyparty.settings.p}"
-          ];
-        }
-      ];
-    }
-  ];
 
   services.restic.backups = {
     photos = {
@@ -198,6 +134,25 @@ in
   users.users.msfjarvis.isSystemUser = lib.mkForce false;
 
   services.${namespace} = {
+    copyparty = {
+      enable = true;
+      user = "msfjarvis";
+      group = "users";
+      volumes = {
+        "/media" = {
+          path = "/media";
+          access = {
+            "r.wmda" = "*";
+          };
+        };
+        "/mediahell" = {
+          path = "/mediahell";
+          access = {
+            "r.wmda" = "*";
+          };
+        };
+      };
+    };
     gphotos-cdp =
       let
         homeDir = config.users.users.msfjarvis.home;
