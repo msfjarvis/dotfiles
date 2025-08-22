@@ -34,6 +34,7 @@
         stylix.darwinModules.stylix
       ];
       systems.modules.nixos = with inputs; [
+        copyparty.nixosModules.default
         disko.nixosModules.disko
         golink.nixosModules.default
         nix-flatpak.nixosModules.nix-flatpak
@@ -45,7 +46,6 @@
       ];
 
       systems.hosts.matara.modules = with inputs; [
-        copyparty.nixosModules.default
         srvos.nixosModules.mixins-mdns
         srvos.nixosModules.mixins-telegraf
         srvos.nixosModules.roles-prometheus
