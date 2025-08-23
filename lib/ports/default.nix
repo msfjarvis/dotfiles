@@ -36,6 +36,7 @@
       qbittorrent = 9102;
       restic-rest-server = 9103;
       postgres = 9104;
+      pocket-id = 9105;
     };
     clickhouse = {
       http = 9200;

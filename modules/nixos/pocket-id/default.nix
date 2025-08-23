@@ -19,14 +19,19 @@ in
     domain = mkOption {
       type = types.str;
       description = "Domain name to expose server on";
-      default = "https://auth.msfjarvis.dev";
+      default = "auth.msfjarvis.dev";
+    };
+    settings = mkOption {
+      type = types.attrs;
+      description = "Extra settings";
+      default = { };
     };
   };
   config = mkIf cfg.enable {
     services.caddy.virtualHosts = {
-      "${cfg.domain}" = {
+      "https://${cfg.domain}" = {
         extraConfig = ''
-          reverse_proxy 127.0.0.1:${config.services.pocket-id.settings.PORT}
+          reverse_proxy ${config.services.pocket-id.settings.HOST}:${config.services.pocket-id.settings.PORT}
         '';
       };
     };
@@ -50,20 +55,32 @@ in
       enable = true;
       environmentFile = config.sops.secrets.pocket-id.path;
       settings = {
-        APP_URL = cfg.domain;
+        APP_URL = "https://${cfg.domain}";
         DB_PROVIDER = "postgres";
         DB_CONNECTION_STRING = "postgres://pocket-id/pocket-id?host=/run/postgresql";
+        HOST = "127.0.0.1";
+        LOG_JSON = true;
         METRICS_ENABLED = true;
+        OTEL_EXPORTER_PROMETHEUS_HOST = "127.0.0.1";
+        OTEL_EXPORTER_PROMETHEUS_PORT = toString lib.${namespace}.ports.exporters.pocket-id;
         OTEL_METRICS_EXPORTER = "prometheus";
         PORT = toString lib.${namespace}.ports.pocket-id;
         TRUST_PROXY = true;
         UI_CONFIG_DISABLED = true;
-      };
+      }
+      // cfg.settings;
     };
-    systemd.services.pocket-id.serviceConfig.RestrictAddressFamilies = lib.mkForce [
-      "AF_INET"
-      "AF_INET6"
-      "AF_UNIX"
+    services.prometheus.scrapeConfigs = [
+      {
+        job_name = "pocket-id";
+        static_configs = [
+          {
+            targets = with config.services.pocket-id.settings; [
+              "${OTEL_EXPORTER_PROMETHEUS_HOST}:${toString OTEL_EXPORTER_PROMETHEUS_PORT}"
+            ];
+          }
+        ];
+      }
     ];
   };
 }
