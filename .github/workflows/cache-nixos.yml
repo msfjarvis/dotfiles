@@ -11,10 +11,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - target: matara
-            runner: ubuntu-latest
-            cache: x86_64-linux
-            public-key: "x86_64-linux:7L1XuoniEc65yX3tVGjkNyNadfePhfMD+TxodWdZtgM="
+          # - target: matara
+          #  runner: ubuntu-latest
+          #  cache: x86_64-linux
+          #  public-key: "x86_64-linux:7L1XuoniEc65yX3tVGjkNyNadfePhfMD+TxodWdZtgM="
           - target: melody
             runner: ubuntu-24.04-arm
             cache: aarch64-linux
