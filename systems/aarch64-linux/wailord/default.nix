@@ -270,6 +270,8 @@ in
       settings = import ./glance.nix { port = ports.glance; };
     };
 
+    pocket-id.enable = true;
+
     postgres.enable = true;
 
     prometheus = {
