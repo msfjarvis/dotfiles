@@ -9,6 +9,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   src = fetchzip {
     url = "https://github.com/catppuccin/gitea/releases/download/v${finalAttrs.version}/catppuccin-gitea.tar.gz";
     hash = "sha256-rZHLORwLUfIFcB6K9yhrzr+UwdPNQVSadsw6rg8Q7gs=";
+    stripRoot = false;
   };
 
   installPhase = ''
