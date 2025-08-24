@@ -177,12 +177,6 @@ in
           reverse_proxy ${config.services.restic.server.listenAddress}
         '';
       };
-      "https://stats.msfjarvis.dev" = {
-        extraConfig = ''
-          import blackholeCrawlers
-          reverse_proxy ${config.services.plausible.server.listenAddress}:${toString config.services.plausible.server.port}
-        '';
-      };
       "https://til.msfjarvis.dev" = {
         extraConfig = ''
           import blackholeCrawlers
@@ -206,45 +200,6 @@ in
       port = ports.actual;
     };
   };
-
-  sops.secrets.plausible-secret = {
-    sopsFile = lib.snowfall.fs.get-file "secrets/plausible.yaml";
-  };
-  sops.secrets.plausible-smtp-pass = {
-    sopsFile = lib.snowfall.fs.get-file "secrets/plausible.yaml";
-  };
-  services.plausible = {
-    enable = true;
-    database.clickhouse.url = "http://localhost:${
-      toString lib.${namespace}.ports.clickhouse.http
-    }/default";
-    server = {
-      baseUrl = "https://stats.msfjarvis.dev";
-      secretKeybaseFile = config.sops.secrets.plausible-secret.path;
-    };
-    mail = {
-      email = "reports@stats.msfjarvis.dev";
-      smtp = {
-        enableSSL = true;
-        hostAddr = "smtp.purelymail.com";
-        hostPort = 587;
-        passwordFile = config.sops.secrets.plausible-smtp-pass.path;
-        user = "me@msfjarvis.dev";
-      };
-    };
-  };
-  # Force override the ports used by Clickhouse
-  environment.etc."clickhouse-server/config.xml".source = lib.mkForce (
-    pkgs.runCommandLocal "clickhouse-server-config.xml" { } ''
-      cp "${config.services.clickhouse.package}/etc/clickhouse-server/config.xml" temp.xml
-      substituteInPlace temp.xml \
-        --replace-fail 8123 ${toString lib.${namespace}.ports.clickhouse.http} \
-        --replace-fail 9000 ${toString lib.${namespace}.ports.clickhouse.tcp} \
-        --replace-fail 9005 ${toString lib.${namespace}.ports.clickhouse.postgresql} \
-        --replace-fail 9009 ${toString lib.${namespace}.ports.clickhouse.interserver_http}
-      mv temp.xml $out
-    ''
-  );
 
   services.${namespace} = {
     betula = {
@@ -270,6 +225,11 @@ in
     };
 
     pocket-id.enable = true;
+
+    plausible = {
+      enable = true;
+      domain = "stats.msfjarvis.dev";
+    };
 
     postgres.enable = true;
 
