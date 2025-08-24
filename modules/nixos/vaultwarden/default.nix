@@ -24,7 +24,7 @@ in
   };
   config = mkIf cfg.enable {
     services.caddy.virtualHosts = {
-      "${cfg.domain}" = {
+      "https://${cfg.domain}" = {
         extraConfig = ''
           reverse_proxy 127.0.0.1:${builtins.toString config.services.vaultwarden.config.ROCKET_PORT}
         '';
@@ -54,7 +54,7 @@ in
       environmentFile = config.sops.secrets.vaultwarden.path;
       config = {
         DATABASE_URL = "postgres://vaultwarden?host=/run/postgresql";
-        DOMAIN = cfg.domain;
+        DOMAIN = "https://${cfg.domain}";
         EXPERIMENTAL_CLIENT_FEATURE_FLAGS = "autofill-overlay,autofill-v2,browser-fileless-import,extension-refresh,fido2-vault-credentials,inline-menu-positioning-improvements,ssh-key-vault-item,ssh-agent";
         INVITATIONS_ALLOWED = false;
         PUSH_ENABLED = true;

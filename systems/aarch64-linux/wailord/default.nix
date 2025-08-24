@@ -242,7 +242,7 @@ in
 
     vaultwarden = {
       enable = true;
-      domain = "https://vault.msfjarvis.dev";
+      domain = "vault.msfjarvis.dev";
     };
   };
 
