@@ -171,12 +171,6 @@ in
           reverse_proxy ${config.services.atticd.settings.listen}
         '';
       };
-      "https://read.msfjarvis.dev" = {
-        extraConfig = ''
-          import blackholeCrawlers
-          reverse_proxy ${toString config.services.miniflux.config.LISTEN_ADDR}
-        '';
-      };
       "https://restic.tiger-shark.ts.net" = {
         extraConfig = ''
           bind tailscale/restic
@@ -270,6 +264,11 @@ in
       settings = import ./glance.nix { port = ports.glance; };
     };
 
+    miniflux = {
+      enable = true;
+      domain = "read.msfjarvis.dev";
+    };
+
     pocket-id.enable = true;
 
     postgres.enable = true;
@@ -301,35 +300,6 @@ in
       host = "smtp.purelymail.com";
     };
   };
-
-  sops.secrets.feed-auth = {
-    owner = config.users.users.miniflux.name;
-    sopsFile = lib.snowfall.fs.get-file "secrets/feed-auth.env";
-    format = "dotenv";
-  };
-  services.miniflux = {
-    enable = true;
-    createDatabaseLocally = true;
-    config = {
-      LISTEN_ADDR = "127.0.0.1:${toString ports.miniflux}";
-      FETCH_ODYSEE_WATCH_TIME = 1;
-      FETCH_YOUTUBE_WATCH_TIME = 1;
-      LOG_DATE_TIME = 1;
-      LOG_FORMAT = "json";
-      WORKER_POOL_SIZE = 2;
-      BASE_URL = "https://read.msfjarvis.dev/";
-      HTTPS = 1;
-      METRICS_COLLECTOR = 1;
-      WEBAUTHN = 1;
-    };
-    adminCredentialsFile = config.sops.secrets.feed-auth.path;
-  };
-  services.prometheus.scrapeConfigs = [
-    {
-      job_name = "miniflux";
-      static_configs = [ { targets = [ config.services.miniflux.config.LISTEN_ADDR ]; } ];
-    }
-  ];
 
   system.stateVersion = "23.11";
 
