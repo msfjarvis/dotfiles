@@ -38,6 +38,16 @@ in
       };
     };
 
+    users = {
+      groups.miniflux = { };
+      users = {
+        miniflux = {
+          isSystemUser = true;
+          group = config.users.groups.miniflux.name;
+        };
+      };
+    };
+
     sops.secrets.feed-auth = {
       owner = config.users.users.miniflux.name;
       sopsFile = lib.snowfall.fs.get-file "secrets/feed-auth.env";
