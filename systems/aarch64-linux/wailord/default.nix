@@ -111,13 +111,6 @@ in
           reverse_proxy 127.0.0.1:${toString ports.metube}
         '';
       };
-      "https://money.msfjarvis.dev" = {
-        extraConfig = ''
-          import blackholeCrawlers
-          encode gzip zstd
-          reverse_proxy ${config.services.actual.settings.hostname}:${toString config.services.actual.settings.port}
-        '';
-      };
       "https://nix-cache.tiger-shark.ts.net" = {
         extraConfig = ''
           bind tailscale/nix-cache
@@ -150,15 +143,12 @@ in
     };
   };
 
-  services.actual = {
-    enable = true;
-    settings = {
-      hostname = "127.0.0.1";
-      port = ports.actual;
-    };
-  };
-
   services.${namespace} = {
+    actual-budget = {
+      enable = true;
+      domain = "money.msfjarvis.dev";
+    };
+
     alps = {
       enable = true;
       domain = "mail";
