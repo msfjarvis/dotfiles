@@ -54,8 +54,14 @@
     prometheus = {
       enable = true;
     };
+
     golink = {
       enable = true;
+    };
+
+    restic-rest-server = {
+      enable = true;
+      domain = "restic-melody";
     };
   };
 
