@@ -70,15 +70,9 @@ in
     yt-dlp
   ];
 
-  sops.secrets.services-tsauthkey-env = {
-    sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
-    owner = config.services.caddy.user;
-  };
   services.caddy = {
     enable = true;
-    enableReload = false;
-    package = pkgs.${namespace}.caddy-with-plugins;
-    environmentFile = config.sops.secrets.services-tsauthkey-env.path;
+    applyDefaults = true;
     virtualHosts = {
       "https://matara.tiger-shark.ts.net" = {
         extraConfig = ''
