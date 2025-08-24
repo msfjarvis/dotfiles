@@ -94,12 +94,6 @@ in
           reverse_proxy 127.0.0.1:${toString ports.metube}
         '';
       };
-      "https://restic.tiger-shark.ts.net" = {
-        extraConfig = ''
-          bind tailscale/restic
-          reverse_proxy ${config.services.restic.server.listenAddress}
-        '';
-      };
       "https://til.msfjarvis.dev" = {
         extraConfig = ''
           import blackholeCrawlers
@@ -173,7 +167,10 @@ in
       grafana.enable = true;
     };
 
-    restic-rest-server.enable = true;
+    restic-rest-server = {
+      enable = true;
+      domain = "restic-wailord";
+    };
 
     vaultwarden = {
       enable = true;

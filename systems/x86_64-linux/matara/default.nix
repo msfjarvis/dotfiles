@@ -91,7 +91,7 @@ in
   services.restic.backups = {
     photos = {
       initialize = true;
-      repository = "rest:https://restic.tiger-shark.ts.net/photos";
+      repository = "rest:https://restic-wailord.tiger-shark.ts.net/photos";
       passwordFile = config.sops.secrets.restic_repo_password.path;
 
       paths = [ config.services.${namespace}.gphotos-cdp.dldir ];

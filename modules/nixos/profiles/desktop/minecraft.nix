@@ -64,7 +64,7 @@ in
 
     services.restic.backups.minecraft = {
       initialize = true;
-      repository = "rest:https://restic.tiger-shark.ts.net/";
+      repository = "rest:https://restic-wailord.tiger-shark.ts.net/";
       passwordFile = config.sops.secrets.restic_repo_password.path;
 
       paths = forEach backupInstances (

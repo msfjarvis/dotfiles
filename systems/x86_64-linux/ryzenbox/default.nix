@@ -161,7 +161,7 @@ in
   services.restic.backups = {
     #     screenshots = {
     #       initialize = true;
-    #       repository = "rest:https://restic.tiger-shark.ts.net/screenshots";
+    #       repository = "rest:https://restic-wailord.tiger-shark.ts.net/screenshots";
     #       passwordFile = config.sops.secrets.restic_repo_password.path;
     #
     #       paths = [ "/mediahell/screenshots" ];

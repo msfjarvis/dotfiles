@@ -6,14 +6,31 @@
 }:
 let
   cfg = config.services.${namespace}.restic-rest-server;
-  inherit (lib.${namespace}) ports;
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    ;
+  inherit (lib.${namespace}) ports mkTailscaleVHost;
 in
 {
   options.services.${namespace}.restic-rest-server = {
     enable = mkEnableOption "Restic REST server";
+    domain = mkOption {
+      type = types.nullOr types.str;
+      domain = null;
+      description = "Tailscale domain to expose the service on";
+    };
   };
   config = mkIf cfg.enable {
+    services.caddy.virtualHosts =
+      { }
+      // (mkIf (cfg.domain != null) (
+        mkTailscaleVHost cfg.domain ''
+          reverse_proxy ${config.services.restic.server.listenAddress}
+        ''
+      ));
     services.restic.server = {
       enable = true;
       extraFlags = [ "--no-auth" ];
