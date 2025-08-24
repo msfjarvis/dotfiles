@@ -6,7 +6,7 @@
       # Default user for Restic backup services, whenever I start using
       # purpose-built users for individual backups this will need to be
       # changed.
-      owner = "root";
+      owner = lib.mkDefault "root";
     };
   };
 }
