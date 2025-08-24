@@ -42,6 +42,7 @@ in
       owner = config.users.users.miniflux.name;
       sopsFile = lib.snowfall.fs.get-file "secrets/feed-auth.env";
       format = "dotenv";
+      restartUnits = [ "miniflux.service" ];
     };
 
     services.miniflux = {
