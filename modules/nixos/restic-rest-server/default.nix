@@ -22,6 +22,11 @@ in
       default = null;
       description = "Tailscale domain to expose the service on";
     };
+    prometheusRepository = mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      description = "Restic repository to scrape for Prometheus metrics";
+    };
   };
   config = mkIf cfg.enable {
     services.caddy.virtualHosts =
@@ -42,11 +47,11 @@ in
       owner = "prometheus";
       group = "prometheus";
     };
-    services.prometheus = {
+    services.prometheus = mkIf (cfg.prometheusRepository != null) {
       exporters = {
         restic = {
           enable = true;
-          repository = "rest:http://${config.services.restic.server.listenAddress}/";
+          repository = "rest:http://${config.services.restic.server.listenAddress}/${cfg.prometheusRepository}";
           passwordFile = config.sops.secrets.restic_repo_password.path;
           port = ports.exporters.restic-rest-server;
           user = "prometheus";
