@@ -7,21 +7,16 @@
 let
   cfg = config.services.${namespace}.alps;
   inherit (lib) mkEnableOption mkIf;
-  inherit (lib.${namespace}) ports;
+  inherit (lib.${namespace}) ports mkTailscaleVHost;
 in
 {
   options.services.${namespace}.alps = {
     enable = mkEnableOption "alps webmail";
   };
   config = mkIf cfg.enable {
-    services.caddy.virtualHosts = {
-      "https://mail.tiger-shark.ts.net" = {
-        extraConfig = ''
-          bind tailscale/mail
-          reverse_proxy ${config.services.alps.bindIP}:${toString config.services.alps.port}
-        '';
-      };
-    };
+    services.caddy.virtualHosts = mkTailscaleVHost "mail" ''
+      reverse_proxy ${config.services.alps.bindIP}:${toString config.services.alps.port}
+    '';
 
     services.alps = {
       enable = true;
