@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  lib,
   inputs,
   namespace,
   ...
@@ -52,19 +50,11 @@
     megatools
   ];
 
-  sops.secrets.golink-tsauthkey = {
-    sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
-    owner = config.services.golink.user;
-    key = "services-tsauthkey-env";
-    restartUnits = [ "golink.service" ];
-  };
-  services.golink = {
-    enable = true;
-  };
-  systemd.services.golink.serviceConfig.EnvironmentFile = config.sops.secrets.golink-tsauthkey.path;
-
   services.${namespace} = {
     prometheus = {
+      enable = true;
+    };
+    golink = {
       enable = true;
     };
   };
