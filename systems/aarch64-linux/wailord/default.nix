@@ -105,12 +105,6 @@ in
           file_server
         '';
       };
-      "https://glance.tiger-shark.ts.net" = {
-        extraConfig = ''
-          bind tailscale/glance
-          reverse_proxy 127.0.0.1:${toString config.services.${namespace}.glance.settings.server.port}
-        '';
-      };
       "https://metube.tiger-shark.ts.net" = {
         extraConfig = ''
           bind tailscale/metube
@@ -167,6 +161,7 @@ in
   services.${namespace} = {
     alps = {
       enable = true;
+      domain = "mail";
     };
 
     betula = {
@@ -183,7 +178,9 @@ in
       enable = true;
       user = "msfjarvis";
       group = "users";
-      settings = import ./glance.nix { port = ports.glance; };
+      settings = (import ./glance.nix { port = ports.glance; }) // {
+        server.domain = "glance";
+      };
     };
 
     miniflux = {

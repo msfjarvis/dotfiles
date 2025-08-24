@@ -6,15 +6,25 @@
 }:
 let
   cfg = config.services.${namespace}.alps;
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    ;
   inherit (lib.${namespace}) ports mkTailscaleVHost;
 in
 {
   options.services.${namespace}.alps = {
     enable = mkEnableOption "alps webmail";
+    domain = mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      description = "Tailscale domain to expose this on";
+    };
   };
   config = mkIf cfg.enable {
-    services.caddy.virtualHosts = mkTailscaleVHost "mail" ''
+    services.caddy.virtualHosts = mkTailscaleVHost cfg.domain ''
       reverse_proxy ${config.services.alps.bindIP}:${toString config.services.alps.port}
     '';
 

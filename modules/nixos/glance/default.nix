@@ -17,6 +17,7 @@ let
     optionalString
     types
     ;
+  inherit (lib.${namespace}) mkTailscaleVHost ports;
   serverType = types.submodule {
     options = {
       host = mkOption {
@@ -25,14 +26,19 @@ let
         description = "Host on which the Glance server listens.";
       };
       port = mkOption {
-        type = types.nullOr types.port;
-        default = null;
+        type = types.port;
+        default = ports.glance;
         description = "Port on which the Glance server listens.";
       };
       assets-path = mkOption {
         type = types.nullOr types.str;
         default = null;
         description = "Path to the assets directory.";
+      };
+      domain = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = "Tailscale domain to expose this on.";
       };
     };
   };
@@ -209,6 +215,14 @@ in
   };
 
   config = mkIf cfg.enable {
+    services.caddy.virtualHosts =
+      { }
+      // (mkIf (cfg.settings.server.domain != null) (
+        mkTailscaleVHost cfg.settings.server.domain ''
+          reverse_proxy 127.0.0.1:${toString config.services.${namespace}.glance.settings.server.port}
+        ''
+      ));
+
     systemd.services.glance = {
       wantedBy = [ "default.target" ];
       after = [
