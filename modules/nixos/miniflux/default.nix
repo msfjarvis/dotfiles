@@ -59,6 +59,10 @@ in
         HTTPS = 1;
         METRICS_COLLECTOR = 1;
         WEBAUTHN = 1;
+        OAUTH2_PROVIDER = "oidc";
+        OAUTH2_REDIRECT_URL = "https://${cfg.domain}/oauth2/oidc/callback";
+        OAUTH2_USER_CREATION = 1;
+        DISABLE_LOCAL_AUTH = 1;
       }
       // cfg.extraConfig;
       adminCredentialsFile = config.sops.secrets.feed-auth.path;
