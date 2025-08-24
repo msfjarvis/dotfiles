@@ -64,23 +64,6 @@ in
     megatools
   ];
 
-  sops.secrets.atticd = {
-    sopsFile = lib.snowfall.fs.get-file "secrets/atticd.yaml";
-  };
-  services.atticd = {
-    enable = true;
-    package = pkgs.attic-server;
-    environmentFile = config.sops.secrets.atticd.path;
-
-    settings = {
-      listen = "127.0.0.1:${toString ports.atticd}";
-      garbage-collection = {
-        interval = "1 hour";
-        default-retention-period = "14 days";
-      };
-    };
-  };
-
   services.atuin = {
     enable = true;
     openRegistration = false;
@@ -109,16 +92,6 @@ in
         extraConfig = ''
           bind tailscale/metube
           reverse_proxy 127.0.0.1:${toString ports.metube}
-        '';
-      };
-      "https://nix-cache.tiger-shark.ts.net" = {
-        extraConfig = ''
-          bind tailscale/nix-cache
-          plausible {
-            domain_name nix-cache.tiger-shark.ts.net
-            base_url https://stats.msfjarvis.dev
-          }
-          reverse_proxy ${config.services.atticd.settings.listen}
         '';
       };
       "https://restic.tiger-shark.ts.net" = {
@@ -152,6 +125,11 @@ in
     alps = {
       enable = true;
       domain = "mail";
+    };
+
+    atticd = {
+      enable = true;
+      domain = "nix-cache";
     };
 
     betula = {
