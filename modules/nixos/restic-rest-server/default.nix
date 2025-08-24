@@ -19,7 +19,7 @@ in
     enable = mkEnableOption "Restic REST server";
     domain = mkOption {
       type = types.nullOr types.str;
-      domain = null;
+      default = null;
       description = "Tailscale domain to expose the service on";
     };
   };
