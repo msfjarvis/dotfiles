@@ -73,11 +73,9 @@ in
     services.prometheus.scrapeConfigs = [
       {
         job_name = "pocket-id";
-        static_configs = [
+        static_configs = with config.services.pocket-id.settings; [
           {
-            targets = with config.services.pocket-id.settings; [
-              "${OTEL_EXPORTER_PROMETHEUS_HOST}:${toString OTEL_EXPORTER_PROMETHEUS_PORT}"
-            ];
+            targets = [ "${OTEL_EXPORTER_PROMETHEUS_HOST}:${toString OTEL_EXPORTER_PROMETHEUS_PORT}" ];
           }
         ];
       }
