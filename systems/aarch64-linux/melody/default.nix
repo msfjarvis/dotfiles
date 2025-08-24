@@ -62,6 +62,7 @@
     restic-rest-server = {
       enable = true;
       domain = "restic-melody";
+      prometheusRepository = "pocket-id";
     };
   };
 

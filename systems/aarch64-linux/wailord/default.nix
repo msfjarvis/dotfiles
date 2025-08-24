@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   inputs,
@@ -170,6 +171,22 @@ in
     vaultwarden = {
       enable = true;
       domain = "vault.msfjarvis.dev";
+    };
+  };
+
+  services.restic.backups = {
+    pocket-id = {
+      initialize = true;
+      repository = "rest:https://restic-melody.tiger-shark.ts.net/pocket-id";
+      passwordFile = config.sops.secrets.restic_repo_password.path;
+
+      paths = [ config.services.pocket-id.dataDir ];
+
+      pruneOpts = [
+        "--keep-daily 5"
+        "--keep-weekly 1"
+        "--keep-monthly 1"
+      ];
     };
   };
 
