@@ -224,7 +224,10 @@ in
       domain = "read.msfjarvis.dev";
     };
 
-    pocket-id.enable = true;
+    pocket-id = {
+      enable = true;
+      domain = "auth.msfjarvis.dev";
+    };
 
     plausible = {
       enable = true;
