@@ -4,7 +4,7 @@
   lib,
 }:
 let
-  version = "5.0.4";
+  version = "5.1.0";
 in
 rustPlatform.buildRustPackage {
   pname = "adx";
@@ -14,10 +14,10 @@ rustPlatform.buildRustPackage {
     owner = "msfjarvis";
     repo = "adx";
     rev = "v${version}";
-    hash = "sha256-jXYN2akIGVt9a6hFPWAcKHVlJpGx/G1o/4AYmk+/5UU=";
+    hash = "sha256-CClV3YFJGu3sD6d7NsGtum9fM9PEjf+8vE39Iq0m/H8=";
   };
 
-  cargoHash = "sha256-CNwzQWmec8/HVKldZFbIXz3WYiO/BDXS2wiyXTuY+Qs=";
+  cargoHash = "sha256-abNknbPXyUH47nZHwa4lN+JabmlmQr9YOsC9KILUUlU=";
 
   # Tests are annoying to make work with buildRustPackage
   doCheck = false;
