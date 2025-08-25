@@ -7,13 +7,13 @@
 }:
 buildNpmPackage {
   pname = "phanpy";
-  version = "2025.07.18.3f4b1a6-unstable-2025-08-20";
+  version = "2025.07.18.3f4b1a6-unstable-2025-08-24";
 
   src = fetchFromGitHub {
     owner = "cheeaun";
     repo = "phanpy";
-    rev = "5bf47bccd78442585d5a70a1881c123b390ae43d";
-    hash = "sha256-qwpgsevY9jNmnXL5YfxNTUPYE8AJs5AX7GFCjdiq5ak=";
+    rev = "363f07b7d9d4ac0535bb5492af9af0f04ba4047e";
+    hash = "sha256-jHHCX2N32h4IzUb9heEhD5/JZ3U04EM/nUh1kzKP4q8=";
   };
 
   patches = [
@@ -24,7 +24,7 @@ buildNpmPackage {
     })
   ];
 
-  npmDepsHash = "sha256-LN/enHYMjs2HoCfUburPzh/2TeyeEvrgLcv1bvXnl9U=";
+  npmDepsHash = "sha256-qRcy7fnQbtn3bzioFz7R+PBUwDJeImGTqTCk6dpQqI0=";
 
   installPhase = ''
     mkdir $out
