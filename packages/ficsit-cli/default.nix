@@ -6,16 +6,16 @@
 
 buildGoModule rec {
   pname = "ficsit-cli";
-  version = "0.6.0";
+  version = "0.6.1";
 
   src = fetchFromGitHub {
     owner = "satisfactorymodding";
     repo = "ficsit-cli";
     rev = "v${version}";
-    hash = "sha256-Zwidx0war3hos9NEmk9dEzPBgDGdUtWvZb7FIF5OZMA=";
+    hash = "sha256-eQbHGxxI7g543XlV5y1Np8QTUsfAJdbG9sPXKbUmluc=";
   };
 
-  vendorHash = "sha256-vmA3jvxOLRYj5BmvWMhSEnCTEoe8BLm8lpm2kruIEv4=";
+  vendorHash = "sha256-3YqOwjCuXF48jsGjwv4mHMoGaiPDgxjzZTcrPAtA7I0=";
 
   ldflags = [
     "-s"
