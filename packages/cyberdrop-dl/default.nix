@@ -6,24 +6,19 @@
 
 python313.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
-  version = "7.3.1-unstable-2025-08-20";
+  version = "7.4.1-unstable-2025-08-23";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jbsparrow";
     repo = "CyberDropDownloader";
-    rev = "7766ab5badc50f5b329cd49d3c7e29074ad17254";
-    hash = "sha256-Ur1QATQQv5Ux91DE7HGdtbX6UivrhM6W/GbdlE66PbU=";
+    rev = "52aec6a137ab3e2a0200fd31aa366f197266d540";
+    hash = "sha256-tHNGGMpwp1kM190WF9HU2rshJyY+wM9mJSAuZ/EkoTA=";
   };
 
   patches = [ ./disable-update-check.diff ];
 
-  pythonRelaxDeps = [
-    "aiosqlite"
-    "certifi"
-    "curl-cffi"
-    "dateparser"
-  ];
+  pythonRelaxDeps = map (p: p.pname) dependencies;
 
   build-system = [
     python313.pkgs.poetry-core
