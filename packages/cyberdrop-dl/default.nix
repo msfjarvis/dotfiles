@@ -63,7 +63,7 @@ python313.pkgs.buildPythonApplication rec {
     homepage = "https://github.com/jbsparrow/CyberDropDownloader";
     changelog = "https://github.com/jbsparrow/CyberDropDownloader/blob/${src.rev}/CHANGELOG.md";
     license = lib.licenses.gpl3Only;
-    maintainers = with lib.maintainers; [ ];
+    maintainers = [ ];
     mainProgram = "cyberdrop-dl";
   };
 }

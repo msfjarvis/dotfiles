@@ -30,7 +30,7 @@ buildGo124Module {
     description = "A self-hosted dashboard that puts all your feeds in one place";
     homepage = "https://github.com/glanceapp/glance";
     license = licenses.agpl3Only;
-    maintainers = with maintainers; [ ];
+    maintainers = [ ];
     mainProgram = "glance";
   };
 }

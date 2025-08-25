@@ -30,7 +30,7 @@ python3.pkgs.buildPythonApplication {
     description = "A prometheus exporter for qbittorrent written in Python. Simple. Works. Docker image";
     homepage = "https://github.com/esanchezm/prometheus-qbittorrent-exporter";
     license = licenses.gpl3Only;
-    maintainers = with maintainers; [ ];
+    maintainers = [ ];
     mainProgram = "qbittorrent-exporter";
   };
 }

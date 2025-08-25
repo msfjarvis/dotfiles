@@ -40,7 +40,7 @@ rustPlatform.buildRustPackage rec {
     description = "Async rust rewrite of mediafire_bulk_downloader";
     homepage = "https://github.com/nickoehler/mediafire_rs";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ ];
+    maintainers = [ ];
     mainProgram = "mdrs";
   };
 }

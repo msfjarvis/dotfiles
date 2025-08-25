@@ -33,7 +33,7 @@ python3.pkgs.buildPythonApplication rec {
     homepage = "https://github.com/mikf/gallery-dl";
     changelog = "https://github.com/mikf/gallery-dl/blob/${src.rev}/CHANGELOG.md";
     license = lib.licenses.gpl2Only;
-    maintainers = with lib.maintainers; [ ];
+    maintainers = [ ];
     mainProgram = "gallery-dl";
   };
 }

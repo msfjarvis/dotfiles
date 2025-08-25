@@ -27,7 +27,7 @@ rustPlatform.buildRustPackage rec {
     description = "Simple Rust CLI tool to derive an age private key from passphrase";
     homepage = "https://github.com/keisentraut/age-keygen-deterministic";
     license = lib.licenses.bsd3;
-    maintainers = with lib.maintainers; [ ];
+    maintainers = [ ];
     mainProgram = "age-keygen-deterministic";
   };
 }

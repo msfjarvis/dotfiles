@@ -29,7 +29,7 @@ buildGoModule rec {
     description = "A CLI tool for managing mods for the game Satisfactory";
     homepage = "https://github.com/satisfactorymodding/ficsit-cli";
     license = lib.licenses.gpl3Only;
-    maintainers = with lib.maintainers; [ ];
+    maintainers = [ ];
     mainProgram = "ficsit-cli";
   };
 }

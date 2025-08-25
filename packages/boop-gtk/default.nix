@@ -1,6 +1,5 @@
 {
   lib,
-  rust,
   rustPlatform,
   stdenv,
   callPackage,
