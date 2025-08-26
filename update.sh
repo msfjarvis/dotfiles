@@ -22,8 +22,7 @@ declare -a ALL_PACKAGES=(
   hcctl
   healthchecks-monitor
   katbin
-  # Waiting for Rust 1.89 to finish its run through Nixpkgs staging
-  # linkleaner
+  linkleaner
   mediafire_rs
   patreon-dl
   phanpy
