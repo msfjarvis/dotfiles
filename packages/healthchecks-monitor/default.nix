@@ -4,7 +4,7 @@
   fetchFromGitHub,
 }:
 let
-  version = "3.0.7";
+  version = "3.1.0";
 in
 rustPlatform.buildRustPackage {
   pname = "healthchecks-monitor";
@@ -14,12 +14,12 @@ rustPlatform.buildRustPackage {
     owner = "msfjarvis";
     repo = "healthchecks-rs";
     rev = "healthchecks-monitor-v${version}";
-    hash = "sha256-oUbGeEKEUAKtgOqB+LL/LYNjjDi6VKsGtu0KwQQKXzo=";
+    hash = "sha256-6N++Kkb6XR/zNNbkkonZFGrTuu3c0XAbX/eHhvX3nM0=";
   };
 
   buildAndTestSubdir = "monitor";
 
-  cargoHash = "sha256-va3/FcTlQjNgWr3w0zGzcoTMqE/gX0Wl09vRGB9vc/M=";
+  cargoHash = "sha256-UzvLBzd5CgVON1mz/d1Cy+M81IOpl1omRJnxX1se56w=";
 
   useNextest = true;
 
