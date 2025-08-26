@@ -4,7 +4,7 @@
   lib,
 }:
 let
-  version = "2.0.9";
+  version = "2.1.0";
 in
 rustPlatform.buildRustPackage {
   pname = "hcctl";
@@ -14,12 +14,12 @@ rustPlatform.buildRustPackage {
     owner = "msfjarvis";
     repo = "healthchecks-rs";
     rev = "hcctl-v${version}";
-    hash = "sha256-oUbGeEKEUAKtgOqB+LL/LYNjjDi6VKsGtu0KwQQKXzo=";
+    hash = "sha256-nhdh3DNoiWodmDjMpDn2oUjV5imD4rpRnyrgGstVKxo=";
   };
 
   buildAndTestSubdir = "hcctl";
 
-  cargoHash = "sha256-va3/FcTlQjNgWr3w0zGzcoTMqE/gX0Wl09vRGB9vc/M=";
+  cargoHash = "sha256-xP1J9YCroxcALepGImG48By90/bejYqbClNQ1w+UcS0=";
 
   useNextest = true;
 
