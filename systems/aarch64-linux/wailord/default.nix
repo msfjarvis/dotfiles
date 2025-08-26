@@ -159,7 +159,10 @@ in
 
     prometheus = {
       enable = true;
-      grafana.enable = true;
+      grafana = {
+        enable = true;
+        host = "grafana.msfjarvis.dev";
+      };
     };
 
     restic-rest-server = {

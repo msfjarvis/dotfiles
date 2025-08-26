@@ -24,13 +24,17 @@ let
     mkIf
     types
     ;
-  inherit (lib.${namespace}) ports;
+  inherit (lib.${namespace}) ports mkTailscaleVHost;
 in
 {
   options.services.${namespace}.prometheus = {
     enable = mkEnableOption "Prometheus";
     grafana = {
       enable = mkEnableOption "Grafana";
+      host = mkOption {
+        type = types.str;
+        description = "Host name for the Prometheus server";
+      };
     };
     host = mkOption {
       type = types.str;
@@ -61,30 +65,18 @@ in
       (mkIf cfg.grafana.enable {
         "https://${config.services.grafana.settings.server.domain}" = {
           extraConfig = ''
-            bind tailscale/grafana
-            tailscale_auth
-            reverse_proxy ${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port} {
-              header_up X-Webauth-User {http.auth.user.tailscale_user}
-            }
+            reverse_proxy ${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}
           '';
         };
       })
-      {
-        "https://${cfg.host}.tiger-shark.ts.net" = {
-          extraConfig = ''
-            bind tailscale/${cfg.host}
-            reverse_proxy 127.0.0.1:${toString config.services.prometheus.port}
-          '';
-        };
-        "https://${cfg.alertmanager.host}.tiger-shark.ts.net" = {
-          extraConfig = ''
-            bind tailscale/${cfg.alertmanager.host}
-            reverse_proxy 127.0.0.1:${toString config.services.prometheus.alertmanager.port}
-          '';
-        };
-      }
+      (mkTailscaleVHost cfg.host ''
+        reverse_proxy 127.0.0.1:${toString config.services.prometheus.port}
+      '')
+      (mkTailscaleVHost cfg.alertmanager.host ''
+        reverse_proxy 127.0.0.1:${toString config.services.prometheus.alertmanager.port}
+      '')
     ];
-    services.grafana = {
+    services.grafana = mkIf cfg.grafana.enable {
       inherit (cfg.grafana) enable;
       settings = {
         "auth.proxy" = {
@@ -93,7 +85,7 @@ in
           enable_login_token = false;
         };
         server = {
-          domain = "grafana.tiger-shark.ts.net";
+          domain = cfg.grafana.host;
           http_addr = "127.0.0.1";
           http_port = ports.grafana;
         };
