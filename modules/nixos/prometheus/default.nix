@@ -5,6 +5,7 @@
   ...
 }:
 let
+  readFromFile = path: "$__file{${path}}";
   cfg = config.services.${namespace}.prometheus;
   email.text = ''
     {{ template "__alertmanagerURL" . }}
@@ -76,24 +77,48 @@ in
         reverse_proxy 127.0.0.1:${toString config.services.prometheus.alertmanager.port}
       '')
     ];
+    sops.secrets = {
+      prometheus-alertmanager = {
+        sopsFile = lib.snowfall.fs.get-file "secrets/alertmanager.env";
+        format = "dotenv";
+      };
+      grafana_oauth_client_id = {
+        sopsFile = lib.snowfall.fs.get-file "secrets/grafana.yaml";
+        owner = "grafana";
+        restartUnits = [ "grafana.service" ];
+      };
+      grafana_oauth_client_secret = {
+        sopsFile = lib.snowfall.fs.get-file "secrets/grafana.yaml";
+        owner = "grafana";
+        restartUnits = [ "grafana.service" ];
+      };
+    };
     services.grafana = mkIf cfg.grafana.enable {
       inherit (cfg.grafana) enable;
       settings = {
-        "auth.proxy" = {
+        "auth.generic_oauth" = {
           enabled = true;
-          auto_sign_up = false;
-          enable_login_token = false;
+          name = "Pocket ID";
+          client_id = readFromFile config.sops.secrets.grafana_oauth_client_id.path;
+          client_secret = readFromFile config.sops.secrets.grafana_oauth_client_secret.path;
+          auth_url = "https://auth.msfjarvis.dev/authorize";
+          token_url = "https://auth.msfjarvis.dev/api/oidc/token";
+          api_url = "";
+          auth_style = "AutoDetect";
+          scopes = "openid,email,profile";
+          allow_sign_up = true;
+          auto_login = false;
+          email_attribute_name = "email:primary";
+          skip_org_role_sync = true;
+          signout_redirect_url = "";
         };
         server = {
           domain = cfg.grafana.host;
+          root_url = "https://${cfg.grafana.host}";
           http_addr = "127.0.0.1";
           http_port = ports.grafana;
         };
       };
-    };
-    sops.secrets.prometheus-alertmanager = {
-      sopsFile = lib.snowfall.fs.get-file "secrets/alertmanager.env";
-      format = "dotenv";
     };
     services.prometheus = {
       enable = true;
