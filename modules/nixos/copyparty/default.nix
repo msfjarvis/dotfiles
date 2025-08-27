@@ -13,7 +13,7 @@ let
     mkOption
     types
     ;
-  inherit (lib.${namespace}) ports;
+  inherit (lib.${namespace}) mkTailscaleVHost ports;
 in
 {
   options.services.${namespace}.copyparty = {
@@ -129,13 +129,8 @@ in
       }
     ];
 
-    services.caddy.virtualHosts = {
-      "https://${cfg.subdomain}.tiger-shark.ts.net" = {
-        extraConfig = ''
-          bind tailscale/${cfg.subdomain}
-          reverse_proxy ${config.services.copyparty.settings.i}:${toString ports.copyparty}
-        '';
-      };
-    };
+    services.caddy.virtualHosts = mkTailscaleVHost cfg.subdomain ''
+      reverse_proxy ${config.services.copyparty.settings.i}:${toString ports.copyparty}
+    '';
   };
 }

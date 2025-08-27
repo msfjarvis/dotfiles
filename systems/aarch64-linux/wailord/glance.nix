@@ -1,4 +1,4 @@
-{ port }:
+{ port, tailnetDomain }:
 {
   server = {
     host = "localhost";
@@ -158,7 +158,7 @@
                 }
                 {
                   title = "Attic cache";
-                  url = "https://nix-cache.tiger-shark.ts.net";
+                  url = "https://nix-cache.${tailnetDomain}";
                   icon = "si:dask";
                 }
                 {
@@ -173,7 +173,7 @@
                 }
                 {
                   title = "Private file share";
-                  url = "https://wailord.tiger-shark.ts.net";
+                  url = "https://wailord.${tailnetDomain}";
                   icon = "si:files";
                 }
                 {
@@ -183,22 +183,22 @@
                 }
                 {
                   title = "Prometheus (matara)";
-                  url = "https://prom-matara.tiger-shark.ts.net";
+                  url = "https://prom-matara.${tailnetDomain}";
                   icon = "si:prometheus";
                 }
                 {
                   title = "Prometheus (melody)";
-                  url = "https://prom-melody.tiger-shark.ts.net";
+                  url = "https://prom-melody.${tailnetDomain}";
                   icon = "si:prometheus";
                 }
                 {
                   title = "Prometheus (wailord)";
-                  url = "https://prom-wailord.tiger-shark.ts.net";
+                  url = "https://prom-wailord.${tailnetDomain}";
                   icon = "si:prometheus";
                 }
                 {
                   title = "QBittorrent";
-                  url = "https://matara.tiger-shark.ts.net";
+                  url = "https://matara.${tailnetDomain}";
                   icon = "si:qbittorrent";
                 }
                 {

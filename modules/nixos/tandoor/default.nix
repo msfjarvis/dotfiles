@@ -6,13 +6,21 @@
 }:
 let
   cfg = config.services.${namespace}.tandoor;
-  domain = "tandoor.tiger-shark.ts.net";
-  inherit (lib) mkEnableOption mkIf;
-  inherit (lib.${namespace}) ports;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    ;
+  inherit (lib.${namespace}) mkTailscaleVHost ports tailnetDomain;
 in
 {
   options.services.${namespace}.tandoor = {
     enable = mkEnableOption "Enable the tandoor recipe service";
+    domain = mkOption {
+      type = types.str;
+      description = "Tailscale domain to expose firefly-iii under";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -30,14 +38,9 @@ in
       after = [ "postgresql.service" ];
     };
 
-    services.caddy.virtualHosts = {
-      "${domain}" = {
-        extraConfig = ''
-          bind tailscale/tandoor
-          reverse_proxy 127.0.0.1:${builtins.toString config.services.tandoor-recipes.port}
-        '';
-      };
-    };
+    services.caddy.virtualHosts = mkTailscaleVHost cfg.domain ''
+      reverse_proxy 127.0.0.1:${builtins.toString config.services.tandoor-recipes.port}
+    '';
 
     services.prometheus.scrapeConfigs = [
       {
@@ -57,7 +60,7 @@ in
         enable = true;
         port = ports.tandoor;
         extraConfig = {
-          ALLOWED_HOSTS = domain;
+          ALLOWED_HOSTS = "https://${cfg.domain}.${tailnetDomain}";
           DB_ENGINE = "django.db.backends.postgresql";
           ENABLE_METRICS = 1;
           POSTGRES_HOST = "/run/postgresql";

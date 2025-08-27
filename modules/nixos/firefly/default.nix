@@ -9,38 +9,33 @@ let
   inherit (lib)
     mkEnableOption
     mkIf
+    mkMerge
     mkOption
     types
     ;
-  inherit (lib.${namespace}) ports;
+  inherit (lib.${namespace}) mkTailscaleVHost ports tailnetDomain;
 in
 {
   options.services.${namespace}.firefly = {
     enable = mkEnableOption "firefly-iii and data importer";
-    hostName = mkOption {
+    domain = mkOption {
       type = types.str;
-      description = "Tailscale hostname to expose firefly-iii under";
+      description = "Tailscale domain to expose firefly-iii under";
     };
   };
   config = mkIf cfg.enable {
-    services.caddy.virtualHosts = {
-      "https://${cfg.hostName}.tiger-shark.ts.net" = {
-        extraConfig = ''
-          bind tailscale/${cfg.hostName}
-          root * ${config.services.firefly-iii.package}/public
-          file_server
-          php_fastcgi unix/${config.services.phpfpm.pools.firefly-iii.socket}
-        '';
-      };
-      "https://${cfg.hostName}-import.tiger-shark.ts.net" = {
-        extraConfig = ''
-          bind tailscale/${cfg.hostName}-import
-          reverse_proxy 127.0.0.1:${toString ports.firefly-importer} {
-            header_down X-Forwarded-Proto https
-          }
-        '';
-      };
-    };
+    services.caddy.virtualHosts = mkMerge [
+      (mkTailscaleVHost cfg.domain ''
+        root * ${config.services.firefly-iii.package}/public
+        file_server
+        php_fastcgi unix/${config.services.phpfpm.pools.firefly-iii.socket}
+      '')
+      (mkTailscaleVHost "${cfg.domain}-import" ''
+        reverse_proxy 127.0.0.1:${toString ports.firefly-importer} {
+          header_down X-Forwarded-Proto https
+        }
+      '')
+    ];
     sops.secrets.firefly-iii = {
       sopsFile = lib.snowfall.fs.get-file "secrets/firefly-iii.yaml";
       owner = config.services.firefly-iii.user;
@@ -50,7 +45,7 @@ in
       enable = true;
       settings = {
         APP_ENV = "production";
-        APP_URL = "https://${cfg.hostName}.tiger-shark.ts.net";
+        APP_URL = "https://${cfg.domain}.${tailnetDomain}";
         APP_KEY_FILE = config.sops.secrets.firefly-iii.path;
         DB_CONNECTION = "sqlite";
         LOG_CHANNEL = "syslog";

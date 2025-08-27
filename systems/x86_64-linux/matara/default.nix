@@ -7,7 +7,7 @@
   ...
 }:
 let
-  inherit (lib.${namespace}) ports;
+  inherit (lib.${namespace}) mkTailscaleVHost ports tailnetDomain;
 in
 {
   imports = [
@@ -74,24 +74,21 @@ in
     enable = true;
     applyDefaults = true;
     virtualHosts = {
-      "https://matara.tiger-shark.ts.net" = {
+      "https://matara.${tailnetDomain}" = {
         extraConfig = ''
           reverse_proxy 127.0.0.1:${toString config.services.${namespace}.qbittorrent.port}
         '';
       };
-      "https://stash.tiger-shark.ts.net" = {
-        extraConfig = ''
-          bind tailscale/stash
-          reverse_proxy ${config.services.stash.settings.host}:${toString config.services.stash.settings.port}
-        '';
-      };
-    };
+    }
+    // (mkTailscaleVHost "stash" ''
+      reverse_proxy ${config.services.stash.settings.host}:${toString config.services.stash.settings.port}
+    '');
   };
 
   services.restic.backups = {
     photos = {
       initialize = true;
-      repository = "rest:https://restic-wailord.tiger-shark.ts.net/photos";
+      repository = "rest:https://restic-wailord.${tailnetDomain}/photos";
       passwordFile = config.sops.secrets.restic_repo_password.path;
 
       paths = [ config.services.${namespace}.gphotos-cdp.dldir ];

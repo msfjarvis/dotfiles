@@ -20,7 +20,7 @@ in
         "8.8.8.8"
         "1.1.1.1"
       ];
-      search = [ "tiger-shark.ts.net" ];
+      search = [ lib.${namespace}.tailnetDomain ];
     };
 
     # Enable Tailscale and allow it to provision certificates to caddy

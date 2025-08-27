@@ -25,7 +25,7 @@ let
     mkIf
     types
     ;
-  inherit (lib.${namespace}) ports mkTailscaleVHost;
+  inherit (lib.${namespace}) ports mkTailscaleVHost tailnetDomain;
 in
 {
   options.services.${namespace}.prometheus = {
@@ -178,7 +178,7 @@ in
       alertmanager = {
         enable = true;
         inherit (cfg.alertmanager) port;
-        webExternalUrl = "https://${cfg.alertmanager.host}.tiger-shark.ts.net/";
+        webExternalUrl = "https://${cfg.alertmanager.host}.${tailnetDomain}/";
         environmentFile = config.sops.secrets.prometheus-alertmanager.path;
         extraFlags = [
           "--cluster.listen-address="

@@ -7,7 +7,7 @@
   ...
 }:
 let
-  inherit (lib.${namespace}) ports;
+  inherit (lib.${namespace}) ports tailnetDomain;
 in
 {
   imports = [
@@ -83,7 +83,7 @@ in
           file_server
         '';
       };
-      "https://metube.tiger-shark.ts.net" = {
+      "https://metube.${tailnetDomain}" = {
         extraConfig = ''
           bind tailscale/metube
           reverse_proxy 127.0.0.1:${toString ports.metube}
@@ -96,7 +96,7 @@ in
           file_server browse
         '';
       };
-      "https://wailord.tiger-shark.ts.net" = {
+      "https://wailord.${tailnetDomain}" = {
         extraConfig = ''
           root * /var/lib/file_share_internal
           file_server browse
@@ -135,9 +135,14 @@ in
       enable = true;
       user = "msfjarvis";
       group = "users";
-      settings = (import ./glance.nix { port = ports.glance; }) // {
-        server.domain = "glance";
-      };
+      settings =
+        (import ./glance.nix {
+          inherit tailnetDomain;
+          port = ports.glance;
+        })
+        // {
+          server.domain = "glance";
+        };
     };
 
     miniflux = {
@@ -180,7 +185,7 @@ in
   services.restic.backups = {
     pocket-id = {
       initialize = true;
-      repository = "rest:https://restic-melody.tiger-shark.ts.net/pocket-id";
+      repository = "rest:https://restic-melody.${tailnetDomain}/pocket-id";
       passwordFile = config.sops.secrets.restic_repo_password.path;
 
       paths = [ config.services.pocket-id.dataDir ];

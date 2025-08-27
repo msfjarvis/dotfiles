@@ -7,6 +7,7 @@
 }:
 let
   inherit (lib) forEach mkEnableOption mkIf;
+  inherit (lib.${namespace}) tailnetDomain;
   cfg = config.profiles.${namespace}.desktop.gaming;
   homeDir = config.users.users.msfjarvis.home;
   vanillaInstances = [
@@ -64,7 +65,7 @@ in
 
     services.restic.backups.minecraft = {
       initialize = true;
-      repository = "rest:https://restic-wailord.tiger-shark.ts.net/";
+      repository = "rest:https://restic-wailord.${tailnetDomain}/";
       passwordFile = config.sops.secrets.restic_repo_password.path;
 
       paths = forEach backupInstances (
