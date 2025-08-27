@@ -33,12 +33,29 @@ in
       };
     };
 
+    sops.secrets.actual-budget = {
+      sopsFile = lib.snowfall.fs.get-file "secrets/actual-budget.env";
+      format = "dotenv";
+      restartUnits = [ "actual.service" ];
+    };
+
     services.actual = {
       enable = true;
       settings = {
         hostname = "127.0.0.1";
         port = ports.actual;
+        allowedLoginMethods = [ "openid" ];
+        enforceOpenId = true;
+        loginMethod = "openid";
+        openId = {
+          server_hostname = "https://${cfg.domain}";
+          authMethod = "openid";
+        };
       };
     };
+
+    systemd.services.actual.serviceConfig.EnvironmentFile = [
+      config.sops.secrets.actual-budget.path
+    ];
   };
 }
