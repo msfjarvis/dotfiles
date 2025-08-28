@@ -56,6 +56,16 @@ in
 
       settings = {
         listen = "127.0.0.1:${toString ports.atticd}";
+        chunking = {
+          # 8 MB
+          nar-size-threshold = 8388608;
+          # 512 KB
+          min-size = 524288;
+          # 2 MB
+          max-size = 2097152;
+          # 1 MB
+          avg-size = 1048576;
+        };
         database = {
           url = "postgres://atticd/atticd?host=/run/postgresql";
         };
