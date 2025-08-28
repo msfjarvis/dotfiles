@@ -77,22 +77,28 @@ in
         reverse_proxy 127.0.0.1:${toString config.services.prometheus.alertmanager.port}
       '')
     ];
-    sops.secrets = {
-      prometheus-alertmanager = {
-        sopsFile = lib.snowfall.fs.get-file "secrets/alertmanager.env";
-        format = "dotenv";
-      };
-      grafana_oauth_client_id = {
-        sopsFile = lib.snowfall.fs.get-file "secrets/grafana.yaml";
-        owner = "grafana";
-        restartUnits = [ "grafana.service" ];
-      };
-      grafana_oauth_client_secret = {
-        sopsFile = lib.snowfall.fs.get-file "secrets/grafana.yaml";
-        owner = "grafana";
-        restartUnits = [ "grafana.service" ];
-      };
-    };
+    sops.secrets = mkMerge [
+      {
+        prometheus-alertmanager = {
+          sopsFile = lib.snowfall.fs.get-file "secrets/alertmanager.env";
+          format = "dotenv";
+        };
+      }
+      (mkIf cfg.grafana.enable {
+        grafana_oauth_client_id = {
+          sopsFile = lib.snowfall.fs.get-file "secrets/grafana.yaml";
+          owner = "grafana";
+          restartUnits = [ "grafana.service" ];
+        };
+      })
+      (mkIf cfg.grafana.enable {
+        grafana_oauth_client_secret = {
+          sopsFile = lib.snowfall.fs.get-file "secrets/grafana.yaml";
+          owner = "grafana";
+          restartUnits = [ "grafana.service" ];
+        };
+      })
+    ];
     services.grafana = mkIf cfg.grafana.enable {
       inherit (cfg.grafana) enable;
       settings = {
