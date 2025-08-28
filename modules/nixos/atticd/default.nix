@@ -50,6 +50,12 @@ in
           interval = "1 hour";
           default-retention-period = "14 days";
         };
+        storage = {
+          type = "s3";
+          region = "auto";
+          bucket = "attic-cache";
+          endpoint = "https://07d4cd9cc7e8077fcafc5dd2fc30391b.r2.cloudflarestorage.com";
+        };
       };
     };
   };
