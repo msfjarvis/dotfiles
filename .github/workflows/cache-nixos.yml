@@ -14,15 +14,15 @@ jobs:
           # - target: matara
           #  runner: ubuntu-latest
           #  cache: x86_64-linux
-          #  public-key: "x86_64-linux:/RNIT5KVJFYXIKw+3WScU7rOcB1p47Uq2OU00Efz3vo="
+          #  public-key: "x86_64-linux:XrBbCCueC9hO05zf8GjmK1/YtHuZwqwcgx0pkHWLgvM="
           - target: melody
             runner: ubuntu-24.04-arm
             cache: aarch64-linux
-            public-key: "aarch64-linux:3nWuIyJ3L6hX3NAWlnS03rVHxfO0N+uCrK52fvBPCH8="
+            public-key: "aarch64-linux:n1uEEJsd/qjPYB1G3jUEW1oyia8O9rTCJKpCLgPW2gM="
           - target: wailord
             runner: ubuntu-24.04-arm
             cache: aarch64-linux
-            public-key: "aarch64-linux:3nWuIyJ3L6hX3NAWlnS03rVHxfO0N+uCrK52fvBPCH8="
+            public-key: "aarch64-linux:n1uEEJsd/qjPYB1G3jUEW1oyia8O9rTCJKpCLgPW2gM="
     runs-on: ${{ matrix.runner }}
     steps:
       - name: Create disk space

@@ -79,7 +79,7 @@
             "https://nix-cache.tiger-shark.ts.net/x86_64-linux"
           ];
           trusted-public-keys = [
-          "x86_64-linux:/RNIT5KVJFYXIKw+3WScU7rOcB1p47Uq2OU00Efz3vo="
+            "x86_64-linux:XrBbCCueC9hO05zf8GjmK1/YtHuZwqwcgx0pkHWLgvM="
           ];
         })
         (lib.mkIf (pkgs.stdenv.hostPlatform.system == "aarch64-linux") {
@@ -87,7 +87,7 @@
             "https://nix-cache.tiger-shark.ts.net/aarch64-linux"
           ];
           trusted-public-keys = [
-            "aarch64-linux:3nWuIyJ3L6hX3NAWlnS03rVHxfO0N+uCrK52fvBPCH8="
+            "aarch64-linux:n1uEEJsd/qjPYB1G3jUEW1oyia8O9rTCJKpCLgPW2gM="
           ];
         })
       ];
