@@ -47,7 +47,7 @@ in
       settings = {
         listen = "127.0.0.1:${toString ports.atticd}";
         garbage-collection = {
-          interval = "1 hour";
+          interval = "1 day";
           default-retention-period = "14 days";
         };
         storage = {
