@@ -39,6 +39,16 @@ in
     sops.secrets.atticd = {
       sopsFile = lib.snowfall.fs.get-file "secrets/atticd.yaml";
     };
+    services.postgresql = {
+      enable = true;
+      ensureUsers = [
+        {
+          name = "atticd";
+          ensureDBOwnership = true;
+        }
+      ];
+      ensureDatabases = [ "atticd" ];
+    };
     services.atticd = {
       enable = true;
       package = pkgs.attic-server;
@@ -46,6 +56,9 @@ in
 
       settings = {
         listen = "127.0.0.1:${toString ports.atticd}";
+        database = {
+          url = "postgres://atticd/atticd?host=/run/postgresql";
+        };
         garbage-collection = {
           interval = "1 day";
           default-retention-period = "14 days";
