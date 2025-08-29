@@ -37,7 +37,8 @@ in
         ''
       ));
     sops.secrets.atticd = {
-      sopsFile = lib.snowfall.fs.get-file "secrets/atticd.yaml";
+      sopsFile = lib.snowfall.fs.get-file "secrets/atticd.env";
+      format = "dotenv";
     };
     services.postgresql = {
       enable = true;
