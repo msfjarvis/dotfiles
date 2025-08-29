@@ -150,6 +150,11 @@ in
       domain = "read.msfjarvis.dev";
     };
 
+    paperless-ngx = {
+      enable = true;
+      domain = "papers.msfjarvis.dev";
+    };
+
     pocket-id = {
       enable = true;
       domain = "auth.msfjarvis.dev";
