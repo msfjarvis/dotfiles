@@ -60,7 +60,8 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    pkgs.${namespace}.cyberdrop-dl
+    # Doesn't build
+    # pkgs.${namespace}.cyberdrop-dl
     ffmpeg_7-headless
     git
     megatools

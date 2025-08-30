@@ -10,7 +10,8 @@ declare -a ALL_PACKAGES=(
   age-keygen-deterministic
   boop-gtk
   clipboard-substitutor
-  cyberdrop-dl
+  # Doesn't build right now
+  # cyberdrop-dl
   dependency-watch
   ficsit-cli
   gallery-dl-unstable
