@@ -150,6 +150,10 @@ in
       domain = "read.msfjarvis.dev";
     };
 
+    ncps = {
+      enable = true;
+    };
+
     paperless-ngx = {
       enable = true;
       domain = "papers.msfjarvis.dev";

@@ -51,6 +51,10 @@
   ];
 
   services.${namespace} = {
+    ncps = {
+      enable = true;
+    };
+
     prometheus = {
       enable = true;
     };
