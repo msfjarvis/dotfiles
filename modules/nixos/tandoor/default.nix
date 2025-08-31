@@ -12,14 +12,14 @@ let
     mkOption
     types
     ;
-  inherit (lib.${namespace}) mkTailscaleVHost ports tailnetDomain;
+  inherit (lib.${namespace}) ports;
 in
 {
   options.services.${namespace}.tandoor = {
-    enable = mkEnableOption "Enable the tandoor recipe service";
+    enable = mkEnableOption "Tandoor recipe service";
     domain = mkOption {
       type = types.str;
-      description = "Tailscale domain to expose firefly-iii under";
+      description = "domain to expose Tandoor under";
     };
   };
 
@@ -38,9 +38,13 @@ in
       after = [ "postgresql.service" ];
     };
 
-    services.caddy.virtualHosts = mkTailscaleVHost cfg.domain ''
-      reverse_proxy 127.0.0.1:${builtins.toString config.services.tandoor-recipes.port}
-    '';
+    services.caddy.virtualHosts = {
+      "https://${cfg.domain}" = {
+        extraConfig = ''
+          reverse_proxy 127.0.0.1:${builtins.toString config.services.tandoor-recipes.port}
+        '';
+      };
+    };
 
     services.prometheus.scrapeConfigs = [
       {
@@ -58,26 +62,14 @@ in
     services = {
       tandoor-recipes = {
         enable = true;
+        address = "127.0.0.1";
         port = ports.tandoor;
+        database.createLocally = true;
         extraConfig = {
-          ALLOWED_HOSTS = "https://${cfg.domain}.${tailnetDomain}";
-          DB_ENGINE = "django.db.backends.postgresql";
+          ALLOWED_HOSTS = "127.0.0.1";
           ENABLE_METRICS = 1;
-          POSTGRES_HOST = "/run/postgresql";
-          POSTGRES_USER = "tandoor_recipes";
-          POSTGRES_DB = "tandoor_recipes";
           SOCIAL_DEFAULT_GROUP = "user";
         };
-      };
-
-      postgresql = {
-        ensureDatabases = [ "tandoor_recipes" ];
-        ensureUsers = [
-          {
-            name = "tandoor_recipes";
-            ensureDBOwnership = true;
-          }
-        ];
       };
     };
   };
