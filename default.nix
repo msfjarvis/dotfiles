@@ -97,11 +97,7 @@ in
   hcctl = callPackage ./packages/hcctl { };
   healthchecks-monitor = callPackage ./packages/healthchecks-monitor { };
   katbin = callPackage ./packages/katbin { };
-  linkleaner = callPackage ./packages/linkleaner {
-    inputs = {
-      inherit fenix rust-manifest;
-    };
-  };
+  linkleaner = callPackage ./packages/linkleaner { };
   mediafire_rs = callPackage ./packages/mediafire_rs { };
   patreon-dl = callPackage ./packages/patreon-dl { };
   phanpy = callPackage ./packages/phanpy { };
