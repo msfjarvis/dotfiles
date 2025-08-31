@@ -20,6 +20,9 @@ in
     services.ncps = {
       enable = true;
       logLevel = "info";
+      prometheus = {
+        enable = true;
+      };
       server = {
         addr = "127.0.0.1:${toString ports.ncps}";
       };
@@ -50,6 +53,13 @@ in
         ];
       };
     };
+    services.prometheus.scrapeConfigs = [
+      {
+        job_name = "ncps";
+        static_configs = [ { targets = [ "${config.services.ncps.server.addr}" ]; } ];
+      }
+    ];
+
     nix.settings = {
       substituters = lib.mkForce [
         "http://${config.services.ncps.server.addr}"
