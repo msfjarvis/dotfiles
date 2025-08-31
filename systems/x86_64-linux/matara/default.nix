@@ -66,6 +66,7 @@ in
     git
     megatools
     micro
+    oxipng
     usbutils
     wirelesstools
     yt-dlp
