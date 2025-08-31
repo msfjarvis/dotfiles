@@ -47,6 +47,7 @@
       "alt-tab"
       "iterm2"
       "obsidian"
+      "orbstack"
       "prismlauncher"
       "raycast"
       "rectangle"
