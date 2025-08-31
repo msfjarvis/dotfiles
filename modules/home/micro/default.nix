@@ -10,5 +10,5 @@
     };
   };
   xdg.configFile."micro/colorschemes/custom.micro".source =
-    "${inputs.micro-theme}/src/catppuccin-mocha.micro";
+    "${inputs.micro-theme}/themes/catppuccin-mocha.micro";
 }
