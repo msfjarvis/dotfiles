@@ -44,11 +44,9 @@ in
       port = ports.paperless-ngx;
       configureTika = false;
       database.createLocally = true;
+      domain = cfg.domain;
       environmentFile = config.sops.secrets.paperless-ngx.path;
       settings = {
-        # Required by a host of security hardening features
-        PAPERLESS_URL = "https://${cfg.domain}";
-
         # Authentication
         PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS = true;
         PAPERLESS_SOCIAL_AUTO_SIGNUP = true;
