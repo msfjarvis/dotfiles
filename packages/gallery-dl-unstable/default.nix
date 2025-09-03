@@ -6,14 +6,14 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "gallery-dl-unstable";
-  version = "1.30.5-unstable-2025-08-31";
+  version = "1.30.5-unstable-2025-09-02";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "mikf";
     repo = "gallery-dl";
-    rev = "12a6e0493e8ea3ec263e8438fbf38a9baf7e1dca";
-    hash = "sha256-/KVAn4a0S6wwmi4xxGTEbhQfe1i8zqGCfX8w96kp9jM=";
+    rev = "e2ca64a636212b1399aef3e3c8b95c7d174e672f";
+    hash = "sha256-SmAcpdCE7GXYqRWLxOSbXPhbG4kmi1twZJk8ArOhFjY=";
   };
 
   build-system = [
