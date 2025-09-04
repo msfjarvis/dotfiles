@@ -107,6 +107,17 @@ in
     enable = true;
     user = "msfjarvis";
     group = "users";
+    pythonPackage = pkgs.python3.withPackages (p: [
+        p.beautifulsoup4
+        p.cloudscraper
+        p.configparser
+        # p.libpath
+        p.lxml
+        p.progressbar
+        p.requests
+        p.yt-dlp
+        p.stashapi
+      ]);
     jwtSecretKeyFile = "/home/msfjarvis/stash-jwt";
     sessionStoreKeyFile = "/home/msfjarvis/stash-sess";
     passwordFile = "/home/msfjarvis/stash-pass";
