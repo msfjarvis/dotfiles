@@ -44,7 +44,7 @@ in
       port = ports.paperless-ngx;
       configureTika = false;
       database.createLocally = true;
-      domain = cfg.domain;
+      inherit (cfg) domain;
       environmentFile = config.sops.secrets.paperless-ngx.path;
       settings = {
         # Authentication
