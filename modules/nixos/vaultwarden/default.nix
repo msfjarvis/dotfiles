@@ -26,7 +26,9 @@ in
     services.caddy.virtualHosts = {
       "https://${cfg.domain}" = {
         extraConfig = ''
-          reverse_proxy 127.0.0.1:${builtins.toString config.services.vaultwarden.config.ROCKET_PORT}
+          reverse_proxy 127.0.0.1:${builtins.toString config.services.vaultwarden.config.ROCKET_PORT} {
+            header_up X-Real-IP {remote_host}
+          }
         '';
       };
     };
