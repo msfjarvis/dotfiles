@@ -36,7 +36,7 @@ in
       enable = true;
       port = ports.alps;
       bindIP = "127.0.0.1";
-      theme = "alps";
+      theme = "sourcehut";
       imaps = {
         port = 993;
         host = "imap.purelymail.com";
