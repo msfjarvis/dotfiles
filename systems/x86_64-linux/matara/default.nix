@@ -176,11 +176,34 @@ in
     };
     qbittorrent = {
       enable = true;
-      port = ports.qbittorrent;
+      port = ports._qbittorrent;
       user = "msfjarvis";
       group = "users";
       openFirewall = true;
       prometheus.enable = true;
+    };
+  };
+
+  services.qbittorrent = {
+    enable = false;
+    user = "msfjarvis";
+    group = "users";
+    openFirewall = true;
+    torrentingPort = ports.qbittorrent.torrenting;
+    webuiPort = ports.qbittorrent.webui;
+    serverConfig = {
+      LegalNotice.Accepted = true;
+      Preferences = {
+        WebUI = {
+          AlternativeUIEnabled = true;
+          AuthSubnetWhitelist = "100.64.0.0/10, 127.0.0.0/8";
+          AuthSubnetWhitelistEnabled = true;
+          Password_PBKDF2 = ''"@ByteArray(2Q0p4bUMuIA8E1wQCuhBWw==:7w4O/oeFRwmvp+go9fW9Za+7KsPN/4Gk2rgSYVEP3Pq8mHfX5r0ju3yMT3jLU0fOSE7OE2AjNUe9t4KbFzfVdA==)"'';
+          RootFolder = "''${pkgs.vuetorrent}/share/vuetorrent";
+          TrustedReverseProxiesList = "127.0.0.1";
+        };
+        General.Locale = "en";
+      };
     };
   };
 

@@ -16,7 +16,7 @@
     miniflux = 9004;
     copyparty = 9005;
     stash = 9006;
-    qbittorrent = 9007;
+    _qbittorrent = 9007;
     atticd = 9008;
     metube = 9009;
     alps = 9010;
@@ -45,6 +45,10 @@
       tcp = 9201;
       postgresql = 9202;
       interserver_http = 9203;
+    };
+    qbittorrent = {
+      torrenting = 9300;
+      webui = 9301;
     };
   };
 }
