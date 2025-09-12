@@ -209,7 +209,7 @@ in
                 {
                   auth_password = "$ALERTMANAGER_EMAIL_PASSWORD";
                   to = "me@msfjarvis.dev";
-                  from = "monitoring@msfjarvis";
+                  from = "monitoring@msfjarvis.dev";
                   smarthost = "smtp.purelymail.com:587";
                   auth_username = "me@msfjarvis.dev";
                   auth_identity = "me@msfjarvis.dev";
