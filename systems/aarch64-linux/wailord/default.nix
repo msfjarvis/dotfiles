@@ -72,19 +72,10 @@ in
     database.createLocally = true;
   };
 
-  environment.etc."phanpy".source = "${pkgs.${namespace}.phanpy}/*";
-
   services.caddy = {
     enable = true;
     applyDefaults = true;
     virtualHosts = {
-      "https://fedi.msfjarvis.dev" = {
-        extraConfig = ''
-          import blackholeCrawlers
-          root * /etc/phanpy/
-          file_server
-        '';
-      };
       "https://metube.${tailnetDomain}" = {
         extraConfig = ''
           bind tailscale/metube
@@ -159,6 +150,11 @@ in
     paperless-ngx = {
       enable = true;
       domain = "papers.msfjarvis.dev";
+    };
+
+    phanpy = {
+      enable = true;
+      domain = "fedi.msfjarvis.dev";
     };
 
     pocket-id = {
