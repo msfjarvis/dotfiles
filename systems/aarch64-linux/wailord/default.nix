@@ -72,6 +72,8 @@ in
     database.createLocally = true;
   };
 
+  environment.etc."phanpy".source = "${pkgs.${namespace}.phanpy}/*";
+
   services.caddy = {
     enable = true;
     applyDefaults = true;
@@ -79,7 +81,7 @@ in
       "https://fedi.msfjarvis.dev" = {
         extraConfig = ''
           import blackholeCrawlers
-          root * ${pkgs.${namespace}.phanpy}
+          root * /etc/phanpy/
           file_server
         '';
       };
