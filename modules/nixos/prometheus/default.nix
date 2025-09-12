@@ -48,7 +48,12 @@ in
       description = "Port for the alertmanager server";
     };
     alertmanager = {
-      enable = mkEnableOption "Alertmanager";
+      enable = mkOption {
+        default = config.services.${namespace}.prometheus.enable;
+        example = true;
+        description = "Whether to enable Alertmanager.";
+        type = lib.types.bool;
+      };
       port = mkOption {
         type = types.int;
         default = ports.alertmanager;
@@ -182,13 +187,9 @@ in
       ];
 
       alertmanager = {
-        enable = true;
-        inherit (cfg.alertmanager) port;
+        inherit (cfg.alertmanager) enable port;
         webExternalUrl = "https://${cfg.alertmanager.host}.${tailnetDomain}/";
         environmentFile = config.sops.secrets.prometheus-alertmanager.path;
-        extraFlags = [
-          "--cluster.listen-address="
-        ];
         configuration = {
           route = {
             receiver = "email";
