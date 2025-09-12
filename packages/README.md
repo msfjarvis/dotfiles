@@ -13,7 +13,6 @@ NixOS packages for personal use.
 - [cyberdrop-dl] : Downloader for CyberDrop and other archive sites
 - [dependency-watch]: Script to wait for an artifact to appear in a Maven repository or to monitor coordinates for new versions.
 - [diffuse-bin] : Java tool to diff between APKs, AARs and JARs
-- [ficsit-cli] : CLI-based mod manager for Satisfactory
 - [gallery-dl-unstable] : gallery-dl repackaging that follows the main branch
 - [game-shortcuts] : Metapackage to generate desktop entries for Steam games
 - [gdrive] : Golang CLI to interact with Google Drive
@@ -44,7 +43,6 @@ NixOS packages for personal use.
 [cyberdrop-dl]: https://github.com/jbsparrow/cyberdropdownloader
 [dependency-watch]: https://github.com/JakeWharton/dependency-watch
 [diffuse-bin]: https://github.com/JakeWharton/diffuse
-[ficsit-cli]: https://github.com/satisfactorymodding/ficsit-cli
 [gallery-dl-unstable]: https://github.com/mikf/gallery-dl
 [game-shortcuts]: https://store.steampowered.com
 [gdrive]: https://msfjarvis.dev/g/gdrive

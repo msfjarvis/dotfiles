@@ -145,7 +145,7 @@ in
       (heroic.override {
         extraPkgs = p: with p; [ gamemode ];
       })
-      pkgs.${namespace}.ficsit-cli
+      ficsit-cli
     ];
     # Required to avoid some logspew
     environment.sessionVariables.VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";

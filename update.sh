@@ -13,7 +13,6 @@ declare -a ALL_PACKAGES=(
   # Doesn't build right now
   # cyberdrop-dl
   dependency-watch
-  ficsit-cli
   gallery-dl-unstable
   gdrive
   gitice
