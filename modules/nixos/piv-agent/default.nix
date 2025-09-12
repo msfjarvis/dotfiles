@@ -12,7 +12,7 @@ in
 {
   options.services.${namespace}.piv-agent = {
     enable = mkEnableOption { description = "Whether to configure the piv-agent service"; };
-    package = mkPackageOption pkgs.jarvis "piv-agent" { };
+    package = mkPackageOption pkgs "piv-agent" { };
   };
 
   config = mkIf cfg.enable {

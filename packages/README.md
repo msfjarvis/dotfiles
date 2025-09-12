@@ -29,7 +29,6 @@ NixOS packages for personal use.
 - [patreon-dl] : Download content from creators you're subscribed to on Patreon
 - [phanpy] : Alternate Mastodon client
 - [pidcat] : Fork of [JakeWharton's pidcat] with Python3 support and some other fixes
-- [piv-agent] : An SSH and GPG agent which you can use with your PIV hardware security device (e.g. a Yubikey).
 - [prometheus-qbittorrent-exporter] : Prometheus exporter for QBittorrent
 - [rucksack] : Simple CLI tool to watch directories and move their files to a single dumping ground
 - [toml-cli] : Simple CLI for editing and querying TOML files
@@ -64,7 +63,6 @@ NixOS packages for personal use.
 [patreon-dl]: https://github.com/PrivateGER/patreon-dl
 [phanpy]: https://github.com/cheeaun/phanpy
 [pidcat]: https://msfjarvis.dev/g/pidcat
-[piv-agent]: https://github.com/smlx/piv-agent
 [prometheus-qbittorrent-exporter]: https://github.com/esanchezm/prometheus-qbittorrent-exporter
 [rucksack]: https://msfjarvis.dev/g/rucksack
 [toml-cli]: https://github.com/gnprice/toml-cli

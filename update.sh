@@ -28,7 +28,6 @@ declare -a ALL_PACKAGES=(
   patreon-dl
   phanpy
   pidcat
-  piv-agent
   prometheus-qbittorrent-exporter
   rucksack
   toml-cli
