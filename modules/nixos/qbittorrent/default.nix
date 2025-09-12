@@ -134,6 +134,27 @@ in
       };
     })
     (mkIf cfg.prometheus.enable {
+      services.prometheus.rules = [
+        (builtins.toJSON {
+          groups = [
+            {
+              name = "qbittorrent";
+              rules = [
+                {
+                  alert = "qbittorrent_down";
+                  expr = ''qbittorrent_up{server="127.0.0.1:${toString cfg.port}"} == 0'';
+                  for = "1m";
+                  labels.severity = "error";
+                  annotations = {
+                    summary = "{{$labels.alias}}: qBittorrent is blocked";
+                    description = "qBittorrent is not connected to the BitTorrent network";
+                  };
+                }
+              ];
+            }
+          ];
+        })
+      ];
       systemd.services.prometheus-qbittorrent-exporter = {
         after = [ "qbittorrent.service" ];
         description = "qBittorrent Prometheus exporter";
