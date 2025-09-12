@@ -30,7 +30,6 @@ NixOS packages for personal use.
 - [pidcat] : Fork of [JakeWharton's pidcat] with Python3 support and some other fixes
 - [prometheus-qbittorrent-exporter] : Prometheus exporter for QBittorrent
 - [rucksack] : Simple CLI tool to watch directories and move their files to a single dumping ground
-- [toml-cli] : Simple CLI for editing and querying TOML files
 
 [adb-sync]: https://msfjarvis.dev/g/adb-sync
 [adbear]: https://github.com/msfjarvis/adbear
@@ -63,4 +62,3 @@ NixOS packages for personal use.
 [pidcat]: https://msfjarvis.dev/g/pidcat
 [prometheus-qbittorrent-exporter]: https://github.com/esanchezm/prometheus-qbittorrent-exporter
 [rucksack]: https://msfjarvis.dev/g/rucksack
-[toml-cli]: https://github.com/gnprice/toml-cli

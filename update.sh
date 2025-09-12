@@ -29,7 +29,6 @@ declare -a ALL_PACKAGES=(
   pidcat
   prometheus-qbittorrent-exporter
   rucksack
-  toml-cli
 )
 
 declare -r -A EXTRA_PARAMS=(
