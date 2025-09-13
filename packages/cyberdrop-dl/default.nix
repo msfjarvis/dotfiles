@@ -6,17 +6,15 @@
 
 python313.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
-  version = "7.4.1-unstable-2025-08-23";
+  version = "7.5.0-unstable-2025-09-13";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jbsparrow";
     repo = "CyberDropDownloader";
-    rev = "52aec6a137ab3e2a0200fd31aa366f197266d540";
-    hash = "sha256-tHNGGMpwp1kM190WF9HU2rshJyY+wM9mJSAuZ/EkoTA=";
+    rev = "fe40b109f53081debe7b2ac3d4a1e88a50cf406f";
+    hash = "sha256-WPgGn+fbBG0XfcaEhiAmu28gNIDvxScxV+nzFJLdp3c=";
   };
-
-  patches = [ ./disable-update-check.diff ];
 
   pythonRelaxDeps = map (p: p.pname) dependencies;
 
@@ -43,9 +41,11 @@ python313.pkgs.buildPythonApplication rec {
     m3u8
     mediafire
     myjdapi
+    packaging
     pillow
     platformdirs
     psutil
+    pycares
     pydantic
     pyyaml
     rich

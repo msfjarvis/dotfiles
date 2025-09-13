@@ -10,8 +10,7 @@ declare -a ALL_PACKAGES=(
   age-keygen-deterministic
   boop-gtk
   clipboard-substitutor
-  # Doesn't build right now
-  # cyberdrop-dl
+  cyberdrop-dl
   dependency-watch
   gallery-dl-unstable
   gdrive
