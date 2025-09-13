@@ -117,8 +117,7 @@ in
       age
 
       pkgs.${namespace}.boop-gtk
-      # Doesn't build
-      # pkgs.${namespace}.cyberdrop-dl
+      pkgs.${namespace}.cyberdrop-dl
       fclones
       ffmpeg_7-full
       (firefox-nightly-bin.override {
