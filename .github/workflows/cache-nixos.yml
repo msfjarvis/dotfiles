@@ -48,6 +48,11 @@ jobs:
         if: "${{ github.event_name == 'schedule' }}"
         shell: bash
         run: nix flake update nixpkgs
+      - name: Update Caddy plugins
+        if: "${{ github.event_name == 'schedule' }}"
+        shell: bash
+        run: |
+          python3 dev/caddy/update_caddy_plugins.py --force
       - name: Build NixOS configuration
         shell: bash
         env:
