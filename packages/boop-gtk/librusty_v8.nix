@@ -1,5 +1,4 @@
 {
-  rust,
   stdenv,
   fetchurl,
 }:
