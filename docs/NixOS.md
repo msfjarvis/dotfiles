@@ -33,12 +33,15 @@ This first uses the `nix` package manager's `eval` option to get the directory f
 Throughout the [nixpkgs](https://github.com/NixOS/nixpkgs) repository you'll notice a lot of package definitions containing a closure looking something like this:
 
 ```nix
-src = fetchFromGitHub {
-  owner = "tomaspinho";
-  repo = "rtl8821ce";
-  rev = "ab6154e150bbc7d12b0525d4cc1298ae196e45de";
-  sha256 = "1my0hidqnv4s7hi5897m81pq0sjw05np0g27hlkg9fwb83b5kzsg";
-};
+{ }:
+{
+  src = fetchFromGitHub {
+    owner = "tomaspinho";
+    repo = "rtl8821ce";
+    rev = "ab6154e150bbc7d12b0525d4cc1298ae196e45de";
+    sha256 = "1my0hidqnv4s7hi5897m81pq0sjw05np0g27hlkg9fwb83b5kzsg";
+  };
+}
 ```
 
 this is not very well documented and thus fields like `sha256` can be a pain to get right when updating a package. `nix-prefetch-url` to the rescue!

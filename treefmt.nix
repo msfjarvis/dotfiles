@@ -48,4 +48,19 @@ in
   programs.yamlfmt = {
     enable = true;
   };
+
+  settings.formatter.markdown-code-runner = {
+    command = pkgs.lib.getExe pkgs.markdown-code-runner;
+    options =
+      let
+        config = pkgs.writers.writeTOML "markdown-code-runner-config" {
+          presets.nixfmt = {
+            language = "nix";
+            command = [ (pkgs.lib.getExe pkgs.nixfmt) ];
+          };
+        };
+      in
+      [ "--config=${config}" ];
+    includes = [ "*.md" ];
+  };
 }
