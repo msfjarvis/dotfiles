@@ -39,6 +39,7 @@
       restic-rest-server = 9103;
       postgres = 9104;
       pocket-id = 9105;
+      blackbox = 9106;
     };
     clickhouse = {
       http = 9200;
