@@ -7,16 +7,12 @@
 }:
 let
   notServer = !config.profiles.${namespace}.starship.server;
-  gcm = pkgs.git-credential-manager.override {
-    withGpgSupport = false;
-  };
-  inherit (pkgs) mergiraf;
 in
 {
-  home.packages = [ mergiraf ] ++ lib.optionals notServer [ gcm ];
+  home.packages = [ pkgs.mergiraf ] ++ lib.optionals notServer [ pkgs.git-credential-oauth ];
 
   home.file.".gitattributes".source = pkgs.runCommandLocal "gitattributes" { } ''
-    ${lib.getExe mergiraf} languages --gitattributes >> $out
+    ${lib.getExe pkgs.mergiraf} languages --gitattributes >> $out
   '';
 
   programs.git = {
@@ -39,13 +35,12 @@ in
     extraConfig = {
       merge.mergiraf = {
         name = "mergiraf";
-        driver = "${lib.getExe mergiraf} merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
+        driver = "${lib.getExe pkgs.mergiraf} merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
       };
     }
     // lib.attrsets.optionalAttrs notServer {
       credential = {
-        credentialStore = if pkgs.stdenv.hostPlatform.isDarwin then "keychain" else "secretservice";
-        helper = lib.getExe gcm;
+        helper = lib.getExe pkgs.git-credential-oauth;
         "https://git.msfjarvis.dev" = {
           provider = "generic";
         };
