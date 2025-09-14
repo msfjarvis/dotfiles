@@ -67,7 +67,6 @@
         copyparty.overlays.default
         devshell.overlays.default
         fenix.overlays.default
-        nh.overlays.default
         # niri.overlays.niri
         nix-topology.overlays.default
       ];
@@ -144,9 +143,6 @@
 
     micro-theme.url = "git+https://github.com/catppuccin/micro";
     micro-theme.flake = false;
-
-    nh.url = "github:nix-community/nh";
-    nh.inputs.nixpkgs.follows = "nixpkgs";
 
     # niri.url = "github:sodiboo/niri-flake";
     # niri.inputs.nixpkgs.follows = "nixpkgs";

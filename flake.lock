@@ -408,26 +408,6 @@
         "url": "https://github.com/catppuccin/micro"
       }
     },
-    "nh": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1757656889,
-        "narHash": "sha256-WtmW6PeMEemuUSMEw7fnmsqRkFXkYALe5N2HaeV3hLg=",
-        "owner": "nix-community",
-        "repo": "nh",
-        "rev": "a8182189f854597652e2acfe5363876241af3511",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nh",
-        "type": "github"
-      }
-    },
     "nix-flatpak": {
       "locked": {
         "lastModified": 1754777568,
@@ -552,7 +532,6 @@
         "home-manager": "home-manager",
         "lib-aggregate": "lib-aggregate",
         "micro-theme": "micro-theme",
-        "nh": "nh",
         "nix-flatpak": "nix-flatpak",
         "nix-index-database": "nix-index-database",
         "nix-topology": "nix-topology",
