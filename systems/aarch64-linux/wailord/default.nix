@@ -152,11 +152,6 @@ in
       domain = "papers.msfjarvis.dev";
     };
 
-    phanpy = {
-      enable = true;
-      domain = "fedi.msfjarvis.dev";
-    };
-
     pocket-id = {
       enable = true;
       domain = "auth.msfjarvis.dev";
