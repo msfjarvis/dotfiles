@@ -65,6 +65,7 @@ in
         substituteInPlace temp.xml \
           --replace-fail 8123 ${toString ports.clickhouse.http} \
           --replace-fail 9000 ${toString ports.clickhouse.tcp} \
+          --replace-fail 9004 ${toString ports.clickhouse.mysql} \
           --replace-fail 9005 ${toString ports.clickhouse.postgresql} \
           --replace-fail 9009 ${toString ports.clickhouse.interserver_http}
         mv temp.xml $out

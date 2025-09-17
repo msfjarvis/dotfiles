@@ -46,6 +46,7 @@
       tcp = 9201;
       postgresql = 9202;
       interserver_http = 9203;
+      mysql = 9204;
     };
     qbittorrent = {
       torrenting = 9300;
