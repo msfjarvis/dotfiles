@@ -57,8 +57,9 @@ in
     powerManagement.enable = false;
     stylix.enable = false;
 
-    environment.systemPackages = [
+    environment.systemPackages = with pkgs; [
       pkgs.${namespace}.gdrive
+      net-tools
     ];
 
     networking = {
