@@ -17,7 +17,11 @@ forgejo.overrideAttrs {
     # Add `/user/repo/commit` route
     (mkPatch "1176b414fe76a04c9eaa19fe355826fee87ad13e" "sha256-Xd/CFVbuiedNILyjgeT3bImm7FyDd1beA//4YApS1eQ=")
     # Render external commit links with proper prefixes
-    # Disabled since it breaks tests right now.
-    # (mkPatch "468d54850a29729d0f54703503fba3bd36ddb060" "sha256-uWJmHSaplFklgzN3FKKxDiuwa2/IVtvXiq/qiIkr8QY=")
+    # Also fixes a host of Markdown rendering bugs
+    # https://codeberg.org/forgejo/forgejo/pulls/9146
+    (fetchpatch2 {
+      url = "https://codeberg.org/forgejo/forgejo/pulls/9146.patch";
+      hash = "sha256-u6dvptIy0DHFsN7ARE0opMt0vYYhH+XT0YAZb6rBS1Y=";
+    })
   ];
 }
