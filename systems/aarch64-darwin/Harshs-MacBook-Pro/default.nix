@@ -46,6 +46,7 @@
     ];
     casks = [
       "alt-tab"
+      "ghostty"
       "iterm2"
       "obsidian"
       "orbstack"
