@@ -15,6 +15,7 @@
     pkgs.${namespace}.adx
     coreutils
     pkgs.${namespace}.diffuse-bin
+    flock
     git-absorb
     hub
     pkgs.${namespace}.katbin
