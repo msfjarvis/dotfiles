@@ -192,15 +192,23 @@ in
         environmentFile = config.sops.secrets.prometheus-alertmanager.path;
         configuration = {
           route = {
-            receiver = "email";
-            group_wait = "30s";
+            receiver = "telegram";
             group_interval = "5m";
-            repeat_interval = "4h";
+            repeat_interval = "10m";
             group_by = [
               "alertname"
               "job"
             ];
             routes = [ ];
+            # receiver = "email";
+            # group_wait = "30s";
+            # group_interval = "5m";
+            # repeat_interval = "4h";
+            # group_by = [
+            #   "alertname"
+            #   "job"
+            # ];
+            # routes = [ ];
           };
           receivers = [
             {
@@ -215,6 +223,18 @@ in
                   auth_identity = "me@msfjarvis.dev";
                   send_resolved = true;
                   inherit (email) text;
+                }
+              ];
+            }
+            {
+              name = "telegram";
+              telegram_configs = [
+                {
+                  api_url = "https://api.telegram.org";
+                  bot_token = "$BOT_TOKEN";
+                  chat_id = 211931420;
+                  parse_mode = "Markdown";
+                  message = email.text;
                 }
               ];
             }
