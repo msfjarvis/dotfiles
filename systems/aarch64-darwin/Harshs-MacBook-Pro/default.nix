@@ -42,6 +42,7 @@
   homebrew = {
     brews = [
       "gnu-sed"
+      "pinentry-mac"
       "spicetify-cli"
     ];
     casks = [
