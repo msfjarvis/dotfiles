@@ -46,9 +46,6 @@
 [core]
 	abbrev = 12
 
-[credential]
-	helper = cache --timeout=3000
-
 [diff]
 	colorMoved = default
 

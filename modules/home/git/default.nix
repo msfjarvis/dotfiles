@@ -40,7 +40,10 @@ in
     }
     // lib.attrsets.optionalAttrs notServer {
       credential = {
-        helper = lib.getExe pkgs.git-credential-oauth;
+        helper = [
+          "cache --timeout 21600"
+          "${lib.getExe pkgs.git-credential-oauth}"
+        ];
         "https://git.msfjarvis.dev" = {
           provider = "generic";
         };
