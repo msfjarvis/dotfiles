@@ -19,7 +19,8 @@
       src = ./.;
       channels-config = {
         allowUnfree = true;
-        allowAliases = false;
+        # microvm.nix uses pkgs.system
+        allowAliases = true;
         cudaSupport = false;
         permittedInsecurePackages = [ ];
       };
@@ -67,6 +68,7 @@
         copyparty.overlays.default
         devshell.overlays.default
         fenix.overlays.default
+        microvm.overlays.default
         # niri.overlays.niri
         nix-topology.overlays.default
       ];
@@ -143,6 +145,10 @@
 
     micro-theme.url = "git+https://github.com/catppuccin/micro";
     micro-theme.flake = false;
+
+    microvm.url = "github:microvm-nix/microvm.nix";
+    microvm.inputs.nixpkgs.follows = "nixpkgs";
+    microvm.inputs.flake-utils.follows = "flake-utils";
 
     # niri.url = "github:sodiboo/niri-flake";
     # niri.inputs.nixpkgs.follows = "nixpkgs";
