@@ -7,13 +7,13 @@
 }:
 buildNpmPackage {
   pname = "phanpy";
-  version = "2025.09.17.213399a-unstable-2025-09-20";
+  version = "2025.09.17.213399a-unstable-2025-09-21";
 
   src = fetchFromGitHub {
     owner = "cheeaun";
     repo = "phanpy";
-    rev = "ce2b40f1c610df826c6c9ef2d452b6acf6ecc3a6";
-    hash = "sha256-W8DWDwgp75lBJiBVVyRfdT/7kjqOepcws9KiSCglWHw=";
+    rev = "480adfef2131e2481db7d1fdbc401440484d2500";
+    hash = "sha256-hjy7sEW4rw7UBPNdnJtUAabUl/2r9M/ViTBsMM6Fjmo=";
   };
 
   patches = [
