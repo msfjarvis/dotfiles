@@ -14,7 +14,7 @@
 
   programs.nh = {
     enable = true;
-    clean.enable = false;
+    clean.enable = config.profiles.${namespace}.server.enable;
     flake = "/home/msfjarvis/git-repos/dotfiles";
   };
 
