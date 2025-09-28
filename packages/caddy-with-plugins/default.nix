@@ -1,11 +1,11 @@
 { caddy, ... }:
 caddy.withPlugins {
   plugins = [
-    "pkg.jsn.cam/caddy-defender@v0.0.0-20250914015815-2527e93ef45f"
+    "pkg.jsn.cam/caddy-defender@v0.0.0-20250921020145-c09f2b3287ec"
     "github.com/muety/caddy-plausible-plugin@v0.0.0-20250829143804-5041083e02a1"
     "github.com/rsp2k/caddy-gitea-pages@v0.0.0-20250609073252-9bb99965619a"
     "github.com/msfjarvis/caddy-tailscale@v0.0.0-20250723144432-4e8672b140b0"
     "github.com/greenpau/caddy-security@v0.0.0-20250325161856-83609dec14a4"
   ];
-  hash = "sha256-eVBhyuIhHaIsI+q8FjlM7mbmBsmQKU4VqGT3FwwxnoI=";
+  hash = "sha256-1vi9keswb/rQ0GIONIY3EcyRkSz0oXDCNvackgufxow=";
 }
