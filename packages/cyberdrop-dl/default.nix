@@ -6,14 +6,14 @@
 
 python313.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
-  version = "8.0.0-unstable-2025-09-26";
+  version = "8.1.0-unstable-2025-09-27";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jbsparrow";
     repo = "CyberDropDownloader";
-    rev = "e9c942bfaed59c33884b4e06ede86067a9c77800";
-    hash = "sha256-GjfOKyK6nio6rVbylo7Wuf5/LcSx1mO6cGsYhWxy9R8=";
+    rev = "9a6a09ff8d48042da07c8dfe37fb1d806b679acb";
+    hash = "sha256-kGpsPbU4Jde5lOgVwFBYKYcwNDI8gnouTuNG0R7GRBQ=";
   };
 
   pythonRelaxDeps = map (p: p.pname) dependencies;
