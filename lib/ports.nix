@@ -52,5 +52,9 @@
       torrenting = 9300;
       webui = 9301;
     };
+    kanidm = {
+      server = 9400;
+      ldap = 9401;
+    };
   };
 }
