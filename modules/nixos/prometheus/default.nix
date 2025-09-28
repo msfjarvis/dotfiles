@@ -91,14 +91,14 @@ in
       }
       (mkIf cfg.grafana.enable {
         grafana_oauth_client_id = {
-          sopsFile = lib.snowfall.fs.get-file "secrets/grafana.yaml";
+          file = "grafana";
           owner = "grafana";
           restartUnits = [ "grafana.service" ];
         };
       })
       (mkIf cfg.grafana.enable {
         grafana_oauth_client_secret = {
-          sopsFile = lib.snowfall.fs.get-file "secrets/grafana.yaml";
+          file = "grafana";
           owner = "grafana";
           restartUnits = [ "grafana.service" ];
         };

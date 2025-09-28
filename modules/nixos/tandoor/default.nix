@@ -13,6 +13,7 @@ let
     types
     ;
   inherit (lib.${namespace}) ports;
+  inherit (lib.${namespace}) mkSystemSecret;
 in
 {
   options.services.${namespace}.tandoor = {
@@ -24,8 +25,8 @@ in
   };
 
   config = mkIf cfg.enable {
-    sops.secrets.tandoor = {
-      sopsFile = lib.snowfall.fs.get-file "secrets/tandoor.env";
+    sops.secrets.tandoor = mkSystemSecret {
+      file = "tandoor";
       format = "dotenv";
       owner = config.services.tandoor-recipes.user;
       inherit (config.services.tandoor-recipes) group;

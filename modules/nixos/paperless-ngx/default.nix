@@ -12,7 +12,7 @@ let
     mkOption
     types
     ;
-  inherit (lib.${namespace}) ports;
+  inherit (lib.${namespace}) ports mkSystemSecret;
 in
 {
   options.services.${namespace}.paperless-ngx = {
@@ -33,8 +33,8 @@ in
       };
     };
 
-    sops.secrets.paperless-ngx = {
-      sopsFile = lib.snowfall.fs.get-file "secrets/paperless.env";
+    sops.secrets.paperless-ngx = mkSystemSecret {
+      file = "paperless.env";
       format = "dotenv";
       owner = config.services.paperless.user;
     };

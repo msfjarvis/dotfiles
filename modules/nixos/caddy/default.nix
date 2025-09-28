@@ -11,14 +11,15 @@ let
     mkEnableOption
     mkIf
     ;
+  inherit (lib.${namespace}) mkSystemSecret;
 in
 {
   options.services.caddy = {
     applyDefaults = mkEnableOption { description = "apply the default settings for Caddy"; };
   };
   config = mkIf cfg.applyDefaults {
-    sops.secrets.services-tsauthkey-env = {
-      sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
+    sops.secrets.services-tsauthkey-env = mkSystemSecret {
+      file = "tailscale";
       owner = config.services.caddy.user;
     };
     services.caddy = {

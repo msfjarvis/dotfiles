@@ -12,7 +12,7 @@ let
     mkOption
     types
     ;
-  inherit (lib.${namespace}) ports mkTailscaleVHost;
+  inherit (lib.${namespace}) ports mkTailscaleVHost mkSystemSecret;
 in
 {
   options.services.${namespace}.restic-rest-server = {
@@ -42,8 +42,8 @@ in
       listenAddress = "127.0.0.1:${toString ports.restic-rest-server}";
     };
 
-    sops.secrets.restic_repo_password = {
-      sopsFile = lib.snowfall.fs.get-file "secrets/restic/password.yaml";
+    sops.secrets.restic_repo_password = mkSystemSecret {
+      file = "restic/password";
       owner = "prometheus";
       group = "prometheus";
     };

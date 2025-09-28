@@ -12,6 +12,7 @@ let
     mkIf
     types
     ;
+  inherit (lib.${namespace}) mkSystemSecret;
 in
 {
   options.services.${namespace}.pocket-id = {
@@ -45,8 +46,8 @@ in
       ];
       ensureDatabases = [ "pocket-id" ];
     };
-    sops.secrets.pocket-id = {
-      sopsFile = lib.snowfall.fs.get-file "secrets/pocket-id.env";
+    sops.secrets.pocket-id = mkSystemSecret {
+      file = "pocket-id";
       owner = config.services.pocket-id.user;
       inherit (config.services.pocket-id) group;
       format = "dotenv";

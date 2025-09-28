@@ -12,7 +12,7 @@ let
     mkOption
     types
     ;
-  inherit (lib.${namespace}) ports;
+  inherit (lib.${namespace}) ports mkSystemSecret;
 in
 {
   options.services.${namespace}.miniflux = {
@@ -48,9 +48,9 @@ in
       };
     };
 
-    sops.secrets.feed-auth = {
+    sops.secrets.feed-auth = mkSystemSecret {
       owner = config.users.users.miniflux.name;
-      sopsFile = lib.snowfall.fs.get-file "secrets/feed-auth.env";
+      file = "feed-auth";
       format = "dotenv";
       restartUnits = [ "miniflux.service" ];
     };

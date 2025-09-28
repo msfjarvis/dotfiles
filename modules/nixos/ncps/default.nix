@@ -7,15 +7,15 @@
 let
   cfg = config.services.${namespace}.ncps;
   inherit (lib) mkEnableOption mkIf;
-  inherit (lib.${namespace}) ports;
+  inherit (lib.${namespace}) ports mkSystemSecret;
 in
 {
   options.services.${namespace}.ncps = {
     enable = mkEnableOption "ncps, a Nix binary cache proxy";
   };
   config = mkIf cfg.enable {
-    sops.secrets.ncps-private-key = {
-      sopsFile = lib.snowfall.fs.get-file "secrets/ncps.yaml";
+    sops.secrets.ncps-private-key = mkSystemSecret {
+      file = "ncps";
     };
     services.ncps = {
       enable = true;

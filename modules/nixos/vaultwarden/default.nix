@@ -12,7 +12,7 @@ let
     mkOption
     types
     ;
-  inherit (lib.${namespace}) ports;
+  inherit (lib.${namespace}) ports mkSystemSecret;
 in
 {
   options.services.${namespace}.vaultwarden = {
@@ -44,8 +44,8 @@ in
       ensureDatabases = [ "vaultwarden" ];
     };
 
-    sops.secrets.vaultwarden = {
-      sopsFile = lib.snowfall.fs.get-file "secrets/vaultwarden.env";
+    sops.secrets.vaultwarden = mkSystemSecret {
+      file = "vaultwarden";
       owner = "vaultwarden";
       group = "vaultwarden";
       format = "dotenv";

@@ -12,7 +12,7 @@ let
     mkOption
     types
     ;
-  inherit (lib.${namespace}) ports;
+  inherit (lib.${namespace}) ports mkSystemSecret;
 in
 {
   options.services.${namespace}.actual-budget = {
@@ -33,8 +33,8 @@ in
       };
     };
 
-    sops.secrets.actual-budget = {
-      sopsFile = lib.snowfall.fs.get-file "secrets/actual-budget.env";
+    sops.secrets.actual-budget = mkSystemSecret {
+      file = "actual-budget";
       format = "dotenv";
       restartUnits = [ "actual.service" ];
     };

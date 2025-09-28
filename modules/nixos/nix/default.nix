@@ -5,6 +5,9 @@
   namespace,
   ...
 }:
+let
+  inherit (lib.${namespace}) mkSystemSecret;
+in
 {
   users.users.msfjarvis.packages = with pkgs; [
     expect
@@ -18,9 +21,8 @@
     flake = "/home/msfjarvis/git-repos/dotfiles";
   };
 
-  sops.secrets.nix-netrc-file = {
-    sopsFile = lib.snowfall.fs.get-file "secrets/nix-cache.yaml";
-    format = "yaml";
+  sops.secrets.nix-netrc-file = mkSystemSecret {
+    file = "nix-cache";
     key = "netrc-file";
   };
 

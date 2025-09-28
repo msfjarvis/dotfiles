@@ -7,14 +7,15 @@
 let
   cfg = config.services.${namespace}.golink;
   inherit (lib) mkEnableOption mkIf;
+  inherit (lib.${namespace}) mkSystemSecret;
 in
 {
   options.services.${namespace}.golink = {
     enable = mkEnableOption "golink, go/ links for Tailscale";
   };
   config = mkIf cfg.enable {
-    sops.secrets.golink-tsauthkey = {
-      sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
+    sops.secrets.golink-tsauthkey = mkSystemSecret {
+      file = "tailscale";
       owner = config.services.golink.user;
       key = "services-tsauthkey-env";
       restartUnits = [ "golink.service" ];

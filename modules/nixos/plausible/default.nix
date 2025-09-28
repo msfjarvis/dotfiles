@@ -13,7 +13,7 @@ let
     mkOption
     types
     ;
-  inherit (lib.${namespace}) ports;
+  inherit (lib.${namespace}) ports mkSystemSecret;
 in
 {
   options.services.${namespace}.plausible = {
@@ -34,11 +34,11 @@ in
       };
     };
 
-    sops.secrets.plausible-secret = {
-      sopsFile = lib.snowfall.fs.get-file "secrets/plausible.yaml";
+    sops.secrets.plausible-secret = mkSystemSecret {
+      file = "plausible";
     };
-    sops.secrets.plausible-smtp-pass = {
-      sopsFile = lib.snowfall.fs.get-file "secrets/plausible.yaml";
+    sops.secrets.plausible-smtp-pass = mkSystemSecret {
+      file = "plausible";
     };
     services.plausible = {
       enable = true;

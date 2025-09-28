@@ -7,7 +7,12 @@
   ...
 }:
 let
-  inherit (lib.${namespace}) mkTailscaleVHost ports tailnetDomain;
+  inherit (lib.${namespace})
+    mkTailscaleVHost
+    ports
+    tailnetDomain
+    mkSystemSecret
+    ;
 in
 {
   imports = [
@@ -43,8 +48,8 @@ in
     gallery-dl.enable = true;
   };
 
-  sops.secrets.wireless-secrets = {
-    sopsFile = lib.snowfall.fs.get-file "secrets/wireless.yaml";
+  sops.secrets.wireless-secrets = mkSystemSecret {
+    file = "wireless";
   };
   networking.hostName = "matara";
   networking = {

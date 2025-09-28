@@ -13,7 +13,12 @@ let
     mkOption
     types
     ;
-  inherit (lib.${namespace}) mkTailscaleVHost ports tailnetDomain;
+  inherit (lib.${namespace})
+    mkTailscaleVHost
+    ports
+    tailnetDomain
+    mkSystemSecret
+    ;
 in
 {
   options.services.${namespace}.atticd = {
@@ -36,8 +41,8 @@ in
           reverse_proxy ${config.services.atticd.settings.listen}
         ''
       ));
-    sops.secrets.atticd = {
-      sopsFile = lib.snowfall.fs.get-file "secrets/atticd.env";
+    sops.secrets.atticd = mkSystemSecret {
+      file = "atticd";
       format = "dotenv";
     };
     services.postgresql = {

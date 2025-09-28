@@ -13,7 +13,7 @@ let
     mkIf
     types
     ;
-  inherit (lib.${namespace}) ports;
+  inherit (lib.${namespace}) ports mkSystemSecret;
 in
 {
   options.profiles.${namespace}.server = {
@@ -114,8 +114,8 @@ in
       }
     ];
 
-    sops.secrets.server-tsauthkey = {
-      sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
+    sops.secrets.server-tsauthkey = mkSystemSecret {
+      file = "tailscale";
       owner = "msfjarvis";
     };
     services.tailscale = {

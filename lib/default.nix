@@ -3,7 +3,7 @@ let
   caddy = import ./caddy.nix;
   nixConfig = import ./nixConfig.nix;
   ports = import ./ports.nix;
-  secrets = import ./secrets.nix { inherit inputs; };
+  secrets = import ./secrets.nix { inherit inputs lib; };
   services = import ./services.nix { inherit lib; };
 in
 {

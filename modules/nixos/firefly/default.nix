@@ -13,7 +13,12 @@ let
     mkOption
     types
     ;
-  inherit (lib.${namespace}) mkTailscaleVHost ports tailnetDomain;
+  inherit (lib.${namespace})
+    mkTailscaleVHost
+    ports
+    tailnetDomain
+    mkSystemSecret
+    ;
 in
 {
   options.services.${namespace}.firefly = {
@@ -36,8 +41,8 @@ in
         }
       '')
     ];
-    sops.secrets.firefly-iii = {
-      sopsFile = lib.snowfall.fs.get-file "secrets/firefly-iii.yaml";
+    sops.secrets.firefly-iii = mkSystemSecret {
+      file = "firefly-iii";
       owner = config.services.firefly-iii.user;
       inherit (config.services.firefly-iii) group;
     };

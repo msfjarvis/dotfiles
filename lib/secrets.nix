@@ -1,5 +1,5 @@
 # Stolen from https://github.com/isabelroses/dotfiles/blob/d1afd75c6dfa1c453ff540ab173dacd7d2eb4c1f/modules/flake/lib/secrets.nix
-{ inputs }:
+{ inputs, lib }:
 let
   inherit (inputs) self;
 
@@ -16,7 +16,7 @@ let
     # Type
 
     ```
-    mkSystemSecret :: (String -> String -> String -> String) -> AttrSet
+    mkSystemSecret :: (String -> String -> String -> String -> String) -> AttrSet
     ```
 
     # Example
@@ -25,6 +25,7 @@ let
     mkSystemSecret { file = "./my-secret.age"; }
     => {
       file = "./my-secret.age";
+      format = "yaml";
       owner = "root";
       group = "root";
       mode = "400";
@@ -34,6 +35,7 @@ let
   mkSystemSecret =
     {
       file,
+      format ? "yaml",
       owner ? "root",
       group ? "root",
       mode ? "0400",
@@ -48,7 +50,7 @@ let
       ];
     in
     {
-      sopsFile = "${self}/secrets/services/${file}.yaml";
+      sopsFile = lib.snowfall.fs.get-file "${self}/secrets/${file}.${format}";
       inherit owner group mode;
     }
     // args';
