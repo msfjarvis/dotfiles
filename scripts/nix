@@ -67,7 +67,7 @@ function modinit() {
   read -rp "Module type? (e.g. programs/services): " MODULE_TYPE
   read -rp "Name?: " MODULE_NAME
   read -rp "Desc?: " MODULE_DESC
-  read -rp "Path?: " MODULE_PATH
+  MODULE_PATH="modules/nixos/${MODULE_TYPE}/${MODULE_NAME}/"
   mkdir -p "${MODULE_PATH}"
   cat <<EOF >"${MODULE_PATH}/default.nix"
 {
@@ -78,11 +78,21 @@ function modinit() {
 }:
 let
   cfg = config.${MODULE_TYPE}.\${namespace}.${MODULE_NAME};
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    ;
 in
 {
   options.${MODULE_TYPE}.\${namespace}.${MODULE_NAME} = {
     enable = mkEnableOption "${MODULE_DESC}";
+    domain = mkOption {
+      type = types.str;
+      description = "Domain name to expose server on";
+      default = null;
+    };
   };
   config = mkIf cfg.enable { };
 }
