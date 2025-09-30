@@ -100,7 +100,7 @@
             }
             {
               type = "weather";
-              location = "New Delhi, India";
+              location = "Bangalore, India";
             }
             {
               type = "releases";
@@ -111,7 +111,6 @@
                 "JetBrains/Kotlin"
                 "Kotlin/kotlinx.serialization"
                 "Kotlin/kotlinx.coroutines"
-                "square/anvil"
                 "tailscale/tailscale"
               ];
             }
