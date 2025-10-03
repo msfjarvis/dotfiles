@@ -13,6 +13,8 @@ in
   imports = [
     ./hardware-configuration.nix
     inputs.nixos-facter-modules.nixosModules.facter
+    inputs.microvm.nixosModules.host
+    ./microvms.nix
     {
       facter.reportPath = ./facter.json;
       facter.detected.graphics.enable = false;
