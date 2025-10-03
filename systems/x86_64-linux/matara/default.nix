@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   namespace,
   ...
 }:
@@ -11,6 +12,8 @@ in
 {
   imports = [
     ./hardware-configuration.nix
+    inputs.microvm.nixosModules.host
+    ./microvms.nix
   ];
 
   hardware.facter.detected.graphics.enable = false;
