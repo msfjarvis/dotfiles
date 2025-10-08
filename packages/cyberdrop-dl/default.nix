@@ -44,6 +44,7 @@ python313.pkgs.buildPythonApplication rec {
     packaging
     pillow
     platformdirs
+    propcache
     psutil
     pycares
     pydantic
@@ -52,6 +53,7 @@ python313.pkgs.buildPythonApplication rec {
     send2trash
     truststore
     xxhash
+    yarl
   ];
 
   pythonImportsCheck = [
