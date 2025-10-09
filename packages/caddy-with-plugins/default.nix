@@ -7,5 +7,5 @@ caddy.withPlugins {
     "github.com/msfjarvis/caddy-tailscale@v0.0.0-20250723144432-4e8672b140b0"
     "github.com/greenpau/caddy-security@v0.0.0-20250325161856-83609dec14a4"
   ];
-  hash = "sha256-4Oe6OA7TXm2ryrz2dL0lzPDDIKZG8dZ1X9xrcYvOWxM=";
+  hash = "sha256-tliLAmov4V/w1NoDHUHxRBL08RhNNd/atIkKnanbEKQ=";
 }
