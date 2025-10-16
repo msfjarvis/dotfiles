@@ -52,7 +52,7 @@ in
     ];
     services.forgejo = {
       enable = true;
-      package = pkgs.${namespace}.forgejo-fork;
+      package = pkgs.forgejo;
       database = {
         type = "postgres";
         createDatabase = true;
