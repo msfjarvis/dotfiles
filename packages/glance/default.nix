@@ -4,7 +4,7 @@
   fetchFromGitHub,
 }:
 let
-  version = "0.8.4-unstable-2025-09-06";
+  version = "0.8.4-unstable-2025-10-16";
 in
 buildGo124Module {
   pname = "glance";
@@ -13,8 +13,8 @@ buildGo124Module {
   src = fetchFromGitHub {
     owner = "glanceapp";
     repo = "glance";
-    rev = "b3b86b34838cf105c594709341c3be343b14cb93";
-    hash = "sha256-UaqZIbnLjNLsBLV+fCaNpAsYX5WIAsQqP/QkAZ2e0mY=";
+    rev = "49058b0300f96bc2c4c6318b5656f0d42df56bbd";
+    hash = "sha256-9R8HxxqW+mmmy12H+VSMlEi9M8dQy/F6+oU2xtrd9K4=";
   };
 
   vendorHash = "sha256-g5ZZneJ1g5rs3PJcNP+bi+SuRyZIXBPBjWiKt7wbe5I=";
