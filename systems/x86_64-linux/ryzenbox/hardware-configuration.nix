@@ -4,12 +4,14 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 {
   # Enable NVIDIA driver
   hardware.graphics = {
     enable = true;
+    extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
 
   # Load nvidia driver for Xorg and Wayland
@@ -40,6 +42,13 @@
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package = config.boot.kernelPackages.nvidiaPackages.latest;
+  };
+
+  environment.variables = {
+    GBM_BACKEND = "nvidia-drm";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    MOZ_DISABLE_RDD_SANDBOX = "1";
+    LIBVA_DRIVER_NAME = "nvidia";
   };
 
   disko.devices = {
