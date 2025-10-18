@@ -51,12 +51,7 @@ in
     snowfallorg.users.msfjarvis.home.config = {
       programs.gradle = {
         enable = true;
-        package = pkgs.callPackage (pkgs.gradleGen (
-          (import ./gradle-version.nix)
-          // {
-            defaultJava = defaultJdk;
-          }
-        )) { };
+        package = pkgs.gradle_9;
         settings = {
           "org.gradle.caching" = true;
           "org.gradle.parallel" = true;
