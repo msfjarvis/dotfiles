@@ -115,8 +115,8 @@ in
       pkgs.${namespace}.adbear
       pkgs.${namespace}.age-keygen-deterministic
       age
-
       pkgs.${namespace}.boop-gtk
+      calibre
       pkgs.${namespace}.cyberdrop-dl
       fclones
       ffmpeg_7-full
