@@ -6,14 +6,14 @@
 
 python313.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
-  version = "8.4.0-unstable-2025-10-17";
+  version = "8.4.0-unstable-2025-10-19";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jbsparrow";
     repo = "CyberDropDownloader";
-    rev = "928ea92c8adf56ca47b11dca87cbad80b7cadca7";
-    hash = "sha256-RGFSvr7X81WgLclI5a/XfX4ijfusi7Aepv3PeLV0tHU=";
+    rev = "9de24246192d6e9c71f045c57a031a87502bf54b";
+    hash = "sha256-xQV3CjlCWjlM/T3nL9CcsiKFp5SZylijwXd0rwxRRQY=";
   };
 
   pythonRelaxDeps = map (p: p.pname) dependencies;
@@ -37,6 +37,7 @@ python313.pkgs.buildPythonApplication rec {
     curl-cffi
     dateparser
     get-video-properties
+    imagesize
     inquirerpy
     m3u8
     mediafire
