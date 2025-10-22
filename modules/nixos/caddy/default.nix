@@ -17,14 +17,14 @@ in
     applyDefaults = mkEnableOption { description = "apply the default settings for Caddy"; };
   };
   config = mkIf cfg.applyDefaults {
-    sops.secrets.services-tsauthkey-env = {
+    sops.secrets.services-oauth-secret-env = {
       sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
       owner = config.services.caddy.user;
     };
     services.caddy = {
       enableReload = false; # I think caddy-tailscale breaks this
       package = pkgs.${namespace}.caddy-with-plugins;
-      environmentFile = config.sops.secrets.services-tsauthkey-env.path;
+      environmentFile = config.sops.secrets.services-oauth-secret-env.path;
       logFormat = ''
         output file /var/log/caddy/caddy_main.log {
           roll_size 100MiB

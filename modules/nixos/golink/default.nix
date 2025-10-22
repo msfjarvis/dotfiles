@@ -16,7 +16,7 @@ in
     sops.secrets.golink-tsauthkey = {
       sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
       owner = config.services.golink.user;
-      key = "services-tsauthkey-env";
+      key = "services-oauth-secret-env";
       restartUnits = [ "golink.service" ];
     };
     services.golink = {
