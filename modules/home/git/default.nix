@@ -54,6 +54,7 @@ in
           "${lib.getExe pkgs.git-credential-manager}"
         ];
         "https://git.msfjarvis.dev" = {
+          provider = "generic";
           helper = [
             "cache --timeout 21600"
             "${lib.getExe pkgs.git-credential-oauth}"
