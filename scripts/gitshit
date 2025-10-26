@@ -3,6 +3,95 @@
 # Copyright (C) Harsh Shandilya <me@msfjarvis.dev>
 # SPDX-License-Identifier: MIT
 
+function pr_checkout() {
+  # Get current repo info
+  local repo
+  repo=$(gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null)
+  if [[ -z $repo ]]; then
+    echo "Error: Not in a GitHub repository or gh CLI not authenticated"
+    return 1
+  fi
+
+  echo "Fetching open PRs for $repo..."
+
+  # Get PRs with format: "#123 | PR Title | author | branch"
+  local pr_list
+  pr_list=$(gh pr list --state open --json number,title,headRefName,author --template '{{range .}}#{{.number}} | {{.title}} | {{.author.login}} | {{.headRefName}}{{"\n"}}{{end}}')
+
+  if [[ -z $pr_list ]]; then
+    echo "No open PRs found"
+    return 0
+  fi
+
+  # Use fzf to select a PR
+  local selected
+  selected=$(echo "$pr_list" | fzf --height=20 --header="Select a PR to checkout:" --preview='echo {}' --preview-window=down:3:wrap)
+
+  if [[ -z $selected ]]; then
+    echo "No PR selected"
+    return 0
+  fi
+
+  # Extract PR number and branch name
+  local pr_number branch_name pr_title
+  pr_number=$(echo "$selected" | cut -d'|' -f1 | sed 's/#//' | xargs)
+  branch_name=$(echo "$selected" | cut -d'|' -f4 | xargs)
+  pr_title=$(echo "$selected" | cut -d'|' -f2 | xargs)
+
+  local base_branch
+  base_branch=$(gh pr view "$pr_number" --json baseRefName -q .baseRefName)
+
+  echo "Selected PR #$pr_number: $pr_title"
+  echo "Branch: $branch_name"
+  echo "Base branch: $base_branch"
+
+  # Create worktree directory name (sanitize for filesystem)
+  local worktree_name worktree_path
+  worktree_name="pr-${pr_number}-${branch_name//[^a-zA-Z0-9-]/-}"
+  worktree_path="../$worktree_name"
+
+  # Check if worktree already exists
+  if [[ -d $worktree_path ]]; then
+    echo "Worktree already exists at $worktree_path"
+    read -p "Do you want to switch to it? (y/N): " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      pushd "$worktree_path" || return 1
+      echo "Switched to existing worktree: $worktree_path"
+    fi
+    return 0
+  fi
+
+  echo "Creating worktree at $worktree_path..."
+
+  # Fetch the PR branch and create worktree
+  if gh pr checkout "$pr_number" --detach 2>/dev/null; then
+    # If gh pr checkout works, create worktree from the checked out state
+    git worktree add "$worktree_path" HEAD
+    git checkout - # Go back to original branch
+  else
+    # Fallback: fetch and create worktree manually
+    git fetch origin "$branch_name:$branch_name" 2>/dev/null || git fetch origin "pull/$pr_number/head:$branch_name"
+    git worktree add "$worktree_path" "$branch_name"
+  fi
+
+  git fetch origin "$base_branch"
+
+  # shellcheck disable=SC2181 # I am too lazy
+  if [[ $? -eq 0 ]]; then
+    echo "Successfully created worktree for PR #$pr_number"
+    echo "Switching to worktree..."
+    pushd "$worktree_path" || return 1
+    # Mixed reset to the merge base so that the diff matches GitHub even if the PR is behind base branch
+    git reset --mixed "$(git merge-base "origin/$base_branch" "origin/$branch_name")"
+    echo "Current directory: $(pwd)"
+    echo "Current branch: $(git branch --show-current)"
+  else
+    echo "Failed to create worktree"
+    return 1
+  fi
+}
+
 function dlgit() {
   local REPO BRANCH
   REPO="${1}"
