@@ -35,9 +35,7 @@ in
         level INFO
       '';
       globalConfig = ''
-        servers {
-          metrics
-        }
+        metrics
         tailscale {
           ephemeral true
         }
