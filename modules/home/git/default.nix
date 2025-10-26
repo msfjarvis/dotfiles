@@ -24,6 +24,14 @@ in
     ${lib.getExe pkgs.mergiraf} languages --gitattributes >> $out
   '';
 
+  programs.difftastic = {
+    enable = true;
+    git = {
+      enable = true;
+      diffToolMode = true;
+    };
+  };
+
   programs.git = {
     enable = true;
     ignores = [
@@ -35,13 +43,9 @@ in
       "fleet.toml"
       ".DS_Store"
     ];
-    difftastic = {
-      enable = true;
-      enableAsDifftool = true;
-    };
     includes = [ { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig"; } ];
     lfs.enable = true;
-    extraConfig = {
+    settings = {
       merge.mergiraf = {
         name = "mergiraf";
         driver = "${lib.getExe pkgs.mergiraf} merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
