@@ -24,13 +24,11 @@ in
     };
   };
   config = mkIf cfg.enable {
-    services.caddy.virtualHosts =
-      { }
-      // (mkIf (cfg.domain != null) (
+    services.caddy.virtualHosts = mkIf (cfg.domain != null) (
         mkTailscaleVHost cfg.domain ''
           reverse_proxy ${config.services.alps.bindIP}:${toString config.services.alps.port}
         ''
-      ));
+      );
 
     services.alps = {
       enable = true;

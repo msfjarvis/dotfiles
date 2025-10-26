@@ -7,7 +7,7 @@
   ...
 }:
 let
-  inherit (lib.${namespace}) ports tailnetDomain;
+  inherit (lib.${namespace}) ports tailnetDomain mkTailscaleVHost;
 in
 {
   imports = [
@@ -76,12 +76,6 @@ in
     enable = true;
     applyDefaults = true;
     virtualHosts = {
-      "https://metube.${tailnetDomain}" = {
-        extraConfig = ''
-          bind tailscale/metube
-          reverse_proxy 127.0.0.1:${toString ports.metube}
-        '';
-      };
       "https://til.msfjarvis.dev" = {
         extraConfig = ''
           import blackholeCrawlers
@@ -95,7 +89,10 @@ in
           file_server browse
         '';
       };
-    };
+    }
+    // (mkTailscaleVHost "metube" ''
+      reverse_proxy 127.0.0.1:${toString ports.metube}
+    '');
   };
 
   services.${namespace} = {
