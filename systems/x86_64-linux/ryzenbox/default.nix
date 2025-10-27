@@ -130,6 +130,7 @@ in
       fzf
       pkgs.${namespace}.gdrive
       git-crypt
+      github-copilot-cli
       google-chrome # Hotstar hates Firefox
       handbrake
       nerd-fonts.iosevka-term
