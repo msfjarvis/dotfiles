@@ -1,11 +1,11 @@
 {
   i18n =
     let
-      locale = "en_US.UTF-8";
+      locale = "en_GB.UTF-8";
     in
     {
       supportedLocales = [
-        "en_US.UTF-8/UTF-8"
+        "en_GB.UTF-8/UTF-8"
       ];
       defaultLocale = locale;
       extraLocaleSettings = {
