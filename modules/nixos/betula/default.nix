@@ -51,11 +51,11 @@ in
     systemd.services.betula = {
       wantedBy = [ "default.target" ];
       after = [
-        "fs.service"
+        "local-fs.target"
         "networking.target"
       ];
       wants = [
-        "fs.service"
+        "local-fs.target"
         "networking.target"
       ];
 

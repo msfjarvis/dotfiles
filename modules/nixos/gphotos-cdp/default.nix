@@ -48,11 +48,11 @@ in
     systemd.services.gphotos-cdp = {
       wantedBy = [ "default.target" ];
       after = [
-        "fs.service"
+        "local-fs.target"
         "networking.target"
       ];
       wants = [
-        "fs.service"
+        "local-fs.target"
         "networking.target"
       ];
 

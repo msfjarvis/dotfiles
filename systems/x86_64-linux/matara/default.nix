@@ -206,5 +206,16 @@ in
     };
   };
 
+  systemd.services = {
+    stash = {
+      after = [ "local-fs.target" ];
+      wants = [ "local-fs.target" ];
+    };
+    qbittorrent = {
+      after = [ "local-fs.target" ];
+      wants = [ "local-fs.target" ];
+    };
+  };
+
   system.stateVersion = "24.05";
 }

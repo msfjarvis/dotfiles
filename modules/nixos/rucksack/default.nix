@@ -60,8 +60,8 @@ in
   config = mkIf cfg.enable {
     systemd.services.rucksack = {
       wantedBy = [ "default.target" ];
-      after = [ "fs.service" ];
-      wants = [ "fs.service" ];
+      after = [ "local-fs.target" ];
+      wants = [ "local-fs.target" ];
 
       serviceConfig = {
         User = cfg.user;
