@@ -5,7 +5,8 @@
     in
     {
       supportedLocales = [
-        "en_GB.UTF-8/UTF-8"
+        "${locale}/UTF-8"
+        "en_US.UTF-8/UTF-8"
       ];
       defaultLocale = locale;
       extraLocaleSettings = {
