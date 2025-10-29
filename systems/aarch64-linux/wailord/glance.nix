@@ -4,11 +4,11 @@
     host = "localhost";
     inherit port;
   };
-  # Refresh every 5 minutes
+  # Refresh every 30 minutes
   branding = {
     logo-url = "https://msfjarvis.dev/favicon.ico";
     favicon-url = "https://msfjarvis.dev/favicon.ico";
-    custom-footer = "<script>if (pageData.slug === 'home')setTimeout(() => location.reload(), 60 * 1000 * 5);</script>";
+    custom-footer = "<script>if (pageData.slug === 'home')setTimeout(() => location.reload(), 60 * 1000 * 30);</script>";
   };
   theme = {
     background-color = "240 21 15";
