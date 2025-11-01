@@ -31,7 +31,7 @@ runs:
           "
         fi
     - name: Setup Tailscale
-      uses: tailscale/github-action@aa604318b61e5b25107287e0d07db6a08b3e72c0 # v4
+      uses: tailscale/github-action@a392da0a182bba0e9613b6243ebd69529b1878aa # v4
       with:
         oauth-client-id: ${{ inputs.ts-oauth-client-id }}
         oauth-secret: ${{ inputs.ts-oauth-secret }}
