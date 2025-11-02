@@ -160,22 +160,6 @@ in
     binfmt = true;
   };
 
-  services.restic.backups = {
-    #     screenshots = {
-    #       initialize = true;
-    #       repository = "rest:https://restic-wailord.tiger-shark.ts.net/screenshots";
-    #       passwordFile = config.sops.secrets.restic_repo_password.path;
-    #
-    #       paths = [ "/mediahell/screenshots" ];
-    #
-    #       pruneOpts = [
-    #         "--keep-daily 5"
-    #         "--keep-weekly 1"
-    #         "--keep-monthly 1"
-    #       ];
-    #     };
-  };
-
   services.udev.extraRules = ''
     # Disable the in-built Bluetooth adapter
     SUBSYSTEM=="usb", ATTRS{idVendor}=="0e8d", ATTRS{idProduct}=="0616", ATTR{authorized}="0"

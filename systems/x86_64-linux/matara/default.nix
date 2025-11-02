@@ -100,6 +100,19 @@ in
         "--keep-monthly 1"
       ];
     };
+    screenshots = {
+      initialize = true;
+      repository = "rest:https://restic-wailord.tiger-shark.ts.net/screenshots";
+      passwordFile = config.sops.secrets.restic_repo_password.path;
+
+      paths = [ "/mediahell/screenshots" ];
+
+      pruneOpts = [
+        "--keep-daily 5"
+        "--keep-weekly 1"
+        "--keep-monthly 1"
+      ];
+    };
   };
 
   services.stash = {
