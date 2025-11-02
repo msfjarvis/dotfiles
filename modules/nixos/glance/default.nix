@@ -225,10 +225,16 @@ in
 
     systemd.services.glance = {
       wantedBy = [ "default.target" ];
-      after = [
+      requires = [
         "local-fs.target"
-        "networking.target"
+        "nss-user-lookup.target"
       ];
+      after = [
+        "nss-user-lookup.target"
+        "local-fs.target"
+        "network.target"
+      ];
+
       wants = [
         "local-fs.target"
         "networking.target"
