@@ -49,11 +49,11 @@ in
       wantedBy = [ "default.target" ];
       after = [
         "local-fs.target"
-        "networking.target"
+        "network.target"
       ];
       wants = [
         "local-fs.target"
-        "networking.target"
+        "network.target"
       ];
 
       serviceConfig = {

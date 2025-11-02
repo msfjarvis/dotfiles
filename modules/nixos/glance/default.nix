@@ -237,7 +237,7 @@ in
 
       wants = [
         "local-fs.target"
-        "networking.target"
+        "network.target"
       ];
 
       serviceConfig = {
