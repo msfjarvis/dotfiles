@@ -219,7 +219,13 @@ in
               "alertname"
               "job"
             ];
-            routes = [ ];
+            routes = [
+              {
+                receiver = "telegram";
+                continue = true;
+              }
+              { receiver = "email"; }
+            ];
             # receiver = "email";
             # group_wait = "30s";
             # group_interval = "5m";
