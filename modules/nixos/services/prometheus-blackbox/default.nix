@@ -54,6 +54,10 @@ let
           target_label = "instance";
         }
         {
+          source_labels = [ "__param_target" ];
+          target_label = "target";
+        }
+        {
           source_labels = [ ];
           target_label = "__address__";
           replacement = "127.0.0.1:${toString ports.exporters.blackbox}";
@@ -99,8 +103,8 @@ in
                   severity = "page";
                 };
                 annotations = {
-                  summary = "Probe {{ $labels.job }} on {{ $labels.target }} failed";
-                  description = "Probe {{ $labels.job }} on {{ $labels.target }} failed for 5 minutes.";
+                  summary = "Probe {{ $labels.job }} on {{ or $labels.target $labels.instance }} failed";
+                  description = "Probe {{ $labels.job }} on {{ or $labels.target $labels.instance }} failed for 5 minutes.";
                 };
               }
               {
@@ -111,8 +115,8 @@ in
                   severity = "ticket";
                 };
                 annotations = {
-                  summary = "TLS certificate for {{ $labels.job }} on {{ $labels.target }} expiring soon";
-                  description = "The TLS certificate for {{ $labels.job }} on {{ $labels.target }} expires in less than 7 days.";
+                  summary = "TLS certificate for {{ $labels.job }} on {{ or $labels.target $labels.instance }} expiring soon";
+                  description = "The TLS certificate for {{ $labels.job }} on {{ or $labels.target $labels.instance }} expires in less than 7 days.";
                 };
               }
             ];

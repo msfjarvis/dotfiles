@@ -11,13 +11,33 @@ let
     {{ template "__alertmanagerURL" . }}
 
     {{ range .Alerts }}
-      {{ .Labels.severity }}: {{ .Annotations.summary }}
-        {{ .Annotations.description }}
-      *Details:*
-        {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
-        {{ end }}
+      Severity: {{ or .Labels.severity "info" }}
+      Summary: {{ or .Annotations.summary "Alert fired" }}
+      {{- if .Labels.target }}
+      Target: {{ .Labels.target }}
+      {{- end }}
+      Description: {{ .Annotations.description }}
+      Source: {{ .GeneratorURL }}
+      Labels:
+      {{ range .Labels.SortedPairs }} - {{ .Name }}: {{ .Value }}
+      {{ end }}
+      Annotations:
+      {{- range .Annotations.SortedPairs }}
+        {{- if and (ne .Name "summary") (ne .Name "description") }} - {{ .Name }}: {{ .Value }}
+        {{- end }}
+      {{- end }}
+      {{- if eq .Labels.job "http_probe" }}
+      Blackbox diagnostics:
+       - probe_success{job="{{ .Labels.job }}",target="{{ .Labels.target }}"}
+       - probe_http_status_code{job="{{ .Labels.job }}",target="{{ .Labels.target }}"}
+       - probe_ssl_earliest_cert_expiry{job="{{ .Labels.job }}",target="{{ .Labels.target }}"} - time()
+       - probe_duration_seconds{job="{{ .Labels.job }}",target="{{ .Labels.target }}"}
+      {{- end }}
+
     {{ end }}
   '';
+  telegram.text = ''{{ if .CommonAnnotations.summary }}{{ .CommonAnnotations.summary }}{{ else }}Alert: {{ or .CommonLabels.alertname "UnknownAlert" }} on {{ if .CommonLabels.target }}{{ .CommonLabels.target }}{{ else }}unknown{{ end }}{{ end }}'';
+
   inherit (lib)
     mkEnableOption
     mkMerge
@@ -222,6 +242,9 @@ in
                   auth_username = "me@msfjarvis.dev";
                   auth_identity = "me@msfjarvis.dev";
                   send_resolved = true;
+                  headers = {
+                    Subject = ''{{ if .CommonAnnotations.summary }}{{ .CommonAnnotations.summary }}{{ else }}Alert: {{ or .CommonLabels.alertname "UnknownAlert" }} on {{ if .CommonLabels.target }}{{ .CommonLabels.target }}{{ else }}unknown{{ end }}{{ end }}'';
+                  };
                   inherit (email) text;
                 }
               ];
@@ -234,7 +257,7 @@ in
                   bot_token = "$BOT_TOKEN";
                   chat_id = 211931420;
                   parse_mode = "Markdown";
-                  message = email.text;
+                  message = telegram.text;
                 }
               ];
             }
