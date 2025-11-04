@@ -41,7 +41,6 @@ in
 
     services.actual = {
       enable = true;
-      environmentFile = config.sops.secrets.actual-budget.path;
       settings = {
         hostname = "127.0.0.1";
         port = ports.actual;
@@ -54,5 +53,9 @@ in
         };
       };
     };
+
+    systemd.services.actual.serviceConfig.EnvironmentFile = [
+      config.sops.secrets.actual-budget.path
+    ];
   };
 }
