@@ -169,13 +169,6 @@ in
       };
     };
 
-    prometheus-blackbox = {
-      enable = true;
-      targets = [
-        "https://fedi.msfjarvis.dev"
-      ];
-    };
-
     restic-rest-server = {
       enable = true;
       domain = "restic-wailord";
