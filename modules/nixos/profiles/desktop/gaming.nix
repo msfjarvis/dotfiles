@@ -71,6 +71,8 @@ in
             ExecStart = "${lib.getExe pkgs.steam} -nochatui -nofriendsui -silent %U";
             Restart = "on-abort";
             RestartSec = "5s";
+            # Limit disk I/O priority to 50% to prevent Steam from starving other processes
+            IOWeight = 50;
           };
         };
       };
