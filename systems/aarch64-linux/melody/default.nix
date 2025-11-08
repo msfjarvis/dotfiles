@@ -51,6 +51,11 @@
   ];
 
   services.${namespace} = {
+    atticd = {
+      enable = true;
+      domain = "nix-cache";
+    };
+
     golink = {
       enable = true;
     };
