@@ -107,7 +107,7 @@ in
     };
 
     atticd = {
-      enable = true;
+      enable = false;
       domain = "nix-cache";
     };
 
