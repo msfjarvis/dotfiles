@@ -51,13 +51,17 @@
   ];
 
   services.${namespace} = {
-    phanpy = {
+    golink = {
       enable = true;
-      domain = "fedi.msfjarvis.dev";
     };
 
     ncps = {
       enable = false;
+    };
+
+    phanpy = {
+      enable = true;
+      domain = "fedi.msfjarvis.dev";
     };
 
     postgres = {
@@ -78,10 +82,6 @@
         "https://read.msfjarvis.dev"
         "https://vault.msfjarvis.dev"
       ];
-    };
-
-    golink = {
-      enable = true;
     };
 
     restic-rest-server = {
