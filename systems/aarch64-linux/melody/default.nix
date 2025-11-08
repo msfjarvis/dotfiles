@@ -55,8 +55,13 @@
       enable = true;
       domain = "fedi.msfjarvis.dev";
     };
+
     ncps = {
       enable = false;
+    };
+
+    postgres = {
+      enable = true;
     };
 
     prometheus = {
