@@ -49,6 +49,7 @@ usage() {
   echo "  gradle-hash     Calculate Gradle hash"
   echo "  test           Run tests"
   echo "  switch         Switch the system [--local]"
+  echo "  upstream-build  Build with upstream caches only"
   exit 1
 }
 
@@ -142,6 +143,20 @@ main() {
       fi
       cleanup_generations
     fi
+    ;;
+  upstream-build)
+    if [[ "$(uname)" == "Darwin" ]]; then
+      echo "Error: 'upstream-build' command is not supported on Darwin systems" >&2
+      exit 1
+    fi
+    run_command sudo nixos-rebuild switch \
+      --option substituters "https://cache.nixos.org https://nix-community.cachix.org" \
+      --option trusted-public-keys "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" \
+      --option extra-substituters "" \
+      --option extra-trusted-public-keys "" \
+      --print-build-logs \
+      --flake \
+      "$@"
     ;;
   --help | -h)
     usage
