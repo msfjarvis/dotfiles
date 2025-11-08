@@ -56,7 +56,7 @@
       domain = "fedi.msfjarvis.dev";
     };
     ncps = {
-      enable = true;
+      enable = false;
     };
 
     prometheus = {

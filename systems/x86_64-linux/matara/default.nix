@@ -181,7 +181,7 @@ in
         group = "users";
       };
     ncps = {
-      enable = true;
+      enable = false;
     };
     prometheus = {
       enable = true;

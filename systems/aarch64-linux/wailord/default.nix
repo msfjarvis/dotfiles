@@ -141,7 +141,7 @@ in
     };
 
     ncps = {
-      enable = true;
+      enable = false;
     };
 
     paperless-ngx = {
