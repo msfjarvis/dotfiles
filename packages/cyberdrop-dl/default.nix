@@ -12,8 +12,8 @@ python313.pkgs.buildPythonApplication rec {
   src = fetchFromGitHub {
     owner = "jbsparrow";
     repo = "CyberDropDownloader";
-    rev = "98626c1a1fe3984c7a65efbf85293403f4236322";
-    hash = "sha256-hqOzkElFF3dYeu954KTskZqfU2uBo5Jic+fHs/x169Y=";
+    rev = "15e87edef5031c198873c89599e48cbb1b8b3ea7";
+    hash = "sha256-agUNM5TgML8N4Vt2Vf1SopwiVD+o10fZDHFT8w/CqWw=";
   };
 
   pythonRelaxDeps = map (p: p.pname) dependencies;
