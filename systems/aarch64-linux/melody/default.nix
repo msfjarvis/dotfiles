@@ -78,7 +78,7 @@
     };
 
     prometheus-blackbox = {
-      enable = false; # wailord is unstable at the moment
+      enable = true;
       targets = [
         "https://msfjarvis.dev"
         "https://git.msfjarvis.dev"
