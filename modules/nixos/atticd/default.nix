@@ -29,10 +29,6 @@ in
       { }
       // (mkIf (cfg.domain != null) (
         mkTailscaleVHost cfg.domain ''
-          plausible {
-            domain_name ${cfg.domain}.${tailnetDomain}
-            base_url https://stats.msfjarvis.dev
-          }
           reverse_proxy ${config.services.atticd.settings.listen}
         ''
       ));
