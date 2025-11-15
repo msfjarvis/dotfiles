@@ -11,10 +11,10 @@ _: prev: {
     ];
   });
   # Force the use of the JDK we're using everywhere else
-  jdk = prev.openjdk23;
-  jdk_headless = prev.openjdk23_headless;
-  jre = prev.openjdk23;
-  jre_headless = prev.openjdk23_headless;
+  jdk = prev.openjdk25;
+  jdk_headless = prev.openjdk25_headless;
+  jre = prev.openjdk25;
+  jre_headless = prev.openjdk25_headless;
   # Silence warnings about existing files
   megatools = prev.megatools.overrideAttrs (_: {
     patches = [ ./megatools.patch ];
