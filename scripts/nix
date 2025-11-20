@@ -193,3 +193,29 @@ function flakechanges() {
     echo "The commit might have a different format than expected."
   fi
 }
+
+function flakeinputs() {
+  local FLAKE TMP PATHS P NAME
+  FLAKE="${1:-.}"
+  TMP="$(mktemp -d -t flake-inputs.XXXXXX)"
+
+  # Use nix flake archive to efficiently enumerate all input store paths
+  if ! PATHS="$(nix flake archive --json "${FLAKE}" 2>/dev/null | jq -r '.. | .path? // empty' 2>/dev/null | sort -u)"; then
+    echo "Failed to archive flake '${FLAKE}'"
+    return 1
+  fi
+
+  if [[ -z ${PATHS} ]]; then
+    echo "No store paths found for '${FLAKE}'"
+    return 1
+  fi
+
+  # Copy each path into the temp directory, using the store basename as folder name
+  for P in ${PATHS}; do
+    NAME="$(basename "${P}")"
+    cp -a "${P}" "${TMP}/${NAME}"
+  done
+
+  cd "${TMP}" || return
+  echo "Archived flake inputs into: ${TMP}"
+}
