@@ -48,6 +48,11 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email noreply@github.com
+      - name: Add nixpkgs-unstable channel
+        shell: bash
+        run: |
+          nix-channel --add https://github.com/msfjarvis/nixpkgs/archive/"$(jq -r .nodes.nixpkgs.locked.rev flake.lock)".tar.gz nixpkgs
+          nix-channel --update
       - name: Check pre-update Git ref
         shell: bash
         run: |
