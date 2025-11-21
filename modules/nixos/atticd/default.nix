@@ -13,7 +13,7 @@ let
     mkOption
     types
     ;
-  inherit (lib.${namespace}) mkTailscaleVHost ports tailnetDomain;
+  inherit (lib.${namespace}) mkTailscaleVHost ports;
 in
 {
   options.services.${namespace}.atticd = {

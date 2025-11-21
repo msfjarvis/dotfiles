@@ -1,23 +1,23 @@
-name: 'Setup Attic cache'
-description: 'Set up Tailscale and Attic to enable automatic caching for Nix Store'
+name: "Setup Attic cache"
+description: "Set up Tailscale and Attic to enable automatic caching for Nix Store"
 inputs:
   ts-oauth-client-id:
-    description: 'Your Tailscale OAuth Client ID.'
+    description: "Your Tailscale OAuth Client ID."
     required: true
   ts-oauth-secret:
-    description: 'Your Tailscale OAuth Client Secret.'
+    description: "Your Tailscale OAuth Client Secret."
     required: true
   attic-cache:
-    description: 'Name of Attic cache'
+    description: "Name of Attic cache"
     required: true
   attic-endpoint:
-    description: 'URL of the Attic server'
+    description: "URL of the Attic server"
     required: true
   attic-public-key:
-    description: 'Public key for the Attic cache'
+    description: "Public key for the Attic cache"
     required: true
   attic-token:
-    description: 'Auth token for Attic'
+    description: "Auth token for Attic"
     required: true
 runs:
   using: "composite"
