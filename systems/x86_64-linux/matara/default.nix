@@ -146,8 +146,6 @@ in
       ];
     };
   };
-  # Stash module is stupid and unconditionally sets this
-  users.users.msfjarvis.isSystemUser = lib.mkForce false;
 
   services.${namespace} = {
     copyparty = {
@@ -221,11 +219,17 @@ in
 
   systemd.services = {
     stash = {
-      after = [ "local-fs.target" ];
+      after = [
+        "local-fs.target"
+        "media.mount"
+      ];
       wants = [ "local-fs.target" ];
     };
     qbittorrent = {
-      after = [ "local-fs.target" ];
+      after = [
+        "local-fs.target"
+        "media.mount"
+      ];
       wants = [ "local-fs.target" ];
     };
   };
