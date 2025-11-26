@@ -24,7 +24,7 @@ declare -a ALL_PACKAGES=(
   linkleaner
   mediafire_rs
   patreon-dl
-  phanpy
+#  phanpy
   pidcat
   prometheus-qbittorrent-exporter
   rucksack
