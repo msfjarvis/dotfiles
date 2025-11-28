@@ -1,4 +1,5 @@
 {
+  jq,
   lib,
   buildNpmPackage,
   fetchFromGitHub,
@@ -30,6 +31,12 @@ buildNpmPackage {
     mkdir $out
     pushd dist || exit 1
     cp -vR ./ $out/
+  '';
+
+  postPatch = ''
+    # If we keep the `exifreader` section then the buildscript will try to call NPM again
+    # which breaks the Nix sandbox assumptions and fails to build.
+    cat <<< $(${lib.getExe jq} 'del(.exifreader)' package.json) > package.json
   '';
 
   PHANPY_WEBSITE = lib.optionalString (defaultUrl != null) defaultUrl;
