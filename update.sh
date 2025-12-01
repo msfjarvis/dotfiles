@@ -7,7 +7,8 @@ declare -a ALL_PACKAGES=(
   adbear
   adbtuifm
   adx
-  age-keygen-deterministic
+  # Don't care to keep it up-to-date
+  # age-keygen-deterministic
   boop-gtk
   clipboard-substitutor
   cyberdrop-dl
