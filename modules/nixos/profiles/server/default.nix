@@ -78,6 +78,12 @@ in
       };
     };
 
+    services.journald = {
+      extraConfig = ''
+        SystemMaxUse=200M
+      '';
+    };
+
     console = {
       font = "Lat2-Terminus16";
       keyMap = lib.mkForce "us";
