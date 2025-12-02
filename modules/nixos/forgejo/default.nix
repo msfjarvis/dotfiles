@@ -121,7 +121,7 @@ in
           DISABLE_HTTP_GIT = false;
           DISABLE_STARS = true;
           ENABLE_PUSH_CREATE_USER = true;
-          DISABLE_DOWNLOAD_SOURCE_ARCHIVES = false;
+          DISABLE_DOWNLOAD_SOURCE_ARCHIVES = true;
         };
         "repository.pull-request" = {
           DEFAULT_MERGE_STYLE = "rebase";
