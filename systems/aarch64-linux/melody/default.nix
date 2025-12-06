@@ -32,6 +32,7 @@
       adapterName = "enp0s6";
       tailscaleExitNode = true;
     };
+    gallery-dl.enable = true;
   };
 
   users = {
