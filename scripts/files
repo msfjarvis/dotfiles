@@ -54,7 +54,7 @@ function batch_dl() {
       dl "${LINK}" "${DEST}"
       ;;
     esac
-  done < <(cat "${INPUT_FILE}")
+  done < <(\cat "${INPUT_FILE}")
 }
 
 # Symlink $1 to $2
@@ -125,7 +125,7 @@ function fao() {
 
 # shellcheck disable=SC2016
 function tab2space() {
-  fd --type f -0 -x bash -c 'tmp=$(mktemp); expand -t 4 "$0" > $tmp && cat $tmp > "$0"; rm $tmp' {} \;
+  fd --type f -0 -x bash -c 'tmp=$(mktemp); expand -t 4 "$0" > $tmp && \cat $tmp > "$0"; rm $tmp' {} \;
 }
 
 function d2u() {
@@ -199,5 +199,5 @@ function reencode_dir() {
       rm -v "${src}"
     else rm -v "${dst}"; fi
     sleep 5
-  done < <(cat "${INPUT_FILE}")
+  done < <(\cat "${INPUT_FILE}")
 }

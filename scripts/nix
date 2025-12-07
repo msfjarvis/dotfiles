@@ -69,7 +69,7 @@ function modinit() {
   read -rp "Desc?: " MODULE_DESC
   MODULE_PATH="modules/nixos/${MODULE_TYPE}/${MODULE_NAME}/"
   mkdir -p "${MODULE_PATH}"
-  cat <<EOF >"${MODULE_PATH}/default.nix"
+    \cat <<EOF >"${MODULE_PATH}/default.nix"
 {
   config,
   lib,

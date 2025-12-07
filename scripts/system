@@ -28,7 +28,7 @@ function apt-history() {
       awk '{print $4"="$5}'
     ;;
   *)
-    cat /var/log/dpkg.log
+    \cat /var/log/dpkg.log
     ;;
   esac
 }
