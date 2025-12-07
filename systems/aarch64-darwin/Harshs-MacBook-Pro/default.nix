@@ -42,20 +42,18 @@
   homebrew = {
     brews = [
       "gnu-sed"
+      "opencode"
       "pinentry-mac"
       "spicetify-cli"
     ];
     casks = [
       "alt-tab"
       "ghostty"
-      "iterm2"
       "obsidian"
       "orbstack"
-      "prismlauncher"
       "raycast"
       "rectangle"
       "spotify"
-      "stolendata-mpv"
       "zed"
     ];
     taps = [ ];
