@@ -16,7 +16,7 @@ in
       store_failed = false;
       style = "full";
       sync_frequency = "5m";
-      sync_address = "http://wailord:${toString ports.atuin}";
+      sync_address = "https://atuin.tiger-shark.ts.net";
     };
   };
 }

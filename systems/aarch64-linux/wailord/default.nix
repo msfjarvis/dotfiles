@@ -63,12 +63,9 @@ in
     enable = true;
     openRegistration = false;
     path = "";
-    # This needs to be 0.0.0.0 so that it's accessible
-    # by the rest of the tailnet.
-    # TODO: Reverse proxy this and lock it down.
-    host = "0.0.0.0";
+    host = "127.0.0.1";
     port = ports.atuin;
-    openFirewall = true;
+    openFirewall = false;
     database.createLocally = true;
   };
 
@@ -90,6 +87,9 @@ in
         '';
       };
     }
+    // (mkTailscaleVHost "atuin" ''
+      reverse_proxy 127.0.0.1:${toString ports.atuin}
+    '')
     // (mkTailscaleVHost "metube" ''
       reverse_proxy 127.0.0.1:${toString ports.metube}
     '');
