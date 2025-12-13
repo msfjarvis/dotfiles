@@ -1,8 +1,4 @@
-{ lib, namespace, ... }:
-let
-  inherit (lib.${namespace}) ports;
-in
-{
+_: {
   programs.atuin = {
     enable = true;
     enableBashIntegration = true;
