@@ -178,6 +178,7 @@ in
     vaultwarden = {
       enable = true;
       domain = "vault.msfjarvis.dev";
+      backvault.enable = false;
     };
   };
 
