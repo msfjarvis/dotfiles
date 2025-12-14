@@ -28,6 +28,7 @@
     openssl
     pkgs.${namespace}.pidcat
     scrcpy
+    yaml-language-server
     yt-dlp
   ];
 
