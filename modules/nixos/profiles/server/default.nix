@@ -121,6 +121,9 @@ in
       }
     ];
 
+    # Must be enabled due to https://github.com/tailscale/tailscale/issues/4254.
+    services.resolved.enable = true;
+
     sops.secrets.server-oauth-secret = {
       sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
       owner = "msfjarvis";
