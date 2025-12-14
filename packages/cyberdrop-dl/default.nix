@@ -23,6 +23,7 @@ python313.pkgs.buildPythonApplication rec {
   ];
 
   dependencies = with python313.pkgs; [
+    aiodns
     aiofiles
     aiohttp
     aiohttp-client-cache
