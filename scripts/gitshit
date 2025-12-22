@@ -322,3 +322,18 @@ function unr() {
   LAST_TAG="$(git tag --list --sort=-taggerdate | head -n1)"
   git diff "${LAST_TAG}"
 }
+
+function flake_lock_update() {
+  # Find all repos with the workflow and trigger it
+  gh search code \
+    --filename flake-lock-maintenance.yml \
+    --match path \
+    --owner msfjarvis \
+    --json repository \
+    --jq '. [] | .repository.nameWithOwner' |
+    sort -u |
+    while read -r repo; do
+      echo "Triggering workflow for $repo..."
+      gh workflow run flake-lock-maintenance.yml --repo "$repo"
+    done
+}
