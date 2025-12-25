@@ -121,6 +121,45 @@
           widgets = [
             { type = "calendar"; }
             {
+              type = "html";
+              source = ''
+                <style>
+                  .gitea-issues { font-family: sans-serif; }
+                  .gitea-issues h3 { margin: 0 0 10px 0; font-size: 16px; }
+                  .gitea-issues ul { list-style: none; padding: 0; margin: 0; }
+                  .gitea-issues li { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+                  .gitea-issues li:last-child { border-bottom: none; }
+                  .gitea-issues a { color: #89b4fa; text-decoration: none; }
+                  .gitea-issues a:hover { text-decoration: underline; }
+                  .issue-number { color: #6c7086; font-size: 0.9em; }
+                </style>
+                <div class="gitea-issues">
+                  <h3>📋 Open Tasks</h3>
+                  <ul id="issue-list"><li>Loading...</li></ul>
+                </div>
+                <script>
+                  const token = "''$GITEA_AUTH_TOKEN";
+                  fetch('https://git.msfjarvis.dev/api/v1/repos/msfjarvis/tasks/issues?state=open&limit=10', {
+                    headers: { 'Authorization': 'token ' + token }
+                  })
+                  .then(r => r.json())
+                  .then(issues => {
+                    const list = document.getElementById('issue-list');
+                    if (!issues.length) {
+                      list.innerHTML = '<li>No open issues</li>';
+                      return;
+                    }
+                    list.innerHTML = issues.map(i =>
+                      '<li><span class="issue-number">#' + i.number + '</span> <a href="' + i.html_url + '" target="_blank">' + i.title + '</a></li>'
+                    ).join(\'\');
+                  })
+                  .catch(() => {
+                    document.getElementById('issue-list').innerHTML = '<li>Failed to load issues</li>';
+                  });
+                </script>
+              '';
+            }
+            {
               type = "twitch-channels";
               cache = "1m";
               collapse-after = 10;
