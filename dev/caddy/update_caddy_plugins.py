@@ -1,4 +1,18 @@
 #!/usr/bin/env python3
+"""
+Update Caddy plugins to their latest versions and fix Nix hashes.
+
+This script automatically updates Caddy plugin versions in the Nix configuration
+by fetching the latest commits from their Git repositories.
+
+Features:
+- Automatically updates plugins to their latest pseudo-versions
+- Pin plugins to specific versions by adding a comment containing "pinned"
+  Example: "pkg.example.com/plugin@v0.0.0-..." # pinned
+- Automatically fixes Nix hash mismatches
+- Supports dry-run mode to preview changes
+- Can add new plugins via --add-plugin flag
+"""
 
 import sys
 import tempfile
@@ -195,13 +209,17 @@ def parse_caddy_plugins_file(file_path):
         return None, None, content
 
     plugins_text = plugins_match.group(1)
-    plugin_pattern = r'"([^"@]+)@([^"]+)"'
+    # Match plugin line with optional comment
+    plugin_pattern = r'"([^"@]+)@([^"]+)"(?:\s*#\s*(.*))?'
     plugins = []
 
     for match in re.finditer(plugin_pattern, plugins_text):
         pkg_path = match.group(1)
         current_version = match.group(2)
-        plugins.append((pkg_path, current_version))
+        comment = match.group(3).strip() if match.group(3) else None
+        # Check if plugin is pinned (using negative lookbehind/lookahead to avoid "unpinned")
+        is_pinned = bool(comment and re.search(r'(?<![a-zA-Z])pinned(?![a-zA-Z])', comment, re.IGNORECASE))
+        plugins.append((pkg_path, current_version, is_pinned, comment))
 
     # Extract current hash
     hash_match = re.search(r'hash\s*=\s*"([^"]+)"', content)
@@ -217,8 +235,17 @@ def update_plugins_file(file_path, content, updated_plugins, new_hash=None):
 
     # Update plugins
     plugins_list = []
-    for pkg_path, version in updated_plugins:
-        plugins_list.append(f'    "{pkg_path}@{version}"')
+    for item in updated_plugins:
+        if len(item) == 4:
+            pkg_path, version, is_pinned, comment = item
+            line = f'    "{pkg_path}@{version}"'
+            if comment:
+                line += f" # {comment}"
+            plugins_list.append(line)
+        else:
+            # Legacy support for tuples without comment
+            pkg_path, version = item
+            plugins_list.append(f'    "{pkg_path}@{version}"')
 
     plugins_text = "[\n" + "\n".join(plugins_list) + "\n  ]"
     new_content = re.sub(
@@ -302,6 +329,10 @@ Examples:
   %(prog)s --verbose          # Enable detailed logging
   %(prog)s --file /path/to/default.nix  # Use specific file
   %(prog)s --add-plugin github.com/user/plugin  # Add new plugin
+
+Pin plugins to specific versions:
+  Add a comment containing "pinned" at the end of a plugin line to prevent updates:
+  "pkg.example.com/plugin@v0.0.0-20231201120000-abc123def456" # pinned
         """,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
@@ -374,9 +405,9 @@ Examples:
             latest_version = get_latest_pseudo_version(args.add_plugin)
             if latest_version:
                 # Check if plugin already exists
-                existing_plugins = [pkg_path for pkg_path, _ in plugins]
+                existing_plugins = [pkg_path for pkg_path, *_ in plugins]
                 if args.add_plugin not in existing_plugins:
-                    plugins.append((args.add_plugin, latest_version))
+                    plugins.append((args.add_plugin, latest_version, False, None))
                     logging.info(f"Added {args.add_plugin}@{latest_version}")
                 else:
                     logging.warning(
@@ -392,27 +423,32 @@ Examples:
         updated_plugins = []
         updates_made = False
 
-        for pkg_path, current_version in plugins:
+        for pkg_path, current_version, is_pinned, comment in plugins:
             logging.info(f"Checking plugin: {pkg_path}")
             logging.info(f"Current version: {current_version}")
+            
+            if is_pinned:
+                logging.info(f"Plugin {pkg_path} is pinned, skipping update")
+                updated_plugins.append((pkg_path, current_version, is_pinned, comment))
+                continue
 
             latest_version = get_latest_pseudo_version(pkg_path)
             if not latest_version:
                 logging.warning(
                     f"Could not get latest version for {pkg_path}, keeping current"
                 )
-                updated_plugins.append((pkg_path, current_version))
+                updated_plugins.append((pkg_path, current_version, is_pinned, comment))
                 continue
 
             if latest_version != current_version:
                 logging.info(
                     f"Updating {pkg_path}: {current_version} -> {latest_version}"
                 )
-                updated_plugins.append((pkg_path, latest_version))
+                updated_plugins.append((pkg_path, latest_version, is_pinned, comment))
                 updates_made = True
             else:
                 logging.info(f"No update needed for {pkg_path}")
-                updated_plugins.append((pkg_path, current_version))
+                updated_plugins.append((pkg_path, current_version, is_pinned, comment))
 
         if not updates_made and not args.force and not args.add_plugin:
             logging.info("No plugin updates needed!")
@@ -425,9 +461,12 @@ Examples:
             print("\n" + "=" * 60)
             print("DRY RUN - PROPOSED CHANGES")
             print("=" * 60)
-            for pkg_path, version in updated_plugins:
-                original_version = next(v for p, v in plugins if p == pkg_path)
-                if version != original_version:
+            for pkg_path, version, is_pinned, comment in updated_plugins:
+                original_version = next(v for p, v, *_ in plugins if p == pkg_path)
+                if is_pinned:
+                    print(f"📌 {pkg_path} (pinned)")
+                    print(f"   {version}")
+                elif version != original_version:
                     print(f"📝 {pkg_path}")
                     print(f"   {original_version} -> {version}")
                 else:
@@ -452,9 +491,12 @@ Examples:
                 print("\n" + "=" * 60)
                 print("PLUGIN UPDATE SUMMARY")
                 print("=" * 60)
-                for pkg_path, version in updated_plugins:
-                    original_version = next(v for p, v in plugins if p == pkg_path)
-                    if version != original_version:
+                for pkg_path, version, is_pinned, comment in updated_plugins:
+                    original_version = next(v for p, v, *_ in plugins if p == pkg_path)
+                    if is_pinned:
+                        print(f"📌 {pkg_path} (pinned)")
+                        print(f"   {version}")
+                    elif version != original_version:
                         print(f"✅ {pkg_path}")
                         print(f"   {original_version} -> {version}")
                     else:
