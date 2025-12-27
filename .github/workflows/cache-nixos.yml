@@ -44,6 +44,7 @@ jobs:
           attic-public-key: ${{ matrix.public-key }}
           attic-endpoint: ${{ secrets.ATTIC_ENDPOINT }}
           attic-token: ${{ secrets.ATTIC_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Update nixpkgs
         if: "${{ github.event_name == 'schedule' }}"
         shell: bash
@@ -89,6 +90,7 @@ jobs:
           attic-public-key: "x86_64-linux:7L1XuoniEc65yX3tVGjkNyNadfePhfMD+TxodWdZtgM="
           attic-endpoint: ${{ secrets.ATTIC_ENDPOINT }}
           attic-token: ${{ secrets.ATTIC_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
       - name: Build topology chart

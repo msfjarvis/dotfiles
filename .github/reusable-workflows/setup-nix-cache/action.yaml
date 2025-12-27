@@ -19,6 +19,9 @@ inputs:
   attic-token:
     description: "Auth token for Attic"
     required: true
+  github-token:
+    description: "GitHub token for Nix to use for API requests"
+    required: true
 runs:
   using: "composite"
   steps:
@@ -28,8 +31,11 @@ runs:
         if [[ -z $(command -v nix) ]]; then
           curl --proto '=https' --tlsv1.2 -sSf -L https://install.lix.systems/lix | sh -s -- install --no-confirm --extra-conf "
             trusted-users = $(whoami)
+            access-tokens = github.com=$GITHUB_TOKEN
           "
         fi
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
     - name: Setup Tailscale
       uses: tailscale/github-action@53acf823325fe9ca47f4cdaa951f90b4b0de5bb9 # v4
       with:

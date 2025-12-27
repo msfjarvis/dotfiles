@@ -43,6 +43,7 @@ jobs:
           attic-public-key: "${{ matrix.public-key }}"
           attic-endpoint: ${{ secrets.ATTIC_ENDPOINT }}
           attic-token: ${{ secrets.ATTIC_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Set Git user and email
         shell: bash
         run: |

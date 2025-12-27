@@ -35,6 +35,7 @@ jobs:
           attic-public-key: "x86_64-linux:XrBbCCueC9hO05zf8GjmK1/YtHuZwqwcgx0pkHWLgvM="
           attic-endpoint: ${{ secrets.ATTIC_ENDPOINT }}
           attic-token: ${{ secrets.ATTIC_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Update Caddy plugins
         run: |
           python3 dev/caddy/update_caddy_plugins.py --force
