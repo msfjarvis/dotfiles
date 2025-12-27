@@ -1,5 +1,10 @@
 on:
   workflow_dispatch:
+    inputs:
+      skip-schedule-steps:
+        description: "Skip update steps normally run on schedule"
+        type: boolean
+        default: false
   schedule:
     - cron: "30 1 * * *"
 permissions: {}
@@ -46,11 +51,11 @@ jobs:
           attic-token: ${{ secrets.ATTIC_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Update nixpkgs
-        if: "${{ github.event_name == 'schedule' }}"
+        if: "${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.skip-schedule-steps) }}"
         shell: bash
         run: nix flake update nixpkgs
       - name: Update Caddy plugins
-        if: "${{ github.event_name == 'schedule' }}"
+        if: "${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.skip-schedule-steps) }}"
         shell: bash
         run: |
           python3 dev/caddy/update_caddy_plugins.py --force
