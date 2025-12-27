@@ -218,7 +218,10 @@ def parse_caddy_plugins_file(file_path):
         current_version = match.group(2)
         comment = match.group(3).strip() if match.group(3) else None
         # Check if plugin is pinned (using negative lookbehind/lookahead to avoid "unpinned")
-        is_pinned = bool(comment and re.search(r'(?<![a-zA-Z])pinned(?![a-zA-Z])', comment, re.IGNORECASE))
+        is_pinned = bool(
+            comment
+            and re.search(r"(?<![a-zA-Z])pinned(?![a-zA-Z])", comment, re.IGNORECASE)
+        )
         plugins.append((pkg_path, current_version, is_pinned, comment))
 
     # Extract current hash
@@ -426,7 +429,7 @@ Pin plugins to specific versions:
         for pkg_path, current_version, is_pinned, comment in plugins:
             logging.info(f"Checking plugin: {pkg_path}")
             logging.info(f"Current version: {current_version}")
-            
+
             if is_pinned:
                 logging.info(f"Plugin {pkg_path} is pinned, skipping update")
                 updated_plugins.append((pkg_path, current_version, is_pinned, comment))
