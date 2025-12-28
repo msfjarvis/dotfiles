@@ -1,6 +1,5 @@
 {
   pkgs,
-  inputs,
   namespace,
   ...
 }:
@@ -8,12 +7,10 @@
   imports = [
     ./disk-config.nix
     ./hardware-configuration.nix
-    inputs.nixos-facter-modules.nixosModules.facter
-    {
-      facter.reportPath = ./facter.json;
-      facter.detected.graphics.enable = false;
-    }
   ];
+
+  hardware.facter.reportPath = ./facter.json;
+  hardware.facter.detected.graphics.enable = false;
 
   boot = {
     # Only enable for first installation

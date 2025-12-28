@@ -2,7 +2,6 @@
   lib,
   pkgs,
   config,
-  inputs,
   namespace,
   ...
 }:
@@ -17,9 +16,9 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    inputs.nixos-facter-modules.nixosModules.facter
-    { config.facter.reportPath = ./facter.json; }
   ];
+
+  hardware.facter.reportPath = ./facter.json;
 
   # We use a deterministically generate SOPS key instead of re-keying based on the system SSH key
   sops.age.keyFile = "/var/lib/sops-nix/keys.txt";

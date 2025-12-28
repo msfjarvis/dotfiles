@@ -158,8 +158,6 @@
     nix-topology.inputs.flake-utils.follows = "flake-utils";
     nix-topology.inputs.pre-commit-hooks.follows = "";
 
-    nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
-
     rust-manifest.url = "https://static.rust-lang.org/dist/2025-03-04/channel-rust-nightly.toml";
     rust-manifest.flake = false;
 

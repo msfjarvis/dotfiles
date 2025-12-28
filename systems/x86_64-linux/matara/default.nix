@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  inputs,
   namespace,
   ...
 }:
@@ -12,12 +11,10 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    inputs.nixos-facter-modules.nixosModules.facter
-    {
-      facter.reportPath = ./facter.json;
-      facter.detected.graphics.enable = false;
-    }
   ];
+
+  hardware.facter.detected.graphics.enable = false;
+  hardware.facter.reportPath = ./facter.json;
 
   topology.self.name = "HomeLab PC";
 
