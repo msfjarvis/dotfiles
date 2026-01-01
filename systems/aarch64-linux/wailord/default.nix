@@ -169,7 +169,7 @@ in
     restic-rest-server = {
       enable = true;
       domain = "restic-wailord";
-      prometheusRepository = "";
+      prometheusRepository = null;
     };
 
     vaultwarden = {
