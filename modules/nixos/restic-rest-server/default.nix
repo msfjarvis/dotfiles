@@ -64,6 +64,29 @@ in
           static_configs = [ { targets = [ "127.0.0.1:${toString ports.exporters.restic-rest-server}" ]; } ];
         }
       ];
+      rules = [
+        (builtins.toJSON {
+          groups = [
+            {
+              name = "restic_backup";
+              rules = [
+                {
+                  alert = "ResticBackupStale";
+                  expr = "time() - restic_backup_timestamp > 86400";
+                  for = "5m";
+                  labels = {
+                    severity = "warning";
+                  };
+                  annotations = {
+                    summary = "Restic backup is stale";
+                    description = "The last restic backup was more than 24 hours ago ({{ $value | humanizeDuration }} ago)";
+                  };
+                }
+              ];
+            }
+          ];
+        })
+      ];
     };
   };
 }
