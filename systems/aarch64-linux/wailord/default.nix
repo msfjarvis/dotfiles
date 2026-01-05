@@ -172,6 +172,11 @@ in
       prometheusRepository = null;
     };
 
+    umami = {
+      enable = true;
+      domain = "stats01.msfjarvis.dev";
+    };
+
     vaultwarden = {
       enable = true;
       domain = "vault.msfjarvis.dev";
