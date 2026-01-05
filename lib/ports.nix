@@ -32,6 +32,7 @@
     forgejo = 9020;
     paperless-ngx = 9021;
     ncps = 9022;
+    umami = 9023;
     exporters = {
       node = 9100;
       systemd = 9101;
