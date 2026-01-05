@@ -151,11 +151,6 @@ in
       domain = "auth.msfjarvis.dev";
     };
 
-    plausible = {
-      enable = true;
-      domain = "stats.msfjarvis.dev";
-    };
-
     postgres.enable = true;
 
     prometheus = {
