@@ -13,6 +13,7 @@
   environment.systemPackages = with pkgs; [
     pkgs.${namespace}.adbear
     pkgs.${namespace}.adx
+    bun
     coreutils
     pkgs.${namespace}.diffuse-bin
     flock
