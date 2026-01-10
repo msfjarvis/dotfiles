@@ -37,5 +37,21 @@ in
         }
       ];
     };
+    sops.secrets.r2-postgres-env = {
+      sopsFile = lib.snowfall.fs.get-file "secrets/restic/r2-postgresql-auth.env";
+      format = "dotenv";
+    };
+    services.restic.backups.postgresql = {
+      initialize = true;
+      repository = "s3:https://07d4cd9cc7e8077fcafc5dd2fc30391b.r2.cloudflarestorage.com/${config.networking.hostName}-postgresql-backup";
+      passwordFile = config.sops.secrets.restic_repo_password.path;
+      environmentFile = config.sops.secrets.r2-postgres-env.path;
+      paths = [ config.services.postgresqlBackup.location ];
+      pruneOpts = [
+        "--keep-daily 7"
+        "--keep-weekly 2"
+        "--keep-monthly 1"
+      ];
+    };
   };
 }
