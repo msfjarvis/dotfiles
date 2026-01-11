@@ -45,7 +45,7 @@ in
       msfjarvis = {
         isNormalUser = true;
         extraGroups = [ "wheel" ];
-        hashedPassword = ''$y$j9T$g8JL/B98ogQF/ryvwHpWe.$jyKMeotGz/o8Pje.nejKzPMiYOxtn//33OzMu5bAHm2'';
+        hashedPassword = "$y$j9T$g8JL/B98ogQF/ryvwHpWe.$jyKMeotGz/o8Pje.nejKzPMiYOxtn//33OzMu5bAHm2";
       };
     };
   };

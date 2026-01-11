@@ -22,19 +22,19 @@ in
     user = mkOption {
       type = types.str;
       default = "copyparty";
-      description = ''User account under which copyparty runs.'';
+      description = "User account under which copyparty runs.";
     };
 
     group = mkOption {
       type = types.str;
       default = "copyparty";
-      description = ''Group under which copyparty runs.'';
+      description = "Group under which copyparty runs.";
     };
 
     subdomain = mkOption {
       type = types.str;
       default = "${config.networking.hostName}-files";
-      description = ''Tailscale subdomain for the Caddy virtual host.'';
+      description = "Tailscale subdomain for the Caddy virtual host.";
     };
 
     volumes = mkOption {
@@ -75,13 +75,13 @@ in
         withSMB = false;
         withMagic = false;
       };
-      description = ''copyparty package to use.'';
+      description = "copyparty package to use.";
     };
 
     extraSettings = mkOption {
       type = types.attrs;
       default = { };
-      description = ''Additional settings to pass to copyparty.'';
+      description = "Additional settings to pass to copyparty.";
     };
   };
 

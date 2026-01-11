@@ -104,7 +104,7 @@ in
       };
     };
     users.users.root.openssh.authorizedKeys.keys = [
-      ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHEykZdEDb8opMyzQMWei91G8+haD1KLhttjNLVOoSPw''
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHEykZdEDb8opMyzQMWei91G8+haD1KLhttjNLVOoSPw"
     ];
     services.fail2ban.enable = false;
 
