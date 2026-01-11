@@ -56,7 +56,6 @@ in
       environmentFile = config.sops.secrets.pocket-id.path;
       settings = {
         APP_URL = "https://${cfg.domain}";
-        DB_PROVIDER = "postgres";
         DB_CONNECTION_STRING = "postgres://pocket-id/pocket-id?host=/run/postgresql";
         HOST = "127.0.0.1";
         LOG_JSON = true;
