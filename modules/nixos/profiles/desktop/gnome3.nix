@@ -113,7 +113,7 @@ in
     ];
 
     stylix.targets = {
-      gnome.enable = true;
+      gnome.enable = false; # Fails to build on GNOME 49.2
       gtk.enable = true;
     };
 
