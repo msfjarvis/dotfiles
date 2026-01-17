@@ -51,7 +51,7 @@ in
     snowfallorg.users.msfjarvis.home.config = {
       programs.gradle = {
         enable = true;
-        package = pkgs.gradleGen (
+        package = pkgs.gradle-packages.mkGradle (
           (import ./gradle-version.nix)
           // {
             defaultJava = defaultJdk;
