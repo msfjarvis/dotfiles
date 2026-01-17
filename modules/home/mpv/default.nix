@@ -17,8 +17,8 @@ in
     stylix.targets.mpv.enable = true;
     programs.mpv = {
       enable = true;
-      package = pkgs.mpv-unwrapped.wrapper {
-        mpv = pkgs.mpv-unwrapped.override {
+      package = pkgs.mpv.override {
+        mpv-unwrapped = pkgs.mpv-unwrapped.override {
           waylandSupport = true;
           x11Support = false;
           cddaSupport = false;
