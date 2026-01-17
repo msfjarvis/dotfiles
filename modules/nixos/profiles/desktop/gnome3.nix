@@ -71,7 +71,7 @@ in
     # Enable the GNOME Desktop Environment.
     services.displayManager.gdm.enable = true;
     services.desktopManager.gnome.enable = true;
-    services.displayManager.defaultSession = "gnome-xorg";
+    services.displayManager.defaultSession = "gnome";
     services.gnome.gnome-keyring.enable = true;
     programs.seahorse.enable = true;
     programs.nautilus-open-any-terminal = {
