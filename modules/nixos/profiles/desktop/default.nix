@@ -91,7 +91,6 @@ in
     # Enable PCSC-Lite daemon for use with my Yubikey.
     services.pcscd.enable = true;
 
-    programs.adb.enable = true;
     services.udev.packages = [
       pkgs.libu2f-host
     ];
