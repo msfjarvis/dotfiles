@@ -118,6 +118,9 @@
     flake-compat.url = "git+https://git.lix.systems/lix-project/flake-compat";
     flake-compat.flake = false;
 
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.inputs.nixpkgs-lib.follows = "lib-aggregate";
+
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
 
@@ -154,6 +157,7 @@
 
     nix-topology.url = "github:oddlama/nix-topology";
     nix-topology.inputs.nixpkgs.follows = "nixpkgs";
+    nix-topology.inputs.flake-parts.follows = "flake-parts";
 
     rust-manifest.url = "https://static.rust-lang.org/dist/2025-03-04/channel-rust-nightly.toml";
     rust-manifest.flake = false;
@@ -173,13 +177,11 @@
     srvos.url = "github:nix-community/srvos";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
-    stylix.url = "github:nix-community/stylix?rev=49b1eb937152b686626be269ee3fe462d1541d5a";
-    stylix.inputs.flake-compat.follows = "flake-compat";
-    stylix.inputs.home-manager.follows = "home-manager";
+    stylix.url = "github:nix-community/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     stylix.inputs.nur.follows = "";
     stylix.inputs.systems.follows = "systems";
-    stylix.inputs.git-hooks.follows = "";
+    stylix.inputs.flake-parts.follows = "flake-parts";
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
