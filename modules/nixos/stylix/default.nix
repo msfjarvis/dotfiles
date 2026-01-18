@@ -20,12 +20,4 @@
       size = 32;
     };
   };
-  snowfallorg.users.msfjarvis.home.config = {
-    stylix = {
-      targets = {
-        bat.enable = true;
-        fzf.enable = true;
-      };
-    };
-  };
 }
