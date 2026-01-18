@@ -27,8 +27,8 @@ let
   instancePath = name: "${homeDir}/Games/PrismLauncher/instances/${name}";
   prismLauncher = pkgs.prismlauncher.override {
     jdks = with pkgs; [
-      openjdk25
-      openjdk17
+      zulu25
+      zulu17
     ];
   };
 in

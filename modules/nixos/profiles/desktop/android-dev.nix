@@ -7,13 +7,16 @@
 }:
 let
   cfg = config.profiles.${namespace}.desktop;
-  defaultJdk = pkgs.openjdk25;
+  defaultJdk = pkgs.zulu25;
   toolchains = [
-    pkgs.openjdk11
-    pkgs.openjdk17
+    pkgs.zulu11
+    pkgs.zulu17
     defaultJdk
   ];
+  # deadnix: skip
   mapOpenJdk = pkg: "${pkg}/lib/openjdk";
+  mapZuluJdk = pkg: "${pkg}/";
+  mapJdk = mapZuluJdk;
   inherit (lib) mkEnableOption mkIf;
 in
 {
@@ -61,10 +64,10 @@ in
           "org.gradle.caching" = true;
           "org.gradle.parallel" = true;
           "org.gradle.jvmargs" = "-XX:MaxMetaspaceSize=1024m -XX:+UseG1GC";
-          "org.gradle.java.home" = mapOpenJdk defaultJdk;
+          "org.gradle.java.home" = mapJdk defaultJdk;
           "org.gradle.java.installations.auto-detect" = false;
           "org.gradle.java.installations.auto-download" = false;
-          "org.gradle.java.installations.paths" = lib.concatMapStringsSep "," mapOpenJdk toolchains;
+          "org.gradle.java.installations.paths" = lib.concatMapStringsSep "," mapJdk toolchains;
         };
       };
     };
