@@ -132,7 +132,6 @@ in
       github-copilot-cli
       google-chrome # Hotstar hates Firefox
       handbrake
-      nerd-fonts.iosevka-term
       pkgs.${namespace}.katbin
       kondo
       maestro
@@ -153,6 +152,10 @@ in
       yt-dlp
     ];
   };
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.iosevka-term
+  ];
 
   programs.appimage = {
     enable = true;
