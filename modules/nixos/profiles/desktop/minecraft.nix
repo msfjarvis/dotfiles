@@ -19,10 +19,11 @@ let
     "Fabulously.Optimized.1.21.4"
     "Fabulously.Optimized.1.21.5"
     "Fabulously.Optimized.1.21.7"
+    "Fabulously.Optimized.1.21.11"
   ];
   minecraftInstances = vanillaInstances ++ moddedInstances;
   backupInstances = [
-    "Fabulously.Optimized.1.21.7"
+    "Fabulously.Optimized.1.21.11"
   ];
   instancePath = name: "${homeDir}/Games/PrismLauncher/instances/${name}";
   prismLauncher = pkgs.prismlauncher.override {
