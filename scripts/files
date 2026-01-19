@@ -165,9 +165,9 @@ function reencode_dir() {
   function select_ext() {
     local INPUT_FILE
     INPUT_FILE="${1:?}"
-    if [ -f "${INPUT_FILE}.mp4" ]; then
+    if [[ -f "${INPUT_FILE}.mp4" ]]; then
       echo "mp4"
-    elif [ -f "${INPUT_FILE}.m4v" ]; then
+    elif [[ -f "${INPUT_FILE}.m4v" ]]; then
       echo "m4v"
     else
       echo ""
@@ -181,12 +181,24 @@ function reencode_dir() {
     reportWarning "'${INPUT_FILE}' doesn't exist"
     return 1
   fi
-  while read -r f; do
+  while IFS= read -r f; do
     local ext src dst codec
     ext="$(select_ext "${f}")"
+    
+    if [[ -z "${ext}" ]]; then
+      echo "Warning: Could not find .mp4 or .m4v file for: ${f}" >&2
+      continue
+    fi
+    
     src="${f}.${ext}"
     dst="${f}_x265.mp4"
-    codec="$(ffprobe -v quiet -print_format json -show_format -show_streams "${src}" | jq -r .streams[0].codec_name)"
+    
+    if [[ ! -f "${src}" ]]; then
+      echo "Error: Source file does not exist: ${src}" >&2
+      continue
+    fi
+    
+    codec="$(ffprobe -v quiet -print_format json -show_format -show_streams "${src}" | jq -r '.streams[0].codec_name')"
 
     if [[ ${codec} == "hevc" ]]; then continue; fi
 
