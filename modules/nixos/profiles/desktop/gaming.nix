@@ -17,29 +17,34 @@ in
     enable = mkEnableOption "set up epic gamer stuff";
   };
   config = mkIf cfg.gaming.enable {
-    # last checked with https://steamdeck-packages.steamos.cloud/archlinux-mirror/jupiter-main/os/x86_64/steamos-customizations-jupiter-20240219.1-2-any.pkg.tar.zst
+    # last checked with https://steamdeck-packages.steamos.cloud/archlinux-mirror/jupiter-main/os/x86_64/steamos-customizations-jupiter-20250117.1-1-any.pkg.tar.zst
     boot.kernel.sysctl = {
       # 20-shed.conf
       "kernel.sched_cfs_bandwidth_slice_us" = 3000;
       # 20-net-timeout.conf
       # This is required due to some games being unable to reuse their TCP ports
-      # if they are killed and restarted quickly - the default timeout is too large.
+      # if they're killed and restarted quickly - the default timeout is too large.
       "net.ipv4.tcp_fin_timeout" = 5;
+      # 30-splitlock.conf
+      # Prevents intentional slowdowns in case games experience split locks
+      # This is valid for kernels v6.0+
+      "kernel.split_lock_mitigate" = 0;
       # 30-vm.conf
       # USE MAX_INT - MAPCOUNT_ELF_CORE_MARGIN.
       # see comment in include/linux/mm.h in the kernel tree.
       "vm.max_map_count" = 2147483642;
     };
+
     environment.systemPackages = with pkgs; [
       cartridges
       mangohud
     ];
+
     programs.steam = {
       enable = true;
       remotePlay.openFirewall = true;
       dedicatedServer.openFirewall = true;
-      # Graphical glitches and broken rendering
-      gamescopeSession.enable = false;
+      gamescopeSession.enable = true;
       package = pkgs.steam.override {
         extraLibraries =
           p: with p; [
@@ -53,72 +58,54 @@ in
         extraPkgs = p: with p; [ gamemode ];
       };
     };
+
     programs.gamemode = {
       enable = true;
       enableRenice = true;
     };
 
-    snowfallorg.users.msfjarvis.home.config = {
-      systemd.user.services = {
-        steam = {
-          Unit = {
-            Description = "Open Steam in the background at boot";
-            StartLimitIntervalSec = "1min";
-            StartLimitBurst = 1;
-          };
-          Install.WantedBy = [ "graphical-session.target" ];
-          Service = {
-            ExecStart = "${lib.getExe pkgs.steam} -nochatui -nofriendsui -silent %U";
-            Restart = "on-abort";
-            RestartSec = "5s";
-            # Limit disk I/O priority to 50% to prevent Steam from starving other processes
-            IOWeight = 50;
-          };
-        };
-      };
-    };
     # Pipewire LowLatency configuration from nix-gaming
     # ref: https://github.com/fufexan/nix-gaming/blob/6caa391790442baea22260296041429fb365e0ce/modules/pipewireLowLatency.nix
     services.pipewire = {
-      extraConfig.pipewire = {
-        "99-lowlatency" = {
-          context = {
-            properties.default.clock.min-quantum = quantum;
-            modules = [
-              {
-                name = "libpipewire-module-rtkit";
-                flags = [
-                  "ifexists"
-                  "nofail"
-                ];
-                args = {
-                  nice.level = -15;
-                  rt = {
-                    prio = 88;
-                    time.soft = 200000;
-                    time.hard = 200000;
-                  };
-                };
-              }
-              {
-                name = "libpipewire-module-protocol-pulse";
-                args = {
-                  server.address = [ "unix:native" ];
-                  pulse.min = {
-                    req = qr;
-                    quantum = qr;
-                    frag = qr;
-                  };
-                };
-              }
-            ];
+      enable = true;
+      # write extra config
+      extraConfig = {
+        pipewire."99-lowlatency" = {
+          "context.properties"."default.clock.min-quantum" = quantum;
 
-            stream.properties = {
-              node.latency = qr;
-              resample.quality = 1;
-            };
-          };
+          "context.modules" = [
+            {
+              name = "libpipewire-module-rt";
+              flags = [
+                "ifexists"
+                "nofail"
+              ];
+              args = {
+                "nice.level" = -15;
+                "rt.prio" = 88;
+                "rt.time.soft" = 200000;
+                "rt.time.hard" = 200000;
+              };
+            }
+          ];
         };
+
+        pipewire-pulse."99-lowlatency"."pulse.properties" = {
+          "server.address" = [ "unix:native" ];
+          "pulse.min.req" = qr;
+          "pulse.min.quantum" = qr;
+          "pulse.min.frag" = qr;
+        };
+
+        client."99-lowlatency"."stream.properties" = {
+          "node.latency" = qr;
+          "resample.quality" = 1;
+        };
+      };
+
+      # ensure WirePlumber is enabled explicitly
+      wireplumber = {
+        enable = true;
       };
     };
 
@@ -149,6 +136,7 @@ in
       })
       ficsit-cli
     ];
+
     # Required to avoid some logspew
     environment.sessionVariables.VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
     environment.variables = {
