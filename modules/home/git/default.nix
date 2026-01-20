@@ -44,7 +44,7 @@ in
       ".DS_Store"
     ];
     includes = [ { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig"; } ];
-    lfs.enable = true;
+    lfs.enable = false;
     settings = {
       merge.mergiraf = {
         name = "mergiraf";
