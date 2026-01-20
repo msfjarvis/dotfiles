@@ -6,7 +6,7 @@
   ...
 }:
 let
-  quantum = 64;
+  quantum = 512;
   rate = 48000;
   qr = "${toString quantum}/${toString rate}";
   cfg = config.profiles.${namespace}.desktop;
