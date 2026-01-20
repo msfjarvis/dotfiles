@@ -162,53 +162,165 @@ function tmpshare() {
 }
 
 function reencode_dir() {
-  function select_ext() {
-    local INPUT_FILE
-    INPUT_FILE="${1:?}"
-    if [[ -f "${INPUT_FILE}.mp4" ]]; then
-      echo "mp4"
-    elif [[ -f "${INPUT_FILE}.m4v" ]]; then
-      echo "m4v"
-    else
-      echo ""
-    fi
-  }
-  local INPUT_FILE
-  INPUT_FILE="${1}"
-  if [ -z "${INPUT_FILE}" ]; then
-    INPUT_FILE="/dev/stdin"
-  elif [ ! -f "${INPUT_FILE}" ]; then
-    reportWarning "'${INPUT_FILE}' doesn't exist"
+  local DIR DRY_RUN
+  DRY_RUN=false
+
+  # Parse arguments
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+    --dry-run)
+      DRY_RUN=true
+      shift
+      ;;
+    *)
+      DIR="$1"
+      shift
+      ;;
+    esac
+  done
+
+  DIR="${DIR:-.}"
+
+  if [ ! -d "${DIR}" ]; then
+    reportWarning "'${DIR}' is not a directory"
     return 1
   fi
-  while IFS= read -r f; do
-    local ext src dst codec
-    ext="$(select_ext "${f}")"
-    
-    if [[ -z "${ext}" ]]; then
-      echo "Warning: Could not find .mp4 or .m4v file for: ${f}" >&2
-      continue
-    fi
-    
-    src="${f}.${ext}"
-    dst="${f}_x265.mp4"
-    
-    if [[ ! -f "${src}" ]]; then
-      echo "Error: Source file does not exist: ${src}" >&2
-      continue
-    fi
-    
+
+  if [[ ${DRY_RUN} == true ]]; then
+    echo "Dry run mode - listing files that will be processed:"
+    echo ""
+  fi
+
+  while IFS= read -r src; do
+    local dst codec base
+    base="${src%.*}"
+    dst="${base}_x265.mp4"
+
     codec="$(ffprobe -v quiet -print_format json -show_format -show_streams "${src}" | jq -r '.streams[0].codec_name')"
 
-    if [[ ${codec} == "hevc" ]]; then continue; fi
+    if [[ ${codec} == "hevc" ]]; then
+      if [[ ${DRY_RUN} == true ]]; then
+        echo "SKIP: ${src} (already hevc)"
+      else
+        echo "Skipping ${src} (already hevc)" >&2
+      fi
+      continue
+    fi
 
-    encode "${src}" "${dst}"
-    du -sh "${src}" | tee -a ~/stats
-    du -sh "${dst}" | tee -a ~/stats
-    if [[ $(stat -c %s "${dst}") -ne 0 && $(stat -c %s "${dst}") -le $(stat -c %s "${src}") ]]; then
-      touch -r "${src}" "${dst}"
-      rm -v "${src}"
-    else rm -v "${dst}"; fi
-    sleep 5
-  done < <(\cat "${INPUT_FILE}")
+    if [[ ${DRY_RUN} == true ]]; then
+      echo "PROCESS: ${src}"
+      echo "      -> ${dst}"
+      echo ""
+    else
+      encode "${src}" "${dst}"
+      du -sh "${src}" | tee -a ~/stats
+      du -sh "${dst}" | tee -a ~/stats
+      if [[ $(stat -c %s "${dst}") -ne 0 && $(stat -c %s "${dst}") -le $(stat -c %s "${src}") ]]; then
+        touch -r "${src}" "${dst}"
+        rm -v "${src}"
+      else rm -v "${dst}"; fi
+      sleep 5
+    fi
+  done < <(fd -e mov -e avi -e mp4 . "${DIR}")
+}
+
+function post_encode() {
+  local DIR DRY_RUN
+  DRY_RUN=false
+
+  # Parse arguments
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+    --dry-run)
+      DRY_RUN=true
+      shift
+      ;;
+    *)
+      DIR="$1"
+      shift
+      ;;
+    esac
+  done
+
+  DIR="${DIR:-.}"
+
+  if [ ! -d "${DIR}" ]; then
+    reportWarning "'${DIR}' is not a directory"
+    return 1
+  fi
+
+  if [[ ${DRY_RUN} == true ]]; then
+    echo "Dry run mode - listing files that will be replaced:"
+    echo ""
+  fi
+
+  while IFS= read -r encoded_file; do
+    local base original_file
+    base="${encoded_file%_x265.mp4}"
+
+    # Find the original file with .mov, .avi, or .mp4 extension
+    original_file=""
+    for ext in mov avi mp4; do
+      if [[ -f "${base}.${ext}" ]]; then
+        original_file="${base}.${ext}"
+        break
+      fi
+    done
+
+    local encoded_size original_size new_name
+    encoded_size=$(stat -c %s "${encoded_file}")
+    new_name="${base}.mp4"
+
+    # Validate encoded file is not empty
+    if [[ ${encoded_size} -eq 0 ]]; then
+      echo "Error: Encoded file is empty: ${encoded_file}" >&2
+      continue
+    fi
+
+    # If no original file found, just strip the _x265 suffix
+    if [[ -z ${original_file} ]]; then
+      if [[ ${DRY_RUN} == true ]]; then
+        echo "RENAME: ${encoded_file}"
+        echo "     -> ${new_name}"
+        echo ""
+      else
+        mv -v "${encoded_file}" "${new_name}"
+        echo "Renamed ${encoded_file} to ${new_name}"
+      fi
+      continue
+    fi
+
+    # Original file exists - validate size comparison
+    original_size=$(stat -c %s "${original_file}")
+
+    if [[ ${encoded_size} -gt ${original_size} ]]; then
+      if [[ ${DRY_RUN} == true ]]; then
+        echo "SKIP: ${encoded_file} is larger than original (${encoded_size} > ${original_size})"
+        echo ""
+      else
+        echo "Skipping ${encoded_file}: larger than original (${encoded_size} > ${original_size})" >&2
+      fi
+      continue
+    fi
+
+    if [[ ${DRY_RUN} == true ]]; then
+      echo "REPLACE: ${original_file}"
+      echo "    with: ${encoded_file}"
+      echo "    size: ${original_size} -> ${encoded_size} bytes"
+      echo ""
+    else
+      # Preserve timestamp and metadata from original file
+      touch -r "${original_file}" "${encoded_file}"
+
+      # Replace original file with encoded version
+      mv -v "${encoded_file}" "${new_name}"
+
+      # Remove original file if it has a different name
+      if [[ ${original_file} != "${new_name}" ]]; then
+        rm -v "${original_file}"
+      fi
+
+      echo "Replaced ${original_file} with ${new_name}"
+    fi
+  done < <(fd -e mp4 '_x265\.mp4$' "${DIR}")
 }
