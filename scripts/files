@@ -221,7 +221,7 @@ function reencode_dir() {
       else rm -v "${dst}"; fi
       sleep 5
     fi
-  done < <(fd -e mov -e avi -e mp4 . "${DIR}")
+  done < <(fd -e mov -e avi -e mp4 -e gif . "${DIR}")
 }
 
 function post_encode() {
@@ -258,9 +258,9 @@ function post_encode() {
     local base original_file
     base="${encoded_file%_x265.mp4}"
 
-    # Find the original file with .mov, .avi, or .mp4 extension
+    # Find the original file with .mov, .avi, .mp4, or .gif extension
     original_file=""
-    for ext in mov avi mp4; do
+    for ext in mov avi mp4 gif; do
       if [[ -f "${base}.${ext}" ]]; then
         original_file="${base}.${ext}"
         break
