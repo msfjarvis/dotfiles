@@ -19,6 +19,7 @@ in
     ./gaming.nix
     ./gnome3.nix
     ./minecraft.nix
+    ./plasma.nix
     # ./niri.nix
     ./noise-cancelation.nix
   ];
