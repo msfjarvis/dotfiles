@@ -14,6 +14,9 @@
     extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
 
+  # Enable loadable firmware
+  hardware.enableAllFirmware = true;
+
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = [ "nvidia" ];
 
