@@ -90,6 +90,7 @@ in
     update.auto.enable = true;
     uninstallUnmanaged = true;
     packages = [
+      "com.spotify.Client"
       "io.gitlab.news_flash.NewsFlash"
     ];
   };

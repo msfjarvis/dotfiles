@@ -30,7 +30,7 @@
     };
     gnome-terminal.enable = true;
     mpv.enable = true;
-    spotify.enable = true;
+    spotify.enable = false;
     zed = {
       enable = true;
       package = pkgs.zed-editor.fhsWithPackages (pkgs: with pkgs; [ nixd ]);
