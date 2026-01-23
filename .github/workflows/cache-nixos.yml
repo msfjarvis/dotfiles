@@ -32,7 +32,7 @@ jobs:
     steps:
       - name: Create disk space
         if: "${{ matrix.runner == 'ubuntu-latest' }}"
-        uses: wimpysworld/nothing-but-nix@6af122a9403f936ef689e44cc013ae3f3e2f1c3b # v6
+        uses: wimpysworld/nothing-but-nix@dd6ef566962bfa4656301706035da97ebbe90e9b # v9
         with:
           hatchet-protocol: rampage
           witness-carnage: true
