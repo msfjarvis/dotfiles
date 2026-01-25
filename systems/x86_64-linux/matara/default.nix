@@ -215,20 +215,9 @@ in
   };
 
   systemd.services = {
-    stash = {
-      after = [
-        "local-fs.target"
-        "media.mount"
-      ];
-      wants = [ "local-fs.target" ];
-    };
-    qbittorrent = {
-      after = [
-        "local-fs.target"
-        "media.mount"
-      ];
-      wants = [ "local-fs.target" ];
-    };
+    stash.unitConfig.RequiresMountsFor = "/media";
+    qbittorrent.unitConfig.RequiresMountsFor = "/media";
+    copyparty.unitConfig.RequiresMountsFor = "/media";
   };
 
   system.stateVersion = "24.05";
