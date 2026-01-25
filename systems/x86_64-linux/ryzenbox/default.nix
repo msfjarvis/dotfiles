@@ -132,7 +132,8 @@ in
       git-crypt
       github-copilot-cli
       google-chrome # Hotstar hates Firefox
-      handbrake
+      # ffmpeg_7-full fails to build: https://hydra.nixos.org/build/319912371/nixlog/2
+      # handbrake
       pkgs.${namespace}.katbin
       kondo
       maestro
