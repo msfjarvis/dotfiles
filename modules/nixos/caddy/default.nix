@@ -17,6 +17,11 @@ in
     applyDefaults = mkEnableOption { description = "apply the default settings for Caddy"; };
   };
   config = mkIf cfg.applyDefaults {
+    systemd.services.caddy = {
+      after = [ "tailscaled-autoconnect.service" ];
+      wants = [ "tailscaled-autoconnect.service" ];
+    };
+
     sops.secrets.services-oauth-secret-env = {
       sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
       owner = config.services.caddy.user;
