@@ -58,7 +58,7 @@ in
 
   environment.systemPackages = with pkgs; [
     pkgs.${namespace}.cyberdrop-dl
-    ffmpeg_7-headless
+    ffmpeg_8-headless
     git
     megatools
     micro

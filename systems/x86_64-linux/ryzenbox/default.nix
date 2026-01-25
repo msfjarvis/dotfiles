@@ -119,7 +119,7 @@ in
       calibre
       pkgs.${namespace}.cyberdrop-dl
       fclones
-      ffmpeg_7-full
+      ffmpeg_8-full
       (firefox-nightly-bin.override {
         cfg = {
           smartcardSupport = true;

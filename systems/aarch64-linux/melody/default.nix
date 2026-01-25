@@ -44,7 +44,7 @@
   programs.command-not-found.enable = true;
 
   environment.systemPackages = with pkgs; [
-    ffmpeg_7-headless
+    ffmpeg_8-headless
     megatools
   ];
 
