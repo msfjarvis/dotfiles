@@ -23,9 +23,6 @@ in
   programs.jsonfmt = {
     enable = true;
   };
-  programs.mdformat = {
-    enable = true;
-  };
   programs.nixfmt = {
     enable = true;
     package = pkgs.nixfmt;
