@@ -79,7 +79,12 @@ in
       };
     }
     // (mkTailscaleVHost "stash" ''
-      reverse_proxy ${config.services.stash.settings.host}:${toString config.services.stash.settings.port}
+      reverse_proxy ${config.services.stash.settings.host}:${toString config.services.stash.settings.port} {
+        transport http {
+          keepalive 60m
+          keepalive_interval 10s
+        }
+      }
     '');
   };
 
