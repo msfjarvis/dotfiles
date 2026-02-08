@@ -1,9 +1,9 @@
 {
-  fetchFromGitHub,
-  rustPlatform,
   stdenv,
-  xorg,
   lib,
+  libxcb,
+  rustPlatform,
+  fetchFromGitHub,
 }:
 let
   version = "0.7.8";
@@ -24,7 +24,7 @@ rustPlatform.buildRustPackage {
 
   useNextest = true;
 
-  buildInputs = lib.optionals stdenv.hostPlatform.isLinux [ xorg.libxcb ];
+  buildInputs = lib.optionals stdenv.hostPlatform.isLinux [ libxcb ];
 
   meta = with lib; {
     description = "CLI to listen to clipboard events and perform operations on the copied text";
