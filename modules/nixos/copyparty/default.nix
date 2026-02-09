@@ -103,6 +103,7 @@ in
         e2ts = true;
         re-maxage = 3600;
         stats = true;
+        rproxy = 1;
       }
       // cfg.extraSettings;
     };
