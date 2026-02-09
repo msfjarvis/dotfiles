@@ -33,6 +33,7 @@
     paperless-ngx = 9021;
     ncps = 9022;
     umami = 9023;
+    hatsu = 9024;
     exporters = {
       node = 9100;
       systemd = 9101;
