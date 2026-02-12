@@ -81,6 +81,27 @@
           size = "small";
           widgets = [
             {
+              type = "custom-api";
+              title = "Open Tasks";
+              title-url = "https://git.msfjarvis.dev/msfjarvis/tasks/issues/new";
+              cache = "5m";
+              url = "https://git.msfjarvis.dev/api/v1/repos/msfjarvis/tasks/issues?state=open";
+              template = ''
+                <ul class="list list-gap-14 list-with-separator">
+                {{ range .JSON.Array "" }}
+                  <li class="size-h3">
+                    <a href="{{ .String "html_url" }}" target="_blank" class="color-primary-if-not-visited">
+                      {{ .String "title" }}
+                    </a>
+                    <div class="text-color-dimmed size-h5 margin-top-4">
+                      #{{ .Int "number" }} - opened <span {{ .String "created_at" | parseTime "RFC3339" | toRelativeTime }}></span>
+                    </div>
+                  </li>
+                {{ end }}
+                </ul>
+              '';
+            }
+            {
               type = "clock";
               hour-format = "12h";
               timezones = [
