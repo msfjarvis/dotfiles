@@ -11,4 +11,4 @@ in
 
 nix build --option substitute false --impure -I nixpkgs=flake:nixpkgs --expr "${EXPR}"
 
-glance -config ./result
+nix run nixpkgs#glance -- -config ./result
