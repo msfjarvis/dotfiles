@@ -30,7 +30,6 @@
     pkgs.${namespace}.pidcat
     scrcpy
     yaml-language-server
-    yt-dlp
   ];
 
   environment.pathsToLink = [

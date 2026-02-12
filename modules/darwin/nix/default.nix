@@ -10,6 +10,7 @@
       inherit lib pkgs;
     }
     // {
+      package = pkgs.nix;
       extraOptions = ''
         experimental-features = auto-allocate-uids cgroups flakes nix-command
       '';
