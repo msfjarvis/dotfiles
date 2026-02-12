@@ -5,8 +5,6 @@
       lib,
     }:
     {
-      package = lib.mkDefault pkgs.lixPackageSets.git.lix;
-
       generateNixPathFromInputs = true;
       generateRegistryFromInputs = true;
       linkInputs = true;

@@ -29,6 +29,7 @@
       inherit lib pkgs;
     }
     // {
+      package = pkgs.lixPackageSets.git.lix;
       optimise.automatic = false;
       settings.netrc-file = config.sops.secrets.nix-netrc-file.path;
     };
