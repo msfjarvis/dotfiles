@@ -43,7 +43,7 @@ in
           @geoblock {
             maxmind_geolocation {
               db_path "${config.services.geoipupdate.settings.DatabaseDirectory}/GeoLite2-Country.mmdb"
-              deny_countries VN
+              deny_countries CN VN
             }
           }
 
