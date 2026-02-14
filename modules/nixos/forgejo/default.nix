@@ -27,7 +27,6 @@ in
       "https://${cfg.domain}" = {
         extraConfig = with config.services.forgejo.settings.server; ''
           import blackholeCrawlers
-          import geoblock
           reverse_proxy ${HTTP_ADDR}:${toString HTTP_PORT}
         '';
       };
