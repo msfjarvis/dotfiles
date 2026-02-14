@@ -118,6 +118,10 @@ in
       domain = "git.msfjarvis.dev";
     };
 
+    geoipupdate = {
+      enable = true;
+    };
+
     glance = {
       enable = true;
       user = "msfjarvis";

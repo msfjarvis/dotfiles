@@ -54,6 +54,10 @@
       domain = "nix-cache";
     };
 
+    geoipupdate = {
+      enable = true;
+    };
+
     golink = {
       enable = true;
     };
