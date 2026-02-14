@@ -3,7 +3,6 @@
   lib,
   buildNpmPackage,
   fetchFromGitHub,
-  fetchpatch2,
   defaultUrl ? "https://fedi.msfjarvis.dev",
 }:
 buildNpmPackage {

@@ -7,7 +7,7 @@
 {
   nix =
     lib.${namespace}.mkNixConfig {
-      inherit lib pkgs;
+      inherit lib;
     }
     // {
       package = pkgs.nix;

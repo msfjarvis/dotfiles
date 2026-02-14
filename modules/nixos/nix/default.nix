@@ -26,7 +26,7 @@
 
   nix =
     lib.${namespace}.mkNixConfig {
-      inherit lib pkgs;
+      inherit lib;
     }
     // {
       package = pkgs.lixPackageSets.git.lix;

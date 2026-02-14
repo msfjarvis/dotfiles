@@ -1,7 +1,6 @@
 {
   mkNixConfig =
     {
-      pkgs,
       lib,
     }:
     {
