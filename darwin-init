@@ -71,6 +71,10 @@ if [ -d ~/go/bin ]; then
   export PATH="${HOME}/go/bin:${PATH}"
 fi
 
+if [ -d ~/.cache/.bun/bin ]; then
+  export PATH="${HOME}/.cache/.bun/bin:$PATH"
+fi
+
 # shellcheck source=scripts/bash_completions.bash disable=SC1091
 source "${SCRIPT_DIR}"/bash_completions.bash
 # shellcheck source=scripts/aliases disable=SC1091
