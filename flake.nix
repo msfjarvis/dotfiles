@@ -174,7 +174,8 @@
     spicetify-nix.inputs.nixpkgs.follows = "nixpkgs";
     spicetify-nix.inputs.systems.follows = "systems";
 
-    srvos.url = "github:nix-community/srvos";
+    # srvos.url = "github:nix-community/srvos";
+    srvos.url = "github:multivac61/srvos?rev=98de0881ad9d5a35e25c1a2a1496fab1d77223f3";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
 
     stylix.url = "github:nix-community/stylix";
