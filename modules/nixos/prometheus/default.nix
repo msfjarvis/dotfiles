@@ -149,6 +149,8 @@ in
           http_addr = "127.0.0.1";
           http_port = ports.grafana;
         };
+        # Old hardcoded value that was removed, I don't use anything that relies on it being secret.
+        security.secret_key = "SW2YcwTIb9zpOOhoPsMm";
       };
     };
     services.prometheus = {
