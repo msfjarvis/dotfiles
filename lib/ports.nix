@@ -34,6 +34,7 @@
     ncps = 9022;
     umami = 9023;
     hatsu = 9024;
+    caldav-api = 9025;
     exporters = {
       node = 9100;
       systemd = 9101;

@@ -10,6 +10,7 @@ declare -a ALL_PACKAGES=(
   # Don't care to keep it up-to-date
   # age-keygen-deterministic
   boop-gtk
+  caldav-api
   clipboard-substitutor
   cyberdrop-dl
   dependency-watch
@@ -32,6 +33,7 @@ declare -a ALL_PACKAGES=(
 )
 
 declare -r -A EXTRA_PARAMS=(
+  ["caldav-api"]="--version=branch"
   ["cyberdrop-dl"]="--version=branch"
   ["gallery-dl-unstable"]="--version=branch"
   ["glance"]="--version=branch=dev"

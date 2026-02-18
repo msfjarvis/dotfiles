@@ -79,6 +79,7 @@ in
   age-keygen-deterministic = callPackage ./packages/age-keygen-deterministic { };
   boop-gtk = callPackage ./packages/boop-gtk { };
   caddy-with-plugins = callPackage ./packages/caddy-with-plugins { };
+  caldav-api = callPackage ./packages/caldav-api { };
   clipboard-substitutor = callPackage ./packages/clipboard-substitutor { };
   cyberdrop-dl = callPackage ./packages/cyberdrop-dl { };
   dependency-watch = callPackage ./packages/dependency-watch { };
