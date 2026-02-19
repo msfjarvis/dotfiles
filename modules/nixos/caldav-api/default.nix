@@ -31,15 +31,15 @@ in
       description = "Subdomain name for the Tailscale virtual host";
     };
 
-    environmentFile = mkOption {
-      type = types.path;
-      example = "/run/secrets/caldav-api.env";
-      description = "Environment file containing CALDAV_URL, CALDAV_USERNAME, CALDAV_PASSWORD, and optionally PORT and TZ";
-    };
-
   };
 
   config = mkIf cfg.enable {
+    sops.secrets.caldav-api = {
+      sopsFile = lib.snowfall.fs.get-file "secrets/caldav-api.env";
+      format = "dotenv";
+      restartUnits = [ "caldav-api.service" ];
+    };
+
     systemd.services.caldav-api = {
       description = "CalDAV HTTP API service";
       wantedBy = [ "multi-user.target" ];
@@ -47,7 +47,7 @@ in
       serviceConfig = {
         DynamicUser = true;
         ExecStart = getExe cfg.package;
-        EnvironmentFile = cfg.environmentFile;
+        EnvironmentFile = [ config.sops.secrets.caldav-api.path ];
         Restart = "on-failure";
         RestartSec = "30s";
         Type = "simple";
