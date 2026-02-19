@@ -47,6 +47,9 @@ in
       serviceConfig = {
         DynamicUser = true;
         ExecStart = getExe cfg.package;
+        Environment = [
+          "PORT=${toString ports.caldav-api}"
+        ];
         EnvironmentFile = [ config.sops.secrets.caldav-api.path ];
         Restart = "on-failure";
         RestartSec = "30s";
