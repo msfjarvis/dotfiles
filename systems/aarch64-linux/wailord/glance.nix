@@ -84,10 +84,11 @@
               type = "custom-api";
               title = "Open Tasks";
               cache = "5m";
-              url = "https://caldav-api.tiger-shark.ts.net/todo";
+              url = "https://caldav-api.tiger-shark.ts.net/tasks";
               template = ''
                 <ul class="list list-gap-14 list-with-separator">
                 {{ range .JSON.Array "" }}
+                  {{ if eq (.String "status") "NEEDS-ACTION" }}
                   <li class="size-h3">
                     <a href="{{ .String "url" }}" target="_blank" class="color-primary-if-not-visited">
                       {{ .String "summary" }}
@@ -95,14 +96,17 @@
                     <div class="text-color-dimmed size-h5 margin-top-4">
                       {{ if .String "due" }}
                         Due <span {{ .String "due" | parseTime "RFC3339" | toRelativeTime }}></span>
+                      {{ else if .String "start" }}
+                        Starts <span {{ .String "start" | parseTime "RFC3339" | toRelativeTime }}></span>
                       {{ else }}
-                        No due date
+                        No date set
                       {{ end }}
                       {{ if .Exists "categories" }}
                         {{ range .Array "categories" }} • {{ .String "" }}{{ end }}
                       {{ end }}
                     </div>
                   </li>
+                  {{ end }}
                 {{ end }}
                 </ul>
               '';
