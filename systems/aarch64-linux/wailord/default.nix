@@ -113,6 +113,10 @@ in
       domain = "links.msfjarvis.dev";
     };
 
+    caldav-api = {
+      enable = true;
+    };
+
     forgejo = {
       enable = true;
       domain = "git.msfjarvis.dev";
