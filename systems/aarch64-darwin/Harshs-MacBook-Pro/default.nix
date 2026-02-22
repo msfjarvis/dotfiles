@@ -55,6 +55,7 @@
       "raycast"
       "rectangle"
       "spotify"
+      "tailscale"
       "zed"
     ];
     taps = [ ];
