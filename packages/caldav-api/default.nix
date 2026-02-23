@@ -5,12 +5,12 @@
 }:
 buildGoModule rec {
   pname = "caldav-api";
-  version = "0-unstable-2026-02-21";
+  version = "0-unstable-2026-02-22";
 
   src = fetchgit {
     url = "https://git.msfjarvis.dev/msfjarvis/acceptable-vibes.git";
-    rev = "b9458ca933fedc5178f490535b9fb0cb7754532c";
-    hash = "sha256-UiRSNnKEig+2dit8NgfW3u+4jN0veZqYZh15qWTvTIE=";
+    rev = "508fa3eaaf7a63ea9ef850f7693d80c2dabd4971";
+    hash = "sha256-itVAG3ZHey4lJ4P9daxQPP/Gq5x9F3vH3ce0OGZKwHc=";
   };
 
   sourceRoot = "${src.name}/caldav-api";
