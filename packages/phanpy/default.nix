@@ -7,7 +7,7 @@
 }:
 buildNpmPackage {
   pname = "phanpy";
-  version = "2026.01.31.8b98d5a-unstable-2026-02-22";
+  version = "2026.02.24.48b2cf7-unstable-2026-02-22";
 
   src = fetchFromGitHub {
     owner = "cheeaun";
