@@ -55,7 +55,7 @@
       "raycast"
       "rectangle"
       "spotify"
-      "tailscale"
+      "tailscale-app"
       "zed"
     ];
     taps = [ ];
