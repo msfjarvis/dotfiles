@@ -42,6 +42,7 @@
 
   homebrew = {
     brews = [
+      "github-mcp-server"
       "gnu-sed"
       "opencode"
       "pinentry-mac"
