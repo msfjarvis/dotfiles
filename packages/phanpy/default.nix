@@ -17,11 +17,8 @@ buildNpmPackage {
   };
 
   patches = [
-    # (fetchpatch2 {
-    #   # https://github.com/cheeaun/phanpy/issues/1085
-    #   url = "https://github.com/sm32d/phanpy/commit/1d50be6834d68d09a76b47e23b7584dd5b0cd4e6.patch";
-    #   hash = "sha256-C3L10o0s7dx7bRMoqOOGSyA3oLfMyVMSRlvgd/AAG1c=";
-    # })
+    # Rebased copy of PR 1096
+    ./0001-1085-add-a-2-in-1-fav-boost-button.patch
   ];
 
   npmDepsHash = "sha256-WTQUgP0TiGU8zFvXy4FGfGrjfk3tdhpTlMQ99EFpAV0=";

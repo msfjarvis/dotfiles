@@ -1,0 +1,177 @@
+From 863845d85f8b7c0dd95498bc390882bc370f5d6b Mon Sep 17 00:00:00 2001
+From: "Sulabh Mehta (Dominik)" <github@sume.uk>
+Date: Mon, 17 Mar 2025 16:54:01 +0800
+Subject: [PATCH] [#1085] add a 2 in 1 fav&boost button
+
+(cherry picked from commit 1d50be6834d68d09a76b47e23b7584dd5b0cd4e6)
+---
+ src/components/ICONS.jsx  |  1 +
+ src/components/status.css | 24 +++++++++++
+ src/components/status.jsx | 86 +++++++++++++++++++++++++++++++++++++++
+ src/index.css             |  1 +
+ 4 files changed, 112 insertions(+)
+
+diff --git a/src/components/ICONS.jsx b/src/components/ICONS.jsx
+index 4d74e0685e40..344bcd683c7c 100644
+--- a/src/components/ICONS.jsx
++++ b/src/components/ICONS.jsx
+@@ -203,4 +203,5 @@ export const ICONS = {
+     module: () => import('../iconify-icons/mingcute/moon-line.js'),
+     flip: 'horizontal',
+   },
++  'fav-boost-celebrate': () => import('../iconify-icons/mingcute/celebrate-line.js'),
+ };
+diff --git a/src/components/status.css b/src/components/status.css
+index 83ee3dc81988..ceb04d0ec814 100644
+--- a/src/components/status.css
++++ b/src/components/status.css
+@@ -2540,6 +2540,30 @@ a.card:is(:hover, :focus):visited {
+ .status .action > button.plain.favourite-button.checked .icon {
+   animation: hearted 1s ease-out;
+ }
++.status .action > button.plain.favourite-boost-button:not(:disabled):is(:hover, :focus) {
++  color: var(--celebrate-color);
++}
++.status .action > button.plain.favourite-boost-button.checked {
++  color: var(--celebrate-color);
++  border-color: var(--celebrate-color);
++}
++@keyframes favouriteAndBoosted {
++  15% {
++    transform: scale(1.25) translateY(-1px);
++  }
++  30% {
++    transform: scale(1) rotate(10deg);
++  }
++  45% {
++    transform: scale(1.5) translateY(-2px) rotate(-10deg);
++  }
++  100% {
++    transform: scale(1);
++  }
++}
++.status .action > button.plain.favourite-boost-button.checked .icon {
++  animation: favouriteAndBoosted 1s ease-out;
++}
+ .status .action > button.plain.bookmark-button.checked {
+   color: var(--link-color);
+   border-color: var(--link-color);
+diff --git a/src/components/status.jsx b/src/components/status.jsx
+index b0f0547df07c..831805688d38 100644
+--- a/src/components/status.jsx
++++ b/src/components/status.jsx
+@@ -889,6 +889,81 @@ function Status({
+     }
+   };
+ 
++  const favouriteAndBoostStatus = async () => {
++    if (!sameInstance || !authenticated) {
++      alert(unauthInteractionErrorMessage);
++      return false;
++    }
++    try {
++      // Case 1: Neither liked nor boosted - add both
++      // Case 2: Either liked or boosted - preserve existing and add other
++      // Case 3: Both liked and boosted - remove both
++      const newFavourited = !(favourited && reblogged);
++      const newReblogged = !(favourited && reblogged);
++
++      states.statuses[sKey] = {
++        ...status,
++        favourited: newFavourited,
++        favouritesCount: favouritesCount + (newFavourited ? 1 : -1),
++        reblogged: newReblogged,
++        reblogsCount: reblogsCount + (newReblogged ? 1 : -1),
++      };
++      
++      // Execute actions based on state changes
++      const actions = [];
++      if (newFavourited !== favourited) {
++        actions.push(
++          newFavourited
++            ? masto.v1.statuses.$select(id).favourite()
++            : masto.v1.statuses.$select(id).unfavourite()
++        );
++      }
++      if (newReblogged !== reblogged) {
++        actions.push(
++          newReblogged
++            ? masto.v1.statuses.$select(id).reblog()
++            : masto.v1.statuses.$select(id).unreblog()
++        );
++      }
++      
++      const results = await Promise.all(actions);
++      
++      // If we're turning off both actions, refresh the status to ensure UI sync
++      if (!newFavourited && !newReblogged) {
++        const refreshedStatus = await masto.v1.statuses.$select(id).fetch();
++        saveStatus(refreshedStatus, instance);
++      } else if (results.length) {
++        const lastResult = results[results.length - 1];
++        saveStatus(lastResult, instance);
++      }
++      
++      return true;
++    } catch (e) {
++      console.error(e);
++      // Revert optimistic update
++      states.statuses[sKey] = status;
++      return false;
++    }
++  };
++
++  const favouriteAndBoostStatusNotify = async () => {
++    try {
++      const success = await favouriteAndBoostStatus();
++      if (success) {
++        showToast(
++          !favourited && !reblogged
++            ? t`Liked and boosted!`
++            : favourited && reblogged
++              ? t`Removed like and boost`
++              : t`Updated status`
++        );
++      }
++    } catch (e) {
++      console.error(e);
++      showToast(t`Unable to update status`);
++    }
++  };
++
+   const favouriteStatus = async () => {
+     if (!sameInstance || !authenticated) {
+       alert(unauthInteractionErrorMessage);
+@@ -2996,6 +3071,17 @@ function Status({
+                     onClick={favouriteStatus}
+                   />
+                 </div>
++                <div class="action">
++                  <button
++                    type="button" 
++                    class={`plain favourite-boost-button ${favourited && reblogged ? 'checked' : ''}`}
++                    title={t`Like and boost`}
++                    disabled={!canBoost}
++                    onClick={favouriteAndBoostStatusNotify}
++                  >
++                    <Icon icon="fav-boost-celebrate" size="l" alt={t`Like and boost`} />
++                  </button>
++                </div>
+                 {supports('@mastodon/post-bookmark') && (
+                   <div class="action">
+                     <StatusButton
+diff --git a/src/index.css b/src/index.css
+index c2f878d62907..19d2657bbc6e 100644
+--- a/src/index.css
++++ b/src/index.css
+@@ -86,6 +86,7 @@
+   --reply-to-color: var(--orange-color);
+   --reply-to-text-color: #b36200;
+   --favourite-color: var(--red-color);
++  --celebrate-color: #ff00bf;
+   --reply-to-faded-color: #ffa60020;
+   --hashtag-color: LightSeaGreen;
+   --hashtag-faded-color: color-mix(
+-- 
+2.52.0
+
