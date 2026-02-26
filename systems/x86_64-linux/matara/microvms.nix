@@ -1,5 +1,7 @@
 { inputs, ... }:
 {
+  microvm.host.enable = true;
+
   microvm.vms = {
     "stash" = {
       # Host build-time reference to where the MicroVM NixOS is defined
@@ -27,8 +29,8 @@
       # Assign host-side IP on the bridge and serve DHCP with static leases
       "10-microvm0" = {
         matchConfig.Name = "microvm0";
+        addresses = [ { addressConfig.Address = "10.100.0.1/24"; } ];
         networkConfig = {
-          Address = "10.100.0.1/24";
           DHCPServer = true;
           IPv4Forwarding = true;
         };

@@ -79,5 +79,10 @@
     };
   };
   microvm.hypervisor = "qemu";
+  microvm.qemu.serialConsole = true;
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = false;
+  };
   system.stateVersion = "24.05";
 }
