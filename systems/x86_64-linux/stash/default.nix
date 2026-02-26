@@ -18,6 +18,9 @@
       DHCP = "yes";
       IPv6AcceptRA = false;
     };
+    dhcpV4Config = {
+      ClientIdentifier = "mac";
+    };
   };
   microvm.interfaces = [
     {
