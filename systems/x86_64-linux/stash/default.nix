@@ -9,6 +9,7 @@
   imports = [ inputs.microvm.nixosModules.microvm ];
   networking.hostName = "stash";
   networking.useNetworkd = true;
+  systemd.network.enable = true;
 
   # Pick up an IP from the host bridge DHCP server.
   # The host issues a static lease 10.100.0.2 for MAC 02:00:00:00:00:01.
@@ -83,6 +84,7 @@
   };
   microvm.hypervisor = "qemu";
   microvm.qemu.serialConsole = true;
+  services.qemuGuest.enable = true;
   services.openssh = {
     enable = true;
     settings.PasswordAuthentication = false;
