@@ -29,7 +29,7 @@
       # Assign host-side IP on the bridge and serve DHCP with static leases
       "10-microvm0" = {
         matchConfig.Name = "microvm0";
-        addresses = [ { addressConfig.Address = "10.100.0.1/24"; } ];
+        addresses = [ { Address = "10.100.0.1/24"; } ];
         networkConfig = {
           DHCPServer = true;
           IPv4Forwarding = true;

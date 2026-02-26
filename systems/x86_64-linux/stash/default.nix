@@ -69,7 +69,7 @@
     mutableSettings = true;
     settings = {
       ui.frontPageContent = [ ];
-      host = "127.0.0.1";
+      host = "0.0.0.0";
       port = lib.${namespace}.ports.stash + 1000;
       stash = [
         {
