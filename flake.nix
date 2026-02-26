@@ -42,23 +42,32 @@
         nix-topology.nixosModules.default
         sops-nix.nixosModules.sops
         stylix.nixosModules.stylix
-        srvos.nixosModules.common
-        srvos.nixosModules.mixins-systemd-boot
       ];
 
       systems.hosts.matara.modules = with inputs; [
+        srvos.nixosModules.common
         srvos.nixosModules.mixins-mdns
+        srvos.nixosModules.mixins-systemd-boot
         srvos.nixosModules.mixins-telegraf
         srvos.nixosModules.roles-prometheus
         srvos.nixosModules.server
       ];
       systems.hosts.melody.modules = with inputs; [
+        srvos.nixosModules.common
+        srvos.nixosModules.mixins-systemd-boot
         srvos.nixosModules.mixins-telegraf
         srvos.nixosModules.roles-prometheus
         srvos.nixosModules.server
       ];
-      systems.hosts.ryzenbox.modules = with inputs; [ srvos.nixosModules.desktop ];
+      systems.hosts.ryzenbox.modules = with inputs; [
+        srvos.nixosModules.common
+        srvos.nixosModules.mixins-systemd-boot
+        srvos.nixosModules.desktop
+      ];
+      systems.hosts.stash.modules = with inputs; [ microvm.nixosModules.microvm ];
       systems.hosts.wailord.modules = with inputs; [
+        srvos.nixosModules.common
+        srvos.nixosModules.mixins-systemd-boot
         srvos.nixosModules.mixins-telegraf
         srvos.nixosModules.roles-prometheus
         srvos.nixosModules.server

@@ -8,7 +8,6 @@
 {
   imports = [ inputs.microvm.nixosModules.microvm ];
   networking.hostName = "stash";
-
   microvm.interfaces = [
     {
       type = "tap";
@@ -16,7 +15,6 @@
       mac = "02:00:00:00:00:01";
     }
   ];
-
   microvm.shares = [
     {
       source = "/nix/store";
@@ -37,11 +35,9 @@
       proto = "virtiofs";
     }
   ];
-
   users.users.msfjarvis.isSystemUser = true;
   users.users.msfjarvis.group = "msfjarvis";
   users.groups.msfjarvis = { };
-
   services.stash = {
     enable = true;
     pythonPackage = pkgs.python3.withPackages (p: [
@@ -71,4 +67,6 @@
       ];
     };
   };
+  microvm.hypervisor = "qemu";
+  system.stateVersion = "24.05";
 }
