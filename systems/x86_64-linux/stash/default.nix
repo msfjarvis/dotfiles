@@ -8,6 +8,17 @@
 {
   imports = [ inputs.microvm.nixosModules.microvm ];
   networking.hostName = "stash";
+  networking.useNetworkd = true;
+
+  # Pick up an IP from the host bridge DHCP server.
+  # The host issues a static lease 10.100.0.2 for MAC 02:00:00:00:00:01.
+  systemd.network.networks."10-eth" = {
+    matchConfig.MACAddress = "02:00:00:00:00:01";
+    networkConfig = {
+      DHCP = "yes";
+      IPv6AcceptRA = false;
+    };
+  };
   microvm.interfaces = [
     {
       type = "tap";
