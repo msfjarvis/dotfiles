@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  inputs,
   namespace,
   ...
 }:
@@ -12,8 +11,6 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    inputs.microvm.nixosModules.host
-    ./microvms.nix
   ];
 
   hardware.facter.detected.graphics.enable = false;
@@ -83,14 +80,6 @@ in
     }
     // (mkTailscaleVHost "stash" ''
       reverse_proxy ${config.services.stash.settings.host}:${toString config.services.stash.settings.port} {
-        transport http {
-          keepalive 60m
-          keepalive_interval 10s
-        }
-      }
-    '')
-    // (mkTailscaleVHost "omg" ''
-      reverse_proxy 10.100.0.2:${toString (lib.${namespace}.ports.stash + 1000)} {
         transport http {
           keepalive 60m
           keepalive_interval 10s

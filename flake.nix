@@ -19,8 +19,7 @@
       src = ./.;
       channels-config = {
         allowUnfree = true;
-        # microvm.nix uses pkgs.system
-        allowAliases = true;
+        allowAliases = false;
         cudaSupport = false;
         permittedInsecurePackages = [ ];
       };
@@ -42,32 +41,23 @@
         nix-topology.nixosModules.default
         sops-nix.nixosModules.sops
         stylix.nixosModules.stylix
+        srvos.nixosModules.common
+        srvos.nixosModules.mixins-systemd-boot
       ];
 
       systems.hosts.matara.modules = with inputs; [
-        srvos.nixosModules.common
         srvos.nixosModules.mixins-mdns
-        srvos.nixosModules.mixins-systemd-boot
         srvos.nixosModules.mixins-telegraf
         srvos.nixosModules.roles-prometheus
         srvos.nixosModules.server
       ];
       systems.hosts.melody.modules = with inputs; [
-        srvos.nixosModules.common
-        srvos.nixosModules.mixins-systemd-boot
         srvos.nixosModules.mixins-telegraf
         srvos.nixosModules.roles-prometheus
         srvos.nixosModules.server
       ];
-      systems.hosts.ryzenbox.modules = with inputs; [
-        srvos.nixosModules.common
-        srvos.nixosModules.mixins-systemd-boot
-        srvos.nixosModules.desktop
-      ];
-      systems.hosts.stash.modules = with inputs; [ microvm.nixosModules.microvm ];
+      systems.hosts.ryzenbox.modules = with inputs; [ srvos.nixosModules.desktop ];
       systems.hosts.wailord.modules = with inputs; [
-        srvos.nixosModules.common
-        srvos.nixosModules.mixins-systemd-boot
         srvos.nixosModules.mixins-telegraf
         srvos.nixosModules.roles-prometheus
         srvos.nixosModules.server
@@ -77,7 +67,6 @@
         copyparty.overlays.default
         devshell.overlays.default
         fenix.overlays.default
-        microvm.overlays.default
         # niri.overlays.niri
         nix-topology.overlays.default
       ];
@@ -156,9 +145,6 @@
 
     micro-theme.url = "git+https://github.com/catppuccin/micro";
     micro-theme.flake = false;
-
-    microvm.url = "github:microvm-nix/microvm.nix";
-    microvm.inputs.nixpkgs.follows = "nixpkgs";
 
     # niri.url = "github:sodiboo/niri-flake";
     # niri.inputs.nixpkgs.follows = "nixpkgs";

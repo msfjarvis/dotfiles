@@ -22,12 +22,11 @@ in
       type = types.str;
       description = "Name of the network adapter to configure for exit node performance";
     };
-    microVM = mkEnableOption "microVM specific optimizations";
     tailscaleExitNode = mkEnableOption "Run this machine as a Tailscale exit node";
   };
   config = mkIf cfg.enable {
     # Enable Tailscale
-    profiles.${namespace}.tailscale.enable = !cfg.microVM;
+    profiles.${namespace}.tailscale.enable = true;
 
     snowfallorg.users.msfjarvis.home.config = {
       services.gpg-agent.pinentry.package = pkgs.pinentry-curses;
@@ -58,9 +57,9 @@ in
     powerManagement.enable = false;
     stylix.enable = false;
 
-    environment.systemPackages = lib.optionals (!cfg.microVM) [
+    environment.systemPackages = with pkgs; [
       pkgs.${namespace}.gdrive
-      pkgs.net-tools
+      net-tools
     ];
 
     networking = {
@@ -95,9 +94,9 @@ in
     services.getty.autologinUser = lib.mkForce "msfjarvis";
 
     # Enable SSH
-    programs.mosh.enable = !cfg.microVM;
+    programs.mosh.enable = true;
     services.openssh = {
-      enable = !cfg.microVM;
+      enable = true;
       package = pkgs.openssh_hpn;
       settings = {
         KbdInteractiveAuthentication = false;
