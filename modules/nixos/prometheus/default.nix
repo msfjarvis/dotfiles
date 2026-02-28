@@ -36,7 +36,7 @@ let
 
     {{ end }}
   '';
-  telegram.text = ''{{ if .CommonAnnotations.summary }}{{ .CommonAnnotations.summary }}{{ else }}Alert: {{ or .CommonLabels.alertname "UnknownAlert" }} on {{ if .CommonLabels.target }}{{ .CommonLabels.target }}{{ else }}unknown{{ end }}{{ end }}'';
+  telegram.text = ''{{ .Annotations.description }}'';
 
   inherit (lib)
     mkEnableOption
