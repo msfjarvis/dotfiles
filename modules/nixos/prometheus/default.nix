@@ -36,7 +36,7 @@ let
 
     {{ end }}
   '';
-  telegram.text = "{{ .Annotations.description }}";
+  telegram.text = ''{{ .Annotations.description }}'';
 
   inherit (lib)
     mkEnableOption
