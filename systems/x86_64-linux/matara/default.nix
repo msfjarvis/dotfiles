@@ -57,7 +57,8 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    pkgs.${namespace}.cyberdrop-dl
+    # Broken omegaconf dependency
+    # pkgs.${namespace}.cyberdrop-dl
     ffmpeg_8-headless
     git
     megatools
