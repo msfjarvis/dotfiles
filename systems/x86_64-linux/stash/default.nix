@@ -50,6 +50,13 @@
       proto = "virtiofs";
     }
   ];
+  microvm.volumes = [
+    {
+      mountPoint = "/var/lib/stash";
+      image = "stash.img";
+      size = 1024 * 10;
+    }
+  ];
   users.users.msfjarvis.isSystemUser = true;
   users.users.msfjarvis.group = "msfjarvis";
   users.groups.msfjarvis = { };
