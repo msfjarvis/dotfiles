@@ -58,6 +58,10 @@
       size = 1024 * 10;
     }
   ];
+  # QEMU hangs when memory is exactly 2GB???
+  # https://github.com/microvm-nix/microvm.nix/issues/171
+  microvm.mem = 2048 + 512;
+
   users.users.msfjarvis.isSystemUser = true;
   users.users.msfjarvis.group = "msfjarvis";
   users.groups.msfjarvis = { };
