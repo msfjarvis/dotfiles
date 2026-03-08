@@ -116,7 +116,8 @@ in
       pkgs.${namespace}.age-keygen-deterministic
       age
       pkgs.${namespace}.boop-gtk
-      calibre
+      # Has a broken dependency and I don't really need it right now
+      # calibre
       pkgs.${namespace}.cyberdrop-dl
       fclones
       ffmpeg_8-full
