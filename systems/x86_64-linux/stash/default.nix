@@ -50,6 +50,7 @@
       proto = "virtiofs";
     }
   ];
+  microvm.vcpu = 4;
   microvm.volumes = [
     {
       mountPoint = "/var/lib/stash";
