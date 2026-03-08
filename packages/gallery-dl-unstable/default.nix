@@ -6,7 +6,7 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "gallery-dl-unstable";
-  version = "1.31.7-unstable-2026-03-06";
+  version = "1.31.8-unstable-2026-03-06";
   pyproject = true;
 
   src = fetchFromGitHub {
