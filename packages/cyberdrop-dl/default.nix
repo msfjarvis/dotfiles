@@ -1,10 +1,10 @@
 {
   lib,
-  python313,
+  python3,
   fetchFromGitHub,
 }:
 
-python313.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
   version = "8.10.0-unstable-2026-02-06";
   pyproject = true;
@@ -19,36 +19,29 @@ python313.pkgs.buildPythonApplication rec {
   pythonRelaxDeps = map (p: p.pname) dependencies;
 
   build-system = [
-    python313.pkgs.poetry-core
+    python3.pkgs.poetry-core
   ];
 
-  dependencies = with python313.pkgs; [
+  dependencies = with python3.pkgs; [
     aiodns
     aiofiles
     aiohttp
-    aiohttp-client-cache
     aiolimiter
     aiosqlite
-    apprise
-    arrow
-    asyncpraw
     beautifulsoup4
-    browser-cookie3
     certifi
     curl-cffi
     dateparser
-    get-video-properties
     imagesize
     inquirerpy
+    jeepney
     m3u8
-    mediafire
     myjdapi
     packaging
-    pillow
-    platformdirs
     propcache
     psutil
     pycares
+    pycryptodome
     pydantic
     pyyaml
     rich
