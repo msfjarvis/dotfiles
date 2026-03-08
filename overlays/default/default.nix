@@ -14,5 +14,9 @@ _: prev: {
   megatools = prev.megatools.overrideAttrs (_: {
     patches = [ ./megatools.patch ];
   });
+  # Patch GitHub Copilot premium request overuse
+  opencode = prev.opencode.overrideAttrs (_: {
+    patches = [ ./opencode-pr-8721.patch ];
+  });
   qbittorrent = prev.qbittorrent.override { guiSupport = false; };
 }
