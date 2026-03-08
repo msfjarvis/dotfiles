@@ -107,7 +107,7 @@ in
       # Arduino
       "dialout"
       # Virtualization
-      "libvirtd"
+      # "libvirtd"
       # Root
       "wheel"
     ];
@@ -194,7 +194,7 @@ in
   };
 
   virtualisation.libvirtd = {
-    enable = true;
+    enable = false;
     qemu = {
       package = pkgs.qemu_kvm;
       runAsRoot = true;
