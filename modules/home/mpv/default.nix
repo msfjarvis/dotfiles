@@ -50,7 +50,7 @@ in
             scripts = with pkgs.mpvScripts; [
               inhibit-gnome
               modernz
-              mpv-cheatsheet
+              mpv-cheatsheet-ng
               thumbfast
             ];
 
