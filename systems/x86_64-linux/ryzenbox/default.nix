@@ -117,6 +117,7 @@ in
       pkgs.${namespace}.adbear
       pkgs.${namespace}.age-keygen-deterministic
       age
+      ast-grep
       pkgs.${namespace}.boop-gtk
       # Has a broken dependency and I don't really need it right now
       # calibre
