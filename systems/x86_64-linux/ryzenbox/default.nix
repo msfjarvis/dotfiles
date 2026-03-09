@@ -110,6 +110,8 @@ in
       # "libvirtd"
       # Root
       "wheel"
+      # DDC control
+      config.hardware.i2c.group
     ];
     packages = with pkgs; [
       pkgs.${namespace}.adbear
@@ -164,6 +166,9 @@ in
     enable = true;
     binfmt = true;
   };
+
+  # Enable external monitor brightness control
+  services.ddccontrol.enable = true;
 
   services.udev.extraRules = ''
     # Disable the in-built Bluetooth adapter

@@ -61,6 +61,10 @@ let
       package = null;
       uuid = "screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com";
     }
+    {
+      package = brightness-control-using-ddcutil;
+      uuid = "monitor-brightness-volume@ailin.nemui";
+    }
   ];
 in
 {
