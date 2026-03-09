@@ -25,6 +25,7 @@
     ninja
     nix-output-monitor
     nixd
+    opencode
     openssh
     openssl
     pkgs.${namespace}.pidcat
@@ -44,7 +45,6 @@
     brews = [
       "github-mcp-server"
       "gnu-sed"
-      "opencode"
       "pinentry-mac"
       "spicetify-cli"
     ];
