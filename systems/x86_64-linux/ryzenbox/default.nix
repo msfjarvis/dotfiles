@@ -115,7 +115,6 @@ in
     ];
     packages = with pkgs; [
       pkgs.${namespace}.adbear
-      pkgs.${namespace}.age-keygen-deterministic
       age
       ast-grep
       pkgs.${namespace}.boop-gtk
