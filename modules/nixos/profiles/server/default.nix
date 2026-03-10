@@ -97,11 +97,11 @@ in
     # Enable SSH
     programs.mosh.enable = !cfg.microVM;
     services.openssh = {
-      enable = !cfg.microVM;
+      enable = true;
       package = pkgs.openssh_hpn;
       settings = {
-        KbdInteractiveAuthentication = false;
-        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = cfg.microVM;
+        PasswordAuthentication = cfg.microVM;
       };
     };
     users.users.root.openssh.authorizedKeys.keys = [

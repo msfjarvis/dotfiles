@@ -11,6 +11,13 @@
   networking.useNetworkd = true;
   systemd.network.enable = true;
 
+  profiles.${namespace} = {
+    server = {
+      enable = true;
+      microVM = true;
+    };
+  };
+
   # Pick up an IP from the host bridge DHCP server.
   # The host issues a static lease 10.100.0.2 for MAC 02:00:00:00:00:01.
   systemd.network.networks."10-eth" = {
@@ -62,12 +69,17 @@
   # https://github.com/microvm-nix/microvm.nix/issues/171
   microvm.mem = 2048 + 512;
 
-  # Enable SSH over VSOCK
-  microvm.vsock.cid = lib.${namespace}.vsock.stash;
+  # Integrate with systemd-machined
+  microvm.registerWithMachined = true;
 
-  users.users.msfjarvis.isSystemUser = true;
-  users.users.msfjarvis.group = "msfjarvis";
-  users.groups.msfjarvis = { };
+  # Enable SSH over VSOCK
+  microvm.vsock = {
+    cid = lib.${namespace}.vsock.stash;
+    ssh.enable = true;
+  };
+
+  users.users.msfjarvis.group = "users";
+  users.users.msfjarvis.hashedPassword = lib.mkForce "";
   # Pin the stash service user to UID 1000 so it matches the host's msfjarvis UID.
   users.users.stash.uid = 1000;
 
@@ -104,9 +116,5 @@
   microvm.hypervisor = "qemu";
   microvm.qemu.serialConsole = true;
   services.qemuGuest.enable = true;
-  services.openssh = {
-    enable = true;
-    settings.PasswordAuthentication = false;
-  };
   system.stateVersion = "24.05";
 }
