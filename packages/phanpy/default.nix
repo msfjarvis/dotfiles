@@ -18,7 +18,9 @@ buildNpmPackage {
 
   patches = [
     # Rebased copy of PR 1096
-    ./0001-1085-add-a-2-in-1-fav-boost-button.patch
+    ./0001-add-a-2-in-1-fav-boost-button.patch
+    # Fix for the scrolling bug
+    ./0002-fix-carousel-make-carousels-focusable-so-keyboard-sc.patch
   ];
 
   npmDepsHash = "sha256-WTQUgP0TiGU8zFvXy4FGfGrjfk3tdhpTlMQ99EFpAV0=";

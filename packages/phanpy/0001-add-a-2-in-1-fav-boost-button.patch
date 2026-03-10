@@ -1,7 +1,7 @@
-From 863845d85f8b7c0dd95498bc390882bc370f5d6b Mon Sep 17 00:00:00 2001
+From 82d13211ac80448875eebc408102c6c9c1f143eb Mon Sep 17 00:00:00 2001
 From: "Sulabh Mehta (Dominik)" <github@sume.uk>
 Date: Mon, 17 Mar 2025 16:54:01 +0800
-Subject: [PATCH] [#1085] add a 2 in 1 fav&boost button
+Subject: [PATCH 1/2] add a 2 in 1 fav&boost button
 
 (cherry picked from commit 1d50be6834d68d09a76b47e23b7584dd5b0cd4e6)
 ---
@@ -173,5 +173,5 @@ index c2f878d62907..19d2657bbc6e 100644
    --hashtag-color: LightSeaGreen;
    --hashtag-faded-color: color-mix(
 -- 
-2.52.0
+2.53.0
 

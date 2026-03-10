@@ -1,0 +1,67 @@
+From bf9d3d819f8fb940f9bb923e999d05b8d3b53cea Mon Sep 17 00:00:00 2001
+From: Harsh Shandilya <me@msfjarvis.dev>
+Date: Wed, 11 Mar 2026 01:47:54 +0530
+Subject: [PATCH 2/2] fix(carousel): make carousels focusable so keyboard
+ scrolling works (#1054)
+
+---
+ src/components/media-first-container.jsx | 2 +-
+ src/components/timeline.jsx              | 2 +-
+ src/pages/notifications.jsx              | 1 +
+ src/pages/trending.jsx                   | 2 +-
+ 4 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/src/components/media-first-container.jsx b/src/components/media-first-container.jsx
+index 95bf4eea7202..a12469bca03e 100644
+--- a/src/components/media-first-container.jsx
++++ b/src/components/media-first-container.jsx
+@@ -33,7 +33,7 @@ function MediaFirstContainer(props) {
+   return (
+     <>
+       <div class="media-first-container">
+-        <div class="media-first-carousel" ref={carouselRef}>
++        <div class="media-first-carousel" ref={carouselRef} tabIndex={0}>
+           {mediaAttachments.map((media, i) => (
+             <div class="media-first-item" key={media.id}>
+               <Media
+diff --git a/src/components/timeline.jsx b/src/components/timeline.jsx
+index 7bf1ba347fe1..4659fac294df 100644
+--- a/src/components/timeline.jsx
++++ b/src/components/timeline.jsx
+@@ -949,7 +949,7 @@ function StatusCarousel({ title, class: className, children }) {
+           </button>
+         </span>
+       </header>
+-      <ul ref={carouselRef}>
++      <ul ref={carouselRef} tabIndex={0}>
+         <InView
+           class="status-carousel-beacon"
+           onChange={(inView) => {
+diff --git a/src/pages/notifications.jsx b/src/pages/notifications.jsx
+index 8932ff26d46b..aa786c7a933c 100644
+--- a/src/pages/notifications.jsx
++++ b/src/pages/notifications.jsx
+@@ -745,6 +745,7 @@ function Notifications({ columnMode }) {
+                     announcements.length > 1 ? 'multiple' : 'single'
+                   }`}
+                   ref={announcementsListRef}
++                  tabIndex={0}
+                 >
+                   {announcements.map((announcement) => (
+                     <li>
+diff --git a/src/pages/trending.jsx b/src/pages/trending.jsx
+index 4353d87e63d1..08c18def57dd 100644
+--- a/src/pages/trending.jsx
++++ b/src/pages/trending.jsx
+@@ -229,7 +229,7 @@ function Trending({ columnMode, ...props }) {
+           </div>
+         )}
+         {!!links.length && (
+-          <div class="links-bar">
++          <div class="links-bar" tabIndex={0}>
+             <header>
+               <h3>
+                 <Trans>Trending News</Trans>
+-- 
+2.53.0
+
