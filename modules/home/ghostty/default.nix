@@ -36,8 +36,8 @@ in
         notify-on-command-finish = "unfocused";
         notify-on-command-finish-action = "notify";
         palette-generate = true;
-        # 512 KB in bytes
-        scrollback-limit = 524288;
+        # 512 MB in bytes
+        scrollback-limit = 536870912;
         shell-integration = "bash";
         shell-integration-features = true;
         quit-after-last-window-closed = false;
