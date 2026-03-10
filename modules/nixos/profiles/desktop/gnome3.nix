@@ -63,7 +63,7 @@ let
     }
     {
       package = brightness-control-using-ddcutil;
-      uuid = "monitor-brightness-volume@ailin.nemui";
+      uuid = "display-brightness-ddcutil@themightydeity.github.com";
     }
   ];
 in
