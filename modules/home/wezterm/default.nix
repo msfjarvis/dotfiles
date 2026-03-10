@@ -29,7 +29,7 @@ in
         config.enable_wayland = true
 
         -- Use Iosevka with a smaller font size than default
-        config.font = wezterm.font 'IosevkaTerm Nerd Font Regular'
+        config.font = wezterm.font 'IosevkaTerm Nerd Font'
         config.font_size = 11.0
 
         -- Set initial size

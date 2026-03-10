@@ -58,6 +58,33 @@ in
       };
     };
 
+    fonts = {
+      enableDefaultPackages = true;
+      packages = with pkgs; [
+        noto-fonts
+        noto-fonts-cjk-sans
+        noto-fonts-color-emoji
+        nerd-fonts.iosevka-term
+        roboto
+        roboto-serif
+      ];
+      fontconfig = {
+        enable = true;
+        defaultFonts = {
+          monospace = [ "IosevkaTerm Nerd Font" ];
+          sansSerif = [
+            "Roboto"
+            "Noto Sans"
+          ];
+          serif = [
+            "Roboto Serif"
+            "Noto Serif"
+          ];
+          emoji = [ "Noto Color Emoji" ];
+        };
+      };
+    };
+
     # Theming
     stylix = {
       image = inputs.wallpaper;
@@ -71,15 +98,15 @@ in
           package = pkgs.noto-fonts-color-emoji;
         };
         monospace = {
-          name = "IosevkaTerm Nerd Font Regular";
+          name = "IosevkaTerm Nerd Font";
           package = pkgs.nerd-fonts.iosevka-term;
         };
         sansSerif = {
-          name = "Roboto Regular";
+          name = "Roboto";
           package = pkgs.roboto;
         };
         serif = {
-          name = "Roboto Serif 20pt Regular";
+          name = "Roboto Serif";
           package = pkgs.roboto-serif;
         };
         sizes = {
