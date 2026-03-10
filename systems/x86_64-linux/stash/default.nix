@@ -62,6 +62,9 @@
   # https://github.com/microvm-nix/microvm.nix/issues/171
   microvm.mem = 2048 + 512;
 
+  # Enable SSH over VSOCK
+  microvm.vsock.cid = lib.${namespace}.vsock.stash;
+
   users.users.msfjarvis.isSystemUser = true;
   users.users.msfjarvis.group = "msfjarvis";
   users.groups.msfjarvis = { };
@@ -90,7 +93,7 @@
     settings = {
       ui.frontPageContent = [ ];
       host = "0.0.0.0";
-      port = lib.${namespace}.ports.stash + 1000;
+      port = lib.${namespace}.ports.stash;
       stash = [
         {
           path = "/stash";
