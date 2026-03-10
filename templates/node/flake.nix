@@ -43,7 +43,7 @@
               }
             ];
 
-            packages = with pkgs; [ nodejs_18 ];
+            packages = with pkgs; [ nodejs ];
           };
         }
       );
