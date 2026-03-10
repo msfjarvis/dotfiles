@@ -85,6 +85,25 @@ in
   # Set your time zone.
   time.timeZone = "Asia/Kolkata";
 
+  programs.firejail =
+    let
+      vesktopPkg = pkgs.vesktop.override { withSystemVencord = true; };
+    in
+    {
+      enable = true;
+      wrappedBinaries = {
+        # Workaround from https://github.com/tailscale/tailscale/issues/10396#issuecomment-3871203280
+        vesktop = {
+          executable = "${lib.getExe vesktopPkg}";
+          desktop = "${vesktopPkg}/share/applications/vesktop.desktop";
+          extraArgs = [
+            "--net=wlp13s0"
+            "--noprofile"
+          ];
+        };
+      };
+    };
+
   services.flatpak = {
     enable = true;
     update.auto.enable = true;
@@ -153,7 +172,6 @@ in
       thunderbird-latest
       unrar
       uv
-      (vesktop.override { withSystemVencord = true; })
       yt-dlp
     ];
   };
