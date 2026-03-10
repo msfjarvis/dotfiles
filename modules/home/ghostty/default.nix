@@ -10,27 +10,38 @@ let
   inherit (lib)
     mkEnableOption
     mkIf
-    mkOption
-    types
     ;
 in
 {
-  # home-manager and stylix both have ghostty modules but
-  # they don't handle fonts right and the theme looks wack, just stick
-  # with this one.
   options.profiles.${namespace}.ghostty = {
     enable = mkEnableOption "ghostty, a fast, feature-rich, and cross-platform terminal emulator that uses platform-native UI and GPU acceleration.";
-    settings = mkOption {
-      type = types.attrs;
-      default = { };
-      description = "key = value settings for ghostty";
-    };
   };
   config = mkIf cfg.enable {
-    home.packages = [ pkgs.ghostty ];
-    home.file."${config.xdg.configHome}/ghostty/config" = mkIf (cfg.settings != { }) {
-      text = lib.generators.toINIWithGlobalSection { listsAsDuplicateKeys = true; } {
-        globalSection = cfg.settings;
+    stylix.targets.ghostty.enable = config.programs.ghostty.enable;
+    programs.ghostty = {
+      enable = true;
+      enableBashIntegration = true;
+      installBatSyntax = true;
+      # TODO: https://gist.github.com/jamesgecko/dd921cef7db3b9533cee4473e832f2a4
+      settings = {
+        cursor-click-to-move = true;
+        gtk-quick-terminal-layer = "overlay";
+        keybind = [
+          "ctrl+shift+right=unbind"
+          "ctrl+shift+left=unbind"
+          "shift+end=unbind"
+          "shift+home=unbind"
+        ];
+        maximize = true;
+        notify-on-command-finish = "unfocused";
+        notify-on-command-finish-action = "notify";
+        palette-generate = true;
+        # 512 KB in bytes
+        scrollback-limit = 524288;
+        shell-integration = "bash";
+        shell-integration-features = true;
+        quit-after-last-window-closed = false;
+        window-theme = "ghostty";
       };
     };
     dconf.settings = {

@@ -90,7 +90,7 @@ in
       image = inputs.wallpaper;
       polarity = "dark";
       opacity = {
-        terminal = 0.6;
+        terminal = 0.9;
       };
       fonts = {
         emoji = {
@@ -111,7 +111,7 @@ in
         };
         sizes = {
           applications = 12;
-          terminal = 12;
+          terminal = 11;
         };
       };
     };
