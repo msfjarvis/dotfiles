@@ -69,13 +69,7 @@ in
       repository = "rest:https://restic-wailord.${tailnetDomain}/";
       passwordFile = config.sops.secrets.restic_repo_password.path;
 
-      paths = forEach backupInstances (
-        name:
-        if builtins.elem name moddedInstances then
-          "${instancePath name}/.minecraft"
-        else
-          "${instancePath name}/minecraft"
-      );
+      paths = forEach backupInstances instancePath;
 
       pruneOpts = [
         "--keep-daily 2"
