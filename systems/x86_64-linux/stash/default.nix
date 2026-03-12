@@ -1,49 +1,23 @@
 {
   lib,
   pkgs,
-  inputs,
+  config,
   namespace,
   ...
 }:
+let
+  vmConfig = lib.${namespace}.microvms.${config.networking.hostName};
+  inherit (lib.${namespace}) ports;
+in
 {
-  imports = [ inputs.microvm.nixosModules.microvm ];
   networking.hostName = "stash";
-  networking.useNetworkd = true;
-  systemd.network.enable = true;
 
-  profiles.${namespace} = {
-    server = {
-      enable = true;
-      microVM = true;
-    };
+  profiles.${namespace}.microvm-guest = {
+    enable = true;
+    inherit (vmConfig) mac_addr tap_if vsock;
   };
 
-  # Pick up an IP from the host bridge DHCP server.
-  # The host issues a static lease for this VM's MAC.
-  systemd.network.networks."10-eth" = {
-    matchConfig.MACAddress = lib.${namespace}.microvms.stash.mac_addr;
-    networkConfig = {
-      DHCP = "ipv4";
-      IPv6AcceptRA = false;
-    };
-    dhcpV4Config = {
-      ClientIdentifier = "mac";
-    };
-  };
-  microvm.interfaces = [
-    {
-      type = "tap";
-      id = lib.${namespace}.microvms.stash.tap_if;
-      mac = lib.${namespace}.microvms.stash.mac_addr;
-    }
-  ];
   microvm.shares = [
-    {
-      source = "/nix/store";
-      mountPoint = "/nix/.ro-store";
-      tag = "ro-store";
-      proto = "virtiofs";
-    }
     {
       source = "/mediahell/MEGA/Videos";
       mountPoint = "/stash";
@@ -68,15 +42,6 @@
   # QEMU hangs when memory is exactly 2GB???
   # https://github.com/microvm-nix/microvm.nix/issues/171
   microvm.mem = 2048 + 512;
-
-  # Integrate with systemd-machined
-  microvm.registerWithMachined = true;
-
-  # Enable SSH over VSOCK
-  microvm.vsock = {
-    cid = lib.${namespace}.microvms.stash.vsock;
-    ssh.enable = true;
-  };
 
   users.users.msfjarvis.group = "users";
   users.users.msfjarvis.hashedPassword = lib.mkForce "";
@@ -105,7 +70,7 @@
     settings = {
       ui.frontPageContent = [ ];
       host = "0.0.0.0";
-      port = lib.${namespace}.ports.stash;
+      port = ports.stash;
       stash = [
         {
           path = "/stash";
@@ -113,8 +78,4 @@
       ];
     };
   };
-  microvm.hypervisor = "qemu";
-  microvm.qemu.serialConsole = true;
-  services.qemuGuest.enable = true;
-  system.stateVersion = "24.05";
 }
