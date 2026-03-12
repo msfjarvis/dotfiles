@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  inputs,
   namespace,
   ...
 }:
@@ -12,8 +11,6 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    inputs.microvm.nixosModules.host
-    ./microvms.nix
   ];
 
   hardware.facter.detected.graphics.enable = false;
@@ -41,7 +38,22 @@ in
       tailscaleExitNode = true;
     };
     gallery-dl.enable = true;
+    microvm.enable = true;
   };
+
+  microvm.vms = {
+    "stash" = {
+      # Host build-time reference to where the MicroVM NixOS is defined
+      # under nixosConfigurations
+      flake = inputs.self;
+      # Specify from where to let `microvm -u` update later on
+      updateFlake = "git+file:///home/msfjarvis/git-repos/dotfiles";
+    };
+  };
+
+  microvm.autostart = [
+    "stash"
+  ];
 
   sops.secrets.wireless-secrets = {
     sopsFile = lib.snowfall.fs.get-file "secrets/wireless.yaml";
