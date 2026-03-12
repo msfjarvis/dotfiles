@@ -35,6 +35,7 @@
     umami = 9023;
     hatsu = 9024;
     caldav-api = 9025;
+    booklore = 9026;
     exporters = {
       node = 9100;
       systemd = 9101;
