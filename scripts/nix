@@ -233,14 +233,25 @@ function mkMicroVm() {
   inputs,
   namespace,
   ...
-}: let
+}:
+let
   vmConfig = lib.\${namespace}.microvms.\${config.networking.hostName};
-in {
-  imports = [inputs.microvm.nixosModules.microvm];
+in
+{
+  imports = [ inputs.microvm.nixosModules.microvm ];
   networking.hostName = "${VM_NAME}";
   networking.useNetworkd = true;
   systemd.network.enable = true;
 
+  profiles.\${namespace} = {
+    server = {
+      enable = true;
+      microVM = true;
+    };
+  };
+
+  # Pick up an IP from the host bridge DHCP server.
+  # The host issues a static lease for this VM's MAC.
   systemd.network.networks."10-eth" = {
     matchConfig.MACAddress = vmConfig.mac_addr;
     networkConfig = {
@@ -269,11 +280,29 @@ in {
     }
   ];
 
+  microvm.vcpu = 1;
+  microvm.volumes = [
+    {
+      mountPoint = "/var/lib/${VM_NAME}";
+      image = "${VM_NAME}.img";
+      size = 1024 * 1;
+    }
+  ];
+  microvm.mem = 512;
+
+  # Integrate with systemd-machined
+  microvm.registerWithMachined = true;
+
   # Enable SSH over VSOCK
   microvm.vsock = {
     cid = vmConfig.vsock;
     ssh.enable = true;
   };
+
+  microvm.hypervisor = "qemu";
+  microvm.qemu.serialConsole = true;
+  services.qemuGuest.enable = true;
+  system.stateVersion = "26.05";
 }
 EOF
 }
