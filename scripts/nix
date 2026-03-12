@@ -224,6 +224,7 @@ function mkMicroVm() {
   local VM_NAME SYSTEM
   VM_NAME="${1:?}"
   SYSTEM="${2:-x86_64-linux}"
+
   mkdir -p systems/"${SYSTEM}"/"${VM_NAME}"/
   cat <<EOF >systems/"${SYSTEM}"/"${VM_NAME}"/default.nix
 {
@@ -232,9 +233,32 @@ function mkMicroVm() {
   inputs,
   namespace,
   ...
-}: {
+}: let
+  vmConfig = lib.\${namespace}.microvms.\${config.networking.hostName};
+in {
   imports = [inputs.microvm.nixosModules.microvm];
   networking.hostName = "${VM_NAME}";
+  networking.useNetworkd = true;
+  systemd.network.enable = true;
+
+  systemd.network.networks."10-eth" = {
+    matchConfig.MACAddress = vmConfig.mac_addr;
+    networkConfig = {
+      DHCP = "ipv4";
+      IPv6AcceptRA = false;
+    };
+    dhcpV4Config = {
+      ClientIdentifier = "mac";
+    };
+  };
+
+  microvm.interfaces = [
+    {
+      type = "tap";
+      id = vmConfig.tap_if;
+      mac = vmConfig.mac_addr;
+    }
+  ];
 
   microvm.shares = [
     {
@@ -244,6 +268,12 @@ function mkMicroVm() {
       proto = "virtiofs";
     }
   ];
+
+  # Enable SSH over VSOCK
+  microvm.vsock = {
+    cid = vmConfig.vsock;
+    ssh.enable = true;
+  };
 }
 EOF
 }

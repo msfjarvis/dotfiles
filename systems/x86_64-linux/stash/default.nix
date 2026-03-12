@@ -19,9 +19,9 @@
   };
 
   # Pick up an IP from the host bridge DHCP server.
-  # The host issues a static lease 10.100.0.2 for MAC 02:00:00:00:00:01.
+  # The host issues a static lease for this VM's MAC.
   systemd.network.networks."10-eth" = {
-    matchConfig.MACAddress = "02:00:00:00:00:01";
+    matchConfig.MACAddress = lib.${namespace}.microvms.stash.mac_addr;
     networkConfig = {
       DHCP = "ipv4";
       IPv6AcceptRA = false;
@@ -33,8 +33,8 @@
   microvm.interfaces = [
     {
       type = "tap";
-      id = "vm-a1";
-      mac = "02:00:00:00:00:01";
+      id = lib.${namespace}.microvms.stash.tap_if;
+      mac = lib.${namespace}.microvms.stash.mac_addr;
     }
   ];
   microvm.shares = [
@@ -74,7 +74,7 @@
 
   # Enable SSH over VSOCK
   microvm.vsock = {
-    cid = lib.${namespace}.vsock.stash;
+    cid = lib.${namespace}.microvms.stash.vsock;
     ssh.enable = true;
   };
 

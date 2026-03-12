@@ -1,4 +1,9 @@
-{ inputs, ... }:
+{
+  inputs,
+  lib,
+  namespace,
+  ...
+}:
 {
   microvm.host.enable = true;
 
@@ -35,13 +40,10 @@
           IPv4Forwarding = true;
         };
         dhcpServerConfig.EmitDNS = true;
-        dhcpServerStaticLeases = [
-          {
-            # stash microvm: MAC 02:00:00:00:00:01 → 10.100.0.2
-            MACAddress = "02:00:00:00:00:01";
-            Address = "10.100.0.2";
-          }
-        ];
+        dhcpServerStaticLeases = lib.mapAttrsToList (_name: vm: {
+          MACAddress = vm.mac_addr;
+          Address = vm.ipv4;
+        }) lib.${namespace}.microvms;
       };
 
       # Attach all vm-* tap interfaces to the bridge
