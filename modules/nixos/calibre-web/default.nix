@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   namespace,
   ...
 }:
@@ -72,6 +73,13 @@ in
 
     services.calibre-web = {
       enable = true;
+      package = pkgs.calibre-web.overridePythonAttrs (old: {
+        dependencies =
+          old.dependencies
+          ++ old.optional-dependencies.kobo
+          ++ old.optional-dependencies.metadata
+          ++ old.optional-dependencies.oauth;
+      });
       listen.port = cfg.port;
       options = {
         calibreLibrary = "/var/lib/calibre-web/library";
