@@ -64,6 +64,8 @@ in
     ];
 
     networking = {
+      # Hard-coded value from srvos, placed here to break priority conflicts between srvos and microvm.nix
+      hostId = lib.mkForce "8425e349";
       useNetworkd = true;
       nftables.enable = true;
       firewall = {
