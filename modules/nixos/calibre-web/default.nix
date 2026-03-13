@@ -75,6 +75,12 @@ in
       listen.port = cfg.port;
       options = {
         calibreLibrary = "/var/lib/calibre-web/library";
+        enableBookUploading = true;
+        enableKepubify = true;
+        reverseProxyAuth = {
+          enable = true;
+          header = "X-Token-User-Email";
+        };
       };
     };
   };
