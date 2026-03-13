@@ -57,12 +57,12 @@ in
       }
 
       route @opds {
-        reverse_proxy 127.0.0.1:${toString cfg.port}
+        reverse_proxy localhost:${toString cfg.port}
       }
 
       route /* {
         authorize with calibreweb_policy
-        reverse_proxy 127.0.0.1:${toString cfg.port}
+        reverse_proxy localhost:${toString cfg.port}
       }
     '';
 
