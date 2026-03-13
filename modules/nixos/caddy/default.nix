@@ -72,7 +72,7 @@ in
             ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: app: ''
               oauth identity provider ${name} {
                 delay_start 3
-                realm generic
+                realm ${name}
                 driver generic
                 client_id {${app.clientIdEnvVar}}
                 client_secret {${app.clientSecretEnvVar}}
@@ -87,7 +87,7 @@ in
                 cookie insecure off
                 cookie domain ${app.domain}
                 transform user {
-                  match realm generic
+                  match realm ${name}
                   action add role user
                 }
               }
