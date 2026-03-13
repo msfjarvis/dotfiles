@@ -60,7 +60,7 @@ in
         {
           type = "tap";
           id = cfg.tap_if;
-          mac = cfg.mac;
+          mac = cfg.mac_addr;
         }
       ];
 
