@@ -24,8 +24,6 @@
     key = "netrc-file";
   };
 
-  # Something turned this off??
-  system.switch.enable = true;
 
   nix =
     lib.${namespace}.mkNixConfig {

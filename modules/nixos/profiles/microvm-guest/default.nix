@@ -10,6 +10,7 @@ let
   inherit (lib)
     mkEnableOption
     mkOption
+    mkMerge
     mkIf
     types
     ;
@@ -33,61 +34,68 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    networking.useNetworkd = true;
-    systemd.network.enable = true;
+  config = mkMerge [
+    {
+      microvm.guest.enable = lib.mkDefault false;
+    }
+    (mkIf cfg.enable {
+      microvm.guest.enable = true;
 
-    profiles.${namespace} = {
-      server = {
-        enable = true;
-        microVM = true;
-      };
-    };
+      networking.useNetworkd = true;
+      systemd.network.enable = true;
 
-    systemd.network.networks."10-eth" = {
-      matchConfig.MACAddress = cfg.mac_addr;
-      networkConfig = {
-        DHCP = "ipv4";
-        IPv6AcceptRA = false;
-      };
-      dhcpV4Config = {
-        ClientIdentifier = "mac";
-      };
-    };
-
-    microvm = {
-      interfaces = [
-        {
-          type = "tap";
-          id = cfg.tap_if;
-          mac = cfg.mac_addr;
-        }
-      ];
-
-      shares = [
-        {
-          source = "/nix/store";
-          mountPoint = "/nix/.ro-store";
-          tag = "ro-store";
-          proto = "virtiofs";
-        }
-      ];
-
-      # Integrate with systemd-machined
-      registerWithMachined = true;
-
-      # Enable SSH over VSOCK
-      vsock = {
-        cid = cfg.vsock;
-        ssh.enable = true;
+      profiles.${namespace} = {
+        server = {
+          enable = true;
+          microVM = true;
+        };
       };
 
-      hypervisor = "qemu";
-      qemu.serialConsole = true;
-    };
+      systemd.network.networks."10-eth" = {
+        matchConfig.MACAddress = cfg.mac_addr;
+        networkConfig = {
+          DHCP = "ipv4";
+          IPv6AcceptRA = false;
+        };
+        dhcpV4Config = {
+          ClientIdentifier = "mac";
+        };
+      };
 
-    services.qemuGuest.enable = true;
+      microvm = {
+        interfaces = [
+          {
+            type = "tap";
+            id = cfg.tap_if;
+            mac = cfg.mac_addr;
+          }
+        ];
 
-    system.stateVersion = "26.05";
-  };
+        shares = [
+          {
+            source = "/nix/store";
+            mountPoint = "/nix/.ro-store";
+            tag = "ro-store";
+            proto = "virtiofs";
+          }
+        ];
+
+        # Integrate with systemd-machined
+        registerWithMachined = true;
+
+        # Enable SSH over VSOCK
+        vsock = {
+          cid = cfg.vsock;
+          ssh.enable = true;
+        };
+
+        hypervisor = "qemu";
+        qemu.serialConsole = true;
+      };
+
+      services.qemuGuest.enable = true;
+
+      system.stateVersion = "26.05";
+    })
+  ];
 }
