@@ -54,6 +54,10 @@
       domain = "nix-cache";
     };
 
+    calibre-web = {
+      enable = true;
+    };
+
     geoipupdate = {
       enable = true;
     };
