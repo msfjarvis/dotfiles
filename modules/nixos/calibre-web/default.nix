@@ -45,25 +45,24 @@ in
     };
 
     services.caddy.virtualHosts."https://${cfg.domain}".extraConfig = ''
-      @auth {
-        path /caddy-security/*
-      }
-
-      route @auth {
-        authenticate with calibreweb_portal
+      handle /caddy-security/* {
+        route {
+          authenticate with calibreweb_portal
+        }
       }
 
       @integrations {
         path /opds /opds/* /kobo /kobo/*
       }
-
-      route @integrations {
+      handle @integrations {
         reverse_proxy localhost:${toString cfg.port}
       }
 
-      route /* {
-        authorize with calibreweb_policy
-        reverse_proxy localhost:${toString cfg.port}
+      handle {
+        route {
+          authorize with calibreweb_policy
+          reverse_proxy localhost:${toString cfg.port}
+        }
       }
     '';
 
