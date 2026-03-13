@@ -53,11 +53,11 @@ in
         authenticate with calibreweb_portal
       }
 
-      @opds {
-        path /opds /opds/*
+      @integrations {
+        path /opds /opds/* /kobo /kobo/*
       }
 
-      route @opds {
+      route @integrations {
         reverse_proxy localhost:${toString cfg.port}
       }
 
