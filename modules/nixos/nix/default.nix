@@ -24,7 +24,6 @@
     key = "netrc-file";
   };
 
-
   nix =
     lib.${namespace}.mkNixConfig {
       inherit lib;

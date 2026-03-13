@@ -18,22 +18,24 @@ in
   options.services.caddy = {
     applyDefaults = mkEnableOption { description = "apply the default settings for Caddy"; };
     pocketIdApplications = mkOption {
-      type = types.attrsOf (types.submodule {
-        options = {
-          domain = mkOption {
-            type = types.str;
-            description = "Domain of the proxied service";
+      type = types.attrsOf (
+        types.submodule {
+          options = {
+            domain = mkOption {
+              type = types.str;
+              description = "Domain of the proxied service";
+            };
+            clientIdEnvVar = mkOption {
+              type = types.str;
+              description = "Environment variable name containing the client ID";
+            };
+            clientSecretEnvVar = mkOption {
+              type = types.str;
+              description = "Environment variable name containing the client secret";
+            };
           };
-          clientIdEnvVar = mkOption {
-            type = types.str;
-            description = "Environment variable name containing the client ID";
-          };
-          clientSecretEnvVar = mkOption {
-            type = types.str;
-            description = "Environment variable name containing the client secret";
-          };
-        };
-      });
+        }
+      );
       default = { };
       description = "Applications to protect with Pocket ID OIDC via caddy-security";
     };
@@ -69,36 +71,38 @@ in
         order authenticate before respond
         ${lib.optionalString (config.services.caddy.pocketIdApplications != { }) ''
           security {
-            ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: app: ''
-              oauth identity provider ${name} {
-                delay_start 3
-                realm ${name}
-                driver generic
-                client_id {${app.clientIdEnvVar}}
-                client_secret {${app.clientSecretEnvVar}}
-                scopes openid email profile
-                base_auth_url https://auth.msfjarvis.dev
-                metadata_url https://auth.msfjarvis.dev/.well-known/openid-configuration
-              }
-
-              authentication portal ${name}_portal {
-                crypto default token lifetime 3600
-                enable identity provider ${name}
-                trust login redirect uri domain exact ${app.domain} path prefix /
-                cookie insecure off
-                cookie domain ${app.domain}
-                transform user {
-                  match realm ${name}
-                  action add role user
+            ${lib.concatStringsSep "\n" (
+              lib.mapAttrsToList (name: app: ''
+                oauth identity provider ${name} {
+                  delay_start 3
+                  realm ${name}
+                  driver generic
+                  client_id {${app.clientIdEnvVar}}
+                  client_secret {${app.clientSecretEnvVar}}
+                  scopes openid email profile
+                  base_auth_url https://auth.msfjarvis.dev
+                  metadata_url https://auth.msfjarvis.dev/.well-known/openid-configuration
                 }
-              }
 
-              authorization policy ${name}_policy {
-                set auth url /caddy-security/oauth2/${name}
-                allow roles user
-                inject headers with claims
-              }
-            '') config.services.caddy.pocketIdApplications)}
+                authentication portal ${name}_portal {
+                  crypto default token lifetime 3600
+                  enable identity provider ${name}
+                  trust login redirect uri domain exact ${app.domain} path prefix /
+                  cookie insecure off
+                  cookie domain ${app.domain}
+                  transform user {
+                    match realm ${name}
+                    action add role user
+                  }
+                }
+
+                authorization policy ${name}_policy {
+                  set auth url /caddy-security/oauth2/${name}
+                  allow roles user
+                  inject headers with claims
+                }
+              '') config.services.caddy.pocketIdApplications
+            )}
           }
         ''}
       '';

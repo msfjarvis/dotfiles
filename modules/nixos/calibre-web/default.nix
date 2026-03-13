@@ -38,7 +38,7 @@ in
     };
 
     services.caddy.pocketIdApplications."calibreweb" = {
-      domain = cfg.domain;
+      inherit (cfg) domain;
       clientIdEnvVar = "$CALIBRE_WEB_POCKET_ID_CLIENT_ID";
       clientSecretEnvVar = "$CALIBRE_WEB_POCKET_ID_CLIENT_SECRET";
     };
