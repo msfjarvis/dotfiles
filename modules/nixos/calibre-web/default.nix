@@ -55,13 +55,25 @@ in
         path /opds /opds/* /kobo /kobo/*
       }
       handle @integrations {
-        reverse_proxy localhost:${toString cfg.port}
+        reverse_proxy localhost:${toString cfg.port} {
+          header_up X-Scheme https
+          transport http {
+            read_buffer 1024k
+            write_buffer 1024k
+          }
+        }
       }
 
       handle {
         route {
           authorize with calibreweb_policy
-          reverse_proxy localhost:${toString cfg.port}
+          reverse_proxy localhost:${toString cfg.port} {
+            header_up X-Scheme https
+            transport http {
+              read_buffer 1024k
+              write_buffer 1024k
+            }
+          }
         }
       }
     '';
