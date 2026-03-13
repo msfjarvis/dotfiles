@@ -37,7 +37,7 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
     - name: Setup Tailscale
-      uses: tailscale/github-action@53acf823325fe9ca47f4cdaa951f90b4b0de5bb9 # v4
+      uses: tailscale/github-action@306e68a486fd2350f2bfc3b19fcd143891a4a2d8 # v4
       with:
         oauth-client-id: ${{ inputs.ts-oauth-client-id }}
         oauth-secret: ${{ inputs.ts-oauth-secret }}
