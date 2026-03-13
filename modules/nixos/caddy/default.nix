@@ -66,7 +66,6 @@ in
         tailscale {
           ephemeral true
         }
-        order plausible before reverse_proxy
         order authenticate before respond
         ${lib.optionalString (config.services.caddy.pocketIdApplications != { }) ''
           security {
