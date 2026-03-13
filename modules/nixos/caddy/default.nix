@@ -84,6 +84,7 @@ in
               authentication portal ${name}_portal {
                 crypto default token lifetime 3600
                 enable identity provider ${name}
+                trust login redirect uri domain exact ${app.domain} path prefix /
                 cookie insecure off
                 cookie domain ${app.domain}
                 transform user {
