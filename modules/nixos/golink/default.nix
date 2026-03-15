@@ -7,6 +7,7 @@
 let
   cfg = config.services.${namespace}.golink;
   inherit (lib) mkEnableOption mkIf;
+  inherit (lib.${namespace}) tailnetDomain;
 in
 {
   options.services.${namespace}.golink = {
@@ -23,5 +24,17 @@ in
       enable = true;
       tailscaleAuthKeyFile = config.sops.secrets.golink-tsauthkey.path;
     };
+    services.prometheus.scrapeConfigs = [
+      {
+        job_name = "golink";
+        metrics_path = "/.metrics";
+        scheme = "https";
+        static_configs = [
+          {
+            targets = [ "go.${tailnetDomain}" ];
+          }
+        ];
+      }
+    ];
   };
 }
