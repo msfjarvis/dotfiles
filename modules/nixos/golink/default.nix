@@ -16,12 +16,12 @@ in
     sops.secrets.golink-tsauthkey = {
       sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
       owner = config.services.golink.user;
-      key = "services-oauth-secret-env";
+      key = "golink-tsauthkey";
       restartUnits = [ "golink.service" ];
     };
     services.golink = {
       enable = true;
+      tailscaleAuthKeyFile = config.sops.secrets.golink-tsauthkey.path;
     };
-    systemd.services.golink.serviceConfig.EnvironmentFile = config.sops.secrets.golink-tsauthkey.path;
   };
 }
