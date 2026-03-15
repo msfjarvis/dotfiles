@@ -28,6 +28,7 @@ python3.pkgs.buildPythonApplication rec {
     aiohttp
     aiolimiter
     aiosqlite
+    async-mega-py
     beautifulsoup4
     certifi
     curl-cffi
