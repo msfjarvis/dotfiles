@@ -24,6 +24,7 @@ in
     {
       programs.ghostty = {
         enable = true;
+        package = if pkgs.stdenv.hostPlatform.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
         enableBashIntegration = true;
         installBatSyntax = true;
         # TODO: https://gist.github.com/jamesgecko/dd921cef7db3b9533cee4473e832f2a4
@@ -46,7 +47,10 @@ in
           shell-integration-features = true;
           quit-after-last-window-closed = false;
           window-theme = "ghostty";
-        };
+        }
+        // (optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
+          scrollbar = "system";
+        });
       };
       dconf.settings = {
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = lib.mkForce {

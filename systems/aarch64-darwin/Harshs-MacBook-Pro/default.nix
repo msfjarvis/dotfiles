@@ -50,7 +50,6 @@
     ];
     casks = [
       "alt-tab"
-      "ghostty"
       "obsidian"
       "orbstack"
       "raycast"
