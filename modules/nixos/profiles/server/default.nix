@@ -63,6 +63,10 @@ in
       pkgs.net-tools
     ];
 
+    # Install terminfo into all servers so that ghostty works
+    environment.enableAllTerminfo = true;
+    security.sudo.keepTerminfo = true;
+
     networking = {
       # Hard-coded value from srvos, placed here to break priority conflicts between srvos and microvm.nix
       hostId = lib.mkForce "8425e349";
