@@ -7,13 +7,13 @@
 }:
 buildNpmPackage {
   pname = "phanpy";
-  version = "2026.02.24.48b2cf7-unstable-2026-03-21";
+  version = "2026.02.24.48b2cf7-unstable-2026-03-22";
 
   src = fetchFromGitHub {
     owner = "cheeaun";
     repo = "phanpy";
-    rev = "e40cf3eb7c497d25d8224fc9defb5cf0ff130b87";
-    hash = "sha256-G0sRPNOIWRMgjsfU/k5gEpoHaU3fEPdY6UU0jeGTr7Y=";
+    rev = "b6cb6ed90daf5764067c44a6253cc2205d88efcf";
+    hash = "sha256-EnCWk/hcmRAtOB2zkAl9FhXUK+6s2atz8yde35tPP3U=";
   };
 
   patches = [
@@ -23,7 +23,7 @@ buildNpmPackage {
     ./0002-fix-carousel-make-carousels-focusable-so-keyboard-sc.patch
   ];
 
-  npmDepsHash = "sha256-NnShRq3/0xRGsfGHuwmv/Pnsc8rAoztFnnQlO3SF9s0=";
+  npmDepsHash = "sha256-1PxjimSwP0cE8uVn7qZ3WiVwT2lAXvPd2DTEcHhfqec=";
 
   installPhase = ''
     mkdir $out
