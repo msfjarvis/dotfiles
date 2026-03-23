@@ -43,6 +43,7 @@
 
   homebrew = {
     brews = [
+      "static-var/tap/build-brief"
       "github-mcp-server"
       "gnu-sed"
       "pinentry-mac"
@@ -58,7 +59,9 @@
       "tailscale-app"
       "zed"
     ];
-    taps = [ ];
+    taps = [
+      "static-var/tap"
+    ];
   };
 
   programs.gnupg.agent.enable = true;
