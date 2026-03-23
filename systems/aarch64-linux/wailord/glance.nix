@@ -53,26 +53,20 @@
               type = "videos";
               cache = "15m";
               channels = [
-                "UClu2e7S8atp6tG2galK9hgg"
-                "UC9lJXqw4QZw-HWaZH6sN-xw"
-                "UC4O9HKe9Jt5yAhKuNv3LXpQ"
-                "UCFKDEp9si4RmHFWJW1vYsMA"
-                "UCuQYHhF6on6EXXO-_i_ClHQ"
-                "UCUBsjvdHcwZd3ztdY1Zadcw"
-                "UCR9Gcq0CMm6YgTzsDxAxjOQ"
-                "UCuMJPFqazQI4SofSFEd-5zA"
-                "UCrEtZMErQXaSYy_JDGoU5Qw"
-                "UCcJgOennb0II4a_qi9OMkRA"
-                "UChFur_NwVSbUozOcF_F2kMg"
-                "UC1GJ5aeqpEWklMBQ3oXrPQQ"
-                "UCDpdtiUfcdUCzokpRWORRqA"
-                "UCodkNmk9oWRTIYZdr_HuSlg"
-                "UCYdXHOv7srjm-ZsNsTcwbBw"
-                "UC4qdHN4zHhd4VvNy3zNgXPA"
-                "UC4YUKOBld2PoOLzk0YZ80lw"
-                "UCU9pX8hKcrx06XfOB-VQLdw"
-                "UCPK5G4jeoVEbUp5crKJl6CQ"
-                "UCjI5qxhtyv3srhWr60HemRw"
+                # Big A Clips
+                "UCdBXOyqr8cDshsp7kcKDAkg"
+                # Cheese Sculptor
+                "UC9Y5-WWYvn16YPO5XW7Nggg"
+                # Daily Geega
+                "UCNEl_8oA7qCFd1zgrnjjHtA"
+                # Geega
+                "UCUERxnZSjCq-G7OfYL7Nukg"
+                # H and Mr. H
+                "UC4_thIY2puJtQdc0vf8nxhQ"
+                # Hologatari
+                "UCEBVn6em4yXPL8X_tJHAgBA"
+                # Rabbit Hole
+                "UCdwths-Q8lcuF7wJwVWsC9g"
               ];
             }
           ];
