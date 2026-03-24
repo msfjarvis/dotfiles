@@ -1,12 +1,12 @@
 {
   lib,
-  buildGo124Module,
+  buildGoModule,
   fetchFromGitHub,
 }:
 let
   version = "0.8.4-unstable-2025-10-26";
 in
-buildGo124Module {
+buildGoModule {
   pname = "glance";
   inherit version;
 
