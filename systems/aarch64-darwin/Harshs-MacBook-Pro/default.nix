@@ -47,6 +47,7 @@
       "github-mcp-server"
       "gnu-sed"
       "pinentry-mac"
+      "rtk"
       "spicetify-cli"
     ];
     casks = [
