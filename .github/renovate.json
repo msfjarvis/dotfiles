@@ -12,6 +12,7 @@
       ],
       "matchDepNames": [
         "msfjarvis/dotfiles"
+        "msfjarvis/shared-workflows"
       ],
       "enabled": false
     }
