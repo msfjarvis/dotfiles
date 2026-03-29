@@ -4,5 +4,16 @@
     "config:recommended",
     "helpers:pinGitHubActionDigests",
     "github>msfjarvis/shared-workflows//renovate/automerge"
+  ],
+  "packageRules": [
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchDepNames": [
+        "msfjarvis/dotfiles"
+      ],
+      "enabled": false
+    }
   ]
 }
