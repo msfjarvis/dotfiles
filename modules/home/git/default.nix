@@ -45,6 +45,7 @@ in
     ];
     includes = [ { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig"; } ];
     lfs.enable = false;
+    signing.format = null;
     settings = {
       merge.mergiraf = {
         name = "mergiraf";
