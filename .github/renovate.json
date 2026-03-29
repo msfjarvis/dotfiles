@@ -11,7 +11,7 @@
         "github-actions"
       ],
       "matchDepNames": [
-        "msfjarvis/dotfiles"
+        "msfjarvis/dotfiles",
         "msfjarvis/shared-workflows"
       ],
       "enabled": false
