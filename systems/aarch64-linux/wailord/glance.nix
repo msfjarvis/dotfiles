@@ -27,6 +27,9 @@
             {
               type = "lobsters";
               sort-by = "hot";
+              excluded-tags = [
+                "vibecoding"
+              ];
             }
             {
               type = "group";

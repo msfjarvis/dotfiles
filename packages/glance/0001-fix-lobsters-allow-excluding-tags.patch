@@ -1,0 +1,53 @@
+From e21b7060eadd857348111c18fbc522f885fb30bf Mon Sep 17 00:00:00 2001
+From: Harsh Shandilya <me@msfjarvis.dev>
+Date: Sat, 4 Apr 2026 00:21:29 +0530
+Subject: [PATCH] fix(lobsters): allow excluding tags
+
+---
+ internal/glance/widget-lobsters.go | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+diff --git a/internal/glance/widget-lobsters.go b/internal/glance/widget-lobsters.go
+index 59405a46d02e..dfe32a2ddfa7 100644
+--- a/internal/glance/widget-lobsters.go
++++ b/internal/glance/widget-lobsters.go
+@@ -17,6 +17,7 @@ type lobstersWidget struct {
+ 	CollapseAfter  int           `yaml:"collapse-after"`
+ 	SortBy         string        `yaml:"sort-by"`
+ 	Tags           []string      `yaml:"tags"`
++	ExcludeTags    []string      `yaml:"exclude-tags"`
+ 	ShowThumbnails bool          `yaml:"-"`
+ 
+ 	Filters filterableFields[forumPost] `yaml:"filters"`
+@@ -53,6 +54,28 @@ func (widget *lobstersWidget) update(ctx context.Context) {
+ 		return
+ 	}
+ 
++	if len(widget.ExcludeTags) > 0 {
++		excludeSet := make(map[string]struct{}, len(widget.ExcludeTags))
++		for _, t := range widget.ExcludeTags {
++			excludeSet[t] = struct{}{}
++		}
++
++		filtered := posts[:0]
++		for _, post := range posts {
++			excluded := false
++			for _, tag := range post.Tags {
++				if _, ok := excludeSet[tag]; ok {
++					excluded = true
++					break
++				}
++			}
++			if !excluded {
++				filtered = append(filtered, post)
++			}
++		}
++		posts = filtered
++	}
++
+ 	posts = widget.Filters.Apply(posts)
+ 
+ 	if widget.Limit < len(posts) {
+-- 
+2.53.0
+

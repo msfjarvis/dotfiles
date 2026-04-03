@@ -17,6 +17,10 @@ buildGoModule {
     hash = "sha256-vXdKSz89kSOb/gIwcq+vpRSYoHnKCWjQNodzLwsl/vs=";
   };
 
+  patches = [
+    ./0001-fix-lobsters-allow-excluding-tags.patch
+  ];
+
   vendorHash = "sha256-g5ZZneJ1g5rs3PJcNP+bi+SuRyZIXBPBjWiKt7wbe5I=";
 
   excludedPackages = [ "build-and-ship" ];
