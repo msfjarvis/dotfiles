@@ -27,7 +27,7 @@
             {
               type = "lobsters";
               sort-by = "hot";
-              excluded-tags = [
+              exclude-tags = [
                 "vibecoding"
               ];
             }
