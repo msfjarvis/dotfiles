@@ -82,6 +82,28 @@
 
   ids.gids.nixbld = 350;
 
+  system.activationScripts.postActivation.text = ''
+    # Install Gradle and OpenJDK via sdkman if not already installed
+    PRIMARY_USER_HOME="/Users/msfjarvis"
+    export SDKMAN_DIR="$PRIMARY_USER_HOME/.sdkman"
+
+    if [ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
+      # Disable bash completion to avoid errors in non-interactive context
+      BASH_COMPLETION_COMPAT_DIR=/dev/null
+      export BASH_COMPLETION_COMPAT_DIR
+      # shellcheck source=/dev/null
+      source "$SDKMAN_DIR/bin/sdkman-init.sh" 2>/dev/null || true
+      
+      if ! sdk list gradle 2>/dev/null | grep -q "^>"; then
+        sdk install gradle
+      fi
+      
+      if ! sdk list java 2>/dev/null | grep -q "^>"; then
+        sdk install java
+      fi
+    fi
+  '';
+
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
