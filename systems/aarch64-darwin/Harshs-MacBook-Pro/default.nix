@@ -49,19 +49,23 @@
       "gnu-sed"
       "pinentry-mac"
       "rtk"
+      "sdkman/tap/sdkman-cli"
       "spicetify-cli"
     ];
     casks = [
       "alt-tab"
+      "jetbrains-toolbox"
       "obsidian"
       "orbstack"
       "raycast"
       "rectangle"
       "spotify"
       "tailscale-app"
+      "telegram"
       "zed"
     ];
     taps = [
+      "sdkman/tap"
       "static-var/tap"
     ];
   };
