@@ -42,6 +42,7 @@
   ];
 
   homebrew = {
+    caskArgs.no_quarantine = null;
     brews = [
       "static-var/tap/build-brief"
       "github-mcp-server"
