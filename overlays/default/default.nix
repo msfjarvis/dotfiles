@@ -5,8 +5,8 @@ _: prev: {
     patches = [
       (prev.fetchpatch2 {
         # https://github.com/git-ecosystem/git-credential-manager/pull/1837
-        url = "https://github.com/git-ecosystem/git-credential-manager/compare/main...d7e4f7673e6492634e70a93a7d8f84e055554b38.patch?full_index=1";
-        hash = "sha256-qcoNTmGwoz7JntxgBBxF/OQ2he0Fc8AK2NSJHUhN+40=";
+        url = "https://github.com/git-ecosystem/git-credential-manager/compare/main...db20a7bbb558dc73be6f5bfa5c0a805223a3e1e4.patch?full_index=1";
+        hash = "sha256-3uuDAvgUdFNxbwuZAsWCqOvoLUnNZcajSkWHl07IjSE=";
       })
     ];
   });
