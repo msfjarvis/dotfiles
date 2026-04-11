@@ -73,11 +73,12 @@ jobs:
         env:
           CACHE_CMD: "attic push ${{ matrix.cache }}"
       - name: Check post-update Git ref
+        if: "always()"
         shell: bash
         run: |
           echo "NEW_REF=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
       - name: Push to main branch
-        if: "env.OLD_REF != env.NEW_REF && matrix.runner == 'ubuntu-latest'"
+        if: "env.OLD_REF != env.NEW_REF && matrix.runner == 'ubuntu-latest' && always()"
         shell: bash
         run: |
           git pull --rebase origin main
