@@ -25,7 +25,6 @@
     ninja
     nix-output-monitor
     nixd
-    opencode
     openssh
     openssl
     pkgs.${namespace}.pidcat

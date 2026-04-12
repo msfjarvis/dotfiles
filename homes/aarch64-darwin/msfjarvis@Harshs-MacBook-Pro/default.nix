@@ -7,6 +7,7 @@
 
   profiles.${namespace} = {
     ghostty.enable = true;
+    opencode.enable = true;
   };
 
   home.stateVersion = "21.05";

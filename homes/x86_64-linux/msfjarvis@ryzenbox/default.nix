@@ -13,6 +13,7 @@
   profiles.${namespace} = {
     ghostty.enable = true;
     gnome-terminal.enable = false;
+    opencode.enable = true;
     mpv.enable = true;
     spotify.enable = false;
     zed = {

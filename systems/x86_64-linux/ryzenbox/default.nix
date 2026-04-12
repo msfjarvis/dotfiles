@@ -164,7 +164,6 @@ in
       nix-init
       nurl
       obsidian
-      opencode
       pkgs.${namespace}.patreon-dl
       pkgs.${namespace}.pidcat
       scrcpy
