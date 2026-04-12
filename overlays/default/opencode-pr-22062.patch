@@ -1,0 +1,83 @@
+From 6b3687eefc1d8f95dd2be61da1505aa9886cda23 Mon Sep 17 00:00:00 2001
+From: Yevhenii Pashkov <yepashkov@users.noreply.github.com>
+Date: Sat, 11 Apr 2026 20:09:23 +0300
+Subject: [PATCH] fix: improve X-Initiator detection for tool calls to prevent
+ premium overcharge
+
+The current isAgent detection only checks the last message role, which fails
+when tool results are returned. Tool call responses often have role: 'user'
+or contain tool_result parts, causing GitHub to incorrectly charge premium
+requests for agent-initiated actions.
+
+This fix checks the entire message context for tool calls (tool_result parts
+or role: 'tool') and marks the request as agent-initiated when tools are
+present, preventing incorrect premium request charges.
+
+Fixes #8030
+
+Co-authored-by: Qwen-Coder <qwen-coder@alibabacloud.com>
+---
+ .../src/plugin/github-copilot/copilot.ts      | 21 ++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
+
+diff --git a/packages/opencode/src/plugin/github-copilot/copilot.ts b/packages/opencode/src/plugin/github-copilot/copilot.ts
+index c0425b7efe8..c45d28a2e4c 100644
+--- a/packages/opencode/src/plugin/github-copilot/copilot.ts
++++ b/packages/opencode/src/plugin/github-copilot/copilot.ts
+@@ -83,30 +83,45 @@ export async function CopilotAuthPlugin(input: PluginInput): Promise<Hooks> {
+                 // Completions API
+                 if (body?.messages && url.includes("completions")) {
+                   const last = body.messages[body.messages.length - 1]
++                  const hasToolCalls = body.messages.some(
++                    (msg: any) =>
++                      Array.isArray(msg.content) && msg.content.some((part: any) => part?.type === "tool_result") ||
++                      msg.role === "tool",
++                  )
+                   return {
+                     isVision: body.messages.some(
+                       (msg: any) =>
+                         Array.isArray(msg.content) && msg.content.some((part: any) => part.type === "image_url"),
+                     ),
+-                    isAgent: last?.role !== "user",
++                    isAgent: hasToolCalls || last?.role !== "user",
+                   }
+                 }
+ 
+                 // Responses API
+                 if (body?.input) {
+                   const last = body.input[body.input.length - 1]
++                  const hasToolCalls = body.input.some(
++                    (item: any) =>
++                      Array.isArray(item?.content) && item.content.some((part: any) => part?.type === "tool_result") ||
++                      item.role === "tool",
++                  )
+                   return {
+                     isVision: body.input.some(
+                       (item: any) =>
+                         Array.isArray(item?.content) && item.content.some((part: any) => part.type === "input_image"),
+                     ),
+-                    isAgent: last?.role !== "user",
++                    isAgent: hasToolCalls || last?.role !== "user",
+                   }
+                 }
+ 
+                 // Messages API
+                 if (body?.messages) {
+                   const last = body.messages[body.messages.length - 1]
++                  const hasToolCalls = body.messages.some(
++                    (msg: any) =>
++                      Array.isArray(msg.content) && msg.content.some((part: any) => part?.type === "tool_result") ||
++                      msg.role === "tool",
++                  )
+                   const hasNonToolCalls =
+                     Array.isArray(last?.content) && last.content.some((part: any) => part?.type !== "tool_result")
+                   return {
+@@ -122,7 +137,7 @@ export async function CopilotAuthPlugin(input: PluginInput): Promise<Hooks> {
+                               part.content.some((nested: any) => nested?.type === "image")),
+                         ),
+                     ),
+-                    isAgent: !(last?.role === "user" && hasNonToolCalls),
++                    isAgent: hasToolCalls || !(last?.role === "user" && hasNonToolCalls),
+                   }
+                 }
+               } catch {}
