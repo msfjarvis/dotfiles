@@ -46,6 +46,9 @@
           allowed-users = [ "msfjarvis" ];
           auto-optimise-store = true;
           builders-use-substitutes = true;
+          deprecated-features = [
+            "broken-string-escape"
+          ];
           experimental-features = lib.mkForce [
             "auto-allocate-uids"
             "cgroups"
