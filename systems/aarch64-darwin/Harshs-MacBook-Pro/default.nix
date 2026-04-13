@@ -27,6 +27,7 @@
     nixd
     openssh
     openssl
+    pkgs.${namespace}.pi-coding-agent
     pkgs.${namespace}.pidcat
     scrcpy
     yaml-language-server
