@@ -100,6 +100,7 @@ in
   mediafire_rs = callPackage ./packages/mediafire_rs { };
   patreon-dl = callPackage ./packages/patreon-dl { };
   phanpy = callPackage ./packages/phanpy { };
+  pi-coding-agent = callPackage ./packages/pi-coding-agent { };
   pidcat = callPackage ./packages/pidcat { };
   prometheus-qbittorrent-exporter = callPackage ./packages/prometheus-qbittorrent-exporter { };
   rucksack = callPackage ./packages/rucksack { };
