@@ -53,6 +53,7 @@
     ];
     casks = [
       "alt-tab"
+      "betterdisplay"
       "jetbrains-toolbox"
       "obsidian"
       "orbstack"
