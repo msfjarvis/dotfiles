@@ -56,6 +56,7 @@
       "alt-tab"
       "betterdisplay"
       "jetbrains-toolbox"
+      "keepingyouawake"
       "obsidian"
       "orbstack"
       "raycast"
