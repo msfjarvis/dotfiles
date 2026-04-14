@@ -32,6 +32,7 @@ declare -a ALL_PACKAGES=(
   pidcat
   prometheus-qbittorrent-exporter
   rucksack
+  weave
 )
 
 declare -r -A EXTRA_PARAMS=(

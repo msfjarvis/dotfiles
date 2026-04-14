@@ -104,4 +104,5 @@ in
   pidcat = callPackage ./packages/pidcat { };
   prometheus-qbittorrent-exporter = callPackage ./packages/prometheus-qbittorrent-exporter { };
   rucksack = callPackage ./packages/rucksack { };
+  weave = callPackage ./packages/weave { };
 }
