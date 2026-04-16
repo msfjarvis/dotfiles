@@ -6,6 +6,7 @@
   versionCheckHook,
   writableTmpDirAsHomeHook,
   ripgrep,
+  patchelf,
   makeBinaryWrapper,
 }:
 buildNpmPackage (finalAttrs: {
@@ -28,6 +29,7 @@ buildNpmPackage (finalAttrs: {
 
   nativeBuildInputs = [
     makeBinaryWrapper
+    patchelf
   ];
 
   # Build workspace dependencies in order, then the coding-agent.
