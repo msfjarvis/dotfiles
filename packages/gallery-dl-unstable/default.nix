@@ -1,19 +1,19 @@
 {
   lib,
   python3,
-  fetchFromGitHub,
+  fetchFromCodeberg,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "gallery-dl-unstable";
-  version = "1.31.10-unstable-2026-04-17";
+  version = "0-unstable-2026-04-17";
   pyproject = true;
 
-  src = fetchFromGitHub {
+  src = fetchFromCodeberg {
     owner = "mikf";
     repo = "gallery-dl";
-    rev = "c7b5fb93036fbca0dbe98f6c330129ffe8b60392";
-    hash = "sha256-qJgxOWsU3r5CRRvYGd6xm8BCG6QVuDbmLWHMhf9+PY8=";
+    rev = "b14f5ae2d55b6ed2cc02750c6c141e2e42feefec";
+    hash = "sha256-Gad0yUPeAKQcHRtc3zaM2suFqtZ3i/exY17VB8wv4Pw=";
   };
 
   build-system = [
@@ -30,10 +30,10 @@ python3.pkgs.buildPythonApplication rec {
 
   meta = {
     description = "Command-line program to download image galleries and collections from several image hosting sites";
-    homepage = "https://github.com/mikf/gallery-dl";
-    changelog = "https://github.com/mikf/gallery-dl/blob/${src.rev}/CHANGELOG.md";
+    homepage = "https://codeberg.org/mikf/gallery-dl";
+    changelog = "https://codeberg.org/mikf/gallery-dl/blob/${finalAttrs.src.rev}/CHANGELOG.md";
     license = lib.licenses.gpl2Only;
     maintainers = [ ];
     mainProgram = "gallery-dl";
   };
-}
+})
