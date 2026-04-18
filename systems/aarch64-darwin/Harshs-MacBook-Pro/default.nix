@@ -46,6 +46,7 @@
     caskArgs.no_quarantine = null;
     brews = [
       "static-var/tap/build-brief"
+      "deezer/repo/caupain"
       "github-mcp-server"
       "gnu-sed"
       "pinentry-mac"
@@ -68,6 +69,7 @@
       "zed"
     ];
     taps = [
+      "deezer/repo"
       "sdkman/tap"
       "static-var/tap"
     ];
