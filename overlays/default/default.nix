@@ -16,7 +16,8 @@ _: prev: {
   });
   # Patch GitHub Copilot premium request overuse
   opencode = prev.opencode.overrideAttrs (_: {
-    patches = [ ./opencode-pr-22062.patch ];
+    # This no longer applies and I also don't care to use OpenCode at this point.
+    # patches = [ ./opencode-pr-22062.patch ];
   });
   qbittorrent = prev.qbittorrent.override { guiSupport = false; };
 }
