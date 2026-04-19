@@ -30,7 +30,6 @@
     pkgs.${namespace}.pi-coding-agent
     pkgs.${namespace}.pidcat
     scrcpy
-    pkgs.${namespace}.weave
     yaml-language-server
   ];
 
