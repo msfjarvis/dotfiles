@@ -6,20 +6,20 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
-  version = "8.10.0-unstable-2026-04-20";
+  version = "9.3.1-unstable-2026-04-21";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jbsparrow";
     repo = "CyberDropDownloader";
-    rev = "7557c204949fd7170cf145bef89571dc32040f90";
-    hash = "sha256-1AbQru5xxwKG3Q0N+E9SSjZgkn0DCbLv544CyI4G5HY=";
+    rev = "a4e6fc34d3036dab5cffaaf381ad37283d43d708";
+    hash = "sha256-vsxwIwqY7kOFY8/U7SJpXAhDQ46+tOxkkax5EYxOM/k=";
   };
 
   pythonRelaxDeps = map (p: p.pname) dependencies;
 
   build-system = [
-    python3.pkgs.poetry-core
+    python3.pkgs.uv-build
   ];
 
   dependencies = with python3.pkgs; [
@@ -32,9 +32,10 @@ python3.pkgs.buildPythonApplication rec {
     beautifulsoup4
     certifi
     curl-cffi
+    cyclopts
     dateparser
     imagesize
-    inquirerpy
+    inquirer
     jeepney
     m3u8
     myjdapi
@@ -45,6 +46,7 @@ python3.pkgs.buildPythonApplication rec {
     pycryptodome
     pydantic
     pyyaml
+    readchar
     rich
     send2trash
     truststore
