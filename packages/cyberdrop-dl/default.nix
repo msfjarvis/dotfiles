@@ -10,8 +10,8 @@ python3.pkgs.buildPythonApplication rec {
   pyproject = true;
 
   src = fetchFromGitHub {
-    owner = "jbsparrow";
-    repo = "CyberDropDownloader";
+    owner = "Cyberdrop-DL";
+    repo = "cyberdrop-dl";
     rev = "a4e6fc34d3036dab5cffaaf381ad37283d43d708";
     hash = "sha256-vsxwIwqY7kOFY8/U7SJpXAhDQ46+tOxkkax5EYxOM/k=";
   };
@@ -60,8 +60,8 @@ python3.pkgs.buildPythonApplication rec {
 
   meta = {
     description = "Bulk Gallery Downloader for Cyberdrop.me and Other Sites";
-    homepage = "https://github.com/jbsparrow/CyberDropDownloader";
-    changelog = "https://github.com/jbsparrow/CyberDropDownloader/blob/${src.rev}/CHANGELOG.md";
+    homepage = "https://github.com/Cyberdrop-DL/cyberdrop-dl";
+    changelog = "https://github.com/Cyberdrop-DL/cyberdrop-dl/blob/${src.rev}/CHANGELOG.md";
     license = lib.licenses.gpl3Only;
     maintainers = [ ];
     mainProgram = "cyberdrop-dl";
