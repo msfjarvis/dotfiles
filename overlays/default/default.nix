@@ -1,6 +1,9 @@
 { inputs, ... }:
 _: prev: {
   inherit (inputs.firefox.packages.${prev.stdenv.hostPlatform.system}) firefox-nightly-bin;
+  calibre-web = prev.calibre-web.overrideAttrs (old: {
+    pythonRelaxDeps = old.pythonRelaxDeps ++ ["requests"];
+  });
   git-credential-manager = prev.git-credential-manager.overrideAttrs (_: {
     patches = [
       (prev.fetchpatch2 {
