@@ -1,3 +1,9 @@
+{ config, lib, ... }:
+let
+  instancesWithMetrics = lib.filterAttrs (
+    _name: inst: inst.settings ? METRICS_BIND
+  ) config.services.anubis.instances;
+in
 {
   services.anubis = {
     defaultOptions = {
@@ -11,4 +17,20 @@
       };
     };
   };
+
+  services.prometheus.scrapeConfigs = lib.mapAttrsToList (name: inst: {
+    job_name = "${name}_anubis";
+    static_configs = [
+      {
+        targets = [
+          (
+            let
+              bind = inst.settings.METRICS_BIND;
+            in
+            if lib.hasPrefix ":" bind then "127.0.0.1${bind}" else bind
+          )
+        ];
+      }
+    ];
+  }) instancesWithMetrics;
 }
