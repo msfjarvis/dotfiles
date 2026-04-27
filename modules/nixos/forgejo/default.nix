@@ -13,6 +13,7 @@ let
     mkOption
     types
     ;
+  inherit (lib.${namespace}) ports;
 in
 {
   options.services.${namespace}.forgejo = {
@@ -23,11 +24,28 @@ in
     };
   };
   config = mkIf cfg.enable {
+    services.anubis = {
+      instances = {
+        forgejo = {
+          enable = true;
+          settings = {
+            BIND = ":${toString ports.anubis.forgejo}";
+            BIND_NETWORK = "tcp";
+            OG_PASSTHROUGH = true;
+            SERVE_ROBOTS_TXT = true;
+            TARGET = with config.services.forgejo.settings.server; "http://${HTTP_ADDR}:${toString HTTP_PORT}";
+          };
+        };
+      };
+    };
     services.caddy.virtualHosts = {
       "https://${cfg.domain}" = {
-        extraConfig = with config.services.forgejo.settings.server; ''
+        extraConfig = ''
           import blackholeCrawlers
-          reverse_proxy ${HTTP_ADDR}:${toString HTTP_PORT}
+          reverse_proxy ${config.services.anubis.instances.forgejo.settings.BIND} {
+            header_up X-Real-Ip {remote_host}
+            header_up X-Http-Version {http.request.proto}          	
+          }
         '';
       };
       "https://vibes.msfjarvis.dev" = {
@@ -134,7 +152,7 @@ in
           LANDING_PAGE = "explore";
           ROOT_URL = "https://${cfg.domain}/";
           HTTP_ADDR = "127.0.0.1";
-          HTTP_PORT = lib.${namespace}.ports.forgejo;
+          HTTP_PORT = ports.forgejo;
         };
         service = {
           DISABLE_REGISTRATION = true;

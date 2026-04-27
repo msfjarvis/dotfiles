@@ -61,5 +61,8 @@
       server = 9400;
       ldap = 9401;
     };
+    anubis = {
+      forgejo = 9500;
+    };
   };
 }
