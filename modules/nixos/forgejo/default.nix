@@ -30,10 +30,6 @@ in
           enable = true;
           settings = {
             BIND = ":${toString ports.anubis.forgejo}";
-            BIND_NETWORK = "tcp";
-            DIFFICULTY = 5;
-            OG_PASSTHROUGH = true;
-            SERVE_ROBOTS_TXT = true;
             TARGET = with config.services.forgejo.settings.server; "http://${HTTP_ADDR}:${toString HTTP_PORT}";
           };
         };
