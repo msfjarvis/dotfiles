@@ -20,6 +20,7 @@ in
 
   services.prometheus.scrapeConfigs = lib.mapAttrsToList (name: inst: {
     job_name = "${name}_anubis";
+    scrape_interval = "1m";
     static_configs = [
       {
         targets = [
