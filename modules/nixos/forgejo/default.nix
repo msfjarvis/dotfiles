@@ -29,7 +29,8 @@ in
         forgejo = {
           enable = true;
           settings = {
-            BIND = ":${toString ports.anubis.forgejo}";
+            BIND = ":${toString ports.anubis.service.forgejo}";
+            METRICS_BIND = ":${toString ports.anubis.prometheus.forgejo}";
             TARGET = with config.services.forgejo.settings.server; "http://${HTTP_ADDR}:${toString HTTP_PORT}";
           };
         };

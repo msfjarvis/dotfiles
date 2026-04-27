@@ -62,7 +62,12 @@
       ldap = 9401;
     };
     anubis = {
-      forgejo = 9500;
+      service = {
+        forgejo = 9500;
+      };
+      prometheus = {
+        forgejo = 9600;
+      };
     };
   };
 }
