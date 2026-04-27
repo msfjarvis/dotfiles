@@ -33,7 +33,9 @@ in
       "https://${cfg.domain}" = {
         extraConfig = ''
           import blackholeCrawlers
-          reverse_proxy ${config.services.miniflux.config.LISTEN_ADDR}
+          reverse_proxy ${config.services.miniflux.config.LISTEN_ADDR} {
+            header_up X-Real-IP {remote_host}
+          }
         '';
       };
     };
