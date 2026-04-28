@@ -133,7 +133,7 @@ in
         };
       };
     })
-    (mkIf cfg.prometheus.enable {
+    (mkIf (cfg.enable && cfg.prometheus.enable) {
       services.prometheus.rules = [
         (builtins.toJSON {
           groups = [
