@@ -90,7 +90,7 @@ in
     virtualHosts = {
       "https://matara.${tailnetDomain}" = {
         extraConfig = ''
-          reverse_proxy 127.0.0.1:${toString config.services.${namespace}.qbittorrent.port}
+          reverse_proxy 127.0.0.1:${toString config.services.deluge.web.port}
         '';
       };
     }
@@ -193,6 +193,9 @@ in
         };
       };
     };
+    deluge = {
+      enable = true;
+    };
     gphotos-cdp =
       let
         homeDir = config.users.users.msfjarvis.home;
@@ -211,7 +214,7 @@ in
       enable = true;
     };
     qbittorrent = {
-      enable = true;
+      enable = false;
       port = ports._qbittorrent;
       user = "msfjarvis";
       group = "users";
