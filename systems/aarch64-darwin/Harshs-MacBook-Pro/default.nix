@@ -48,6 +48,7 @@
       "deezer/repo/caupain"
       "github-mcp-server"
       "gnu-sed"
+      "nodejs"
       "pinentry-mac"
       "rtk"
       "sdkman/tap/sdkman-cli"

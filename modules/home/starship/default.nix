@@ -96,7 +96,7 @@ in
         nats.disabled = true;
         nim.disabled = true;
         nix_shell.disabled = true;
-        nodejs.disabled = true;
+        nodejs.disabled = false;
         ocaml.disabled = true;
         odin.disabled = true;
         opa.disabled = true;
