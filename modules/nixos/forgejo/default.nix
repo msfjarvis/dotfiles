@@ -24,25 +24,15 @@ in
     };
   };
   config = mkIf cfg.enable {
-    services.anubis = {
-      instances = {
-        forgejo = {
-          enable = true;
-          settings = {
-            BIND = ":${toString ports.anubis.service.forgejo}";
-            METRICS_BIND = ":${toString ports.anubis.prometheus.forgejo}";
-            TARGET = with config.services.forgejo.settings.server; "http://${HTTP_ADDR}:${toString HTTP_PORT}";
-          };
-        };
-      };
-    };
+    services.${namespace}.iocaine.enable = true;
     services.caddy.virtualHosts = {
       "https://${cfg.domain}" = {
         extraConfig = ''
           import blackholeCrawlers
-          reverse_proxy ${config.services.anubis.instances.forgejo.settings.BIND} {
+          import iocaine
+          reverse_proxy ${config.services.forgejo.settings.server.HTTP_ADDR}:${toString config.services.forgejo.settings.server.HTTP_PORT} {
             header_up X-Real-Ip {remote_host}
-            header_up X-Http-Version {http.request.proto}          	
+            header_up X-Http-Version {http.request.proto}
           }
         '';
       };
