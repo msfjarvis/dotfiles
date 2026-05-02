@@ -24,6 +24,23 @@ in
     };
   };
   config = mkIf cfg.enable {
+
+    sops.secrets."cloudflared/forgejo" = {
+      sopsFile = lib.snowfall.fs.get-file "secrets/cloudflare/forgejo-tunnel-creds.bin";
+      format = "binary";
+    };
+    services.cloudflared = {
+      enable = true;
+      tunnels."44b1dcda-66b1-49bf-b939-80193c0b0198" = {
+        credentialsFile = config.sops.secrets."cloudflared/forgejo".path;
+        default = "http_status:404";
+        ingress = {
+          "git.msfjarvis.dev" =
+            with config.services.forgejo.settings.server;
+            "http://${HTTP_ADDR}:${toString HTTP_PORT}";
+        };
+      };
+    };
     services.anubis = {
       instances = {
         forgejo = {
