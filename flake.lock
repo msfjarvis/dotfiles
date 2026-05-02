@@ -1,43 +1,5 @@
 {
   "nodes": {
-    "avalanche": {
-      "inputs": {
-        "nixpkgs": [
-          "nixocaine",
-          "nam-shub-of-enki",
-          "nixpkgs"
-        ],
-        "nixpkgs-2505": [
-          "nixpkgs"
-        ],
-        "pre-commit-hooks": [
-          "nixocaine",
-          "nam-shub-of-enki",
-          "pre-commit-hooks"
-        ],
-        "systems": [
-          "systems"
-        ],
-        "treefmt-nix": [
-          "nixocaine",
-          "nam-shub-of-enki",
-          "treefmt-nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1765198317,
-        "narHash": "sha256-IQoB7lK8cJzWG3hEZrPe0Zoa8/1LRwcgTSoX9mpr20E=",
-        "ref": "refs/heads/main",
-        "rev": "01af515b690125cb0b636a86ab95cace3c0cc8c6",
-        "revCount": 160,
-        "type": "git",
-        "url": "https://git.madhouse-project.org/algernon/avalanche.git"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://git.madhouse-project.org/algernon/avalanche.git"
-      }
-    },
     "base16": {
       "inputs": {
         "fromYaml": "fromYaml"
@@ -407,36 +369,6 @@
         "type": "github"
       }
     },
-    "iocaine-unstable": {
-      "inputs": {
-        "nixpkgs": [
-          "nixocaine",
-          "nixpkgs"
-        ],
-        "pre-commit-hooks": [
-          "nixocaine",
-          "pre-commit-hooks"
-        ],
-        "systems": [
-          "systems"
-        ],
-        "treefmt-nix": [
-          "nixocaine",
-          "treefmt-nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1775891927,
-        "narHash": "sha256-Fl9aWzox39KkuP+P3h2KFIvx7F3BabZReSUK417hybA=",
-        "rev": "bbea06f348c1608b7d492ef800f501338b2b9f04",
-        "type": "tarball",
-        "url": "https://git.madhouse-project.org/api/v1/repos/iocaine/iocaine/archive/bbea06f348c1608b7d492ef800f501338b2b9f04.tar.gz?rev=bbea06f348c1608b7d492ef800f501338b2b9f04"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://git.madhouse-project.org/iocaine/iocaine/archive/iocaine-3.x.tar.gz"
-      }
-    },
     "lib-aggregate": {
       "inputs": {
         "flake-utils": [
@@ -497,38 +429,6 @@
         "type": "github"
       }
     },
-    "nam-shub-of-enki": {
-      "inputs": {
-        "avalanche": "avalanche",
-        "iocaine": [
-          "nixocaine",
-          "iocaine-unstable"
-        ],
-        "nixpkgs": [
-          "nixocaine",
-          "nixpkgs"
-        ],
-        "pre-commit-hooks": [
-          "nixocaine",
-          "pre-commit-hooks"
-        ],
-        "treefmt-nix": [
-          "nixocaine",
-          "treefmt-nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1775893741,
-        "narHash": "sha256-I0uBsP2ozlBr2tT6spz/K/XsRZrgoCMEtdKAqyunjT0=",
-        "rev": "7e81078fb380bb90a0d0c2969caa6cdc717a5e4e",
-        "type": "tarball",
-        "url": "https://git.madhouse-project.org/api/v1/repos/iocaine/nam-shub-of-enki/archive/7e81078fb380bb90a0d0c2969caa6cdc717a5e4e.tar.gz?rev=7e81078fb380bb90a0d0c2969caa6cdc717a5e4e"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://git.madhouse-project.org/iocaine/nam-shub-of-enki/archive/main.tar.gz"
-      }
-    },
     "nix-flatpak": {
       "locked": {
         "lastModified": 1777402031,
@@ -587,33 +487,6 @@
         "type": "github"
       }
     },
-    "nixocaine": {
-      "inputs": {
-        "iocaine-unstable": "iocaine-unstable",
-        "nam-shub-of-enki": "nam-shub-of-enki",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "pre-commit-hooks": [],
-        "systems": [
-          "systems"
-        ],
-        "treefmt-nix": [
-          "treefmt-nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1775896046,
-        "narHash": "sha256-RFFA5st980IqJL2P/gmjlrW38V23+G+1p1yZx0ped0Q=",
-        "rev": "ac2cd7e9c0002b89e894e8751c46a456585e5d06",
-        "type": "tarball",
-        "url": "https://git.madhouse-project.org/api/v1/repos/iocaine/nixocaine/archive/ac2cd7e9c0002b89e894e8751c46a456585e5d06.tar.gz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://git.madhouse-project.org/iocaine/nixocaine/archive/main.tar.gz"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1777769276,
@@ -650,7 +523,6 @@
         "nix-flatpak": "nix-flatpak",
         "nix-index-database": "nix-index-database",
         "nix-topology": "nix-topology",
-        "nixocaine": "nixocaine",
         "nixpkgs": "nixpkgs",
         "rust-manifest": "rust-manifest",
         "snowfall-lib": "snowfall-lib",

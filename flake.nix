@@ -40,7 +40,6 @@
         golink.nixosModules.default
         nix-flatpak.nixosModules.nix-flatpak
         nix-topology.nixosModules.default
-        nixocaine.nixosModules.default
         sops-nix.nixosModules.sops
         stylix.nixosModules.stylix
       ];
@@ -143,15 +142,6 @@
     firefox.inputs.nixpkgs.follows = "nixpkgs";
     firefox.inputs.flake-compat.follows = "flake-compat";
     firefox.inputs.lib-aggregate.follows = "lib-aggregate";
-
-    nixocaine.url = "https://git.madhouse-project.org/iocaine/nixocaine/archive/main.tar.gz";
-    nixocaine.inputs.nixpkgs.follows = "nixpkgs";
-    nixocaine.inputs.pre-commit-hooks.follows = "";
-    nixocaine.inputs.treefmt-nix.follows = "treefmt-nix";
-    nixocaine.inputs.systems.follows = "systems";
-    nixocaine.inputs.iocaine-unstable.inputs.systems.follows = "systems";
-    nixocaine.inputs.nam-shub-of-enki.inputs.avalanche.inputs.systems.follows = "systems";
-    nixocaine.inputs.nam-shub-of-enki.inputs.avalanche.inputs.nixpkgs-2505.follows = "nixpkgs";
 
     golink.url = "github:tailscale/golink";
     golink.inputs.nixpkgs.follows = "nixpkgs";
