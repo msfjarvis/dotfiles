@@ -56,19 +56,19 @@ in
       credential = {
         credentialStore = if pkgs.stdenv.hostPlatform.isDarwin then "keychain" else "secretservice";
         helper = [
-          "${lib.getExe pkgs.git-credential-manager}"
+          "${lib.getExe gcm}"
         ];
         "https://git.msfjarvis.dev" = {
           provider = "generic";
           helper = [
             "cache --timeout 21600"
-            "${lib.getExe pkgs.git-credential-oauth}"
+            "${lib.getExe gcm}"
           ];
         };
         "https://github.com" = {
           provider = "github";
           helper = [
-            "${lib.getExe pkgs.git-credential-manager}"
+            "${lib.getExe gcm}"
           ];
         };
       };
