@@ -35,13 +35,34 @@ in
         credentialsFile = config.sops.secrets."cloudflared/forgejo".path;
         default = "http_status:404";
         ingress = {
-          "${cfg.domain}" =
+          "git.msfjarvis.dev" =
             with config.services.forgejo.settings.server;
             "http://${HTTP_ADDR}:${toString HTTP_PORT}";
         };
       };
     };
+    services.anubis = {
+      instances = {
+        forgejo = {
+          enable = true;
+          settings = {
+            BIND = ":${toString ports.anubis.service.forgejo}";
+            METRICS_BIND = ":${toString ports.anubis.prometheus.forgejo}";
+            TARGET = with config.services.forgejo.settings.server; "http://${HTTP_ADDR}:${toString HTTP_PORT}";
+          };
+        };
+      };
+    };
     services.caddy.virtualHosts = {
+      "https://${cfg.domain}" = {
+        extraConfig = ''
+          import blackholeCrawlers
+          reverse_proxy ${config.services.anubis.instances.forgejo.settings.BIND} {
+            header_up X-Real-Ip {remote_host}
+            header_up X-Http-Version {http.request.proto}          	
+          }
+        '';
+      };
       "https://vibes.msfjarvis.dev" = {
         extraConfig = ''
           gitea_pages {
