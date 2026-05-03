@@ -30,7 +30,7 @@ in
       format = "binary";
     };
     services.cloudflared = {
-      enable = true;
+      enable = false;
       tunnels."44b1dcda-66b1-49bf-b939-80193c0b0198" = {
         credentialsFile = config.sops.secrets."cloudflared/forgejo".path;
         default = "http_status:404";
@@ -41,26 +41,11 @@ in
         };
       };
     };
-    services.anubis = {
-      instances = {
-        forgejo = {
-          enable = true;
-          settings = {
-            BIND = ":${toString ports.anubis.service.forgejo}";
-            METRICS_BIND = ":${toString ports.anubis.prometheus.forgejo}";
-            TARGET = with config.services.forgejo.settings.server; "http://${HTTP_ADDR}:${toString HTTP_PORT}";
-          };
-        };
-      };
-    };
     services.caddy.virtualHosts = {
       "https://${cfg.domain}" = {
-        extraConfig = ''
+        extraConfig = with config.services.forgejo.settings.server; ''
           import blackholeCrawlers
-          reverse_proxy ${config.services.anubis.instances.forgejo.settings.BIND} {
-            header_up X-Real-Ip {remote_host}
-            header_up X-Http-Version {http.request.proto}          	
-          }
+          reverse_proxy ${HTTP_ADDR}:${toString HTTP_PORT}
         '';
       };
       "https://vibes.msfjarvis.dev" = {
