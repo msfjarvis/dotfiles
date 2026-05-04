@@ -43,7 +43,5 @@ buildNpmPackage {
     description = "A minimalistic opinionated Mastodon web client ";
     homepage = "https://github.com/cheeaun/phanpy";
     license = lib.licenses.mit;
-    # Nothing to run here
-    mainProgram = null;
   };
 }
