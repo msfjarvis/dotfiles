@@ -220,6 +220,12 @@ function flakeinputs() {
   echo "Archived flake inputs into: ${TMP}"
 }
 
+function flakesearch() {
+  local SEARCH_TERM
+  SEARCH_TERM="${1}"
+  nix flake archive --json | jq -r '.. | objects | select(has("path")) | .path' | sort -u | xargs -I {} rg "${SEARCH_TERM:?}" {}
+}
+
 function mkMicroVm() {
   local VM_NAME SYSTEM
   VM_NAME="${1:?}"
