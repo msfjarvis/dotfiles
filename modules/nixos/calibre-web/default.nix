@@ -42,28 +42,13 @@ in
       inherit (cfg) domain;
       clientIdEnvVar = "$CALIBRE_WEB_POCKET_ID_CLIENT_ID";
       clientSecretEnvVar = "$CALIBRE_WEB_POCKET_ID_CLIENT_SECRET";
+      extraAuthorizationPolicy = ''
+        bypass uri prefix /opds
+        bypass uri prefix /kobo
+      '';
     };
 
     services.caddy.virtualHosts."https://${cfg.domain}".extraConfig = ''
-      handle /caddy-security/* {
-        route {
-          authenticate with calibreweb_portal
-        }
-      }
-
-      @integrations {
-        path /opds /opds/* /kobo /kobo/*
-      }
-      handle @integrations {
-        reverse_proxy localhost:${toString cfg.port} {
-          header_up X-Scheme https
-          transport http {
-            read_buffer 1024k
-            write_buffer 1024k
-          }
-        }
-      }
-
       handle {
         route {
           authorize with calibreweb_policy

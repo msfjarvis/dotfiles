@@ -33,6 +33,11 @@ in
               type = types.str;
               description = "Environment variable name containing the client secret";
             };
+            extraAuthorizationPolicy = mkOption {
+              type = types.str;
+              default = "";
+              description = "Extra authorization policy directives to be prepended to the default values";
+            };
           };
         }
       );
@@ -86,20 +91,20 @@ in
 
                 authentication portal ${name}_portal {
                   crypto default token lifetime 3600
-                  crypto key sign-verify default
                   enable identity provider ${name}
                   trust login redirect uri domain exact ${app.domain} path prefix /
                   cookie insecure off
                   cookie domain ${app.domain}
                   transform user {
                     match realm ${name}
-                    action add role user
+                    action add role authp/user
                   }
                 }
 
                 authorization policy ${name}_policy {
+                  ${app.extraAuthorizationPolicy}
                   set auth url /caddy-security/oauth2/${name}
-                  allow roles user
+                  allow roles authp/user
                   inject headers with claims
                 }
               '') config.services.caddy.pocketIdApplications
