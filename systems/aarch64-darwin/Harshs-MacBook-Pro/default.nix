@@ -57,6 +57,7 @@
     casks = [
       "alt-tab"
       "betterdisplay"
+      "google-chrome"
       "jetbrains-toolbox"
       "keepingyouawake"
       "obsidian"
