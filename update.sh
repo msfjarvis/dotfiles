@@ -10,7 +10,8 @@ declare -a ALL_PACKAGES=(
   # Don't care to keep it up-to-date
   # age-keygen-deterministic
   boop-gtk
-  caldav-api
+  # CF blocks it, manual updates for this are fine
+  # caldav-api
   clipboard-substitutor
   cyberdrop-dl
   dependency-watch
