@@ -29,7 +29,8 @@ declare -a ALL_PACKAGES=(
   patreon-dl
   # TODO seems to have broken builds
   # phanpy
-  pi-coding-agent
+  # TODO https://github.com/earendil-works/pi/issues/4315
+  # pi-coding-agent
   pidcat
   prometheus-qbittorrent-exporter
   rucksack
