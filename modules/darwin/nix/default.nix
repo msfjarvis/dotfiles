@@ -5,6 +5,10 @@
   ...
 }:
 {
+  environment.systemPackages = with pkgs; [
+    nix-forecast
+  ];
+
   nix =
     lib.${namespace}.mkNixConfig {
       inherit lib;

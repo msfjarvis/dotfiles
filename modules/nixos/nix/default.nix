@@ -9,6 +9,7 @@
   users.users.msfjarvis.packages = with pkgs; [
     attic-client
     expect
+    nix-forecast
     nix-inspect
     nix-output-monitor
   ];
