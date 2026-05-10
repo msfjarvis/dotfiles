@@ -38,7 +38,7 @@ in
       adapterName = "eno1";
       tailscaleExitNode = true;
     };
-    # gallery-dl.enable = true;
+    gallery-dl.enable = true;
     microvm.enable = true;
   };
 
