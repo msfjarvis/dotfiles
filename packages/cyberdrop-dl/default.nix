@@ -50,6 +50,7 @@ python3.pkgs.buildPythonApplication rec {
     rich
     send2trash
     truststore
+    urllib3
     xxhash
     yarl
   ];
