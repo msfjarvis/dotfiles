@@ -9,7 +9,7 @@
   lib,
 }:
 let
-  version = "0.2.3";
+  version = "0.2.0";
   rev = "3b35f0e3dd7022ddf8574e5bd587d2afc0ab4e66";
 in
 rustPlatform.buildRustPackage {
