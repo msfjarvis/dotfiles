@@ -4,7 +4,7 @@
   fetchFromGitHub,
 }:
 let
-  version = "0.8.4-unstable-2025-10-26";
+  version = "0-unstable-2025-10-26";
 in
 buildGoModule {
   pname = "glance";
