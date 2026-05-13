@@ -31,7 +31,8 @@ declare -a ALL_PACKAGES=(
   # phanpy
   # TODO https://github.com/earendil-works/pi/issues/4315
   # pi-coding-agent
-  pidcat
+  # Doesn't need updates
+  # pidcat
   prometheus-qbittorrent-exporter
   rucksack
 )
