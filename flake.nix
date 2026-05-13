@@ -77,6 +77,7 @@
         copyparty.overlays.default
         devshell.overlays.default
         fenix.overlays.default
+        llm-agents.overlays.shared-nixpkgs
         microvm.overlays.default
         # niri.overlays.niri
         nix-topology.overlays.default
@@ -153,6 +154,12 @@
     lib-aggregate.url = "github:nix-community/lib-aggregate";
     lib-aggregate.inputs.nixpkgs-lib.follows = "nixpkgs";
     lib-aggregate.inputs.flake-utils.follows = "flake-utils";
+
+    llm-agents.url = "github:numtide/llm-agents.nix";
+    llm-agents.inputs.nixpkgs.follows = "nixpkgs";
+    llm-agents.inputs.systems.follows = "systems";
+    llm-agents.inputs.treefmt-nix.follows = "treefmt-nix";
+    llm-agents.inputs.flake-parts.follows = "flake-parts";
 
     micro-theme.url = "git+https://github.com/catppuccin/micro";
     micro-theme.flake = false;
