@@ -61,7 +61,7 @@ jobs:
       - name: Check for updates of given package
         shell: bash
         if: "github.event.inputs.package != null || github.event.action == 'package-bump'"
-        run: nix-shell -p nix-update git --run "./update.sh ${PACKAGE} ${VERSION}"
+        run: nix-shell -p nix-update git --run "./update.sh ${PACKAGE_NAME} ${VERSION}"
         env:
           CACHE_CMD: "attic push ${{ matrix.cache }}"
           PACKAGE_NAME: ${{ github.event.inputs.package || github.event.client_payload.package_name }}
