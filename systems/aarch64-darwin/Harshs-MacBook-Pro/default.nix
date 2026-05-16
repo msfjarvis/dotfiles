@@ -50,6 +50,7 @@
       "gnu-sed"
       "nodejs"
       "pinentry-mac"
+      "pnpm"
       "rtk"
       "sdkman/tap/sdkman-cli"
       "spicetify-cli"
