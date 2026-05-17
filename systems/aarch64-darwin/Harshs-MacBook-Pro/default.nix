@@ -59,6 +59,7 @@
     casks = [
       "alt-tab"
       "betterdisplay"
+      "flashspace"
       "google-chrome"
       "jetbrains-toolbox"
       "keepingyouawake"
