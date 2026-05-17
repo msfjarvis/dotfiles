@@ -6,14 +6,14 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "cyberdrop-dl";
-  version = "9.10.0-unstable-2026-05-13";
+  version = "9.10.1-unstable-2026-05-17";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "Cyberdrop-DL";
     repo = "cyberdrop-dl";
-    rev = "c2a9f854b65a7870855dadaa0dc32899f640686f";
-    hash = "sha256-SEwMevE8Ggs4qOmhC77qOuSD7DV3/vddl38VDVfvQc4=";
+    rev = "20ab19411bafd6ff2ccdcb7a6249cfbd7e9e6f83";
+    hash = "sha256-Ab55d5YpM7+Jmr4Fq/472gNkcLTNVcIbMCNMqxzqk6k=";
   };
 
   pythonRelaxDeps = map (p: p.pname) dependencies;
@@ -29,6 +29,7 @@ python3.pkgs.buildPythonApplication rec {
     aiolimiter
     aiosqlite
     async-mega-py
+    backports-zstd
     beautifulsoup4
     certifi
     curl-cffi
