@@ -5,12 +5,7 @@
     curl
     delta
     diskus
-    (fastfetch.override {
-      x11Support = false;
-      waylandSupport = false;
-      rpmSupport = false;
-      vulkanSupport = false;
-    })
+    fastfetchMinimal
     fd
     git-absorb
     git-quickfix
