@@ -49,15 +49,28 @@ in
     };
 
     services.caddy.virtualHosts."https://${cfg.domain}".extraConfig = ''
-      handle {
-        route {
-          authorize with calibreweb_policy
-          reverse_proxy localhost:${toString cfg.port} {
-            header_up X-Scheme https
-            transport http {
-              read_buffer 1024k
-              write_buffer 1024k
-            }
+      route /caddy-security* {
+        authenticate with calibreweb_portal
+      }
+
+      @integrations {
+        path /opds /opds/* /kobo /kobo/*
+      }
+      reverse_proxy @integrations localhost:${toString cfg.port} {
+        header_up X-Scheme https
+        transport http {
+          read_buffer 1024k
+          write_buffer 1024k
+        }
+      }
+
+      route {
+        authorize with calibreweb_policy
+        reverse_proxy localhost:${toString cfg.port} {
+          header_up X-Scheme https
+          transport http {
+            read_buffer 1024k
+            write_buffer 1024k
           }
         }
       }

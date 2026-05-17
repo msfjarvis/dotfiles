@@ -94,7 +94,6 @@ in
                   enable identity provider ${name}
                   trust login redirect uri domain exact ${app.domain} path prefix /
                   cookie insecure off
-                  cookie domain ${app.domain}
                   transform user {
                     match realm ${name}
                     action add role authp/user
