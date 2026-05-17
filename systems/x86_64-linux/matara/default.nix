@@ -88,11 +88,6 @@ in
     enable = true;
     applyDefaults = true;
     virtualHosts = {
-      "https://matara.${tailnetDomain}" = {
-        extraConfig = ''
-          reverse_proxy 127.0.0.1:${toString config.services.deluge.web.port}
-        '';
-      };
     }
     // (mkTailscaleVHost "stash" ''
       reverse_proxy ${config.services.stash.settings.host}:${toString config.services.stash.settings.port} {
@@ -192,9 +187,6 @@ in
           };
         };
       };
-    };
-    deluge = {
-      enable = true;
     };
     gphotos-cdp =
       let
