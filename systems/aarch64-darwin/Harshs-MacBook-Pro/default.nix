@@ -18,6 +18,7 @@
     pkgs.${namespace}.diffuse-bin
     flock
     git-absorb
+    harper
     hub
     pkgs.${namespace}.katbin
     maestro
