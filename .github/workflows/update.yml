@@ -72,6 +72,9 @@ jobs:
         run: nix-shell -p nix-update git --run ./update.sh
         env:
           CACHE_CMD: "attic push ${{ matrix.cache }}"
+      - name: Bump llm-agents.nix input
+        shell: bash
+        run: nix flake update llm-agents --commit-lock-file
       - name: Check post-update Git ref
         if: "always()"
         shell: bash
