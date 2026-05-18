@@ -4,19 +4,26 @@
   fetchFromGitHub,
 }:
 
-python3.pkgs.buildPythonApplication rec {
-  pname = "cyberdrop-dl";
-  version = "9.10.1-unstable-2026-05-17";
-  pyproject = true;
-
+let
   src = fetchFromGitHub {
     owner = "Cyberdrop-DL";
     repo = "cyberdrop-dl";
-    rev = "20ab19411bafd6ff2ccdcb7a6249cfbd7e9e6f83";
-    hash = "sha256-Ab55d5YpM7+Jmr4Fq/472gNkcLTNVcIbMCNMqxzqk6k=";
+    rev = "be313dbba870d23a9e1121a02a347507c95e80cf";
+    hash = "sha256-BVv2kKApFd3igJzSro68E8nsUUN16lSk9W9KONc9iyo=";
   };
+in
+python3.pkgs.buildPythonApplication {
+  pname = "cyberdrop-dl";
+  version = "9.10.1-unstable-2026-05-18";
+  inherit src;
 
-  pythonRelaxDeps = map (p: p.pname) dependencies;
+  pyproject = true;
+
+  pythonRelaxDeps = true;
+
+  postPatch = ''
+    sed -ie 's/requires = \["uv_build[^"]*"]/requires = ["uv_build"]/' pyproject.toml
+  '';
 
   build-system = [
     python3.pkgs.uv-build
