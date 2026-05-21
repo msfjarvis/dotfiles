@@ -52,11 +52,6 @@ in
     // lib.attrsets.optionalAttrs notServer {
       credential = {
         "https://git.msfjarvis.dev" = {
-          oauthClientId = "46f9ecfb-b304-4660-b975-d2f3cadffe82";
-          oauthScopes = "read_repository write_repository";
-          oauthAuthURL = "/oauth/authorize";
-          oauthTokenURL = "/oauth/token";
-          oauthDeviceAuthURL = "/oauth/authorize_device";
           helper = [
             "cache --timeout 21600"
             "${lib.getExe git-credential-oauth}"
