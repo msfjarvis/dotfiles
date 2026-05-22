@@ -88,6 +88,11 @@ in
     enable = true;
     applyDefaults = true;
     virtualHosts = {
+      "https://matara.${tailnetDomain}" = {
+        extraConfig = ''
+          reverse_proxy 127.0.0.1:${toString config.services.${namespace}.qbittorrent.port}
+        '';
+      };
     }
     // (mkTailscaleVHost "stash" ''
       reverse_proxy ${config.services.stash.settings.host}:${toString config.services.stash.settings.port} {
@@ -206,7 +211,7 @@ in
       enable = true;
     };
     qbittorrent = {
-      enable = false;
+      enable = true;
       port = ports._qbittorrent;
       user = "msfjarvis";
       group = "users";
