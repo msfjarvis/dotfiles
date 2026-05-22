@@ -71,7 +71,6 @@ in
       globalConfig = ''
         metrics
         tailscale {
-          ephemeral true
         }
         order authenticate before respond
         ${lib.optionalString (config.services.caddy.pocketIdApplications != { }) ''
