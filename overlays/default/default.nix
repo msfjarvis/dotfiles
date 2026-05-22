@@ -22,5 +22,13 @@ _: prev: {
     # This no longer applies and I also don't care to use OpenCode at this point.
     # patches = [ ./opencode-pr-22062.patch ];
   });
-  qbittorrent = prev.qbittorrent.override { guiSupport = false; };
+  qbittorrent = (prev.qbittorrent.override { guiSupport = false; }).overrideAttrs (_: {
+    patches = [
+      (prev.fetchpatch2 {
+        # https://github.com/qbittorrent/qBittorrent/pull/24286
+        url = "https://patch-diff.githubusercontent.com/raw/qbittorrent/qBittorrent/pull/24286.patch";
+        hash = "sha256-61uh5gVcuUkuZoiYqSSw9w8FrBTmAyW5EPexmYNaezY=";
+      })
+    ];
+  });
 }
