@@ -51,12 +51,10 @@ in
     }
     // lib.attrsets.optionalAttrs notServer {
       credential = {
-        "https://git.msfjarvis.dev" = {
-          helper = [
-            "cache --timeout 21600"
-            "${lib.getExe git-credential-oauth}"
-          ];
-        };
+        helper = [
+          "cache --timeout 21600"
+          "${lib.getExe git-credential-oauth}"
+        ];
         "https://github.com" = {
           helper = [
             "${lib.getExe git-credential-oauth} -device"
