@@ -8,8 +8,8 @@ let
   src = fetchFromGitHub {
     owner = "Cyberdrop-DL";
     repo = "cyberdrop-dl";
-    rev = "4b81c9bacf7a56ed1469d441e9c44b89185c51ee";
-    hash = "sha256-pwxRw521kP01o4gc7dpCNKF/6iaTEm5Ia8atLK3ES5s=";
+    rev = "43541cb26ce175b3c18fcb7b395d874578bc124b";
+    hash = "sha256-2rXZrD1nWJdhci30fekROq+bVWYuYrfz9k3kvYyFiYI=";
   };
 in
 python3.pkgs.buildPythonApplication {
