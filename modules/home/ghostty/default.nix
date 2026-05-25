@@ -52,6 +52,10 @@ in
           scrollbar = "system";
         });
       };
+      home.packages = with pkgs; [
+        # Preview images in the terminal
+        chafa
+      ];
       dconf.settings = {
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = lib.mkForce {
           binding = "<Control><Alt>t";
