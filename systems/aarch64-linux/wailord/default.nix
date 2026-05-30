@@ -70,6 +70,13 @@ in
     enable = true;
     applyDefaults = true;
     virtualHosts = {
+      "https://claw.msfjarvis.dev" = {
+        extraConfig = ''
+          import blackholeCrawlers
+          root * /var/lib/claw-deploy
+          file_server browse
+        '';
+      };
       "https://til.msfjarvis.dev" = {
         extraConfig = ''
           import blackholeCrawlers
