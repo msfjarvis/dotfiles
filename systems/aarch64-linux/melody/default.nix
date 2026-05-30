@@ -88,10 +88,10 @@
       targets = [
         # "https://msfjarvis.dev"
         # "https://git.msfjarvis.dev"
-        "https://grafana.msfjarvis.dev"
-        "https://money.msfjarvis.dev"
-        "https://read.msfjarvis.dev"
-        "https://vault.msfjarvis.dev"
+        # "https://grafana.msfjarvis.dev"
+        # "https://money.msfjarvis.dev"
+        # "https://read.msfjarvis.dev"
+        # "https://vault.msfjarvis.dev"
       ];
     };
 
