@@ -5,4 +5,5 @@ _: prev: {
   megatools = prev.megatools.overrideAttrs (_: {
     patches = [ ./megatools.patch ];
   });
+  qbittorrent = prev.qbittorrent.override { guiSupport = false; };
 }
