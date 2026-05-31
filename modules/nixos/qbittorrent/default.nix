@@ -88,8 +88,6 @@ in
 
   config = mkMerge [
     (mkIf cfg.enable {
-      environment.systemPackages = [ pkgs.qbittorrent ];
-
       networking.firewall = mkIf cfg.openFirewall {
         allowedTCPPorts = [ cfg.port ];
         allowedUDPPorts = [ cfg.port ];
@@ -99,10 +97,9 @@ in
         after = [ "network.target" ];
         description = "qBittorrent Daemon";
         wantedBy = [ "multi-user.target" ];
-        path = [ pkgs.qbittorrent ];
         serviceConfig = {
           ExecStart = ''
-            ${pkgs.qbittorrent}/bin/qbittorrent-nox \
+            ${lib.getExe pkgs.qbittorrent} \
               --profile=${configDir} \
               --confirm-legal-notice \
               --webui-port=${toString cfg.port}
