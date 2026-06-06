@@ -11,6 +11,7 @@
       autoUpdate = true;
       cleanup = lib.mkDefault "uninstall";
       upgrade = true;
+      extraFlags = [ "--force-cleanup" ];
     };
   };
 }
