@@ -898,13 +898,13 @@
     "wallpaper": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-XIMLfOmVVNVGjTlzv6uhtizlNaGt49noWW8k4lAi6uA=",
+        "narHash": "sha256-vZTfOh2etX6i2qFMJGbJ2DKFRd8zuq3aYq6M4onGwx0=",
         "type": "file",
-        "url": "https://til.msfjarvis.dev/20250126195618_1.jpg"
+        "url": "https://til.msfjarvis.dev/Scarle%20Yonaguni%20Cheer.png"
       },
       "original": {
         "type": "file",
-        "url": "https://til.msfjarvis.dev/20250126195618_1.jpg"
+        "url": "https://til.msfjarvis.dev/Scarle%20Yonaguni%20Cheer.png"
       }
     }
   },

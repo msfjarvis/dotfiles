@@ -207,7 +207,7 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    wallpaper.url = "https://til.msfjarvis.dev/20250126195618_1.jpg";
+    wallpaper.url = "https://til.msfjarvis.dev/Scarle%20Yonaguni%20Cheer.png";
     wallpaper.flake = false;
   };
 }
