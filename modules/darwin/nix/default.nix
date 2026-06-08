@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   namespace,
@@ -8,6 +9,8 @@
   environment.systemPackages = with pkgs; [
     nix-forecast
   ];
+
+  srvos.update-diff.command = "${pkgs.nvd}/bin/nvd --nix-bin-dir=${config.nix.package}/bin diff";
 
   nix =
     lib.${namespace}.mkNixConfig {

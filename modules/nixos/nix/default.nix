@@ -14,6 +14,8 @@
     nix-output-monitor
   ];
 
+  srvos.update-diff.command = "${pkgs.nvd}/bin/nvd --nix-bin-dir=${config.nix.package}/bin diff";
+
   programs.nh = {
     enable = true;
     clean.enable = config.profiles.${namespace}.server.enable;
