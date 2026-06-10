@@ -1,40 +1,44 @@
 {
   config,
   lib,
+  options,
   pkgs,
   namespace,
   ...
 }:
 {
-  users.users.msfjarvis.packages = with pkgs; [
-    attic-client
-    expect
-    nix-forecast
-    nix-inspect
-    nix-output-monitor
-  ];
+  config = {
+    users.users.msfjarvis.packages = with pkgs; [
+      attic-client
+      expect
+      nix-forecast
+      nix-inspect
+      nix-output-monitor
+    ];
 
-  srvos.update-diff.command = "${pkgs.nvd}/bin/nvd --nix-bin-dir=${config.nix.package}/bin diff";
-
-  programs.nh = {
-    enable = true;
-    clean.enable = config.profiles.${namespace}.server.enable;
-    flake = "/home/msfjarvis/git-repos/dotfiles";
-  };
-
-  sops.secrets.nix-netrc-file = {
-    sopsFile = lib.snowfall.fs.get-file "secrets/nix-cache.yaml";
-    format = "yaml";
-    key = "netrc-file";
-  };
-
-  nix =
-    lib.${namespace}.mkNixConfig {
-      inherit lib;
-    }
-    // {
-      package = pkgs.lixPackageSets.git.lix;
-      optimise.automatic = false;
-      settings.netrc-file = config.sops.secrets.nix-netrc-file.path;
+    programs.nh = {
+      enable = true;
+      clean.enable = config.profiles.${namespace}.server.enable;
+      flake = "/home/msfjarvis/git-repos/dotfiles";
     };
+
+    sops.secrets.nix-netrc-file = {
+      sopsFile = lib.snowfall.fs.get-file "secrets/nix-cache.yaml";
+      format = "yaml";
+      key = "netrc-file";
+    };
+
+    nix =
+      lib.${namespace}.mkNixConfig {
+        inherit lib;
+      }
+      // {
+        package = pkgs.lixPackageSets.git.lix;
+        optimise.automatic = false;
+        settings.netrc-file = config.sops.secrets.nix-netrc-file.path;
+      };
+  }
+  // lib.optionalAttrs (builtins.hasAttr "srvos" options) {
+    srvos.update-diff.command = "${pkgs.nvd}/bin/nvd --nix-bin-dir=${config.nix.package}/bin diff";
+  };
 }
