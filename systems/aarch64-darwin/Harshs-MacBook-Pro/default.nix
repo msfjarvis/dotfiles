@@ -47,6 +47,7 @@
     brews = [
       "static-var/tap/build-brief"
       "deezer/repo/caupain"
+      "container"
       "github-mcp-server"
       "gnu-sed"
       "nodejs"
@@ -57,14 +58,12 @@
       "spicetify-cli"
     ];
     casks = [
-      "alt-tab"
       "betterdisplay"
       "flashspace"
       "google-chrome"
       "jetbrains-toolbox"
       "keepingyouawake"
       "obsidian"
-      "orbstack"
       "raycast"
       "rectangle"
       "spotify"
