@@ -1,22 +1,26 @@
 { lib, config, ... }:
 let
-  inherit (lib) filter hasInfix optionalAttrs;
+  inherit (lib) filter hasInfix map optionalAttrs;
 
   primaryUser = config.system.primaryUser;
   primaryUserHome = (builtins.getAttr primaryUser config.users.users).home;
-  xdgConfigHome = config.environment.variables.XDG_CONFIG_HOME or "${primaryUserHome}/.config";
-  trustDir = "${xdgConfigHome}/homebrew";
+  trustDir = "${primaryUserHome}/.homebrew";
   trustPath = "${trustDir}/trust.json";
 
+  entryName = entry: entry.name;
   isThirdPartyPackage = name: hasInfix "/" name;
+
+  trustedTaps = map entryName config.homebrew.taps;
+  trustedFormulae = filter isThirdPartyPackage (map entryName config.homebrew.brews);
+  trustedCasks = filter isThirdPartyPackage (map entryName config.homebrew.casks);
 
   trustFile = builtins.toJSON (
     {
-      trustedtaps = config.homebrew.taps;
-      trustedformulae = filter isThirdPartyPackage config.homebrew.brews;
+      trustedtaps = trustedTaps;
+      trustedformulae = trustedFormulae;
     }
-    // optionalAttrs (config.homebrew.casks != [ ]) {
-      trustedcasks = filter isThirdPartyPackage config.homebrew.casks;
+    // optionalAttrs (trustedCasks != [ ]) {
+      trustedcasks = trustedCasks;
     }
   );
 in
@@ -27,7 +31,8 @@ in
     HOMEBREW_NO_EMOJI = "1";
   };
 
-  system.activationScripts.homebrewTrustFile.text = ''
+  system.checks.text = lib.mkBefore ''
+    mkdir -p ${trustDir}
     install -d -o ${primaryUser} -g staff -m 0755 ${trustDir}
     cat > ${trustPath} <<'EOF'
     ${trustFile}
