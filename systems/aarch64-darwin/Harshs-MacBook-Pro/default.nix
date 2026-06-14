@@ -47,6 +47,7 @@
     brews = [
       "static-var/tap/build-brief"
       "deezer/repo/caupain"
+      "cloudflared"
       "container"
       "github-mcp-server"
       "gnu-sed"
