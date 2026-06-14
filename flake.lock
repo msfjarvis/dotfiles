@@ -578,11 +578,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1781398836,
-        "narHash": "sha256-Az5VwxtFeHhQnwxM0qyMZHQ8Cf1b0E8jq/ARGI1jdAM=",
+        "lastModified": 1781410852,
+        "narHash": "sha256-a1UW0X+PwgWLku/8aDIdfrwWQkWgyeK84X1io0y0618=",
         "owner": "msfjarvis",
         "repo": "nixpkgs",
-        "rev": "472bfc9329cd23f4480217ac61cdbe01943d2efa",
+        "rev": "cd0e60b999d73ca03408bd66571cb58feaac8814",
         "type": "github"
       },
       "original": {
@@ -898,7 +898,7 @@
     "wallpaper": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-9YKIKdjvG2xNOfA8EEpJjDUAi0bSNbU7nsByMGV3koE=",
+        "narHash": "sha256-vZTfOh2etX6i2qFMJGbJ2DKFRd8zuq3aYq6M4onGwx0=",
         "type": "file",
         "url": "https://til.msfjarvis.dev/Scarle%20Yonaguni%20Cheer.png"
       },
