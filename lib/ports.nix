@@ -38,6 +38,7 @@
     booklore = 9026;
     calibre-web = 9027;
     deluge-web = 9028;
+    lurker = 9029;
     exporters = {
       node = 9100;
       systemd = 9101;
