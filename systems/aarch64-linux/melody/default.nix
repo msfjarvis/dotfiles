@@ -66,6 +66,11 @@
       enable = true;
     };
 
+    lurker = {
+      enable = true;
+      domain = "lurker";
+    };
+
     ncps = {
       enable = false;
     };
