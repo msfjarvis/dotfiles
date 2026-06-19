@@ -50,6 +50,7 @@ in
         }
         // (optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
           scrollbar = "system";
+          theme = "dark:Catppuccin Mocha,light:Catppuccin Latte";
         });
       };
       home.packages = with pkgs; [
