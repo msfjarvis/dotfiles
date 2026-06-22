@@ -57,6 +57,8 @@ in
         ];
         "https://github.com" = {
           helper = [
+            ""
+            "cache --timeout 21600"
             "${lib.getExe git-credential-oauth} -device"
           ];
         };
