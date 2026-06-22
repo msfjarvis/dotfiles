@@ -27,8 +27,7 @@ declare -a ALL_PACKAGES=(
   linkleaner
   mediafire_rs
   patreon-dl
-  # TODO seems to have broken builds
-  # phanpy
+  phanpy
   # Doesn't need updates
   # pidcat
   prometheus-qbittorrent-exporter
