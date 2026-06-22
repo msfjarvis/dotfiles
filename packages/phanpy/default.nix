@@ -16,25 +16,12 @@ buildNpmPackage {
     hash = "sha256-2zrdraN1wsHNaTISuZNKTCVvU28hvQSgp71SX0ckCpM=";
   };
 
-  patches = [
-    # Rebased copy of PR 1096
-    ./0001-add-a-2-in-1-fav-boost-button.patch
-    # Fix for the scrolling bug
-    ./0002-fix-carousel-make-carousels-focusable-so-keyboard-sc.patch
-  ];
-
   npmDepsHash = "sha256-1PxjimSwP0cE8uVn7qZ3WiVwT2lAXvPd2DTEcHhfqec=";
 
   installPhase = ''
     mkdir $out
     pushd dist || exit 1
     cp -vR ./ $out/
-  '';
-
-  postPatch = ''
-    # If we keep the `exifreader` section then the buildscript will try to call NPM again
-    # which breaks the Nix sandbox assumptions and fails to build.
-    cat <<< $(${lib.getExe jq} 'del(.exifreader)' package.json) > package.json
   '';
 
   PHANPY_WEBSITE = lib.optionalString (defaultUrl != null) defaultUrl;
