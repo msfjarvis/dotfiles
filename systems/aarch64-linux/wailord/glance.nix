@@ -131,7 +131,7 @@
             }
             {
               type = "weather";
-              location = "Bangalore, India";
+              location = "Bengaluru, India";
             }
             {
               type = "releases";
