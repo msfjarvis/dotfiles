@@ -93,11 +93,13 @@ in
           NODE_ENV = "production";
           PORT = "8015";
           DATABASE_PATH = "/app/data/lurker.db";
-        } // cfg.extraEnvironment;
+        }
+        // cfg.extraEnvironment;
         extraOptions = [
           "--pull=always"
         ];
-      } // optionalAttrs (cfg.environmentFile != null) {
+      }
+      // optionalAttrs (cfg.environmentFile != null) {
         inherit (cfg) environmentFile;
       };
 

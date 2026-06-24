@@ -1,6 +1,11 @@
 { lib, config, ... }:
 let
-  inherit (lib) filter hasInfix map optionalAttrs;
+  inherit (lib)
+    filter
+    hasInfix
+    map
+    optionalAttrs
+    ;
 
   primaryUser = config.system.primaryUser;
   primaryUserHome = (builtins.getAttr primaryUser config.users.users).home;
