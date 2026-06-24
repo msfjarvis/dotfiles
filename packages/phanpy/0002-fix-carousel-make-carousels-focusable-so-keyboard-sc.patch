@@ -1,4 +1,4 @@
-From a18c50d76693d01f3d125e5962322142a6459ccc Mon Sep 17 00:00:00 2001
+From 9a498256d43a7a577eb98ca7728fe18cb0a59458 Mon Sep 17 00:00:00 2001
 From: Harsh Shandilya <me@msfjarvis.dev>
 Date: Wed, 11 Mar 2026 01:47:54 +0530
 Subject: [PATCH 2/2] fix(carousel): make carousels focusable so keyboard
@@ -25,10 +25,10 @@ index 95bf4eea7202..a12469bca03e 100644
              <div class="media-first-item" key={media.id}>
                <Media
 diff --git a/src/components/timeline.jsx b/src/components/timeline.jsx
-index ad7e130e91a6..12a5bf105c79 100644
+index 6edfe45e253f..380027112e5c 100644
 --- a/src/components/timeline.jsx
 +++ b/src/components/timeline.jsx
-@@ -996,7 +996,7 @@ function StatusCarousel({ title, class: className, children }) {
+@@ -993,7 +993,7 @@ function StatusCarousel({ title, class: className, children }) {
            </button>
          </span>
        </header>
@@ -38,10 +38,10 @@ index ad7e130e91a6..12a5bf105c79 100644
            class="status-carousel-beacon"
            onChange={(inView) => {
 diff --git a/src/pages/notifications.jsx b/src/pages/notifications.jsx
-index fc6376303bbe..8a3ef119d374 100644
+index da234e27fe25..d05d6b3ee195 100644
 --- a/src/pages/notifications.jsx
 +++ b/src/pages/notifications.jsx
-@@ -766,6 +766,7 @@ function Notifications({ columnMode }) {
+@@ -823,6 +823,7 @@ function Notifications({ columnMode }) {
                      announcements.length > 1 ? 'multiple' : 'single'
                    }`}
                    ref={announcementsListRef}
@@ -63,5 +63,5 @@ index 4353d87e63d1..08c18def57dd 100644
                <h3>
                  <Trans>Trending News</Trans>
 -- 
-2.53.0
+2.54.0
 

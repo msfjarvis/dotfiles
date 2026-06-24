@@ -1,4 +1,4 @@
-From 928edd3cd89fa62c341a93eaec1d31acaf44e832 Mon Sep 17 00:00:00 2001
+From 99af623649ebba95db808113e9fbe8fd3ab96d41 Mon Sep 17 00:00:00 2001
 From: "Sulabh Mehta (Dominik)" <github@sume.uk>
 Date: Mon, 17 Mar 2025 16:54:01 +0800
 Subject: [PATCH 1/2] add a 2 in 1 fav&boost button
@@ -12,20 +12,20 @@ Subject: [PATCH 1/2] add a 2 in 1 fav&boost button
  4 files changed, 112 insertions(+)
 
 diff --git a/src/components/ICONS.jsx b/src/components/ICONS.jsx
-index 73f87ed29e99..c53ad4203bb4 100644
+index cc9ff6948413..3d4c8380f6c0 100644
 --- a/src/components/ICONS.jsx
 +++ b/src/components/ICONS.jsx
-@@ -204,4 +204,5 @@ export const ICONS = {
-     flip: 'horizontal',
+@@ -206,4 +206,5 @@ export const ICONS = {
    },
    'arrow-up-top': () => import('../iconify-icons/mingcute/arrow-to-up-line.js'),
+   collections: () => import('../iconify-icons/mingcute/board-line.js'),
 +  'fav-boost-celebrate': () => import('../iconify-icons/mingcute/celebrate-line.js'),
  };
 diff --git a/src/components/status.css b/src/components/status.css
-index fb5436150f34..d97deaf051f9 100644
+index a1c9f80b90ab..c8a906aadefa 100644
 --- a/src/components/status.css
 +++ b/src/components/status.css
-@@ -2546,6 +2546,30 @@ a.card:is(:hover, :focus):visited {
+@@ -2558,6 +2558,30 @@ a.card:is(:hover, :focus):visited {
  .status .action > button.plain.favourite-button.checked .icon {
    animation: hearted 1s ease-out;
  }
@@ -57,10 +57,10 @@ index fb5436150f34..d97deaf051f9 100644
    color: var(--link-color);
    border-color: var(--link-color);
 diff --git a/src/components/status.jsx b/src/components/status.jsx
-index 2742fb809e19..925d553612e4 100644
+index 97caef696cfc..6c26347236d0 100644
 --- a/src/components/status.jsx
 +++ b/src/components/status.jsx
-@@ -891,6 +891,81 @@ function Status({
+@@ -894,6 +894,81 @@ function Status({
      }
    };
  
@@ -142,7 +142,7 @@ index 2742fb809e19..925d553612e4 100644
    const favouriteStatus = async () => {
      if (!sameInstance || !authenticated) {
        alert(unauthInteractionErrorMessage);
-@@ -3059,6 +3134,17 @@ function Status({
+@@ -3089,6 +3164,17 @@ function Status({
                      }}
                    />
                  </div>
@@ -161,10 +161,10 @@ index 2742fb809e19..925d553612e4 100644
                    <div class="action">
                      <StatusButton
 diff --git a/src/index.css b/src/index.css
-index e8d71a709c9d..0a3d5cb1a00a 100644
+index 0c3026c5401c..485290a9b424 100644
 --- a/src/index.css
 +++ b/src/index.css
-@@ -86,6 +86,7 @@
+@@ -87,6 +87,7 @@
    --reply-to-color: var(--orange-color);
    --reply-to-text-color: #b36200;
    --favourite-color: var(--red-color);
@@ -173,5 +173,5 @@ index e8d71a709c9d..0a3d5cb1a00a 100644
    --hashtag-color: LightSeaGreen;
    --hashtag-faded-color: color-mix(
 -- 
-2.53.0
+2.54.0
 

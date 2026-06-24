@@ -1,5 +1,4 @@
 {
-  jq,
   lib,
   buildNpmPackage,
   fetchFromGitHub,
@@ -15,6 +14,13 @@ buildNpmPackage {
     rev = "48db02f7b99f4719010910ddef4ddeec4c13e72f";
     hash = "sha256-kqzlHHTjuDzQFaLO499y/w+6KJb8TCS4HSgAY2sc2xw=";
   };
+
+  patches = [
+    # Rebased copy of PR 1096
+    ./0001-add-a-2-in-1-fav-boost-button.patch
+    # Fix for the scrolling bug
+    ./0002-fix-carousel-make-carousels-focusable-so-keyboard-sc.patch
+  ];
 
   npmDepsHash = "sha256-zwl7qCo/Nhu2dMgwFP0YFD7MZmtyKIYNsIXCTNcyWAU=";
 
