@@ -30,6 +30,7 @@ in
   config = mkIf cfg.enable {
     services.caddy.virtualHosts = {
       "https://${cfg.domain}" = {
+        logFormat = lib.${namespace}.mkFail2banLogFormat cfg.domain;
         extraConfig = ''
           reverse_proxy ${config.services.pocket-id.settings.HOST}:${config.services.pocket-id.settings.PORT}
         '';

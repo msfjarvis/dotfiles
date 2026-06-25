@@ -43,6 +43,7 @@ in
     };
     services.caddy.virtualHosts = {
       "https://${cfg.domain}" = {
+        logFormat = lib.${namespace}.mkFail2banLogFormat cfg.domain;
         extraConfig = with config.services.forgejo.settings.server; ''
           import blackholeCrawlers
           reverse_proxy ${HTTP_ADDR}:${toString HTTP_PORT} {
@@ -51,6 +52,7 @@ in
         '';
       };
       "https://vibes.msfjarvis.dev" = {
+        logFormat = lib.${namespace}.mkFail2banLogFormat "vibes.msfjarvis.dev";
         extraConfig = ''
           gitea_pages {
             gitea_url https://${cfg.domain}

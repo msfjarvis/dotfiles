@@ -55,6 +55,12 @@ in
       sopsFile = lib.snowfall.fs.get-file "secrets/tailscale.yaml";
       owner = config.services.caddy.user;
     };
+    environment.etc."fail2ban/filter.d/caddy-access.local".text = ''
+      [Definition]
+      failregex = ^<HOST>.*"(GET|POST|OPTIONS).*" (4[0-9][0-9])[ \d]*$
+      ignoreregex =
+    '';
+
     services.caddy = {
       enableReload = false; # I think caddy-tailscale breaks this
       package = pkgs.${namespace}.caddy-with-plugins;
@@ -117,6 +123,17 @@ in
           }
         }
       '';
+    };
+
+    services.fail2ban.jails.caddy-access.settings = {
+      enabled = true;
+      filter = "caddy-access";
+      logpath = "/var/log/caddy/access-*.log";
+      backend = "auto";
+      port = "http,https";
+      findtime = 30;
+      maxretry = 5;
+      bantime = 600;
     };
   };
 }

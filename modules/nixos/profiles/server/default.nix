@@ -114,7 +114,7 @@ in
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHEykZdEDb8opMyzQMWei91G8+haD1KLhttjNLVOoSPw"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJAEOFlF6JRh88JkFUnxaPVv6LxGP7ervltThqHAOzu1"
     ];
-    services.fail2ban.enable = false;
+    services.fail2ban.enable = true;
 
     # Enable passwordless sudo.
     security.sudo.extraRules = [

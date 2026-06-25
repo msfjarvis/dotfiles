@@ -48,33 +48,36 @@ in
       '';
     };
 
-    services.caddy.virtualHosts."https://${cfg.domain}".extraConfig = ''
-      route /caddy-security* {
-        authenticate with calibreweb_portal
-      }
-
-      @integrations {
-        path /opds /opds/* /kobo /kobo/*
-      }
-      reverse_proxy @integrations localhost:${toString cfg.port} {
-        header_up X-Scheme https
-        transport http {
-          read_buffer 1024k
-          write_buffer 1024k
+    services.caddy.virtualHosts."https://${cfg.domain}" = {
+      logFormat = lib.${namespace}.mkFail2banLogFormat cfg.domain;
+      extraConfig = ''
+        route /caddy-security* {
+          authenticate with calibreweb_portal
         }
-      }
 
-      route {
-        authorize with calibreweb_policy
-        reverse_proxy localhost:${toString cfg.port} {
+        @integrations {
+          path /opds /opds/* /kobo /kobo/*
+        }
+        reverse_proxy @integrations localhost:${toString cfg.port} {
           header_up X-Scheme https
           transport http {
             read_buffer 1024k
             write_buffer 1024k
           }
         }
-      }
-    '';
+
+        route {
+          authorize with calibreweb_policy
+          reverse_proxy localhost:${toString cfg.port} {
+            header_up X-Scheme https
+            transport http {
+              read_buffer 1024k
+              write_buffer 1024k
+            }
+          }
+        }
+      '';
+    };
 
     systemd.services.caddy.serviceConfig.EnvironmentFile = [
       config.sops.secrets.calibre-web-caddy-env.path

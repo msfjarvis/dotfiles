@@ -25,12 +25,14 @@ in
   config = mkIf cfg.enable {
     services.caddy.virtualHosts = {
       "https://${cfg.domain}" = {
+        logFormat = lib.${namespace}.mkFail2banLogFormat cfg.domain;
         extraConfig = ''
           import blackholeCrawlers
           reverse_proxy 127.0.0.1:${toString config.services.gitea.settings.server.HTTP_PORT}
         '';
       };
       "https://vibes.msfjarvis.dev" = {
+        logFormat = lib.${namespace}.mkFail2banLogFormat "vibes.msfjarvis.dev";
         extraConfig = ''
           gitea_pages {
             gitea_url https://${cfg.domain}

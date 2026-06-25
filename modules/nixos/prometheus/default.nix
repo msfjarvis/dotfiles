@@ -90,6 +90,7 @@ in
     services.caddy.virtualHosts = mkMerge [
       (mkIf cfg.grafana.enable {
         "https://${config.services.grafana.settings.server.domain}" = {
+          logFormat = lib.${namespace}.mkFail2banLogFormat cfg.grafana.host;
           extraConfig = ''
             reverse_proxy ${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}
           '';

@@ -6,7 +6,12 @@
   ...
 }:
 let
-  inherit (lib.${namespace}) ports tailnetDomain mkTailscaleVHost;
+  inherit (lib.${namespace})
+    ports
+    tailnetDomain
+    mkTailscaleVHost
+    mkFail2banLogFormat
+    ;
 in
 {
   imports = [
@@ -71,6 +76,7 @@ in
     applyDefaults = true;
     virtualHosts = {
       "https://claw.msfjarvis.dev" = {
+        logFormat = mkFail2banLogFormat "claw.msfjarvis.dev";
         extraConfig = ''
           import blackholeCrawlers
           root * /var/lib/claw-deploy
@@ -78,6 +84,7 @@ in
         '';
       };
       "https://til.msfjarvis.dev" = {
+        logFormat = mkFail2banLogFormat "til.msfjarvis.dev";
         extraConfig = ''
           import blackholeCrawlers
           root * /var/lib/file_share
