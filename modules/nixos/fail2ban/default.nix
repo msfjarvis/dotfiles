@@ -2,17 +2,34 @@
   config,
   lib,
   namespace,
+  pkgs,
   ...
 }:
 let
   cfg = config.services.${namespace}.fail2ban;
+  exporterCfg = config.services.prometheus.exporters.fail2ban;
   inherit (lib)
+    concatStringsSep
+    getExe
     mkEnableOption
     mkIf
+    optional
     optionals
     ;
   inherit (lib.${namespace}) ports;
   prometheusEnabled = config.services.${namespace}.prometheus.enable;
+  exporterArgs = concatStringsSep " \\\n            " (
+    [
+      (getExe pkgs.prometheus-fail2ban-exporter)
+    ]
+    ++ optional exporterCfg.exitOnError "--collector.f2b.exit-on-socket-connection-error"
+    ++ optional (exporterCfg.username != null) ''--web.basic-auth.username="${exporterCfg.username}"''
+    ++ optional (exporterCfg.passwordFile != null) ''--web.basic-auth.password="$(cat ${exporterCfg.passwordFile})"''
+    ++ [
+      ''--web.listen-address="${exporterCfg.host}:${toString exporterCfg.port}"''
+      "--collector.f2b.socket=${exporterCfg.fail2banSocket}"
+    ]
+  );
 in
 {
   options.services.${namespace}.fail2ban = {
@@ -43,6 +60,21 @@ in
       enable = true;
       host = "127.0.0.1";
       port = ports.exporters.fail2ban;
+    };
+
+    systemd.services.prometheus-fail2ban-exporter = mkIf exporterCfg.enable {
+      requires = mkIf config.services.fail2ban.enable [ "prometheus-fail2ban-exporter-setup.service" ];
+      serviceConfig = {
+        DynamicUser = false;
+        ExecStart = lib.mkForce ''
+          ${exporterArgs}
+        '';
+        RestrictAddressFamilies = [
+          "AF_INET"
+          "AF_INET6"
+          "AF_UNIX"
+        ];
+      };
     };
 
     services.prometheus.scrapeConfigs = optionals prometheusEnabled [
