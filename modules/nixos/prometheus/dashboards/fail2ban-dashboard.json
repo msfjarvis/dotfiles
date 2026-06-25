@@ -69,7 +69,7 @@
       "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "unit": "none" } },
       "gridPos": { "h": 4, "w": 6, "x": 12, "y": 1 },
       "id": 3,
-      "options": { "reduceOptions": { "calcs": ["sum"], "fields": "", "values": false }, "colorMode": "background", "graphMode": "none" },
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "colorMode": "background", "graphMode": "none" },
       "title": "Currently Banned",
       "type": "stat",
       "targets": [ { "expr": "sum(f2b_jail_banned_current{instance=~\"$instance\"})", "legendFormat": "", "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" } } ]
@@ -79,7 +79,7 @@
       "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "unit": "none" } },
       "gridPos": { "h": 4, "w": 6, "x": 18, "y": 1 },
       "id": 4,
-      "options": { "reduceOptions": { "calcs": ["sum"], "fields": "", "values": false }, "colorMode": "background", "graphMode": "none" },
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "colorMode": "background", "graphMode": "none" },
       "title": "Total Bans",
       "type": "stat",
       "targets": [ { "expr": "sum(f2b_jail_banned_total{instance=~\"$instance\"})", "legendFormat": "", "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" } } ]
