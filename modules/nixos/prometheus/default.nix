@@ -125,8 +125,31 @@ in
         };
       })
     ];
+    environment.etc."grafana-dashboards/fail2ban.json" = mkIf cfg.grafana.enable {
+      source = lib.snowfall.fs.get-file "modules/nixos/prometheus/dashboards/fail2ban-dashboard.json";
+      user = "grafana";
+      group = "grafana";
+    };
     services.grafana = mkIf cfg.grafana.enable {
       inherit (cfg.grafana) enable;
+      provision = {
+        enable = true;
+        dashboards.settings = {
+          apiVersion = 1;
+          providers = [
+            {
+              name = "default";
+              type = "file";
+              disableDeletion = true;
+              updateIntervalSeconds = 30;
+              options = {
+                path = "/etc/grafana-dashboards";
+                foldersFromFilesStructure = true;
+              };
+            }
+          ];
+        };
+      };
       settings = {
         "auth.generic_oauth" = {
           enabled = true;
