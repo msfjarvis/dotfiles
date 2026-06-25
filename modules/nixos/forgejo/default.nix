@@ -45,7 +45,9 @@ in
       "https://${cfg.domain}" = {
         extraConfig = with config.services.forgejo.settings.server; ''
           import blackholeCrawlers
-          reverse_proxy ${HTTP_ADDR}:${toString HTTP_PORT}
+          reverse_proxy ${HTTP_ADDR}:${toString HTTP_PORT} {
+            header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+          }
         '';
       };
       "https://vibes.msfjarvis.dev" = {
