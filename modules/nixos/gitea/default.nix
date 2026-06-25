@@ -23,6 +23,12 @@ in
     };
   };
   config = mkIf cfg.enable {
+    environment.etc."fail2ban/filter.d/caddy-gitea-404.local".text = ''
+      [Definition]
+      failregex = ^<HOST>.*"[A-Z]+ .*" 404[ \d]*$
+      ignoreregex =
+    '';
+
     services.caddy.virtualHosts = {
       "https://${cfg.domain}" = {
         logFormat = lib.${namespace}.mkFail2banLogFormat cfg.domain;
@@ -41,6 +47,16 @@ in
           }
         '';
       };
+    };
+    services.fail2ban.jails.caddy-gitea-404.settings = {
+      enabled = true;
+      filter = "caddy-gitea-404";
+      logpath = "/var/log/caddy/access-${cfg.domain}.log";
+      backend = "auto";
+      port = "http,https";
+      findtime = 1;
+      maxretry = 1;
+      bantime = 2592000;
     };
     services.gitea = {
       enable = true;

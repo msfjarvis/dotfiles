@@ -47,6 +47,7 @@
       postgres = 9104;
       pocket-id = 9105;
       blackbox = 9106;
+      fail2ban = 9107;
     };
     clickhouse = {
       http = 9200;
