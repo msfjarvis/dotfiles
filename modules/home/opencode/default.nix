@@ -24,6 +24,7 @@ in
 
     programs.opencode = {
       enable = true;
+      package = pkgs.llm-agents.opencode;
 
       settings = {
         model = "github-copilot/claude-sonnet-4.6";
