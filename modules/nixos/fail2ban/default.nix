@@ -24,7 +24,9 @@ let
     ]
     ++ optional exporterCfg.exitOnError "--collector.f2b.exit-on-socket-connection-error"
     ++ optional (exporterCfg.username != null) ''--web.basic-auth.username="${exporterCfg.username}"''
-    ++ optional (exporterCfg.passwordFile != null) ''--web.basic-auth.password="$(cat ${exporterCfg.passwordFile})"''
+    ++ optional (
+      exporterCfg.passwordFile != null
+    ) ''--web.basic-auth.password="$(cat ${exporterCfg.passwordFile})"''
     ++ [
       ''--web.listen-address="${exporterCfg.host}:${toString exporterCfg.port}"''
       "--collector.f2b.socket=${exporterCfg.fail2banSocket}"

@@ -2,7 +2,7 @@ rec {
   tailnetDomain = "tiger-shark.ts.net";
   mkFail2banLogFormat = site: ''
     output file /var/log/caddy/access-${builtins.replaceStrings [ "/" " " ] [ "_" "_" ] site}.log
-    format transform "{common_log}"
+    format transform `{request>client_ip} - - [{ts}] "{request>method} {request>uri} {request>proto}" {status} {size}`
     level INFO
   '';
   mkTailscaleVHost = name: config: {
