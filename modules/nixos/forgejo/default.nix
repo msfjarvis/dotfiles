@@ -76,6 +76,12 @@ in
       findtime = 1;
       maxretry = 1;
       bantime = 2592000;
+    }
+    // lib.optionalAttrs config.services.${namespace}.fail2ban.cloudflare.enable {
+      action = lib.concatStringsSep "\n" [
+        "%(action_)s"
+        "  cloudflare-edge-ban"
+      ];
     };
     services.prometheus.scrapeConfigs = [
       {

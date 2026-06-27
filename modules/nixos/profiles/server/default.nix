@@ -115,7 +115,10 @@ in
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJAEOFlF6JRh88JkFUnxaPVv6LxGP7ervltThqHAOzu1"
     ];
 
-    services.${namespace}.fail2ban.enable = true;
+    services.${namespace}.fail2ban = {
+      enable = true;
+      cloudflare.enable = true;
+    };
 
     # Enable passwordless sudo.
     security.sudo.extraRules = [
