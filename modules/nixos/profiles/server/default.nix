@@ -117,7 +117,7 @@ in
 
     services.${namespace}.fail2ban = {
       enable = true;
-      cloudflare.enable = true;
+      cloudflare.enable = false;
     };
 
     # Enable passwordless sudo.
