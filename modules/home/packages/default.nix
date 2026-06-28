@@ -5,7 +5,7 @@
     curl
     delta
     diskus
-    fastfetch.minimal
+    fastfetch-unwrapped
     fd
     git-absorb
     git-quickfix
