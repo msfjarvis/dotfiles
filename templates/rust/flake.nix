@@ -42,7 +42,7 @@
         system:
         (import fenix { pkgs = nixpkgsFor.${system}; }).fromToolchainFile {
           file = ./rust-toolchain.toml;
-          sha256 = "sha256-mvUGEOHYJpn3ikC5hckneuGixaC+yGrkMM/liDIDgoU=";
+          sha256 = "sha256-h+t2xTBz5yt2YIO+1VMIIGlCU7gyp2LYOFvaV1nwOXU=";
         }
       );
       craneLib = eachSystem (
