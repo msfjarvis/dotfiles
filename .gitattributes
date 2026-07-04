@@ -1,1 +1,2 @@
 *.lock linguist-generated
+modules/nixos/prometheus/dashboards/*.json linguist-generated
