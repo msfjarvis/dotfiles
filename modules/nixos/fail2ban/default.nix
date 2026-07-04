@@ -15,7 +15,6 @@ let
     mkIf
     mkMerge
     optional
-    optionalAttrs
     ;
   inherit (lib.${namespace}) ports;
   prometheusEnabled = config.services.${namespace}.prometheus.enable;
