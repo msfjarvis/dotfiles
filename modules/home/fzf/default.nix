@@ -13,12 +13,15 @@ lib.mkMerge [
       defaultCommand = "fd -tf";
       defaultOptions = [ "--height 40%" ];
       enableBashIntegration = true;
-      fileWidgetCommand = "fd -H";
-      changeDirWidgetCommand = "fd -Htd";
-      historyWidgetOptions = [
-        "--sort"
-        "--exact"
-      ];
+      fileWidget.command = "fd -H";
+      changeDirWidget.command = "fd -Htd";
+      historyWidget = {
+        command = "";
+        options = [
+          "--sort"
+          "--exact"
+        ];
+      };
     };
   }
   (lib.optionalAttrs stylixAvailable {
