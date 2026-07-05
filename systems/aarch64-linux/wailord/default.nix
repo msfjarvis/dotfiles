@@ -89,7 +89,6 @@ in
           import blackholeCrawlers
           root * /var/lib/file_share
           file_server browse
-          header_down +Cache-Control "public, no-transform"
         '';
       };
       "https://wailord.${tailnetDomain}" = {
