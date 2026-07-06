@@ -5,6 +5,21 @@
     "helpers:pinGitHubActionDigests",
     "github>msfjarvis/shared-workflows//renovate/automerge"
   ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^modules\/nixos\/.*\\.nix$/",
+        "/^systems\/.*\\.nix$/"
+      ],
+      "matchStrings": [
+        "image\\s*=\\s*\"(?<depName>[^:\"@]+(?:/[^:\"@]+)*)(?::(?<currentValue>[^\"@]+))?(?:@(?<currentDigest>sha256:[a-f0-9]+))?\";"
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker",
+      "currentValueTemplate": "{{#if currentValue}}{{{currentValue}}}{{else}}latest{{/if}}"
+    }
+  ],
   "packageRules": [
     {
       "matchManagers": [
