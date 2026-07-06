@@ -94,7 +94,7 @@ in
       oci-containers = {
         backend = "podman";
         containers.backvault = {
-          image = "ghcr.io/mvfc/backvault:latest";
+          image = "ghcr.io/mvfc/backvault:2.0.13";
           environmentFiles = [
             config.sops.secrets.backvault.path
           ];

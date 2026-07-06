@@ -57,7 +57,7 @@ in
     };
     virtualisation.oci-containers.containers = {
       "firefly-importer" = {
-        image = "fireflyiii/data-importer:version-1.5.3";
+        image = "fireflyiii/data-importer:version-2.3.3";
         autoStart = true;
         environment = {
           TRUSTED_PROXIES = "*";
