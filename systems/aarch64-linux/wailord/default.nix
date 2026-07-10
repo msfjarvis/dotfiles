@@ -81,6 +81,7 @@ in
           import blackholeCrawlers
           root * /var/lib/claw-deploy
           file_server browse
+          header Cache-Control "no-store, no-cache, must-revalidate"
         '';
       };
       "https://til.msfjarvis.dev" = {
