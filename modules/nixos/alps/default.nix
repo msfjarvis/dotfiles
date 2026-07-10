@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.services.${namespace}.alps;
+  alpsAddr = "127.0.0.1:${toString ports.alps}";
   inherit (lib)
     mkEnableOption
     mkOption
@@ -31,22 +32,16 @@ in
 
     services.caddy.virtualHosts = mkIf (cfg.domain != null) (
       mkTailscaleVHost cfg.domain ''
-        reverse_proxy ${config.services.alps.bindIP}:${toString config.services.alps.port}
+        reverse_proxy ${alpsAddr}
       ''
     );
 
     services.alps = {
       enable = true;
-      port = ports.alps;
-      bindIP = "127.0.0.1";
-      theme = "sourcehut";
-      imaps = {
-        port = 993;
-        host = "imap.purelymail.com";
-      };
-      smtps = {
-        port = 465;
-        host = "smtp.purelymail.com";
+      settings = {
+        server.addr = alpsAddr;
+        provider.imap.server = "imaps://imap.purelymail.com:993";
+        smtp.server = "smtps://smtp.purelymail.com:465";
       };
     };
   };
