@@ -115,7 +115,7 @@
     copyparty.inputs.nixpkgs.follows = "nixpkgs";
     copyparty.inputs.flake-utils.follows = "flake-utils";
 
-    darwin.url = "github:LnL7/nix-darwin/master";
+    darwin.url = "github:nix-darwin/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     devshell.url = "github:numtide/devshell";
