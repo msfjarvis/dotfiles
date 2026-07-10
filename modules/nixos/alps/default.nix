@@ -32,13 +32,22 @@ in
 
     services.caddy.virtualHosts = mkIf (cfg.domain != null) (
       mkTailscaleVHost cfg.domain ''
-        reverse_proxy ${alpsAddr}
+        reverse_proxy ${alpsAddr} {
+          # Workaround for alps CSRF protection being a little wonky
+          header_up -Origin
+          header_up -Referer
+        }
       ''
     );
 
     services.alps = {
       enable = true;
       settings = {
+        trusted_proxies = [
+          "127.0.0.1/32"
+          "::1/128"
+          "10.0.0.0/8"
+        ];
         server.addr = alpsAddr;
         provider.imap.server = "imaps://imap.purelymail.com:993";
         smtp.server = "smtps://smtp.purelymail.com:465";
