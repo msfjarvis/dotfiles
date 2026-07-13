@@ -39,6 +39,7 @@
     calibre-web = 9027;
     deluge-web = 9028;
     lurker = 9029;
+    remote-pi-relay = 9030;
     exporters = {
       node = 9100;
       systemd = 9101;
