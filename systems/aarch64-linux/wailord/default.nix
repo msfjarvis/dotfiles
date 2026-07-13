@@ -78,7 +78,6 @@ in
       "https://claw.msfjarvis.dev" = {
         logFormat = mkFail2banLogFormat "claw.msfjarvis.dev";
         extraConfig = ''
-          import blackholeCrawlers
           root * /var/lib/claw-deploy
           file_server browse
           header Cache-Control "no-store, no-cache, must-revalidate"
