@@ -6,4 +6,8 @@ _: prev: {
     patches = [ ./megatools.patch ];
   });
   qbittorrent = prev.qbittorrent.override { guiSupport = false; };
+
+  llm-agents = {
+    inherit (inputs.llm-agents.packages.${prev.stdenv.hostPlatform.system}) pi opencode;
+  };
 }

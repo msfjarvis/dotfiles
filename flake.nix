@@ -77,7 +77,6 @@
         copyparty.overlays.default
         devshell.overlays.default
         fenix.overlays.default
-        llm-agents.overlays.shared-nixpkgs
         microvm.overlays.default
         # niri.overlays.niri
         nix-topology.overlays.default
