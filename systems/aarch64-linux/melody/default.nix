@@ -100,6 +100,13 @@
       ];
     };
 
+    remote-pi-relay = {
+      enable = true;
+      domain = "pi-relay";
+      listenAddress = "127.0.0.1";
+      logLevel = "info";
+    };
+
     restic-rest-server = {
       enable = true;
       domain = "restic-melody";
