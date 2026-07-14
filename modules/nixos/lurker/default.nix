@@ -14,7 +14,7 @@ let
     optionalAttrs
     types
     ;
-  inherit (lib.${namespace}) mkTailscaleVHost ports;
+  inherit (lib.${namespace}) mkTailscaleVHost ports tailnetDomain;
   portString = toString cfg.port;
   portMapping =
     if cfg.listenAddress == "0.0.0.0" then
@@ -69,8 +69,8 @@ in
     };
 
     domain = mkOption {
-      type = types.nullOr types.str;
-      default = null;
+      type = types.str;
+      default = "lurker";
       example = "lurker";
       description = "Tailscale hostname to expose Lurker under through Caddy.";
     };
@@ -93,6 +93,13 @@ in
           NODE_ENV = "production";
           PORT = "8015";
           DATABASE_PATH = "/app/data/lurker.db";
+          WEBAUTHN_RP_ID = "${cfg.domain}.${tailnetDomain}";
+          WEBAUTHN_RP_NAME = "Lurker";
+          WEBAUTHN_ORIGIN = "https://${cfg.domain}.${tailnetDomain}";
+          VAPID_SUBJECT = "mailto:trash_lurker@msfjarvis.dev";
+          USER_AGENT_CONTACT = "https://${cfg.domain}.${tailnetDomain}";
+          LURKER_BOUNCER_ENABLED = "true";
+          LURKER_BOUNCER_PORT = "6667";
         }
         // cfg.extraEnvironment;
         extraOptions = [
@@ -103,14 +110,13 @@ in
         inherit (cfg) environmentFile;
       };
 
-      networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port ];
-    }
-    (mkIf (cfg.domain != null) {
+      networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port 6667 ];
+
       services.caddy.virtualHosts = mkTailscaleVHost cfg.domain ''
         import blackholeCrawlers
         encode gzip zstd
         reverse_proxy ${cfg.listenAddress}:${portString}
       '';
-    })
+    }
   ]);
 }
