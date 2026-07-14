@@ -76,7 +76,9 @@ in
     applyDefaults = true;
     virtualHosts = {
       "https://claw.msfjarvis.dev" = {
-        logFormat = mkFail2banLogFormat "claw.msfjarvis.dev";
+        # Keep logging disabled so I do not record IP addresses for users of the app.
+        # I'll figure out a different solution for observability.
+        logFormat = null;
         extraConfig = ''
           root * /var/lib/claw-deploy
           file_server browse
