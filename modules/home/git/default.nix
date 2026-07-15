@@ -64,5 +64,10 @@ in
         };
       };
     };
+  }
+  // lib.attrsets.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
+    package = pkgs.git.override {
+      osxkeychainSupport = false;
+    };
   };
 }
