@@ -64,7 +64,8 @@ in
           avg-size = 1048576;
         };
         database = {
-          url = "postgres://atticd/atticd?host=/run/postgresql";
+          # yo dawg I heard you like your atticd, so I put atticd in your atticd so you can have even more atticd
+          url = "postgres://atticd@atticd/atticd?host=/run/postgresql";
         };
         garbage-collection = {
           interval = "1 day";
