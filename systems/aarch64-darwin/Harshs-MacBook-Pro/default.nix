@@ -31,6 +31,7 @@
     pkgs.llm-agents.pi
     pkgs.${namespace}.pidcat
     scrcpy
+    pkgs.llm-agents.skills
     yaml-language-server
   ];
 

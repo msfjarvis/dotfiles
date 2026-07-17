@@ -8,6 +8,6 @@ _: prev: {
   qbittorrent = prev.qbittorrent.override { guiSupport = false; };
 
   llm-agents = {
-    inherit (inputs.llm-agents.packages.${prev.stdenv.hostPlatform.system}) pi opencode;
+    inherit (inputs.llm-agents.packages.${prev.stdenv.hostPlatform.system}) opencode pi skills;
   };
 }
