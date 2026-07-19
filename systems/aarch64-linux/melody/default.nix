@@ -101,7 +101,7 @@
     };
 
     remote-pi-relay = {
-      enable = true;
+      enable = false;
       domain = "pi-relay";
       listenAddress = "127.0.0.1";
       logLevel = "info";
