@@ -60,7 +60,7 @@ in
       type = types.port;
       default = ports.qbittorrent;
       description = ''
-        qBittorrent web UI port.
+        Qui web UI port.
       '';
     };
 
@@ -68,7 +68,15 @@ in
       type = types.bool;
       default = false;
       description = ''
-        Open services.qBittorrent.port to the outside network.
+        Open the Qui web UI port to the outside network.
+      '';
+    };
+
+    qui.secretFile = mkOption {
+      type = types.path;
+      description = ''
+        Path to Qui's persistent session secret. Generate it with
+        <command>openssl rand -hex 32</command>.
       '';
     };
 
@@ -102,7 +110,7 @@ in
             ${lib.getExe pkgs.qbittorrent} \
               --profile=${configDir} \
               --confirm-legal-notice \
-              --webui-port=${toString cfg.port}
+              --webui-port=${toString ports.qbittorrent.webui}
           '';
           # To prevent "Quit & shutdown daemon" from working; we want systemd to
           # manage it!
@@ -113,6 +121,18 @@ in
           LimitNOFILE = cfg.openFilesLimit;
         };
       };
+
+      services.qui = {
+        enable = true;
+        inherit (cfg) user group;
+        secretFile = cfg.qui.secretFile;
+        settings = {
+          host = "127.0.0.1";
+          port = cfg.port;
+        };
+      };
+
+      systemd.services.qui.after = [ "qbittorrent.service" ];
 
       users.users = mkIf (cfg.user == "qbittorrent") {
         qbittorrent = {
@@ -139,7 +159,7 @@ in
               rules = [
                 {
                   alert = "qbittorrent_down";
-                  expr = ''qbittorrent_up{server="127.0.0.1:${toString cfg.port}"} == 0'';
+                  expr = ''qbittorrent_up{server="127.0.0.1:${toString ports.qbittorrent.webui}"} == 0'';
                   for = "1m";
                   labels.severity = "error";
                   annotations = {
@@ -165,7 +185,7 @@ in
         };
         script = ''
           export QBITTORRENT_HOST=127.0.0.1
-          export QBITTORRENT_PORT=${toString cfg.port}
+          export QBITTORRENT_PORT=${toString ports.qbittorrent.webui}
           export EXPORTER_ADDRESS=127.0.0.1
           export EXPORTER_PORT=${toString cfg.prometheus.port}
           ${lib.getExe pkgs.${namespace}.prometheus-qbittorrent-exporter}

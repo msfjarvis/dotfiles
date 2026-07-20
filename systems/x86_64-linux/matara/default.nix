@@ -59,6 +59,9 @@ in
   sops.secrets.wireless-secrets = {
     sopsFile = lib.snowfall.fs.get-file "secrets/wireless.yaml";
   };
+  sops.secrets.qui-session-secret = {
+    sopsFile = lib.snowfall.fs.get-file "secrets/qui-session-secret.yaml";
+  };
   networking.hostName = "matara";
   networking = {
     wireless = {
@@ -216,6 +219,7 @@ in
       user = "msfjarvis";
       group = "users";
       openFirewall = true;
+      qui.secretFile = config.sops.secrets.qui-session-secret.path;
       prometheus.enable = true;
     };
   };
