@@ -31,7 +31,7 @@ in
 
     services.caddy.virtualHosts = {
       "https://${cfg.domain}" = {
-        logFormat = lib.${namespace}.mkFail2banLogFormat cfg.domain;
+        logFormat = lib.${namespace}.mkReactionLogFormat cfg.domain;
         extraConfig = ''
           import blackholeCrawlers
           root * /etc/phanpy/

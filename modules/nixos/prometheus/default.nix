@@ -90,7 +90,7 @@ in
     services.caddy.virtualHosts = mkMerge [
       (mkIf cfg.grafana.enable {
         "https://${config.services.grafana.settings.server.domain}" = {
-          logFormat = lib.${namespace}.mkFail2banLogFormat cfg.grafana.host;
+          logFormat = lib.${namespace}.mkReactionLogFormat cfg.grafana.host;
           extraConfig = ''
             reverse_proxy ${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}
           '';
@@ -103,6 +103,11 @@ in
         reverse_proxy 127.0.0.1:${toString config.services.prometheus.alertmanager.port}
       '')
     ];
+    environment.etc."grafana-dashboards/fail2ban.json" = mkIf cfg.grafana.enable {
+      source = lib.snowfall.fs.get-file "modules/nixos/prometheus/dashboards/fail2ban-dashboard.json";
+      user = "grafana";
+      group = "grafana";
+    };
     sops.secrets = mkMerge [
       {
         prometheus-alertmanager = {
@@ -125,11 +130,6 @@ in
         };
       })
     ];
-    environment.etc."grafana-dashboards/fail2ban.json" = mkIf cfg.grafana.enable {
-      source = lib.snowfall.fs.get-file "modules/nixos/prometheus/dashboards/fail2ban-dashboard.json";
-      user = "grafana";
-      group = "grafana";
-    };
     services.grafana = mkIf cfg.grafana.enable {
       inherit (cfg.grafana) enable;
       provision = {

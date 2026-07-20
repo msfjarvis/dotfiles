@@ -23,6 +23,14 @@ in
       description = "Name of the network adapter to configure for exit node performance";
     };
     microVM = mkEnableOption "microVM specific optimizations";
+    securityBackend = mkOption {
+      type = types.enum [
+        "reaction"
+        "fail2ban"
+      ];
+      default = "reaction";
+      description = "Exactly one log-ban daemon is enabled.";
+    };
     tailscaleExitNode = mkEnableOption "Run this machine as a Tailscale exit node";
   };
   config = mkIf cfg.enable {
@@ -115,9 +123,12 @@ in
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJAEOFlF6JRh88JkFUnxaPVv6LxGP7ervltThqHAOzu1"
     ];
 
-    services.${namespace}.fail2ban = {
-      enable = true;
-      cloudflare.enable = false;
+    services.${namespace} = {
+      reaction.enable = cfg.securityBackend == "reaction";
+      fail2ban = {
+        enable = cfg.securityBackend == "fail2ban";
+        cloudflare.enable = false;
+      };
     };
 
     # Enable passwordless sudo.

@@ -10,7 +10,7 @@ let
     ports
     tailnetDomain
     mkTailscaleVHost
-    mkFail2banLogFormat
+    mkReactionLogFormat
     ;
 in
 {
@@ -86,7 +86,7 @@ in
         '';
       };
       "https://til.msfjarvis.dev" = {
-        logFormat = mkFail2banLogFormat "til.msfjarvis.dev";
+        logFormat = mkReactionLogFormat "til.msfjarvis.dev";
         extraConfig = ''
           import blackholeCrawlers
           root * /var/lib/file_share

@@ -8,6 +8,8 @@
 let
   cfg = config.services.${namespace}.fail2ban;
   exporterCfg = config.services.prometheus.exporters.fail2ban;
+  forgejoCfg = config.services.${namespace}.forgejo;
+  giteaCfg = config.services.${namespace}.gitea;
   inherit (lib)
     concatStringsSep
     getExe
@@ -18,6 +20,31 @@ let
     ;
   inherit (lib.${namespace}) ports;
   prometheusEnabled = config.services.${namespace}.prometheus.enable;
+  cloudflareAction = lib.optionalAttrs cfg.cloudflare.enable {
+    action = lib.concatStringsSep "\n" [
+      "%(action_)s"
+      "  cloudflare-edge-ban"
+    ];
+  };
+  caddy404Jail = service: domain: {
+    environment.etc."fail2ban/filter.d/caddy-${service}-404.local".text = ''
+      [Definition]
+      failregex = ^<HOST>.*"[A-Z]+ .*" 404[ \d]*$
+      ignoreregex =
+    '';
+
+    services.fail2ban.jails."caddy-${service}-404".settings = {
+      enabled = true;
+      filter = "caddy-${service}-404";
+      logpath = "/var/log/caddy/access-${domain}.log";
+      backend = "auto";
+      port = "http,https";
+      findtime = 1;
+      maxretry = 1;
+      bantime = 2592000;
+    }
+    // cloudflareAction;
+  };
   exporterArgs = concatStringsSep " \\\n            " (
     [
       (getExe pkgs.prometheus-fail2ban-exporter)
@@ -39,7 +66,7 @@ in
     cloudflare.enable = mkEnableOption "Cloudflare edge bans for public web jails";
   };
 
-  config = mkMerge [
+  config = mkIf cfg.enable (mkMerge [
     {
       services.fail2ban.enable = true;
 
@@ -59,12 +86,7 @@ in
         maxretry = 5;
         bantime = 600;
       }
-      // lib.optionalAttrs cfg.cloudflare.enable {
-        action = lib.concatStringsSep "\n" [
-          "%(action_)s"
-          "  cloudflare-edge-ban"
-        ];
-      };
+      // cloudflareAction;
 
       services.prometheus.exporters.fail2ban = {
         enable = true;
@@ -87,6 +109,8 @@ in
         };
       };
     }
+    (mkIf forgejoCfg.enable (caddy404Jail "forgejo" forgejoCfg.domain))
+    (mkIf giteaCfg.enable (caddy404Jail "gitea" giteaCfg.domain))
     (mkIf cfg.cloudflare.enable {
       sops.secrets.cloudflare-fail2ban-token = {
         sopsFile = lib.snowfall.fs.get-file "secrets/cloudflare/fail2ban.yaml";
@@ -134,5 +158,5 @@ in
         }
       ];
     })
-  ];
+  ]);
 }

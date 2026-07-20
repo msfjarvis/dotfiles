@@ -23,22 +23,16 @@ in
     };
   };
   config = mkIf cfg.enable {
-    environment.etc."fail2ban/filter.d/caddy-gitea-404.local".text = ''
-      [Definition]
-      failregex = ^<HOST>.*"[A-Z]+ .*" 404[ \d]*$
-      ignoreregex =
-    '';
-
     services.caddy.virtualHosts = {
       "https://${cfg.domain}" = {
-        logFormat = lib.${namespace}.mkFail2banLogFormat cfg.domain;
+        logFormat = lib.${namespace}.mkReactionLogFormat cfg.domain;
         extraConfig = ''
           import blackholeCrawlers
           reverse_proxy 127.0.0.1:${toString config.services.gitea.settings.server.HTTP_PORT}
         '';
       };
       "https://vibes.msfjarvis.dev" = {
-        logFormat = lib.${namespace}.mkFail2banLogFormat "vibes.msfjarvis.dev";
+        logFormat = lib.${namespace}.mkReactionLogFormat "vibes.msfjarvis.dev";
         extraConfig = ''
           gitea_pages {
             gitea_url https://${cfg.domain}
@@ -47,22 +41,6 @@ in
           }
         '';
       };
-    };
-    services.fail2ban.jails.caddy-gitea-404.settings = {
-      enabled = true;
-      filter = "caddy-gitea-404";
-      logpath = "/var/log/caddy/access-${cfg.domain}.log";
-      backend = "auto";
-      port = "http,https";
-      findtime = 1;
-      maxretry = 1;
-      bantime = 2592000;
-    }
-    // lib.optionalAttrs config.services.${namespace}.fail2ban.cloudflare.enable {
-      action = lib.concatStringsSep "\n" [
-        "%(action_)s"
-        "  cloudflare-edge-ban"
-      ];
     };
     services.gitea = {
       enable = true;

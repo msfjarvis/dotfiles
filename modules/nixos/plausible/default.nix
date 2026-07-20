@@ -27,7 +27,7 @@ in
   config = mkIf cfg.enable {
     services.caddy.virtualHosts = {
       "https://${cfg.domain}" = {
-        logFormat = lib.${namespace}.mkFail2banLogFormat cfg.domain;
+        logFormat = lib.${namespace}.mkReactionLogFormat cfg.domain;
         extraConfig = ''
           import blackholeCrawlers
           reverse_proxy ${config.services.plausible.server.listenAddress}:${toString config.services.plausible.server.port}

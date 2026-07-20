@@ -72,7 +72,7 @@ in
 
     services.caddy.virtualHosts = mkIf (cfg.domain != null) {
       "https://${cfg.domain}" = {
-        logFormat = lib.${namespace}.mkFail2banLogFormat cfg.domain;
+        logFormat = lib.${namespace}.mkReactionLogFormat cfg.domain;
         extraConfig = ''
           # Port hardcoded by betula, need to be changed via Web UI
           reverse_proxy 127.0.0.1:${toString ports.betula}

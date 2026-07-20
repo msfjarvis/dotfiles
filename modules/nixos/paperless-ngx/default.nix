@@ -26,7 +26,7 @@ in
 
     services.caddy.virtualHosts = {
       "https://${cfg.domain}" = with config.services.paperless; {
-        logFormat = lib.${namespace}.mkFail2banLogFormat cfg.domain;
+        logFormat = lib.${namespace}.mkReactionLogFormat cfg.domain;
         extraConfig = ''
           import blackholeCrawlers
           reverse_proxy ${address}:${toString port}

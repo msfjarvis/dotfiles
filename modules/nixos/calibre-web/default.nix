@@ -49,7 +49,7 @@ in
     };
 
     services.caddy.virtualHosts."https://${cfg.domain}" = {
-      logFormat = lib.${namespace}.mkFail2banLogFormat cfg.domain;
+      logFormat = lib.${namespace}.mkReactionLogFormat cfg.domain;
       extraConfig = ''
         route /caddy-security* {
           authenticate with calibreweb_portal
