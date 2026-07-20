@@ -49,6 +49,7 @@ in
       stopForFirewall = true;
       settings = {
         plugins = {
+          virtual.systemd = false;
           ipset.enable = false;
           nftables = {
             enable = true;
