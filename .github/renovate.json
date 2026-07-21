@@ -21,6 +21,11 @@
   ],
   "packageRules": [
     {
+      "matchManagers": ["rust-toolchain"],
+      "matchDepNames": ["rust"],
+      "enabled": false,
+    },
+    {
       "matchManagers": [
         "github-actions"
       ],
