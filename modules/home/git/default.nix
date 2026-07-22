@@ -39,6 +39,7 @@ in
       ".direnv/"
       "fleet.toml"
       ".DS_Store"
+      ".worktrees/"
     ];
     includes = [ { path = "${config.home.homeDirectory}/git-repos/dotfiles/.gitconfig"; } ];
     lfs.enable = false;
