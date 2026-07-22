@@ -61,6 +61,7 @@
     ];
     casks = [
       "betterdisplay"
+      "chatterino"
       "flashspace"
       "google-chrome"
       "jetbrains-toolbox"
