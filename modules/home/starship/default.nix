@@ -67,7 +67,7 @@ in
           ahead = "";
           behind = "";
           diverged = "";
-          typechanged = "[⇢\($count\)](bold green)";
+          typechanged = "[⇢($count)](bold green)";
           use_git_executable = true;
         };
         gleam.disabled = true;
