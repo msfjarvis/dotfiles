@@ -27,6 +27,9 @@ in
       enable = true;
       mode = "both";
     };
+    options = {
+      tab-width = 2;
+    };
   };
 
   programs.git = {
