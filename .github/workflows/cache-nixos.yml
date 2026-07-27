@@ -11,7 +11,7 @@ permissions: {}
 name: Build and cache NixOS configuration
 jobs:
   build-and-cache:
-    name: "Build server configurations and push to Attic"
+    name: "Build server configurations with Hestia"
     strategy:
       fail-fast: false
       matrix:
@@ -50,6 +50,11 @@ jobs:
           attic-endpoint: ${{ secrets.ATTIC_ENDPOINT }}
           attic-token: ${{ secrets.ATTIC_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Hestia cache
+        uses: Mic92/hestia@b21a1aaf8c3d5c2e430c9ba278c0f78abd46a320 # v3.0.0
+        with:
+          version: v3.0.0
+          upstream-cache-filter: true
       - name: Update nixpkgs
         if: "${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.skip-schedule-steps) }}"
         shell: bash

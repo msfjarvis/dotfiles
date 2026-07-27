@@ -1,0 +1,48 @@
+name: Hestia cache GC
+
+on:
+  schedule:
+    - cron: "23 3 * * *"
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: Plan only; do not repack, touch, or delete anything.
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hestia-gc
+  cancel-in-progress: false
+
+jobs:
+  gc:
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Install Lix
+        shell: bash
+        run: |
+          if [[ -z $(command -v nix) ]]; then
+            curl --proto '=https' --tlsv1.2 -sSf -L https://install.lix.systems/lix | sh -s -- install --no-confirm --extra-conf "
+              trusted-users = $(whoami)
+              access-tokens = github.com=$GITHUB_TOKEN
+            "
+          fi
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Set up Hestia cache
+        uses: Mic92/hestia@b21a1aaf8c3d5c2e430c9ba278c0f78abd46a320 # v3.0.0
+        with:
+          version: v3.0.0
+      - name: Garbage collect cache
+        shell: bash
+        run: |
+          "$HESTIA_BIN" gc ${{ inputs.dry-run && '--dry-run' || '' }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
