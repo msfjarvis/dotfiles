@@ -36,12 +36,6 @@ if [ -d ~/Android/Sdk ]; then
   export ANDROID_HOME=~/Android/Sdk
 fi
 
-# Sexy colors in `ls`
-if type vivid &>/dev/null; then
-  LS_COLORS="$(vivid generate catppuccin-mocha)"
-  export LS_COLORS
-fi
-
 # Bash completion
 for DIR in "${HOME}"/bash_completion.d "${HOME}"/.nix-profile/share/bash-completion/completions; do
   # shellcheck disable=SC1090
