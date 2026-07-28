@@ -110,7 +110,10 @@ in
         inherit (cfg) environmentFile;
       };
 
-      networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port 6667 ];
+      networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [
+        cfg.port
+        6667
+      ];
 
       services.caddy.virtualHosts = mkTailscaleVHost cfg.domain ''
         import blackholeCrawlers

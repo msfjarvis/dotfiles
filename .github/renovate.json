@@ -21,9 +21,13 @@
   ],
   "packageRules": [
     {
-      "matchManagers": ["rust-toolchain"],
-      "matchDepNames": ["rust"],
-      "enabled": false,
+      "matchManagers": [
+        "rust-toolchain"
+      ],
+      "matchDepNames": [
+        "rust"
+      ],
+      "enabled": false
     },
     {
       "matchManagers": [

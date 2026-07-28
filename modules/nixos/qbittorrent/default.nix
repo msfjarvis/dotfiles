@@ -128,7 +128,7 @@ in
         secretFile = cfg.qui.secretFile;
         settings = {
           host = "127.0.0.1";
-          port = cfg.port;
+          inherit (cfg) port;
         };
       };
 
