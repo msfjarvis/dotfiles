@@ -22,6 +22,7 @@
     hub
     pkgs.${namespace}.katbin
     maestro
+    pkgs.llm-agents.mcporter
     nh
     ninja
     nix-output-monitor
