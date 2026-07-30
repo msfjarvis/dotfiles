@@ -80,6 +80,8 @@ in
       };
       dump = {
         enable = true;
+        # Cap these to 4 at max otherwise we end up with a 100 gigs of backups that are essentially useless.
+        age = "4d";
         type = "tar.zst";
       };
       settings = {
