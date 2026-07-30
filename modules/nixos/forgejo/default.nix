@@ -164,6 +164,7 @@ in
           COOKIE_NAME = "i_dont_like_gitea";
           COOKIE_SECURE = true;
           DOMAIN = cfg.domain;
+          SESSION_LIFE_TIME = 604800;
         };
         time = {
           DEFAULT_UI_LOCATION = "Asia/Kolkata";
