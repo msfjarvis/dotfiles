@@ -7,12 +7,12 @@ _: prev: {
   });
   qbittorrent = prev.qbittorrent.override { guiSupport = false; };
 
-  llm-agents = {
-    inherit (inputs.llm-agents.packages.${prev.stdenv.hostPlatform.system})
-      mcporter
-      opencode
-      skills
-      ;
-    pi = inputs.llm-agents.packages.${prev.stdenv.hostPlatform.system}.pi.override { useBun = false; };
-  };
+  llm-agents =
+    let
+      llmPackages = inputs.llm-agents.packages.${prev.stdenv.hostPlatform.system};
+    in
+    {
+      inherit (llmPackages) mcporter opencode skills;
+      pi = llmPackages.pi.override { useBun = false; };
+    };
 }
