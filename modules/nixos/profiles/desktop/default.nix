@@ -86,7 +86,7 @@ in
 
     # Theming
     stylix = {
-      image = inputs.wallpaper;
+      image = ./wallpaper.png;
       polarity = "dark";
       opacity = {
         terminal = 0.9;

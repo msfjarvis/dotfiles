@@ -94,7 +94,7 @@ in
             };
             spawn-at-startup = [
               { command = [ (lib.getExe pkgs.xwayland-satellite-unstable) ]; }
-              { command = [ "${lib.getExe pkgs.swaybg} --image ${inputs.wallpaper}" ]; }
+              { command = [ "${lib.getExe pkgs.swaybg} --image ${./wallpaper.png}" ]; }
             ];
             prefer-no-csd = true;
             window-rules = [

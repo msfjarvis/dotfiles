@@ -597,8 +597,7 @@
         "srvos": "srvos",
         "stylix": "stylix",
         "systems": "systems",
-        "treefmt-nix": "treefmt-nix",
-        "wallpaper": "wallpaper"
+        "treefmt-nix": "treefmt-nix"
       }
     },
     "rust-analyzer-src": {
@@ -869,18 +868,6 @@
         "owner": "numtide",
         "repo": "treefmt-nix",
         "type": "github"
-      }
-    },
-    "wallpaper": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-vZTfOh2etX6i2qFMJGbJ2DKFRd8zuq3aYq6M4onGwx0=",
-        "type": "file",
-        "url": "https://til.msfjarvis.dev/Scarle%20Yonaguni%20Cheer.png"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://til.msfjarvis.dev/Scarle%20Yonaguni%20Cheer.png"
       }
     }
   },
