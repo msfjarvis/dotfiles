@@ -97,9 +97,12 @@ in
           WEBAUTHN_RP_NAME = "Lurker";
           WEBAUTHN_ORIGIN = "https://${cfg.domain}.${tailnetDomain}";
           VAPID_SUBJECT = "mailto:trash_lurker@msfjarvis.dev";
-          USER_AGENT_CONTACT = "https://${cfg.domain}.${tailnetDomain}";
+          USER_AGENT_CONTACT = "https://msfjarvis.dev/";
           LURKER_BOUNCER_ENABLED = "true";
           LURKER_BOUNCER_PORT = "6667";
+          LURKER_LINK_PREVIEWS = "on";
+          LURKER_PREVIEW_CACHE_MODE = "local";
+          LURKER_TRUST_PROXY = true;
         }
         // cfg.extraEnvironment;
         extraOptions = [
