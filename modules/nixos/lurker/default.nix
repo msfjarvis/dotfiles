@@ -102,7 +102,7 @@ in
           LURKER_BOUNCER_PORT = "6667";
           LURKER_LINK_PREVIEWS = "on";
           LURKER_PREVIEW_CACHE_MODE = "local";
-          LURKER_TRUST_PROXY = true;
+          LURKER_TRUST_PROXY = "true";
         }
         // cfg.extraEnvironment;
         extraOptions = [
