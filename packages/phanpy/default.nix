@@ -11,8 +11,8 @@ buildNpmPackage {
   src = fetchFromGitHub {
     owner = "cheeaun";
     repo = "phanpy";
-    rev = "af8e495e2c2ea2575dbaa6de02e1f9d6d871201d";
-    hash = "sha256-st0IZjFtCMqvhLDaBL7h+xW7TimXa/DtFpZ1jeNnpIc=";
+    rev = "d650f02644b32c10cbcaad8c1eed8e3642c80f68";
+    hash = "sha256-I0aHU9i8KkJPqWfRIKuo9gROzljvrcc9qBr21DlaDVU=";
   };
 
   patches = [
