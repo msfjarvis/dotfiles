@@ -1,8 +1,13 @@
 {
+  config,
+  lib,
   pkgs,
   namespace,
   ...
 }:
+let
+  inherit (lib.${namespace}) tailnetDomain;
+in
 {
   imports = [
     ./disk-config.nix
@@ -112,6 +117,21 @@
       domain = "restic-melody";
       prometheusRepository = "pocket-id";
     };
+  };
+
+  services.restic.backups.lurker = {
+    initialize = true;
+    repository = "rest:https://restic-wailord.${tailnetDomain}/lurker";
+    passwordFile = config.sops.secrets.restic_repo_password.path;
+    paths = [ config.services.${namespace}.lurker.dataDir ];
+    backupPrepareCommand = "${pkgs.systemd}/bin/systemctl stop podman-lurker.service";
+    backupCleanupCommand = "${pkgs.systemd}/bin/systemctl start podman-lurker.service";
+
+    pruneOpts = [
+      "--keep-daily 5"
+      "--keep-weekly 1"
+      "--keep-monthly 1"
+    ];
   };
 
   services.caddy = {
