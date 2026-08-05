@@ -83,7 +83,7 @@ in
       ];
 
       virtualisation.oci-containers.containers.lurker = {
-        image = "ghcr.io/amiantos/lurker:1.1.6";
+        image = "ghcr.io/amiantos/lurker:2.0.0";
         autoStart = true;
         ports = [ portMapping ];
         volumes = [
