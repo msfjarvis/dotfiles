@@ -47,11 +47,6 @@ for DIR in "${HOME}"/bash_completion.d "${HOME}"/.nix-profile/share/bash-complet
   fi
 done
 
-# Enable pass user extensions
-if type pass &>/dev/null; then
-  export PASSWORD_STORE_ENABLE_EXTENSIONS=true
-fi
-
 # Setup zoxide
 if type zoxide &>/dev/null; then
   alias cd=z
