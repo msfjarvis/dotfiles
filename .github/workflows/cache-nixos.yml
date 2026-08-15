@@ -8,26 +8,30 @@ on:
   schedule:
     - cron: "30 1 * * *"
 permissions: {}
-name: Build and cache NixOS configuration
+name: Build and cache system configurations
 jobs:
   build-and-cache:
-    name: "Build server configurations with Hestia"
+    name: "Build system configurations with Hestia"
     strategy:
       fail-fast: false
       matrix:
         include:
-          - target: matara
+          - attribute: nixosConfigurations.matara.config.system.build.toplevel
             runner: ubuntu-latest
             cache: x86_64-linux
             public-key: "x86_64-linux:XrBbCCueC9hO05zf8GjmK1/YtHuZwqwcgx0pkHWLgvM="
-          - target: melody
+          - attribute: nixosConfigurations.melody.config.system.build.toplevel
             runner: ubuntu-24.04-arm
             cache: aarch64-linux
             public-key: "aarch64-linux:n1uEEJsd/qjPYB1G3jUEW1oyia8O9rTCJKpCLgPW2gM="
-          - target: wailord
+          - attribute: nixosConfigurations.wailord.config.system.build.toplevel
             runner: ubuntu-24.04-arm
             cache: aarch64-linux
             public-key: "aarch64-linux:n1uEEJsd/qjPYB1G3jUEW1oyia8O9rTCJKpCLgPW2gM="
+          - attribute: darwinConfigurations.Harshs-MacBook-Pro.system
+            runner: macos-latest
+            cache: aarch64-darwin
+            public-key: "aarch64-darwin:XGW7869Rr0Apk963rQWJEnwQsS+49o12zEBmmEs/nww="
     runs-on: ${{ matrix.runner }}
     steps:
       - name: Create disk space
@@ -64,11 +68,11 @@ jobs:
         shell: bash
         run: |
           python3 dev/caddy/update_caddy_plugins.py --force
-      - name: Build NixOS configuration
+      - name: Build system configuration
         shell: bash
         env:
-          TARGET: ${{ matrix.target }}
-        run: nix build --print-build-logs ".#nixosConfigurations.${TARGET}.config.system.build.toplevel"
+          ATTRIBUTE: ${{ matrix.attribute }}
+        run: nix build --print-build-logs ".#${ATTRIBUTE}"
       - name: Push to attic cache
         shell: bash
         run: |
