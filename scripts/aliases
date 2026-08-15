@@ -31,4 +31,4 @@ fi
 if type zeditor &>/dev/null; then
   alias zed=zeditor
 fi
-alias nano="${EDITOR}"
+alias nano='${EDITOR}'
