@@ -8,13 +8,13 @@ let
   src = fetchFromGitHub {
     owner = "Cyberdrop-DL";
     repo = "cyberdrop-dl";
-    rev = "f5ca40e0ebf6bd9ed343e05f6d9b84341fd78c9d";
-    hash = "sha256-f3LJn1esW9+kCoINmRJdr8RbYtljQ+3N+DqpWkvkgDY=";
+    rev = "3c19e268c29c2e4f4c7d17ea491a71e9c231524f";
+    hash = "sha256-zTcSVtBUpzk5b6AqtwvGBZpGPxpN3Osf7F2sAod5VUc=";
   };
 in
 python3.pkgs.buildPythonApplication {
   pname = "cyberdrop-dl";
-  version = "10.3.0-unstable-2026-08-13";
+  version = "10.4.0-unstable-2026-08-14";
   inherit src;
 
   pyproject = true;
@@ -59,6 +59,7 @@ python3.pkgs.buildPythonApplication {
     send2trash
     truststore
     urllib3
+    wassima
     xxhash
     yarl
   ];
