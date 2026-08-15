@@ -53,6 +53,7 @@
       "container"
       "github-mcp-server"
       "gnu-sed"
+      "ZacSweers/tap/kempt-fmt"
       "nodejs"
       "pinentry-mac"
       "pnpm"
