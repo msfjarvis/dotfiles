@@ -7,6 +7,7 @@
 }:
 {
   environment.systemPackages = with pkgs; [
+    attic-client
     nix-forecast
   ];
 
