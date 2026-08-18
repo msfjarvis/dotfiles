@@ -7,5 +7,10 @@
       tab_size = 2;
       line_numbers = true;
     };
+    extraPackages = with pkgs; [
+      astro-language-server
+      marksman
+      taplo
+    ];
   };
 }
