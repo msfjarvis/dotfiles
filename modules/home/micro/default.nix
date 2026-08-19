@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   programs.micro = {
-    enable = false;
+    enable = true;
     settings = {
       colorscheme = "custom";
       mkparents = true;

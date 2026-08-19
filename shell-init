@@ -47,6 +47,12 @@ for DIR in "${HOME}"/bash_completion.d "${HOME}"/.nix-profile/share/bash-complet
   fi
 done
 
+# Nano love, or is it?
+if type micro &>/dev/null; then
+  export EDITOR=micro
+  export MICRO_TRUECOLOR=1
+fi
+
 # Setup zoxide
 if type zoxide &>/dev/null; then
   alias cd=z

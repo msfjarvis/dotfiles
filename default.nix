@@ -83,7 +83,6 @@ in
   cyberdrop-dl = callPackage ./packages/cyberdrop-dl { };
   dependency-watch = callPackage ./packages/dependency-watch { };
   diffuse-bin = callPackage ./packages/diffuse-bin { };
-  fresh-editor = callPackage ./packages/fresh-editor { };
   gallery-dl-unstable = callPackage ./packages/gallery-dl-unstable { };
   gdrive = callPackage ./packages/gdrive { };
   gitice = callPackage ./packages/gitice {

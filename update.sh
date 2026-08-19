@@ -15,7 +15,6 @@ declare -a ALL_PACKAGES=(
   clipboard-substitutor
   cyberdrop-dl
   dependency-watch
-  fresh-editor
   gallery-dl-unstable
   gdrive
   gitice
