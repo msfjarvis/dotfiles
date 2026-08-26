@@ -54,6 +54,7 @@ python3.pkgs.buildPythonApplication {
     pycryptodome
     pydantic
     pyyaml
+    questionary
     readchar
     rich
     send2trash
