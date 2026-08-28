@@ -53,14 +53,25 @@ in
     megatools
   ];
 
+  sops.secrets.bookorbit = {
+    sopsFile = lib.snowfall.fs.get-file "secrets/bookorbit.env";
+    format = "dotenv";
+  };
+
   services.${namespace} = {
     atticd = {
       enable = true;
       domain = "nix-cache";
     };
 
-    calibre-web = {
+    bookorbit = {
       enable = true;
+      environmentFile = config.sops.secrets.bookorbit.path;
+      appUrl = "https://books.msfjarvis.dev";
+    };
+
+    calibre-web = {
+      enable = false;
     };
 
     geoipupdate = {
