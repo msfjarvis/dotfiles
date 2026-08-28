@@ -41,6 +41,7 @@
     lurker = 9029;
     remote-pi-relay = 9030;
     linkding = 9031;
+    bookorbit = 9032;
     exporters = {
       node = 9100;
       systemd = 9101;
