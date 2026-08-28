@@ -14,8 +14,9 @@ let
     mkOption
     types
     ;
-  inherit (lib.${namespace}) mkTailscaleVHost ports tailnetDomain;
+  inherit (lib.${namespace}) ports;
   portString = toString cfg.port;
+  publicUrl = "https://${cfg.domain}";
   portMapping =
     if cfg.listenAddress == "0.0.0.0" then
       "${portString}:3000"
@@ -35,20 +36,14 @@ in
 
     domain = mkOption {
       type = types.str;
-      default = "bookorbit";
-      description = "Tailscale hostname to expose through Caddy.";
-    };
-
-    appUrl = mkOption {
-      type = types.str;
-      default = "https://${cfg.domain}.${tailnetDomain}";
-      description = "Public URL BookOrbit uses in links, device integrations, and OIDC callbacks.";
+      description = "Fully-qualified public hostname for BookOrbit's HTTPS Caddy virtual host.";
+      example = "books.example.com";
     };
 
     clientUrl = mkOption {
       type = types.str;
-      default = cfg.appUrl;
-      description = "Browser client URL when it differs from appUrl.";
+      default = publicUrl;
+      description = "Browser client URL when it differs from BookOrbit's public URL.";
     };
 
     listenAddress = mkOption {
@@ -208,7 +203,7 @@ in
           NODE_ENV = "production";
           PORT = "3000";
           DATABASE_URL = "postgres://bookorbit@/bookorbit?host=/run/postgresql";
-          APP_URL = cfg.appUrl;
+          APP_URL = publicUrl;
           CLIENT_URL = cfg.clientUrl;
           TZ = config.time.timeZone;
           LIBRARY_BROWSE_ROOT = cfg.libraryBrowseRoot;
@@ -230,10 +225,13 @@ in
 
       networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port ];
 
-      services.caddy.virtualHosts = mkTailscaleVHost cfg.domain ''
-        encode gzip zstd
-        reverse_proxy 127.0.0.1:${portString}
-      '';
+      services.caddy.virtualHosts."https://${cfg.domain}" = {
+        logFormat = lib.${namespace}.mkReactionLogFormat cfg.domain;
+        extraConfig = ''
+          encode gzip zstd
+          reverse_proxy 127.0.0.1:${portString}
+        '';
+      };
     }
   ]);
 }

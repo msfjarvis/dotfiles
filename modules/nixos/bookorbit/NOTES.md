@@ -8,7 +8,7 @@
 - PostgreSQL is the host's native NixOS PostgreSQL instance with the packaged `pgvector` extension, rather than the upstream database container. The module does not force a major-version upgrade on a shared instance.
 - The module creates the `bookorbit` database and role, then idempotently enables `uuid-ossp`, `pg_trgm`, and `vector`, which BookOrbit requires.
 - App state and books default to `/var/lib/bookorbit` and `/var/lib/bookorbit/books`; both directories are owned by the dynamically allocated host `bookorbit` system user/group.
-- The app is local-only by default and exposed through the repository's Tailscale Caddy helper at `https://bookorbit.tiger-shark.ts.net`.
+- The app's HTTP container remains bound to loopback by default, while the module owns the public HTTPS Caddy vhost for its fully-qualified `domain`.
 
 ## Required secret environment file
 
@@ -47,9 +47,10 @@ Snowfall loads `modules/nixos/bookorbit/default.nix` automatically. In a convent
 
   services.jarvis.bookorbit = {
     enable = true;
+    domain = "books.example.com";
     environmentFile = config.sops.secrets.bookorbit.path;
   };
 }
 ```
 
-For a public hostname rather than the default Tailscale vhost, set `appUrl` to the public HTTPS URL and add the matching Caddy virtual host outside this module. Do not also set `openFirewall` unless direct, non-proxied HTTP access is intentional.
+Set `domain` to the fully-qualified public hostname. The module uses `https://${domain}` as BookOrbit's `APP_URL`, creates the matching Caddy site, enables gzip/zstd compression, applies the repository reaction log format, and reverse proxies to the loopback container port. Do not set `openFirewall` unless direct, non-proxied HTTP access is intentional.

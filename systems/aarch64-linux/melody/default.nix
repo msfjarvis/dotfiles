@@ -67,7 +67,7 @@ in
     bookorbit = {
       enable = true;
       environmentFile = config.sops.secrets.bookorbit.path;
-      appUrl = "https://books.msfjarvis.dev";
+      domain = "books.msfjarvis.dev";
     };
 
     calibre-web = {
@@ -148,13 +148,6 @@ in
   services.caddy = {
     enable = true;
     applyDefaults = true;
-    virtualHosts."https://books.msfjarvis.dev" = {
-      logFormat = lib.${namespace}.mkReactionLogFormat "books.msfjarvis.dev";
-      extraConfig = ''
-        encode gzip zstd
-        reverse_proxy 127.0.0.1:${toString config.services.${namespace}.bookorbit.port}
-      '';
-    };
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
