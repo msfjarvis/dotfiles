@@ -131,7 +131,7 @@ in
     };
 
     caldav-api = {
-      enable = true;
+      enable = false;
     };
 
     forgejo = {
