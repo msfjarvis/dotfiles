@@ -19,7 +19,8 @@ declare -a ALL_PACKAGES=(
   gdrive
   gitice
   gitout
-  glance
+  # Wants a too-new version of Go
+  # glance
   gphotos-cdp
   hcctl
   healthchecks-monitor
