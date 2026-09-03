@@ -3,6 +3,9 @@
   users.users.msfjarvis = {
     name = "msfjarvis";
     home = "/Users/msfjarvis";
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFttuMMe3lg7guH6ZQBJqfMwKQj4HQkVPVG4aKBhAHzz harsh shandilya@michi"
+    ];
   };
   system.primaryUser = "msfjarvis";
 
