@@ -83,6 +83,15 @@
     ];
   };
 
+  # Only accept SSH logins for the primary user from the active LAN. The
+  # source-address rule remains correct when the DHCP-assigned host address changes.
+  services.openssh = {
+    enable = true;
+    extraConfig = ''
+      AllowUsers msfjarvis@10.0.0.0/24
+    '';
+  };
+
   programs.gnupg.agent.enable = true;
   programs.man.enable = true;
 
