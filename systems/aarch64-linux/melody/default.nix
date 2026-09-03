@@ -50,6 +50,7 @@ in
 
   environment.systemPackages = with pkgs; [
     ffmpeg_8-headless
+    nodejs
     megatools
     pkgs.llm-agents.pi
   ];
