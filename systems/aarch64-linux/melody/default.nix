@@ -51,6 +51,7 @@ in
   environment.systemPackages = with pkgs; [
     ffmpeg_8-headless
     megatools
+    pkgs.llm-agents.pi
   ];
 
   sops.secrets.bookorbit = {
