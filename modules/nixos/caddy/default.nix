@@ -49,6 +49,7 @@ in
     systemd.services.caddy = {
       after = [ "tailscaled-autoconnect.service" ];
       wants = [ "tailscaled-autoconnect.service" ];
+      serviceConfig.RestartPreventExitStatus = lib.mkForce "";
     };
 
     sops.secrets.services-oauth-secret-env = {
