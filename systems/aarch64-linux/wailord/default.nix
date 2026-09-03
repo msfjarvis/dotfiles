@@ -195,6 +195,25 @@ in
   };
 
   services.restic.backups = {
+    backvault = {
+      initialize = true;
+      repository = "rest:https://restic-melody.${tailnetDomain}/backvault";
+      passwordFile = config.sops.secrets.restic_repo_password.path;
+
+      paths = [ "${config.services.${namespace}.vaultwarden.backvault.dataPath}/backups" ];
+
+      timerConfig = {
+        OnCalendar = "*-*-* 01:00:00";
+        Persistent = true;
+      };
+
+      pruneOpts = [
+        "--keep-daily 5"
+        "--keep-weekly 1"
+        "--keep-monthly 1"
+      ];
+    };
+
     pocket-id = {
       initialize = true;
       repository = "rest:https://restic-melody.${tailnetDomain}/pocket-id";
