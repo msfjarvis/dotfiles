@@ -2,7 +2,6 @@
   config,
   lib,
   namespace,
-  pkgs,
   ...
 }:
 let
@@ -22,7 +21,6 @@ let
       "${portString}:3000"
     else
       "${cfg.listenAddress}:${portString}:3000";
-  runtimeEnvironmentFile = "/run/bookorbit/environment";
 in
 {
   options.services.${namespace}.bookorbit = {
@@ -82,6 +80,18 @@ in
       '';
     };
 
+    userId = mkOption {
+      type = types.int;
+      example = 987;
+      description = "Stable host UID used by BookOrbit and PostgreSQL peer authentication.";
+    };
+
+    groupId = mkOption {
+      type = types.int;
+      example = 984;
+      description = "Stable host GID used by BookOrbit.";
+    };
+
     libraryBrowseRoot = mkOption {
       type = types.str;
       default = "/books";
@@ -122,43 +132,11 @@ in
         ];
       };
 
-      users.groups.bookorbit = { };
+      users.groups.bookorbit.gid = cfg.groupId;
       users.users.bookorbit = {
+        uid = cfg.userId;
         isSystemUser = true;
         group = "bookorbit";
-      };
-
-      systemd.services.bookorbit-runtime-environment = {
-        description = "Generate BookOrbit container user environment";
-        serviceConfig = {
-          Type = "oneshot";
-          RuntimeDirectory = "bookorbit";
-          RuntimeDirectoryMode = "0755";
-          RemainAfterExit = true;
-        };
-        script = ''
-          set -euo pipefail
-          uid=$(${pkgs.coreutils}/bin/id -u bookorbit)
-          gid=$(${pkgs.coreutils}/bin/id -g bookorbit)
-          tmp=${runtimeEnvironmentFile}.tmp
-          {
-            printf 'PUID=%s\n' "$uid"
-            printf 'PGID=%s\n' "$gid"
-          } > "$tmp"
-          ${pkgs.coreutils}/bin/chmod 0644 "$tmp"
-          ${pkgs.coreutils}/bin/mv -f "$tmp" ${runtimeEnvironmentFile}
-        '';
-      };
-
-      systemd.services.podman-bookorbit = {
-        after = [
-          "bookorbit-runtime-environment.service"
-          "postgresql.service"
-        ];
-        requires = [
-          "bookorbit-runtime-environment.service"
-          "postgresql.service"
-        ];
       };
 
       systemd.services.bookorbit-database-setup = {
@@ -189,10 +167,7 @@ in
       virtualisation.oci-containers.containers.bookorbit = {
         inherit (cfg) image;
         autoStart = true;
-        environmentFiles = [
-          cfg.environmentFile
-          runtimeEnvironmentFile
-        ];
+        environmentFiles = [ cfg.environmentFile ];
         ports = [ portMapping ];
         volumes = [
           "${cfg.dataDir}:/data"
@@ -200,6 +175,8 @@ in
           "/run/postgresql:/run/postgresql:ro"
         ];
         environment = {
+          PUID = toString cfg.userId;
+          PGID = toString cfg.groupId;
           NODE_ENV = "production";
           PORT = "3000";
           DATABASE_URL = "postgres://bookorbit@/bookorbit?host=/run/postgresql";

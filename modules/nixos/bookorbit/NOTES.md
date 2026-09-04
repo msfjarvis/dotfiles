@@ -7,7 +7,7 @@
 - The BookOrbit application remains an OCI container using upstream's published `ghcr.io/bookorbit/bookorbit:latest` image. `nh search bookorbit` found no native Nixpkgs package.
 - PostgreSQL is the host's native NixOS PostgreSQL instance with the packaged `pgvector` extension, rather than the upstream database container. The module does not force a major-version upgrade on a shared instance.
 - The module creates the `bookorbit` database and role, then idempotently enables `uuid-ossp`, `pg_trgm`, and `vector`, which BookOrbit requires.
-- App state and books default to `/var/lib/bookorbit` and `/var/lib/bookorbit/books`; both directories are owned by the dynamically allocated host `bookorbit` system user/group.
+- App state and books default to `/var/lib/bookorbit` and `/var/lib/bookorbit/books`; both directories are owned by the configured host `bookorbit` system user/group.
 - The app's HTTP container remains bound to loopback by default, while the module owns the public HTTPS Caddy vhost for its fully-qualified `domain`.
 
 ## Required secret environment file
@@ -25,7 +25,7 @@ Database access is passwordless peer authentication over a Unix socket, not a da
 postgres://bookorbit@/bookorbit?host=/run/postgresql
 ```
 
-The host and database role names match. The module defines a dynamic system `bookorbit` user/group, then generates `/run/bookorbit/environment` at service start with its runtime numeric `PUID`/`PGID`; this is passed to the upstream image so its entrypoint drops privileges before running migrations and the application, making peer authentication resolve to the host account. The generated file contains no secret.
+The host and database role names match. Configure stable `userId` and `groupId` values, then the module passes them directly as `PUID` and `PGID` to the upstream image. Its entrypoint drops privileges before migrations and application startup, making peer authentication resolve to the host account. Keep these IDs stable: changing them requires migrating ownership of the persistent directories.
 
 The secret file can additionally include BookOrbit-supported optional variables such as `NODE_MAX_OLD_SPACE_SIZE`, `BOOK_DOCK_PATH`, `EMAIL_ENCRYPTION_KEY`, `MIGRATION_ENCRYPTION_KEY`, `MIGRATION_IMPORT_ROOT`, `LOG_LEVEL`, `OIDC_ALLOW_LOCAL_ISSUERS`, and `CSP_ALLOW_CLOUDFLARE_INSIGHTS`. Do not set the module-owned `DATABASE_URL`, `PUID`, `PGID`, `PORT`, `APP_URL`, `CLIENT_URL`, or `TZ` variables there.
 
@@ -49,6 +49,8 @@ Snowfall loads `modules/nixos/bookorbit/default.nix` automatically. In a convent
     enable = true;
     domain = "books.example.com";
     environmentFile = config.sops.secrets.bookorbit.path;
+    userId = 987;
+    groupId = 984;
   };
 }
 ```

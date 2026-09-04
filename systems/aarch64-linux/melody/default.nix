@@ -69,6 +69,8 @@ in
     bookorbit = {
       enable = true;
       environmentFile = config.sops.secrets.bookorbit.path;
+      userId = 987;
+      groupId = 984;
       domain = "books.msfjarvis.dev";
     };
 
