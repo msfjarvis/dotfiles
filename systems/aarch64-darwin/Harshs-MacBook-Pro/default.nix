@@ -25,15 +25,17 @@
     hub
     pkgs.${namespace}.katbin
     maestro
-    pkgs.llm-agents.mcporter
     nh
     ninja
     nix-output-monitor
     nixd
+    nodejs
     openssh
     openssl
     pkgs.llm-agents.pi
     pkgs.${namespace}.pidcat
+    pnpm
+    pkgs.llm-agents.rtk
     scrcpy
     pkgs.llm-agents.skills
     yaml-language-server
@@ -52,15 +54,7 @@
     brews = [
       "static-var/tap/build-brief"
       "deezer/repo/caupain"
-      "cloudflared"
-      "container"
-      "github-mcp-server"
-      "gnu-sed"
-      "ZacSweers/tap/kempt-fmt"
-      "nodejs"
       "pinentry-mac"
-      "pnpm"
-      "rtk"
       "sdkman/tap/sdkman-cli"
       "spicetify-cli"
     ];
