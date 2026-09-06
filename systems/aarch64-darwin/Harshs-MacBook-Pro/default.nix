@@ -56,6 +56,7 @@
       "deezer/repo/caupain"
       "pinentry-mac"
       "sdkman/tap/sdkman-cli"
+      "sentry-cli"
       "spicetify-cli"
     ];
     casks = [
