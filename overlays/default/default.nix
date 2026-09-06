@@ -12,7 +12,12 @@ _: prev: {
       llmPackages = inputs.llm-agents.packages.${prev.stdenv.hostPlatform.system};
     in
     {
-      inherit (llmPackages) mcporter opencode rtk skills;
+      inherit (llmPackages)
+        mcporter
+        opencode
+        rtk
+        skills
+        ;
       pi = llmPackages.pi.override { useBun = false; };
     };
 }
