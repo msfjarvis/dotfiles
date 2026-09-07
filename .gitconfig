@@ -18,7 +18,7 @@
 	ds = diff --stat
 	expire-reflog = "!git reflog expire --expire=\"$(date)\" --all"
 	export = archive --format zip --output
-    finish = '!f() { current=$(git branch --show-current); git checkout main && git merge "$current" && git branch -d "$current"; }; f'
+	finish = "!f() { current=$(git branch --show-current); git checkout main && git merge \"$current\" && git branch -d \"$current\"; }; f"
 	fix = ca --fixup
 	ignore = "!gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ >> .gitignore ;}; gi"
 	kang = commit --amend --reset-author
