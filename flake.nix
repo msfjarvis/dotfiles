@@ -19,8 +19,7 @@
       src = ./.;
       channels-config = {
         allowUnfree = true;
-        # microvm.nix uses pkgs.system
-        allowAliases = true;
+        allowAliases = false;
         cudaSupport = false;
         permittedInsecurePackages = [ ];
       };
