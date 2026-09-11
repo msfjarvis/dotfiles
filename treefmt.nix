@@ -11,6 +11,7 @@ in
   projectRootFile = "flake.nix";
   package = pkgs.treefmt;
 
+  # keep-sorted block start
   programs.actionlint = {
     enable = true;
   };
@@ -21,6 +22,9 @@ in
     enable = true;
   };
   programs.jsonfmt = {
+    enable = true;
+  };
+  programs.keep-sorted = {
     enable = true;
   };
   programs.nixfmt = {
@@ -45,4 +49,5 @@ in
   programs.yamlfmt = {
     enable = true;
   };
+  # keep-sorted block end
 }
