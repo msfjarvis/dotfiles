@@ -24,6 +24,7 @@
     harper
     hub
     pkgs.${namespace}.katbin
+    keep-sorted
     maestro
     nh
     ninja
