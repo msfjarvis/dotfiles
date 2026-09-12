@@ -53,14 +53,16 @@
   homebrew = {
     caskArgs.no_quarantine = null;
     brews = [
-      "static-var/tap/build-brief"
+      # keep-sorted start
       "deezer/repo/caupain"
       "pinentry-mac"
       "sdkman/tap/sdkman-cli"
-      "sentry-cli"
       "spicetify-cli"
+      "static-var/tap/build-brief"
+      # keep-sorted end
     ];
     casks = [
+      # keep-sorted start
       "betterdisplay"
       "chatterino"
       "flashspace"
@@ -70,15 +72,19 @@
       "obsidian"
       "raycast"
       "rectangle"
+      "sentry-cli"
       "spotify"
       "tailscale-app"
       "telegram"
       "zed"
+      # keep-sorted end
     ];
     taps = [
+      # keep-sorted start
       "deezer/repo"
       "sdkman/tap"
       "static-var/tap"
+      # keep-sorted end
     ];
   };
 
