@@ -18,7 +18,7 @@
       inherit lib;
     }
     // {
-      package = pkgs.lixPackageSets.git.lix;
+      package = pkgs.nix;
       extraOptions = ''
         experimental-features = auto-allocate-uids cgroups flakes nix-command
       '';
