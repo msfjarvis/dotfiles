@@ -11,6 +11,7 @@ let
   stylixAvailable = options ? stylix.targets;
   inherit (lib)
     mkEnableOption
+    mkPackageOption
     mkIf
     mkMerge
     optionalAttrs
@@ -19,14 +20,21 @@ in
 {
   options.profiles.${namespace}.ghostty = {
     enable = mkEnableOption "ghostty, a fast, feature-rich, and cross-platform terminal emulator that uses platform-native UI and GPU acceleration.";
+    package =
+      mkPackageOption pkgs "ghostty" {
+        nullable = true;
+      }
+      // {
+        default = if pkgs.stdenv.hostPlatform.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
+      };
   };
   config = mkIf cfg.enable (mkMerge [
     {
       programs.ghostty = {
         enable = true;
-        package = if pkgs.stdenv.hostPlatform.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
+        inherit (cfg) package;
         enableBashIntegration = true;
-        installBatSyntax = true;
+        installBatSyntax = cfg.package != null;
         # TODO: https://gist.github.com/jamesgecko/dd921cef7db3b9533cee4473e832f2a4
         settings = {
           cursor-click-to-move = true;
