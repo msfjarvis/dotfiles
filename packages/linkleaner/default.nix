@@ -4,7 +4,7 @@
   lib,
 }:
 let
-  version = "2.10.1";
+  version = "2.11.1";
 in
 rustPlatform.buildRustPackage {
   pname = "linkleaner";
@@ -14,10 +14,10 @@ rustPlatform.buildRustPackage {
     owner = "msfjarvis";
     repo = "linkleaner";
     rev = "v${version}";
-    hash = "sha256-nlCUjnbRuHeefNJz6CZSdGAbILraFSgrpaI4Oe+lxl0=";
+    hash = "sha256-thwqubTZCcVl+lOHMxQcWr4F0YvCa3X0Vx+KZsWc7gA=";
   };
 
-  cargoHash = "sha256-X3qZa7E04qNi996DCHZZzI/buGLZ/LkLEltIpy53LjU=";
+  cargoHash = "sha256-0IPnw/BQhyqvZ65aoDYQ6L0GnNe3XAqvqDeaiEEvVPo=";
 
   useNextest = true;
 
