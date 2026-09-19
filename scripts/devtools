@@ -13,3 +13,147 @@ function mkexecjar() {
   printf "#!/bin/sh\n\nexec java \$JAVA_OPTS -jar \$0 \"\$@\"\n" >"${EXEC_FILE}"
   \cat "${JAR_FILE}" >>"${EXEC_FILE}"
 }
+
+# Prints a size given in kibibytes as a human-readable string.
+function _human_kb() {
+  awk -v kb="${1}" 'BEGIN {
+    split("KB MB GB TB PB", units, " ")
+    i = 1
+    while (kb >= 1024 && i < 5) { kb /= 1024; i++ }
+    printf "%.1f%s", kb, units[i]
+  }'
+}
+
+function gradle_cleanup() {
+  local OPTIND=1
+  local dry_run=1
+  local opt
+  while getopts ":w" opt; do
+    case "${opt}" in
+    w)
+      dry_run=0
+      ;;
+    *)
+      printf 'Usage: gradle_cleanup [-w]\n' >&2
+      return 1
+      ;;
+    esac
+  done
+  shift "$((OPTIND - 1))"
+
+  # Finds the newest directory under a parent by comparing each name as a
+  # semver, where prereleases sort below their corresponding release. This is
+  # needed for the build-scan-data directories which are keyed to the plugin
+  # version rather than Gradle, and for picking a final release over an rc.
+  # shellcheck disable=SC2016
+  local semver_max='
+function cmp_prerelease(a, b,   na, nb, av, bv, i, n, x, y, xn, yn) {
+  gsub(/-/, ".", a)
+  gsub(/-/, ".", b)
+  na = split(a, av, ".")
+  nb = split(b, bv, ".")
+  n = (na < nb) ? na : nb
+  for (i = 1; i <= n; i++) {
+    x = av[i]; y = bv[i]
+    xn = (x ~ /^[0-9]+$/); yn = (y ~ /^[0-9]+$/)
+    if (xn && yn) {
+      if (x + 0 != y + 0) return (x + 0 > y + 0) ? 1 : -1
+    } else if (xn != yn) {
+      return xn ? -1 : 1
+    } else if (x != y) {
+      return (x > y) ? 1 : -1
+    }
+  }
+  if (na == nb) return 0
+  return (na > nb) ? 1 : -1
+}
+function cmp_semver(a, b,   ai, bi, am, bm, ap, bp, na, nb, n, i, av, bv, x, y) {
+  ai = index(a, "-"); bi = index(b, "-")
+  if (ai > 0) { am = substr(a, 1, ai - 1); ap = substr(a, ai + 1) } else { am = a; ap = "" }
+  if (bi > 0) { bm = substr(b, 1, bi - 1); bp = substr(b, bi + 1) } else { bm = b; bp = "" }
+  na = split(am, av, "."); nb = split(bm, bv, ".")
+  n = (na > nb) ? na : nb
+  for (i = 1; i <= n; i++) {
+    x = (i <= na) ? av[i] + 0 : 0
+    y = (i <= nb) ? bv[i] + 0 : 0
+    if (x != y) return (x > y) ? 1 : -1
+  }
+  if (ap == "" && bp == "") return 0
+  if (ap == "") return 1
+  if (bp == "") return -1
+  return cmp_prerelease(ap, bp)
+}
+{
+  n = split($0, seg, "/")
+  version = seg[n]
+  paths[count++] = $0
+  if (count == 1 || cmp_semver(version, best) > 0) best = version
+}
+END {
+  if (count > 1) print "keep " best
+  for (i = 0; i < count; i++) {
+    n = split(paths[i], seg, "/")
+    if (seg[n] != best) print "stale " paths[i]
+  }
+}'
+
+  local version_regex='^\d+\.\d+\.\d+'
+  local gradle_home="${GRADLE_USER_HOME:-${HOME}/.gradle}"
+  if [ ! -d "${gradle_home}" ]; then
+    printf 'Gradle user home not found at %s\n' "${gradle_home}" >&2
+    return 1
+  fi
+
+  local -a parents=()
+  mapfile -t parents < <(
+    fd -td "${version_regex}" --max-depth 3 "${gradle_home}" |
+      sed 's:/$::' |
+      sed 's:/[^/]*$::' |
+      sort -u
+  )
+
+  local -a stale=()
+  local parent
+  for parent in "${parents[@]}"; do
+    local -a results=()
+    mapfile -t results < <(
+      fd -td "${version_regex}" --max-depth 1 "${parent}" |
+        sed 's:/$::' |
+        awk "${semver_max}"
+    )
+    if [ "${#results[@]}" -eq 0 ]; then
+      continue
+    fi
+    printf 'Keeping %s\n' "${results[0]#keep }"
+    local i
+    for ((i = 1; i < ${#results[@]}; i++)); do
+      stale+=("${results[i]#stale }")
+    done
+  done
+
+  if [ "${#stale[@]}" -eq 0 ]; then
+    printf 'Nothing to clean up in %s\n' "${gradle_home}"
+    return 0
+  fi
+
+  local total_kb=0
+  local path size_kb
+  printf '\nDirectories to remove:\n'
+  for path in "${stale[@]}"; do
+    size_kb="$(du -sk "${path}" | cut -f1)"
+    total_kb=$((total_kb + size_kb))
+    printf '  %8s  %s\n' "$(_human_kb "${size_kb}")" "${path}"
+  done
+  printf '\nTotal reclaimable: %s\n' "$(_human_kb "${total_kb}")"
+
+  if [ "${dry_run}" -eq 1 ]; then
+    printf 'Dry run: pass -w to delete these directories.\n'
+    return 0
+  fi
+
+  for path in "${stale[@]}"; do
+    rm -rf -- "${path}"
+    printf 'Removed %s\n' "${path}"
+  done
+  printf 'Reclaimed %s\n' "$(_human_kb "${total_kb}")"
+}
