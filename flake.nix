@@ -52,6 +52,7 @@
         srvos.nixosModules.server
       ];
       systems.hosts.melody.modules = with inputs; [
+        nix-index-database.nixosModules.default
         srvos.nixosModules.common
         srvos.nixosModules.mixins-systemd-boot
         srvos.nixosModules.mixins-telegraf
