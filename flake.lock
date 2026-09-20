@@ -556,18 +556,14 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1789778232,
-        "narHash": "sha256-BVWmCPqTMnQ5PFqXCXqSs90o0uTKmKH6xue+3zNG+1c=",
-        "owner": "msfjarvis",
-        "repo": "nixpkgs",
-        "rev": "36a94096fb5e8de3d6cfecdd94a56956da7a958a",
-        "type": "github"
+        "lastModified": 315532800,
+        "narHash": "sha256-vA/xQ7rW+2bhQNkyhHXtCkm21EbV2O89aCBbL5LjjZg=",
+        "type": "tarball",
+        "url": "https://nixexprs.msfjarvis.dev/nixexprs.tar.zst"
       },
       "original": {
-        "owner": "msfjarvis",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://nixexprs.msfjarvis.dev/nixexprs.tar.zst"
       }
     },
     "root": {

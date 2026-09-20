@@ -106,7 +106,8 @@
 
   inputs = {
     # nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs.url = "github:msfjarvis/nixpkgs/nixpkgs-unstable";
+    # Automatically built and uploaded by rebase.yml in msfjarvis/nixpkgs
+    nixpkgs.url = "https://nixexprs.msfjarvis.dev/nixexprs.tar.zst";
 
     systems.url = "github:msfjarvis/flake-systems";
 
