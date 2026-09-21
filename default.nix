@@ -100,7 +100,6 @@ in
       inherit fenix rust-manifest;
     };
   };
-  gitout = callPackage ./packages/gitout { };
   glance = callPackage ./packages/glance { };
   gphotos-cdp = callPackage ./packages/gphotos-cdp { };
   hcctl = callPackage ./packages/hcctl { };

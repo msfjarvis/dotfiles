@@ -18,7 +18,6 @@ declare -a ALL_PACKAGES=(
   gallery-dl-unstable
   gdrive
   gitice
-  gitout
   # Wants a too-new version of Go
   # glance
   gphotos-cdp
