@@ -38,13 +38,23 @@ let
     };
 
   getFlake =
-    name: with (fromJSON (readFile ./flake.lock)).nodes.${name}.locked; {
-      inherit rev;
-      outPath = fetchTarball {
-        url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
-        sha256 = narHash;
+    name:
+    with (fromJSON (readFile ./flake.lock)).nodes.${name}.locked;
+    if type == "tarball" then
+      {
+        outPath = fetchTarball {
+          inherit url;
+          sha256 = narHash;
+        };
+      }
+    else
+      {
+        inherit rev;
+        outPath = fetchTarball {
+          url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
+          sha256 = narHash;
+        };
       };
-    };
   getRawFlake =
     name: with (fromJSON (readFile ./flake.lock)).nodes.${name}.locked; {
       inherit rev;
