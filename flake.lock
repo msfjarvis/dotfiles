@@ -88,16 +88,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1788011267,
-        "narHash": "sha256-mEq2kU+ljompTToZ44Afvm7d/rHJ5iMBl0tjZuyShJs=",
+        "lastModified": 1790001035,
+        "narHash": "sha256-1/SLBjSYBzDdDhvLQ83wrzBakyS/xNGgtxHGNuveOEQ=",
         "owner": "Mic92",
         "repo": "bun2nix",
-        "rev": "5765b0614591f75ee8ba5596e81ae85c167d1071",
+        "rev": "07a5bfc8ac36c5370199343fa620b69f63186e33",
         "type": "github"
       },
       "original": {
         "owner": "Mic92",
-        "ref": "fix-structured-attrs-hook",
+        "ref": "llm-agents",
         "repo": "bun2nix",
         "type": "github"
       }
@@ -446,11 +446,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789937674,
-        "narHash": "sha256-2c6Ez/4+4IApuAT9zyrLjxkrE+HLImz00K8bPtu0qCs=",
+        "lastModified": 1790010217,
+        "narHash": "sha256-jTsS9BbmgbnA0Hxho4G8nlkBD6zpx1wRQdFjDk8oBK0=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "dbe87a4fa675f6f583065116ec0b71eb52f0143a",
+        "rev": "4e06012de602e51d03b0d482c2ddec420151cb9d",
         "type": "github"
       },
       "original": {
