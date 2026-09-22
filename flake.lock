@@ -557,13 +557,15 @@
     "nixpkgs": {
       "locked": {
         "lastModified": 315532800,
-        "narHash": "sha256-vA/xQ7rW+2bhQNkyhHXtCkm21EbV2O89aCBbL5LjjZg=",
+        "narHash": "sha256-3+M3ceRIEwQi9ybgJsPvctLDEaExk6BTdzZZKnAMzTw=",
+        "rev": "8b80bc4da6c1bf777784925c2e50eac1a4966919",
+        "revCount": 1065199,
         "type": "tarball",
-        "url": "https://nixexprs.msfjarvis.dev/nixexprs.tar.zst"
+        "url": "https://nix-channels.msfjarvis.dev/nixpkgs/snapshots/sha256-3%2BM3ceRIEwQi9ybgJsPvctLDEaExk6BTdzZZKnAMzTw%3D.tar.zst"
       },
       "original": {
         "type": "tarball",
-        "url": "https://nixexprs.msfjarvis.dev/nixexprs.tar.zst"
+        "url": "https://nix-channels.msfjarvis.dev/nixpkgs/latest.tar.zst"
       }
     },
     "root": {
