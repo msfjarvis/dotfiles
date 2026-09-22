@@ -97,6 +97,8 @@ in
       SystemMaxUse = "200M";
     };
 
+    systemd.enableStrictShellChecks = true;
+
     console = {
       font = "Lat2-Terminus16";
       keyMap = lib.mkForce "us";
