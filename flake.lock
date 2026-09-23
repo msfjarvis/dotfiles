@@ -371,16 +371,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1790169495,
+        "lastModified": 1790171299,
         "narHash": "sha256-lIt63F0a5AQNANln/ZtlpbMPNvqdEcutu2ybOT5vE6I=",
-        "owner": "msfjarvis",
+        "owner": "tailscale",
         "repo": "golink",
-        "rev": "bca358c853c75ebaa5b3e1df0ce5835586bcac1d",
+        "rev": "e034189e44e1d01c0672c401b038b8959d58aea6",
         "type": "github"
       },
       "original": {
-        "owner": "msfjarvis",
-        "ref": "fix-shellcheck",
+        "owner": "tailscale",
         "repo": "golink",
         "type": "github"
       }
