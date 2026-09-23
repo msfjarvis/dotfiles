@@ -144,8 +144,7 @@
     firefox.inputs.flake-compat.follows = "flake-compat";
     firefox.inputs.lib-aggregate.follows = "lib-aggregate";
 
-    # Pinned because newer revisions require Go 1.26.6 that is in 26.05 but not unstable?
-    golink.url = "github:tailscale/golink?rev=52e1fd108b6362c7269fc834f854146b21a3bfc7";
+    golink.url = "github:tailscale/golink";
     golink.inputs.nixpkgs.follows = "nixpkgs";
     golink.inputs.systems.follows = "systems";
 
