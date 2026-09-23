@@ -22,6 +22,7 @@
     flock
     git-absorb
     harper
+    pkgs.llm-agents.herdr
     hub
     pkgs.${namespace}.katbin
     keep-sorted

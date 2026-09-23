@@ -13,6 +13,7 @@ _: prev: {
     in
     {
       inherit (llmPackages)
+        herdr
         mcporter
         opencode
         rtk
