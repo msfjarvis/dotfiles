@@ -144,7 +144,7 @@
     firefox.inputs.flake-compat.follows = "flake-compat";
     firefox.inputs.lib-aggregate.follows = "lib-aggregate";
 
-    golink.url = "github:tailscale/golink";
+    golink.url = "github:msfjarvis/golink/fix-shellcheck";
     golink.inputs.nixpkgs.follows = "nixpkgs";
     golink.inputs.systems.follows = "systems";
 
