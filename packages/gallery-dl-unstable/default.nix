@@ -12,8 +12,8 @@ python3.pkgs.buildPythonApplication (finalAttrs: {
   src = fetchFromCodeberg {
     owner = "mikf";
     repo = "gallery-dl";
-    rev = "91f83996edc76d5c2a4eca65f4e20d15ace49e09";
-    hash = "sha256-WS2bP5KV5MbLEJOPgIPuUhEN9dHjkIKl7M+OTp+SAbQ=";
+    rev = "ebb5fc09f4934da9f4e03e02190a7c2b68b44df4";
+    hash = "sha256-70rcjOgEZJMboCqVCCQXKHgui106x2Fkyj41zLk+AQE=";
   };
 
   build-system = [
