@@ -60,6 +60,7 @@
       "sdkman/tap/sdkman-cli"
       "spicetify-cli"
       "static-var/tap/build-brief"
+      "uv"
       # keep-sorted end
     ];
     casks = [
