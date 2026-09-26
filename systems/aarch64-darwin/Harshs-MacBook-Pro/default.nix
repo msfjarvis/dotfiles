@@ -71,6 +71,7 @@
       "google-chrome"
       "jetbrains-toolbox"
       "keepingyouawake"
+      "nkzw-tech/tap/codiff"
       "obsidian"
       "raycast"
       "rectangle"
