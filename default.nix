@@ -41,7 +41,7 @@ let
     name: with (fromJSON (readFile ./flake.lock)).nodes.${name}.locked; {
       inherit rev;
       outPath = fetchTarball {
-        url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
+        inherit url;
         sha256 = narHash;
       };
     };
