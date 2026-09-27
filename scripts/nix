@@ -101,7 +101,7 @@ EOF
 
 function flakechanges() {
   # Use provided commit hash or find the latest flake.lock update commit
-  local COMMIT INPUT_NAME FROM_URL TO_URL
+  local COMMIT TMP_DIR
 
   if [[ -n $1 ]]; then
     COMMIT="$1"
@@ -114,84 +114,53 @@ function flakechanges() {
     return 1
   fi
 
+  TMP_DIR=$(mktemp -d) || return 1
+  if ! git show "${COMMIT}^:flake.lock" >"$TMP_DIR/before.lock" ||
+    ! git show "${COMMIT}:flake.lock" >"$TMP_DIR/after.lock"; then
+    echo "Could not read flake.lock before and after '$COMMIT'"
+    rm -rf "$TMP_DIR"
+    return 1
+  fi
+
   echo "Found flake.lock update commit: $COMMIT"
   echo
-
-  # Extract the commit message to get the input changes
-  local COMMIT_MSG
-  COMMIT_MSG=$(git show -s --format=%B "$COMMIT")
-
-  # This will collect all input changes from the commit message
   echo "Input changes:"
   echo "-------------"
 
-  # Process the commit message and extract GitHub compare URLs
-  local capturing=false first_url=false
-
-  while IFS= read -r line; do
-    # Start capturing when we find an input line
-    if [[ $line == "• Updated input "* ]]; then
-      # Extract the input name between single quotes
-      INPUT_NAME=$(echo "$line" | sed -n "s/• Updated input '\([^']*\)':.*/\1/p")
-      capturing=true
-      first_url=true
-      FROM_URL=""
-      TO_URL=""
-      continue
-    fi
-
-    # Extract URLs from multi-line format
-    if [[ $capturing == true && $line == *"'"* ]]; then
-      # Extract the URL between single quotes
-      local URL
-      URL=$(echo "$line" | grep -o "'[^']*'" | sed "s/'//g")
-
-      if [[ $URL == github:* ]]; then
-        if [[ $first_url == true ]]; then
-          FROM_URL=$URL
-          first_url=false
-        elif [[ $line == *"→"* ]]; then
-          TO_URL=$URL
-        fi
-      fi
-    fi
-
-    # When we reach a line with "→" and we have both URLs, process them
-    if [[ $capturing == true && $line == *"→"* && -n $FROM_URL && -n $TO_URL ]]; then
-      # Check if these are GitHub URLs
-      if [[ $FROM_URL == github:* && $TO_URL == github:* ]]; then
-        # Extract owner, repo, and commit hashes
-        local OWNER REPO FROM_COMMIT TO_COMMIT
-        OWNER=$(echo "$FROM_URL" | sed -n 's/github:\([^\/]*\)\/.*/\1/p')
-        REPO=$(echo "$FROM_URL" | sed -n 's/github:[^\/]*\/\([^\/]*\)\/.*/\1/p')
-        FROM_COMMIT=$(echo "$FROM_URL" | sed -n 's/github:[^\/]*\/[^\/]*\/\([^?]*\).*/\1/p')
-        TO_COMMIT=$(echo "$TO_URL" | sed -n 's/github:[^\/]*\/[^\/]*\/\([^?]*\).*/\1/p')
-
-        # Create GitHub compare URL
-        local COMPARE_URL
-        COMPARE_URL="https://github.com/$OWNER/$REPO/compare/$FROM_COMMIT...$TO_COMMIT"
-        printf "%-25s %s\n" "$INPUT_NAME:" "$COMPARE_URL"
-      else
-        printf "%-25s %s\n" "$INPUT_NAME:" "Not a GitHub URL or couldn't parse"
-        printf "  From: %s\n" "$FROM_URL"
-        printf "  To:   %s\n" "$TO_URL"
-      fi
-
-      # Reset for next input
-      capturing=false
-    fi
-
-    # If we encounter a new input line, stop capturing the current one
-    if [[ $capturing == true && $line == "• Updated input "* ]]; then
-      capturing=false
-    fi
-  done <<<"$COMMIT_MSG"
-
-  # Print a helpful message if no changes were found
-  if [[ -z $INPUT_NAME ]]; then
-    echo "No input changes found in the commit message."
-    echo "The commit might have a different format than expected."
+  # Compare the root input revisions from each lockfile. nixpkgs uses a
+  # tarball URL now, so its GitHub repository must be supplied explicitly.
+  local CHANGES
+  CHANGES=$(jq -nr --slurpfile before "$TMP_DIR/before.lock" --slurpfile after "$TMP_DIR/after.lock" '
+    def root_inputs($lock): $lock.nodes[$lock.root].inputs;
+    def resolved($lock; $name):
+      root_inputs($lock)[$name] as $node_ref |
+      if ($node_ref | type) == "string" then $lock.nodes[$node_ref].locked else null end;
+    ($before[0]) as $old | ($after[0]) as $new |
+    ((root_inputs($old) | keys) + (root_inputs($new) | keys) | unique[]) as $name |
+    (resolved($old; $name)) as $from |
+    (resolved($new; $name)) as $to |
+    select($from != null and $to != null and $from.rev != null and $to.rev != null and $from.rev != $to.rev) |
+    (if $name == "nixpkgs" then "https://github.com/msfjarvis/nixpkgs"
+     elif $to.type == "github" then "https://github.com/\($to.owner)/\($to.repo)"
+     elif $from.type == "github" then "https://github.com/\($from.owner)/\($from.repo)"
+     else empty end) as $repo |
+    [$name, "\($repo)/compare/\($from.rev)...\($to.rev)"] | @tsv
+  ')
+  local STATUS=$?
+  rm -rf "$TMP_DIR"
+  if [[ $STATUS -ne 0 ]]; then
+    echo "Could not compare flake.lock files"
+    return "$STATUS"
   fi
+
+  if [[ -z $CHANGES ]]; then
+    echo "No input revision changes found in flake.lock."
+    return 0
+  fi
+
+  while IFS=$'\t' read -r INPUT_NAME COMPARE_URL; do
+    printf "%-25s %s\n" "$INPUT_NAME:" "$COMPARE_URL"
+  done <<<"$CHANGES"
 }
 
 function flakeinputs() {
