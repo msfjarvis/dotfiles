@@ -29,6 +29,7 @@
 	los = log --oneline --stat
 	lst = ls-tree --full-tree -r HEAD
 	mv-wt = "!f() { main=$(git worktree list --porcelain | awk '/^worktree / {print substr($0,10); exit}'); pick=$(git worktree list --porcelain | awk -v main=\"$main\" '/^worktree / {p=substr($0,10)} /^branch refs\\/heads\\// && p != main {b=$0; sub(/^branch refs\\/heads\\//,\"\",b); print b \"\\t\" p}' | fzf --delimiter=\"$(printf \"\\t\")\" --with-nth=1) || return; b=$(printf \"%s\\n\" \"$pick\" | cut -f1); p=$(printf \"%s\\n\" \"$pick\" | cut -f2-); git worktree remove \"$p\" && git switch \"$b\"; }; f"
+	new = "!f() { git switch -c hshandilya.$(date +\"%F\")-\"$1\"; }; f"
 	pf = push --force-with-lease
 	publish = "!git push origin --set-upstream $(git rev-parse --abbrev-ref HEAD)"
 	rc = rebase --continue
@@ -41,6 +42,7 @@
 	suicide = reset --hard
 	su = submodule update --init --recursive
 	sw = "!git switch $(git branch | fzf | tr -d '*[:space:]')"
+	topic = "!f() { echo hshandilya.$(date +\"%F\")-\"$1\"; }; f"
 
 [color]
 	ui = true
