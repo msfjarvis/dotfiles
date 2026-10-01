@@ -250,7 +250,23 @@ def update_plugins_file(file_path, content, updated_plugins, new_hash=None):
             pkg_path, version = item
             plugins_list.append(f'    "{pkg_path}@{version}"')
 
-    plugins_text = "[\n" + "\n".join(plugins_list) + "\n  ]"
+    original_plugins = re.search(r"plugins\s*=\s*\[(.*?)\];", content, re.DOTALL)
+    keep_sorted_comments = []
+    if original_plugins:
+        keep_sorted_comments = re.findall(
+            r"^[ \t]*# keep-sorted (?:start|end)[ \t]*$",
+            original_plugins.group(1),
+            re.MULTILINE,
+        )
+
+    plugin_lines = "\n".join(plugins_list)
+    if len(keep_sorted_comments) == 2:
+        plugin_lines = (
+            f"{keep_sorted_comments[0]}\n"
+            f"{plugin_lines}\n"
+            f"{keep_sorted_comments[1]}"
+        )
+    plugins_text = "[\n" + plugin_lines + "\n  ]"
     new_content = re.sub(
         r"plugins\s*=\s*\[.*?\];",
         f"plugins = {plugins_text};",
