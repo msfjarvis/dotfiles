@@ -10,9 +10,6 @@ rec {
     "https://${name}.${tailnetDomain}" = {
       extraConfig = ''
         bind tailscale/${name}
-        tailscale ${name} {
-          tags "tag:services"
-        }
         ${config}
       '';
     };

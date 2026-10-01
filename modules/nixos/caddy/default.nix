@@ -78,6 +78,7 @@ in
           client_ip_headers CF-Connecting-IP CF-Connecting-IPv6 X-Forwarded-For
         }
         tailscale {
+          tags "tag:services"
         }
         order authenticate before respond
         ${lib.optionalString (config.services.caddy.pocketIdApplications != { }) ''
