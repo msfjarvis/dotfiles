@@ -6,13 +6,13 @@
 }:
 buildNpmPackage {
   pname = "phanpy";
-  version = "2026.08.08.e6a2887-unstable-2026-09-30";
+  version = "2026.08.08.e6a2887-unstable-2026-10-02";
 
   src = fetchFromGitHub {
     owner = "cheeaun";
     repo = "phanpy";
-    rev = "21bf3277ee8b589eb1057653a5b0bacbf80783b2";
-    hash = "sha256-2JQIqhkkf3M5XkKTipIJr3pj1LxquiDeSQjF5hHnI88=";
+    rev = "2c1f00087e4f163fd21370ac327f57675de24a69";
+    hash = "sha256-jzI3Kgo/WtyGWrmxD3FouDdX1cuMajjdZdUvxjE6YZM=";
   };
 
   patches = [
@@ -22,7 +22,7 @@ buildNpmPackage {
     ./0002-fix-carousel-make-carousels-focusable-so-keyboard-sc.patch
   ];
 
-  npmDepsHash = "sha256-393Ce4cQOhX+vUB3Tbw4b/YVW2HQoU1oF3zKVToRePo=";
+  npmDepsHash = "sha256-yr91n9zG24X4UaZDMNIxbjco7NSFe/QG8ncW+0/YRFo=";
 
   postPatch = ''
     substituteInPlace vite.config.js \
