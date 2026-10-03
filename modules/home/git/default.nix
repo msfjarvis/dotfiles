@@ -11,6 +11,7 @@ let
 in
 {
   home.packages = [
+    pkgs.${namespace}.forge
     pkgs.mergiraf
   ]
   ++ lib.optionals notServer [
