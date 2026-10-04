@@ -18,6 +18,9 @@
         vw = "pr view --web";
       };
     };
-    extensions = with pkgs; [ gh-poi gh-stack ];
+    extensions = with pkgs; [
+      gh-poi
+      gh-stack
+    ];
   };
 }
