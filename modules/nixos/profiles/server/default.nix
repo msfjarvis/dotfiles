@@ -66,13 +66,13 @@ in
     powerManagement.enable = false;
     stylix.enable = false;
 
-    environment.systemPackages = lib.optionals (!cfg.microVM) [
-      pkgs.${namespace}.gdrive
-      pkgs.net-tools
-    ];
-
     # Install terminfo into all servers so that ghostty works
-    environment.enableAllTerminfo = true;
+    # Do not use enableAllTerminfo since it can contain broken packages
+    environment.systemPackages = lib.optionals (!cfg.microVM) [
+      pkgs.net-tools
+      pkgs.ghostty.terminfo
+      pkgs.tmux.terminfo
+    ];
     security.sudo.keepTerminfo = true;
 
     networking = {
