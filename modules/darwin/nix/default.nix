@@ -30,8 +30,5 @@
         trusted-users = [ "msfjarvis" ];
         sandbox = false;
       };
-      # Linux builder causes conflicts here
-      generateNixPathFromInputs = false;
-      generateRegistryFromInputs = false;
     };
 }
