@@ -210,7 +210,7 @@ def parse_caddy_plugins_file(file_path):
 
     plugins_text = plugins_match.group(1)
     # Match plugin line with optional comment
-    plugin_pattern = r'"([^"@]+)@([^"]+)"(?:\s*#\s*(.*))?'
+    plugin_pattern = r'"([^"@]+)@([^"]+)"(?:[ \t]*#[ \t]*(.*))?'
     plugins = []
 
     for match in re.finditer(plugin_pattern, plugins_text):
