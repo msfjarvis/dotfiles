@@ -86,6 +86,11 @@ if [ -d /opt/homebrew/opt/rustup/bin ]; then
   export PATH=/opt/homebrew/opt/rustup/bin:$PATH
 fi
 
+# shellcheck disable=SC1090
+if [ -f ~/export-esp.sh ]; then
+  . ~/export-esp.sh
+fi
+
 # shellcheck source=scripts/bash_completions.bash disable=SC1091
 source "${SCRIPT_DIR}"/bash_completions.bash
 # shellcheck source=scripts/aliases disable=SC1091
