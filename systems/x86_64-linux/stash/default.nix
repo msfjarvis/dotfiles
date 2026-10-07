@@ -43,6 +43,10 @@ in
   # https://github.com/microvm-nix/microvm.nix/issues/171
   microvm.mem = 4096 + 512;
 
+  environment.systemPackages = with pkgs; [
+    nano
+  ];
+
   users.users.msfjarvis.group = "users";
   users.users.msfjarvis.hashedPassword = lib.mkForce "";
   # Pin the stash service user to UID 1000 so it matches the host's msfjarvis UID.
