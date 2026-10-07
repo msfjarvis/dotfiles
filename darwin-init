@@ -70,6 +70,10 @@ if [ -d ~/go/bin ]; then
   export PATH="${HOME}/go/bin:${PATH}"
 fi
 
+if [ -d ~/.cargo/bin ]; then
+  export PATH="${HOME}/.cargo/bin:${PATH}"
+fi
+
 if [ -d ~/.cache/.bun/bin ]; then
   export PATH="${HOME}/.cache/.bun/bin:$PATH"
 fi
