@@ -56,6 +56,7 @@
     brews = [
       # keep-sorted start
       "deezer/repo/caupain"
+      "mole"
       "pinentry-mac"
       "sdkman/tap/sdkman-cli"
       "spicetify-cli"
