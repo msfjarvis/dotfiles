@@ -13,11 +13,13 @@
     LANG = "en_US.UTF-8";
   };
 
+  # keep-sorted block start
   environment.systemPackages = with pkgs; [
     pkgs.${namespace}.adbear
     pkgs.${namespace}.adx
     bun
     coreutils
+    cloudflared
     pkgs.${namespace}.diffuse-bin
     flock
     git-absorb
@@ -41,6 +43,7 @@
     pkgs.llm-agents.skills
     yaml-language-server
   ];
+  # keep-sorted block end
 
   environment.pathsToLink = [
     "Applications"
