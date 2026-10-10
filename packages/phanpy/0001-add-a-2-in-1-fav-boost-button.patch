@@ -1,4 +1,4 @@
-From 99af623649ebba95db808113e9fbe8fd3ab96d41 Mon Sep 17 00:00:00 2001
+From e573a6a4f8fe677d4866d11d13536d6dd193f492 Mon Sep 17 00:00:00 2001
 From: "Sulabh Mehta (Dominik)" <github@sume.uk>
 Date: Mon, 17 Mar 2025 16:54:01 +0800
 Subject: [PATCH 1/2] add a 2 in 1 fav&boost button
@@ -22,10 +22,10 @@ index cc9ff6948413..3d4c8380f6c0 100644
 +  'fav-boost-celebrate': () => import('../iconify-icons/mingcute/celebrate-line.js'),
  };
 diff --git a/src/components/status.css b/src/components/status.css
-index a1c9f80b90ab..c8a906aadefa 100644
+index f69876cb91f2..60c296fc381c 100644
 --- a/src/components/status.css
 +++ b/src/components/status.css
-@@ -2558,6 +2558,30 @@ a.card:is(:hover, :focus):visited {
+@@ -2616,6 +2616,30 @@ a.card:is(:hover, :focus):visited {
  .status .action > button.plain.favourite-button.checked .icon {
    animation: hearted 1s ease-out;
  }
@@ -57,10 +57,10 @@ index a1c9f80b90ab..c8a906aadefa 100644
    color: var(--link-color);
    border-color: var(--link-color);
 diff --git a/src/components/status.jsx b/src/components/status.jsx
-index 97caef696cfc..6c26347236d0 100644
+index 06191c5476fc..87fdb12a3679 100644
 --- a/src/components/status.jsx
 +++ b/src/components/status.jsx
-@@ -894,6 +894,81 @@ function Status({
+@@ -901,6 +901,81 @@ function Status({
      }
    };
  
@@ -142,7 +142,7 @@ index 97caef696cfc..6c26347236d0 100644
    const favouriteStatus = async () => {
      if (!sameInstance || !authenticated) {
        alert(unauthInteractionErrorMessage);
-@@ -3089,6 +3164,17 @@ function Status({
+@@ -3113,6 +3188,17 @@ function Status({
                      }}
                    />
                  </div>
@@ -157,11 +157,11 @@ index 97caef696cfc..6c26347236d0 100644
 +                    <Icon icon="fav-boost-celebrate" size="l" alt={t`Like and boost`} />
 +                  </button>
 +                </div>
+                 <div class="spacer" />
                  {supports('@mastodon/post-bookmark') && (
                    <div class="action">
-                     <StatusButton
 diff --git a/src/index.css b/src/index.css
-index 0c3026c5401c..485290a9b424 100644
+index 3e231fa66171..59fc0af91c6d 100644
 --- a/src/index.css
 +++ b/src/index.css
 @@ -87,6 +87,7 @@
@@ -173,5 +173,5 @@ index 0c3026c5401c..485290a9b424 100644
    --hashtag-color: LightSeaGreen;
    --hashtag-faded-color: color-mix(
 -- 
-2.54.0
+2.55.0
 

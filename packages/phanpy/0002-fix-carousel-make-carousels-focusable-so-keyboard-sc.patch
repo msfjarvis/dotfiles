@@ -1,4 +1,4 @@
-From 9a498256d43a7a577eb98ca7728fe18cb0a59458 Mon Sep 17 00:00:00 2001
+From 1dd6c9c3ff31b856719ef737052de8ce9ff3cf0e Mon Sep 17 00:00:00 2001
 From: Harsh Shandilya <me@msfjarvis.dev>
 Date: Wed, 11 Mar 2026 01:47:54 +0530
 Subject: [PATCH 2/2] fix(carousel): make carousels focusable so keyboard
@@ -25,10 +25,10 @@ index 95bf4eea7202..a12469bca03e 100644
              <div class="media-first-item" key={media.id}>
                <Media
 diff --git a/src/components/timeline.jsx b/src/components/timeline.jsx
-index 6edfe45e253f..380027112e5c 100644
+index 7683f9fa8cbd..38941a870506 100644
 --- a/src/components/timeline.jsx
 +++ b/src/components/timeline.jsx
-@@ -993,7 +993,7 @@ function StatusCarousel({ title, class: className, children }) {
+@@ -996,7 +996,7 @@ function StatusCarousel({ title, class: className, children }) {
            </button>
          </span>
        </header>
@@ -38,10 +38,10 @@ index 6edfe45e253f..380027112e5c 100644
            class="status-carousel-beacon"
            onChange={(inView) => {
 diff --git a/src/pages/notifications.jsx b/src/pages/notifications.jsx
-index da234e27fe25..d05d6b3ee195 100644
+index 4eeaff57c218..7977dcb3d451 100644
 --- a/src/pages/notifications.jsx
 +++ b/src/pages/notifications.jsx
-@@ -823,6 +823,7 @@ function Notifications({ columnMode }) {
+@@ -826,6 +826,7 @@ function Notifications({ columnMode }) {
                      announcements.length > 1 ? 'multiple' : 'single'
                    }`}
                    ref={announcementsListRef}
@@ -50,7 +50,7 @@ index da234e27fe25..d05d6b3ee195 100644
                    {announcements.map((announcement) => (
                      <li>
 diff --git a/src/pages/trending.jsx b/src/pages/trending.jsx
-index 4353d87e63d1..08c18def57dd 100644
+index b3da248b8b56..1b7b3a56a7e2 100644
 --- a/src/pages/trending.jsx
 +++ b/src/pages/trending.jsx
 @@ -229,7 +229,7 @@ function Trending({ columnMode, ...props }) {
@@ -63,5 +63,5 @@ index 4353d87e63d1..08c18def57dd 100644
                <h3>
                  <Trans>Trending News</Trans>
 -- 
-2.54.0
+2.55.0
 
