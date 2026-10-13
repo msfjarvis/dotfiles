@@ -1,6 +1,6 @@
 {
   programs.lsd = {
-    enable = true;
+    enable = false;
     enableBashIntegration = true;
   };
 }
