@@ -33,6 +33,7 @@
 	pf = push --force-with-lease
 	publish = "!git push origin --set-upstream $(git rev-parse --abbrev-ref HEAD)"
 	rc = rebase --continue
+	rewrite = "!f() { if [ $# -lt 2 ]; then echo 'usage: git rewrite <sed-expression> <revision-range>' >&2; return 2; fi; export GIT_REWRITE_SED=$1; shift; GIT_SEQUENCE_EDITOR='perl -pi -e s/^pick\\ /reword\\ /' GIT_EDITOR=\"sh -c 'sed \\\"\\$GIT_REWRITE_SED\\\" \\\"\\$1\\\" > \\\"\\$1.tmp\\\" && cat \\\"\\$1.tmp\\\" > \\\"\\$1\\\" && rm \\\"\\$1.tmp\\\"' sh\" git rebase -i \"$@\"; }; f"
 	reword = "!EDITOR='sed -i -re s/^pick/e/' sh -c 'git rebase -i $1 && while test -f .git/rebase-merge/interactive; do git commit --amend && git rebase --continue;done' -"
 	ru = remote update --prune
 	rv = remote -v
