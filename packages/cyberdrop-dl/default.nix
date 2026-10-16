@@ -46,6 +46,7 @@ python3.pkgs.buildPythonApplication {
     inquirer
     jeepney
     m3u8
+    markdown
     myjdapi
     packaging
     propcache
