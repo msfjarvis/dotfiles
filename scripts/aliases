@@ -9,9 +9,6 @@ alias gi=git
 if type bat &>/dev/null; then
   alias cat='bat --style=grid,header'
 fi
-if type micro &>/dev/null; then
-  alias nano=micro
-fi
 if type aria2c &>/dev/null; then
   alias batch="aria2c --conditional-get true --continue true --auto-file-renaming=false --input-file"
 fi

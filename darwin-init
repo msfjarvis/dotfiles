@@ -54,7 +54,13 @@ fi
 # Nano love, or is it?
 if type micro &>/dev/null; then
   export EDITOR=micro
+  export GIT_EDITOR='micro -colorscheme="$(defaults read -globalDomain AppleInterfaceStyle >/dev/null 2>&1 && printf catppuccin-mocha || printf catppuccin-latte)"'
   export MICRO_TRUECOLOR=1
+  # automatically set light/dark theme on macOS
+  # command fails when light mode is on, says Dark when dark mode is on
+  function micro() {
+    command micro -colorscheme="$(defaults read -globalDomain AppleInterfaceStyle &> /dev/null && echo catppuccin-mocha || echo catppuccin-latte)" "$@"
+  }
 fi
 
 # Setup zoxide

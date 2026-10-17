@@ -3,7 +3,7 @@
   programs.micro = {
     enable = true;
     settings = {
-      colorscheme = "custom";
+      colorscheme = "catppuccin-mocha";
       # Too annoying with pi's settings.json and I don't care as much anymore
       eofnewline = false;
       mkparents = true;
@@ -11,6 +11,10 @@
       wordwrap = true;
     };
   };
-  xdg.configFile."micro/colorschemes/custom.micro".source =
-    "${inputs.micro-theme}/themes/catppuccin-mocha.micro";
+  xdg.configFile = {
+    "micro/colorschemes/catppuccin-mocha.micro".source =
+      "${inputs.micro-theme}/themes/catppuccin-mocha.micro";
+    "micro/colorschemes/catppuccin-latte.micro".source =
+      "${inputs.micro-theme}/themes/catppuccin-latte.micro";
+  };
 }
