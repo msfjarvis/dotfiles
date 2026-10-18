@@ -1,6 +1,6 @@
 _: {
   programs.atuin = {
-    enable = true;
+    enable = false;
     enableBashIntegration = true;
     flags = [ "--disable-up-arrow" ];
     settings = {
