@@ -33,7 +33,9 @@
         inherit lib;
       }
       // {
-        package = pkgs.lixPackageSets.git.lix;
+        # TODO: Build failure (https://github.com/NixOS/nixpkgs/pull/575023)
+        # package = pkgs.lixPackageSets.git.lix;
+        package = pkgs.lixPackageSets.latest.lix;
         optimise.automatic = false;
         settings.netrc-file = config.sops.secrets.nix-netrc-file.path;
       };
