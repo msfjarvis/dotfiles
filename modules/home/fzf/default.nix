@@ -16,7 +16,6 @@ lib.mkMerge [
       fileWidget.command = "fd -H";
       changeDirWidget.command = "fd -Htd";
       historyWidget = {
-        command = "";
         options = [
           "--sort"
           "--exact"
