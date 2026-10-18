@@ -62,7 +62,7 @@ in
   ];
 
   services.atuin = {
-    enable = true;
+    enable = false;
     openRegistration = false;
     path = "";
     host = "127.0.0.1";
