@@ -3,13 +3,16 @@
 set -euxo pipefail
 
 declare -a ALL_PACKAGES=(
+  # Never getting updated either
   adb-sync
   adbear
+  # Fine the way it is
   adbtuifm
   adx
   # Don't care to keep it up-to-date
   # age-keygen-deterministic
-  boop-gtk
+  # This will basically never get any useful updates
+  # boop-gtk
   # CF blocks it, manual updates for this are fine
   # caldav-api
   clipboard-substitutor
