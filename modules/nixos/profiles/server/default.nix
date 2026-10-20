@@ -75,6 +75,12 @@ in
     ];
     security.sudo.keepTerminfo = true;
 
+    # These certs were compromised: https://emudhra.we-have-a-problem.com/
+    security.pki.caCertificateBlacklist = [
+      "Comodo AAA Services root"
+      "emSign ECC Root CA - G3"
+    ];
+
     networking = {
       # Hard-coded value from srvos, placed here to break priority conflicts between srvos and microvm.nix
       hostId = lib.mkForce "8425e349";
