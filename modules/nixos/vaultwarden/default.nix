@@ -94,7 +94,7 @@ in
       oci-containers = {
         backend = "podman";
         containers.backvault = {
-          image = "ghcr.io/mvfc/backvault:2.0.15";
+          image = "ghcr.io/mvfc/backvault:2.1.0";
           environment = {
             BW_SERVER = "https://${cfg.domain}";
             BACKUP_ENCRYPTION_MODE = "bitwarden";
