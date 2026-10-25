@@ -31,10 +31,6 @@ buildNpmPackage {
 
   npmRebuildFlags = [ "--ignore-scripts" ];
 
-  preBuild = ''
-    npm run generate-icons
-  '';
-
   installPhase = ''
     mkdir $out
     pushd dist || exit 1

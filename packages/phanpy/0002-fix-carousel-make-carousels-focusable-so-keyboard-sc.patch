@@ -1,4 +1,4 @@
-From 1dd6c9c3ff31b856719ef737052de8ce9ff3cf0e Mon Sep 17 00:00:00 2001
+From 2bc7ddbe5a435e6360bb81209444a8229f4de020 Mon Sep 17 00:00:00 2001
 From: Harsh Shandilya <me@msfjarvis.dev>
 Date: Wed, 11 Mar 2026 01:47:54 +0530
 Subject: [PATCH 2/2] fix(carousel): make carousels focusable so keyboard
@@ -25,10 +25,10 @@ index 95bf4eea7202..a12469bca03e 100644
              <div class="media-first-item" key={media.id}>
                <Media
 diff --git a/src/components/timeline.jsx b/src/components/timeline.jsx
-index 7683f9fa8cbd..38941a870506 100644
+index c305f4542616..d6574bba6577 100644
 --- a/src/components/timeline.jsx
 +++ b/src/components/timeline.jsx
-@@ -996,7 +996,7 @@ function StatusCarousel({ title, class: className, children }) {
+@@ -1076,7 +1076,7 @@ function StatusCarousel({ title, class: className, children }) {
            </button>
          </span>
        </header>

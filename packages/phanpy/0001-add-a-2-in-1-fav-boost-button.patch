@@ -1,4 +1,4 @@
-From e573a6a4f8fe677d4866d11d13536d6dd193f492 Mon Sep 17 00:00:00 2001
+From 20d1110ffbb40fef6ceabbc7346b29dbcbad1ee1 Mon Sep 17 00:00:00 2001
 From: "Sulabh Mehta (Dominik)" <github@sume.uk>
 Date: Mon, 17 Mar 2025 16:54:01 +0800
 Subject: [PATCH 1/2] add a 2 in 1 fav&boost button
@@ -12,22 +12,24 @@ Subject: [PATCH 1/2] add a 2 in 1 fav&boost button
  4 files changed, 112 insertions(+)
 
 diff --git a/src/components/ICONS.jsx b/src/components/ICONS.jsx
-index cc9ff6948413..3d4c8380f6c0 100644
+index a6b3b9c1d914..c4a3d2f111f4 100644
 --- a/src/components/ICONS.jsx
 +++ b/src/components/ICONS.jsx
-@@ -206,4 +206,5 @@ export const ICONS = {
-   },
-   'arrow-up-top': () => import('../iconify-icons/mingcute/arrow-to-up-line.js'),
-   collections: () => import('../iconify-icons/mingcute/board-line.js'),
-+  'fav-boost-celebrate': () => import('../iconify-icons/mingcute/celebrate-line.js'),
- };
+@@ -7,6 +7,7 @@ import unpinIcon from '@mingcute/icons/core-regular/pin';
+ import replyIcon from '@mingcute/icons/core-regular/share-forward';
+ 
+ // These icons don't need further customizations, use as-is
++export { default as 'fav-boost-celebrate' } from '@mingcute/icons/core-regular/celebrate';
+ export { default as x } from '@mingcute/icons/core-regular/close';
+ export { default as heart } from '@mingcute/icons/core-regular/heart';
+ export { default as bookmark } from '@mingcute/icons/core-regular/bookmark';
 diff --git a/src/components/status.css b/src/components/status.css
-index f69876cb91f2..60c296fc381c 100644
+index 4c3221401b19..4470d55f4843 100644
 --- a/src/components/status.css
 +++ b/src/components/status.css
-@@ -2616,6 +2616,30 @@ a.card:is(:hover, :focus):visited {
+@@ -2701,6 +2701,30 @@ a.card:is(:hover, :focus):visited {
  .status .action > button.plain.favourite-button.checked .icon {
-   animation: hearted 1s ease-out;
+   animation: hearted 1.1s cubic-bezier(0.34, 1.56, 0.64, 1);
  }
 +.status .action > button.plain.favourite-boost-button:not(:disabled):is(:hover, :focus) {
 +  color: var(--celebrate-color);
@@ -57,10 +59,10 @@ index f69876cb91f2..60c296fc381c 100644
    color: var(--link-color);
    border-color: var(--link-color);
 diff --git a/src/components/status.jsx b/src/components/status.jsx
-index 06191c5476fc..87fdb12a3679 100644
+index 120cab5e1da2..1cff4227abec 100644
 --- a/src/components/status.jsx
 +++ b/src/components/status.jsx
-@@ -901,6 +901,81 @@ function Status({
+@@ -907,6 +907,81 @@ function Status({
      }
    };
  
@@ -142,7 +144,7 @@ index 06191c5476fc..87fdb12a3679 100644
    const favouriteStatus = async () => {
      if (!sameInstance || !authenticated) {
        alert(unauthInteractionErrorMessage);
-@@ -3113,6 +3188,17 @@ function Status({
+@@ -3184,6 +3259,17 @@ function Status({
                      }}
                    />
                  </div>
@@ -161,7 +163,7 @@ index 06191c5476fc..87fdb12a3679 100644
                  {supports('@mastodon/post-bookmark') && (
                    <div class="action">
 diff --git a/src/index.css b/src/index.css
-index 3e231fa66171..59fc0af91c6d 100644
+index 2c7d459d24e6..2cab39da880b 100644
 --- a/src/index.css
 +++ b/src/index.css
 @@ -87,6 +87,7 @@
