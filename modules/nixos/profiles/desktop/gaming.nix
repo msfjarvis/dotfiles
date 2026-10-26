@@ -144,5 +144,8 @@ in
       # https://web.archive.org/web/20230921201835/https://old.reddit.com/r/linux_gaming/comments/16lwgnj/is_it_possible_to_improve_font_rendering_on_linux/
       FREETYPE_PROPERTIES = "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0";
     };
+
+    # Used by Proton >= 11 on Linux >=6.14 to use more faithful reimplementations of NT sync primitives.
+    boot.kernelModules = [ "ntsync" ];
   };
 }
