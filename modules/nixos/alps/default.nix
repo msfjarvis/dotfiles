@@ -14,7 +14,7 @@ let
     mkIf
     types
     ;
-  inherit (lib.${namespace}) ports mkTailscaleVHost;
+  inherit (lib.${namespace}) ports tailnetDomain mkTailscaleVHost;
 in
 {
   options.services.${namespace}.alps = {
@@ -53,6 +53,11 @@ in
         server.addr = alpsAddr;
         provider.imap.server = "imaps://imap.purelymail.com:993";
         smtp.server = "smtps://smtp.purelymail.com:465";
+        webauthn = {
+          rpid = "${cfg.domain}.${tailnetDomain}";
+          display_name = "Alps Webmail";
+          origins = [ "https://${cfg.domain}.${tailnetDomain}/" ];
+        };
       };
     };
   };
