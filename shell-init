@@ -51,14 +51,10 @@ done
 if type micro &>/dev/null; then
   export EDITOR=micro
   # shellcheck disable=SC2016
-  export GIT_EDITOR='micro -colorscheme="$(gsettings get org.gnome.desktop.interface color-scheme | grep -q prefer-dark && printf catppuccin-mocha || printf catppuccin-latte)"'
+  export GIT_EDITOR='micro -colorscheme="$(if command -v gsettings >/dev/null 2>&1; then gsettings get org.gnome.desktop.interface color-scheme | grep -q prefer-dark && printf catppuccin-mocha || printf catppuccin-latte; else printf catppuccin-mocha; fi)"'
   export MICRO_TRUECOLOR=1
   function micro() {
-    if [ "$(gsettings get org.gnome.desktop.interface color-scheme)" = "'prefer-dark'" ]; then
-      command micro -colorscheme=catppuccin-mocha "$@"
-    else
-      command micro -colorscheme=catppuccin-latte "$@"
-    fi
+    command micro -colorscheme="$(if command -v gsettings >/dev/null 2>&1; then gsettings get org.gnome.desktop.interface color-scheme | grep -q prefer-dark && printf catppuccin-mocha || printf catppuccin-latte; else printf catppuccin-mocha; fi)" "$@"
   }
 fi
 
