@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   namespace,
   ...
 }:
@@ -42,6 +43,7 @@ in
 
     services.alps = {
       enable = true;
+      package = pkgs.${namespace}.alps-purelymail;
       settings = {
         trusted_proxies = [
           "127.0.0.1/32"

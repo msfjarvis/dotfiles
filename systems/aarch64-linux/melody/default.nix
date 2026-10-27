@@ -59,6 +59,11 @@ in
   };
 
   services.${namespace} = {
+    alps = {
+      enable = true;
+      domain = "mail";
+    };
+
     atticd = {
       enable = true;
       domain = "nix-cache";

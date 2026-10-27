@@ -105,11 +105,6 @@ in
       domain = "money.msfjarvis.dev";
     };
 
-    alps = {
-      enable = true;
-      domain = "mail";
-    };
-
     atticd = {
       enable = false;
       domain = "nix-cache";
