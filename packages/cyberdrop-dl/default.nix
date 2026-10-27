@@ -8,13 +8,13 @@ let
   src = fetchFromGitHub {
     owner = "Cyberdrop-DL";
     repo = "cyberdrop-dl";
-    rev = "4abf62f33f8f8141f45c1d78ed456c52ae99c1a6";
-    hash = "sha256-/GGsk94DNogP7zffhaJzge+k7C4/Of9/ntPoClaInMU=";
+    rev = "6b23fcd20fd39227e190e3424950668058fe0bec";
+    hash = "sha256-OpIGY29w1HbC8dDe8V9VRtCE05F/Nvji26jTYtVc9mM=";
   };
 in
 python3.pkgs.buildPythonApplication {
   pname = "cyberdrop-dl";
-  version = "10.13.0-unstable-2026-10-26";
+  version = "10.13.0-unstable-2026-10-27";
   inherit src;
 
   pyproject = true;
