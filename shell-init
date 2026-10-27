@@ -50,6 +50,7 @@ done
 # Nano love, or is it?
 if type micro &>/dev/null; then
   export EDITOR=micro
+  # shellcheck disable=SC2016
   export GIT_EDITOR='micro -colorscheme="$(gsettings get org.gnome.desktop.interface color-scheme | grep -q prefer-dark && printf catppuccin-mocha || printf catppuccin-latte)"'
   export MICRO_TRUECOLOR=1
   function micro() {
