@@ -86,6 +86,7 @@ in
   };
   adbtuifm = callPackage ./packages/adbtuifm { };
   adx = callPackage ./packages/adx { };
+  alps-purelymail = callPackage ./packages/alps-purelymail { };
   boop-gtk = callPackage ./packages/boop-gtk { };
   caddy-with-plugins = callPackage ./packages/caddy-with-plugins { };
   caldav-api = callPackage ./packages/caldav-api { };
