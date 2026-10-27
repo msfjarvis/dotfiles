@@ -51,6 +51,17 @@ in
           "10.0.0.0/8"
         ];
         server.addr = alpsAddr;
+        plugins = {
+          caldav = {
+            server = "https://purelymail.com/webdav/322/caldav/";
+          };
+          carddav = {
+            server = "https://purelymail.com/webdav/322/carddav/";
+          };
+          managesieve = {
+            server = "managesieves://mailserver.purelymail.com:4190";
+          };
+        };
         provider.imap.server = "imaps://imap.purelymail.com:993";
         smtp.server = "smtps://smtp.purelymail.com:465";
         webauthn = {
