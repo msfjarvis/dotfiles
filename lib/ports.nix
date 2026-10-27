@@ -42,6 +42,7 @@
     remote-pi-relay = 9030;
     linkding = 9031;
     bookorbit = 9032;
+    flaresolverr = 9033;
     exporters = {
       node = 9100;
       systemd = 9101;
