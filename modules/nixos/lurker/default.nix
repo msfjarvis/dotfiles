@@ -16,6 +16,8 @@ let
     types
     ;
   inherit (lib.${namespace}) mkTailscaleVHost ports tailnetDomain;
+  networkName = "lurker-dns";
+  bridgeName = "br-lurker";
   portString = toString cfg.port;
   portMapping =
     if cfg.listenAddress == "0.0.0.0" then
@@ -90,8 +92,8 @@ in
         "d ${cfg.dataDir} 0750 root root - -"
       ];
 
-      # Podman's default network does not provide container-name DNS. Keep both
-      # containers on a dedicated DNS-enabled bridge without publishing the decoder.
+      # Use a new network so an existing auto-named lurker bridge can coexist
+      # during migration. Podman's default network lacks container-name DNS.
       systemd.services.lurker-network = {
         description = "Create the Lurker container network";
         before = [
@@ -103,7 +105,7 @@ in
           RemainAfterExit = true;
         };
         script = ''
-          ${pkgs.podman}/bin/podman network exists lurker || ${pkgs.podman}/bin/podman network create lurker
+          ${pkgs.podman}/bin/podman network exists ${networkName} || ${pkgs.podman}/bin/podman network create --interface-name ${bridgeName} ${networkName}
         '';
       };
 
@@ -124,7 +126,7 @@ in
         environment.LURKER_PREVIEWS_ALLOW_PRIVATE = "1";
         extraOptions = [
           "--pull=always"
-          "--network=lurker"
+          "--network=${networkName}"
           "--read-only"
           "--tmpfs=/tmp:rw,noexec,nosuid,size=256m"
           "--cap-drop=all"
@@ -161,11 +163,16 @@ in
         // cfg.extraEnvironment;
         extraOptions = [
           "--pull=always"
-          "--network=lurker"
+          "--network=${networkName}"
         ];
       }
       // optionalAttrs (cfg.environmentFile != null) {
         inherit (cfg) environmentFile;
+      };
+
+      networking.firewall.interfaces.${bridgeName} = {
+        allowedTCPPorts = [ 53 ];
+        allowedUDPPorts = [ 53 ];
       };
 
       networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [
