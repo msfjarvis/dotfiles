@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   namespace,
   ...
 }:
@@ -78,9 +79,62 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     {
+      assertions = [
+        {
+          assertion = config.virtualisation.oci-containers.backend == "podman";
+          message = "The Lurker preview network requires the Podman OCI backend.";
+        }
+      ];
+
       systemd.tmpfiles.rules = [
         "d ${cfg.dataDir} 0750 root root - -"
       ];
+
+      # Podman's default network does not provide container-name DNS. Keep both
+      # containers on a dedicated DNS-enabled bridge without publishing the decoder.
+      systemd.services.lurker-network = {
+        description = "Create the Lurker container network";
+        before = [
+          "podman-lurker.service"
+          "podman-lurker-previews.service"
+        ];
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+        };
+        script = ''
+          ${pkgs.podman}/bin/podman network exists lurker || ${pkgs.podman}/bin/podman network create lurker
+        '';
+      };
+
+      systemd.services.podman-lurker = {
+        requires = [ "lurker-network.service" ];
+        after = [ "lurker-network.service" ];
+      };
+      systemd.services.podman-lurker-previews = {
+        requires = [ "lurker-network.service" ];
+        after = [ "lurker-network.service" ];
+      };
+
+      virtualisation.oci-containers.containers.lurker-previews = {
+        image = "ghcr.io/amiantos/lurker-previews:latest";
+        autoStart = true;
+        # No network-layer private-address filtering is configured here. The
+        # decoder's URL SSRF guard remains active, but cannot contain an RCE.
+        environment.LURKER_PREVIEWS_ALLOW_PRIVATE = "1";
+        extraOptions = [
+          "--pull=always"
+          "--network=lurker"
+          "--read-only"
+          "--tmpfs=/tmp:rw,noexec,nosuid,size=256m"
+          "--cap-drop=all"
+          "--security-opt=no-new-privileges"
+          "--memory=512m"
+          "--memory-swap=512m"
+          "--pids-limit=128"
+          "--ipc=none"
+        ];
+      };
 
       virtualisation.oci-containers.containers.lurker = {
         image = "ghcr.io/amiantos/lurker:2.6.1";
@@ -100,13 +154,14 @@ in
           USER_AGENT_CONTACT = "https://msfjarvis.dev/";
           LURKER_BOUNCER_ENABLED = "true";
           LURKER_BOUNCER_PORT = "6667";
-          LURKER_LINK_PREVIEWS = "on";
+          LURKER_PREVIEWS_URL = "http://lurker-previews:8030";
           LURKER_PREVIEW_CACHE_MODE = "local";
           LURKER_TRUST_PROXY = "true";
         }
         // cfg.extraEnvironment;
         extraOptions = [
           "--pull=always"
+          "--network=lurker"
         ];
       }
       // optionalAttrs (cfg.environmentFile != null) {
