@@ -20,6 +20,10 @@ jobs:
             runner: ubuntu-latest
             cache: x86_64-linux
             public-key: "x86_64-linux:XrBbCCueC9hO05zf8GjmK1/YtHuZwqwcgx0pkHWLgvM="
+          - attribute: nixosConfigurations.ryzenbox.config.system.build.toplevel
+            runner: ubuntu-latest
+            cache: x86_64-linux
+            public-key: "x86_64-linux:XrBbCCueC9hO05zf8GjmK1/YtHuZwqwcgx0pkHWLgvM="
           - attribute: nixosConfigurations.melody.config.system.build.toplevel
             runner: ubuntu-24.04-arm
             cache: aarch64-linux
