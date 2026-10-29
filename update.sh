@@ -9,7 +9,8 @@ declare -a ALL_PACKAGES=(
   # Fine the way it is
   adbtuifm
   adx
-  alps-purelymail
+  # Doesn't seem to work, will have to figure something else out
+  # alps-purelymail
   # Don't care to keep it up-to-date
   # age-keygen-deterministic
   # This will basically never get any useful updates
