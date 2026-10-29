@@ -39,6 +39,7 @@ declare -a ALL_PACKAGES=(
 )
 
 declare -r -A EXTRA_PARAMS=(
+  ["alps-purelymail"]="--version=branch"
   ["caldav-api"]="--version=branch"
   ["cyberdrop-dl"]="--version=branch"
   ["gallery-dl-unstable"]="--version=branch"
