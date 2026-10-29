@@ -34,12 +34,14 @@ jobs:
             public-key: "aarch64-darwin:XGW7869Rr0Apk963rQWJEnwQsS+49o12zEBmmEs/nww="
     runs-on: ${{ matrix.runner }}
     steps:
-      - name: Create disk space
-        if: "${{ matrix.runner == 'ubuntu-latest' }}"
-        uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
-        with:
-          hatchet-protocol: rampage
-          witness-carnage: true
+      # TODO: Broken due to some APT dependency mess, don't quite care and the other platforms
+      #       seem to be fine with no disk space cleaving so maybe this just works fine now.
+      # - name: Create disk space
+      #   if: "${{ matrix.runner == 'ubuntu-latest' }}"
+      #   uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
+      #   with:
+      #     hatchet-protocol: rampage
+      #     witness-carnage: true
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
