@@ -93,12 +93,11 @@
     ];
   };
 
-  # Only accept SSH logins for the primary user from the active LAN. The
-  # source-address rule remains correct when the DHCP-assigned host address changes.
+  # Only accept SSH logins for the primary user from the LAN or Tailscale.
   services.openssh = {
     enable = true;
     extraConfig = ''
-      AllowUsers msfjarvis@10.0.0.0/24
+      AllowUsers msfjarvis@10.0.0.0/24 msfjarvis@100.64.0.0/10 msfjarvis@fd7a:115c:a1e0::/48
     '';
   };
 
