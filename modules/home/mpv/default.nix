@@ -29,7 +29,6 @@ in
               drmSupport = false;
               archiveSupport = false;
               bluraySupport = false;
-              bs2bSupport = false;
               cacaSupport = false;
               cmsSupport = false;
               dvdnavSupport = false;
