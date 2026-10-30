@@ -79,7 +79,6 @@
       "rectangle"
       "sentry-cli"
       "spotify"
-      "tailscale-app"
       "telegram"
       "zed"
       # keep-sorted end
