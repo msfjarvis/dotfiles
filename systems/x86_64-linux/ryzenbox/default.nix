@@ -135,10 +135,7 @@ in
     packages = with pkgs; [
       pkgs.${namespace}.adbear
       age
-      ast-grep
       pkgs.${namespace}.boop-gtk
-      # Has a broken dependency and I don't really need it right now
-      # calibre
       pkgs.${namespace}.cyberdrop-dl
       fclones
       ffmpeg_8-full
@@ -152,20 +149,17 @@ in
       fzf
       pkgs.${namespace}.gdrive
       git-crypt
-      github-copilot-cli
       google-chrome # Hotstar hates Firefox
       # ffmpeg_7-full fails to build: https://hydra.nixos.org/build/319912371/nixlog/2
       # handbrake
       kondo
       maestro
-      pkgs.${namespace}.mediafire_rs
       megatools
       nix-init
       nurl
       obsidian
       pkgs.${namespace}.patreon-dl
       pkgs.${namespace}.pidcat
-      scrcpy
       telegram-desktop
       thunderbird-latest
       unrar
