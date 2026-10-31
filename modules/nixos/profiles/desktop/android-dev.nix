@@ -9,8 +9,6 @@ let
   cfg = config.profiles.${namespace}.desktop;
   defaultJdk = pkgs.zulu25;
   toolchains = [
-    pkgs.zulu11
-    pkgs.zulu17
     defaultJdk
   ];
   # deadnix: skip
