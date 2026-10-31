@@ -156,7 +156,6 @@ in
       google-chrome # Hotstar hates Firefox
       # ffmpeg_7-full fails to build: https://hydra.nixos.org/build/319912371/nixlog/2
       # handbrake
-      pkgs.${namespace}.katbin
       kondo
       maestro
       pkgs.${namespace}.mediafire_rs
