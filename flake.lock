@@ -560,7 +560,7 @@
         "rev": "de6770c33bc78955fbdefc2eb466cbfa06e77d0a",
         "revCount": 1093213,
         "type": "tarball",
-        "url": "https://nix-channels.msfjarvis.dev/nixpkgs/snapshots/sha256-RJDQaG7%2BZgHYg2VM7YlXSPZogLg4SgDZQPl0I5p3YvA%3D.tar.zst?lastModified=315532800&narHash=sha256-RJDQaG7%2BZgHYg2VM7YlXSPZogLg4SgDZQPl0I5p3YvA%3D&rev=de6770c33bc78955fbdefc2eb466cbfa06e77d0a&revCount=1093213"
+        "url": "https://nix-channels.msfjarvis.dev/nixpkgs/snapshots/sha256-RJDQaG7%2BZgHYg2VM7YlXSPZogLg4SgDZQPl0I5p3YvA%3D.tar.zst"
       },
       "original": {
         "type": "tarball",
