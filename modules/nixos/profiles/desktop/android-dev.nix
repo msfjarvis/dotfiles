@@ -60,13 +60,14 @@ in
         );
         settings = {
           "org.gradle.caching" = true;
-          "org.gradle.parallel" = true;
-          "org.gradle.workers.max" = 6;
-          "org.gradle.jvmargs" = "-XX:MaxMetaspaceSize=1G -XX:+UseG1GC -Xms1G -Xmx4G";
+          "org.gradle.parallel" = false;
+          "org.gradle.workers.max" = 2;
+          "org.gradle.jvmargs" = "-XX:MaxMetaspaceSize=768g -XX:+UseG1GC -Xmx3g";
           "org.gradle.java.home" = mapJdk defaultJdk;
           "org.gradle.java.installations.auto-detect" = false;
           "org.gradle.java.installations.auto-download" = false;
           "org.gradle.java.installations.paths" = lib.concatMapStringsSep "," mapJdk toolchains;
+          "kotlin.compiler.execution.strategy" = "in-process";
         };
       };
     };
