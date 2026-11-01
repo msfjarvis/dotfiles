@@ -156,9 +156,11 @@ in
       maestro
       megatools
       nix-init
+      nodejs
       nurl
       obsidian
       pkgs.${namespace}.patreon-dl
+      pkgs.llm-agents.pi
       pkgs.${namespace}.pidcat
       telegram-desktop
       thunderbird-latest
