@@ -3,12 +3,12 @@ caddy.withPlugins {
   plugins = [
     # keep-sorted start
     "github.com/caddyserver/transform-encoder@v0.0.0-20260423033309-ba4124974830"
-    "github.com/greenpau/caddy-security@v0.0.0-20261023222939-15d5f6b01853"
+    "github.com/greenpau/caddy-security@v0.0.0-20261028003341-ffe6f3632e5c"
     "github.com/porech/caddy-maxmind-geolocation@v0.0.0-20250305164927-9066f91c9696"
     "github.com/rsp2k/caddy-gitea-pages@v0.0.0-20250609073252-9bb99965619a"
     "github.com/tailscale/caddy-tailscale@v0.0.0-20260826180304-de41b249af4f"
-    "pkg.jsn.cam/caddy-defender@v0.0.0-20261025041719-c75c981ac347"
+    "pkg.jsn.cam/caddy-defender@v0.0.0-20261101053933-ae1345076020"
     # keep-sorted end
   ];
-  hash = "sha256-TQiwiRGjj/+GSfR2aZNoCU0wd8m9H7pwE3FmDo7utlU=";
+  hash = "sha256-FL5u7Tc5cpzuS97jAxVZGb6xAyCUhkQpls/JJtba5bo=";
 }
