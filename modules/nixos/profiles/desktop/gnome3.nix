@@ -16,8 +16,8 @@ let
   extensionsMap = with pkgs.gnomeExtensions; [
     # Save and restore window positions
     {
-      package = another-window-session-manager;
-      uuid = "another-window-session-manager@gmail.com";
+      package = yet-another-window-session-manager;
+      uuid = "yet-another-window-session-manager@github.com";
     }
     # A nicer application menu for gnome
     {
