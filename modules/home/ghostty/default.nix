@@ -46,7 +46,8 @@ in
             "shift+home=unbind"
           ];
           maximize = true;
-          notify-on-command-finish = "unfocused";
+          # Past me did not realize how annoying this is on Linux
+          notify-on-command-finish = "never";
           notify-on-command-finish-action = "notify";
           palette-generate = true;
           # 512 MB in bytes
