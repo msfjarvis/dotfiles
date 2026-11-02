@@ -32,15 +32,11 @@
     ninja
     nix-output-monitor
     nixd
-    nodejs
     openssh
     openssl
-    pkgs.llm-agents.pi
     pkgs.${namespace}.pidcat
     pnpm
-    pkgs.llm-agents.rtk
     scrcpy
-    pkgs.llm-agents.skills
     yaml-language-server
   ];
   # keep-sorted block end

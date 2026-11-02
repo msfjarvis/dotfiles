@@ -160,7 +160,6 @@ in
       nurl
       obsidian
       pkgs.${namespace}.patreon-dl
-      pkgs.llm-agents.pi
       pkgs.${namespace}.pidcat
       pnpm
       telegram-desktop
