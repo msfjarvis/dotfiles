@@ -1,0 +1,25 @@
+diff --git a/crates/treedb/src/lib.rs b/crates/treedb/src/lib.rs
+--- a/crates/treedb/src/lib.rs
++++ b/crates/treedb/src/lib.rs
+@@ -195,10 +195,12 @@ impl DatabaseManager {
+     pub fn manager(
+         mut self,
+         cancellation_token: CancellationToken,
+-        _task_tracker_token: TaskTrackerToken,
++        task_tracker_token: TaskTrackerToken,
+     ) -> oneshot::Receiver<Result<(), String>> {
+         let (error_tx, error_rx) = oneshot::channel();
+         tokio::spawn(async move {
++            // Keep the database task tracked until its lock has been removed.
++            let task_tracker_token = task_tracker_token;
+             let mut interval = interval(self.flush_every);
+             // If we missed a tick, it will tick immediately, then wait
+             // flush_every for the next tick, resulting in a relaxed interval.
+@@ -247,6 +249,7 @@ impl DatabaseManager {
+                 .await
+                 .map_err(|err| format!("while deleting database lock file: {err}"));
+ 
++            drop(task_tracker_token);
+             let _ = error_tx.send(if let Some(err) = status {
+                 Err(err)
+             } else if close_status.is_err() {
