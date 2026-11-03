@@ -67,6 +67,13 @@ in
             "${lib.getExe git-credential-oauth}"
           ];
         };
+        "https://framagit.com" = {
+          helper = [
+            ""
+            "cache --timeout 21600"
+            "${lib.getExe git-credential-oauth}"
+          ];
+        };
       };
     };
   }
