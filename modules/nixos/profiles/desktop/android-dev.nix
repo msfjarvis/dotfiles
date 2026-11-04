@@ -25,6 +25,7 @@ in
     users.users.msfjarvis.packages = with pkgs; [
       pkgs.${namespace}.adb-sync
       pkgs.${namespace}.adx
+      android-cli
       android-tools
       androidStudioPackages.stable
       androidStudioPackages.beta
