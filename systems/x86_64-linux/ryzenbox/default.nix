@@ -110,6 +110,7 @@ in
     uninstallUnmanaged = true;
     packages = [
       "com.spotify.Client"
+      "be.alexandervanhee.gradia"
       "io.gitlab.news_flash.NewsFlash"
     ];
   };
