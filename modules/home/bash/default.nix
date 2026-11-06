@@ -8,9 +8,9 @@ in
     sessionVariables = {
       COLORTERM = "truecolor";
     };
-    historySize = 1000;
+    historySize = 100000;
     historyFile = "${config.home.homeDirectory}/.bash_history";
-    historyFileSize = 10000;
+    historyFileSize = 1000000;
     historyControl = [
       "erasedups"
       "ignoreboth"
