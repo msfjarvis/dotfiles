@@ -36,7 +36,11 @@ jobs:
           mapfile -t configurations < <(nix eval --json '.#nixosConfigurations' --apply 'builtins.attrNames' | jq -r '.[]')
           for configuration in "${configurations[@]}"; do
             system=$(nix eval --raw ".#nixosConfigurations.${configuration}.config.nixpkgs.system")
-            current_system=$(nix eval --raw --expr builtins.currentSystem)
+            case "$(uname -m)" in
+              x86_64) current_system=x86_64-linux ;;
+              aarch64) current_system=aarch64-linux ;;
+              *) echo "Unsupported runner architecture: $(uname -m)" >&2; exit 1 ;;
+            esac
             if [[ "$system" != "$current_system" ]]; then
               echo "Skipping $configuration ($system; runner is $current_system)"
               continue
