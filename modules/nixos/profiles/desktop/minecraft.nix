@@ -11,25 +11,20 @@ let
   cfg = config.profiles.${namespace}.desktop.gaming;
   homeDir = config.users.users.msfjarvis.home;
   vanillaInstances = [
-    "CraftMine"
   ];
   moddedInstances = [
-    "Big Globe"
-    "Fabulously.Optimized.1.21.3"
-    "Fabulously.Optimized.1.21.4"
-    "Fabulously.Optimized.1.21.5"
-    "Fabulously.Optimized.1.21.7"
     "Fabulously.Optimized.1.21.11"
+    "Fabulously.Optimized.26.3"
   ];
   minecraftInstances = vanillaInstances ++ moddedInstances;
   backupInstances = [
     "Fabulously.Optimized.1.21.11"
+    "Fabulously.Optimized.26.3"
   ];
   instancePath = name: "${homeDir}/Games/PrismLauncher/instances/${name}";
   prismLauncher = pkgs.prismlauncher.override {
     jdks = with pkgs; [
       zulu25
-      zulu17
     ];
   };
 in
@@ -82,7 +77,6 @@ in
       sources =
         (forEach moddedInstances (name: "${instancePath name}/.minecraft/screenshots"))
         ++ (forEach vanillaInstances (name: "${instancePath name}/minecraft/screenshots"));
-
     };
   };
 }
