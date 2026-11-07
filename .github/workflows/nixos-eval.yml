@@ -1,0 +1,27 @@
+name: Evaluate NixOS configurations
+on:
+  push:
+    branches:
+      - "renovate/*"
+permissions: {}
+jobs:
+  eval:
+    name: Evaluate NixOS configurations
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Nix
+        uses: cachix/install-nix-action@f0fe604f8a4de2d8d7d1e69d5b3c2c1bb40f63b # v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Evaluate NixOS configurations
+        shell: bash
+        run: |
+          mapfile -t configurations < <(nix eval --json '.#nixosConfigurations' --apply 'builtins.attrNames' | jq -r '.[]')
+          for configuration in "${configurations[@]}"; do
+            echo "Evaluating $configuration"
+            nix eval ".#nixosConfigurations.${configuration}.config.system.build.toplevel.drvPath"
+          done
