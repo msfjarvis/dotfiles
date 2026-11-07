@@ -80,7 +80,7 @@
             }
             {
               type = "weather";
-              location = "Bengaluru, India";
+              location = "Ghaziabad, India";
             }
             {
               type = "releases";
