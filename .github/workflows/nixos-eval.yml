@@ -7,7 +7,13 @@ permissions: {}
 jobs:
   eval:
     name: Evaluate NixOS configurations
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-latest
+          - runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -29,6 +35,12 @@ jobs:
         run: |
           mapfile -t configurations < <(nix eval --json '.#nixosConfigurations' --apply 'builtins.attrNames' | jq -r '.[]')
           for configuration in "${configurations[@]}"; do
+            system=$(nix eval --raw ".#nixosConfigurations.${configuration}.config.nixpkgs.system")
+            current_system=$(nix eval --raw --expr builtins.currentSystem)
+            if [[ "$system" != "$current_system" ]]; then
+              echo "Skipping $configuration ($system; runner is $current_system)"
+              continue
+            fi
             echo "Evaluating $configuration"
             nix eval ".#nixosConfigurations.${configuration}.config.system.build.toplevel.drvPath"
           done
