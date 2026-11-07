@@ -32,25 +32,8 @@
               ];
             }
             {
-              type = "group";
-              widgets = [
-                {
-                  type = "reddit";
-                  subreddit = "hermitcraft";
-                  style = "vertical-list";
-                  show-thumbnails = true;
-                  sort-by = "top";
-                  top-period = "day";
-                }
-                {
-                  type = "reddit";
-                  subreddit = "hermitcraftmemes";
-                  style = "vertical-list";
-                  show-thumbnails = true;
-                  sort-by = "top";
-                  top-period = "week";
-                }
-              ];
+              type = "hacker-news";
+              sort-by = "top";
             }
             {
               type = "videos";
@@ -118,18 +101,42 @@
           widgets = [
             { type = "calendar"; }
             {
-              type = "twitch-channels";
+              type = "markets";
               cache = "1m";
               collapse-after = 10;
-              channels = [
-                "atrioc"
-                "couriway"
-                "feinberg"
-                "geega"
-                "kqsii"
-                "laynalazar"
-                "mintcastella"
-                "projektmelody"
+              markets = [
+                {
+                	symbol = "NET";
+                	name = "Cloudflare";
+                }
+                {
+                	symbol = "NSE.BO";
+                	name = "National Stock Exchange";
+                }
+                {
+                	symbol = "BSE.NS";
+                	name = "BSE";
+                }
+                {
+                	symbol = "JIOFIN.BO";
+                	name = "Jio Finance";
+                }
+                {
+                	symbol = "JPL.BO";
+                	name = "Jio Platforms";
+                }
+                {
+                	symbol = "TATACAP.BO";
+                	name = "Tata Capital";
+                }
+                {
+                	symbol = "TATAPOWER.BO";
+                	name = "Tata Power";
+                }
+                {
+                	symbol = "TATASTEEL.BO";
+                	name = "Tata Steel";
+                }
               ];
             }
           ];

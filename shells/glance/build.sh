@@ -4,7 +4,7 @@ EXPR="
 let
   pkgs = import <nixpkgs> { };
   settingsFormat = pkgs.formats.yaml { };
-  settingsFile = settingsFormat.generate \"glance.yaml\" (import ./${1:?} { port = 8080; tailnetDomain = \"google.doccy.ts.net\"; });
+  settingsFile = settingsFormat.generate \"glance.yaml\" (import ./${1:?} { port = 8080; tailnetDomain = \"tiger-shark.ts.net\"; });
 in
 \"\${settingsFile}\"
 "

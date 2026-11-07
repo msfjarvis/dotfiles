@@ -18,7 +18,7 @@ pkgs.devshell.mkShell {
       category = "development";
       help = "Run a Glance server with an automatically updating config";
       command = ''
-        ${getExe pkgs.watchexec} -r -w "${glanceConf}" -- "./shells/glance/build.sh ${glanceConf}"
+        ${getExe pkgs.watchexec} -r -w "${glanceConf}" -w "shells/glance/" -- "./shells/glance/build.sh ${glanceConf}"
       '';
     }
   ];
