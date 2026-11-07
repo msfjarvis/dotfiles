@@ -9,12 +9,19 @@ let
   cfg = config.services.${namespace}.glance;
   settingsFormat = pkgs.formats.yaml { };
   settingsFile = settingsFormat.generate "glance.yaml" cfg.settings;
+  configFile =
+    if cfg.checkConfig then
+      pkgs.runCommand "glance-validated.yaml" { } ''
+        cp ${settingsFile} "$out"
+        ${lib.getExe cfg.package} -config "$out" config:validate
+      ''
+    else
+      settingsFile;
   inherit (lib)
     mkEnableOption
     mkIf
     mkOption
     mkPackageOption
-    optionalString
     types
     ;
   inherit (lib.${namespace}) mkTailscaleVHost ports;
@@ -247,19 +254,9 @@ in
         RestartSec = "30s";
         Type = "simple";
       };
-      script =
-        let
-          configFile = pkgs.writeTextFile {
-            name = "glance.yaml";
-            text = builtins.readFile settingsFile;
-            checkPhase = optionalString cfg.checkConfig ''
-              ${lib.getExe cfg.package} -config ${settingsFile} config:validate
-            '';
-          };
-        in
-        ''
-          ${lib.getExe cfg.package} -config ${configFile}
-        '';
+      script = ''
+        ${lib.getExe cfg.package} -config ${configFile}
+      '';
     };
 
     users.users = mkIf (cfg.user == "glance") {

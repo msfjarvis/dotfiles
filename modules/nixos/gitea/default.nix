@@ -115,12 +115,7 @@ in
           DEFAULT_UI_LOCATION = "Asia/Kolkata";
         };
         ui = {
-          THEMES = builtins.concatStringsSep "," (
-            [ "auto" ]
-            ++ (map (name: lib.removePrefix "theme-" (lib.removeSuffix ".css" name)) (
-              builtins.attrNames (builtins.readDir "${pkgs.${namespace}.catppuccin-gitea}")
-            ))
-          );
+          THEMES = builtins.concatStringsSep "," ([ "auto" ] ++ pkgs.${namespace}.catppuccin-gitea.themes);
           DEFAULT_THEME = "catppuccin-mocha-mauve";
           DEFAULT_SHOW_FULL_NAME = true;
         };
