@@ -78,7 +78,7 @@ jobs:
         shell: bash
         env:
           ATTRIBUTE: ${{ matrix.attribute }}
-        run: nix build --print-build-logs ".#${ATTRIBUTE}"
+        run: nix build --print-build-logs --option max-jobs "$(($(nproc || sysctl -n hw.logicalcpu || echo 1) / 2))" ".#${ATTRIBUTE}"
       - name: Push to attic cache
         shell: bash
         run: |
