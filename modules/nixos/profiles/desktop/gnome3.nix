@@ -24,16 +24,6 @@ let
       package = arcmenu;
       uuid = "arcmenu@arcmenu.com";
     }
-    # KDEConnect port
-    {
-      package = gsconnect;
-      uuid = "gsconnect@andyholmes.github.io";
-    }
-    # Tailscale
-    {
-      package = tailscale-qs;
-      uuid = "tailscale@joaophi.github.com";
-    }
     # Better tiling controls
     {
       package = tiling-shell;
