@@ -19,7 +19,7 @@
     spotify.enable = false;
     zed = {
       enable = true;
-      package = pkgs.zed-editor.fhsWithPackages (pkgs: with pkgs; [ nixd ]);
+      package = pkgs.zed-editor.fhs;
       extensions = [
         "basher"
         "catppuccin"
