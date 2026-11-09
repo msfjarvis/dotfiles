@@ -106,36 +106,36 @@
               collapse-after = 10;
               markets = [
                 {
-                	symbol = "NET";
-                	name = "Cloudflare";
+                  symbol = "NET";
+                  name = "Cloudflare";
                 }
                 {
-                	symbol = "NSE.BO";
-                	name = "National Stock Exchange";
+                  symbol = "NSE.BO";
+                  name = "National Stock Exchange";
                 }
                 {
-                	symbol = "BSE.NS";
-                	name = "BSE";
+                  symbol = "BSE.NS";
+                  name = "BSE";
                 }
                 {
-                	symbol = "JIOFIN.BO";
-                	name = "Jio Finance";
+                  symbol = "JIOFIN.BO";
+                  name = "Jio Finance";
                 }
                 {
-                	symbol = "JPL.BO";
-                	name = "Jio Platforms";
+                  symbol = "JPL.BO";
+                  name = "Jio Platforms";
                 }
                 {
-                	symbol = "TATACAP.BO";
-                	name = "Tata Capital";
+                  symbol = "TATACAP.BO";
+                  name = "Tata Capital";
                 }
                 {
-                	symbol = "TATAPOWER.BO";
-                	name = "Tata Power";
+                  symbol = "TATAPOWER.BO";
+                  name = "Tata Power";
                 }
                 {
-                	symbol = "TATASTEEL.BO";
-                	name = "Tata Steel";
+                  symbol = "TATASTEEL.BO";
+                  name = "Tata Steel";
                 }
               ];
             }
