@@ -22,42 +22,6 @@
       name = "Home";
       columns = [
         {
-          size = "full";
-          widgets = [
-            {
-              type = "lobsters";
-              sort-by = "hot";
-              exclude-tags = [
-                "vibecoding"
-              ];
-            }
-            {
-              type = "hacker-news";
-              sort-by = "top";
-            }
-            {
-              type = "videos";
-              cache = "15m";
-              channels = [
-                # Big A Clips
-                "UCdBXOyqr8cDshsp7kcKDAkg"
-                # Cheese Sculptor
-                "UC9Y5-WWYvn16YPO5XW7Nggg"
-                # Daily Geega
-                "UCNEl_8oA7qCFd1zgrnjjHtA"
-                # Geega
-                "UCUERxnZSjCq-G7OfYL7Nukg"
-                # H and Mr. H
-                "UC4_thIY2puJtQdc0vf8nxhQ"
-                # Hologatari
-                "UCEBVn6em4yXPL8X_tJHAgBA"
-                # Rabbit Hole
-                "UCdwths-Q8lcuF7wJwVWsC9g"
-              ];
-            }
-          ];
-        }
-        {
           size = "small";
           widgets = [
             {
@@ -97,9 +61,85 @@
           ];
         }
         {
+          size = "full";
+          widgets = [
+            {
+              type = "split-column";
+              widgets = [
+                {
+                  type = "lobsters";
+                  sort-by = "hot";
+                  exclude-tags = [
+                    "vibecoding"
+                  ];
+                }
+                {
+                  type = "hacker-news";
+                  sort-by = "top";
+                }
+              ];
+            }
+            {
+              type = "videos";
+              cache = "15m";
+              channels = [
+                # Big A Clips
+                "UCdBXOyqr8cDshsp7kcKDAkg"
+                # Cheese Sculptor
+                "UC9Y5-WWYvn16YPO5XW7Nggg"
+                # Daily Geega
+                "UCNEl_8oA7qCFd1zgrnjjHtA"
+                # Geega
+                "UCUERxnZSjCq-G7OfYL7Nukg"
+                # H and Mr. H
+                "UC4_thIY2puJtQdc0vf8nxhQ"
+                # Hologatari
+                "UCEBVn6em4yXPL8X_tJHAgBA"
+                # Rabbit Hole
+                "UCdwths-Q8lcuF7wJwVWsC9g"
+              ];
+            }
+            {
+              type = "split-column";
+              widgets = [
+                {
+                  type = "custom-api";
+                  title = "Steam Discounts";
+                  cache = "12h";
+                  url = "https://store.steampowered.com/api/featuredcategories?cc=us";
+                  template = ''
+                    <ul class="list list-gap-10 collapsible-container" data-collapse-after="5">
+                    {{ range .JSON.Array "specials.items" }}
+                      <li>
+                        <a class="size-h4 color-highlight block text-truncate" href="https://store.steampowered.com/app/{{ .Int "id" }}/">{{ .String "name" }}</a>
+                        <ul class="list-horizontal-text">
+                          <li>{{ div (.Int "final_price" | toFloat) 100 | printf "$%.2f" }}</li>
+                          {{ $discount := .Int "discount_percent" }}
+                          <li{{ if ge $discount 40 }} class="color-positive"{{ end }}>{{ $discount }}% off</li>
+                        </ul>
+                      </li>
+                    {{ end }}
+                    </ul>
+                  '';
+                }
+                {
+                  type = "custom-api";
+                  title = "Useless Fact";
+                  cache = "12h";
+                  url = "https://uselessfacts.jsph.pl/api/v2/facts/random";
+                  template = ''<p class="size-h4 color-paragraph">{{ .JSON.String "text" }}</p>'';
+                }
+              ];
+            }
+          ];
+        }
+        {
           size = "small";
           widgets = [
             { type = "calendar"; }
+            {
+              type = "to-do";
+            }
             {
               type = "markets";
               cache = "1m";
