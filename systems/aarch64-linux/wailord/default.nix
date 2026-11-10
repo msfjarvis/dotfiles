@@ -228,7 +228,7 @@ in
 
   virtualisation.oci-containers.containers = {
     metube = {
-      image = "ghcr.io/alexta69/metube:2026.11.06";
+      image = "ghcr.io/alexta69/metube:2026.11.10";
       ports = [ "127.0.0.1:${toString ports.metube}:8081" ];
       volumes = [ "/var/lib/metube:/downloads" ];
     };
