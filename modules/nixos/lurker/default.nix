@@ -119,7 +119,7 @@ in
       };
 
       virtualisation.oci-containers.containers.lurker-previews = {
-        image = "ghcr.io/amiantos/lurker-previews:0.2.2";
+        image = "ghcr.io/amiantos/lurker-previews:0.2.3";
         autoStart = true;
         # No network-layer private-address filtering is configured here. The
         # decoder's URL SSRF guard remains active, but cannot contain an RCE.
