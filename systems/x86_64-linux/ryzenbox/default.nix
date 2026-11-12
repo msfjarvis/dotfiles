@@ -86,7 +86,7 @@ in
 
   programs.firejail =
     let
-      vesktopPkg = pkgs.vesktop.override { withSystemVencord = true; };
+      vesktopPkg = pkgs.vesktop.override { withSystemVencord = false; };
     in
     {
       enable = true;
