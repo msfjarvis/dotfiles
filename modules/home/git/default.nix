@@ -8,6 +8,11 @@
 let
   notServer = !config.profiles.${namespace}.starship.server;
   inherit (pkgs) git-credential-oauth;
+  storageHelper =
+    if pkgs.stdenv.hostPlatform.isLinux then
+      lib.getExe pkgs.oo7-git-credential
+    else
+      "cache --timeout 21600";
 in
 {
   home.packages = [
@@ -57,20 +62,20 @@ in
     // lib.attrsets.optionalAttrs notServer {
       credential = {
         helper = [
-          "cache --timeout 21600"
+          storageHelper
           "${lib.getExe git-credential-oauth}"
         ];
         "https://github.com" = {
           helper = [
             ""
-            "cache --timeout 21600"
+            storageHelper
             "${lib.getExe git-credential-oauth}"
           ];
         };
         "https://framagit.com" = {
           helper = [
             ""
-            "cache --timeout 21600"
+            storageHelper
             "${lib.getExe git-credential-oauth}"
           ];
         };
