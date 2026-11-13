@@ -57,6 +57,7 @@ in
             autofit = "100%";
             window-maximized = "yes";
             hwdec = "nvdec";
+            keep-open = "no";
           };
         };
       }
