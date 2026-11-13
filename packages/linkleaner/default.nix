@@ -1,6 +1,8 @@
 {
   fetchFromGitHub,
   rustPlatform,
+  pkg-config,
+  aws-lc,
   lib,
 }:
 let
@@ -20,6 +22,9 @@ rustPlatform.buildRustPackage {
   cargoHash = "sha256-H2L0T7vlPkuBevxlcHV1YeFFMYtVhzPkEaWLQT1tOU8=";
 
   useNextest = true;
+
+  nativeBuildInputs = [ pkg-config ];
+  buildInputs = [ aws-lc ];
 
   meta = with lib; {
     description = "A Telegram bot with an identity crisis";
