@@ -60,7 +60,7 @@ in
 
   services.${namespace} = {
     alps = {
-      enable = true;
+      enable = false;
       domain = "mail";
     };
 
@@ -101,6 +101,11 @@ in
     phanpy = {
       enable = true;
       domain = "fedi.msfjarvis.dev";
+    };
+
+    pl-mail = {
+      enable = true;
+      domain = "mail";
     };
 
     postgres = {
