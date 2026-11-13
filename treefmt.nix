@@ -12,9 +12,6 @@ in
   package = pkgs.treefmt;
 
   # keep-sorted block start
-  programs.actionlint = {
-    enable = true;
-  };
   programs.black = {
     enable = true;
   };
@@ -47,6 +44,9 @@ in
     enable = true;
   };
   programs.yamlfmt = {
+    enable = true;
+  };
+  programs.zizmor = {
     enable = true;
   };
   # keep-sorted block end
