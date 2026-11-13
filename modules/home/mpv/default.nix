@@ -23,7 +23,7 @@ in
           package = pkgs.mpv.override {
             mpv-unwrapped = pkgs.mpv-unwrapped.override {
               waylandSupport = true;
-              x11Support = false;
+              x11Support = true; # libGL doesn't get included without this
               cddaSupport = false;
               vulkanSupport = false;
               drmSupport = false;
