@@ -1,6 +1,6 @@
 # plMail deployment
 
-The upstream all-in-one image runs the web server, workers, scheduler and Mercure in one container. PostgreSQL runs natively. The container runs as the host `plmail` user and connects directly to the mounted PostgreSQL Unix socket with peer authentication; no database TCP listener or proxy is required. The OCI backend must not remap the container UID to a different host UID. PostgreSQL must listen on its usual `/run/postgresql` socket and permit peer authentication for `plmail`.
+The upstream all-in-one image runs the web server, workers, scheduler and Mercure in one container. PostgreSQL runs natively. The container runs as the host `plmail` user and connects directly to the mounted PostgreSQL Unix socket with peer authentication; no database TCP listener or proxy is required. The OCI backend must not remap the container UID to a different host UID. PostgreSQL must listen on its usual `/run/postgresql` socket and permit peer authentication for `plmail`. A PostgreSQL-superuser oneshot installs the `vector` extension in the `plmail` database before the container starts; the application database role remains unprivileged.
 
 The HTTP port is loopback-only and Caddy exposes it over Tailscale. Port 9034 is the next free singleton service port in `lib/ports.nix`. This private endpoint cannot receive external provider webhooks; upstream falls back to polling. Create the first administrator promptly after enabling the service.
 

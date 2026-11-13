@@ -57,6 +57,7 @@ in
     services.postgresql = {
       enable = true;
       ensureDatabases = [ "plmail" ];
+      extensions = extensions: [ extensions.pgvector ];
       ensureUsers = [
         {
           name = "plmail";
@@ -70,9 +71,28 @@ in
     };
     users.groups.plmail = { };
 
+    # plMail detects available pgvector files and tries to create the extension,
+    # which requires a superuser. Install it before the unprivileged app starts.
+    systemd.services.pl-mail-postgresql = {
+      description = "Install plMail PostgreSQL extension";
+      requires = [ "postgresql-setup.service" ];
+      after = [ "postgresql-setup.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        User = "postgres";
+        Group = "postgres";
+        RemainAfterExit = true;
+      };
+      path = [ config.services.postgresql.finalPackage ];
+      environment.PGPORT = toString config.services.postgresql.settings.port;
+      script = ''
+        psql -X -v ON_ERROR_STOP=1 -d plmail -c 'CREATE EXTENSION IF NOT EXISTS vector'
+      '';
+    };
+
     systemd.services."${backend}-pl-mail" = {
-      requires = [ "postgresql.service" ];
-      after = [ "postgresql.service" ];
+      requires = [ "pl-mail-postgresql.service" ];
+      after = [ "pl-mail-postgresql.service" ];
       path = lib.mkBefore [ containerRuntime ];
     };
 
