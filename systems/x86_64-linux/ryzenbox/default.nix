@@ -135,9 +135,7 @@ in
     packages = with pkgs; [
       pkgs.${namespace}.adbear
       age
-      pkgs.${namespace}.boop-gtk
       pkgs.${namespace}.cyberdrop-dl
-      fclones
       ffmpeg_8-full
       (firefox-nightly-bin.override {
         cfg = {
@@ -145,7 +143,6 @@ in
           pipewireSupport = true;
         };
       })
-      forge-sparks
       fzf
       pkgs.${namespace}.gdrive
       git-crypt
@@ -155,9 +152,7 @@ in
       kondo
       maestro
       megatools
-      nix-init
       nodejs
-      nurl
       obsidian
       pkgs.${namespace}.patreon-dl
       pkgs.${namespace}.pidcat
