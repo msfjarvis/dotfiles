@@ -7,7 +7,6 @@
 
   profiles.${namespace} = {
     ghostty.enable = true;
-    opencode.enable = false;
     pi.enable = true;
   };
 

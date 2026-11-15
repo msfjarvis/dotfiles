@@ -15,7 +15,6 @@ _: prev: {
       inherit (llmPackages)
         herdr
         mcporter
-        opencode
         rtk
         skills
         ;
