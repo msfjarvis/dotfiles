@@ -39,6 +39,12 @@ in
     gallery-dl.enable = true;
   };
 
+  boot.kernelPackages = pkgs.linuxPackages;
+  boot.kernel.sysctl = {
+    "kernel.panic_on_oops" = 1;
+    "kernel.panic" = 10;
+  };
+
   # Only enable for first installation
   # boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot = {
