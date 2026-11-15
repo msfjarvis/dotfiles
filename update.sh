@@ -30,7 +30,8 @@ declare -a ALL_PACKAGES=(
   healthchecks-monitor
   katbin
   linkleaner
-  markfmt
+  # No idea why this doesn't like the update script
+  # markfmt
   mediafire_rs
   patreon-dl
   phanpy
