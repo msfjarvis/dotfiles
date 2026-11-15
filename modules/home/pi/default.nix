@@ -22,6 +22,7 @@ in
       nodejs_latest
       pkgs.llm-agents.rtk
       pkgs.llm-agents.skills
+      pkgs.${namespace}.markfmt
     ];
 
     programs.pi-coding-agent = {

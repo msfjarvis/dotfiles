@@ -152,7 +152,6 @@ in
       kondo
       maestro
       megatools
-      nodejs
       obsidian
       pkgs.${namespace}.patreon-dl
       pkgs.${namespace}.pidcat
