@@ -23,6 +23,7 @@ NixOS packages for personal use.
 - [healthchecks-monitor]: CLI tool to run commands and report its result to https://healthchecks.io
 - [katbin] : A CLI for [katb.in]
 - [linkleaner] : Telegram bot to fix social media link previews
+- [markfmt] : Fast, standalone formatter for Markdown, Markdeep, and AI agent instruction/skill files (AGENTS.md, SKILL.md, etc)
 - [mediafire_rs] : Downloader for Mediafire folders
 - [patreon-dl] : Download content from creators you're subscribed to on Patreon
 - [phanpy] : Alternate Mastodon client
@@ -55,6 +56,7 @@ NixOS packages for personal use.
 [katb.in]: https://katb.in
 [katbin]: https://github.com/SphericalKat/katbin-cli
 [linkleaner]: https://msfjarvis.dev/g/linkleaner
+[markfmt]: https://github.com/tnorbye/markfmt
 [mediafire_rs]: https://github.com/nickoehler/mediafire_rs
 [patreon-dl]: https://github.com/PrivateGER/patreon-dl
 [phanpy]: https://github.com/cheeaun/phanpy

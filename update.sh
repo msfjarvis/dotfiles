@@ -30,6 +30,7 @@ declare -a ALL_PACKAGES=(
   healthchecks-monitor
   katbin
   linkleaner
+  markfmt
   mediafire_rs
   patreon-dl
   phanpy
