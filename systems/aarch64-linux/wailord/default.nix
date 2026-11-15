@@ -61,16 +61,6 @@ in
     megatools
   ];
 
-  services.atuin = {
-    enable = false;
-    openRegistration = false;
-    path = "";
-    host = "127.0.0.1";
-    port = ports.atuin;
-    openFirewall = false;
-    database.createLocally = true;
-  };
-
   services.caddy = {
     enable = true;
     applyDefaults = true;
@@ -91,9 +81,6 @@ in
         '';
       };
     }
-    // (mkTailscaleVHost "atuin" ''
-      reverse_proxy 127.0.0.1:${toString ports.atuin}
-    '')
     // (mkTailscaleVHost "metube" ''
       reverse_proxy 127.0.0.1:${toString ports.metube}
     '');
