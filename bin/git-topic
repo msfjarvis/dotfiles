@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+printf 'hshandilya.%s-%s\n' "$(date +"%F")" "${1:?usage: git topic <name>}"

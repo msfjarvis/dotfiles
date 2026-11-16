@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+branch=$(git branch | fzf | tr -d '*[:space:]') || exit
+[[ -n $branch ]] && exec git switch "$branch"

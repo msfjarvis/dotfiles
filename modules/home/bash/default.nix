@@ -31,6 +31,7 @@ in
       "checkjobs"
     ];
     bashrcExtra = ''
+      export PATH="${config.home.homeDirectory}/git-repos/dotfiles/bin:$PATH"
       # Load completions from system
       if [ -f /usr/share/bash-completion/bash_completion ]; then
         . /usr/share/bash-completion/bash_completion

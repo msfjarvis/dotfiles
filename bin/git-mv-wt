@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+main=$(git worktree list --porcelain | awk '/^worktree / {print substr($0,10); exit}')
+pick=$(git worktree list --porcelain | awk -v main="$main" '/^worktree / {p=substr($0,10)} /^branch refs\/heads\// && p != main {b=$0; sub(/^branch refs\/heads\//,"",b); print b "\t" p}' | fzf --delimiter="$(printf "\t")" --with-nth=1) || exit
+b=$(printf '%s\n' "$pick" | cut -f1)
+p=$(printf '%s\n' "$pick" | cut -f2-)
+git worktree remove "$p" && git switch "$b"

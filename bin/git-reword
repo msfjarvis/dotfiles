@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+EDITOR='sed -i -re s/^pick/e/' git rebase -i "$@" || exit
+while test -f .git/rebase-merge/interactive; do
+  git commit --amend && git rebase --continue || exit
+ done

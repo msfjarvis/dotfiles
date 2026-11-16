@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -e
+current=$(git branch --show-current)
+git checkout main
+git merge "$current"
+git branch -d "$current"
