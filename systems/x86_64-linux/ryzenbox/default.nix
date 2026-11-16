@@ -75,6 +75,7 @@ in
   # Enable networking
   networking = {
     hostName = "ryzenbox";
+    networkmanager.wifi.powersave = false;
     nftables.enable = true;
     # KDEConnect needs these ports
     firewall = {
