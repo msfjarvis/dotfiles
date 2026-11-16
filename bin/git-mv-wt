@@ -1,6 +1,49 @@
 #!/usr/bin/env bash
-main=$(git worktree list --porcelain | awk '/^worktree / {print substr($0,10); exit}')
-pick=$(git worktree list --porcelain | awk -v main="$main" '/^worktree / {p=substr($0,10)} /^branch refs\/heads\// && p != main {b=$0; sub(/^branch refs\/heads\//,"",b); print b "\t" p}' | fzf --delimiter="$(printf "\t")" --with-nth=1) || exit
-b=$(printf '%s\n' "$pick" | cut -f1)
-p=$(printf '%s\n' "$pick" | cut -f2-)
-git worktree remove "$p" && git switch "$b"
+set -euo pipefail
+
+current=$(git rev-parse --show-toplevel)
+worktrees=$(git worktree list --porcelain)
+main=
+while IFS= read -r line; do
+  if [[ $line == worktree\ * ]]; then
+    main=${line#worktree }
+    break
+  fi
+done <<< "$worktrees"
+
+if [[ $(cd "$current" && pwd -P) == $(cd "$main" && pwd -P) ]]; then
+  echo 'git mv-wt cannot be run from the main worktree' >&2
+  exit 1
+fi
+
+choices=
+path=
+while IFS= read -r line; do
+  case $line in
+    worktree\ *) path=${line#worktree } ;;
+    branch\ refs/heads/*)
+      branch=${line#branch refs/heads/}
+      if [[ $path != "$main" ]]; then
+        choices+="$branch"$'\t'"$path"$'\n'
+      fi
+      ;;
+  esac
+done <<< "$worktrees"
+choices=${choices%$'\n'}
+
+if [[ -z $choices ]]; then
+  echo 'No removable worktrees found' >&2
+  exit 1
+fi
+
+pick=$(printf '%s\n' "$choices" | fzf --delimiter="$(printf '\t')" --with-nth=1) || exit
+branch=${pick%%$'\t'*}
+path=${pick#*$'\t'}
+
+git worktree remove "$path"
+# Git may leave the directory behind when it cannot remove all contents.
+if [[ -d $path ]]; then
+  rm -rf -- "$path"
+fi
+git worktree prune
+git switch "$branch"
