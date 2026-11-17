@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-current=$(git rev-parse --show-toplevel)
 worktrees=$(git worktree list --porcelain)
 main=
 while IFS= read -r line; do
@@ -10,11 +9,6 @@ while IFS= read -r line; do
     break
   fi
 done <<< "$worktrees"
-
-if [[ $(cd "$current" && pwd -P) == $(cd "$main" && pwd -P) ]]; then
-  echo 'git mv-wt cannot be run from the main worktree' >&2
-  exit 1
-fi
 
 choices=
 path=
@@ -39,6 +33,12 @@ fi
 pick=$(printf '%s\n' "$choices" | fzf --delimiter="$(printf '\t')" --with-nth=1) || exit
 branch=${pick%%$'\t'*}
 path=${pick#*$'\t'}
+
+# Never remove the default (first-listed) worktree, even if selection data is malformed.
+if [[ $(cd "$path" && pwd -P) == $(cd "$main" && pwd -P) ]]; then
+  echo 'git mv-wt cannot remove the default worktree' >&2
+  exit 1
+fi
 
 git worktree remove "$path"
 # Git may leave the directory behind when it cannot remove all contents.
