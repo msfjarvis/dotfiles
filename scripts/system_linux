@@ -43,6 +43,51 @@ function clrclip_x() {
   echo ' ' | xclip
 }
 
+function waitfor() {
+  if [ "$#" -ne 1 ] || [ -z "$1" ]; then
+    echo "Usage: waitfor <process-name>" >&2
+    return 2
+  fi
+
+  local pattern processes status answer
+  # pgrep uses extended regular expressions; treat the supplied name literally.
+  pattern="$(printf '%s\n' "$1" | sed 's/[][\\.^$*+?(){}|]/\\&/g')"
+  if processes="$(pgrep -a -- "${pattern}")"; then
+    printf 'Matching processes:\n%s\n' "${processes}"
+  else
+    status=$?
+    if [ "${status}" -eq 1 ]; then
+      echo "No processes found named '$1'; not shutting down." >&2
+    else
+      echo "Process lookup failed; not shutting down." >&2
+    fi
+    return "${status}"
+  fi
+
+  read -r -p 'Wait for these processes and shut down? [y/N] ' answer || return 1
+  case "${answer}" in
+  y | Y | yes | YES) ;;
+  *)
+    echo 'Cancelled.'
+    return 1
+    ;;
+  esac
+
+  while :; do
+    if pgrep -- "${pattern}" >/dev/null; then
+      sleep 5 || return
+    else
+      status=$?
+      if [ "${status}" -eq 1 ]; then
+        shutdown -h now
+        return $?
+      fi
+      echo 'Process lookup failed; not shutting down.' >&2
+      return "${status}"
+    fi
+  done
+}
+
 function vpnup() {
   local DEVICE
   DEVICE="${1:-wailord}"
