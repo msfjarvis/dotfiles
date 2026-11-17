@@ -64,7 +64,8 @@ in
       repository = "rest:https://restic-wailord.${tailnetDomain}/";
       passwordFile = config.sops.secrets.restic_repo_password.path;
 
-      paths = forEach backupInstances instancePath;
+      paths = backupInstances;
+      extraBackupArgs = [ "--tag prism-instances" ];
 
       pruneOpts = [
         "--keep-daily 2"
@@ -72,6 +73,9 @@ in
         "--keep-monthly 1"
       ];
     };
+
+    systemd.services.restic-backups-minecraft.serviceConfig.WorkingDirectory =
+      "${homeDir}/Games/PrismLauncher/instances";
 
     services.${namespace}.rucksack = {
       sources =
