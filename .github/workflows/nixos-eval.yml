@@ -35,7 +35,7 @@ jobs:
         run: |
           mapfile -t configurations < <(nix eval --json '.#nixosConfigurations' --apply 'builtins.attrNames' | jq -r '.[]')
           for configuration in "${configurations[@]}"; do
-            system=$(nix eval --raw ".#nixosConfigurations.${configuration}.config.nixpkgs.system")
+            system=$(nix eval --raw ".#nixosConfigurations.${configuration}.pkgs.stdenv.hostPlatform.system")
             case "$(uname -m)" in
               x86_64) current_system=x86_64-linux ;;
               aarch64) current_system=aarch64-linux ;;
