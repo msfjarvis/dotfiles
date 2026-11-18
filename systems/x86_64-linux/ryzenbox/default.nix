@@ -184,6 +184,8 @@ in
   services.ddccontrol.enable = true;
 
   services.udev.extraRules = ''
+    # Prefer NVIDIA for GNOME even if the BIOS selects the AMD GPU as boot VGA
+    SUBSYSTEM=="drm", ENV{DEVTYPE}=="drm_minor", ENV{DEVNAME}=="/dev/dri/card[0-9]", SUBSYSTEMS=="pci", ATTRS{vendor}=="0x10de", ATTRS{device}=="0x2782", TAG+="mutter-device-preferred-primary"
     # Disable the in-built Bluetooth adapter
     SUBSYSTEM=="usb", ATTRS{idVendor}=="0e8d", ATTRS{idProduct}=="0616", ATTR{authorized}="0"
     # Allow access to the CoryDora macropad
