@@ -1,7 +1,7 @@
 {
   lib,
   python3,
-  fetchFromCodeberg,
+  fetchFromForgejo,
 }:
 
 python3.pkgs.buildPythonApplication (finalAttrs: {
@@ -9,8 +9,9 @@ python3.pkgs.buildPythonApplication (finalAttrs: {
   version = "1.32.20-unstable-2026-11-16";
   pyproject = true;
 
-  src = fetchFromCodeberg {
-    owner = "mikf";
+  src = fetchFromForgejo {
+    domain = "git.msfjarvis.dev";
+    owner = "msfjarvis";
     repo = "gallery-dl";
     rev = "0d6394420d838a92bad8abd4314103a94a222029";
     hash = "sha256-h0doOltPTkokecxtw/WOxXCe/LBmmUhdE5bmVkoeV6k=";
