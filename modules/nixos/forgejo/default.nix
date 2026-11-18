@@ -47,7 +47,7 @@ in
           import blackholeCrawlers
           @blockedArchives {
             path_regexp ^/(api/v1/repos/)?[^/]+/[^/]+/archive(/|$)
-            not header_regexp User-Agent `^(curl/[^ ]+ )?(Nix|Lix)/[^ ]+( .*)?$`
+            not header_regexp User-Agent `^(curl/[^ ]+ )?(Nix|Lix|Nixpkgs)/[^ ]+( .*)?$`
           }
           # Use a distinct status so an upstream authorization failure cannot trigger a ban.
           respond @blockedArchives 418
