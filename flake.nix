@@ -1,23 +1,10 @@
 {
   outputs =
     inputs:
-    let
-      lib = inputs.snowfall-lib.mkLib {
-        inherit inputs;
-        src = ./.;
-        snowfall = {
-          namespace = "jarvis";
-          meta = {
-            name = "msfjarvis-nix-configs";
-            title = "msfjarvis' Nix configurations";
-          };
-        };
-      };
-    in
-    lib.mkFlake {
+    import ./lib/flake.nix {
       inherit inputs;
-      src = ./.;
-      channels-config = {
+      namespace = "jarvis";
+      nixpkgsConfig = {
         allowUnfree = true;
         allowAliases = false;
         cudaSupport = false;
@@ -81,9 +68,9 @@
         # niri.overlays.niri
         nix-topology.overlays.default
       ];
-      outputs-builder = channels: {
+      perSystem = pkgs: {
         topology = import inputs.nix-topology {
-          pkgs = channels.nixpkgs;
+          inherit pkgs;
           modules = [
             { inherit (inputs.self) nixosConfigurations; }
             ./topology.nix
@@ -92,7 +79,7 @@
 
         formatter =
           let
-            treefmtEval = inputs.treefmt-nix.lib.evalModule channels.nixpkgs ./treefmt.nix;
+            treefmtEval = inputs.treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
           in
           treefmtEval.config.build.wrapper;
       };
@@ -135,9 +122,6 @@
 
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
-
-    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus?rev=3542fe9126dc492e53ddd252bb0260fe035f2c0f";
-    flake-utils-plus.inputs.flake-utils.follows = "flake-utils";
 
     firefox.url = "github:nix-community/flake-firefox-nightly";
     firefox.inputs.nixpkgs.follows = "nixpkgs";
@@ -182,11 +166,6 @@
 
     rust-manifest.url = "https://static.rust-lang.org/dist/2025-03-04/channel-rust-nightly.toml";
     rust-manifest.flake = false;
-
-    snowfall-lib.url = "github:snowfallorg/lib";
-    snowfall-lib.inputs.flake-compat.follows = "flake-compat";
-    snowfall-lib.inputs.flake-utils-plus.follows = "flake-utils-plus";
-    snowfall-lib.inputs.nixpkgs.follows = "nixpkgs";
 
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";

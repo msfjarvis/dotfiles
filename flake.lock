@@ -305,27 +305,6 @@
         "type": "github"
       }
     },
-    "flake-utils-plus": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ]
-      },
-      "locked": {
-        "lastModified": 1715533576,
-        "narHash": "sha256-fT4ppWeCJ0uR300EH3i7kmgRZnAVxrH+XtK09jQWihk=",
-        "owner": "gytis-ivaskevicius",
-        "repo": "flake-utils-plus",
-        "rev": "3542fe9126dc492e53ddd252bb0260fe035f2c0f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "gytis-ivaskevicius",
-        "repo": "flake-utils-plus",
-        "rev": "3542fe9126dc492e53ddd252bb0260fe035f2c0f",
-        "type": "github"
-      }
-    },
     "fromYaml": {
       "flake": false,
       "locked": {
@@ -578,7 +557,6 @@
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
-        "flake-utils-plus": "flake-utils-plus",
         "golink": "golink",
         "home-manager": "home-manager",
         "lib-aggregate": "lib-aggregate",
@@ -590,7 +568,6 @@
         "nix-topology": "nix-topology",
         "nixpkgs": "nixpkgs",
         "rust-manifest": "rust-manifest",
-        "snowfall-lib": "snowfall-lib",
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix",
         "srvos": "srvos",
@@ -626,32 +603,6 @@
       "original": {
         "type": "file",
         "url": "https://static.rust-lang.org/dist/2025-03-04/channel-rust-nightly.toml"
-      }
-    },
-    "snowfall-lib": {
-      "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "flake-utils-plus": [
-          "flake-utils-plus"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1784328457,
-        "narHash": "sha256-4R5WV74NHhPk21ctoPmjL7nQ6txDnoBLwSWULvIw0TY=",
-        "owner": "snowfallorg",
-        "repo": "lib",
-        "rev": "6ee3542cb459ca4b038cfe50ceb8797f05cdabad",
-        "type": "github"
-      },
-      "original": {
-        "owner": "snowfallorg",
-        "repo": "lib",
-        "type": "github"
       }
     },
     "sops-nix": {
