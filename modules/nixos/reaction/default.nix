@@ -81,6 +81,21 @@ in
         }
         // optionalAttrs config.services.${namespace}.forgejo.enable {
           forgejo_404 = caddy404Stream config.services.${namespace}.forgejo.domain;
+          forgejo_archives = {
+            cmd = [
+              "${pkgs.bash}/bin/sh"
+              "-c"
+              "exec ${pkgs.coreutils}/bin/tail -Fn0 /var/log/caddy/access-${
+                config.services.${namespace}.forgejo.domain
+              }.log"
+            ];
+            filters.blocked_archives = {
+              regex = [
+                ''^<ip>.*"[A-Z]+ [^ ]+ HTTP/[^ ]+" 418[ \d]*$''
+              ];
+              actions = banFor "30d";
+            };
+          };
         }
         // optionalAttrs config.services.${namespace}.gitea.enable {
           gitea_404 = caddy404Stream config.services.${namespace}.gitea.domain;

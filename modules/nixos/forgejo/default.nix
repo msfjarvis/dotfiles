@@ -45,6 +45,12 @@ in
         logFormat = lib.${namespace}.mkReactionLogFormat cfg.domain;
         extraConfig = with config.services.forgejo.settings.server; ''
           import blackholeCrawlers
+          @blockedArchives {
+            path_regexp ^/(api/v1/repos/)?[^/]+/[^/]+/archive(/|$)
+            not header_regexp User-Agent `^(curl/[^ ]+ )?(Nix|Lix)/[^ ]+( .*)?$`
+          }
+          # Use a distinct status so an upstream authorization failure cannot trigger a ban.
+          respond @blockedArchives 418
           reverse_proxy ${HTTP_ADDR}:${toString HTTP_PORT} {
             header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
           }
@@ -144,7 +150,7 @@ in
           DISABLE_HTTP_GIT = false;
           DISABLE_STARS = true;
           ENABLE_PUSH_CREATE_USER = true;
-          DISABLE_DOWNLOAD_SOURCE_ARCHIVES = true;
+          DISABLE_DOWNLOAD_SOURCE_ARCHIVES = false;
         };
         "repository.pull-request" = {
           DEFAULT_MERGE_STYLE = "rebase";

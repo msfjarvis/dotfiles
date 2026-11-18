@@ -109,7 +109,27 @@ in
         };
       };
     }
-    (mkIf forgejoCfg.enable (caddy404Jail "forgejo" forgejoCfg.domain))
+    (mkIf forgejoCfg.enable (mkMerge [
+      (caddy404Jail "forgejo" forgejoCfg.domain)
+      {
+        environment.etc."fail2ban/filter.d/caddy-forgejo-archives.local".text = ''
+          [Definition]
+          failregex = ^<HOST>.*"[A-Z]+ [^ ]+ HTTP/[^ ]+" 418[ \d]*$
+          ignoreregex =
+        '';
+        services.fail2ban.jails.caddy-forgejo-archives.settings = {
+          enabled = true;
+          filter = "caddy-forgejo-archives";
+          logpath = "/var/log/caddy/access-${forgejoCfg.domain}.log";
+          backend = "auto";
+          port = "http,https";
+          findtime = 1;
+          maxretry = 1;
+          bantime = 2592000;
+        }
+        // cloudflareAction;
+      }
+    ]))
     (mkIf giteaCfg.enable (caddy404Jail "gitea" giteaCfg.domain))
     (mkIf cfg.cloudflare.enable {
       sops.secrets.cloudflare-fail2ban-token = {
