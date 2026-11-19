@@ -32,7 +32,7 @@ python3.pkgs.buildPythonApplication (finalAttrs: {
   meta = {
     description = "Command-line program to download image galleries and collections from several image hosting sites";
     homepage = "https://git.msfjarvis.dev/msfjarvis/gallery-dl";
-    changelog = "https://git.msfjarvis.dev/msfjarvis/gallery-dl/blob/${finalAttrs.src.rev}/CHANGELOG.md";
+    changelog = "https://git.msfjarvis.dev/msfjarvis/gallery-dl/src/commit/${finalAttrs.src.rev}/CHANGELOG.md";
     license = lib.licenses.gpl2Only;
     maintainers = [ ];
     mainProgram = "gallery-dl";
