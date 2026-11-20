@@ -20,6 +20,7 @@ in
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       nodejs_latest
+      pkgs.llm-agents.plannotator
       pkgs.llm-agents.rtk
       pkgs.llm-agents.skills
       pkgs.${namespace}.markfmt

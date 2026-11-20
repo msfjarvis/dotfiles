@@ -15,6 +15,7 @@ _: prev: {
       inherit (llmPackages)
         herdr
         mcporter
+        plannotator
         rtk
         skills
         ;
