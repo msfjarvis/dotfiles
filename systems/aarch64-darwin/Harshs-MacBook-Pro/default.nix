@@ -36,7 +36,6 @@
     openssl
     pkgs.${namespace}.pidcat
     pnpm
-    scrcpy
     yaml-language-server
   ];
   # keep-sorted block end
@@ -56,9 +55,9 @@
       "deezer/repo/caupain"
       "mole"
       "pinentry-mac"
+      "scrcpy"
       "sdkman/tap/sdkman-cli"
       "spicetify-cli"
-      "static-var/tap/build-brief"
       "uv"
       # keep-sorted end
     ];
@@ -83,7 +82,6 @@
       # keep-sorted start
       "deezer/repo"
       "sdkman/tap"
-      "static-var/tap"
       # keep-sorted end
     ];
   };
