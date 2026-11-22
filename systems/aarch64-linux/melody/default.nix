@@ -50,7 +50,6 @@ in
     ffmpeg_8-headless
     nodejs
     megatools
-    pkgs.llm-agents.pi
   ];
 
   sops.secrets.bookorbit = {

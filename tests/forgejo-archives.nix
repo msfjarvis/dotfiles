@@ -1,6 +1,6 @@
 { system }:
 let
-  config = system.config;
+  inherit (system) config;
   domain = config.services.jarvis.forgejo.domain;
   caddyConfig = config.services.caddy.virtualHosts."https://${domain}".extraConfig;
   userAgentPattern = builtins.elemAt (builtins.split "`" caddyConfig) 2;
