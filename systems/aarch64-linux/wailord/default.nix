@@ -102,10 +102,6 @@ in
       domain = "links.msfjarvis.dev";
     };
 
-    caldav-api = {
-      enable = false;
-    };
-
     forgejo = {
       enable = true;
       domain = "git.msfjarvis.dev";
@@ -132,10 +128,6 @@ in
     miniflux = {
       enable = true;
       domain = "read.msfjarvis.dev";
-    };
-
-    ncps = {
-      enable = false;
     };
 
     paperless-ngx = {

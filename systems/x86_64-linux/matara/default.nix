@@ -207,9 +207,6 @@ in
         user = "msfjarvis";
         group = "users";
       };
-    ncps = {
-      enable = false;
-    };
     prometheus = {
       enable = true;
     };

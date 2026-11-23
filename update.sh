@@ -3,36 +3,19 @@
 set -euxo pipefail
 
 declare -a ALL_PACKAGES=(
-  # Never getting updated either
-  adb-sync
   adbear
-  # Fine the way it is
-  adbtuifm
   adx
-  # Doesn't seem to work, will have to figure something else out
-  # alps-purelymail
-  # Don't care to keep it up-to-date
-  # age-keygen-deterministic
-  # This will basically never get any useful updates
-  # boop-gtk
-  # CF blocks it, manual updates for this are fine
-  # caldav-api
   clipboard-substitutor
   cyberdrop-dl
   dependency-watch
   gallery-dl-unstable
   gdrive
-  gitice
-  # Wants a too-new version of Go
-  # glance
+  glance
   gphotos-cdp
-  hcctl
-  healthchecks-monitor
   katbin
   linkleaner
   # No idea why this doesn't like the update script
   # markfmt
-  mediafire_rs
   patreon-dl
   phanpy
   # Doesn't need updates
@@ -42,15 +25,10 @@ declare -a ALL_PACKAGES=(
 )
 
 declare -r -A EXTRA_PARAMS=(
-  ["alps-purelymail"]="--version=branch"
-  ["caldav-api"]="--version=branch"
   ["cyberdrop-dl"]="--version=branch"
   ["gallery-dl-unstable"]="--version=branch"
   ["glance"]="--version=branch=dev"
-  ["hcctl"]="--version-regex=hcctl-v(.*)"
-  ["healthchecks-monitor"]="--version-regex=healthchecks-monitor-v(.*)"
   ["phanpy"]="--url=https://github.com/cheeaun/phanpy --version=branch"
-  ["spot-unstable"]="--version=branch=development"
 )
 
 PKG="${1-}"

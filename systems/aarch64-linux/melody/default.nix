@@ -93,10 +93,6 @@ in
       domain = "lurker";
     };
 
-    ncps = {
-      enable = false;
-    };
-
     phanpy = {
       enable = true;
       domain = "fedi.msfjarvis.dev";
@@ -125,13 +121,6 @@ in
         # "https://read.msfjarvis.dev"
         # "https://vault.msfjarvis.dev"
       ];
-    };
-
-    remote-pi-relay = {
-      enable = false;
-      domain = "pi-relay";
-      listenAddress = "127.0.0.1";
-      logLevel = "info";
     };
 
     restic-rest-server = {

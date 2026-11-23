@@ -78,36 +78,23 @@ let
   callPackage = pkg: pkgs.callPackage pkg;
 in
 {
-  adb-sync = callPackage ./packages/adb-sync { };
   adbear = callPackage ./packages/adbear {
     inputs = {
       inherit fenix rust-manifest;
     };
   };
-  adbtuifm = callPackage ./packages/adbtuifm { };
   adx = callPackage ./packages/adx { };
-  alps-purelymail = callPackage ./packages/alps-purelymail { };
   boop-gtk = callPackage ./packages/boop-gtk { };
   caddy-with-plugins = callPackage ./packages/caddy-with-plugins { };
-  caldav-api = callPackage ./packages/caldav-api { };
   clipboard-substitutor = callPackage ./packages/clipboard-substitutor { };
   cyberdrop-dl = callPackage ./packages/cyberdrop-dl { };
-  dependency-watch = callPackage ./packages/dependency-watch { };
   diffuse-bin = callPackage ./packages/diffuse-bin { };
   gallery-dl-unstable = callPackage ./packages/gallery-dl-unstable { };
   gdrive = callPackage ./packages/gdrive { };
-  gitice = callPackage ./packages/gitice {
-    inputs = {
-      inherit fenix rust-manifest;
-    };
-  };
   glance = callPackage ./packages/glance { };
   gphotos-cdp = callPackage ./packages/gphotos-cdp { };
-  hcctl = callPackage ./packages/hcctl { };
-  healthchecks-monitor = callPackage ./packages/healthchecks-monitor { };
   katbin = callPackage ./packages/katbin { };
   linkleaner = callPackage ./packages/linkleaner { };
-  mediafire_rs = callPackage ./packages/mediafire_rs { };
   patreon-dl = callPackage ./packages/patreon-dl { };
   phanpy = callPackage ./packages/phanpy { };
   pidcat = callPackage ./packages/pidcat { };
