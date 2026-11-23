@@ -27,7 +27,7 @@ declare -a ALL_PACKAGES=(
 declare -r -A EXTRA_PARAMS=(
   ["cyberdrop-dl"]="--version=branch"
   ["gallery-dl-unstable"]="--version=branch"
-  ["glance"]="--version=branch=dev"
+  ["glance"]="--version=branch=main"
   ["phanpy"]="--url=https://github.com/cheeaun/phanpy --version=branch"
 )
 
