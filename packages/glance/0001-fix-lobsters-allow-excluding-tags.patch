@@ -1,4 +1,4 @@
-From e21b7060eadd857348111c18fbc522f885fb30bf Mon Sep 17 00:00:00 2001
+From 8995974a6d3f347c2827c5852bf5ad20c0a9235d Mon Sep 17 00:00:00 2001
 From: Harsh Shandilya <me@msfjarvis.dev>
 Date: Sat, 4 Apr 2026 00:21:29 +0530
 Subject: [PATCH] fix(lobsters): allow excluding tags
@@ -8,7 +8,7 @@ Subject: [PATCH] fix(lobsters): allow excluding tags
  1 file changed, 23 insertions(+)
 
 diff --git a/internal/glance/widget-lobsters.go b/internal/glance/widget-lobsters.go
-index 59405a46d02e..dfe32a2ddfa7 100644
+index 786d1dfb6c87..8a9881ea7cca 100644
 --- a/internal/glance/widget-lobsters.go
 +++ b/internal/glance/widget-lobsters.go
 @@ -17,6 +17,7 @@ type lobstersWidget struct {
@@ -17,9 +17,9 @@ index 59405a46d02e..dfe32a2ddfa7 100644
  	Tags           []string      `yaml:"tags"`
 +	ExcludeTags    []string      `yaml:"exclude-tags"`
  	ShowThumbnails bool          `yaml:"-"`
+ }
  
- 	Filters filterableFields[forumPost] `yaml:"filters"`
-@@ -53,6 +54,28 @@ func (widget *lobstersWidget) update(ctx context.Context) {
+@@ -51,6 +52,28 @@ func (widget *lobstersWidget) update(ctx context.Context) {
  		return
  	}
  
@@ -45,9 +45,9 @@ index 59405a46d02e..dfe32a2ddfa7 100644
 +		posts = filtered
 +	}
 +
- 	posts = widget.Filters.Apply(posts)
- 
  	if widget.Limit < len(posts) {
+ 		posts = posts[:widget.Limit]
+ 	}
 -- 
-2.53.0
+2.56.0
 
