@@ -9,10 +9,7 @@ let
   notServer = !config.profiles.${namespace}.starship.server;
   inherit (pkgs) git-credential-oauth;
   storageHelper =
-    if pkgs.stdenv.hostPlatform.isLinux then
-      lib.getExe pkgs.oo7-git-credential
-    else
-      "cache --timeout 21600";
+    if pkgs.stdenv.hostPlatform.isLinux then lib.getExe pkgs.oo7-git-credential else "osxkeychain";
 in
 {
   home.packages = [
@@ -62,6 +59,7 @@ in
     // lib.attrsets.optionalAttrs notServer {
       credential = {
         helper = [
+          ""
           storageHelper
           "${lib.getExe git-credential-oauth}"
         ];
@@ -80,11 +78,6 @@ in
           ];
         };
       };
-    };
-  }
-  // lib.attrsets.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
-    package = pkgs.git.override {
-      osxkeychainSupport = false;
     };
   };
 }
