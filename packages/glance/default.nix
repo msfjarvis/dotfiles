@@ -4,7 +4,7 @@
   fetchFromGitHub,
 }:
 let
-  version = "0.8.5-unstable-2026-08-19";
+  version = "0.8.8-unstable-2026-11-07";
 in
 buildGoModule {
   pname = "glance";
@@ -13,15 +13,15 @@ buildGoModule {
   src = fetchFromGitHub {
     owner = "glanceapp";
     repo = "glance";
-    rev = "a18cac8a84da9df2e87bfc45458810abba4a40fa";
-    hash = "sha256-BVfkuBJASAcZyDnS+CzOktGH1i5CNmq9saATvun/BQo=";
+    rev = "53aec7f392ca72143870dcb45526ec7c80a68f32";
+    hash = "sha256-b/FTXk0ZKvCZvJ0F4cJiJ5uByQTShY6MrB3EmdipCow=";
   };
 
   patches = [
     ./0001-fix-lobsters-allow-excluding-tags.patch
   ];
 
-  vendorHash = "sha256-a92V/duqvrWEb8QSJLA5rHYYZCcJ4fBC962SEr4FJDA=";
+  vendorHash = "sha256-btFhC33IwzldCtPi9lqGz7tNG6wqujjIlp11Iqi24qk=";
 
   excludedPackages = [ "build-and-ship" ];
 
