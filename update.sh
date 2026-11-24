@@ -7,7 +7,6 @@ declare -a ALL_PACKAGES=(
   adx
   clipboard-substitutor
   cyberdrop-dl
-  dependency-watch
   gallery-dl-unstable
   gdrive
   glance
