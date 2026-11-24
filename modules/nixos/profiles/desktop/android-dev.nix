@@ -23,7 +23,6 @@ in
   };
   config = mkIf cfg.android-dev.enable {
     users.users.msfjarvis.packages = with pkgs; [
-      pkgs.${namespace}.adb-sync
       pkgs.${namespace}.adx
       android-cli
       android-tools
