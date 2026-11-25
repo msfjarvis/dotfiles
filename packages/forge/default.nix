@@ -7,17 +7,17 @@
 
 buildGoModule (finalAttrs: {
   pname = "forge";
-  version = "1.10.1-unstable-2026-10-03";
+  version = "0.11.0-unstable-2026-11-22";
   __structuredAttrs = true;
 
   src = fetchFromGitHub {
     owner = "git-pkgs";
     repo = "forge";
-    rev = "70caf18ac5059dbb877d26f2b191d24d4805723a";
-    hash = "sha256-DhFp3BNoeVI9eYo4Plywgx8jLukqEewl4+BoMdOMCrI=";
+    rev = "7b1d0921a3c914cdcaf1873f084eff38187b69ed";
+    hash = "sha256-7zKv5SCp2yfSimZJmG3Y36hB7GMUt+KRhzhz1My6CHs=";
   };
 
-  vendorHash = "sha256-GueEIQ4POxDmuIRv/Q2Fgo1Lbua6SbUeVkqDRyG+XVA=";
+  vendorHash = "sha256-Dg8l/XpA0qJ+nEhGkgXjHlb+DFnytUWzq3Bwraw2TUE=";
 
   ldflags = [
     "-s"
