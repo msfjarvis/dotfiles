@@ -89,6 +89,7 @@ in
   clipboard-substitutor = callPackage ./packages/clipboard-substitutor { };
   cyberdrop-dl = callPackage ./packages/cyberdrop-dl { };
   diffuse-bin = callPackage ./packages/diffuse-bin { };
+  forge = callPackage ./packages/forge { };
   gallery-dl-unstable = callPackage ./packages/gallery-dl-unstable { };
   gdrive = callPackage ./packages/gdrive { };
   glance = callPackage ./packages/glance { };

@@ -33,7 +33,6 @@ buildGoModule (finalAttrs: {
   meta = {
     description = "Go library and CLI for working with git forges. Supports GitHub, GitLab, Gitea/Forgejo, and Bitbucket Cloud through a single interface";
     homepage = "https://github.com/git-pkgs/forge";
-    changelog = "https://github.com/git-pkgs/forge/releases/tag/${finalAttrs.src.tag}";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ ];
     mainProgram = "forge";
