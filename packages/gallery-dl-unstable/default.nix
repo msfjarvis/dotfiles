@@ -6,15 +6,15 @@
 
 python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "gallery-dl-unstable";
-  version = "1.32.21-unstable-2026-11-22";
+  version = "1.32.21-unstable-2026-11-24";
   pyproject = true;
 
   src = fetchFromForgejo {
     domain = "git.msfjarvis.dev";
     owner = "msfjarvis";
     repo = "gallery-dl";
-    rev = "ea4236d1de99caff58c42a17df6b79972bd215f6";
-    hash = "sha256-dV/A8KiOLXJ483kMf0qGbs9rjeTjDqG36nf7wS6xeDo=";
+    rev = "c62eadc94102f7275ea5c7d5402162fd6c2be034";
+    hash = "sha256-PBlOsWXJ7L0cK7caakHpE22Bp2PL5x5WF9ZNQtosSqw=";
   };
 
   build-system = [
