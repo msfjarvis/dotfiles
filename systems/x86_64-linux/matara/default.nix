@@ -45,7 +45,6 @@ in
   microvm.vms = {
     "chrome-cdp" = {
       flake = inputs.self;
-      updateFlake = "git+file:///home/msfjarvis/git-repos/dotfiles";
     };
     "stash" = {
       # Host build-time reference to where the MicroVM NixOS is defined
@@ -268,6 +267,7 @@ in
   };
 
   systemd.services = {
+    "microvm@chrome-cdp".requires = [ "install-microvm-chrome-cdp.service" ];
     stash.unitConfig.RequiresMountsFor = "/media";
     qbittorrent.unitConfig.RequiresMountsFor = "/media";
     copyparty.unitConfig.RequiresMountsFor = "/media";

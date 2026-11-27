@@ -12,6 +12,9 @@ let
 in
 assert builtins.elem "chrome-cdp" config.microvm.autostart;
 assert config.microvm.vms ? chrome-cdp;
+assert !(config.systemd.services.install-microvm-chrome-cdp.unitConfig ? ConditionPathExists);
+assert builtins.elem "install-microvm-chrome-cdp.service"
+  config.systemd.services."microvm@chrome-cdp".requires;
 assert !config.services.jarvis.remote-chrome.enable;
 assert vm.microvm.guest.enable;
 assert builtins.any (
