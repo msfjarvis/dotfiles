@@ -27,6 +27,7 @@ in
         HOSTNAME = "127.0.0.1";
         PORT = toString ports.karakeep;
         NEXTAUTH_URL = "https://${cfg.domain}";
+        DISABLE_SIGNUPS = "true";
       };
     };
 
