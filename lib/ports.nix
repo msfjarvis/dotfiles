@@ -44,6 +44,7 @@
     bookorbit = 9032;
     flaresolverr = 9033;
     pl-mail = 9034;
+    karakeep = 9035;
     exporters = {
       node = 9100;
       systemd = 9101;
