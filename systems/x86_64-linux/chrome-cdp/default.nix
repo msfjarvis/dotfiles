@@ -55,7 +55,7 @@ in
   # Only the host-side reverse proxy may reach DevTools on the VM bridge.
   networking.nftables.enable = true;
   networking.firewall.extraInputRules = ''
-    ip saddr 10.100.0.1 ip daddr ${vm.ipv4} tcp dport ${
+    ip saddr ${vm.gateway} ip daddr ${vm.ipv4} tcp dport ${
       toString config.services.${namespace}.remote-chrome.port
     } accept
   '';
