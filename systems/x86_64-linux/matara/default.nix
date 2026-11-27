@@ -43,6 +43,10 @@ in
   };
 
   microvm.vms = {
+    "chrome-cdp" = {
+      flake = inputs.self;
+      updateFlake = "git+file:///home/msfjarvis/git-repos/dotfiles";
+    };
     "stash" = {
       # Host build-time reference to where the MicroVM NixOS is defined
       # under nixosConfigurations
@@ -53,6 +57,7 @@ in
   };
 
   microvm.autostart = [
+    "chrome-cdp"
     "stash"
   ];
 
@@ -87,10 +92,28 @@ in
     yt-dlp
   ];
 
+  sops.templates.chrome-cdp-caddy-env = {
+    owner = config.services.caddy.user;
+    content = ''
+      CHROME_CDP_TS_AUTHKEY=${config.sops.placeholder.server-oauth-secret}
+    '';
+  };
+  systemd.services.caddy.serviceConfig.EnvironmentFile = [
+    config.sops.templates.chrome-cdp-caddy-env.path
+  ];
+
   services.caddy = {
     enable = true;
     applyDefaults = true;
+    tailscaleNodes.chrome-cdp = {
+      tags = [ "tag:chrome-cdp" ];
+      authKeyEnv = "CHROME_CDP_TS_AUTHKEY";
+    };
     virtualHosts = {
+      "http://:9222".extraConfig = ''
+        bind tailscale/chrome-cdp
+        reverse_proxy ${lib.${namespace}.microvms.chrome-cdp.ipv4}:9222
+      '';
       "https://matara.${tailnetDomain}" = {
         extraConfig = ''
           reverse_proxy 127.0.0.1:${toString config.services.${namespace}.qbittorrent.port}
@@ -209,10 +232,6 @@ in
       };
     prometheus = {
       enable = true;
-    };
-    remote-chrome = {
-      enable = true;
-      authKeyFile = config.sops.secrets.server-oauth-secret.path;
     };
     qbittorrent = {
       enable = true;

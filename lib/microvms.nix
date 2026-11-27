@@ -9,6 +9,12 @@
       mac_addr = "02:00:00:00:00:01";
       ipv4 = "10.100.0.2";
     };
+    chrome-cdp = {
+      vsock = 1236;
+      tap_if = "vm-a3";
+      mac_addr = "02:00:00:00:00:03";
+      ipv4 = "10.100.0.4";
+    };
     booklore = {
       vsock = 1235;
       tap_if = "vm-a2";

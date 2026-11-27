@@ -17,6 +17,24 @@ in
 {
   options.services.caddy = {
     applyDefaults = mkEnableOption { description = "apply the default settings for Caddy"; };
+    tailscaleNodes = mkOption {
+      type = types.attrsOf (
+        types.submodule {
+          options = {
+            tags = mkOption {
+              type = types.listOf (types.strMatching "tag:[a-zA-Z0-9-]+");
+              description = "Tags used when registering this Tailscale node.";
+            };
+            authKeyEnv = mkOption {
+              type = types.strMatching "[A-Za-z_][A-Za-z0-9_]*";
+              description = "Environment variable containing the node's Tailscale OAuth secret.";
+            };
+          };
+        }
+      );
+      default = { };
+      description = "Named Caddy Tailscale nodes with registration overrides.";
+    };
     pocketIdApplications = mkOption {
       type = types.attrsOf (
         types.submodule {
@@ -86,6 +104,14 @@ in
         }
         tailscale {
           tags "tag:services"
+          ${lib.concatStringsSep "\n" (
+            lib.mapAttrsToList (name: node: ''
+              ${name} {
+                tags ${lib.concatStringsSep " " node.tags}
+                auth_key {env.${node.authKeyEnv}}
+              }
+            '') cfg.tailscaleNodes
+          )}
         }
         order authenticate before respond
         ${lib.optionalString (config.services.caddy.pocketIdApplications != { }) ''

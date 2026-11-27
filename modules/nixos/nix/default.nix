@@ -35,7 +35,7 @@
         # package = pkgs.lixPackageSets.git.lix;
         package = pkgs.lixPackageSets.latest.lix;
         optimise.automatic = false;
-        settings.netrc-file = config.sops.secrets.nix-netrc-file.path;
+        settings.netrc-file = config.sops.secrets.nix-netrc-file.path or "/dev/null";
       };
   }
   // lib.optionalAttrs (builtins.hasAttr "srvos" options) {

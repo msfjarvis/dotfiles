@@ -5,6 +5,6 @@
     format = "binary";
   };
   services.cloudflared = {
-    certificateFile = config.sops.secrets.cf-tunnel-cert.path;
+    certificateFile = config.sops.secrets.cf-tunnel-cert.path or "/dev/null";
   };
 }
