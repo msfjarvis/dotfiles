@@ -14,6 +14,13 @@ in
     microvm-guest = {
       enable = true;
       inherit (vm) mac_addr tap_if vsock;
+      network = {
+        publicOnly = true;
+        dnsServers = [
+          "1.1.1.1"
+          "8.8.8.8"
+        ];
+      };
     };
     # This guest needs neither server credentials nor access to the host's secrets.
     server.enable = lib.mkForce false;

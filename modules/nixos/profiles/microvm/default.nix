@@ -10,7 +10,34 @@ let
   vms = lib.${namespace}.microvms;
   bridges = map (vm: vm.bridge) (builtins.attrValues vms);
   bridgeSet = lib.concatMapStringsSep ", " (bridge: ''"${bridge}"'') bridges;
-  chromeBridge = vms.chrome-cdp.bridge;
+  guestPolicy =
+    name:
+    let
+      vm = config.microvm.vms.${name} or null;
+      guest =
+        if vm == null then
+          null
+        else if vm.flake != null then
+          vm.flake.nixosConfigurations.${name}.config
+        else if vm.evaluatedConfig != null then
+          vm.evaluatedConfig.config
+        else
+          vm.config.config;
+    in
+    if guest == null then
+      {
+        publicOnly = false;
+        dnsServers = [ ];
+      }
+    else
+      guest.profiles.${namespace}.microvm-guest.network or {
+        publicOnly = false;
+        dnsServers = [ ];
+      };
+  restrictedBridges = lib.mapAttrsToList (_: vm: vm.bridge) (
+    lib.filterAttrs (name: _: (guestPolicy name).publicOnly) vms
+  );
+  restrictedSet = lib.concatMapStringsSep ", " (bridge: ''"${bridge}"'') restrictedBridges;
 in
 {
   imports = [ inputs.microvm.nixosModules.host ];
@@ -35,7 +62,7 @@ in
 
       networks =
         (lib.mapAttrs' (
-          _: vm:
+          name: vm:
           lib.nameValuePair "10-${vm.bridge}" {
             matchConfig.Name = vm.bridge;
             addresses = [ { Address = "${vm.gateway}/30"; } ];
@@ -46,11 +73,7 @@ in
             };
             dhcpServerConfig = {
               EmitDNS = true;
-              # Chrome cannot reach tailnet/private resolvers under its egress policy.
-              DNS = lib.mkIf (vm.bridge == chromeBridge) [
-                "1.1.1.1"
-                "8.8.8.8"
-              ];
+              DNS = lib.mkIf ((guestPolicy name).dnsServers != [ ]) (guestPolicy name).dnsServers;
               PoolOffset = 2;
               PoolSize = 1;
             };
@@ -81,21 +104,25 @@ in
     };
 
     # Separate bridges prevent direct L2 traffic; these chains also prevent
-    # routing between bridges and restrict the untrusted browser's egress.
+    # routing between bridges and enforce each guest's requested egress policy.
     networking.nftables.tables.microvm-isolation = {
       family = "inet";
       content = ''
         chain input {
           type filter hook input priority -10; policy accept;
-          iifname "${chromeBridge}" ct state established,related accept
-          iifname "${chromeBridge}" udp sport 68 udp dport 67 accept
-          iifname "${chromeBridge}" drop
+          ${lib.optionalString (restrictedBridges != [ ]) ''
+            iifname { ${restrictedSet} } ct state established,related accept
+            iifname { ${restrictedSet} } udp sport 68 udp dport 67 accept
+            iifname { ${restrictedSet} } drop
+          ''}
         }
         chain forward {
           type filter hook forward priority -10; policy accept;
           iifname { ${bridgeSet} } oifname { ${bridgeSet} } drop
-          iifname "${chromeBridge}" meta nfproto ipv6 drop
-          iifname "${chromeBridge}" ip daddr { 0.0.0.0/8, 10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8, 169.254.0.0/16, 172.16.0.0/12, 192.168.0.0/16, 198.18.0.0/15, 224.0.0.0/4, 240.0.0.0/4 } drop
+          ${lib.optionalString (restrictedBridges != [ ]) ''
+            iifname { ${restrictedSet} } meta nfproto ipv6 drop
+            iifname { ${restrictedSet} } ip daddr { 0.0.0.0/8, 10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8, 169.254.0.0/16, 172.16.0.0/12, 192.168.0.0/16, 198.18.0.0/15, 224.0.0.0/4, 240.0.0.0/4 } drop
+          ''}
         }
       '';
     };

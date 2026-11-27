@@ -32,6 +32,14 @@ in
       type = types.int;
       description = "VSOCK CID";
     };
+    network = {
+      publicOnly = mkEnableOption "host-enforced public-only network access for this guest";
+      dnsServers = mkOption {
+        type = types.listOf types.str;
+        default = [ ];
+        description = "DNS servers advertised to this guest by the MicroVM host; an empty list uses host defaults.";
+      };
+    };
   };
 
   config = mkMerge [
@@ -39,6 +47,12 @@ in
       microvm.guest.enable = lib.mkDefault false;
     }
     (mkIf cfg.enable {
+      assertions = [
+        {
+          assertion = !cfg.network.publicOnly || cfg.network.dnsServers != [ ];
+          message = "A public-only MicroVM must specify reachable public DNS servers.";
+        }
+      ];
       microvm.guest.enable = true;
 
       networking.useNetworkd = true;
