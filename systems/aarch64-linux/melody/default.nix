@@ -83,6 +83,11 @@ in
       enable = true;
     };
 
+    karakeep = {
+      enable = true;
+      domain = "later.msfjarvis.dev";
+    };
+
     lurker = {
       enable = true;
       domain = "lurker";
