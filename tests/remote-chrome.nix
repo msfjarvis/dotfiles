@@ -31,6 +31,7 @@ assert !(builtins.elem 22 vm.networking.firewall.allowedTCPPorts);
 assert has "--remote-debugging-address=127.0.0.1" browser.ExecStart;
 assert has "--remote-debugging-port=9223" browser.ExecStart;
 assert socket.ListenStream == "10.100.0.4:9222";
+assert socket.FreeBind;
 assert socket.Accept;
 assert has "ip saddr 10.100.0.1 ip daddr 10.100.0.4 tcp dport 9222 accept"
   vm.networking.firewall.extraInputRules;

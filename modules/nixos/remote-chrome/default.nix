@@ -100,10 +100,10 @@ in
     systemd.sockets.remote-chrome-proxy = {
       description = "Chrome DevTools guest socket";
       wantedBy = [ "sockets.target" ];
-      after = [ "network-online.target" ];
-      wants = [ "network-online.target" ];
       socketConfig = {
         ListenStream = "${cfg.listenAddress}:${toString cfg.port}";
+        # DHCP may assign the address after sockets.target starts.
+        FreeBind = true;
         Accept = true;
       };
     };
