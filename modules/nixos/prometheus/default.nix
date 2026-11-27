@@ -68,6 +68,7 @@ in
       description = "Port for the alertmanager server";
     };
     alertmanager = {
+      clusterEnabled = mkEnableOption "Alertmanager high-availability clustering";
       enable = mkOption {
         default = config.services.${namespace}.prometheus.enable;
         example = true;
@@ -234,6 +235,7 @@ in
 
       alertmanager = {
         inherit (cfg.alertmanager) enable port;
+        extraFlags = lib.optional (!cfg.alertmanager.clusterEnabled) "--cluster.listen-address=";
         webExternalUrl = "https://${cfg.alertmanager.host}.${tailnetDomain}/";
         environmentFile = config.sops.secrets.prometheus-alertmanager.path;
         configuration = {

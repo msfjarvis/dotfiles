@@ -38,6 +38,20 @@ in
       format = "dotenv";
     };
 
+    systemd.services.prometheus-tailscale-exporter = {
+      wants = [ "network-online.target" ];
+      after = [
+        "network-online.target"
+        "systemd-resolved.service"
+      ];
+      # DNS and OAuth may remain unavailable after network-online.target.
+      unitConfig.StartLimitIntervalSec = 0;
+      serviceConfig = {
+        Restart = "always";
+        RestartSec = "30s";
+      };
+    };
+
     services.prometheus = {
       exporters.tailscale = {
         enable = true;
