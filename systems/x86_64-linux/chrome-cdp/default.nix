@@ -9,6 +9,7 @@ let
 in
 {
   networking.hostName = "chrome-cdp";
+  time.timeZone = "Asia/Kolkata";
   profiles.${namespace} = {
     microvm-guest = {
       enable = true;
@@ -28,6 +29,13 @@ in
 
   microvm.vcpu = 2;
   microvm.mem = 2560;
+  microvm.volumes = [
+    {
+      mountPoint = "/var/lib";
+      image = "chrome-cdp-data.img";
+      size = 2048;
+    }
+  ];
   microvm.shares = lib.mkForce [
     {
       source = "/nix/store";

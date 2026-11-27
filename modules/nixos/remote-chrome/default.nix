@@ -69,6 +69,34 @@ in
       };
     };
 
+    systemd.services.remote-chrome-cleanup = {
+      description = "Clear the remote Chrome profile";
+      unitConfig.RequiresMountsFor = "/var/lib";
+      serviceConfig.Type = "oneshot";
+      path = [ pkgs.findutils ];
+      script = ''
+        systemctl stop remote-chrome-proxy.socket
+        restart_browser() {
+          systemctl start remote-chrome.service
+          systemctl start remote-chrome-proxy.socket
+        }
+        trap restart_browser EXIT
+        systemctl stop remote-chrome.service
+        # DynamicUser stores StateDirectory contents below /var/lib/private.
+        if [ -d /var/lib/private/remote-chrome ]; then
+          find /var/lib/private/remote-chrome -mindepth 1 -delete
+        fi
+      '';
+    };
+    systemd.timers.remote-chrome-cleanup = {
+      description = "Clear the remote Chrome profile at midnight";
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "*-*-* 00:00:00";
+        Persistent = true;
+      };
+    };
+
     systemd.sockets.remote-chrome-proxy = {
       description = "Chrome DevTools guest socket";
       wantedBy = [ "sockets.target" ];

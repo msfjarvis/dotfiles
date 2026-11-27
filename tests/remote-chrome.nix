@@ -14,6 +14,16 @@ assert builtins.elem "chrome-cdp" config.microvm.autostart;
 assert config.microvm.vms ? chrome-cdp;
 assert !config.services.jarvis.remote-chrome.enable;
 assert vm.microvm.guest.enable;
+assert builtins.any (
+  volume:
+  volume.mountPoint == "/var/lib" && volume.size == 2048 && volume.image == "chrome-cdp-data.img"
+) vm.microvm.volumes;
+assert vm.time.timeZone == "Asia/Kolkata";
+assert vm.systemd.timers.remote-chrome-cleanup.timerConfig.OnCalendar == "*-*-* 00:00:00";
+assert vm.systemd.timers.remote-chrome-cleanup.timerConfig.Persistent;
+assert has "systemctl stop remote-chrome.service" vm.systemd.services.remote-chrome-cleanup.script;
+assert has "find /var/lib/private/remote-chrome -mindepth 1 -delete"
+  vm.systemd.services.remote-chrome-cleanup.script;
 assert vm.sops.secrets == { };
 assert vm.microvm.interfaces != [ ];
 assert builtins.all (share: share.readOnly) vm.microvm.shares;
@@ -31,5 +41,7 @@ assert has "bind tailscale/chrome-cdp"
 assert has "reverse_proxy 10.100.0.4:9222"
   config.services.caddy.virtualHosts."http://:9222".extraConfig;
 assert !(disabled.systemd.services ? remote-chrome);
+assert !(disabled.systemd.services ? remote-chrome-cleanup);
+assert !(disabled.systemd.timers ? remote-chrome-cleanup);
 assert !(disabled.systemd.sockets ? remote-chrome-proxy);
 true
