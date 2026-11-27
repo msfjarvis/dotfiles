@@ -8,6 +8,8 @@
 let
   cfg = config.services.${namespace}.remote-chrome;
   internalPort = 9223;
+  socket = "/run/remote-chrome-tailscale/tailscaled.sock";
+  tailscale = "${lib.getExe config.services.tailscale.package} --socket=${socket}";
 in
 {
   options.services.${namespace}.remote-chrome = {
@@ -15,7 +17,11 @@ in
     port = lib.mkOption {
       type = lib.types.port;
       default = 9222;
-      description = "DevTools port exposed on the Tailscale interface.";
+      description = "DevTools port exposed on the dedicated Tailscale node.";
+    };
+    authKeyFile = lib.mkOption {
+      type = lib.types.path;
+      description = "File containing a Tailscale OAuth secret authorized to register tag:chrome-cdp.";
     };
   };
 
@@ -30,8 +36,6 @@ in
         message = "remote-chrome's exposed port must differ from its loopback port.";
       }
     ];
-
-    networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ cfg.port ];
 
     systemd.services.remote-chrome = {
       description = "Headless Chromium for remote crawling";
@@ -71,29 +75,38 @@ in
       };
     };
 
-    # Chrome binds DevTools to loopback. Socket activation limits the forwarder
-    # to packets arriving through Tailscale, including when addresses change.
-    systemd.sockets.remote-chrome-proxy = {
-      description = "Tailscale-only Chrome DevTools socket";
-      wantedBy = [ "sockets.target" ];
-      socketConfig = {
-        ListenStream = cfg.port;
-        BindToDevice = "tailscale0";
-        Accept = true;
+    # A separate userspace node gives the browser its own ACL identity without
+    # changing Matara's server tag or exposing CDP on Matara's Tailscale IP.
+    systemd.services.remote-chrome-tailscaled = {
+      description = "Tailscale node for remote Chrome";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+      serviceConfig = {
+        RuntimeDirectory = "remote-chrome-tailscale";
+        StateDirectory = "remote-chrome-tailscale";
+        ExecStart = "${config.services.tailscale.package}/bin/tailscaled --tun=userspace-networking --port=0 --socket=${socket} --state=%S/remote-chrome-tailscale/tailscaled.state";
+        Restart = "on-failure";
       };
     };
 
-    systemd.services."remote-chrome-proxy@" = {
-      description = "Chrome DevTools connection forwarder";
+    systemd.services.remote-chrome-tailscale-setup = {
+      description = "Register and serve the remote Chrome Tailscale node";
+      wantedBy = [ "multi-user.target" ];
+      requires = [ "remote-chrome-tailscaled.service" ];
+      after = [ "remote-chrome-tailscaled.service" ];
       serviceConfig = {
-        DynamicUser = true;
-        StandardInput = "socket";
-        ExecStart = "${lib.getExe pkgs.socat} STDIO TCP4:127.0.0.1:${toString internalPort}";
-        NoNewPrivileges = true;
-        PrivateTmp = true;
-        ProtectSystem = "strict";
-        ProtectHome = true;
+        Type = "oneshot";
+        RemainAfterExit = true;
+        Restart = "on-failure";
+        RestartSec = 5;
       };
+      script = ''
+        ${tailscale} up --auth-key ${lib.escapeShellArg "file:${toString cfg.authKeyFile}"} --timeout=60s \
+          --hostname=chrome-cdp --advertise-tags=tag:chrome-cdp
+        ${tailscale} serve reset
+        ${tailscale} serve --bg --tcp=${toString cfg.port} tcp://127.0.0.1:${toString internalPort}
+      '';
     };
   };
 }

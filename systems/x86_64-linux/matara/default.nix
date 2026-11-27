@@ -210,7 +210,10 @@ in
     prometheus = {
       enable = true;
     };
-    remote-chrome.enable = true;
+    remote-chrome = {
+      enable = true;
+      authKeyFile = config.sops.secrets.server-oauth-secret.path;
+    };
     qbittorrent = {
       enable = true;
       port = ports._qbittorrent;

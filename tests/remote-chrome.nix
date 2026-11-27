@@ -9,22 +9,22 @@ let
     (system.extendModules {
       modules = [ { services.jarvis.remote-chrome.port = 9333; } ];
     }).config;
-  socket = config.systemd.sockets.remote-chrome-proxy.socketConfig;
   browser = config.systemd.services.remote-chrome.serviceConfig;
-  proxy = config.systemd.services."remote-chrome-proxy@".serviceConfig;
-  libHas = needle: haystack: (builtins.match ".*${needle}.*" haystack) != null;
+  daemon = config.systemd.services.remote-chrome-tailscaled.serviceConfig;
+  setup = config.systemd.services.remote-chrome-tailscale-setup;
+  has = needle: haystack: (builtins.match ".*${needle}.*" haystack) != null;
 in
-assert socket.ListenStream == 9222;
-assert socket.BindToDevice == "tailscale0";
-assert socket.Accept;
-assert builtins.elem 9222 config.networking.firewall.interfaces.tailscale0.allowedTCPPorts;
+assert has "--remote-debugging-address=127.0.0.1" browser.ExecStart;
+assert has "--remote-debugging-port=9223" browser.ExecStart;
+assert has "--tun=userspace-networking" daemon.ExecStart;
+assert has "--advertise-tags=tag:chrome-cdp" setup.script;
+assert has "serve --bg --tcp=9222 tcp://127.0.0.1:9223" setup.script;
+assert has "serve --bg --tcp=9333 tcp://127.0.0.1:9223"
+  customPort.systemd.services.remote-chrome-tailscale-setup.script;
 assert !(builtins.elem 9222 config.networking.firewall.allowedTCPPorts);
-assert libHas "--remote-debugging-address=127.0.0.1" browser.ExecStart;
-assert libHas "--remote-debugging-port=9223" browser.ExecStart;
-assert libHas "TCP4:127.0.0.1:9223" proxy.ExecStart;
-assert proxy.StandardInput == "socket";
-assert customPort.systemd.sockets.remote-chrome-proxy.socketConfig.ListenStream == 9333;
-assert builtins.elem 9333 customPort.networking.firewall.interfaces.tailscale0.allowedTCPPorts;
+assert
+  !(builtins.elem 9222 (config.networking.firewall.interfaces.tailscale0.allowedTCPPorts or [ ]));
 assert !(disabled.systemd.services ? remote-chrome);
-assert !(disabled.systemd.sockets ? remote-chrome-proxy);
+assert !(disabled.systemd.services ? remote-chrome-tailscaled);
+assert !(disabled.systemd.services ? remote-chrome-tailscale-setup);
 true
