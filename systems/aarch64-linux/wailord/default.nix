@@ -98,7 +98,7 @@ in
     };
 
     betula = {
-      enable = true;
+      enable = false;
       domain = "links.msfjarvis.dev";
     };
 
