@@ -35,6 +35,8 @@ in
         PORT = toString ports.karakeep;
         NEXTAUTH_URL = "https://${cfg.domain}";
         DISABLE_SIGNUPS = "true";
+        # OOM'd at the default 512 MB
+        CRAWLER_PARSER_MEM_LIMIT_MB = "768";
       };
       environmentFile = config.sops.secrets.karakeep.path;
     };
