@@ -19,6 +19,13 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    sops.secrets.karakeep = {
+      sopsFile = lib.snowfall.fs.get-file "secrets/karakeep.env";
+      owner = "karakeep";
+      group = "karakeep";
+      format = "dotenv";
+    };
+
     services.karakeep = {
       enable = true;
       browser.enable = false;
@@ -29,6 +36,7 @@ in
         NEXTAUTH_URL = "https://${cfg.domain}";
         DISABLE_SIGNUPS = "true";
       };
+      environmentFile = config.sops.secrets.karakeep.path;
     };
 
     services.caddy.virtualHosts."https://${cfg.domain}" = {
