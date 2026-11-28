@@ -133,10 +133,10 @@ in
 
     services.rex = {
       loginServer = {
-        enable = true;
+        enable = !cfg.microVM;
         accounts.msfjarvis.principals = [ "tailscale:msfjarvis@gmail.com" ];
-        socketActivation = true;
-        tailscaleServe.enable = true;
+        socketActivation = !cfg.microVM;
+        tailscaleServe.enable = !cfg.microVM;
       };
     };
     users.users.msfjarvis = {
