@@ -34,6 +34,7 @@
     nixd
     openssh
     openssl
+    opentofu
     pkgs.${namespace}.pidcat
     pnpm
     yaml-language-server
