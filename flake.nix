@@ -26,6 +26,7 @@
         golink.nixosModules.default
         nix-flatpak.nixosModules.nix-flatpak
         nix-topology.nixosModules.default
+        rex.nixosModules.default
         sops-nix.nixosModules.sops
         stylix.nixosModules.stylix
       ];
@@ -163,6 +164,9 @@
     nix-topology.url = "github:oddlama/nix-topology";
     nix-topology.inputs.nixpkgs.follows = "nixpkgs";
     nix-topology.inputs.flake-parts.follows = "flake-parts";
+
+    rex.url = "https://pkgs.superlogical.com/rex/nix/snapshot.tar.gz";
+    rex.inputs.nixpkgs.follows = "nixpkgs";
 
     rust-manifest.url = "https://static.rust-lang.org/dist/2025-03-04/channel-rust-nightly.toml";
     rust-manifest.flake = false;

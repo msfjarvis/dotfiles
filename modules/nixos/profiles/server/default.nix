@@ -131,6 +131,18 @@ in
       };
     };
 
+    services.rex = {
+      loginServer = {
+        enable = true;
+        accounts.msfjarvis.principals = [ "tailscale:msfjarvis@gmail.com" ];
+        socketActivation = true;
+        tailscaleServe.enable = true;
+      };
+    };
+    users.users.msfjarvis = {
+      extraGroups = [ "rex" ];
+    };
+
     # Enable passwordless sudo.
     security.sudo.extraRules = [
       {
